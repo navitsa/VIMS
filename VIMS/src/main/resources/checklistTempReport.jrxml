@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="checklistTempReport" pageWidth="595" pageHeight="842" columnWidth="523" leftMargin="36" rightMargin="36" topMargin="36" bottomMargin="36" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="stage" class="java.lang.String"/>
+	<field name="item" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="remark" class="java.lang.String"/>
+	<group name="stage group">
+		<groupExpression><![CDATA[$F{stage}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="0" y="0" width="100" height="20" uuid="44e3452b-437e-4391-8684-17dc95b81cc0"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Calibri" size="10" isBold="true" isItalic="false"/>
+						<paragraph lineSpacing="Fixed" lineSpacingSize="1.0"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{stage}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="item group">
+		<groupExpression><![CDATA[$F{item}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="100" y="0" width="126" height="20" uuid="4caa1da4-54a1-46cf-ba9a-31a0b7e61cc6"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Calibri" size="10"/>
+						<paragraph lineSpacing="Fixed"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="status goup">
+		<groupExpression><![CDATA[$F{status}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="226" y="0" width="100" height="20" uuid="1b114ff4-b7d1-4905-86f0-0cff76727509"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Calibri" size="10"/>
+						<paragraph lineSpacing="Fixed"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<title>
+		<band height="22">
+			<staticText>
+				<reportElement x="0" y="0" width="523" height="21" forecolor="#0066FF" uuid="702063fe-0ca1-4d2d-98fd-53343ba21a68"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri Light" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Checklist Template]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="402" y="0" width="121" height="20" uuid="deb5ce46-8f22-48c9-8e72-4375f950b795"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22">
+			<rectangle>
+				<reportElement x="0" y="0" width="523" height="20" backcolor="#99B4D1" uuid="655201e8-9f32-42e6-bf13-ebb853ca4c54"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="115" y="1" width="112" height="20" uuid="59341b52-e540-4908-8e94-2f3ab970eab0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri Light" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ITEM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="1" width="100" height="19" uuid="f787a9ba-47c4-4ee7-9160-a1c9207360eb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri Light" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[STATUS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="0" width="100" height="20" uuid="a5f023f8-204e-4f48-b692-bd501a286a0a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri Light" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[STAGE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="2" width="100" height="20" uuid="b04a4912-cc84-46e5-aa0c-4ad22cf8dfdc"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri Light" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REMARK]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23">
+			<line>
+				<reportElement x="100" y="21" width="423" height="1" uuid="86c98a5b-874f-425e-845a-41295c1612f0"/>
+			</line>
+			<textField>
+				<reportElement x="327" y="0" width="197" height="20" uuid="2533568e-3298-4a8e-bc14-e7ff4684a112"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="10"/>
+					<paragraph lineSpacing="Fixed"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="2276bb01-190d-4c9c-aa94-f7e8da207164"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="375" y="0" width="148" height="20" uuid="b97a88e8-fcac-45bc-854e-c47f0681a5cc"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Visual Inspection Template]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

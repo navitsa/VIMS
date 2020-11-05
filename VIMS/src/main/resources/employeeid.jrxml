@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="employeeid" pageWidth="360" pageHeight="216" columnWidth="360" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
+	<property name="ireport.zoom" value="1.100000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="bordre" fill="Solid">
+		<pen lineWidth="0.0"/>
+		<box>
+			<topPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{style}==true]]></conditionExpression>
+			<style mode="Opaque" backcolor="#CCCCCC" fill="Solid" isBlankWhenNull="true" fontSize="10" isBold="true">
+				<pen lineWidth="1.0"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{style}==false]]></conditionExpression>
+			<style mode="Opaque" fill="Solid" fontName="SansSerif" isBold="false">
+				<pen lineWidth="1.0" lineStyle="Solid"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+			</style>
+		</conditionalStyle>
+	</style>
+	<parameter name="img" class="java.lang.Object"/>
+	<parameter name="username" class="java.lang.String"/>
+	<parameter name="pw" class="java.lang.String"/>
+	<parameter name="userlevel" class="java.lang.String"/>
+	<parameter name="centername" class="java.lang.String"/>
+	<pageHeader>
+		<band height="150">
+			<image hAlign="Left" vAlign="Middle">
+				<reportElement x="10" y="43" width="91" height="83" uuid="ca76a1dd-cc69-4334-97ac-71f2a3e8aa10"/>
+				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{img})).getImage()]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="360" height="20" backcolor="#CCCCCC" uuid="e1dae1aa-0e76-4dbb-8cd6-fdc0b068d5b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{centername}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Right">
+				<reportElement x="245" y="43" width="108" height="83" uuid="6e64a86b-5257-4fc8-9e11-f9877c2ee0b3"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(new com.google.zxing.qrcode.QRCodeWriter().encode($P{username}+"-"+$P{pw},com.google.zxing.BarcodeFormat.QR_CODE,300,300) )]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="101" y="88" width="144" height="20" uuid="2c7ca21e-f8db-47c6-b24f-c0214f7e7dca"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{username}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="101" y="46" width="144" height="20" uuid="ee076838-dcc1-4a02-a2f5-583134947ddf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{userlevel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band/>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="38">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="13" width="360" height="25" backcolor="#CCCCCC" uuid="83ce51d3-bc5a-4d9b-a97b-a07b29251b30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee ID]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

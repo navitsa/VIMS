@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_noiselevel_subreport" columnCount="3" printOrder="Horizontal" pageWidth="555" pageHeight="802" columnWidth="185" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e9357150-69a3-4ffb-b02a-a04f0f9c153e">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="test_value_result_detail_Result" class="java.lang.Double"/>
+	<field name="test_type_type_id" class="java.lang.String"/>
+	<field name="t_test_point_name" class="java.lang.String"/>
+	<field name="unit" class="java.lang.String"/>
+	<field name="finalize_pass_fail_status" class="java.lang.String"/>
+	<field name="test_type_test_type" class="java.lang.String"/>
+	<group name="test_type_group">
+		<groupExpression><![CDATA[$F{test_type_type_id}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{test_type_type_id}.equals( "34000-34499" )]]></printWhenExpression>
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#EAEAEA" uuid="83758388-f8d1-453e-b679-8c43f6073a23"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textField>
+						<reportElement x="429" y="2" width="99" height="12" uuid="ee71a52c-cce9-45da-b883-0469eb181bd9"/>
+						<textElement textAlignment="Right" verticalAlignment="Middle">
+							<font size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{finalize_pass_fail_status}]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement x="10" y="0" width="112" height="14" uuid="7d114778-d31a-4707-83ca-71d1e01e2949"/>
+						<textElement>
+							<font size="9"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{test_type_test_type}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{test_type_type_id}.equals( "34000-34499" )]]></printWhenExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement x="39" y="0" width="38" height="12" isRemoveLineWhenBlank="true" uuid="411c15a5-ae0f-4fb0-b67f-67684eb150fd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{test_value_result_detail_Result}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="39" height="12" isRemoveLineWhenBlank="true" uuid="da35fce8-ff45-4949-948c-c0d0d325fe02"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_test_point_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="77" y="0" width="33" height="12" isRemoveLineWhenBlank="true" uuid="fbeef90e-b7d2-4134-950f-505698b90ad0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

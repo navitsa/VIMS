@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_emission_petrol_subreport" pageWidth="553" pageHeight="842" columnWidth="553" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="879ad841-5e31-4b22-bf6a-94849754bf15">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{empcdata.result}.equalsIgnoreCase("PASS")]]></conditionExpression>
+			<style isBlankWhenNull="true" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{empcdata.result}.equalsIgnoreCase("FAIL")]]></conditionExpression>
+			<style isBlankWhenNull="true" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+		</conditionalStyle>
+	</style>
+	<field name="empcgas.pres_co" class="java.lang.String"/>
+	<field name="empcgas.pres_hc" class="java.lang.String"/>
+	<field name="empcgas.co" class="java.lang.String"/>
+	<field name="empcgas.hc" class="java.lang.String"/>
+	<field name="empcgas.co2" class="java.lang.String"/>
+	<field name="empcgas.o2" class="java.lang.String"/>
+	<field name="empcgas.nox" class="java.lang.String"/>
+	<field name="empcgas.lembda" class="java.lang.String"/>
+	<field name="empcgas.rpm" class="java.lang.String"/>
+	<field name="empclambda.co" class="java.lang.String"/>
+	<field name="empclambda.hc" class="java.lang.String"/>
+	<field name="empclambda.co2" class="java.lang.String"/>
+	<field name="empclambda.o2" class="java.lang.String"/>
+	<field name="empclambda.nox" class="java.lang.String"/>
+	<field name="empclambda.lembda" class="java.lang.String"/>
+	<field name="empclambda.rpm" class="java.lang.String"/>
+	<field name="empcpetrol.pres_co" class="java.lang.String"/>
+	<field name="empcpetrol.pres_hc" class="java.lang.String"/>
+	<field name="empcpetrol.co" class="java.lang.String"/>
+	<field name="empcpetrol.hc" class="java.lang.String"/>
+	<field name="empcpetrol.co2" class="java.lang.String"/>
+	<field name="empcpetrol.o2" class="java.lang.String"/>
+	<field name="empcpetrol.nox" class="java.lang.String"/>
+	<field name="empcpetrol.lembda" class="java.lang.String"/>
+	<field name="empcpetrol.rpm" class="java.lang.String"/>
+	<field name="empcdata.result" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="139" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="61" width="49" height="12" uuid="fca70aa2-9be9-40bf-ae74-3602c861d68c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CO (val %)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="73" width="49" height="12" uuid="867936bb-c6e3-42c3-9893-bd5ec3ab81e6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[HC (ppm)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="85" width="49" height="11" uuid="b84fb9fe-5984-4b31-aab6-0b4c6e4b1727"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CO2 (val %)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="96" width="49" height="11" uuid="1d8f7707-4998-47ba-a004-4bfb9050907e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[O2 (ppm)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="107" width="49" height="10" uuid="fc2b7521-96e9-40ca-838d-d87270626a11"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[LAMBDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="117" width="49" height="11" uuid="53190ad1-3043-4ff5-8f6d-a1e0e2910d34"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[NOx (ppm)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="128" width="49" height="11" uuid="f69929f5-f4ac-48aa-bdce-2c2c8d5cfff9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[RPM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="39" width="41" height="22" uuid="d9e1df40-159f-4d50-9ba5-3de54aac1aca"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Measured Level]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="12" width="44" height="18" uuid="78e5c825-7e5a-46df-9969-54f3f74a885f"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Petrol Test Idle RPM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="39" width="44" height="22" uuid="2d8f1409-bd47-4120-ae15-a7ba764f4fc0"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Prescribed Standard]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="12" width="44" height="18" uuid="b23b37a8-b3c7-4fc1-a4a7-9932933723ae"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Gas Test Idle RPM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="39" width="44" height="22" uuid="f8c2eb0c-540b-4a86-b691-5e849aee6a94"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Prescribed Standard]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="189" y="40" width="41" height="21" uuid="e5d4ce28-9069-4f3a-bd17-395107c14b11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Measured Level]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="256" y="12" width="60" height="28" uuid="87490907-9f55-4ec3-81f7-b7ac30750409"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Lambda Test (Heigh Idle RPM 2500+/-200)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="241" y="40" width="44" height="21" uuid="7725e483-014e-4617-8192-d585d7f01922"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Prescribed Standard]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="40" width="41" height="21" uuid="de6ce6ae-e00e-4d51-ba72-ca22f5a61ae0"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Measured Level]]></text>
+			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="553" height="12" backcolor="#EAEAEA" uuid="9de41490-1d9d-41db-8da0-9b965899630f"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<staticText>
+					<reportElement x="10" y="0" width="145" height="12" uuid="a4acb075-f5eb-4bc5-93e2-2430b7da4cd4"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Emission/Smoke Test Results]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="style1" x="421" y="0" width="113" height="12" uuid="ea847073-9a1c-4d77-87fc-aea2bc105281"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{empcdata.result}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField>
+				<reportElement x="145" y="61" width="44" height="12" uuid="75bec90b-efeb-4a80-82c2-287fd165e1e8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcgas.pres_co}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="145" y="73" width="44" height="12" uuid="bc5347a1-49d0-4663-9492-1ee275462c6a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcgas.pres_hc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="61" width="41" height="12" uuid="9df36c7e-6199-4bdc-b9ed-28f003cde77d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcgas.co}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="73" width="41" height="12" uuid="1c5866c8-bbab-476a-b80a-11ad46a8a68c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcgas.hc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="85" width="41" height="11" uuid="4ca398ed-c467-4818-b5bf-d0595ac7e8d7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcgas.co2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="96" width="41" height="11" uuid="c074e105-9bb5-48bd-ac8c-a869deda3e6b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcgas.o2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="107" width="41" height="10" uuid="a02ce60a-a3e1-47fb-a348-0da8e9eb153c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcgas.lembda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="117" width="41" height="11" uuid="992afb7d-f49c-42cf-b664-81727b9bb5ef"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcgas.nox}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="128" width="41" height="11" uuid="18d82c98-0f62-41a3-ab4f-2aa49f8b5c41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcgas.rpm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="61" width="41" height="12" uuid="9553cef1-a2e4-4aaa-a2ba-efe18aea73bc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empclambda.co}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="73" width="41" height="12" uuid="be31c502-c08e-4712-ac9d-bc3f1a5ca05b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empclambda.hc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="85" width="41" height="11" uuid="aac1d105-b4e0-4eca-a178-af702a785fad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empclambda.co2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="96" width="41" height="11" uuid="a205f7a8-0596-4845-a360-a026fc5f772f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empclambda.o2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="107" width="41" height="10" uuid="d67637fe-faf6-4a77-ac51-d4a1cb9cc0d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empclambda.lembda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="117" width="41" height="11" uuid="f8dcb99b-e6ed-498e-b925-001398a27509"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empclambda.nox}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="128" width="41" height="11" uuid="eeb57a05-2b26-4a2f-9c73-fc73fc33f697"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empclambda.rpm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="61" width="44" height="12" uuid="9261c6c9-af62-4fd6-9145-d306e139cbd7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcpetrol.pres_co}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="73" width="44" height="12" uuid="305efe8f-221e-489b-8363-fb510c5e7798"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcpetrol.pres_hc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="61" width="41" height="12" uuid="1dcb2a4f-b199-4836-bd51-0c0b62a51dd2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcpetrol.co}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="73" width="41" height="12" uuid="f85a221a-75b1-403a-9cee-2a8f2779bddb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcpetrol.hc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="85" width="41" height="11" uuid="6ef229f7-0099-44e7-b5a4-1fa6a39468d1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcpetrol.co2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="96" width="41" height="11" uuid="ff58a837-1c0c-4a9f-96af-dc1796570fe6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcpetrol.o2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="107" width="41" height="10" uuid="78cda1c5-fd67-4253-82d6-900bb312f5fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcpetrol.lembda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="117" width="41" height="11" uuid="b47445a8-e9d2-4c05-8b48-cf30929948a4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcpetrol.nox}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="128" width="41" height="11" uuid="93bbf3fb-ef73-4c4a-b1f8-b8f7195d94f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empcpetrol.rpm}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

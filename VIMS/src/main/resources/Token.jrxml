@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="token" pageWidth="226" pageHeight="648" columnWidth="226" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
+	<property name="ireport.zoom" value="1.100000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="84"/>
+	<style name="bordre" fill="Solid">
+		<pen lineWidth="0.0"/>
+		<box>
+			<topPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{style}==true]]></conditionExpression>
+			<style mode="Opaque" backcolor="#CCCCCC" fill="Solid" isBlankWhenNull="true" fontSize="10" isBold="true">
+				<pen lineWidth="1.0"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{style}==false]]></conditionExpression>
+			<style mode="Opaque" fill="Solid" fontName="SansSerif" isBold="false">
+				<pen lineWidth="1.0" lineStyle="Solid"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+			</style>
+		</conditionalStyle>
+	</style>
+	<parameter name="img" class="java.lang.Object"/>
+	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="tokenno" class="java.lang.String"/>
+	<parameter name="RegNo" class="java.lang.String"/>
+	<parameter name="RegType" class="java.lang.String"/>
+	<parameter name="Fee" class="java.lang.String"/>
+	<parameter name="NumberPlate" class="java.lang.String"/>
+	<parameter name="VehiMake" class="java.lang.String"/>
+	<parameter name="VehiModel" class="java.lang.String"/>
+	<parameter name="ManuYear" class="java.lang.String"/>
+	<parameter name="RegYear" class="java.lang.String"/>
+	<parameter name="EngineNo" class="java.lang.String"/>
+	<parameter name="ChassisNo" class="java.lang.String"/>
+	<parameter name="LaneNo" class="java.lang.String"/>
+	<parameter name="tokenDate" class="java.lang.String"/>
+	<parameter name="appoNo" class="java.lang.String"/>
+	<pageHeader>
+		<band height="536">
+			<textField>
+				<reportElement x="14" y="102" width="200" height="36" uuid="8a3824f9-aa4a-4035-a2dc-7deb7a5ba044"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tokenno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="159" width="200" height="42" uuid="6da199a3-c2f2-439b-a561-d60b2e932040"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LaneNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="224" width="200" height="20" uuid="5e888f24-16b6-41ab-b223-22ddabba7e28"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tokenDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="14" y="302" width="200" height="20" uuid="38b071ef-f3fc-40e6-bd92-0b3fb46a2287"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Fee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="345" width="200" height="20" uuid="8945c516-a2bf-4006-959c-db46aeceac4c"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NumberPlate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="387" width="200" height="20" uuid="5bc6707e-5fdf-4ed8-a42d-07afffeb0557"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{VehiMake}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="430" width="200" height="20" uuid="c633696c-4ee0-4523-8d5b-43d41d6a9aa8"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{VehiModel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="472" width="200" height="20" uuid="b97e4c0a-9a84-4d16-8d68-aa0fbb9032ea"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ManuYear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="514" width="200" height="20" uuid="2aced3e9-6810-4b7d-b4d0-704a612fcde1"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ChassisNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="82" width="200" height="20" uuid="a2d70866-37de-4797-9f1c-1545e1fa7618"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Token Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="140" width="200" height="20" uuid="0b042378-5c91-4adf-8bf9-31076488dc82"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Lane Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="204" width="200" height="20" uuid="b9961a8c-0f7a-49cf-b0b8-67f651e2249d"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Token Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="282" width="200" height="20" uuid="15a4e305-5517-4cea-9524-d913046e134a"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Service Fees]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="325" width="200" height="20" uuid="970d316e-064d-4a97-8255-5f78472541d9"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Number Plate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="367" width="200" height="20" uuid="005aab84-a5fb-4c16-b078-85cc6358efc1"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Vehicle Make]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="410" width="200" height="20" uuid="82e23f8d-fdb8-46fc-bfcc-f1070c5361fe"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Vehicle Model]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="452" width="200" height="20" uuid="e59b58c5-4505-4eba-91c3-c533667ae9dd"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Manufactured Year]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="494" width="200" height="20" uuid="325ca4e4-2123-4b75-8811-8bb1626ec8e9"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Chassis Number]]></text>
+			</staticText>
+			<image hAlign="Center">
+				<reportElement x="14" y="14" width="200" height="67" uuid="6e64a86b-5257-4fc8-9e11-f9877c2ee0b3"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(new com.google.zxing.qrcode.QRCodeWriter().encode($P{tokenno}+"-"+$P{NumberPlate},com.google.zxing.BarcodeFormat.QR_CODE,300,300) )]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="14" y="244" width="200" height="20" uuid="72233a5c-5e90-4828-b6c3-aef8b6b4763c"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Appointment ID]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="14" y="264" width="200" height="20" uuid="8b202d03-b238-4324-9029-01a77b311f5e"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{appoNo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band/>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="112">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="14" y="0" width="200" height="85" uuid="ec35accc-1eb5-40d4-b8e7-25bcd1921512"/>
+				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{img})).getImage()]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

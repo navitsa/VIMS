@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_speedometer_subreport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="6230b4c9-97d8-4045-89e3-3b84779a4f8c">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="passStatus" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="speedoLimitDesc" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E:\\eclipse-workspace\\V-Inspection\\EmissionTesting\\resources\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="value1" class="java.lang.String"/>
+	<field name="value2" class="java.lang.Double"/>
+	<field name="value3" class="java.lang.Double"/>
+	<field name="value4" class="java.lang.String"/>
+	<field name="value5" class="java.lang.Double"/>
+	<field name="value6" class="java.lang.Double"/>
+	<field name="limitDes" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="27">
+			<staticText>
+				<reportElement x="10" y="16" width="62" height="11" uuid="cb755e1d-816f-4a9f-8d23-713f3ea5b1ec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Actual Speed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="16" width="58" height="11" uuid="09fd5e8f-dc17-45ef-a72d-338aad448141"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Target Speed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="16" width="57" height="11" uuid="72315b68-99c8-4778-a242-01342e58fd98"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Actual Speed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="232" y="16" width="55" height="11" uuid="185cc5be-1ccb-46b7-aee8-ae09c574dafc"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Target Speed]]></text>
+			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#EAEAEA" uuid="8a18e823-1433-42ab-aa13-d48d20daaaee"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<staticText>
+					<reportElement x="10" y="0" width="100" height="14" uuid="b49aabad-5d78-4a13-9d8f-6ef07da34779"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Speedometer Test]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="476" y="0" width="79" height="14" uuid="9719174a-a665-470d-93d5-b09301fb489b"/>
+					<textElement textAlignment="Center">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{passStatus}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="149" y="4" width="17" height="12" isRemoveLineWhenBlank="true" uuid="157cbdfd-54e6-4134-a50d-46740097c88d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value4}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="166" y="4" width="29" height="12" isRemoveLineWhenBlank="true" uuid="4c4d70d9-51c2-4589-a60c-e4a232a2f7af"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="195" y="4" width="28" height="12" uuid="90d17c60-f3a2-4086-8112-57bbda54cec0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[km/h]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="4" width="10" height="12" isRemoveLineWhenBlank="true" uuid="84669875-c73a-49bd-b057-f4856eb69e63"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="10" y="4" width="33" height="12" isRemoveLineWhenBlank="true" uuid="b5aca7f2-0d28-4152-bc57-1c0346cd6cbf"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="81" y="4" width="30" height="12" isRemoveLineWhenBlank="true" uuid="0285a506-b636-4bb5-a8a8-efb47adc9ddf"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="43" y="4" width="29" height="12" uuid="0e20ebf9-90b9-4e20-b9a7-9f06cc002886"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[km/h]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="111" y="4" width="28" height="12" uuid="d022f7e1-428c-4952-a212-140bce2ac56d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[km/h]]></text>
+			</staticText>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="232" y="4" width="29" height="12" isRemoveLineWhenBlank="true" uuid="2e614a1a-f19a-4959-bfd6-f41d0aff2beb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value6}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="261" y="4" width="26" height="12" uuid="ff83cb94-0328-487e-af7a-78f767662b6a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[km/h]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="363" y="0" width="103" height="16" isRemoveLineWhenBlank="true" uuid="d5f4f18d-1c4d-45d7-a8b8-9b58cba8a6d5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{limitDes}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="12"/>
+	</columnFooter>
+</jasperReport>

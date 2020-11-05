@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="chequePre" pageWidth="595" pageHeight="432" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
+	<property name="ireport.zoom" value="1.210000000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="date" class="java.lang.String"/>
+	<parameter name="chequeno" class="java.lang.String"/>
+	<parameter name="amount" class="java.lang.String"/>
+	<parameter name="amountinword" class="java.lang.String"/>
+	<parameter name="duedata" class="java.lang.String"/>
+	<group name="date">
+		<groupExpression><![CDATA[]]></groupExpression>
+	</group>
+	<pageHeader>
+		<band height="333">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="595" height="328" uuid="cd4ac6db-37f9-4c12-87d8-37cf2203ff01"/>
+				<textElement>
+					<font fontName="Arial" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="595" height="328" uuid="a30da93e-d590-4646-a4fc-a485dd7efe42"/>
+				<textElement>
+					<font fontName="Arial" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{amountinword}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="595" height="328" uuid="fd54261d-bc08-4be5-9fb0-4ce383f4372d"/>
+				<textElement>
+					<font fontName="Arial" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{chequeno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="595" height="328" uuid="255e7739-17ed-4a61-9184-d97d2e709999"/>
+				<textElement>
+					<font fontName="Arial" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{duedata}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="595" height="328" uuid="af014256-926f-4a90-863b-23d4bacec9b0"/>
+				<textElement>
+					<font fontName="Arial" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="7"/>
+	</columnHeader>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EquipmentSummaryReport" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
+	<property name="ireport.zoom" value="1.210000000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="eqtype" class="java.lang.String"/>
+	<field name="eqmake" class="java.lang.String"/>
+	<field name="eqmodel" class="java.lang.String"/>
+	<field name="eqid" class="java.lang.String"/>
+	<field name="serialno" class="java.lang.String"/>
+	<field name="eqmakelogo" class="java.lang.Object"/>
+	<field name="eqmodellogo" class="java.lang.Object"/>
+	<group name="eqType">
+		<groupExpression><![CDATA[$F{eqtype}]]></groupExpression>
+		<groupHeader>
+			<band height="22">
+				<textField>
+					<reportElement x="42" y="0" width="519" height="20" forecolor="#000000" uuid="26527f2b-f677-4457-9466-95edb02d3139"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{eqtype}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="eqMake">
+		<groupExpression><![CDATA[$F{eqmake}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement x="140" y="0" width="421" height="38" forecolor="#000000" uuid="735c500d-628f-4d65-9aff-50199960796c"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{eqmake}]]></textFieldExpression>
+				</textField>
+				<image hAlign="Right" vAlign="Middle">
+					<reportElement x="72" y="0" width="68" height="38" uuid="93a07da8-71fc-4a31-88da-64117030cb7b"/>
+					<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$F{eqmakelogo})).getImage()]]></imageExpression>
+				</image>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="EqModel">
+		<groupExpression><![CDATA[$F{eqmodel}]]></groupExpression>
+		<groupHeader>
+			<band height="39">
+				<textField>
+					<reportElement x="247" y="1" width="314" height="38" forecolor="#000000" uuid="74908ddc-2cb8-4240-b181-95e356223121"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{eqmodel}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="42" y="1" width="132" height="38" forecolor="#000000" uuid="51e0a931-e88b-40a5-8471-7a3aecc0c458"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font fontName="SansSerif"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<image hAlign="Right" vAlign="Middle">
+					<reportElement x="174" y="1" width="72" height="38" uuid="a02a418a-5c06-4fe5-81da-527e9a8a9d97"/>
+					<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$F{eqmodellogo})).getImage()]]></imageExpression>
+				</image>
+			</band>
+		</groupHeader>
+	</group>
+	<pageHeader>
+		<band height="96">
+			<staticText>
+				<reportElement x="3" y="51" width="592" height="25" forecolor="#0066FF" uuid="702063fe-0ca1-4d2d-98fd-53343ba21a68"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Equipment Summary Report]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23">
+			<staticText>
+				<reportElement mode="Opaque" x="42" y="1" width="98" height="20" backcolor="#99B4D1" uuid="59c95dc5-aa49-4e78-954a-d10a042c0f1a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[   Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="140" y="1" width="107" height="20" backcolor="#99B4D1" uuid="fe9fbe6e-9036-4595-a6af-162b80ae0bfe"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Make]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="247" y="1" width="138" height="20" backcolor="#99B4D1" uuid="c93097ec-1b6b-4c8f-a6e9-fafb4d952a87"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Model]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="350" y="1" width="104" height="20" backcolor="#99B4D1" uuid="f9af8cd6-dc2a-4dac-a9f5-91ad3c4ff78f"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="454" y="1" width="107" height="20" backcolor="#99B4D1" uuid="f3b34911-be53-4767-bda7-6c5d0eb02cb8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Serial No]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21">
+			<textField>
+				<reportElement x="350" y="1" width="104" height="20" forecolor="#000000" uuid="5672f659-8dd5-407d-a00e-2c37e5b9f457"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eqid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="1" width="107" height="20" forecolor="#000000" uuid="d3d9b82f-63fc-497e-bc46-69dbc4590df5"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{serialno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="42" y="1" width="79" height="20" forecolor="#000000" uuid="8e7ea62c-426c-48f0-92e9-42a2dfaecdba"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="0" width="125" height="20" forecolor="#000000" uuid="5c3da4a3-3d90-45c3-b05b-1a0154dfc9ad"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="1" width="103" height="20" forecolor="#000000" uuid="17dcadb6-1d69-41bd-990c-2bfd308c9c1b"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
