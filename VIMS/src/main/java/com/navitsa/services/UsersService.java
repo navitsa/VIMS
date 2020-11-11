@@ -2,6 +2,7 @@ package com.navitsa.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.navitsa.entity.BusinessPartner;
@@ -124,6 +125,9 @@ public class UsersService {
 	public List<Roleassign> findUserIdRoles(String userid){
 		return roleassignRepository.findUserIdRoles(userid);
 		
+	}
+	 public List<Levelmanage> getUserLevelmanageRole(String userid){
+		return levelManageRepo.getUserLevelmanageRole(userid);
 	}
 	//save taxConfiguration
 	public void  saveTax(TaxConfiguration taxc) {

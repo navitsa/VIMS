@@ -228,7 +228,8 @@
 			<div class="content">
 				<div class="page-inner">	
 					<div class="page-header">
-							<h4 class="page-title">Capture License Plate</h4>
+					<i class="fa fa-camera" style='font-size:36px;color:#3245f0'></i>
+							<h4 class="page-title">Gate Entry</h4>
 							<ul class="breadcrumbs">
 								<li class="nav-home">
 									<a href="#">
@@ -243,16 +244,16 @@
 								</li>
 							
 							</ul>
-						</div>				
-											<div class="row">
-										
-					
-							<!-- Pie Chart -->
-						<div class="col-xl-7">
+						</div>
+					<div class="row">	
+					<div class="col-xl-4">					
+					<div class="row">
+
+						<div class="col-xl-12">
 							<div class="card shadow mb-4">
 								<!-- Card Header - Dropdown -->
 								<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">
-									<i class="fa fa-camera" style='font-size:36px;color:blue'></i><h6 class="m-0 font-weight-bold text-primary">Capture License Plate</h6>
+									<h6 class="m-0 font-weight-bold text-primary">.</h6>
 								</div>
 								<!-- Card Body -->
 								<div class="card-body">
@@ -358,15 +359,23 @@
 								</div>
 							</div>
 						</div>
-					
-						<div class="col-xl-5" hidden="true" id="vdetails">
+					</div>				
+					<div class="row">
+						<div class="col-xl-12" hidden="true" id="vdetails">
 							<div class="card shadow mb-4">
 								<!-- Card Header - Dropdown -->
-								<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">
-									<i class="fa fa-car" style='font-size:36px;color:blue'></i><h6 class="m-0 font-weight-bold text-primary">Vehicle</h6>
-								</div>
+<!-- 								<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between"> -->
+<!-- <!-- 									<i class="fa fa-car" style='font-size:36px;color:#3245f0'></i> --> 
+<!-- 									<h6 class="m-0 font-weight-bold text-primary">.</h6> -->
+<!-- 								</div> -->
+									<div class="card-header py-0 d-flex justify-content-between">
+<!-- 									<img src="resources/img/icon/vowner.png" class="iconstyle"/> -->
+									<h6 class="font-weight-bold text-primary">Vehicle</h6>
+									</div>
 								<!-- Card Body -->
 								<div class="card-body">
+
+								
 									 <div class="row">
 										<div class="col-sm-4">
 											<label class="fontst">Class</label>
@@ -429,7 +438,8 @@
 													
 							</div>
 								<div class="card-header py-0 d-flex justify-content-between">
-									<img src="resources/img/icon/vowner.png" class="iconstyle"/></i><h6 class="font-weight-bold text-primary">Current Owner</h6>
+<!-- 									<img src="resources/img/icon/vowner.png" class="iconstyle"/> -->
+									<h6 class="font-weight-bold text-primary">Current Owner</h6>
 								</div>
 							<div class="card-body">	
 									<div class="row">
@@ -460,7 +470,54 @@
 	
 						
 					</div>
+					 </div>
+				<!-- 		===========================================================		  --> 
+				 <div class="col-xl-4">
 				 
+				 			<div class="card shadow mb-4">
+				<!-- Card Header - Dropdown -->
+				<div class="card-header py-2 d-flex flex-row align-items-center">
+<!-- 					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/> -->
+					<h6 class="m-0 font-weight-bold text-primary">Pending Lane Registrations</h6>
+				</div>
+				<!-- Card Body -->
+				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 600px;">	
+					<div class="row" >
+								<div class="col-sm-12" id="ocrVehicle">
+	
+																	
+								</div>
+					</div>	
+					
+	
+				</div>
+			</div>
+				 
+				 </div>
+				<!-- 		===========================================================		  --> 
+				 <div class="col-xl-3">
+				 
+				 <div class="card shadow mb-4">
+				<!-- Card Header - Dropdown -->
+				<div class="card-header py-2 d-flex flex-row align-items-center">
+<!-- 					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/> -->
+					<h6 class="m-0 font-weight-bold text-primary">Pending Appointment</h6>
+				</div>
+				<!-- Card Body -->
+				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 600px">	
+					<div class="row" >
+								<div class="col-sm-12" id="asss">
+																
+								</div>
+					</div>	
+					
+	
+				</div>
+			</div>
+				 
+				 </div>	
+				 </div>
+				 	 
 				    </div>
 				   
 				  </div> 
@@ -598,7 +655,93 @@
 		        }
 			 });
 		
+			//pending Registation
+			$.ajax({
 
+			    type: 'POST',
+			    url: "getOcrVehicle",
+		        success: function(data){
+		            var slctSubcat=$('#ocrVehicle'), option="";
+		            slctSubcat.empty();
+		        	for(var i=0; i<data.length; i++){
+		        		
+	        			var statu="";
+		        		
+		        		if(data[i].vmStatus=="pending"){
+		        			statu="<div class='row'>"+
+						"<div class='col-sm-12'>"+
+							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Details    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+					"</div></div>";
+								}else if(data[i].docStatus=="pending"){
+									statu="<div class='row'>"+
+									"<div class='col-sm-12'>"+
+										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Details    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+									"</div></div>"+
+									"<div class='row'>"+
+										"<div class='col-sm-12'>"+
+											"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Document Verification    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+										"</div>"+
+									"</div>";	
+								}else if(data[i].vrStatus=="pending"){
+									
+									statu="<div class='row'>"+
+									"<div class='col-sm-12'>"+
+										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Details    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+									"</div</div>"+
+									"<div class='row'>"+
+									"<div class='col-sm-12'>"+
+										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Document Verification    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+									"</div></div>"+
+									"<div class='row'>"+
+									"<div class='col-sm-12'>"+
+										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Regostration    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+									"</div></div>";		
+									
+								}
+		        		
+		        		
+		        		var link="4";
+		        		
+		        		if(data[i].vehicletype=="New"){
+		        			link="newVehicleMaster?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid;
+		        		}else if(data[i].vehicletype=="Old"){
+		        			link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid+"&appNo=0";
+		        		}
+		        		
+		        		
+		        		
+	        			 selected_option = "<a href='"+link+"'><div class='row' >"+
+	 					
+	 					"<div class='col-sm-12'>"+
+	 						"<div class='row'>"+
+	 							"<div class='col-sm-12'>"+
+	 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].ocrVid+"</div>"+
+	 							"</div>"+
+	 						"</div>"+
+
+ 						"<div class='row'>"+
+							"<div class='col-sm-12'>"+
+								"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+data[i].ocrid+"</div>"+
+						"</div></div>"+
+						statu+"<hr/></div></a><hr/>";
+	        			 
+	        		
+
+	            	 slctSubcat.append(selected_option);	
+	        	}
+
+   	
+		        },
+		        error:function(){
+		        //	alert("Error");
+		        }
+			 });
+			
+			function clickNext(){
+				alert("");
+				
+			}
+			
 	//	});
 
 	}	

@@ -402,9 +402,10 @@ public class UsersController {
 	}
 	// findUserIdRoles
 	 @RequestMapping(value="/getUserIdRoles", method=RequestMethod.GET)
-		public @ResponseBody List<Roleassign> getUserIdRoles(@RequestParam String userid) {
-			List<Roleassign> rassign = usservice.findUserIdRoles(userid);	
-			return rassign;
+		public @ResponseBody List<Levelmanage> getUserIdRoles(@RequestParam String userid) {
+		 List<Levelmanage> levelMana=usservice.getUserLevelmanageRole(userid);
+		// List<Roleassign> rassign = usservice.findUserIdRoles(userid);	
+			return levelMana;
 		}
 	 
 	// load tax configuration form

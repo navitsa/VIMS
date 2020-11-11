@@ -24,7 +24,7 @@
 	<script src="resources/assets/js/plugin/datatables/datatables.min.js"></script>
 
 	<!-- Bootstrap Notify -->
-	<script src="resources/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<!-- 	<script src="resources/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script> -->
 
 	<!-- jQuery Vector Maps -->
 	<script src="resources/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
@@ -81,9 +81,9 @@
 			        
 						
 			            for(var i=0; i<data.length+1; i++){
-			            	if(data[i].roleassignPK.roleID.roleID!="000"){
-			            document.getElementById(data[i].roleassignPK.roleID.desc.split("-")[0]).hidden = false;
-			            document.getElementById(data[i].roleassignPK.roleID.desc.split("-")[1]).hidden = false;
+			            	if(data[i].levelManagePK.roleID.roleID!="000"){
+			            document.getElementById(data[i].levelManagePK.roleID.desc.split("-")[0]).hidden = false;
+			            document.getElementById(data[i].levelManagePK.roleID.desc.split("-")[1]).hidden = false;
 			            	}
 			            }
 

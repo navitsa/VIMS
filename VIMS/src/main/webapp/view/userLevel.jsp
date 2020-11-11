@@ -38,7 +38,7 @@
 			<div class="content">
 				<div class="page-inner">	
 					<div class="page-header">
-							<h4 class="page-title">Vehicle Lane Entry Status</h4>
+							<h4 class="page-title">User Categories</h4>
 							<ul class="breadcrumbs">
 								<li class="nav-home">
 									<a href="#">
@@ -47,6 +47,7 @@
 								</li>
 								<li class="separator">
 									<i class="flaticon-right-arrow"></i>
+									Create a User Level
 								</li>
 								
 								
@@ -56,11 +57,7 @@
 						
 				<div class="container-fluid">
 
-					<!-- Page Heading -->
-					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Create a User Level</h1>
-					</div>
+				
 
 					<form:form action="saveUserLevel" method="post" modelAttribute="userLevel" id="form1">
 						<div class="row">

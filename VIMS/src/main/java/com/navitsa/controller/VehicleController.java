@@ -2502,6 +2502,13 @@ public class VehicleController {
 			   return numberDataBeenlist;
 			}			
 			
+			@RequestMapping(value = "getOcrVehicle", method = RequestMethod.POST)
+			public @ResponseBody List<OcrDetails> takeOcrNo(HttpSession session) 
+			{	List<OcrDetails> ocrStatusDetails=null;			
+				ocrStatusDetails=vehicleService.pendingOcrDetails();	
+				return ocrStatusDetails;
+			}
+			
 			
 			@RequestMapping(value = "takeOcrNo", method = RequestMethod.POST)
 			public @ResponseBody List<OcrDetails> takeOcrNo(@RequestParam ("method") String method, HttpSession session) 
@@ -2837,7 +2844,17 @@ public class VehicleController {
 				List<VehicleModel> vmodel = vehicleService.getModelByID(make,clas);
 				return vmodel;
 			}
+			@RequestMapping(value="/getCheckModelValue", method=RequestMethod.GET)
+			public  @ResponseBody  String getCheckModel(@RequestParam String make,@RequestParam String clas,@RequestParam String modelname) {
 			
+				List<VehicleModel> vmodel = vehicleService.getModelCheck(make,clas,modelname);
+				if(vmodel.size()>0) {
+					return "0";
+				}else {
+					return "1";
+				}
+				
+			}
 			@RequestMapping(value="/getTestStatusVehicleRegistation", method=RequestMethod.GET)
 			public  @ResponseBody  List<VehicleRegistration> getTestStatusVehicleRegistation(@RequestParam String vehicleID) {
 				System.out.println("ghgggggggggggggg");

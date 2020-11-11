@@ -24,5 +24,8 @@ public interface OcrDetailsRepository extends CrudRepository<OcrDetails, Integer
 	@Query(value = "SELECT oc FROM OcrDetails oc where oc.vmStatus=:vmStatus and oc.vrStatus=:vrStatus and oc.docStatus=:docStatus")
 	public List<OcrDetails> pendingOcrStatusDetails(@Param("vmStatus")String vmStatus,@Param("vrStatus")String vrStatus,@Param("docStatus")String docStatus);
 	
-
+	@Query(value = "SELECT oc FROM OcrDetails oc where oc.vrStatus='pending' ")
+	public List<OcrDetails> pendingOcrDetails();
+	
+	
 }

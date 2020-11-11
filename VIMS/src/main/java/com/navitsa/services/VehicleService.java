@@ -261,10 +261,10 @@ public class VehicleService {
 	};
 
 	public VehicleMaster getVMasterById(String id) {
-		if(masterRepo.findById(id).equals(null)) {
-			return null;
-		}else {
+		try {
 			return masterRepo.findById(id).get();
+		}catch(Exception e) {
+			return null;
 		}
 	}
 
@@ -378,7 +378,10 @@ public class VehicleService {
 	public List<VehicleModel> getModelByID(String makeID,String vehicleClassID) {
 		return modelRepo.getModelByID(makeID,vehicleClassID);
 	}
-	
+	public List<VehicleModel> getModelCheck(String makeID,String vehicleClassID,String modelname) {
+		return modelRepo.getModelCheck(makeID,vehicleClassID,modelname);
+	}
+
 	public VehicleOwner getVehicleOwnerIDByVehicleID(String vehicleID) {
 		return ownerRepo.getVehicleOwnerIDByVehicleID(vehicleID);
 	}
@@ -566,10 +569,12 @@ public class VehicleService {
 
 	}
 	public List<OcrDetails> pendingOcrStatusDetails(String vmStatus,String vrStatus,String docStatus){
-		return ocrDetailsRepo.pendingOcrStatusDetails(vmStatus,vrStatus,docStatus);
-		
+		return ocrDetailsRepo.pendingOcrStatusDetails(vmStatus,vrStatus,docStatus);		
 	}
-
+	public List<OcrDetails> pendingOcrDetails(){
+		return ocrDetailsRepo.pendingOcrDetails();		
+	}
+	
 	public void updateVehicleMaster(String engineNo, String chassisNo, String mYear, String rYear,
 			String engineC, String noOfWheel, String emisNorms, String modelID,String fuelID, String vehicleNo) {
 		masterRepo.updateVehicleMaster(engineNo, chassisNo, mYear, rYear, engineC, noOfWheel, emisNorms, modelID, fuelID, vehicleNo);

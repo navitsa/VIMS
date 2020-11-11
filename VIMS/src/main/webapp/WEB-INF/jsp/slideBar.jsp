@@ -226,7 +226,7 @@
 		
 			<div class="bg-white py-2 collapse-inner rounded">
 				<a class="collapse-item fontst-sb-it" href="appointment" id="appointment">Make Appointment</a>
-				<a class="collapse-item fontst-sb-it" href="vehicleInformation" hidden="true" id="vehicleInformation">Capture License Plate</a>
+				<a class="collapse-item fontst-sb-it" href="vehicleInformation" hidden="true" id="vehicleInformation">Gate Entry</a>
 				<a class="collapse-item fontst-sb-it" href="vehicleMaster" hidden="true" id="vehicleMaster">Vehicle Master</a>
 				<a class="collapse-item fontst-sb-it" href="checkDocument" hidden="true" id="checkDocument">Check Document</a>
 				<a class="collapse-item fontst-sb-it" href="vehicleRegistration" hidden="true" id="vehicleRegistration">Vehicle Registration</a>
