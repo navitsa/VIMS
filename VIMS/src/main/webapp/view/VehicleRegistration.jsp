@@ -15,13 +15,21 @@
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
 	
 	<style>
+	.vidSty{
+	font-family: Arial, Helvetica, sans-serif;	
+	font-size:30px;
+	font-weight: bold;
+	color: #02d41b;	
+	}
+	
+	
 	    .textred{
        font-family: Arial, Helvetica, sans-serif;
         border: 1px solid #b30000;
 		font-size:20px;
        	text-align:center;
-       	color: #b30000;	
-       	 pointer-events: none;
+       	color: #ffffff;	
+     
        }  
 	      .fontst{
          font-family: Arial, Helvetica, sans-serif;
@@ -87,30 +95,62 @@
 		<!-- End Sidebar -->
 		<div class="main-panel">
 			<div class="content">
-				<div class="page-inner">	
-					<div class="page-header">
-							<h4 class="page-title"> Vehicle Details</h4>
-							<ul class="breadcrumbs">
-								<li class="nav-home">
-									<a href="#">
-										<i class="flaticon-home"></i>
-									</a>
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								<li class="nav-item">
-									<a href="#">Capture License Plate</a>
-								</li>
-							
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								<li class="nav-item">
-									<a href="#">Document Check</a>
-								</li>
-							</ul>
+				<div class="panel-header bg-primary-gradient">
+					<div class="page-inner py-3">
+						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+							<div>
+								<h2 class="text-white pb-2 fw-bold">Vehicle Registrations</h2>
+								<h5 class="text-white op-7 mb-2"></h5>
+							</div>
+							<div class="ml-md-auto py-2 py-md-4">
+							<p class="vidSty" ><%=session.getAttribute("vRvid")%></p>
+							</div>
+							<div class="ml-md-auto py-2 py-md-4">
+								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
+								<a href="vehicleMasterAuto?vehicleID=<%=session.getAttribute("vRvid")%>&id=<%=session.getAttribute("vRocr")%>&appNo=0" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a>
+								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a>
+<!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
+							</div>
 						</div>
+					</div>
+				</div>
+				
+				<div class="page-inner mt--5">	
+				
+		
+				
+				
+<!-- 					<div class="page-header"> -->
+<!-- 						<div class="col-xl-8 col-lg-6"> -->
+					
+<!-- 							<h4 class="page-title"> Vehicle Registrations</h4> -->
+<!-- 							<ul class="breadcrumbs"> -->
+<!-- 								<li class="nav-home"> -->
+<!-- 									<a href="#"> -->
+<!-- 										<i class="flaticon-home"></i> -->
+<!-- 									</a> -->
+<!-- 								</li> -->
+<!-- 								<li class="separator"> -->
+<!-- 									<i class="flaticon-right-arrow"></i> -->
+<!-- 								</li> -->
+<!-- 								<li class="nav-item"> -->
+<!-- 									<a href="vehicleInformation">Gate Entry</a> -->
+<!-- 								</li> -->
+							
+<!-- 								<li class="separator"> -->
+<!-- 									<i class="flaticon-right-arrow"></i> -->
+<!-- 								</li> -->
+<!-- 								<li class="nav-item"> -->
+<!-- 									<a href="vehicleInformation">Vehicle Details</a> -->
+<!-- 								</li> -->
+<!-- 							</ul> -->
+<!-- 						</div>	 -->
+<!-- 						<div class="col-xl-4 col-lg-6">	 -->
+<!-- 							 <a type="button" class="bt-sty btn btn-outline-primary waves-effect" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
+									
+							
+<!-- 						</div>	 -->
+<!-- 						</div> -->
 				
 						
 				<form:form  modelAttribute="VehicleRegistration" method="POST" id="formVehicleRegistration">
@@ -133,52 +173,17 @@
 
 
 			             <div class="row">
+
 			             	<div class="col-sm-3">
-								<table id="ocrdetails" class="table1 myTable table table-sm table-wrapper-scroll-y my-custom-scrollbar" style="height: 112px;">                	
-									<tbody id="ocrdetailstbody">									
-									
-									</tbody>
-								</table>
-			             
-			             	</div>
-			             	<div class="col-sm-4">
 			             	<%-- 			             		<c:if test = "${imgVe == null}"> --%>
 			             			<img src="data:image/jpg;base64,${imgVimg}" class="capCam"  id="results"/>
 <%-- 			             		</c:if>	 --%>
 			             	
 			             	
 			             	</div>
-			             	<div class="col-sm-5">
-			             		<div class="form-group row">
-			             			<div class="col-sm-12">
-				                		<form:input class="form-control textred" path="vid.vehicleID" id="vid" placeholder="Licence Plate NO..." readonly="true"  />
-<%-- 				                		<form:errors path="vehicleID" cssClass="error1"/> --%>
-				                	</div>		
-				               </div>
-				           
-				                <div class="row">
+			             	<div class="col-sm-4">
+										             		<div class="row">
 									<div class="col-sm-6">
-						             	<label class="l-fontst">Mileage</label>
-						             	<form:input class="form-control fontst " path="centermaster" value='<%=session.getAttribute("centerid")%>' type="hidden" id="icenterId"/>
-						             	<input class="form-control fontst " value='${vclassid}' type="hidden" id="vclassids"/>
-						             	
-						             </div>
-								 	<div class="col-sm-5">
-										<form:input class="form-control fontst" path="currentMilage" id="currentMilage" required="Required" />
-						             	<i class='fas fa-tachometer-alt iconali'></i>
-						            </div>
-						           
-															         
-				                </div>		
-			             	</div>
-			             </div>
-
-<hr>
-
-						<div class="form-group row">						
-							<div class="col-sm-6">
-								<div class="row">
-									<div class="col-sm-4">
 										<label for="manufactureYear" class="l-fontst">Appointment ID</label>
 										 	
 									</div>	
@@ -193,12 +198,12 @@
 									</div>
 
 												             		
-									</div>			
-								</div>
-
-									
-							<div class="col-sm-6">	
-								<div class="row">
+									</div>
+			             
+			             	</div>
+			             	<div class="col-sm-4">
+	
+			             			<div class="row">
 									<div class="col-sm-6">
 										<label  class="l-fontst">Appointment Time</label>
 									</div>	
@@ -214,13 +219,48 @@
 										             		
 									</div>
 									
+								</div><br>
+									<div class="row">
+									<div class="col-sm-6">
+										<label  class="l-fontst">Mileage</label>
+									</div>	
+									<div class="col-sm-5">	
+									
+										<form:input class="form-control fontst" path="currentMilage" id="currentMilage" required="Required" />
+									
+										             		
+									</div>
+									
 								</div>
+								
+								
+			             								<div class="col-sm-6">	
+
 							
 							</div>
-										
-						 </div>	
-
-
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             		<div class="form-group row">
+			             			<div class="col-sm-12">
+				                		<form:input class="form-control textred" path="vid.vehicleID" id="vid" placeholder="Licence Plate NO..." readonly="true" type="hidden" />
+<%-- 				                		<form:errors path="vehicleID" cssClass="error1"/> --%>
+				                	</div>		
+				               </div>
+				           
+		
+			             	</div>
+			             </div>
+<hr>
 						<div class="form-group row">						
 							<div class="col-sm-6">
 								<div class="row">
@@ -587,12 +627,8 @@
 				
 				
 				</form:form>
-							
-	
-				
-				
-				
-				
+									
+				<%@include file="checkDocument.jsp"%>	
 				
 					</div>
 				
@@ -1071,61 +1107,12 @@
     		
     		 
     	}
-     	takeAutoNo();
-     	function takeAutoNo() {
-     		 
-//     		 var str = document.getElementById("ocrid").value;
-//     		 var y=0;
-//     		 if(str!=""){
-//     			 y=str;					 
-//     		 }
-//     		document.getElementById("lice-msg").style.display = "none";
-//     		document.getElementById("loader").style.display = "block";
-//     		document.getElementById("cam-click").style.display = "none";
-     			
-     		
-//     		var jsonfile={id:y,mthod:meth};
-     		$.ajax({
+//      	setvechileDateNo();
+//      	function setvechileDateNo() {
+//      		var str = document.getElementById("viewVid").innerHTML=document.getElementById("vid").value;
 
-     		    type: 'POST',
-     		    url: "takeOcrNo", 
-     		    data: {"method":"vrStatus"},
-     	       success: function(data){
-     	       	
-//     	            var slctSubcat=$('#ocrdetails'), option="";
-//     	            slctSubcat.empty();
-//     	            selected_option = "  <tr><td></td></tr>"
-//     	            slctSubcat.append(selected_option);
-     	       	
-     	      	$("#ocrdetails tbody").empty();
-     				for(var i=0; i<data.length; i++){
-     				
-     					var markup =  "<tr data-folder='ghjgh'><td>"+ data[i].ocrVid+ "</td>"
-     			           // +"<td><img src=data:image/jpg;base64,"+ data[i].noimage+" style='height:20px; width:30px;'></td>"
-     			            +"<td style='display:none;'>"+ data[i].noimage+"</td>"
-     			            +"<td style='display:none;'>"+ data[i].ocrid+"</td>"
-     			            +"<td style='display:none;'>"+ data[i].vehicletype+"</td>"
-     			           +"<td style='display:none;'>"+ data[i].currentMilage+"</td>"
-     			            +"</tr>";
-     						
-     			            //;
-     			            $("#ocrdetails tbody").append(markup);
-     	          	 }
-     	       	
-     	       	
-     	   
-     	  	
-     	     	
-     	       },
-     	       error:function(){
-     	       	alert("Error");
-     	       }
-     		 });
-
-
-//     		});
-
-     	}
+//      		link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid+"&appNo=0";
+//      	}
      	
      	var table = document.getElementsByTagName("table")[0];
      	var tbody = table.getElementsByTagName("tbody")[0];

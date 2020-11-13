@@ -226,25 +226,43 @@
 		<!-- End Sidebar -->
 		<div class="main-panel">
 			<div class="content">
-				<div class="page-inner">	
-					<div class="page-header">
-					<i class="fa fa-camera" style='font-size:36px;color:#3245f0'></i>
-							<h4 class="page-title">Gate Entry</h4>
-							<ul class="breadcrumbs">
-								<li class="nav-home">
-									<a href="#">
-										<i class="flaticon-home"></i>
-									</a>
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								<li class="nav-item">
-									<a href="#"></a>
-								</li>
-							
-							</ul>
+			
+				<div class="panel-header bg-primary-gradient">
+					<div class="page-inner py-4">
+						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+							<div>
+								<h2 class="text-white pb-2 fw-bold">Gate Entry</h2>
+								<h5 class="text-white op-7 mb-2"></h5>
+							</div>
+							<div class="ml-md-auto py-2 py-md-4">
+<!-- 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a> -->
+<!-- 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a> -->
+<!-- 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
+<!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
+							</div>
 						</div>
+					</div>
+				</div>
+	
+				<div class="page-inner mt--5">	
+<!-- 					<div class="page-header"> -->
+<!-- 					<i class="fa fa-camera" style='font-size:36px;color:#3245f0'></i> -->
+<!-- 							<h4 class="page-title">Gate Entry</h4> -->
+<!-- 							<ul class="breadcrumbs"> -->
+<!-- 								<li class="nav-home"> -->
+<!-- 									<a href="#"> -->
+<!-- 										<i class="flaticon-home"></i> -->
+<!-- 									</a> -->
+<!-- 								</li> -->
+<!-- 								<li class="separator"> -->
+<!-- 									<i class="flaticon-right-arrow"></i> -->
+<!-- 								</li> -->
+<!-- 								<li class="nav-item"> -->
+<!-- 									<a href="#"></a> -->
+<!-- 								</li> -->
+							
+<!-- 							</ul> -->
+<!-- 						</div> -->
 					<div class="row">	
 					<div class="col-xl-4">					
 					<div class="row">
@@ -253,7 +271,7 @@
 							<div class="card shadow mb-4">
 								<!-- Card Header - Dropdown -->
 								<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">
-									<h6 class="m-0 font-weight-bold text-primary">.</h6>
+									<i class="fa fa-camera" style='font-size:28px;color:#3245f0'></i><h6 class="m-0 font-weight-bold text-primary">.</h6>
 								</div>
 								<!-- Card Body -->
 								<div class="card-body">
@@ -664,49 +682,88 @@
 		            var slctSubcat=$('#ocrVehicle'), option="";
 		            slctSubcat.empty();
 		        	for(var i=0; i<data.length; i++){
-		        		
+		        		var link="";
 	        			var statu="";
 		        		
+// 		        		if(data[i].vmStatus=="pending"){
+// 		        			statu="<div class='row'>"+
+// 						"<div class='col-sm-12'>"+
+// 							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Details    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+// 					"</div></div>";
+// 			        		if(data[i].vehicletype=="New"){
+// 			        			link="newVehicleMaster?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid;
+// 			        		}else if(data[i].vehicletype=="Old"){
+// 			        			link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid+"&appNo=0";
+// 			        		}
+					
+					
+// 								}else if(data[i].docStatus=="pending"){
+// 									statu="<div class='row'>"+
+// 									"<div class='col-sm-12'>"+
+// 										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Details    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+// 									"</div></div>"+
+// 									"<div class='row'>"+
+// 										"<div class='col-sm-12'>"+
+// 											"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Document Verification    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+// 										"</div>"+
+// 									"</div>";	
+// 								}else if(data[i].vrStatus=="pending"){
+									
+	
+									
+// 									link="vehicleRegistrationAuto?vid="+data[i].ocrVid+"&curMi=0"+"&id="+data[i].ocrid;
+									
+									
+// 								}
+		        		
 		        		if(data[i].vmStatus=="pending"){
-		        			statu="<div class='row'>"+
+						statu=statu+"<div class='row'>"+
 						"<div class='col-sm-12'>"+
-							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Details    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
-					"</div></div>";
-								}else if(data[i].docStatus=="pending"){
-									statu="<div class='row'>"+
-									"<div class='col-sm-12'>"+
-										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Details    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
-									"</div></div>"+
-									"<div class='row'>"+
-										"<div class='col-sm-12'>"+
-											"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Document Verification    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
-										"</div>"+
-									"</div>";	
-								}else if(data[i].vrStatus=="pending"){
-									
-									statu="<div class='row'>"+
-									"<div class='col-sm-12'>"+
-										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Details    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
-									"</div</div>"+
-									"<div class='row'>"+
-									"<div class='col-sm-12'>"+
-										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Document Verification    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
-									"</div></div>"+
-									"<div class='row'>"+
-									"<div class='col-sm-12'>"+
-										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Regostration    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
-									"</div></div>";		
-									
-								}
-		        		
-		        		
-		        		var link="4";
-		        		
-		        		if(data[i].vehicletype=="New"){
-		        			link="newVehicleMaster?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid;
-		        		}else if(data[i].vehicletype=="Old"){
-		        			link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid+"&appNo=0";
+						"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Details    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+						"</div></div>";
+			        		if(data[i].vehicletype=="New"){
+		        				link="newVehicleMaster?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid;
+			        		}else if(data[i].vehicletype=="Old"){
+			        			link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid+"&appNo=0";
+			        		}
+						
+		        		}else{
+		        			statu=statu+"<div class='row'>"+
+							"<div class='col-sm-12'>"+
+								"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Details    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+							"</div></div>";
+		        			link="vehicleRegistrationAuto?vid="+data[i].ocrVid+"&curMi=0"+"&id="+data[i].ocrid;
 		        		}
+		        		
+		        		if(data[i].docStatus=="pending"){
+							statu=statu+"<div class='row'>"+
+							"<div class='col-sm-12'>"+
+							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Document Verification    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+							"</div></div>";
+			        		}else{
+			        			statu=statu+"<div class='row'>"+
+								"<div class='col-sm-12'>"+
+									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Document Verification    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+								"</div></div>";
+			        			
+			        		}
+		        		
+		        		if(data[i].vrStatus=="pending"){
+							statu=statu+"<div class='row'>"+
+							"<div class='col-sm-12'>"+
+							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Regostration    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+							"</div></div>";
+			        		}else{
+			        			statu=statu+"<div class='row'>"+
+								"<div class='col-sm-12'>"+
+									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Regostration    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+								"</div></div>";
+			        			
+			        		}
+		        		
+						
+		        		
+
 		        		
 		        		
 		        		
@@ -1015,8 +1072,8 @@
 			if(status=="1"){	
 				//window.location.href = "checkDocumentAuto?vid="+vid+"&id="+y+"&curMi=0";
 				
-				window.location.href = "checkDocumentAuto?vecNo="+vid+"&id="+y+"&curMi=0";
-				
+				//window.location.href = "checkDocumentAuto?vecNo="+vid+"&id="+y+"&curMi=0";
+				vehicleMaster();
 				
 				
 			}else if(status=="3"){

@@ -15,6 +15,15 @@
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
 	
 	<style>
+	
+		.vidSty{
+			font-family: Arial, Helvetica, sans-serif;	
+			font-size:30px;
+			font-weight: bold;
+			color: #02d41b;	
+			}
+	
+	
 		.error1{color:red;font-size: 12px } 
 		
  		form input[type="file"] { 
@@ -139,24 +148,45 @@
 		<!-- End Sidebar -->
 		<div class="main-panel">
 			<div class="content">
-				<div class="page-inner">	
-					<div class="page-header">
-							<h4 class="page-title">Appointment</h4>
-							<ul class="breadcrumbs">
-								<li class="nav-home">
-									<a href="#">
-										<i class="flaticon-home"></i>
-									</a>
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								<li class="nav-item">
-									<a href="#"></a>
-								</li>
-							
-							</ul>
+				<div class="panel-header bg-primary-gradient">
+					<div class="page-inner py-3">
+						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+							<div>
+								<h2 class="text-white pb-2 fw-bold">Vehicle Details</h2>
+								<h5 class="text-white op-7 mb-2"></h5>
+							</div>
+							<div class="ml-md-auto py-2 py-md-4">
+							<p class="vidSty" ><%=session.getAttribute("vMvid")%></p>
+							</div>
+							<div class="ml-md-auto py-2 py-md-4">
+								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
+<!-- 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a> -->
+								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a>
+<!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
+							</div>
 						</div>
+					</div>
+				</div>
+			
+			
+				<div class="page-inner mt--5">	
+<!-- 					<div class="page-header"> -->
+<!-- 							<h4 class="page-title">Vehicle Details</h4> -->
+<!-- 							<ul class="breadcrumbs"> -->
+<!-- 								<li class="nav-home"> -->
+<!-- 									<a href="#"> -->
+<!-- 										<i class="flaticon-home"></i> -->
+<!-- 									</a> -->
+<!-- 								</li> -->
+<!-- 								<li class="separator"> -->
+<!-- 									<i class="flaticon-right-arrow"></i> -->
+<!-- 								</li> -->
+<!-- 								<li class="nav-item"> -->
+<!-- 									<a href="vehicleInformation">Gate Entry</a> -->
+<!-- 								</li> -->
+							
+<!-- 							</ul> -->
+<!-- 						</div> -->
 				
 						
 					
@@ -177,7 +207,7 @@
 					<h6 class="m-0 font-weight-bold text-primary">.  Vehicle Details</h6>
 				</div>
 				<div class="col-sm-7">
-					<form:input class="form-control textred" path="vehicleID" id="vehicleID" placeholder="Licence Plate NO..."  onkeyup="this.value = this.value.toUpperCase();" readonly="true"  />
+					<form:input class="form-control textred" path="vehicleID" id="vehicleID" placeholder="Licence Plate NO..."  onkeyup="this.value = this.value.toUpperCase();" readonly="true" type="hidden" />
 				</div>
 				</div>
 
@@ -224,18 +254,20 @@
 						             	<label class="l-fontst">Mileage</label>
 						             </div>
 								 	<div class="col-sm-5">
-										<input class="form-control fontst" name="currentMilage" required="Required" id="currentMilage" required="true"/><i class='fas fa-tachometer-alt iconali'></i>	
+										<input class="form-control fontst" name="currentMilage" required="Required" id="currentMilage" required="true"/>
+<!-- 										<i class='fas fa-tachometer-alt iconali'></i>	 -->
 						             	
 						            </div>
 						           
 															         
 				                </div>		
 			             	</div>
+			             	
 			             </div>
-	
+	<hr>
 <!-- 		 </div> -->
 			
-		 <hr/>		
+		
 <!-- 	<div class="card-header py-1 d-flex flex-row align-items-center"> -->
 <!-- 		<img src="resources/img/icon/vehicleidentification.png" class="videnty"/><h6 class="m-0 font-weight-bold text-primary">.  Vehicle Identification</h6> -->
 		
@@ -502,7 +534,7 @@
 						 </div>	
 					
 					
-						<div class="row">						
+						<div class="form-group row">						
 							<div class="col-sm-5">
 							
 									<div class="row">
@@ -531,10 +563,10 @@
 							</div>		
 							<div class="col-sm-5">	
 									<div class="row">
-								<div class="col-sm-5">
+								<div class="col-sm-6">
 										<label for="chassisNo" class="l-fontst" >Speed Governor</label>	
 									</div>	
-								<div class="col-sm-7">		
+								<div class="col-sm-6">		
 					             		<form:select  path="subCategoryID.subCategoryID" class="custom-select fontst" required="true">
 											<form:option value="NONE">Select...</form:option>
 											<c:forEach items="${vehiclesSubCategorylist}" var="vscat">
@@ -549,7 +581,7 @@
 							</div>
 										
 						 </div>
-					
+					<br><br>
 
 					
 					
@@ -759,7 +791,7 @@
    
    </form:form>
 							
-	
+	<%@include file="checkDocument.jsp"%>
 				
 				
 				

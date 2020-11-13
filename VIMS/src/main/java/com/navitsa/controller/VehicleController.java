@@ -572,7 +572,7 @@ public class VehicleController {
 		}else {
 		mav.addObject("veOwner", vo);
 		}
-		
+		session.setAttribute("vMvid", vehicleID);
 		
 		return mav;
 	}
@@ -609,10 +609,10 @@ public class VehicleController {
 				ocrDetails.setVmStatus("completed");
 				vehicleService.saveOcrDetailsRepo(ocrDetails);
 				
-				//return "redirect:/vehicleRegistrationAuto?vid="+vmaster.getVehicleID()+"&curMi="+currentMilage+"&id="+ocid; 
+				return "redirect:/vehicleRegistrationAuto?vid="+vmaster.getVehicleID()+"&curMi="+currentMilage+"&id="+ocid; 
 		
 	 
-				return "redirect:/checkDocumentAuto?vecNo="+vmaster.getVehicleID()+"&curMi="+currentMilage+"&id="+ocid; 
+				//return "redirect:/checkDocumentAuto?vecNo="+vmaster.getVehicleID()+"&curMi="+currentMilage+"&id="+ocid; 
 				
 				
 			 
@@ -641,7 +641,7 @@ public class VehicleController {
 				
 		vehicleService.saveOcrDetailsRepo(ocrDetails);
 	    
-	    
+		session.setAttribute("vMvid", vehicleID);
 		
 		ModelAndView mav = new ModelAndView("vehicleMaster");
 		VehicleMaster vm=new VehicleMaster();
@@ -750,20 +750,24 @@ public class VehicleController {
 		m.addAttribute("apono",ocrDetails.getAppNo());
 		//ocrDetails.setOcrid(Long.parseLong(id));
 
+		ocrDetails.setVmStatus("completed");
+		vehicleService.saveOcrDetailsRepo(ocrDetails);
+		
 		vecir.setOcrid(ocrDetails);
 		VehicleMaster vm=vehicleService.getVMasterById(vid);
 		//vm.setVehicleID(vid);
 		vecir.setVid(vm);	
 		vecir.setCurrentMilage(Long.parseLong(curMi));
 		
+		m.addAttribute("vid",vid);
 		m.addAttribute("VehicleRegistration",vecir);
 		m.addAttribute("imgVimg",ocrDetails.getNoimageView());
 		m.addAttribute("pre_vehicle",vehicleService.getPerviousRegistrationVehicle(vid));
 		m.addAttribute("vclassid",vm.getVmodel().getVehicleClass().getVehicleClassID());
 		
 		
-		
-		
+		session.setAttribute("vRvid", vid);
+		session.setAttribute("vRocr", id);
 		
 		
 		List<TestLaneHead> allCenterLane=laneServices.getTestLaneHeadDetailByCenter(session.getAttribute("centerid")+"");
@@ -3576,7 +3580,16 @@ public class VehicleController {
 		model.put("documentlist", documentlist);
 			return "checkDocument";
 		}
-	
+		@ModelAttribute("documentlist")
+		public List<Document> getdocumentlist() {
+			
+			
+			List<Document> documentlist = documentScrvice.getAllActiveDocument();			
+			
+
+			return documentlist;
+		}
+		
 		@RequestMapping("/checkDocumentAuto")
 		public String checkDocumentAuto(@RequestParam("vecNo") String vecNo,@RequestParam("curMi") String curMi,@RequestParam("id") String id,Map<String, Object> model) {	
 	
