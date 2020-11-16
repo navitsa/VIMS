@@ -894,8 +894,9 @@
 		        url: "getFindVmaster",
 		        data: {"vehicleID" :x},
 		        success: function(data){
-		        	
-		        if(data!=null){
+		        
+		        if(data!=null&&data!=""){
+		        	alert(data);
 		        	$('#veclass').text(data.vmodel.vehicleClass.vehicleClass);
 		        	$('#vMnM').text( data.vmodel.vehicleMakeID.vehicleMake+' / '+data.vmodel.vehicleModel);
 		        	//$('#vModel').text(data.vmodel.vehicleModel);
@@ -914,9 +915,10 @@
 					 document.getElementById("lod1").style.display = "none";
 
 		        }else{
+		        	
 		        	 document.getElementById('vdetails').hidden = true;
 		        	
-		        	//alert("sssssssssss");
+		        	
 		        	 status="0";
 		        	 document.getElementById("capButtion").style.display = "block";
 		        	 document.getElementById("lod1").style.display = "none";
