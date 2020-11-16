@@ -41,7 +41,7 @@
 								<li class="separator">
 									<i class="flaticon-right-arrow"></i>
 								</li>
-									<a href="#">Test Profilesr</a>
+									<a href="#">Test Profiles</a>
 								<li class="nav-item">
 								</li>
 								
