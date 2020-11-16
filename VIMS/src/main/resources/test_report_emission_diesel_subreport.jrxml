@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_emission_diesel_subreport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="7aea3084-683a-4dac-b740-699b7899281e">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="93"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<style name="style1">
+	<style name="pass fail color style">
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$F{edc_id.result}.equalsIgnoreCase("PASS")]]></conditionExpression>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $F{edc_id.result}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
+			<style mode="Transparent" forecolor="#009966"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $F{edc_id.result}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
+			<style forecolor="#990000"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $F{edc_id.result}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
 			<style isBlankWhenNull="true" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$F{edc_id.result}.equalsIgnoreCase("FAIL")]]></conditionExpression>
-			<style isBlankWhenNull="true" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $F{edc_id.result}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
+			<style markup="none" isBlankWhenNull="true" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 		</conditionalStyle>
 	</style>
+	<parameter name="reportColor" class="java.lang.Integer" isForPrompting="false"/>
 	<field name="k" class="java.lang.String"/>
 	<field name="hsu" class="java.lang.String"/>
 	<field name="rpm_min" class="java.lang.String"/>
@@ -25,7 +34,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="108">
+		<band height="123">
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#EAEAEA" uuid="7be64c2d-7cdd-43e4-a8fd-4d1727574658"/>
 				<box>
@@ -39,116 +48,123 @@
 					<textElement verticalAlignment="Middle">
 						<font size="9" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Emission/Smoke Test Results]]></text>
+					<text><![CDATA[Emission / Smoke Test]]></text>
 				</staticText>
-				<textField>
-					<reportElement style="style1" x="441" y="1" width="95" height="13" uuid="b0f3771e-f39e-40da-9984-e3c05485ac18"/>
+				<textField isBlankWhenNull="true">
+					<reportElement style="pass fail color style" x="399" y="1" width="124" height="13" isRemoveLineWhenBlank="true" uuid="b0f3771e-f39e-40da-9984-e3c05485ac18"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="9" isBold="true"/>
+						<font fontName="SansSerif" size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{edc_id.result}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{edc_id.result}.equalsIgnoreCase("FAIL")?$F{edc_id.result}.toUpperCase()+"*":$F{edc_id.result}.toUpperCase()]]></textFieldExpression>
 				</textField>
 			</frame>
 			<staticText>
-				<reportElement x="61" y="14" width="111" height="12" uuid="ed4b077a-1076-48f6-be75-14984f09bbcb"/>
+				<reportElement x="61" y="22" width="111" height="12" uuid="ed4b077a-1076-48f6-be75-14984f09bbcb"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Free Accereration Test ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="61" y="26" width="41" height="22" uuid="9d4d7b99-83fc-48f9-b958-38cf074726e0"/>
+				<reportElement x="61" y="34" width="41" height="22" uuid="9d4d7b99-83fc-48f9-b958-38cf074726e0"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Prescribed Standard]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="131" y="26" width="41" height="21" uuid="beb9c876-8479-4cd1-9347-ce85ffa4d625"/>
+				<reportElement x="131" y="34" width="41" height="21" uuid="beb9c876-8479-4cd1-9347-ce85ffa4d625"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Measured Level]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="48" width="61" height="12" uuid="a54f0090-bad3-44d8-97d3-dc7f1df8709e"/>
+				<reportElement x="0" y="56" width="61" height="12" uuid="a54f0090-bad3-44d8-97d3-dc7f1df8709e"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[HSU ( val %)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="60" width="61" height="12" uuid="2daaf63d-42e3-4391-9722-43b3e90f9468"/>
+				<reportElement x="0" y="68" width="61" height="12" uuid="2daaf63d-42e3-4391-9722-43b3e90f9468"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Kmean (m-1)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="72" width="61" height="12" uuid="f82bf420-2ee1-4560-9896-8f4897bfef7d"/>
+				<reportElement x="0" y="80" width="61" height="12" uuid="f82bf420-2ee1-4560-9896-8f4897bfef7d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[OilTemp (0C)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="84" width="61" height="12" uuid="7265bff8-7982-4638-9e90-1f972171c44a"/>
+				<reportElement x="0" y="92" width="61" height="12" uuid="7265bff8-7982-4638-9e90-1f972171c44a"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Avg.RPM Min]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="96" width="61" height="12" uuid="18dfe8e5-c434-4492-8bc9-fabc87afc9ff"/>
+				<reportElement x="0" y="104" width="61" height="12" uuid="18dfe8e5-c434-4492-8bc9-fabc87afc9ff"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Avg.RPM Min]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="131" y="59" width="36" height="13" uuid="1b3d6746-72f0-476c-8742-b237486c5948"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="131" y="67" width="41" height="13" isRemoveLineWhenBlank="true" uuid="1b3d6746-72f0-476c-8742-b237486c5948"/>
+				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{k}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="131" y="46" width="36" height="13" uuid="17f41a34-5774-4afa-8be3-82ba97f1cd2d"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="131" y="54" width="41" height="13" isRemoveLineWhenBlank="true" uuid="17f41a34-5774-4afa-8be3-82ba97f1cd2d"/>
+				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{hsu}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="131" y="71" width="36" height="13" uuid="5b080a7c-33a2-4644-9cc7-74ad258f9e7a"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="131" y="79" width="41" height="13" isRemoveLineWhenBlank="true" uuid="5b080a7c-33a2-4644-9cc7-74ad258f9e7a"/>
+				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{oil_temp}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="131" y="83" width="36" height="13" uuid="26d68ea2-ffd5-435e-92bc-29359d12c660"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="131" y="91" width="41" height="13" isRemoveLineWhenBlank="true" uuid="26d68ea2-ffd5-435e-92bc-29359d12c660"/>
+				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rpm_min}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="131" y="95" width="36" height="13" uuid="33fda0ea-5102-44a9-b54d-b71a1c93b7fc"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="131" y="103" width="41" height="13" isRemoveLineWhenBlank="true" uuid="33fda0ea-5102-44a9-b54d-b71a1c93b7fc"/>
+				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rpm_max}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="61" y="48" width="36" height="12" uuid="29854e25-a02e-4467-ac0f-e07596c377ab"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="61" y="56" width="41" height="12" isRemoveLineWhenBlank="true" uuid="29854e25-a02e-4467-ac0f-e07596c377ab"/>
+				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{edc_id.hsu_pres}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="61" y="60" width="36" height="12" uuid="ba22a147-89f2-4ab4-8911-5347a66d2031"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="61" y="68" width="41" height="12" isRemoveLineWhenBlank="true" uuid="ba22a147-89f2-4ab4-8911-5347a66d2031"/>
+				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>

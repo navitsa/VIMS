@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_brake_subreport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a0bca50d-dd4c-4bf1-9f07-e375f1a84f4a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="pass fail color style">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $F{finalize_pass_fail_status}.equals("PASS")]]></conditionExpression>
+			<style mode="Transparent" forecolor="#009966"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $F{finalize_pass_fail_status}.equals("FAIL")]]></conditionExpression>
+			<style forecolor="#990000"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $F{finalize_pass_fail_status}.equals("PASS")]]></conditionExpression>
+			<style isBlankWhenNull="true" isBold="true"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $F{finalize_pass_fail_status}.equals("FAIL")]]></conditionExpression>
+			<style markup="none" isBlankWhenNull="true" isBold="true" isItalic="true"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="limitValueDescription" class="java.util.List" isForPrompting="false"/>
+	<parameter name="reportColor" class="java.lang.Integer" isForPrompting="false"/>
+	<field name="test_type_test_type" class="java.lang.String"/>
+	<field name="test_type_type_id" class="java.lang.String"/>
+	<field name="t_test_point_name" class="java.lang.String"/>
+	<field name="ta_para_name" class="java.lang.String"/>
+	<field name="taa_angle_name" class="java.lang.String"/>
+	<field name="test_value_result_detail_Result" class="java.lang.Double"/>
+	<field name="unit" class="java.lang.String"/>
+	<field name="finalize_pass_fail_status" class="java.lang.String"/>
+	<group name="test_type_group">
+		<groupExpression><![CDATA[$F{test_type_test_type}]]></groupExpression>
+		<groupHeader>
+			<band height="23">
+				<printWhenExpression><![CDATA[$F{test_type_type_id}.equals("40000-49999") || $F{test_type_type_id}.equals("50000-69999")]]></printWhenExpression>
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#EAEAEA" uuid="248c8cf3-2bb0-4b57-a89f-0fffbfd0ba5d"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textField isBlankWhenNull="true">
+						<reportElement style="pass fail color style" x="395" y="0" width="133" height="14" isRemoveLineWhenBlank="true" uuid="d34da358-4c1d-4bc9-969e-5832ec0a9008"/>
+						<textElement textAlignment="Right" verticalAlignment="Middle">
+							<font fontName="SansSerif" size="9" pdfFontName="Helvetica"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{finalize_pass_fail_status}.equalsIgnoreCase("FAIL")?$F{finalize_pass_fail_status}+"*":$F{finalize_pass_fail_status}]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement mode="Transparent" x="15" y="0" width="153" height="14" uuid="6464030e-cb3d-4f92-881c-4974877f10d7"/>
+						<box>
+							<pen lineWidth="0.0"/>
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement verticalAlignment="Middle">
+							<font fontName="SansSerif" size="9" isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{test_type_test_type}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="25">
+				<printWhenExpression><![CDATA[$F{test_type_type_id}.equals("40000-49999") || $F{test_type_type_id}.equals("50000-69999")]]></printWhenExpression>
+				<crosstab ignoreWidth="true">
+					<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="356" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="7afe58eb-2c9f-46fc-b3fb-98ec993c0ac8"/>
+					<crosstabDataset isDataPreSorted="true">
+						<dataset resetType="Group" resetGroup="test_type_group"/>
+					</crosstabDataset>
+					<rowGroup name="t_test_point_name" width="60">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{t_test_point_name}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#F0F8FF" mode="Transparent">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="60" height="11" isRemoveLineWhenBlank="true" uuid="f89f4021-e262-4739-b51b-f01c612874a9"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font fontName="Arial" size="8" isBold="false"/>
+										<paragraph lineSpacing="Single"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{t_test_point_name}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents/>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<columnGroup name="ta_para_name" height="13" headerPosition="Stretch">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{ta_para_name}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents backcolor="#FFFFFF" mode="Transparent">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement style="Crosstab Data Text" mode="Transparent" x="0" y="0" width="39" height="11" isRemoveLineWhenBlank="true" uuid="fb269706-0443-429d-a076-f59dd216d1c5"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Arial" size="8" isBold="false"/>
+										<paragraph lineSpacing="Single"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{ta_para_name}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents/>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<columnGroup name="taa_angle_name" height="12">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{taa_angle_name}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents backcolor="#F0F8FF" mode="Transparent">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="39" height="11" isRemoveLineWhenBlank="true" uuid="8a6e4ea9-beca-4042-9d3f-2ae850350474"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Arial" size="8" isBold="false"/>
+										<paragraph lineSpacing="Single"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{taa_angle_name}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents/>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<measure name="test_value_result_detail_ResultMeasure" class="java.lang.Double">
+						<measureExpression><![CDATA[$F{test_value_result_detail_Result}]]></measureExpression>
+					</measure>
+					<measure name="unit" class="java.lang.String">
+						<measureExpression><![CDATA[$F{unit}]]></measureExpression>
+					</measure>
+					<crosstabCell width="41" height="11">
+						<cellContents mode="Transparent">
+							<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="26" height="11" isRemoveLineWhenBlank="true" uuid="f09c66f7-da12-4453-88e5-94290e8b6ef2"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Arial" size="8"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" x="26" y="0" width="15" height="11" uuid="d3061a0e-69ff-4aea-ae97-a673d8532902"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{unit}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell height="25" rowTotalGroup="t_test_point_name">
+						<cellContents mode="Opaque">
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="61aeeb74-7305-4d1e-b0fa-d9c6b8f735d9"/>
+								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" columnTotalGroup="ta_para_name">
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="840cf476-70ee-43e2-b401-222052cd6a4c"/>
+								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="t_test_point_name" columnTotalGroup="ta_para_name">
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="26c34448-e2c4-4475-a218-34a2eb450d7f"/>
+								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" columnTotalGroup="taa_angle_name">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="b179ca99-bc2c-420b-9785-bba04638f9a3"/>
+								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="t_test_point_name" columnTotalGroup="taa_angle_name">
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="8e2fd295-0770-4b88-a220-39588e64af86"/>
+								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+				</crosstab>
+				<subreport>
+					<reportElement x="356" y="0" width="87" height="15" isRemoveLineWhenBlank="true" printWhenGroupChanges="test_type_group" uuid="f3d6a162-dacd-46ff-8c64-8abe21211872"/>
+					<subreportParameter name="testTypeID">
+						<subreportParameterExpression><![CDATA[$F{test_type_type_id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{limitValueDescription})]]></dataSourceExpression>
+					<subreportExpression><![CDATA["limitValueDesSubReport.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+</jasperReport>
