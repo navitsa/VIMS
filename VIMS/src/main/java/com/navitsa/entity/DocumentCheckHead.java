@@ -26,7 +26,9 @@ public class DocumentCheckHead {
 	@Column(name="Status")	
 	private String  status;
 
-
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "ocrid", referencedColumnName = "ocrid")
+	private OcrDetails ocrid;
 
 	public String getDocumentcheckheadid() {
 		return documentcheckheadid;
@@ -58,6 +60,14 @@ public class DocumentCheckHead {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public OcrDetails getOcrid() {
+		return ocrid;
+	}
+
+	public void setOcrid(OcrDetails ocrid) {
+		this.ocrid = ocrid;
 	}
 
 

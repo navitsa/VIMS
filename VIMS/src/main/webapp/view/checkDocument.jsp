@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body">
        
-   										<form action="savaCheckDocument" method="post"
+   										<form  id="savaCheckdocid"  method="post" enctype="multipart/form-data"
 														>
 
 
@@ -23,11 +23,12 @@
 																		<div class="form-group row">
 																			<div class="col-sm-12">
 																				<input class="form-control textred"
-																					name="vecNo" value="${vecNo}" id="vno"
+																					name="vehNO" value="${vvid}" id="vehNO"
 																					placeholder="Licence Plate NO..."
 																					
 																					readonly="true" />
-																				
+																					<input class="form-control form-control-sm"
+																			name="mocrid" id="mocrid" value="${ocid}"  type="hidden"/>
 																			</div>
 																		</div>
 																	
@@ -36,10 +37,8 @@
 																				
 																			</div>
 																			<div class="col-sm-5">
-																			<input class="form-control form-control-sm"
-																			name="curMi" id="curMi" value="${curMi}" hidden="true"/>
-																		<input class="form-control form-control-sm"
-																			name="id" id="id" value="${id}" hidden="true"/>
+																		
+																	
 																			</div>
 
 
@@ -47,13 +46,7 @@
 																		</div>
 																	</div>
 																	<div class="col-sm-3">
-																		<table id="ocrdetails"
-																			class="table1 myTable table table-sm table-wrapper-scroll-y my-custom-scrollbar"
-																			style="height: 112px;">
-																			<tbody id="ocrdetailstbody">
-
-																			</tbody>
-																		</table>
+														
 
 																	</div>																	
 																</div>
@@ -69,7 +62,7 @@
 										
 													
 
-													<table id="eqTypeTable" 
+													<table id="checkDocTable" 
 														class="table table-striped table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
 														cellspacing="0" style="height: 200px;">
 	
@@ -87,7 +80,9 @@
 															<c:forEach items="${documentlist}"
 																var="doc" varStatus="i"> <%--Loop Status --%>
 																<tr>
-																	<td><div><input class="form-control form-control-sm textfi" type="text" name="docid"  readOnly="true" value="${doc.documentid}" /></div></td>
+																	<td><div>
+																	<input class="form-control form-control-sm" 	name="doc" id="doc" value="${doc.documentid}"  />
+																	</div></td>
 																	<td><div>${doc.description}</div></td>
 																	<td><div>${doc.remarks}</div></td>
 																	<td><div>
@@ -125,10 +120,10 @@
 															
 															
 																<td>
-																	<div class="col-sm-7 mb-1 mb-sm-3 justify-content-end">
-																		<input type="submit" class="btn btn-success"
-																			value="Continue">
-																	</div>
+<!-- 																	<div class="col-sm-7 mb-1 mb-sm-3 justify-content-end"> -->
+<!-- 																		<input type="submit" class="btn btn-success" -->
+<!-- 																			value="Continue"> -->
+<!-- 																	</div> -->
 																</td>
 															</tr>
 														</table>
@@ -139,9 +134,9 @@
       </div>
       <div class="modal-footer">
       <div class="col-sm-7 mb-1 mb-sm-3">
-	<button type="button" class="btn btn-success" data-dismiss="modal" onclick="saveMakeV()">Add Vehicle Make</button>
+	<button type="button" class="btn btn-success" data-dismiss="modal" onclick="saveCheckDocment()">Save</button>
 	
-			<button type="button" class="btn btn-info" data-dismiss="modal" onclick="getMakeV()">Close</button>
+			<button type="button" class="btn btn-info" data-dismiss="modal" >Close</button>
 		</div>																
       </div>
     </div>
@@ -150,10 +145,7 @@
 </div>
 
 
-
-
-
-
+	 
 
 
 

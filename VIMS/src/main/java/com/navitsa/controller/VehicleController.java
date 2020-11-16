@@ -654,6 +654,7 @@ public class VehicleController {
 		mav.addObject("veOwner", vo);
 		mav.addObject("imgVe",ocrDetails.getNoimageView());
 		mav.addObject("ocid",id);
+		mav.addObject("vvid",vehicleID);
 		return mav;
 		
 	}
@@ -3611,9 +3612,10 @@ public class VehicleController {
 		
 		 
 		
-		@RequestMapping(value = "/savaCheckDocument", method = RequestMethod.POST, produces = "text/html")
-		public String savaCheckDocument(@RequestParam("vecNo") String vecNo,@RequestParam("curMi") String curMi,@RequestParam("id") String id,@RequestParam("docid") String[] docid)/*,@RequestParam("docStatus") String[] docStatus)*/ {
-	
+		@RequestMapping(value = "/savaCheckDocument", method = RequestMethod.POST)
+		public @ResponseBody String savaCheckDocument(@RequestParam("vehNO") String vecNo,@RequestParam("mocrid") String id,@RequestParam("doc") String[] docid)/*,@RequestParam("docStatus") String[] docStatus)*/ {
+
+			try {
 		    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 		    Date date = new Date(); 
 		   
@@ -3625,6 +3627,9 @@ public class VehicleController {
 			VehicleMaster vm=vehicleService.getVMasterById(vecNo);
 			
 			documentCheckHead.setVehicleID(vm);
+			OcrDetails ocrDetails=new OcrDetails();
+			ocrDetails.setOcrid(Integer.parseInt(id));
+			documentCheckHead.setOcrid(ocrDetails);
 			documentCheckHead.setStatus("ACTIVE");
 			
 			documentScrvice.saveDocumentCheckHead(documentCheckHead);
@@ -3652,7 +3657,10 @@ public class VehicleController {
 			
 			
 			//return "checkDocument";
-			return "redirect:/vehicleRegistrationAuto?vid="+vecNo+"&curMi="+curMi+"&id="+id; 
+			return "1"; 
+			}catch (Exception e) {
+				return "0"; 
+			}
 			
 		}
 		
