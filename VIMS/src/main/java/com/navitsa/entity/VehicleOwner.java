@@ -17,7 +17,7 @@ public class VehicleOwner {
 	@Column(name = "Owner_ID")
 	private String ownerID;
 
-	@NotEmpty(message = "Please select a title")
+	@NotEmpty(message = "Please select title")
 	@Column(name = "Title")
 	private String title;
 	

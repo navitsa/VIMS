@@ -50,6 +50,7 @@ import com.navitsa.services.VisualInspectionServices;
 import com.navitsa.utils.ReportViewe;
 
 
+
 @Controller
 public class TestingReportConfigController {
 
@@ -154,7 +155,8 @@ public class TestingReportConfigController {
 	
 	
 	@GetMapping("/getTestReport")
-	 public ModelAndView getTestReport(@RequestParam String register_id,@RequestParam String test_value_file_id,HttpServletResponse response)
+	 public ModelAndView getTestReport(@RequestParam String register_id,@RequestParam String test_value_file_id,
+			 @RequestParam int color,HttpServletResponse response)
 	 {
 		 ModelAndView mav = new ModelAndView("comPdfReportView");
 		 
@@ -210,7 +212,13 @@ public class TestingReportConfigController {
 		 params.put("Inspector",vr.getUser().getUserName());
 		 params.put("emissionType",vr.getVid().getEmissionNorms());
 		 params.put("tokenNo",vr.getTrid().getTrID());
-		 params.put("appointmentNo", vr.getOcrid().getAppNo());
+		 params.put("reportColor",color);
+		 
+		 String bookingNo = vr.getOcrid().getAppNo();		 
+		 if(bookingNo == null || bookingNo.equals("0") ) {
+			 bookingNo = "N / A";
+		 }
+		 params.put("appointmentNo", bookingNo);
 		 
 		 //getting test results from query
 		 String[][] result = service.getTestResult(test_pro_id,test_value_file_id);
@@ -387,7 +395,17 @@ public class TestingReportConfigController {
 //				System.out.println(a[i][0]+" "+a[i][1]+" "+a[i][2]+" "+a[i][3]+" "+a[i][4]+" "+a[i][5]);
 //			}
 			
+					
+			String subCat = vr.getVid().getSubCategoryID().getDescription();
+			boolean haveSpeedGovernor = false;
+			int maxSpeed = 0;
+			if (!subCat.equalsIgnoreCase("N/A")) {
+				maxSpeed = vr.getVid().getSubCategoryID().getMaxSpeed();
+				haveSpeedGovernor =  true;
+			}
+			
 			String status="PASS";
+			String status2="PASS";
 			List<TestResultSpeedoBean> speedoList = new ArrayList<>();
 			for (int i = 0; i < a.length; i++) {
 				
@@ -402,24 +420,37 @@ public class TestingReportConfigController {
 				String desc = speedoObj.getValue1()+" ActualSpeed  < "+speedoObj.getValue3()+" Normal\n"+speedoObj.getValue4()+" ActualSpeed  < "+speedoObj.getValue6()+" Normal";
 				speedoObj.setLimitDes(desc);
 				
-				if(status=="PASS") {
-					if(speedoObj.getValue2() > speedoObj.getValue3()) {
-						status="FAIL*";
-					}
-					if(speedoObj.getValue5() > speedoObj.getValue6()) {
-						status="FAIL*";
-					}
+				if (haveSpeedGovernor) {
+					if(status2=="PASS") {
+						if(speedoObj.getValue2() > maxSpeed)
+							status2="FAIL";
+						if(speedoObj.getValue5() > maxSpeed)
+							status2="FAIL";
+					}						
+				}else {
+					if(status=="PASS") {
+						if(speedoObj.getValue2() >  speedoObj.getValue3())
+							status="FAIL";
+						if(speedoObj.getValue5() > speedoObj.getValue6())
+							status="FAIL";
+					}					
 				}
 				
 				speedoList.add(speedoObj);
 			}
 			
 			params.put("speedoResults",speedoList);
-			params.put("speedoPassStatus",status);
+			if (haveSpeedGovernor) {
+				params.put("speedoPassStatus2", status2);
+				params.put("speedoGovernorLimit", "<= "+maxSpeed+" km/h");
+			}	
+			else {
+				params.put("speedoPassStatus",status);}
+			
 /* ---------------------------------------------------------------------------------------------------------- */
 
 			params.put("noiseResults",list);
-			
+			params.put("brakeResults", list);
 /* ---------------------------------------------------------------------------------------------------------- */
 			
 		 try {
@@ -499,7 +530,7 @@ public class TestingReportConfigController {
 			 String final_result = null;
 			 if(y==0.0) {
 				 //fail
-				 final_result="FAIL*";
+				 final_result="FAIL";
 				 
 			 }else if(y>0.0 && y<1.0 ) {
 				 //pass
@@ -748,5 +779,21 @@ public class TestingReportConfigController {
 		return respone;
 	}
 	
-	//a
+	@RequestMapping(value = "/checkAvailableTestResults", method = RequestMethod.GET)
+	public @ResponseBody void checkAvailableTestResults(@RequestParam("regID") String regID) {
+		
+		VisualChecklistMaster vi = inspectionServices.getChecklistMasterData(regID);
+		EmissionDieselCertificateData emd = service.getEmiDieselCerData(regID);
+		EmissionPetrolCertificateData empcdata = service.getEmiPetrolCerData(regID);
+		
+		System.out.println(emd);
+		
+		if(vi == null)
+			System.out.println("visual inspection data is missing !");
+		if(emd == null)
+			System.out.println("diesel data is missing !");
+		if(empcdata == null)
+			System.out.println("Petrol data is missing !");
+
+	}
 }

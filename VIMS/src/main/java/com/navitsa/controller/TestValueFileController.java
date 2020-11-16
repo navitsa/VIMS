@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.navitsa.entity.ConfigSystem;
@@ -27,6 +29,8 @@ import com.navitsa.services.CenterService;
 import com.navitsa.services.TestReportConfigService;
 import com.navitsa.services.TestValueFileService;
 import com.navitsa.services.VehicleService;
+
+
 
 
 @Controller
@@ -53,8 +57,8 @@ public class TestValueFileController {
 	}
 
 	
-	@RequestMapping("/readingTestValues")
-	public String readingTestValues(RedirectAttributes redirectAttributes,HttpSession session) {
+	@RequestMapping(value="/readingTestValues",method=RequestMethod.GET)
+	public @ResponseBody List<TestValueFileHeader> readingTestValues(RedirectAttributes redirectAttributes,HttpSession session) {
 
 		//String ESOUT_path = partnerService.getDefaultPartner().getEsOutPath();
 		String centerid=(String) session.getAttribute("centerid");
@@ -198,9 +202,9 @@ public class TestValueFileController {
 		      }  
 
 	      
-		//return "testValueFileReading";
-		 return "redirect:/testValueFile";
-		
+		 //return "redirect:/testValueFile";
+		 List<TestValueFileHeader> result = testValueFileServices.listPendingHeaderInfo();
+		 return result;
 		
 	}
 	

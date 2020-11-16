@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.navitsa.entity.ConfigSystem;
-import com.navitsa.entity.FtpServerInfoEsout;
 import com.navitsa.entity.TestValueFileDetail;
 import com.navitsa.entity.TestValueFileHeader;
 import com.navitsa.repository.ConfigSystemRepository;
 import com.navitsa.repository.FtpServerInfoEsoutRepository;
 import com.navitsa.repository.TestValueFileDetailRepository;
 import com.navitsa.repository.TestValueFileHeaderRepository;
+
+
 
 
 
