@@ -50,8 +50,8 @@ public interface TestProfileDetailRepository extends CrudRepository<TestProfileD
 			"    `test_value_result_header` test_value_result_header ON test_value_result_detail.`Test_Value_File_ID` = test_value_result_header.`Test_Value_File_ID`\r\n" + 
 			"WHERE\r\n" + 
 			"    test_value_result_header.`Test_Value_File_ID` =:test_value_file_id\r\n" + 
-			"        AND test_profile_header.`profile_id` =:test_pro_id AND test_type.`type_id` != '37000-37999'"
-			+ "ORDER BY test_profile_status.serial_no, parameter_code.s_id",nativeQuery = true)
+			"    AND test_profile_header.`profile_id` =:test_pro_id\r\n"+ 
+			"ORDER BY test_profile_status.serial_no, parameter_code.s_id",nativeQuery = true)
 	public String[][] getTestResult(@Param("test_pro_id") int test_pro_id,@Param("test_value_file_id") String test_value_file_id);
 	
 	@Query(value ="SELECT \r\n" + 
