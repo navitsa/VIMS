@@ -15,8 +15,65 @@
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
 	<link href="resources/css/appointmentForm.css" rel="stylesheet">
 
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+<style>
+	.fontst {
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		height: 30px;
+	}
+	
+	.fontcol-peo {
+		color: #ff8000;
+	}
+
+</style>
+<style>
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+#text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+#text2{
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  font-size: 25px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+#text3{
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+</style>
+
 </head>
-<body>
+<body onload="checkCloseTime()">
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -31,27 +88,7 @@
 		<!-- End Sidebar -->
 		<div class="main-panel">
 			<div class="content">
-				<div class="page-inner">	
-					<div class="page-header">
-							<h4 class="page-title">Appointment</h4>
-							<ul class="breadcrumbs">
-								<li class="nav-home">
-									<a href="#">
-										<i class="flaticon-home"></i>
-									</a>
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								<li class="nav-item">
-									<a href="#"></a>
-								</li>
-							
-							</ul>
-						</div>
-				
-						
-								<div class="container-fluid">
+				<div class="page-inner">
 
 					<form:form id="msform" action="saveAppointment" method="POST" modelAttribute="appointmentForm" onsubmit="return validateForm()">
 					
@@ -69,21 +106,21 @@
 
 							<div class="form-group row">
 							   <div class="col-lg-6">
-									<select class="custom-select custom-select-sm mb-4" id="vClass" onchange="findBestLane()" required>									
+									<select class="custom-select mb-4" id="vClass" onchange="findBestLane()" required>									
 										<option value="">Select vehicle class...</option>
 										<c:forEach items="${vClass}" var="vClass">
 											<option value="${vClass.vehicleClassID}">${vClass.vehicleClass}</option>
 										</c:forEach>																																		
 									</select>
 									
-									<form:select path="categoryId.categoryId" class="custom-select custom-select-sm mb-4" id="testCat" onchange="findBestLane()" required="true">									
+									<select class="custom-select mb-4" id="testCat" onchange="findBestLane()" required>									
 										<option value="">Select testing category...</option>
 										<c:forEach items="${testCategory}" var="cat">
 											<option value="${cat.categoryId}">${cat.categoryType}</option>
 										</c:forEach>																																		
-									</form:select>
+									</select>
 									
-									<form:select path="lane.testLaneHeadId" class="custom-select custom-select-sm" 
+									<form:select path="lane.testLaneHeadId" class="custom-select" 
 										onchange="getFreeTimes();deleteLanemsg();" required="true" id="laneID">									
 										<form:option value=""> Select lane...</form:option>
 										<c:forEach items="${lanes}" var="lane">
@@ -107,9 +144,9 @@
 									
 							   </div>
 							</div>
-							<label class="bg-info text-white note" id="instruction">
+<!-- 							<label class="bg-info text-white note" id="instruction">
 								Please select a lane and date to show free time for appointments
-							</label>
+							</label> -->
 			            	<div class="btn-group-toggle" data-toggle="buttons" id="timeSlots">
 							</div>
 
@@ -346,26 +383,26 @@
 					   
 					  </fieldset>
 					</form:form>
-							  	
-				</div>
-							
-	
-				
-				
-				
-				
-				
+
+					<div id="overlay" onclick="off()">
+					  <div id="text">Center is closed now !</div>
+					  <!-- <div id="text2">Opens 8 AM to 5 PM</div> -->
+					  <div id="text3"><a href="Dashboard" class="btn btn-success"> Back to Home</a></div>
 					</div>
-				
+
+				</div>		
 			</div>	
-			<%@include file="../WEB-INF/jsp/footer.jsp"%>			
+			<%-- <%@include file="../WEB-INF/jsp/footer.jsp"%>	 --%>		
 		</div>
 	</div>
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
 
-<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-<script src="resources/jQuery/appointmentForm.js"></script>
+	<!-- Page level custom scripts -->
+	<script src="resources/jQuery/appointmentForm.js"></script>
+	
+	<script
+		src="<c:url value='resources/vendor/jquery-easing/jquery.easing.min.js'/>"
+		type="text/javascript"></script>
 
 
 
@@ -692,6 +729,27 @@ function goAsNewOne() {
 			
 		
 		return formValid;
+	}
+</script>
+
+<script>
+	function checkCloseTime() {
+		$.ajax({
+		    type: 'GET',
+		    url: "checkCloseTime",
+		    success: function(data){
+
+		    	if (data == true) {
+		    		document.getElementById("overlay").style.display = "block";
+				}else{
+					document.getElementById("overlay").style.display = "none";
+				}
+		    },
+		    error:function(){
+		        //alert("error");
+		    }
+		
+		});
 	}
 </script>
 
