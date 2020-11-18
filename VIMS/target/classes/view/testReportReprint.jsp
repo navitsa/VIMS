@@ -94,7 +94,8 @@
 	</div>
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
 
-<!--    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script> -->
+	<script src="resources/assets/js/plugin/datatables/datatables.min.js"></script>
+	
 	<script>
 	$(document).ready(function() {
 	    $('#example').DataTable( {

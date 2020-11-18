@@ -42,19 +42,20 @@
 	
 	
 	<script src="resources/assets/js/file-input.js"></script>
-	 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-		<script
-		src="https://cdn.datatables.net/rowgroup/1.1.1/js/dataTables.rowGroup.min.js"></script> 
+	<!--  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script> -->
+<!-- 		<script
+		src="https://cdn.datatables.net/rowgroup/1.1.1/js/dataTables.rowGroup.min.js"></script>  -->
 	 
 	   
-  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-  
-          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script> 
-
-		    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-	    
-	    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	  
+	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+	  
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+	   
+	  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	  
+	  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	 
 	<script type="text/javascript">
 

@@ -24,7 +24,7 @@
 	<script src="resources/assets/js/plugin/datatables/datatables.min.js"></script>
 
 	<!-- Bootstrap Notify -->
-	<script src="resources/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<!-- 	<script src="resources/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script> -->
 
 	<!-- jQuery Vector Maps -->
 	<script src="resources/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
@@ -42,19 +42,20 @@
 	
 	
 	<script src="resources/assets/js/file-input.js"></script>
-	 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-		<script
-		src="https://cdn.datatables.net/rowgroup/1.1.1/js/dataTables.rowGroup.min.js"></script> 
+	<!--  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script> -->
+<!-- 		<script
+		src="https://cdn.datatables.net/rowgroup/1.1.1/js/dataTables.rowGroup.min.js"></script>  -->
 	 
 	   
-  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-  
-          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script> 
-
-		    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-	    
-	    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	  
+	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+	  
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+	   
+	  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	  
+	  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	 
 	<script type="text/javascript">
 
@@ -81,9 +82,9 @@
 			        
 						
 			            for(var i=0; i<data.length+1; i++){
-			            	if(data[i].roleassignPK.roleID.roleID!="000"){
-			            document.getElementById(data[i].roleassignPK.roleID.desc.split("-")[0]).hidden = false;
-			            document.getElementById(data[i].roleassignPK.roleID.desc.split("-")[1]).hidden = false;
+			            	if(data[i].levelManagePK.roleID.roleID!="000"){
+			            document.getElementById(data[i].levelManagePK.roleID.desc.split("-")[0]).hidden = false;
+			            document.getElementById(data[i].levelManagePK.roleID.desc.split("-")[1]).hidden = false;
 			            	}
 			            }
 
