@@ -35,7 +35,7 @@
 </style>
 	
 </head>
-<body>
+<body onload="Reading()">
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -65,35 +65,23 @@
 								
 								
 							</ul>
+<div class="dropdown float-right">
+	<button type="button" class="btn btn-sm" data-toggle="dropdown">
+	   <i class="fa fa-ellipsis-v" style="font-size:22px;color:blue"></i>
+	</button>
+	<div class="dropdown-menu">
+		<a class="dropdown-item" href="previousResults">Previous Reports</a>
+	</div>
+</div>
 						</div>
+
 
 	              <!-- Card -->
 	              <div class="card shadow mb-4">
-	                <div class="card-header py-3">
-		                <div class="row">
-		                	<div class="col-sm-8">
-							 <h6 class="m-0 font-weight-bold text-primary">Test Results</h6>
-							 </div>
-							 <div class="col-sm-4">
-								 <div class="dropdown float-right">
-	<!-- 							  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-								   More
-								  </button> -->
-									  <button type="button" class="btn btn-sm" data-toggle="dropdown">
-									   <i class="fa fa-ellipsis-v" style="font-size:22px;color:blue"></i>
-									  </button>
-								  <div class="dropdown-menu">
-								    <a class="dropdown-item" href="previousResults">Previous Reports</a>
-								  </div>
-								</div>
-							</div>
-						</div>	
-	                </div>
 	                <div class="card-body">
 						<!-- <input type="button" class="btn btn-primary btn-sm" value="Read Test Results" onclick="Reading()"> -->
 	                	<!-- <input type="button" class="btn btn-primary btn-sm" value="Read Emission Results (AVL DB)" onclick="ReadingEmissionResults()"> -->
 	                	<!-- <input type="button" class="btn btn-primary btn-sm" value="Download file from FTP" onclick="download()"> -->
-	                	<br>
 	                	
 							<div class="table-responsive-lg">
 								<table class="table table-sm">
@@ -144,7 +132,7 @@
 	function Reading()
 	{
 		//window.location.href = "readingTestValues";
-		document.getElementById("overlay").style.display = "block";
+		//document.getElementById("overlay").style.display = "block";
 		
 		$.ajax({
 		    type: 'GET',
