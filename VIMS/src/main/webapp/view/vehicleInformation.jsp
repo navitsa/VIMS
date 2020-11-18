@@ -501,7 +501,7 @@
 				<!-- Card Body -->
 				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 600px;">	
 					<div class="row" >
-								<div class="col-sm-12" id="ocrVehicle">
+								<div class="col-mb-12" id="ocrVehicle">
 	
 																	
 								</div>
@@ -762,28 +762,32 @@
 			        		}
 		        		
 						
-		        		
+		        		var encodedString = btoa(data[i].noimage);
 
+		        	//	alert(""+encodedString);
 		        		
 		        		
-		        		
-	        			 selected_option = "<a href='"+link+"'><div class='row' >"+
-	 					
-	 					"<div class='col-sm-12'>"+
+	        			 selected_option = 
+	        	"<a href='"+link+"'>"+	        			
+	 					"<div class='col-mb-8'>"+
 	 						"<div class='row'>"+
 	 							"<div class='col-sm-12'>"+
 	 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].ocrVid+"</div>"+
 	 							"</div>"+
 	 						"</div>"+
 
- 						"<div class='row'>"+
-							"<div class='col-sm-12'>"+
-								"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+data[i].ocrid+"</div>"+
-						"</div></div>"+
-						statu+"<hr/></div></a><hr/>";
-	        			 
-	        		
-
+ 							"<div class='row'>"+
+								"<div class='col-sm-12'>"+
+									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+data[i].ocrid+"</div>"+
+								"</div>"+
+							"</div>"+
+							"<img src='data:image/jpg;base64,"+encodedString+" width='90' height='80' alt='No image' />"+
+							statu+"<hr/>"+
+						"</div>"+
+					"</a>";
+					"<div class='col-mb-4'>"+
+					
+					"</div>"
 	            	 slctSubcat.append(selected_option);	
 	        	}
 

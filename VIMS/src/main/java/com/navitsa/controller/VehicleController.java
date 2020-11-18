@@ -574,6 +574,9 @@ public class VehicleController {
 		}
 		session.setAttribute("vMvid", vehicleID);
 		
+
+		mav.addObject("vvid",vehicleID);
+		
 		return mav;
 	}
 
@@ -769,7 +772,9 @@ public class VehicleController {
 		
 		session.setAttribute("vRvid", vid);
 		session.setAttribute("vRocr", id);
-		
+
+		m.addAttribute("ocid",id);
+		m.addAttribute("vvid",vid);
 		
 		List<TestLaneHead> allCenterLane=laneServices.getTestLaneHeadDetailByCenter(session.getAttribute("centerid")+"");
 		m.addAttribute("allLane",allCenterLane);
@@ -3627,8 +3632,7 @@ public class VehicleController {
 			VehicleMaster vm=vehicleService.getVMasterById(vecNo);
 			
 			documentCheckHead.setVehicleID(vm);
-			OcrDetails ocrDetails=new OcrDetails();
-			ocrDetails.setOcrid(Integer.parseInt(id));
+			OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));;			
 			documentCheckHead.setOcrid(ocrDetails);
 			documentCheckHead.setStatus("ACTIVE");
 			
@@ -3650,10 +3654,10 @@ public class VehicleController {
 			
 			documentScrvice.saveAllDocumentCheckDetails(docCheckDetailsList);
 
-//            OcrDetails ocrDetails=vehicleService.getOcrDetailsById();
+          // OcrDetails ocrDetails=vehicleService.getOcrDetailsById();
 //			
-//    		ocrDetails.setVrStatus("completed");
-//    		vehicleService.saveOcrDetailsRepo(ocrDetails);
+			ocrDetails.setDocStatus("completed");
+    		vehicleService.saveOcrDetailsRepo(ocrDetails);
 			
 			
 			//return "checkDocument";

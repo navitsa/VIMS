@@ -156,7 +156,7 @@
 				<form:form  modelAttribute="VehicleRegistration" method="POST" id="formVehicleRegistration">
 					<!-- Card -->
 		<!-- Area Chart -->
-		
+		<form:input class="form-control" path="centermaster.center_ID" id="icenterId" value='<%=session.getAttribute("centerid")%>'  readonly="true" type="hidden"  />
 	 <div class="row">	
 		<div class="col-xl-8 col-lg-6">
 			<div class="card shadow mb-4">
@@ -1153,6 +1153,53 @@
 		    }
 		  });
 	});
+	
+	function saveCheckDocment() {
+
+		var request_method = $("#savaCheckdocid").attr("method"); //get form GET/POST method
+		
+		// Get form
+		var form = $('#savaCheckdocid')[0];
+
+		// Create an FormData object
+		var data = new FormData(form);
+		
+		//alert("Error "+form_data);
+		$.ajax({
+
+			url : "savaCheckDocument",
+			type : request_method,
+			enctype : 'multipart/form-data',
+			data : data,
+			processData : false,
+			contentType : false,
+			cache : false,
+			success : function(data) {
+				
+	 			if (data == "1") {
+					swal("Good job!", "You clicked the button!", {
+						icon : "success",
+						buttons : {
+							confirm : {
+								className : 'btn btn-success'
+							}
+						},
+					});
+	 			}else{
+	 				alert("Data not Save");
+	 			}
+	 			
+
+
+			}
+
+		});
+		
+
+
+	}
+	
+	
 	</script>
 
 </body>

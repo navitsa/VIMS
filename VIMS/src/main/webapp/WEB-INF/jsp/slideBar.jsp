@@ -259,7 +259,7 @@
 				<a class="collapse-item fontst-sb-it" href="vehicalRecCOPY" hidden="true" id="vehicalRecCOPY">Reprint Receipts</a>
 				<a class="collapse-item fontst-sb-it" href="vehicalRecCancel" hidden="true" id="vehicalRecCancel">Receipt Cancel</a>
 				<a class="collapse-item fontst-sb-it" href="vehicalInvCOPY"  id="vehicalInvCOPY">Reprint Credit Invoice</a>
-				<a class="collapse-item fontst-sb-it" href="vehicalInvCancel" hidden="true" id="vehicalInvCancel">Invoice Cancel</a>
+				<a class="collapse-item fontst-sb-it" href="vehicalInvCancel"  hidden="true" hidden="true" id="vehicalInvCancel">Invoice Cancel</a>
 				<a class="collapse-item fontst-sb-it" href="revenueStatementPrivew" hidden="true" id="revenueStatementRpt">Revenue Statement</a>
 				<a class="collapse-item fontst-sb-it" href="invoiceSummaryReport" hidden="true" id="invoiceSummaryReport">Invoice Summary Report</a>
 				<a class="collapse-item fontst-sb-it" href="incomingPayment"  hidden="true" id="incomingPayment">Incoming Payment</a>				
@@ -270,7 +270,7 @@
 				<a class="collapse-item fontst-sb-it" href="outgoingPayments"  hidden="true" id="outgoingPayments">Outgoing Payments</a>
 				<a class="collapse-item fontst-sb-it" href="reprintOutgoingPayments" hidden="true"  id="reprintOutgoingPayments">Reprint Outgoing Payments</a>
 				<a class="collapse-item fontst-sb-it" href="OutgoingPaymentsDetailsReport"  hidden="true" id="OutgoingPaymentsDetailsReport">Outgoing Payments Report</a>
-				<a class="collapse-item fontst-sb-it" href="chequePrint"   id="chequePrint">Cheque Print</a>
+				<a class="collapse-item fontst-sb-it" href="chequePrint"  hidden="true" id="chequePrint">Cheque Print</a>
 			</div>
 		</div>
 	</li>
