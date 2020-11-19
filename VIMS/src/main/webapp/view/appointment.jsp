@@ -14,7 +14,8 @@
 <head>
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
 	<link href="resources/css/appointmentForm.css" rel="stylesheet">
-
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"/>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <style>
@@ -390,12 +391,14 @@
 					  <div id="text3"><a href="Dashboard" class="btn btn-success"> Back to Home</a></div>
 					</div>
 
+
 				</div>		
 			</div>	
 			<%-- <%@include file="../WEB-INF/jsp/footer.jsp"%>	 --%>		
 		</div>
 	</div>
-<%@include file="../WEB-INF/jsp/commJs.jsp"%>
+	
+	<%@include file="../WEB-INF/jsp/commJs.jsp"%>
 
 	<!-- Page level custom scripts -->
 	<script src="resources/jQuery/appointmentForm.js"></script>
@@ -404,11 +407,11 @@
 		src="<c:url value='resources/vendor/jquery-easing/jquery.easing.min.js'/>"
 		type="text/javascript"></script>
 
-
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <script type="text/javascript">
         $(function () {
-        	
             $('#datetimepicker1').datetimepicker({
                 inline: true,
                 sideBySide: true,
