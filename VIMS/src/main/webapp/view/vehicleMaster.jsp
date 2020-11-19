@@ -218,16 +218,12 @@
 			             <div class="row">
 			             	<div class="col-sm-3">
 <%-- 			             		<c:if test = "${imgVe == null}"> --%>
-			             			<img src="data:image/jpg;base64,${imgVe}" class="capCam"  id="results"/>
+			             			<img src="data:image/jpg;base64,${imgVe}" class="capCam"  id="results" onerror="this.onerror=null; this.src='resources/img/car-placeholder.jpg'"/>
 			             			<input class="form-control textred" id="ocid" name="ocid"  value="${ocid}" type="hidden" />
 <%-- 			             		</c:if>	 --%>
 			             	</div>
 			             	<div class="col-sm-4">
-			             									<table id="ocrdetails" class="table1 myTable table table-sm table-wrapper-scroll-y my-custom-scrollbar" style="height: 112px;">                	
-									<tbody id="ocrdetailstbody">									
-									
-									</tbody>
-								</table>
+			             			
 
 			             	
 			             	</div>
@@ -774,7 +770,7 @@
 					</div>	
 					<div class="row">
 						<div class="col-sm-12 justify-content-end">
-			             	<button type="submit" class="btn btn-success btn-block">Proceed to Lane Register</button>
+			             	<button type="submit" class="btn btn-success btn-block">Proceed to Lane Entry</button>
 						</div>
 
 
@@ -1538,68 +1534,7 @@ function getMakeV()
 	
 }     	
    	
-takeAutoNo();
-function takeAutoNo() {
-	 
-	
-	
-	
-	var autoValue=document.getElementById('autoValue').value;
-
-	if(autoValue.split("-")[0].substring(0,1)=="0"){
-
-//	 var str = document.getElementById("ocrid").value;
-//	 var y=0;
-//	 if(str!=""){
-//		 y=str;					 
-//	 }
-//	document.getElementById("lice-msg").style.display = "none";
-//	document.getElementById("loader").style.display = "block";
-//	document.getElementById("cam-click").style.display = "none";
-		
-	
-//	var jsonfile={id:y,mthod:meth};
-	$.ajax({
-
-	    type: 'POST',
-	    url: "takeOcrNo", 
-	    data: {"method":"vmStatus"},
-       success: function(data){
-       	
-//            var slctSubcat=$('#ocrdetails'), option="";
-//            slctSubcat.empty();
-//            selected_option = "  <tr><td></td></tr>"
-//            slctSubcat.append(selected_option);
-       	
-      	$("#ocrdetails tbody").empty();
-			for(var i=0; i<data.length; i++){
-			
-				var markup =  "<tr data-folder='ghjgh'><td>"+ data[i].ocrVid+ "</td>"
-		           // +"<td><img src=data:image/jpg;base64,"+ data[i].noimage+" style='height:20px; width:30px;'></td>"
-		            +"<td style='display:none;'>"+ data[i].noimage+"</td>"
-		            +"<td style='display:none;'>"+ data[i].ocrid+"</td>"
-		            +"<td style='display:none;'>"+ data[i].vehicletype+"</td>"
-		            +"</tr>";
-					
-		            //;
-		            $("#ocrdetails tbody").append(markup);
-          	 }
-       	
-       	
-   
-  	
-     	
-       },
-       error:function(){
-       	alert("Error");
-       }
-	 });
-
-}
-//	});
-
-}	
-   	
+	 	
 var table = document.getElementsByTagName("table")[0];
 var tbody = table.getElementsByTagName("tbody")[0];
 tbody.onclick = function (e) {

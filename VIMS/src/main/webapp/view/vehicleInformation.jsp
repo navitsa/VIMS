@@ -279,29 +279,35 @@
 				
 									 <div class="row">
 											<div class="col-sm-6">
-												<div class="row">
+<!-- 												<div class="row"> -->
 												
-							         			<a href="#" class="" onClick="takeAutoNo()" id="cam-click">
-							             		<i class="fa fa-refresh  fa-spin" style="font-size:24px"></i> 
-							             		</a>														
-												</div>
+<!-- 							         			<a href="#" class="" onClick="takeAutoNo()" id="cam-click"> -->
+<!-- 							             		<i class="fa fa-refresh  fa-spin" style="font-size:24px"></i>  -->
+<!-- 							             		</a>														 -->
+<!-- 												</div> -->
 												<br>
 												<div class="row">
-												<input type="hidden" value='<%=session.getAttribute("vehicleAutoConfig")%>' id="autoValue" >
-													<table id="ocrdetails" class="myTable table table-sm table-wrapper-scroll-y my-custom-scrollbar" style="height: 112px;">                	
-				
-														<tbody>
-														
-														
-														</tbody>
-				
-													</table>	
+													<div class="col-sm-12">
+														<input type="hidden" value='<%=session.getAttribute("vehicleAutoConfig")%>' id="autoValue" >
+														<table id="ocrdetails" class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 112px;">                	
+					
+															<tbody>
+															
+															
+															</tbody>
+					
+														</table>	
+													</div>	
 												</div>
-												<div class="row">
-												<a href="#" class="" onClick="takeSnapshot();" id="more">More..</a>	
+												<br>
 												
-												<div class="spinner-grow" role="status" id="moreLoder" style="display: none;">
-												  <span class="sr-only" >Loading...</span>
+												<div class="row">
+													<div class="col-sm-12">
+														<a href="#" class="" onClick="takeSnapshot();" id="more">More..</a>	
+													
+														<div class="spinner-grow" role="status" id="moreLoder" style="display: none;">
+													  	<span class="sr-only" >Loading...</span>
+													 </div>
 												</div>
 																								
 												
@@ -312,7 +318,7 @@
 												
 												</div>
 												<div class="row">
-													<input type="file" class="" id="num_img"  accept="image/*" capture="user"  />	
+													<input type="file" class="" id="num_img"  accept="image/*" capture="user"  style="display: none;" />	
 												</div>
 												
 												
@@ -496,10 +502,10 @@
 				<!-- Card Header - Dropdown -->
 				<div class="card-header py-2 d-flex flex-row align-items-center">
 <!-- 					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/> -->
-					<h6 class="m-0 font-weight-bold text-primary">Pending Lane Registrations</h6>
+					<h6 class="m-0 font-weight-bold text-primary">Pending Lane Registrations</h6><span class="badge badge-pill badge-warning" id="pendingVehic" style="font-size:15px; font-weight: 900; color:black; border-radius: 50%;"></span>
 				</div>
 				<!-- Card Body -->
-				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 600px;">	
+				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 630px;">	
 					<div class="row" >
 								<div class="col-mb-12" id="ocrVehicle">
 	
@@ -519,10 +525,10 @@
 				<!-- Card Header - Dropdown -->
 				<div class="card-header py-2 d-flex flex-row align-items-center">
 <!-- 					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/> -->
-					<h6 class="m-0 font-weight-bold text-primary">Pending Appointment</h6>
+					<h6 class="m-0 font-weight-bold text-primary">Pending Appointment</h6><span class="badge badge-pill badge-warning" id="pendingAppoi" style="font-size:15px; font-weight: 900; color:black; border-radius: 50%;"></span> 
 				</div>
 				<!-- Card Body -->
-				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 600px">	
+				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 630px">	
 					<div class="row" >
 								<div class="col-sm-12" id="asss">
 																
@@ -672,7 +678,7 @@
 		        //	alert("Error");
 		        }
 			 });
-		
+		var g=0;
 			//pending Registation
 			$.ajax({
 
@@ -682,9 +688,11 @@
 		            var slctSubcat=$('#ocrVehicle'), option="";
 		            slctSubcat.empty();
 		        	for(var i=0; i<data.length; i++){
+		        		
+		        		
 		        		var link="";
 	        			var statu="";
-		        		
+		        		g=g+1;
 // 		        		if(data[i].vmStatus=="pending"){
 // 		        			statu="<div class='row'>"+
 // 						"<div class='col-sm-12'>"+
@@ -762,14 +770,32 @@
 			        		}
 		        		
 						
-		        		var encodedString = btoa(data[i].noimage);
+		        	//	var encodedString = btoa(data[i].noimage);
 
-		        	//	alert(""+encodedString);
+		        	//	alert(data[i].noimage);
 		        		
+		        	//alert("dd");
+		        	
+		 
+	//  var enc =arrayBufferToBase64(data[i].noimage );// window.btoa(data[i].noimage);
+    
+// 	  alert(enc);
+		        	
+		        	var  img="";
+// 		        	if(data[i].noimage!=null){
+		        	//	onerror="this.src='resources/img/car-placeholder.jpg'"
+		       
+		        		img="<img src='data:image/jpg;base64,"+arrayBufferToBase64(data[i].noimage )+"' width='90' height='80' onerror='this.src='resources/img/car-placeholder.jpg';' alt='No Image'/>";	
+// 		        	}else{
+// 		        		img="<img src='resources/img/car-placeholder.jpg' width='90' height='80' alt='No image' />";	
+// 		        	}
+// 		   	<img src="resources/img/car-placeholder.jpg" class="capCam"  id="results"/>
+		        	
 		        		
 	        			 selected_option = 
-	        	"<a href='"+link+"'>"+	        			
-	 					"<div class='col-mb-8'>"+
+	        	"<div class='row'    style='padding-left:40px;'> "+	        			
+	 					"<div class='col-mb-2'></div><div class='col-mb-1'>"+
+	 					"<a href='"+link+"'>"+
 	 						"<div class='row'>"+
 	 							"<div class='col-sm-12'>"+
 	 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].ocrVid+"</div>"+
@@ -781,22 +807,35 @@
 									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+data[i].ocrid+"</div>"+
 								"</div>"+
 							"</div>"+
-							"<img src='data:image/jpg;base64,"+encodedString+" width='90' height='80' alt='No image' />"+
+							
 							statu+"<hr/>"+
+							"</a>"+
 						"</div>"+
-					"</a>";
-					"<div class='col-mb-4'>"+
 					
-					"</div>"
+					"<div class='col-mb-4'  style='padding-left:40px;'>"+
+					"<div class='row'>"+
+						"<div class='col-sm-12'>"+
+					
+					img+
+						"</div>"+
+					"</div>"+
+					
+				
+					"</div></div>";
 	            	 slctSubcat.append(selected_option);	
 	        	}
 
-   	
+		        	document.getElementById('pendingVehic').innerHTML = g;
 		        },
 		        error:function(){
 		        //	alert("Error");
 		        }
 			 });
+			
+			
+			
+			
+			
 			
 			function clickNext(){
 				alert("");
@@ -807,7 +846,17 @@
 
 	}	
 		
+	
 		
+	function arrayBufferToBase64( buffer ) {
+		var binary = '';
+		var bytes = new Uint8Array( buffer );
+		var len = bytes.byteLength;
+		for (var i = 0; i < len; i++) {
+			binary += String.fromCharCode( bytes[ i ] );
+		}
+		return window.btoa( binary );
+	}	
 	</script>
 	
 	
@@ -900,7 +949,7 @@
 		        success: function(data){
 		        
 		        if(data!=null&&data!=""){
-		        	alert(data);
+		       
 		        	$('#veclass').text(data.vmodel.vehicleClass.vehicleClass);
 		        	$('#vMnM').text( data.vmodel.vehicleMakeID.vehicleMake+' / '+data.vmodel.vehicleModel);
 		        	//$('#vModel').text(data.vmodel.vehicleModel);
@@ -1109,7 +1158,7 @@
 				 // document.write("mobile device");
 				  document.getElementById("num_img").style.display = "block";
 				 // document.getElementById("num_img_g").style.display = "block";
-				  document.getElementById("cam-click").style.display = "none";
+			//	  document.getElementById("cam-click").style.display = "none";
 				  document.getElementById("more").style.display = "none";
 				  
 				  
@@ -1118,9 +1167,9 @@
 				  // false for not mobile device
 				//    alert("error");
 				//  document.write("not mobile device");
-				  document.getElementById("num_img").style.display = "none";
+				
 				 // document.getElementById("num_img_g").style.display = "none";
-				  document.getElementById("cam-click").style.display = "block";
+				//  document.getElementById("cam-click").style.display = "block";
 				  document.getElementById("more").style.display = "block";
 				}
 			
@@ -1210,7 +1259,7 @@
 	
 			
 			
-		})
+		});
 		
 		
 		getAllPendingAppointment("");
@@ -1218,7 +1267,7 @@
 		function getAllPendingAppointment(vno){
 			
 			appointmrntNo="0";
-			
+			var hj=0;
 		//	alert(vno)
 			$.ajax({
 		        type: 'GET',
@@ -1228,7 +1277,7 @@
 		            var slctSubcat=$('#asss'), option="";
 		            slctSubcat.empty();
 		        	for(var i=0; i<data.length; i++){
-		
+		        		hj=hj+1;
 		        		if(vno==data[i].vehicle_id.vehicleID){
 		        			 status="3";
 		        			 appointmrntNo=data[i].appointmentID;
@@ -1286,7 +1335,7 @@
 		            
 		            	 slctSubcat.append(selected_option);	
 		        	}
-	
+	             document.getElementById('pendingAppoi').innerHTML = hj;
 
 		        },
 		        error:function(){

@@ -83,8 +83,8 @@ public class OcrDetails {
 		this.ocrDate = ocrDate;
 	}
 
-	public String getNoimage() {
-		return Base64.getEncoder().encodeToString(this.noimage);
+	public byte[] getNoimage() {
+		return this.noimage;
 	}
 
 	public void setNoimage(byte[] noimage) {		

@@ -175,8 +175,9 @@
 			             <div class="row">
 
 			             	<div class="col-sm-3">
+<!-- 			             	 src="resources/img/car-placeholder.jpg" -->
 			             	<%-- 			             		<c:if test = "${imgVe == null}"> --%>
-			             			<img src="data:image/jpg;base64,${imgVimg}" class="capCam"  id="results"/>
+			             			<img src="data:image/jpg;base64,${imgVimg}" class="capCam"  id="results" onerror="this.onerror=null; this.src='resources/img/car-placeholder.jpg'"/>
 <%-- 			             		</c:if>	 --%>
 			             	
 			             	
@@ -528,7 +529,7 @@
 			            <div class="col-sm-6">
 			            </div>
 						<div class="col-sm-6 justify-content-end">
-			             	<button type="button"  class="btn btn-success btn-block" onclick="checkCondition();" id="proceedLanBtn">Proceed to Lane Register in Lane</button>
+			             	<button type="button"  class="btn btn-success btn-block" onclick="checkCondition();" id="proceedLanBtn">Proceed to Lane Entry in Lane</button>
 						
 								<div class="spinner-grow" role="status" id="moreLoder" style="display: none;">
 												  <span class="sr-only" >Loading...</span>
