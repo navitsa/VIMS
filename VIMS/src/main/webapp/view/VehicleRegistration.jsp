@@ -706,43 +706,61 @@
 				        data : form_data,
 				        success: function(data){
 				      
-	 			        	if(data=="0"){
-	 			        		swal({
-	 			        			  title: "Are you sure?",
-	 			        			  text: "Your will not be able to recover this imaginary file!",
-	 			        			  type: "warning",
-	 			        			  showCancelButton: true,
-	 			        			  confirmButtonClass: "btn-danger",
-	 			        			  confirmButtonText: "Yes, delete it!",
-	 			        			  closeOnConfirm: false
-	 			        			},
-	 			        			function(){
-	 			        			  swal("Deleted!", "Your imaginary file has been deleted.", "success");
-	 			        			});
+				        	if(data=="0"){
+	 			        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'Data Transfer not Working'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+	 	 						document.getElementById("proceedLanBtn").style.display = "block";
+	 	 						document.getElementById("moreLoder").style.display = "none";
 	 			        	}else if(data=="2"){
-	 			        		swal({
-	 			        			  title: "Are you sure?",
-	 			        			  text: "Your will not be able to recover this imaginary file!",
-	 			        			  type: "warning",
-	 			        			  showCancelButton: true,
-	 			        			  confirmButtonClass: "btn-danger",
-	 			        			  confirmButtonText: "Yes, delete it!",
-	 			        			  closeOnConfirm: false
-	 			        			},
-	 			        			function(){
-	 			        			  swal("Deleted!", "Your imaginary file has been deleted.", "success");
+	 			        		Swal.fire({
+	 			        			  icon: 'error',
+	 			        			  title: 'Oops...',
+	 			        			  text: 'Data Transfer Server not found'
+	 			        			  //,footer: '<a href>Why do I have this issue?</a>'
 	 			        			});
+	 	 						document.getElementById("proceedLanBtn").style.display = "block";
+	 	 						document.getElementById("moreLoder").style.display = "none";
 	 			        	}else if(data=="3"){
-	 			        		swal({
-	 			        			  title: "Are you sure?",
-	 			        			  text: "Your will not be able to recover this imaginary file!",
-	 			        			  type: "warning",
-	 			        			  showCancelButton: true,
-	 			        			  confirmButtonClass: "btn-danger",
-	 			        			  confirmButtonText: "Yes, delete it!",
-	 			        			  closeOnConfirm: false
-	 			        			});
-	 			        	}else{ 	
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'This Vehicle Already Assigned to a Lane'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+	 			        	}else if(data=="4"){
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'XML_IN Path not Found'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else if(data=="5"){
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'ES_IN Path not Found'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else if(data=="6"){
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'Documents are not verified ! Please confirm document verification and continue'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else{ 	
 	 			        	
 	 			       		window.location.href = data;
 	 			        	}
@@ -765,42 +783,60 @@
 	 			        success: function(data){
 				      
 	 			        	if(data=="0"){
-	 			        		swal({
-	 			        			  title: "Are you sure?",
-	 			        			  text: "Your will not be able to recover this imaginary file!",
-	 			        			  type: "warning",
-	 			        			  showCancelButton: true,
-	 			        			  confirmButtonClass: "btn-danger",
-	 			        			  confirmButtonText: "Yes, delete it!",
-	 			        			  closeOnConfirm: false
-	 			        			},
-	 			        			function(){
-	 			        			  swal("Deleted!", "Your imaginary file has been deleted.", "success");
-	 			        			});
+	 			        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'Data Transfer not Working'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+	 	 						document.getElementById("proceedLanBtn").style.display = "block";
+	 	 						document.getElementById("moreLoder").style.display = "none";
 	 			        	}else if(data=="2"){
-	 			        		swal({
-	 			        			  title: "Are you sure?",
-	 			        			  text: "Your will not be able to recover this imaginary file!",
-	 			        			  type: "warning",
-	 			        			  showCancelButton: true,
-	 			        			  confirmButtonClass: "btn-danger",
-	 			        			  confirmButtonText: "Yes, delete it!",
-	 			        			  closeOnConfirm: false
-	 			        			},
-	 			        			function(){
-	 			        			  swal("Deleted!", "Your imaginary file has been deleted.", "success");
+	 			        		Swal.fire({
+	 			        			  icon: 'error',
+	 			        			  title: 'Oops...',
+	 			        			  text: 'Data Transfer Server not found'
+	 			        			  //,footer: '<a href>Why do I have this issue?</a>'
 	 			        			});
+	 	 						document.getElementById("proceedLanBtn").style.display = "block";
+	 	 						document.getElementById("moreLoder").style.display = "none";
 	 			        	}else if(data=="3"){
-	 			        		swal({
-	 			        			  title: "Are you sure?",
-	 			        			  text: "Your will not be able to recover this imaginary file!",
-	 			        			  type: "warning",
-	 			        			  showCancelButton: true,
-	 			        			  confirmButtonClass: "btn-danger",
-	 			        			  confirmButtonText: "Yes, delete it!",
-	 			        			  closeOnConfirm: false
-	 			        			});
-	 			        	}else{ 	
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'This Vehicle Already Assigned to a Lane'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+	 			        	}else if(data=="4"){
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'XML_IN Path not Found'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else if(data=="5"){
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'ES_IN Path not Found'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else if(data=="6"){
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'Documents are not verified ! Please confirm document verification and continue'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else{ 	
 	 			        	
 	 			       		window.location.href = data;
 	 			        	}
@@ -869,6 +905,15 @@
 			        			  icon: 'error',
 			        			  title: 'Oops...',
 			        			  text: 'ES_IN Path not Found'
+			        			  //,footer: '<a href>Why do I have this issue?</a>'
+			        			});
+	 						document.getElementById("proceedLanBtn").style.display = "block";
+	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="6"){
+			        		Swal.fire({
+			        			  icon: 'error',
+			        			  title: 'Oops...',
+			        			  text: 'Documents are not verified ! Please confirm document verification and continue'
 			        			  //,footer: '<a href>Why do I have this issue?</a>'
 			        			});
 	 						document.getElementById("proceedLanBtn").style.display = "block";

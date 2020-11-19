@@ -894,8 +894,9 @@ public class VehicleController {
 	
 	        	File texEsin = new File(checkTextFilePath);  
 	        	File xmlEsin = new File(checkXmlFilePath);  		
-	        	  
-	        	  
+	        	OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
+	        	
+	        if (ocrDetails.getDocStatus().equals("completed")) {  
 	            if (texEsin.isDirectory()) {
 	          
 	        	
@@ -998,7 +999,7 @@ public class VehicleController {
             	//System.out.println("ghghg="+centerMaster.getEsInPath()+"\\"+vehiclereg.getTestLaneHeadId().getLaneName()+"\\"+vehiclereg.getVid().getVehicleID()+".txt");
             	//create Next Receipt No
             	businessPartnerService.setUpdateLastRecNo(centerMaster.getPartner_ID().getPartner_ID());
-            	OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
+            	
             //	if(testFeePresent!=0) {
 	            	//insert ReceiptHead date & ReceiptDetails
 	            	ReceiptHead receiptHead=new ReceiptHead(nextRecno, vehiclereg, vehiclereg.getDate(),vehiclereg.getTime(),calTestFee,"New Vehicle Register",ocrDetails.getAppNo(),"ACTIVE");
@@ -1243,6 +1244,9 @@ public class VehicleController {
                 
 	        }else {
 	        	  return "5"; 
+	        }
+	         }else {
+	        	  return "6"; 
 	          
 	          } 
                 
