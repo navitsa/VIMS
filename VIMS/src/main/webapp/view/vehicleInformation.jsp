@@ -235,10 +235,10 @@
 								<h5 class="text-white op-7 mb-2"></h5>
 							</div>
 							<div class="ml-md-auto py-2 py-md-4">
-<!-- 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a> -->
+<!-- 								<a href="vechi" class="btn btn-white btn-border btn-round mr-2">Vehicle Status</a> -->
 <!-- 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a> -->
 <!-- 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
-<!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
+<!-- 							<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#vehicleStatusModel">Vehicle Status</a> -->
 							</div>
 						</div>
 					</div>
@@ -496,9 +496,9 @@
 					</div>
 					 </div>
 				<!-- 		===========================================================		  --> 
-				 <div class="col-xl-4">
+				 <div class="card shadow col-xl-5">
 				 
-				 			<div class="card shadow mb-4">
+				 		
 				<!-- Card Header - Dropdown -->
 				<div class="card-header py-2 d-flex flex-row align-items-center">
 <!-- 					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/> -->
@@ -506,8 +506,8 @@
 				</div>
 				<!-- Card Body -->
 				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 630px;">	
-					<div class="row" >
-								<div class="col-mb-12" id="ocrVehicle">
+					<div class="row" style="padding-left:5px;"  >
+								<div  id="ocrVehicle">
 	
 																	
 								</div>
@@ -515,7 +515,7 @@
 					
 	
 				</div>
-			</div>
+			
 				 
 				 </div>
 				<!-- 		===========================================================		  --> 
@@ -547,7 +547,7 @@
 				  </div> 
 				
 					</div>
-				
+				<%@include file="vehicleStatusModel.jsp"%>
 			</div>	
 			<%@include file="../WEB-INF/jsp/footer.jsp"%>			
 		</div>
@@ -687,6 +687,8 @@
 		        success: function(data){
 		            var slctSubcat=$('#ocrVehicle'), option="";
 		            slctSubcat.empty();
+		            var slctSubcat1=$('#vehicleSta'), option="";
+		            slctSubcat1.empty();
 		        	for(var i=0; i<data.length; i++){
 		        		
 		        		
@@ -793,36 +795,50 @@
 		        	
 		        		
 	        			 selected_option = 
-	        	"<div class='row'    style='padding-left:40px;'> "+	        			
-	 					"<div class='col-mb-2'></div><div class='col-mb-1'>"+
-	 					"<a href='"+link+"'>"+
-	 						"<div class='row'>"+
-	 							"<div class='col-sm-12'>"+
-	 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].ocrVid+"</div>"+
-	 							"</div>"+
-	 						"</div>"+
-
- 							"<div class='row'>"+
-								"<div class='col-sm-12'>"+
-									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+data[i].ocrid+"</div>"+
+	        	"<div class='row'   > "+	        			 					
+	 					"<div class='col-sm-6' >"+
+		 					"<a href='"+link+"'>"+
+		 						"<div class='row'>"+
+		 							"<div class='col-sm-12'>"+
+		 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].ocrVid+"</div>"+
+		 							"</div>"+
+		 						"</div>"+
+	
+	 							"<div class='row'>"+
+									"<div class='col-sm-12'>"+
+										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+data[i].ocrid+"</div>"+
+									"</div>"+
+								"</div>"+
+								
+								statu+"<hr/>"+
+								"</a>"+
+						"</div>"+
+					
+						"<div class='col-sm-3'  style='padding-left:20px;'>"+
+							"<div class='row'>"+
+								"<div class='col-sm-12'>"+					
+									img+
 								"</div>"+
 							"</div>"+
-							
-							statu+"<hr/>"+
-							"</a>"+
+											
 						"</div>"+
-					
-					"<div class='col-mb-4'  style='padding-left:40px;'>"+
-					"<div class='row'>"+
-						"<div class='col-sm-12'>"+
-					
-					img+
+						"<div class='col-sm-3' style='padding-left:40px;>"+
+						"<div class='row'>"+
+							"<div class='col-sm-12' >"+					
+							
+							"<button type='button' onClick='ocrDeleteEntry("+data[i].ocrid+")' class='btn btn-xs btn-danger' style='border-radius: 8px;'>Delete</button>"+
+								
+							"</div>"+
 						"</div>"+
 					"</div>"+
+
 					
-				
-					"</div></div>";
+					"</div>";
 	            	 slctSubcat.append(selected_option);	
+	            	 
+	            	 
+	            	 
+	            	 slctSubcat1.append(selected_option);
 	        	}
 
 		        	document.getElementById('pendingVehic').innerHTML = g;
@@ -831,8 +847,6 @@
 		        //	alert("Error");
 		        }
 			 });
-			
-			
 			
 			
 			
@@ -846,6 +860,67 @@
 
 	}	
 		
+	function ocrDeleteEntry(str)
+	{
+	
+		swal({
+			  title: "Are you sure?",
+			  text: "Once deleted, you will not be able to recover this imaginary file!",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+				  
+				  
+				  
+					$.ajax({
+
+					    type: 'POST',
+					    url: "changeStatusOcr", 
+					    data: {"ocrid":str},
+				        success: function(data){
+				        	if(data=="1"){
+				        
+				        	    swal("Poof! Your imaginary file has been deleted!", {
+				  			      icon: "success",
+				  			    });		
+				        	}else {
+				        		alert("Data Not Delete");
+				        		
+				        	}
+				        	takeAutoNo();
+				        	
+				        },
+				        error:function(data){
+				        	alert("Data Not Delete");
+				           
+				        }
+					 }); 
+				  
+					
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+		
+			  } else {
+			    swal("Your imaginary file is safe!");
+			  }
+			});
+		
+		
+	}
+	
 	
 		
 	function arrayBufferToBase64( buffer ) {

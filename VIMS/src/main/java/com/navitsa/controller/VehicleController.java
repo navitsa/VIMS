@@ -2186,6 +2186,7 @@ public class VehicleController {
 				ocrDetails.setVmStatus("pending");
 				ocrDetails.setVrStatus("pending");
 				ocrDetails.setDocStatus("pending");
+				ocrDetails.setStatus("ACTIVE");
 				ocrDetails.setAppNo(apoid);
 				
 				if(vtype.equals("1")||vtype.equals("3")) {
@@ -2209,7 +2210,20 @@ public class VehicleController {
 			   
 			}
 		    
-		  
+			@RequestMapping(value = "changeStatusOcr", method = RequestMethod.POST)
+			public @ResponseBody String changeStatusOcr(@RequestParam ("ocrid") String ocrid) 
+			{
+				try {		
+					OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(ocrid));					
+					ocrDetails.setStatus("INACTIVE");
+								
+					vehicleService.saveOcrDetailsRepo(ocrDetails);				
+					return "1";			    
+			   }catch(Exception e) {				   				  
+				   e.printStackTrace();
+				   return "0";
+			   }			      
+			}
 		    
 			@RequestMapping(value = "saveLicensePlate", method = RequestMethod.POST)
 			public @ResponseBody List<NumberDataBeen> saveWebCam( @RequestParam ("json") String json, @RequestParam ("id") String id) 

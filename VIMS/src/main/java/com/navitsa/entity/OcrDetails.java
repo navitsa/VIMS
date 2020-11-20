@@ -43,6 +43,9 @@ public class OcrDetails {
 	@Column(name = "appNo")
 	private String appNo;
 	
+	@Column(name = "Status")
+	private String status;
+	
 	public String getDocStatus() {
 		return docStatus;
 	}
@@ -128,9 +131,14 @@ public class OcrDetails {
 	public void setAppNo(String appNo) {
 		this.appNo = appNo;
 	}
-	
-	
-	
-	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+		
 	
 }

@@ -21,10 +21,10 @@ public interface OcrDetailsRepository extends CrudRepository<OcrDetails, Integer
 	public int setVmAndVrStatus(@Param("vmStatus")String vmStatus,@Param("vrStatus")String vrStatus,@Param("docStatus")String docStatus,@Param("ocrid")String ocrid);
 	
 	
-	@Query(value = "SELECT oc FROM OcrDetails oc where oc.vmStatus=:vmStatus and oc.vrStatus=:vrStatus and oc.docStatus=:docStatus")
+	@Query(value = "SELECT oc FROM OcrDetails oc where oc.vmStatus=:vmStatus and oc.vrStatus=:vrStatus and oc.docStatus=:docStatus and oc.vrStatus='pending' and oc.status='ACTIVE'")
 	public List<OcrDetails> pendingOcrStatusDetails(@Param("vmStatus")String vmStatus,@Param("vrStatus")String vrStatus,@Param("docStatus")String docStatus);
 	
-	@Query(value = "SELECT oc FROM OcrDetails oc where oc.vrStatus='pending' ")
+	@Query(value = "SELECT oc FROM OcrDetails oc where oc.vrStatus='pending' and oc.status='ACTIVE'")
 	public List<OcrDetails> pendingOcrDetails();
 	
 	

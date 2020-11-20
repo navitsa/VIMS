@@ -760,6 +760,15 @@
 				        			});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else if(data=="7"){
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'License Plate is not captured ! Please capture and continue'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
 				        	}else{ 	
 	 			        	
 	 			       		window.location.href = data;
@@ -832,6 +841,15 @@
 				        			  icon: 'error',
 				        			  title: 'Oops...',
 				        			  text: 'Documents are not verified ! Please confirm document verification and continue'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else if(data=="7"){
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'License Plate is not captured ! Please capture and continue'
 				        			  //,footer: '<a href>Why do I have this issue?</a>'
 				        			});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
@@ -914,6 +932,15 @@
 			        			  icon: 'error',
 			        			  title: 'Oops...',
 			        			  text: 'Documents are not verified ! Please confirm document verification and continue'
+			        			  //,footer: '<a href>Why do I have this issue?</a>'
+			        			});
+	 						document.getElementById("proceedLanBtn").style.display = "block";
+	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="7"){
+			        		Swal.fire({
+			        			  icon: 'error',
+			        			  title: 'Oops...',
+			        			  text: 'License Plate is not captured ! Please capture and continue'
 			        			  //,footer: '<a href>Why do I have this issue?</a>'
 			        			});
 	 						document.getElementById("proceedLanBtn").style.display = "block";
