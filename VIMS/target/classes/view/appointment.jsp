@@ -74,7 +74,7 @@
 </style>
 
 </head>
-<body onload="checkCloseTime()">
+<body onload="checkCloseTime()"  data-background-color="bg3">
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -94,34 +94,34 @@
 					<form:form id="msform" action="saveAppointment" method="POST" modelAttribute="appointmentForm" onsubmit="return validateForm()">
 					
 					  <!-- progressbar -->
-					  <ul id="progressbar">
+<!-- 					  <ul id="progressbar">
 					    <li class="active">Date & Time</li>
 					    <li>Vehicle Details</li>
 					    <li>Customer Details</li>
-					  </ul>
+					  </ul> -->
 					  
 					  <!-- fieldsets -->
 					  <fieldset>
-					    <h2 class="fs-title">Make your appointment</h2>
-					    <h3 class="fs-subtitle">Choose a Date & Time</h3>
+					    <h2 class="fs-title">Appointment ( offline )</h2>
+					    <!-- <h3 class="fs-subtitle">Choose a Date & Time</h3> -->
 
 							<div class="form-group row">
-							   <div class="col-lg-6">
-									<select class="custom-select mb-4" id="vClass" onchange="findBestLane()" required>									
+							   <div class="col-lg">
+									<select class="form-control mb-4" id="vClass" onchange="findBestLane()" required>									
 										<option value="">Select vehicle class...</option>
 										<c:forEach items="${vClass}" var="vClass">
 											<option value="${vClass.vehicleClassID}">${vClass.vehicleClass}</option>
 										</c:forEach>																																		
 									</select>
 									
-									<select class="custom-select mb-4" id="testCat" onchange="findBestLane()" required>									
+									<select class="form-control mb-4" id="testCat" onchange="findBestLane()" required>									
 										<option value="">Select testing category...</option>
 										<c:forEach items="${testCategory}" var="cat">
 											<option value="${cat.categoryId}">${cat.categoryType}</option>
 										</c:forEach>																																		
 									</select>
 									
-									<form:select path="lane.testLaneHeadId" class="custom-select" 
+									<form:select path="lane.testLaneHeadId" class="form-control" 
 										onchange="getFreeTimes();deleteLanemsg();" required="true" id="laneID">									
 										<form:option value=""> Select lane...</form:option>
 										<c:forEach items="${lanes}" var="lane">
@@ -130,7 +130,7 @@
 									</form:select>
 									<div id="lanemsg"><span></span></div>
 							   </div>
-							   <div class="col-lg-6">
+							   <div class="col-lg">
 							   
 									<div style="overflow:hidden;">        
 						            	<div class="form-group">
@@ -159,13 +159,24 @@
 					    <h3 class="fs-subtitle"></h3>
 					    
 							<div class="form-group row">
-								<div class="col-lg-4">
+								<div class="col-lg">
 									<form:input class="form-control form-control-sm"
-										placeholder="License Plate No." path="vehicleID"  required="true" onfocusout="getCurrentOwner(this.value)"
+										placeholder="Enter License Plate No." path="vehicleID" id="vehicleID"  required="true" onfocusout="getCurrentOwner(this.value)"
 										onkeyup="this.value = this.value.toUpperCase()"/>
 								</div>
+								OR
 								<div class="col-lg">
-									<select id="vMake" class="custom-select custom-select-sm"
+									<select class="form-control form-control-sm" onchange="getCurrentOwner(this.value)">
+										<option value="">Select License Plate No.</option>
+										<c:forEach items="${ocr_vehicles}" var="ocr">
+											<option value="${ocr.ocrVid}">${ocr.ocrVid}</option>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-lg">
+									<select id="vMake" class="form-control form-control-sm"
 										onchange="getModel(this.value);getMakeLogo()" required>
 										<option value="">Select Make...</option>
 											<c:forEach items="${vMake}" var="vMake">
@@ -176,7 +187,7 @@
 								</div>
 								<div class="col-lg">
 									<form:select path="vmodel.vehicleModelID" id="vehicleModelID"
-										class="custom-select custom-select-sm" onchange="getModelImage()"
+										class="form-control form-control-sm" onchange="getModelImage()"
 										required="true">
 										<form:option value="">Select Model...</form:option>
 											<c:forEach items="${vmodel}" var="model">
@@ -187,9 +198,9 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<div class="col-lg-4">
+								<div class="col-lg">
 									<div class="form-inline">
-										<form:select class="custom-select custom-select-sm mb-2 mr-sm-2" 
+										<form:select class="form-control form-control-sm mb-2 mr-sm-2" 
 											id="fuelType" path="ftype.fuelTypeID" required="true">
 											<option value="">Fuel Type...</option>
 											<c:forEach items="${fuelType}" var="fuel">
@@ -201,29 +212,32 @@
 								</div>
 							</div>
 
-							<label class="bg-info text-white note">
+<!-- 							<label class="bg-info text-white note">
 								Note : If you can fill in the vehicle details below, You can save more time at the gate entrance !
-							</label>
+							</label> -->
 							
-							<div class="card mb-4">
-								<a href="#collapse" class="d-block card-header bg-primary" 
-									data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapse">
-									<h6 class="m-0 font-weight-bold text-white">More Details</h6>
-								</a>
-								<div class="collapse hide" id="collapse">
+							<div class="accordion accordion-secondary">
+							<div class="card">
+								<div class="card-header collapsed" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+
+									<div class="span-title">
+										If you can fill in the vehicle details below, You can save more time at the gate entrance !
+									</div>
+									<div class="span-mode"></div>
+								</div>
+								<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
 									<div class="card-body">
-									
 										<div class="form-group row">
 										
 											<div class="form-inline">
 
-												<label for="" class="mr-sm-2 fontst">Registered Year</label>
+												<label for="registeredYear" class="mr-sm-2">Registered Year</label>
 <%-- 												<form:input type="text" class="form-control mb-2 mr-sm-2 datetimepicker-input" 
 													id="datetimepicker2" data-toggle="datetimepicker" 
 													data-target="#datetimepicker2" style="width: 90px" path="registeredYear"/> --%>
 
-													<form:input type="text" class="form-control mb-2 mr-sm-2" 
-													style="width: 80px" path="registeredYear"/>
+													<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2" 
+													style="width: 80px" path="registeredYear" id="registeredYear"/>
 												
 												<i class="fa fa-calendar mb-2" style="color:black;"></i>
 
@@ -232,32 +246,32 @@
 												  id="registeredYear" style="width: 80px" /> -->
 										</div>
 										<div class="form-group row">
-											<label for="chassisNo" class="fontst">VIN (Chassis Number)</label>
-											<form:input class="form-control v-chno" id="chassisNo" maxlength="17"
+											<label for="chassisNo">VIN (Chassis Number)</label>
+											<form:input class="form-control form-control-sm v-chno" id="chassisNo" maxlength="17"
 												onkeyup="this.value = this.value.toUpperCase();" path="chassisNo"/>
 										</div>
 										<div class="form-group row">
 											<div class="form-inline">
-												<label for="" class="mr-sm-2 fontst">Manufactured Year</label>
+												<label for="manufactureYear" class="mr-sm-2">Manufactured Year</label>
 <%-- 												<form:input type="text" class="form-control mb-2 mr-sm-2 datetimepicker-input" 
 													id="datetimepicker3" data-toggle="datetimepicker" 
 													data-target="#datetimepicker3" style="width: 80px" path="manufactureYear"/> --%>
 													
-													<form:input type="text" class="form-control mb-2 mr-sm-2" 
-													style="width: 80px" path="manufactureYear"/>
+													<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2" 
+													style="width: 80px" path="manufactureYear" id="manufactureYear"/>
 												<i class="fa fa-calendar mb-2 mr-sm-4" style="color:black;"></i>
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="form-inline">
-												<label for="engno" class="mr-sm-4 fontst">Engine No.</label>
+												<label for="engno" class="mr-sm-4">Engine No.</label>
 												<form:input class="form-control form-control-sm" id="engno"
 													onkeyup="this.value = this.value.toUpperCase();" path="engineNo"/>
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="form-inline">
-												<label for="engineCapacity" class="mr-sm-2 fontst">Capacity</label>
+												<label for="engineCapacity" class="mr-sm-2">Capacity</label>
 												<form:input class="form-control form-control-sm mb-2 mr-sm-2" 
 													id="engineCapacity" style="width: 80px" path="engineCapacity"/>
 												<label class="mb-2 mr-sm-4 fontst">CC</label>
@@ -267,8 +281,8 @@
 										</div>
 										<div class="form-group row">
 											<div class="form-inline">
-												<label for="axles" class="mr-sm-2 fontst">No of Axles</label>
-												<form:select class="custom-select custom-select-sm mb-2 mr-sm-4" 
+												<label for="axles" class="mr-sm-2">No of Axles</label>
+												<form:select class="form-control form-control-sm mb-2 mr-sm-4" 
 													id="axles" path="noWheel">
 													<form:option value="1">1</form:option>
 													<form:option selected="true" value="2">2</form:option>
@@ -281,8 +295,8 @@
 													<form:option value="9">9</form:option>
 												</form:select>
 												
-												<label class="mr-sm-2 fontst">Emission Norms</label>
-													<form:select path="emissionNorms"  class="custom-select custom-select-sm">
+												<label class="mr-sm-2">Emission Norms</label>
+													<form:select path="emissionNorms" id="emissionNorms"  class="form-control form-control-sm">
 														<form:option value="">--SELECT--</form:option>
 														<form:option value="2/3 WHEELER">2/3 WHEELER</form:option>
 														<form:option value="4W Pre Bh.II">4W Pre Bh.II</form:option>
@@ -293,11 +307,12 @@
 													</form:select>
 
 											</div>
-										</div>
-										
-									</div> <!-- Card body end -->
+										</div>			
+									</div>
 								</div>
-							</div> <!-- Card end -->
+							</div>
+							</div>				
+
 							
 						<input type="button" name="previous" class="previous action-button" value="Previous" />
 					    <input type="button" name="next" class="next action-button" value="Next" />
@@ -311,7 +326,7 @@
 
 							<div class="form-group row">
 								<div class="col-lg-6">
-									<form:select path="customer_owner_status" class="custom-select custom-select-sm" 
+									<form:select path="customer_owner_status" class="form-control form-control-sm" 
 									required="true" onchange="goAsNewOne()">										
 										<form:option selected="true" value="owner">Owner</form:option>
 										<form:option value="customer">Customer</form:option>																																		
@@ -331,7 +346,7 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-lg-3">
-									<form:select path="cusTitle" id="cusTitle" class="custom-select custom-select-sm" 
+									<form:select path="cusTitle" id="cusTitle" class="form-control form-control-sm" 
 									required="true">										
 										<form:option selected="true" value="Mr">Mr</form:option>
 										<form:option value="Mrs">Mrs</form:option>
@@ -359,7 +374,7 @@
 							<div class="form-group row">
 								<div class="col-lg-6">						
 									<%-- <form:textarea class="form-control" path="address" placeholder="Address" id="address"/> --%>
-						             <form:select  path="stateid.stateid" class="custom-select custom-select-sm" id="stateid">
+						             <form:select  path="stateid.stateid" class="form-control form-control-sm" id="stateid">
 										<form:option value="">Select State...</form:option>
 										<c:forEach items="${countryStates}" var="state">
 											<form:option value="${state.stateid}">${state.state}</form:option>
@@ -381,6 +396,7 @@
 							
 					    <input type="button" name="previous" class="previous action-button" value="Previous" />
 					    <input type="submit" name="submit" class="submit action-button" value="Submit"/>
+					    <!-- <button type="submit" class="btn btn-success action-button">Submit</button> -->
 					   
 					  </fieldset>
 					</form:form>
@@ -646,6 +662,19 @@ function getCurrentOwner(vehicleNo){
 			    	document.getElementById("postalCode").value = data.postalBox;
 			    	document.getElementById("city").value = data.city;
 			    	document.getElementById("stateid").value = data.stateid.stateid;
+			    	
+			    	document.getElementById("vMake").value = data.vehicleID.vmodel.vehicleMakeID.vehicleMakeID;
+			    	document.getElementById("vehicleModelID").value = data.vehicleID.vmodel.vehicleModelID;
+			    	document.getElementById("fuelType").value = data.vehicleID.ftype.fuelTypeID;
+			    	
+			    	document.getElementById("registeredYear").value = data.vehicleID.registeredYear;
+			    	document.getElementById("chassisNo").value = data.vehicleID.chassisNo;
+			    	document.getElementById("manufactureYear").value = data.vehicleID.manufactureYear;
+			    	document.getElementById("engno").value = data.vehicleID.engineNo;
+			    	document.getElementById("engineCapacity").value = data.vehicleID.engineCapacity;
+			    	document.getElementById("axles").value = data.vehicleID.noWheel;
+			    	document.getElementById("emissionNorms").value = data.vehicleID.emissionNorms;
+			    	document.getElementById("vehicleID").value = data.vehicleID.vehicleID;
 		    	}else{
 		    		goAsNewOne();
 		    	}

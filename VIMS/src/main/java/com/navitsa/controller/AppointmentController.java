@@ -1,9 +1,5 @@
 package com.navitsa.controller;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,6 +27,7 @@ import com.navitsa.entity.CountryMaster;
 import com.navitsa.entity.CountryState;
 import com.navitsa.entity.Customer;
 import com.navitsa.entity.FuelType;
+import com.navitsa.entity.OcrDetails;
 import com.navitsa.entity.TestCategory;
 import com.navitsa.entity.TestLaneHead;
 import com.navitsa.entity.VehicleClass;
@@ -346,7 +343,7 @@ public class AppointmentController {
 	@RequestMapping(value="/getCurrentOwner", method=RequestMethod.GET)
 	public @ResponseBody VehicleOwner getCurrentOwner(@RequestParam String vehicelNo){
 		
-		System.out.println("abc "+vehicelNo);
+		//System.out.println("abc "+vehicelNo);
 		return vehicleService.getVehicleOwnerIDByVehicleID(vehicelNo);
 	}
 	
@@ -386,6 +383,23 @@ public class AppointmentController {
           System.out.println(e);
         }
 	}
+
+	@RequestMapping("/appointmentOffline")
+	public String loadingAppointmentOfflineForm(Model m) {
+		
+		AppointmentForm newApointment = new AppointmentForm();
+		m.addAttribute("appointmentForm", newApointment);
+		return "appointmentOffline";	
+	}
 	
+	@ModelAttribute("ocr_vehicles")
+	public List<OcrDetails> get_ocr_vehicles() throws ParseException {
+		
+		SimpleDateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
+		String todayDate = df2.format(new Date());
+		
+		List<OcrDetails> ocrList = appointmentService.getOCRVehicles(todayDate);
+		return ocrList;
+	}
 	
 }

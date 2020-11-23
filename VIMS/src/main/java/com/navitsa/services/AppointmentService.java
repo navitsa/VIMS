@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.navitsa.entity.Appointment;
 import com.navitsa.entity.Customer;
+import com.navitsa.entity.OcrDetails;
 import com.navitsa.entity.VehicleMaster;
 import com.navitsa.repository.AppointmentRepository;
 import com.navitsa.repository.CustomerRepository;
+import com.navitsa.repository.OcrDetailsRepository;
 import com.navitsa.repository.TestLaneHeadRepository;
 import com.navitsa.repository.VehicleMasterRepository;
 
@@ -30,6 +32,9 @@ public class AppointmentService {
 	
 	@Autowired
 	private TestLaneHeadRepository testLaneHeadRepo;
+	
+	@Autowired
+	private OcrDetailsRepository ocrDetailsRepo;
 
     public String nextAppointmentId() {
     	
@@ -75,6 +80,12 @@ public class AppointmentService {
 	public String[][] findBestLane(String catid, String vclassid, String cenid) {
 		// TODO Auto-generated method stub
 		return  testLaneHeadRepo.getTestLaneHeadDetailByCenterCategoryVclass(catid,vclassid,cenid);
+	}
+
+	public List<OcrDetails> getOCRVehicles(String todayDate) {
+
+		return ocrDetailsRepo.getOCRVehicles(todayDate);
+
 	}
 	
 }
