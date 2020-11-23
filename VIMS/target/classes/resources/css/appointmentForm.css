@@ -6,9 +6,10 @@
 /*basic reset*/
 * {margin: 0; padding: 0;}
 
-body {
+/* body {
 	font-family: montserrat, arial, verdana;
-}
+} */
+
 /*form styles*/
 #msform {
 	width: 700px;
