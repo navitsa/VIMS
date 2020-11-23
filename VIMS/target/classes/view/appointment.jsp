@@ -94,11 +94,11 @@
 					<form:form id="msform" action="saveAppointment" method="POST" modelAttribute="appointmentForm" onsubmit="return validateForm()">
 					
 					  <!-- progressbar -->
-<!-- 					  <ul id="progressbar">
+					  <ul id="progressbar">
 					    <li class="active">Date & Time</li>
 					    <li>Vehicle Details</li>
 					    <li>Customer Details</li>
-					  </ul> -->
+					  </ul>
 					  
 					  <!-- fieldsets -->
 					  <fieldset>
