@@ -10,8 +10,7 @@
       </div>
       <div class="modal-body">
        
-   										<form  id="savaCheckdocid"  method="post" enctype="multipart/form-data"
-														>
+   										<form  id="savaCheckdocid"  method="post" enctype="multipart/form-data">
 
 
 														<div class="form-group row">
@@ -64,7 +63,7 @@
 
 													<table id="checkDocTable" 
 														class="table table-striped table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-														cellspacing="0" style="height: 200px;">
+														 style="height: 200px;">
 	
 														<thead>
 															<tr>
@@ -75,16 +74,16 @@
 																
 															</tr>
 														</thead>
-														<tbody id="myTable">
+														<tbody id="docTable1">
 														 
 															<c:forEach items="${documentlist}"
-																var="doc" varStatus="i"> <%--Loop Status --%>
+																var="doc1" varStatus="i"> <%--Loop Status --%>
 																<tr>
 																	<td><div>
-																	<input class="form-control form-control-sm" 	name="doc" id="doc" value="${doc.documentid}"  />
+																	<input class="form-control form-control-sm" name="doc" id="doc" value="${doc1.documentid}"  />
 																	</div></td>
-																	<td><div>${doc.description}</div></td>
-																	<td><div>${doc.remarks}</div></td>
+																	<td><div>${doc1.description}</div></td>
+																	<td><div>${doc1.remarks}</div></td>
 																	<td><div>
 <!-- 																<select class="custom-select"name="docStatus"  > -->
 <!-- 																		<option value="N/A">N/A</option> -->

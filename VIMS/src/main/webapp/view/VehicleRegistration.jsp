@@ -228,7 +228,8 @@
 									<div class="col-sm-5">	
 									
 										<form:input class="form-control fontst" path="currentMilage" id="currentMilage" required="Required" />
-									
+									<input class="form-control fontst " value='${vclassid}' type="hidden" id="vclassids"/>
+						             	
 										             		
 									</div>
 									
@@ -1051,11 +1052,11 @@
 	//getLanes();
 	
 		function getLanes() {
-	
+			
 			var icenterId=document.getElementById("icenterId").value;
 			var vci=document.getElementById("vclassids").value;
 			var catid=document.getElementById("testCat").value;
-			
+		
 
 			//	alert("ffaaaaaaff="+icenterId+"-"+vci+"-"+catid);
 				$.ajax({
@@ -1187,28 +1188,28 @@
 //      		link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid+"&appNo=0";
 //      	}
      	
-     	var table = document.getElementsByTagName("table")[0];
-     	var tbody = table.getElementsByTagName("tbody")[0];
-     	tbody.onclick = function (e) {
-     	    e = e || window.event;
-     	    var data = [];
-     	    var target = e.srcElement || e.target;
-     	    while (target && target.nodeName !== "TR") {
-     	        target = target.parentNode;
-     	    }
-     	    if (target) {
-     	        var cells = target.getElementsByTagName("td");
-     	        for (var i = 0; i < cells.length; i++) {
-     	            data.push(cells[i].innerHTML);
-     	        }
-     	    }
-     			document.getElementById('vid').value = data[0];
-     			//document.getElementById('ocid').value = data[2];
-     		//	getVMasterData(data[0]);
-     		document.getElementById('currentMilage').value = data[4];
-     			document.getElementById('results').src = "data:image/jpg;base64,"+data[1];
+//      	var table = document.getElementsByTagName("table")[0];
+//      	var tbody = table.getElementsByTagName("tbody")[0];
+//      	tbody.onclick = function (e) {
+//      	    e = e || window.event;
+//      	    var data = [];
+//      	    var target = e.srcElement || e.target;
+//      	    while (target && target.nodeName !== "TR") {
+//      	        target = target.parentNode;
+//      	    }
+//      	    if (target) {
+//      	        var cells = target.getElementsByTagName("td");
+//      	        for (var i = 0; i < cells.length; i++) {
+//      	            data.push(cells[i].innerHTML);
+//      	        }
+//      	    }
+//      			document.getElementById('vid').value = data[0];
+//      			//document.getElementById('ocid').value = data[2];
+//      		//	getVMasterData(data[0]);
+//      		document.getElementById('currentMilage').value = data[4];
+//      			document.getElementById('results').src = "data:image/jpg;base64,"+data[1];
 
-     	};
+//      	};
      	
      	
 	</script>
