@@ -565,7 +565,7 @@
 			<div class="card shadow mb-4">
 				<!-- Card Header - Dropdown -->
 				<div class="card-header py-2 d-flex flex-row align-items-center">
-					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/><h6 class="m-0 font-weight-bold text-primary">.  Pervious Registrations </h6>
+					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/><h6 class="m-0 font-weight-bold text-primary">.  Previous Registrations </h6>
 				</div>
 				<!-- Card Body -->
 				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 540px;">	

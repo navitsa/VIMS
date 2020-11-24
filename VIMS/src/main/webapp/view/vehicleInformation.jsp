@@ -256,9 +256,12 @@
 							</div>
 							<div class="ml-md-auto py-2 py-md-4">
 <!-- 								<a href="vechi" class="btn btn-white btn-border btn-round mr-2">Vehicle Status</a> -->
-<!-- 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a> -->
-<!-- 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
+								<a href="appointment" class="btn btn-white btn-border btn-round mr-2">Make Appointment</a>
+
 							<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#vehicleStatusModel" onclick="getVehicleStatus()">Vehicle Status</a>
+						
+						
+						
 							</div>
 						</div>
 					</div>
@@ -545,7 +548,7 @@
 				<!-- Card Header - Dropdown -->
 				<div class="card-header py-2 d-flex flex-row align-items-center">
 <!-- 					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/> -->
-					<h6 class="m-0 font-weight-bold text-primary">Pending Appointment</h6><span class="badge badge-pill badge-warning" id="pendingAppoi" style="font-size:15px; font-weight: 900; color:black; border-radius: 50%;"></span> 
+					<h6 class="m-0 font-weight-bold text-primary">Pending Appointments</h6><span class="badge badge-pill badge-warning" id="pendingAppoi" style="font-size:15px; font-weight: 900; color:black; border-radius: 50%;"></span> 
 				</div>
 				<!-- Card Body -->
 				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 630px">	
@@ -848,7 +851,7 @@
 						"<div class='row'>"+
 							"<div class='col-sm-12' >"+					
 							
-							"<button type='button' onClick='ocrDeleteEntry("+data[i].ocrid+")' class='btn btn-xs btn-danger' style='border-radius: 8px;'>Delete</button>"+
+							"<button type='button' onClick='ocrDeleteEntry("+data[i].ocrid+")' class='btn btn-xs btn-danger' style='border-radius: 8px;'>Remove</button>"+
 								
 							"</div>"+
 						"</div>"+
@@ -1456,31 +1459,38 @@
 						    url: "getOCRVehiclesByDates", 
 						    data: {"todayDate":date2},
 					        success: function(data){
-					     
+					     var totEntry=0;
+					     var totComDoc=0;
+					     var totComVr=0;
+					     var totComLent=0;
 					            var slctSubcat1=$('#vehicleSta'), option="";
 					            slctSubcat1.empty();
 					        	for(var i=0; i<data.length; i++){
 					        	
-					        		
+					        		totEntry=totEntry+1;
 					        		var docst="<td></td>";
 					        		var vmSta="<td></td>";
 					        		var vrcst="<td></td>";
 					        		var apo="";
 					        		
 									if(data[i].docStatus=="completed"){
-										docst="<td bgcolor='green' style='color: #000000;'>"+data[i].docStatus+"</td>";											
+										docst="<td bgcolor='green' style='color: #000000; text-align: center;'>Completed</td>";											
+										totComDoc=totComDoc+1;
 									}else{
-										docst="<td bgcolor='red' style='color: #000000;'>"+data[i].docStatus+"</td>";
+										docst="<td bgcolor='red' style='color: #ffffff; text-align: center;'>Pending</td>";
 									}
 									if(data[i].vmStatus=="completed"){
-										vmSta="<td bgcolor='green' style='color: #000000;'>"+data[i].vmStatus+"</td>";
+										vmSta="<td bgcolor='green' style='color: #000000; text-align: center;'>Completed</td>";
+										totComVr=totComVr+1;
 									}else{
-										vmSta="<td bgcolor='red' style='color: #000000;'>"+data[i].vmStatus+"</td>";
+										vmSta="<td bgcolor='red' style='color: #ffffff; text-align: center;'>Pending</td>";
 									}					        		
 									if(data[i].vrStatus=="completed"){
-										vrcst="<td bgcolor='green' style='color: #000000;'>"+data[i].vrStatus+"</td>";
+										
+										totComLent=totComLent+1;
+										vrcst="<td bgcolor='green' style='color: #000000; text-align: center;'>Completed</td>";
 									}else{
-										vrcst="<td bgcolor='red' style='color: #000000;'>"+data[i].vrStatus+"</td>";
+										vrcst="<td bgcolor='red' style='color: #ffffff; text-align: center;'>Pending</td>";
 									}
 					        		
 					        		
@@ -1489,20 +1499,70 @@
 									}else{
 										apo=data[i].appNo;
 									}
+									const event = new Date(data[i].ocrDate);
 									
 									
-									
-					        		 selected_option="<tr>"+
-					        		 "<td>"+data[i].ocrVid+"</td>"+
-					        		 "<td>"+apo+"</td>"+	 
-					        		 "<td>"+
+					        		 selected_option="<tr class='d5' style='height: 80px; border: 10px solid #f0f0e6; '>"+
+					        		 
+					        		 					        		
+					        		 "<td><div class='pull-right' style='color: #0014ed;'>"+data[i].ocrVid+"</div></br><div>"+event.toTimeString().slice(0,5)+"</div></br><div style='color: #fa6a0a;'>Gate Entry ID-"+data[i].ocrid+"</div></td>"+
+					        		 "<td style='text-align: center;'>"+apo+"</td>"+	 
+					        		 "<td style='text-align: center;'>"+
 					        		"<img src='data:image/jpg;base64,"+arrayBufferToBase64(data[i].noimage )+"' width='90' height='80' onerror='this.src='resources/img/car-placeholder.jpg';' alt='No Image'/>"+
 					        		 
 					        		 "</td>"+docst+""+vmSta+""+vrcst+"</tr>"
 					        			 
 					        		slctSubcat1.append(selected_option);	 
 					        	}
+// 							     var totEntry=0;
+// 							     var totComDoc=0;
+// 							     var totComVr=0;
+// 							     var totComLent=0;
+					 document.getElementById("totgate").innerHTML=totEntry;       	
+					    		Circles.create({
+					    			id:'circles-1',
+					    			radius:35,
+					    			value:totComDoc,
+					    			maxValue:totEntry,
+					    			width:7,
+					    			text: totComDoc,
+					    			colors:['#f1f1f1', '#FF9E27'],
+					    			duration:400,
+					    			wrpClass:'circles-wrp',
+					    			textClass:'circles-text',
+					    			styleWrapper:true,
+					    			styleText:true
+					    		})
 					        	
+		Circles.create({
+			id:'circles-2',
+			radius:35,
+			value:totComVr,
+			maxValue:totEntry,
+			width:7,
+			text: totComVr,
+			colors:['#f1f1f1', '#F25961',],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+
+		Circles.create({
+			id:'circles-3',
+			radius:35,
+			value:totComLent,
+			maxValue:totEntry,
+			width:7,
+			text: totComLent,
+			colors:['#f1f1f1', '#2BB930'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
 					        	 
 					        },
 					        error:function(data){
@@ -1517,6 +1577,13 @@
 		
 	
 	</script>
+<script>
 
+
+
+		
+
+
+	</script>
 </body>
 </html>
