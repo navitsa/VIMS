@@ -583,7 +583,9 @@ public class VehicleService {
 	public List<VehiclesSubCategory> vehiclesSubCategorylist(){
 		return (List<VehiclesSubCategory>)vehiclesSubCategoryRepository.findAll();
 	}
-	
+	public List<OcrDetails> getOCRVehiclesByDates(@Param("todayDate")String todayDate){
+		return ocrDetailsRepo.getOCRVehiclesByDates(todayDate);	
+	}
 	
 }
 

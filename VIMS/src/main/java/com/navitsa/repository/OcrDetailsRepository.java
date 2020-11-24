@@ -30,5 +30,6 @@ public interface OcrDetailsRepository extends CrudRepository<OcrDetails, Integer
 	@Query(value = "SELECT oc FROM OcrDetails oc where (oc.vmStatus='pending' OR oc.vrStatus='pending' OR oc.docStatus='pending') AND oc.ocrDate LIKE :todayDate || '%' ")
 	public List<OcrDetails> getOCRVehicles(@Param("todayDate")String todayDate);
 	
-	
+	@Query(value = "SELECT oc FROM OcrDetails oc where oc.status='ACTIVE' AND  oc.ocrDate LIKE :todayDate || '%' ")
+	public List<OcrDetails> getOCRVehiclesByDates(@Param("todayDate")String todayDate);
 }

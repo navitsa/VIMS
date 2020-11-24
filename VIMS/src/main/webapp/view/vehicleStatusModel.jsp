@@ -9,32 +9,20 @@
         <h4 class="modal-title">Vehicle Inspection Status</h4>
       </div>
       <div class="modal-body">
-       
-   	
-<!-- 				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 500px;">	 -->
-<!-- 					<div class="row" style="padding-left:5px;"  > -->
-<!-- 								<div  id="vehicleSta"> -->
-	
-																	
-<!-- 								</div> -->
-<!-- 					</div>	 -->
-					
-	
-<!-- 				</div> -->
-													
 
- 													<table id="c" class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 500px;">
+ 													<table id="nf" class="table table-bordered table-wrapper-scroll-y my-custom-scrollbar" style="height: 500px">
 	
-														<thead>
-															<tr>
-																<th>Document ID</th>
-																<th>Description</th>
-																<th>Remarks</th>
-																<th>Status</th>
-																
+														<thead >
+															<tr bgcolor="#C0C0C0">
+																<th></th>
+																<th >Appointment</th>
+																<th>License Plate</th>
+																<th>Check Document</th>
+																<th>Vehicle Registration</th>
+																<th>Lane Entry</th>
 															</tr>
 														</thead>
-														<tbody id="vehicleSta">
+														<tbody id="vehicleSta" >
 														 
 														
 														</tbody>
@@ -48,7 +36,6 @@
       </div>
       <div class="modal-footer">
       <div class="col-sm-7 mb-1 mb-sm-3">
-	<button type="button" class="btn btn-success" data-dismiss="modal" onclick="saveCheckDocment()">Save</button>
 	
 			<button type="button" class="btn btn-info" data-dismiss="modal" >Close</button>
 		</div>																

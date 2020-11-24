@@ -103,7 +103,27 @@
   }
 }
          
-         
+    .flat-table {
+  display: block;
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 115%;
+  overflow: auto;
+  width: auto;
+  
+  th {
+    background-color: rgb(112, 196, 105);
+    color: white;
+    font-weight: normal;
+    padding: 20px 30px;
+    text-align: center;
+  }
+  td {
+    background-color: rgb(238, 238, 238);
+    color: rgb(111, 111, 111);
+    padding: 20px 30px;
+  }
+}     
          
          
          
@@ -238,7 +258,7 @@
 <!-- 								<a href="vechi" class="btn btn-white btn-border btn-round mr-2">Vehicle Status</a> -->
 <!-- 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a> -->
 <!-- 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
-<!-- 							<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#vehicleStatusModel">Vehicle Status</a> -->
+							<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#vehicleStatusModel" onclick="getVehicleStatus()">Vehicle Status</a>
 							</div>
 						</div>
 					</div>
@@ -291,7 +311,7 @@
 														<input type="hidden" value='<%=session.getAttribute("vehicleAutoConfig")%>' id="autoValue" >
 														<table id="ocrdetails" class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 112px;">                	
 					
-															<tbody>
+															<tbody id="ocrdetails4" >
 															
 															
 															</tbody>
@@ -663,14 +683,17 @@
 			    url: "takeAutoNo",
 		        success: function(data){
 
-		        	$("table tbody").empty();
+		        	//$("table tbody").empty();
+		        	
+		        	 var slctSubcat1=$('#ocrdetails4'), option="";
+			            slctSubcat1.empty();
 					for(var i=0; i<data.length; i++){
 					
-						var markup =  "<tr data-folder='ghjgh'><td>"+ data[i].number+ "</td>"
+						selected_option =  "<tr data-folder='ghjgh'><td>"+ data[i].number+ "</td>"
 				            +"<td style='display:none;'>"+ data[i].noimage+"</td>"
 				            +"</tr>";
-							
-							$("table tbody").append(markup);
+				            slctSubcat1.append(selected_option);
+							//$("table tbody").append(markup);
 		           	 }
    	
 		        },
@@ -687,8 +710,7 @@
 		        success: function(data){
 		            var slctSubcat=$('#ocrVehicle'), option="";
 		            slctSubcat.empty();
-		            var slctSubcat1=$('#vehicleSta'), option="";
-		            slctSubcat1.empty();
+		    
 		        	for(var i=0; i<data.length; i++){
 		        		
 		        		
@@ -836,9 +858,7 @@
 					"</div>";
 	            	 slctSubcat.append(selected_option);	
 	            	 
-	            	 
-	            	 
-	            	 slctSubcat1.append(selected_option);
+	         
 	        	}
 
 		        	document.getElementById('pendingVehic').innerHTML = g;
@@ -1421,8 +1441,77 @@
 			//setTimeout(hideContinue,30);
 		}
 		
+		// getVehicleStatus();
+		function getVehicleStatus()
+		{
 		
-		
+			var todayDate = new Date().toISOString().slice(0,10); 			
+						
+				var date2 = new Date(todayDate);
+			//	alert(todayDate);
+					  
+						$.ajax({
+
+						    type: 'GET',
+						    url: "getOCRVehiclesByDates", 
+						    data: {"todayDate":date2},
+					        success: function(data){
+					     
+					            var slctSubcat1=$('#vehicleSta'), option="";
+					            slctSubcat1.empty();
+					        	for(var i=0; i<data.length; i++){
+					        	
+					        		
+					        		var docst="<td></td>";
+					        		var vmSta="<td></td>";
+					        		var vrcst="<td></td>";
+					        		var apo="";
+					        		
+									if(data[i].docStatus=="completed"){
+										docst="<td bgcolor='green' style='color: #000000;'>"+data[i].docStatus+"</td>";											
+									}else{
+										docst="<td bgcolor='red' style='color: #000000;'>"+data[i].docStatus+"</td>";
+									}
+									if(data[i].vmStatus=="completed"){
+										vmSta="<td bgcolor='green' style='color: #000000;'>"+data[i].vmStatus+"</td>";
+									}else{
+										vmSta="<td bgcolor='red' style='color: #000000;'>"+data[i].vmStatus+"</td>";
+									}					        		
+									if(data[i].vrStatus=="completed"){
+										vrcst="<td bgcolor='green' style='color: #000000;'>"+data[i].vrStatus+"</td>";
+									}else{
+										vrcst="<td bgcolor='red' style='color: #000000;'>"+data[i].vrStatus+"</td>";
+									}
+					        		
+					        		
+									if(data[i].appNo==0){
+										apo="N/A";
+									}else{
+										apo=data[i].appNo;
+									}
+									
+									
+									
+					        		 selected_option="<tr>"+
+					        		 "<td>"+data[i].ocrVid+"</td>"+
+					        		 "<td>"+apo+"</td>"+	 
+					        		 "<td>"+
+					        		"<img src='data:image/jpg;base64,"+arrayBufferToBase64(data[i].noimage )+"' width='90' height='80' onerror='this.src='resources/img/car-placeholder.jpg';' alt='No Image'/>"+
+					        		 
+					        		 "</td>"+docst+""+vmSta+""+vrcst+"</tr>"
+					        			 
+					        		slctSubcat1.append(selected_option);	 
+					        	}
+					        	
+					        	 
+					        },
+					        error:function(data){
+					        	alert("Data Not Delete");
+					           
+					        }
+						 }); 
+
+		}
 		
 		
 		

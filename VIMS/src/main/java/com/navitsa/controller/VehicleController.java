@@ -30,6 +30,7 @@ import javax.validation.Valid;
 import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -3733,7 +3734,13 @@ public class VehicleController {
 			List<VehiclesSubCategory> vCatList = vehicleService.vehiclesSubCategorylist();
 			return vCatList;
 		}
-		
-		
+	  	@RequestMapping(value="getOCRVehiclesByDates", method=RequestMethod.GET)		
+		public  @ResponseBody List<OcrDetails> getOCRVehiclesByDates(@RequestParam Date todayDate){
+	  		
+	  		
+	  		List<OcrDetails> vlist = vehicleService.getOCRVehiclesByDates(DateHelperWeb.getFormatStringDate2(todayDate));
+			return vlist;
+		}
+	
 }
 
