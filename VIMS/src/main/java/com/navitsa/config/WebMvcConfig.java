@@ -55,10 +55,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public MultipartResolver multipartResolver() {
 			
 		   CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-		  // multipartResolver.setMaxUploadSize(-1); //-1 = no limit
-		     multipartResolver.setMaxUploadSize(10485760); // 10MB
-		   //   multipartResolver.setMaxUploadSizePerFile(1048576); // 1MB
-	        return multipartResolver;
+		   multipartResolver.setMaxUploadSize(52428800); // 50MB
+		   
+		   return multipartResolver;
 		
 	}
 	

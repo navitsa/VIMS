@@ -15,6 +15,8 @@ import javax.persistence.Table;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.navitsa.utils.ImageResizer;
+
 @Entity
 @Table(name = "visual_checklist_details")
 public class VisualChecklistDetail {
@@ -161,7 +163,8 @@ public class VisualChecklistDetail {
 	}
 
 	public void setImage(MultipartFile image) throws IOException {
-		
+		//ImageResizer obj = new ImageResizer();
+		//obj.resize(image);
 		if(image.isEmpty())
 		{
 			this.image = null;

@@ -237,7 +237,7 @@
 													<div class="collapse" id="collapseExampleb${z.index}" data-parent="#accordion${z.index}">
 														<div class="card card-body">
 															<input type="file" class="form-control-file" accept="image/*" capture="user" name="checklistDetail[${z.index}].image">
-															<span class="required text-danger">Rear camera will be opened on android and ios devices</span>
+															<span class="required text-danger">Rear camera will be opened on android and iOS devices</span>
 													    </div>
 													</div>
 												</div>

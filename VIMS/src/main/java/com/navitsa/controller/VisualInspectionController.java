@@ -419,7 +419,7 @@ public class VisualInspectionController {
 							
 							for (VisualChecklistDetail detail1 : detail) {
 								
-								System.out.println("Partner ID"+detail1.getPartnerID());
+								//System.out.println("Partner ID"+detail1.getPartnerID());
 								//System.out.printf("%s \t %s \t %s \t %s \t %s \t %s \n",detail1.getVcm().getCheklistID(),detail1.getPartnerID(),detail1.getStage().getStageID(),detail1.getItem().getItemId());
 								if(detail1.getPartnerID() != null)
 									inspectionServices.saveChDetailData(detail1);
