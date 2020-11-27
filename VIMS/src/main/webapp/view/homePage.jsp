@@ -100,16 +100,16 @@
 						<div class="col-md-6">
 							<div class="card full-height">
 								<div class="card-body">
-									<div class="card-title">Total income & spend statistics</div>
+									<div class="card-title">Vehicle Status</div>
 									<div class="row py-3">
 										<div class="col-md-4 d-flex flex-column justify-content-around">
 											<div>
-												<h6 class="fw-bold text-uppercase text-success op-8">Total Income</h6>
-												<h3 class="fw-bold">INR 9.782</h3>
+												<h6 class="fw-bold text-uppercase text-success op-8"></h6>
+												<h3 class="fw-bold"></h3>
 											</div>
 											<div>
-												<h6 class="fw-bold text-uppercase text-danger op-8">Total Spend</h6>
-												<h3 class="fw-bold">INR 1,248</h3>
+												<h6 class="fw-bold text-uppercase text-danger op-8"></h6>
+												<h3 class="fw-bold"></h3>
 											</div>
 										</div>
 										<div class="col-md-8">
@@ -122,38 +122,38 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-8">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-head-row">
-										<div class="card-title">User Statistics</div>
-										<div class="card-tools">
-											<a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
-												<span class="btn-label">
-													<i class="fa fa-pencil"></i>
-												</span>
-												Export
-											</a>
-											<a href="#" class="btn btn-info btn-border btn-round btn-sm">
-												<span class="btn-label">
-													<i class="fa fa-print"></i>
-												</span>
-												Print
-											</a>
-										</div>
-									</div>
-								</div>
-								<div class="card-body">
-									<div class="chart-container" style="min-height: 375px">
-										<canvas id="statisticsChart"></canvas>
-									</div>
-									<div id="myChartLegend"></div>
-								</div>
-							</div>
-						</div>
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col-md-8"> -->
+<!-- 							<div class="card"> -->
+<!-- 								<div class="card-header"> -->
+<!-- 									<div class="card-head-row"> -->
+<!-- 										<div class="card-title">User Statistics</div> -->
+<!-- 										<div class="card-tools"> -->
+<!-- 											<a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2"> -->
+<!-- 												<span class="btn-label"> -->
+<!-- 													<i class="fa fa-pencil"></i> -->
+<!-- 												</span> -->
+<!-- 												Export -->
+<!-- 											</a> -->
+<!-- 											<a href="#" class="btn btn-info btn-border btn-round btn-sm"> -->
+<!-- 												<span class="btn-label"> -->
+<!-- 													<i class="fa fa-print"></i> -->
+<!-- 												</span> -->
+<!-- 												Print -->
+<!-- 											</a> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								<div class="card-body"> -->
+<!-- 									<div class="chart-container" style="min-height: 375px"> -->
+<!-- 										<canvas id="statisticsChart"></canvas> -->
+<!-- 									</div> -->
+<!-- 									<div id="myChartLegend"></div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 
-					</div>
+<!-- 					</div> -->
 					
 <!-- 												<div class="card"> -->
 <!-- 								<div class="card-body pb-0"> -->
@@ -367,7 +367,7 @@
 					    			maxValue:data.totgate,
 					    			width:7,
 					    			text: data.pendinCheckDoc,
-					    			colors:['#f1f1f1', '#2BB930'],
+					    			colors:['#f1f1f1', '#40daf5'],
 					    			duration:400,
 					    			wrpClass:'circles-wrp',
 					    			textClass:'circles-text',
@@ -407,7 +407,7 @@
 		})	
 				    		
 					    		
-			document.getElementById("totinc").innerHTML="INR "+data.dalyTotIncome;		    		
+			document.getElementById("totinc").innerHTML="INR "+((data.dalyTotIncome/100).toFixed(2));		    		
 			    		
 					    		
 					    		
@@ -422,7 +422,44 @@
 		
 	
 		
+		var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
 
+		var mytotalIncomeChart = new Chart(totalIncomeChart, {
+			type: 'bar',
+			data: {
+				labels: ["Car", "Truck", "Van", "Bus", "Two", "Three"],
+				datasets : [{
+					label: "Total Income",
+					backgroundColor: '#ff9e27',
+					borderColor: 'rgb(23, 125, 255)',
+					data: [5, 4, 9, 5, 4, 6],
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							display: false //this will remove only the label
+						},
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}],
+					xAxes : [ {
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}]
+				},
+			}
+		});
 
 
 
