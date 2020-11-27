@@ -32,4 +32,9 @@ public interface OcrDetailsRepository extends CrudRepository<OcrDetails, Integer
 	
 	@Query(value = "SELECT oc FROM OcrDetails oc where oc.status='ACTIVE' AND  oc.ocrDate LIKE :todayDate || '%' ")
 	public List<OcrDetails> getOCRVehiclesByDates(@Param("todayDate")String todayDate);
+	
+	@Query(value = "SELECT count(*),COALESCE(sum(if(o.vm_Status='completed',1,0)),0),COALESCE(sum(if(o.vr_Status='completed',1,0)),0),COALESCE(sum(if(o.doc_Status='completed',1,0)),0) FROM ocr_details o where o.ocrDate like :selectedDate",nativeQuery = true)
+    public String[][] getDashBordOCrDetails(@Param("selectedDate") String selectedDate);
+	
+
 }

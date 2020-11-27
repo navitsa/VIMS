@@ -24,5 +24,6 @@ public interface ReceiptHeadRepository extends CrudRepository<ReceiptHead,String
 	@Query(value="UPDATE ReceiptHead rh SET rh.status='INACTIVE' WHERE rh.recNo=:recNo")
 	public int setCancelReceipt(@Param("recNo")String recNo);
 	
-	
+	@Query(value="SELECT COALESCE(sum(rh.testFee),0),COALESCE(sum(rh.netTotal),0) FROM ReceiptHead rh WHERE rh.recDate=:recDate ")
+	public String[][] getReceiptHeadNetAndTestFeeTotal(@Param("recDate") String recDate);
 }

@@ -38,11 +38,13 @@
 					</div>
 					<ul class="nav nav-primary">
 						<li class="nav-item active">
-							<a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+<!-- 							<a data-toggle="collapse" href="Dashboard" > -->
+								
+								<a href="Dashboard" >
 								<i class="fas fa-home"></i>
-								<p>Dashboard</p>
-								<span class="caret"></span>
-							</a>
+								<p>Dashboard</p></a>
+								
+<!-- 							</a> -->
 							
 						</li>
 						<li class="nav-section">

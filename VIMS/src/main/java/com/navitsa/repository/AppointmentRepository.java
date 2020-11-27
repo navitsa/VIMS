@@ -17,10 +17,12 @@ public interface AppointmentRepository extends CrudRepository<Appointment , Stri
 	//@Query(value = "SELECT a FROM Appointment a where a.appointmentDate =:selectedDate AND a.lane.testLaneHeadId=:laneID")
 	public String[] getReservedTimes(@Param("selectedDate") String selectedDate, @Param("laneID") String laneID);
 
-
 	@Query(value = "SELECT a FROM Appointment a where a.status='pending'")
     public List<Appointment> getAllPendingAppointment();
 	
 	@Query(value = "SELECT * FROM appointment WHERE status = 'pending' AND appointment_date =:selectedDate",nativeQuery = true)
     public List<Appointment> getPendingAppointmentsByDate(@Param("selectedDate") String selectedDate);
+
+	@Query(value = "SELECT count(*),COALESCE(sum(if(a.status='pending',0,1)),0) FROM appointment a WHERE  a.appointment_date =:selectedDate",nativeQuery = true)
+    public String[][] getDashBordApoymentDetails(@Param("selectedDate") String selectedDate);
 }

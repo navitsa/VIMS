@@ -16,4 +16,7 @@ public interface IncomingReceiptHeadRepository extends CrudRepository<IncomingRe
 	@Query(value = "SELECT ir From IncomingReceiptHead ir WHERE ir.inRecDate between :fromdate and :todate order by ir.status,ir.inRecDate,ir.payType,ir.inRecTime")
 	public List<IncomingReceiptHead> getIncomingReceiptHeadBytwoDate(@Param("fromdate") String fromdate,@Param("todate") String todate);
 	
+	@Query(value = "SELECT COALESCE(SUM(ir.payAmt),0) From IncomingReceiptHead ir WHERE ir.inRecDate =:fromdate")
+	public String[][] getIncomingReceiptSumPayAmt(@Param("fromdate") String fromdate);
+	
 }

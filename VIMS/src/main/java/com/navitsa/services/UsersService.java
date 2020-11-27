@@ -16,6 +16,7 @@ import com.navitsa.entity.Users;
 import com.navitsa.repository.BusinessPartnerRepository;
 import com.navitsa.repository.CustomerRepository;
 import com.navitsa.repository.LevelmanageRepository;
+import com.navitsa.repository.OcrDetailsRepository;
 import com.navitsa.repository.RoleRepository;
 import com.navitsa.repository.RoleassignRepository;
 import com.navitsa.repository.TaxConfigurationRepository;
@@ -48,6 +49,9 @@ public class UsersService {
 	
 	@Autowired
 	CustomerRepository customerRepository;
+
+	@Autowired
+	OcrDetailsRepository ocrDetailsRepository;
 	
 	public List<Users> listAll(){
 		return (List<Users>) repo.findAll();
@@ -213,6 +217,9 @@ public class UsersService {
 		return repo.checkQrLogin(uname, login);		
 	}
 	
-	
+	public String[][] getDashBordOCrDetails(String selectedDate){
+		String selectedDate1=selectedDate+"%";
+		return  ocrDetailsRepository.getDashBordOCrDetails(selectedDate1);
+	}
 	
 }

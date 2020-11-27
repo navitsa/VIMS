@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.navitsa.Reports.DashboardBeen;
 import com.navitsa.entity.BusinessPartner;
 import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.CountryMaster;
@@ -39,8 +41,12 @@ import com.navitsa.entity.RoleassignPK;
 import com.navitsa.entity.TaxConfiguration;
 import com.navitsa.entity.UserLevel;
 import com.navitsa.entity.Users;
+import com.navitsa.repository.AppointmentRepository;
+import com.navitsa.services.AppointmentService;
 import com.navitsa.services.CenterService;
+import com.navitsa.services.FinanceAccountingService;
 import com.navitsa.services.UsersService;
+import com.navitsa.utils.DateHelperWeb;
 import com.navitsa.utils.ReportViewe;
 import com.navitsa.utils.StringFormaterWeb;
 
@@ -51,6 +57,10 @@ public class UsersController {
 	private UsersService usservice;
 	@Autowired
 	CenterService centerService;
+	@Autowired
+	AppointmentService sppointmentService;
+	@Autowired
+	FinanceAccountingService financeAccountingService;
 
 	@RequestMapping("/logout")
 	public String logout() {
@@ -494,22 +504,44 @@ public class UsersController {
 				}
 				return "redirect:/newCustomer.do";
 			}
-			 @RequestMapping(value="/getChartData", method=RequestMethod.GET)
-			 public @ResponseBody ResponseEntity<Map<String, Integer>> getChartData(@RequestParam String centerID) {	
-			        Map<String, Integer> graphData = new TreeMap<>();
-			       
-			       
-			        graphData.put("01", 0);
-			        graphData.put("02", 0);
-			        graphData.put("03", 0);
-			        graphData.put("04", 0);
-			        graphData.put("05", 0);
-			        graphData.put("06", 0);
+			 @RequestMapping(value="/getDashBordData", method=RequestMethod.GET)
+			 public @ResponseBody DashboardBeen getChartData(@RequestParam String date) {	
+				 DashboardBeen dasnBordData = new DashboardBeen();
+			        
+			        String[][] getApoData=sppointmentService.getDashBordApoymentDetails(date);
+			      
+			        String[][] getOcrDetail=usservice.getDashBordOCrDetails(DateHelperWeb.getFormatStringDate2(DateHelperWeb.getDate(date)));
+			        
+			        String[][] getIncomRecHeh=financeAccountingService.getIncomingReceiptSumPayAmt(date);
+			        String[][] getRecHeh=financeAccountingService.getReceiptHeadNetAndTestFeeTotal(date);
+			        
+			        dasnBordData.setNfApoyment(getApoData[0][0]);
+			        dasnBordData.setPendingApoyment(getApoData[0][1]);
+			        
+   
+			        dasnBordData.setTotgate(getOcrDetail[0][0]);
+			        dasnBordData.setPendinCheckDoc(getOcrDetail[0][3]);
+			        dasnBordData.setPendingVehicleReg(getOcrDetail[0][1]);
+			        dasnBordData.setPendingLaneEntry(getOcrDetail[0][2]);
+			   //Daly Total Income
+			        long netRecinc=Long.parseLong(getRecHeh[0][1]);
+			        long netIncRecinc=Long.parseLong(getIncomRecHeh[0][0]);
+			  
+			        dasnBordData.setDalyTotIncome((netRecinc+netIncRecinc)+"");
 			        
 			        
-			        return new ResponseEntity<>(graphData, HttpStatus.OK);
+			        
+			      //  graphData.put("02", 0);
+			        
+			       //graphData.put("03", 0);
+			       // graphData.put("04", 0);
+			        //graphData.put("05", 0);
+			        //graphData.put("06", 0);
+			        
+			        
+			        return  dasnBordData;
 				 
-			}	 
+			} 
 			 @RequestMapping(value="/getSession", method=RequestMethod.GET)
 			 public @ResponseBody String getSession(@RequestParam String usr) {	
 

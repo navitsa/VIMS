@@ -87,5 +87,8 @@ public class AppointmentService {
 		return ocrDetailsRepo.getOCRVehicles(todayDate);
 
 	}
-	
+	public String[][] getDashBordApoymentDetails(String selectedDate){
+		return appointmentRepo.getDashBordApoymentDetails(selectedDate);
+		
+	}	
 }
