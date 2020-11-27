@@ -46,8 +46,8 @@
 					</div>
 				</div>
 				<div class="page-inner mt--5">
-					<div class="row mt--2">
-						<div class="col-md-8">
+					<div class="row mt--3">
+						<div class="col-md-7">
 							<div class="card full-height">
 								<div class="card-body">
 									<div class="card-title">Overall statistics</div>
@@ -80,14 +80,19 @@
 								</div>
 							</div>
 						</div>
+						
+						
+						
 						<div class="col-md-4">
+						<div class="row mt-1">
+							<div class="col-md-12">
 							<div class="card card-primary">
 								<div class="card-header">
 									<div class="card-title">Today Total Income</div>
 									<div class="card-category" id="today"></div>
 								</div>
 								<div class="card-body pb-0">
-									<div class="mb-4 mt-2">
+									<div class="mb-5 mt-5">
 										<h1 id="totinc">0</h1>
 									</div>
 <!-- 									<div class="pull-in"> -->
@@ -95,16 +100,28 @@
 <!-- 									</div> -->
 								</div>
 							</div>
-
+							</div>
+					</div>
 						</div>
 					</div>
 				<div class="row">
-						<div class="col-md-6">
+					<div class="col-md-4">
+							
+								<div class="card-body">
+								<img src="resources/assets/img/adams-car.gif" alt="navbar brand" class="navbar-brand" style="width: 400px; height: 300px;">
+<!-- 								<img src="resources/assets/img/dashimg.jpg" alt="navbar brand" class="navbar-brand" style="width: 400px; height: 300px;"> -->
+								
+								</div>
+							
+						</div>
+					
+			
+						<div class="col-md-7">
 							<div class="card full-height">
 								<div class="card-body">
 									<div class="card-title">Vehicle Status</div>
 									<div class="row py-3">
-										<div class="col-md-4 d-flex flex-column justify-content-around">
+										<div class="col-md-3 d-flex flex-column justify-content-around">
 											<div>
 												<h6 class="fw-bold text-uppercase text-success op-8"></h6>
 												<h3 class="fw-bold"></h3>
@@ -114,7 +131,7 @@
 												<h3 class="fw-bold"></h3>
 											</div>
 										</div>
-										<div class="col-md-8">
+										<div class="col-md-9">
 											<div id="chart-container">
 												<canvas id="totalIncomeChart"></canvas>
 											</div>
@@ -429,12 +446,12 @@
 		var mytotalIncomeChart = new Chart(totalIncomeChart, {
 			type: 'bar',
 			data: {
-				labels: ["Car", "Truck", "Van", "Bus", "Two", "Three"],
+				labels: ["Car", "Truck", "Van", "Bus", "2/Wheeler ", "3/Wheeler","MPV","UTV"],
 				datasets : [{
 					label: "Total Income",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
-					data: [5, 4, 9, 5, 4, 6],
+					data: [5, 4, 9, 5, 4, 6,8,2],
 				}],
 			},
 			options: {
