@@ -132,8 +132,13 @@
          
         }
 	</style>
+	
+    
+       
+	<link href="resources/assets/css/scrollbar.css" rel="stylesheet">
 </head>
 <body onload="getClassImage();getMakeLogo();getModelImage();">
+
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -805,7 +810,31 @@
 
 <%@include file="VehicleModelFormModel.jsp"%>
 
+
+    
+        <script src='resources/assets/js/select2/select2.min.js' type='text/javascript'></script>
+
+
+
+
 		<script>
+		
+		
+		$(document).ready(function(){
+			
+		    // Initialize select2
+		    $("#vehicleModelID").select2();
+		   
+		});
+		
+		$(document).ready(function(){
+			
+		    // Initialize select2
+		    $("#vMake").select2();
+		   
+		});
+		
+		
 	$(document).ready(function(){
 		  $("#manufactureYear").keypress(function(e){
 		    var keyCode = e.which;
@@ -1568,7 +1597,12 @@ tbody.onclick = function (e) {
 
 };
    	
-   	
+   
+
+
+
+
+
         </script>
 
 </body>
