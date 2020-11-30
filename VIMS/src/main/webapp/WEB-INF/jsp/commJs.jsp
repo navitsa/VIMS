@@ -1,13 +1,11 @@
 	<!--   Core JS Files   -->
 	
 	
-<!-- 	    <script src='resources/whilecard/jquery-3.2.1.min.js' type='text/javascript'></script> -->
- 
+
 	
 	<script src="resources/assets/js/core/jquery.3.2.1.min.js"></script>
 	<script src="resources/assets/js/core/popper.min.js"></script>
 	<script src="resources/assets/js/core/bootstrap.min.js"></script>
-<script src='resources/whilecard/select2/dist/js/select2.min.js' type='text/javascript'></script>
 
 	<!-- jQuery UI -->
 	<script src="resources/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
@@ -55,7 +53,7 @@
 	   
 	  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 	  
-	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<!-- 	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> -->
 	  
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 	   

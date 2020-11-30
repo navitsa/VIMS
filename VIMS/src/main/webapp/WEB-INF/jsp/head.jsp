@@ -14,7 +14,36 @@
 			}
 		});
 	</script>
-
+	<script type="text/javascript">    
+	
+	       function disableBackButtonAllBrowsers() {
+	
+	            window.history.forward()
+	
+	        };
+	
+	
+	        window.onload = disableBackButtonAllBrowsers();
+	
+	        window.onpageshow = function (evts) {  
+	
+	                       if (evts.persisted) {
+	
+	                                disableBackButtonAllBrowsers(); 
+	
+	                        }
+	
+	         }; 
+	
+	       
+	
+	        window.onunload = function () { 
+	
+	                void (0) 
+	
+	        };
+	
+	 </script>
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="resources/assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="resources/assets/css/atlantis.min.css">
