@@ -387,9 +387,9 @@ public class AppointmentController {
 	@RequestMapping("/appointmentOffline")
 	public String loadingAppointmentOfflineForm(Model m) {
 		
-		AppointmentForm newApointment = new AppointmentForm();
-		m.addAttribute("appointmentForm", newApointment);
-		return "appointmentOffline";	
+		//AppointmentForm newApointment = new AppointmentForm();
+		//m.addAttribute("appointmentForm", newApointment);
+		return "gateEntryAppointmentCard";	
 	}
 	
 	@ModelAttribute("ocr_vehicles")
@@ -399,7 +399,39 @@ public class AppointmentController {
 		String todayDate = df2.format(new Date());
 		
 		List<OcrDetails> ocrList = appointmentService.getOCRVehicles(todayDate);
+		//System.out.println(ocrList.isEmpty());
 		return ocrList;
+	}
+	
+  	@RequestMapping(value="getApposByDate", method=RequestMethod.GET)		
+	public  @ResponseBody List<Appointment> getApposByDate(@RequestParam String selectedDate){
+  		
+		SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+		String todayDate = df2.format(new Date());
+		
+		//System.out.println("Selected Date is "+selectedDate);
+  		List<Appointment> todayAppoList = appointmentService.getPendingAppointmentsByDate(selectedDate);
+		return todayAppoList;
+	}
+  	
+	@RequestMapping(value="getLateAppos", method=RequestMethod.GET)
+	public @ResponseBody List<Appointment> getLateAppos(){
+		
+		List<Appointment> lateApposList = appointmentService.getLateAppointments();
+		
+		for(Appointment x : lateApposList) {
+			System.out.println(x.getVehicle_id().getVehicleID());
+		}
+		
+		return lateApposList;
+
+	}
+	
+	@RequestMapping(value="cancelling", method=RequestMethod.GET)
+	public @ResponseBody void cancelling(@RequestParam String appoID){
+		
+		appointmentService.cancellingAppointment(appoID);
+
 	}
 	
 }

@@ -7,8 +7,7 @@
 <%@ page isELIgnored="false"%>
 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
-
+<%@ page import="java.util.*" %>
 
 <html lang="en">
 <head>
@@ -18,7 +17,7 @@
     <link href="resources/css/accordion.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-PMjWzHVtwxdq7m7GIxBot5vdxUY+5aKP9wpKtvnNBZrVv1srI8tU6xvFMzG8crLNcMj/8Xl/WWmo/oAP/40p1g==" crossorigin="anonymous" />
+<!--     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"/> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
@@ -100,14 +99,14 @@
 								    </div>
 								    <div class="form-group row">
 								    	<div class="col-sm">
-									 		<label for="" class="text-gray-900">Conducted On <span class="required text-danger">*</span></label>
-
-												<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-												    <form:input path="time" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+									 		<!-- <label for="" class="text-gray-900">Conducted On</label><br> -->
+									 		<%-- <%= (new java.util.Date()).toLocaleString()%> --%>
+												<div class="input-group date" id="datetimepicker1" data-target-input="nearest">							
+												    <form:input path="time" type="hidden" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
 												    <form:input path="date" type="hidden" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-												     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+<!-- 												 <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
 												       <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-												     </div>
+												     </div> -->
 												</div>
 								    	</div>
 								    	<div class="col-sm">
@@ -296,7 +295,7 @@
 						    </div><!-- end of accordion body -->
 						    <br>
 							
-							<label for="" class="text-gray-900 mb-2 mr-sm-2">End on <span class="required text-danger">*</span></label>
+<!-- 							<label for="" class="text-gray-900 mb-2 mr-sm-2">End on <span class="required text-danger">*</span></label>
 							<input type="button" value="NOW" class="btn btn-primary btn-sm" onclick="setEndTime()"/>
 	
 								<div class="input-group date" id="datetimepicker2" data-target-input="nearest">
@@ -304,7 +303,7 @@
 										<div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
 											<div class="input-group-text"><i class="fa fa-calendar"></i></div>
 										</div>
-								</div><br>
+								</div><br> -->
 							<label for="submitButton" class="required text-danger">Mandatory</label>
 						    <input type="submit" value="MARK AS COMPLETE" class="btn btn-success form-control" id="submitButton" form="form1"/>
 	
@@ -399,14 +398,13 @@
             });
           });
         
-        function setEndTime(){
+/*         function setEndTime(){
         	var curr_date=  new Date();
             $('#datetimepicker2').datetimepicker({
                 useCurrent:false,
                 defaultDate: curr_date
             });
-        }
-
+        } */
     </script>
 
 

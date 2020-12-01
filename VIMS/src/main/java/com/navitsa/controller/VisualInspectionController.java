@@ -1,7 +1,9 @@
 package com.navitsa.controller;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -413,6 +415,9 @@ public class VisualInspectionController {
 					 
 					 List<VisualChecklistDetail> detail = chDetailForm.getChecklistDetail();
 					 
+					 SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+					 Date endTime = df.parse(df.format(new Date()));
+					 vcm.setEndtime(endTime);
 					 inspectionServices.saveChMasterData(vcm);
 						
 						if(null != detail && detail.size() > 0) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="checklistReport" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="523" leftMargin="36" rightMargin="36" topMargin="36" bottomMargin="36" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="86940fa7-be60-4b36-8bb7-f941352637a3">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="2"/>
 	<style name="style1">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{status.vprofileItemStatus}.equals("Ok")]]></conditionExpression>
@@ -56,6 +56,7 @@
 	<field name="vcm.vr.cusid.tpno" class="java.lang.String"/>
 	<field name="image" class="java.lang.Object"/>
 	<field name="vcm.vr.vid.noWheel" class="java.lang.String"/>
+	<field name="vcm.date" class="java.util.Date"/>
 	<variable name="remarkName_1" class="java.lang.Integer" resetType="Group" resetGroup="item group" calculation="Count">
 		<variableExpression><![CDATA[$F{remarkName}]]></variableExpression>
 	</variable>
@@ -150,19 +151,19 @@
 			<line>
 				<reportElement x="0" y="121" width="523" height="1" uuid="79c6a1f0-ee43-48cb-8796-c12097ea9721"/>
 			</line>
-			<textField isBlankWhenNull="true">
+			<textField pattern="h.mm a" isBlankWhenNull="true">
 				<reportElement x="323" y="111" width="62" height="10" isRemoveLineWhenBlank="true" uuid="b48b57e2-a3b5-47d1-9f33-ed99cf95ea12"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="7" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{vcm.endtime}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vcm.endtime}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="h.mm a" isBlankWhenNull="true">
 				<reportElement x="323" y="101" width="62" height="10" isRemoveLineWhenBlank="true" uuid="53e2fa4a-296c-4799-98f3-057cc9da3dae"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="7" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{vcm.time}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vcm.time}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="99" y="0" width="324" height="20" uuid="b028a9ba-7d65-4a4a-9200-b6770991523d"/>
@@ -291,15 +292,15 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="398" y="69" width="125" height="20" isRemoveLineWhenBlank="true" uuid="ec3249ce-04a4-4625-84d4-ca4f587c4ce9"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="398" y="69" width="125" height="12" isRemoveLineWhenBlank="true" uuid="ec3249ce-04a4-4625-84d4-ca4f587c4ce9"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="398" y="89" width="125" height="12" isRemoveLineWhenBlank="true" uuid="99339993-b764-4315-ae73-aaf7a6be506f"/>
+				<reportElement x="398" y="81" width="125" height="12" isRemoveLineWhenBlank="true" uuid="99339993-b764-4315-ae73-aaf7a6be506f"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
@@ -315,6 +316,13 @@
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vcm.vr.vid.noWheel}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement x="278" y="89" width="107" height="12" uuid="77f858fc-fd56-4118-b6ec-d694973df720"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vcm.date}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

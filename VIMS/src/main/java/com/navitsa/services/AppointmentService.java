@@ -90,5 +90,14 @@ public class AppointmentService {
 	public String[][] getDashBordApoymentDetails(String selectedDate){
 		return appointmentRepo.getDashBordApoymentDetails(selectedDate);
 		
-	}	
+	}
+	public List<Appointment> getLateAppointments() {
+		// TODO Auto-generated method stub
+		return appointmentRepo.getLateAppos();
+	}
+
+	public void cancellingAppointment(String appoID) {
+		// TODO Auto-generated method stub
+		appointmentRepo.cancellingAppointment(appoID);
+	}
 }
