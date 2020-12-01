@@ -434,4 +434,33 @@ public class AppointmentController {
 
 	}
 	
+	@RequestMapping(value="/checkCloseTime", method=RequestMethod.GET)
+	public @ResponseBody boolean checkCloseTime(HttpSession session) throws ParseException {
+
+		String centerid=(String) session.getAttribute("centerid");
+		//String open_time = centerService.getcenterById(centerid).getOpenTime();
+		String close_time = centerService.getcenterById(centerid).getCloseTime();
+
+		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+		
+		//Date ot = df.parse(open_time);
+		Date ct = df.parse(close_time);
+
+		Date currentTime = df.parse(df.format(new Date()));
+		
+		System.out.println("close time - "+ct);
+		System.out.println("Current time -"+currentTime);
+		
+		System.out.println(currentTime.compareTo(ct));
+		
+		if (currentTime.compareTo(ct)==0 || currentTime.compareTo(ct)>0) {
+			
+			return true;
+		}else {
+			return false;
+		}
+		
+		//return false;
+	}
+	
 }

@@ -232,18 +232,17 @@
 											<div class="form-inline">
 
 												<label for="registeredYear" class="mr-sm-2">Registered Year</label>
-<%-- 												<form:input type="text" class="form-control mb-2 mr-sm-2 datetimepicker-input" 
-													id="datetimepicker2" data-toggle="datetimepicker" 
-													data-target="#datetimepicker2" style="width: 90px" path="registeredYear"/> --%>
+												<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2 datetimepicker-input" 
+													id="registeredYear" data-toggle="datetimepicker" 
+													data-target="#registeredYear" style="width: 80px" path="registeredYear"/>
 
-													<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2" 
-													style="width: 80px" path="registeredYear" id="registeredYear"/>
+<%-- 													<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2" 
+													style="width: 80px" path="registeredYear" id="registeredYear"/> --%>
 												
 												<i class="fa fa-calendar mb-2" style="color:black;"></i>
 
 											</div>
-												<!-- <input class="form-control form-control-sm  mb-2 mr-sm-2"
-												  id="registeredYear" style="width: 80px" /> -->
+
 										</div>
 										<div class="form-group row">
 											<label for="chassisNo">VIN (Chassis Number)</label>
@@ -253,12 +252,12 @@
 										<div class="form-group row">
 											<div class="form-inline">
 												<label for="manufactureYear" class="mr-sm-2">Manufactured Year</label>
-<%-- 												<form:input type="text" class="form-control mb-2 mr-sm-2 datetimepicker-input" 
-													id="datetimepicker3" data-toggle="datetimepicker" 
-													data-target="#datetimepicker3" style="width: 80px" path="manufactureYear"/> --%>
+												<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2 datetimepicker-input" 
+													id="manufactureYear" data-toggle="datetimepicker" 
+													data-target="#manufactureYear" style="width: 80px" path="manufactureYear"/>
 													
-													<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2" 
-													style="width: 80px" path="manufactureYear" id="manufactureYear"/>
+<%-- 													<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2" 
+													style="width: 80px" path="manufactureYear" id="manufactureYear"/> --%>
 												<i class="fa fa-calendar mb-2 mr-sm-4" style="color:black;"></i>
 											</div>
 										</div>
@@ -418,7 +417,7 @@
 
 	<!-- Page level custom scripts -->
 	<script src="resources/jQuery/appointmentForm.js"></script>
-	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 	<script
 		src="<c:url value='resources/vendor/jquery-easing/jquery.easing.min.js'/>"
 		type="text/javascript"></script>
@@ -435,21 +434,22 @@
                 minDate: moment(1, 'h')
             });
         	
-//             $('#datetimepicker2').datetimepicker({
-//                 viewMode: 'years',
-//                 format: 'MM/YYYY'
-//             });
+             $('#registeredYear').datetimepicker({
+                 viewMode: 'years',
+                 format: 'MM/YYYY'
+            });
             
-//             $('#datetimepicker3').datetimepicker({
-//                 viewMode: 'years',
-//                 format: 'MM/YYYY'
-//             });
+             $('#manufactureYear').datetimepicker({
+                 viewMode: 'years',
+                 format: 'YYYY'
+             });
 
              $('#datetimepicker1').on("change.datetimepicker", function (e) {
              	getFreeTimes();
               });
             
         });
+        
     </script>
     
 <script>
