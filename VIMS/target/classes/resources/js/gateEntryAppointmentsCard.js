@@ -91,7 +91,7 @@ $(function () {
     
   });
 
-$('#alertbtn').on('click',function(){
+function lateNotify() {
 	
 	$.ajax({
         type: 'GET',
@@ -127,9 +127,11 @@ $('#alertbtn').on('click',function(){
 
     });
 	
-});
+}
+
+setInterval(lateNotify, 60000);
 
 function cancel(str) {
-	alert("hello "+str);
+	//alert("hello "+str);
 }
 

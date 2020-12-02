@@ -26,7 +26,7 @@
 							<h6 class="m-0 mr-sm-2 font-weight-bold text-primary">Upcoming Appointments</h6>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-sm" id="alertbtn" >
+<button type="button" class="btn btn-primary btn-sm" id="alertbtn" onclick="lateNotify()" >
 	Alert
 </button>
 
@@ -156,8 +156,7 @@ function getApposByDate(vno){
      
 <script type="text/javascript">
 
-$('#alertbtn').on('click',function(){
-	
+function lateNotify() {
 	$.ajax({
         type: 'GET',
         url: "getLateAppos",
@@ -192,16 +191,18 @@ $('#alertbtn').on('click',function(){
 
     });
 	
-});
+}
+setInterval(lateNotify, 60000);
 
 function cancel(str) {
 	alert("hello "+str);
 }
 
 </script>
-  
+
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
-<script src="resources/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>   
+<script src="resources/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+  
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
 

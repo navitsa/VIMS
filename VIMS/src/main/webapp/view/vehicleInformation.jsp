@@ -585,7 +585,11 @@
 		</div>
 	</div>
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
-<script src="resources/js/gateEntryAppointmentsCard.js"></script>
+
+<!-- appointment card js files -->
+	<script src="resources/js/gateEntryAppointmentsCard.js"></script>
+	<script src="resources/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<!-- End -->
 
 	<script language="JavaScript">
 // 	var id;
