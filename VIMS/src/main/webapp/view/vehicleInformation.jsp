@@ -7,7 +7,8 @@
 <%@ page isELIgnored="false"%>
 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<%@ page import = "java.io.*,java.util.*" %>
+<%@ page import = "javax.servlet.*,java.text.*" %>
 
 
 <html lang="en">
@@ -542,31 +543,39 @@
 				 
 				 </div>
 				<!-- 		===========================================================		  --> 
+				 
 				 <div class="col-xl-3">
-				 
-				 <div class="card shadow mb-4">
-				<!-- Card Header - Dropdown -->
-				<div class="card-header py-2 d-flex flex-row align-items-center">
-<!-- 					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/> -->
-					<h6 class="m-0 font-weight-bold text-primary">Pending Appointments</h6><span class="badge badge-pill badge-warning" id="pendingAppoi" style="font-size:15px; font-weight: 900; color:black; border-radius: 50%;"></span> 
-				</div>
-				<!-- Card Body -->
-				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 630px">	
-					<div class="row" >
-								<div class="col-sm-12" id="asss">
-																
-								</div>
-					</div>	
-					
+
+					<div class="card shadow mb-4">
+
+						<div class="card-header py-2 d-flex flex-row align-items-center">
+							
+							<h6 class="m-0 mr-sm-2 font-weight-bold text-primary">Pending Appointments</h6>
+					      <%
+					         Date dNow = new Date( );
+					         SimpleDateFormat ft = new SimpleDateFormat ("E MM.dd.yyyy");
+					         out.print( ft.format(dNow));
+					      %>
+							<span class="badge badge-pill badge-warning" id="noOfAppos"
+								style="font-size: 15px; font-weight: 900; color: black; border-radius: 50%;">
+							</span>
+
+						</div>
 	
-				</div>
-			</div>
-				 
-				 </div>	
+						<!-- Card Body -->
+						<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 630px">									
+							<div class="row">
+								<div class="col-lg" id="appoDiv"></div>
+							</div>
+						</div>
+						
+					</div>
+
 				 </div>
-				 	 
+				 
+				 	
+				 </div>	 	 
 				    </div>
-				   
 				  </div> 
 				
 					</div>
@@ -576,6 +585,7 @@
 		</div>
 	</div>
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
+<script src="resources/js/gateEntryAppointmentsCard.js"></script>
 
 	<script language="JavaScript">
 // 	var id;
@@ -1103,7 +1113,7 @@
 		    });
    
 			}	
-			getAllPendingAppointment(x);
+			getApposByDate(x);
 		}
 	
 		function takeAutoCapMore(){
@@ -1360,89 +1370,7 @@
 		});
 		
 		
-		getAllPendingAppointment("");
-		
-		function getAllPendingAppointment(vno){
-			
-			appointmrntNo="0";
-			var hj=0;
-		//	alert(vno)
-			$.ajax({
-		        type: 'GET',
-		        url: "getAllPendingAppointment", 
-		        success: function(data){
-		        	
-		            var slctSubcat=$('#asss'), option="";
-		            slctSubcat.empty();
-		        	for(var i=0; i<data.length; i++){
-		        		hj=hj+1;
-		        		if(vno==data[i].vehicle_id.vehicleID){
-		        			 status="3";
-		        			 appointmrntNo=data[i].appointmentID;
-		        			 //alert(data[i].vehicle_id.vehicleID);
-		        			 
-		        			 selected_option = "<div class='row'style='background-color: green; background: rgba(0, 128, 0, 0.3)'>"+
-		 					
-		 					"<div class='col-sm-12'>"+
-		 						"<div class='row'>"+
-		 							"<div class='col-sm-12'>"+
-		 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicle_id.vehicleID+"</div>"+
-		 							"</div>"+
-		 						"</div>"+
-		 						"<div class='row'>"+
-		 							"<div class='col-sm-12'>"+
-		 								"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>"+data[i].appointmentDate+" "+data[i].appointmentTime+"</div>"+
-		 							"</div>"+
-		 						"</div>"+
-//		  						"<div class='row'>"+
-//		  							"<div class='col-sm-12'>"+
-//		  								"<div style='color: #000099; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>"+data[i].appointmentTime+"</div>"+
-//		  							"</div>"+
-//		  						"</div>"+
-		 					"</div>"+
-		 					
-		 					
-		 					"<hr/></div>";
-		        			 
-		        		}else{
-		        			
-		        			selected_option = "<div class='row'>"+
-							
-							"<div class='col-sm-12'>"+
-								"<div class='row'>"+
-									"<div class='col-sm-12'>"+
-										"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicle_id.vehicleID+"</div>"+
-									"</div>"+
-								"</div>"+
-								"<div class='row'>"+
-									"<div class='col-sm-12'>"+
-										"<div style='color: #3e34fa; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>"+data[i].appointmentDate+" "+data[i].appointmentTime+"</div>"+
-									"</div>"+
-								"</div>"+
-//		 						"<div class='row'>"+
-//		 							"<div class='col-sm-12'>"+
-//		 								"<div style='color: #000099; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>"+data[i].appointmentTime+"</div>"+
-//		 							"</div>"+
-//		 						"</div>"+
-							"</div>"+
-							
-							
-							"</div><hr/>";
-		        			
-		        		}  
-		            
-		            	 slctSubcat.append(selected_option);	
-		        	}
-	             document.getElementById('pendingAppoi').innerHTML = hj;
-
-		        },
-		        error:function(){
-		         //   alert("error");
-		        }
-
-		    });
-			//setTimeout(hideContinue,30);
-		}
+		getApposByDate("");
 		
 		// getVehicleStatus();
 		function getVehicleStatus()

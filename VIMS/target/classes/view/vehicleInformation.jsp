@@ -7,7 +7,8 @@
 <%@ page isELIgnored="false"%>
 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<%@ page import = "java.io.*,java.util.*" %>
+<%@ page import = "javax.servlet.*,java.text.*" %>
 
 
 <html lang="en">
@@ -103,7 +104,27 @@
   }
 }
          
-         
+    .flat-table {
+  display: block;
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 115%;
+  overflow: auto;
+  width: auto;
+  
+  th {
+    background-color: rgb(112, 196, 105);
+    color: white;
+    font-weight: normal;
+    padding: 20px 30px;
+    text-align: center;
+  }
+  td {
+    background-color: rgb(238, 238, 238);
+    color: rgb(111, 111, 111);
+    padding: 20px 30px;
+  }
+}     
          
          
          
@@ -226,33 +247,55 @@
 		<!-- End Sidebar -->
 		<div class="main-panel">
 			<div class="content">
-				<div class="page-inner">	
-					<div class="page-header">
-							<h4 class="page-title">Capture License Plate</h4>
-							<ul class="breadcrumbs">
-								<li class="nav-home">
-									<a href="#">
-										<i class="flaticon-home"></i>
-									</a>
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								<li class="nav-item">
-									<a href="#"></a>
-								</li>
+			
+				<div class="panel-header bg-primary-gradient">
+					<div class="page-inner py-4">
+						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+							<div>
+								<h2 class="text-white pb-2 fw-bold">Gate Entry</h2>
+								<h5 class="text-white op-7 mb-2"></h5>
+							</div>
+							<div class="ml-md-auto py-2 py-md-4">
+<!-- 								<a href="vechi" class="btn btn-white btn-border btn-round mr-2">Vehicle Status</a> -->
+								<a href="appointment" class="btn btn-white btn-border btn-round mr-2">Make Appointment</a>
+
+							<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#vehicleStatusModel" onclick="getVehicleStatus()">Vehicle Status</a>
+						
+						
+						
+							</div>
+						</div>
+					</div>
+				</div>
+	
+				<div class="page-inner mt--5">	
+<!-- 					<div class="page-header"> -->
+<!-- 					<i class="fa fa-camera" style='font-size:36px;color:#3245f0'></i> -->
+<!-- 							<h4 class="page-title">Gate Entry</h4> -->
+<!-- 							<ul class="breadcrumbs"> -->
+<!-- 								<li class="nav-home"> -->
+<!-- 									<a href="#"> -->
+<!-- 										<i class="flaticon-home"></i> -->
+<!-- 									</a> -->
+<!-- 								</li> -->
+<!-- 								<li class="separator"> -->
+<!-- 									<i class="flaticon-right-arrow"></i> -->
+<!-- 								</li> -->
+<!-- 								<li class="nav-item"> -->
+<!-- 									<a href="#"></a> -->
+<!-- 								</li> -->
 							
-							</ul>
-						</div>				
-											<div class="row">
-										
-					
-							<!-- Pie Chart -->
-						<div class="col-xl-7">
+<!-- 							</ul> -->
+<!-- 						</div> -->
+					<div class="row">	
+					<div class="col-xl-4">					
+					<div class="row">
+
+						<div class="col-xl-12">
 							<div class="card shadow mb-4">
 								<!-- Card Header - Dropdown -->
 								<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">
-									<i class="fa fa-camera" style='font-size:36px;color:blue'></i><h6 class="m-0 font-weight-bold text-primary">Capture License Plate</h6>
+									<i class="fa fa-camera" style='font-size:28px;color:#3245f0'></i><h6 class="m-0 font-weight-bold text-primary">.</h6>
 								</div>
 								<!-- Card Body -->
 								<div class="card-body">
@@ -260,29 +303,35 @@
 				
 									 <div class="row">
 											<div class="col-sm-6">
-												<div class="row">
+<!-- 												<div class="row"> -->
 												
-							         			<a href="#" class="" onClick="takeAutoNo()" id="cam-click">
-							             		<i class="fa fa-refresh  fa-spin" style="font-size:24px"></i> 
-							             		</a>														
-												</div>
+<!-- 							         			<a href="#" class="" onClick="takeAutoNo()" id="cam-click"> -->
+<!-- 							             		<i class="fa fa-refresh  fa-spin" style="font-size:24px"></i>  -->
+<!-- 							             		</a>														 -->
+<!-- 												</div> -->
 												<br>
 												<div class="row">
-												<input type="hidden" value='<%=session.getAttribute("vehicleAutoConfig")%>' id="autoValue" >
-													<table id="ocrdetails" class="myTable table table-sm table-wrapper-scroll-y my-custom-scrollbar" style="height: 112px;">                	
-				
-														<tbody>
-														
-														
-														</tbody>
-				
-													</table>	
+													<div class="col-sm-12">
+														<input type="hidden" value='<%=session.getAttribute("vehicleAutoConfig")%>' id="autoValue" >
+														<table id="ocrdetails" class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 112px;">                	
+					
+															<tbody id="ocrdetails4" >
+															
+															
+															</tbody>
+					
+														</table>	
+													</div>	
 												</div>
-												<div class="row">
-												<a href="#" class="" onClick="takeSnapshot();" id="more">More..</a>	
+												<br>
 												
-												<div class="spinner-grow" role="status" id="moreLoder" style="display: none;">
-												  <span class="sr-only" >Loading...</span>
+												<div class="row">
+													<div class="col-sm-12">
+														<a href="#" class="" onClick="takeSnapshot();" id="more">More..</a>	
+													
+														<div class="spinner-grow" role="status" id="moreLoder" style="display: none;">
+													  	<span class="sr-only" >Loading...</span>
+													 </div>
 												</div>
 																								
 												
@@ -293,7 +342,7 @@
 												
 												</div>
 												<div class="row">
-													<input type="file" class="" id="num_img"  accept="image/*" capture="user"  />	
+													<input type="file" class="" id="num_img"  accept="image/*" capture="user"  style="display: none;" />	
 												</div>
 												
 												
@@ -358,15 +407,23 @@
 								</div>
 							</div>
 						</div>
-					
-						<div class="col-xl-5" hidden="true" id="vdetails">
+					</div>				
+					<div class="row">
+						<div class="col-xl-12" hidden="true" id="vdetails">
 							<div class="card shadow mb-4">
 								<!-- Card Header - Dropdown -->
-								<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">
-									<i class="fa fa-car" style='font-size:36px;color:blue'></i><h6 class="m-0 font-weight-bold text-primary">Vehicle</h6>
-								</div>
+<!-- 								<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between"> -->
+<!-- <!-- 									<i class="fa fa-car" style='font-size:36px;color:#3245f0'></i> --> 
+<!-- 									<h6 class="m-0 font-weight-bold text-primary">.</h6> -->
+<!-- 								</div> -->
+									<div class="card-header py-0 d-flex justify-content-between">
+<!-- 									<img src="resources/img/icon/vowner.png" class="iconstyle"/> -->
+									<h6 class="font-weight-bold text-primary">Vehicle</h6>
+									</div>
 								<!-- Card Body -->
 								<div class="card-body">
+
+								
 									 <div class="row">
 										<div class="col-sm-4">
 											<label class="fontst">Class</label>
@@ -429,7 +486,8 @@
 													
 							</div>
 								<div class="card-header py-0 d-flex justify-content-between">
-									<img src="resources/img/icon/vowner.png" class="iconstyle"/></i><h6 class="font-weight-bold text-primary">Current Owner</h6>
+<!-- 									<img src="resources/img/icon/vowner.png" class="iconstyle"/> -->
+									<h6 class="font-weight-bold text-primary">Current Owner</h6>
 								</div>
 							<div class="card-body">	
 									<div class="row">
@@ -460,18 +518,74 @@
 	
 						
 					</div>
+					 </div>
+				<!-- 		===========================================================		  --> 
+				 <div class="card shadow col-xl-5">
 				 
+				 		
+				<!-- Card Header - Dropdown -->
+				<div class="card-header py-2 d-flex flex-row align-items-center">
+<!-- 					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/> -->
+					<h6 class="m-0 font-weight-bold text-primary">Pending Lane Registrations</h6><span class="badge badge-pill badge-warning" id="pendingVehic" style="font-size:15px; font-weight: 900; color:black; border-radius: 50%;"></span>
+				</div>
+				<!-- Card Body -->
+				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 630px;">	
+					<div class="row" style="padding-left:5px;"  >
+								<div  id="ocrVehicle">
+	
+																	
+								</div>
+					</div>	
+					
+	
+				</div>
+			
+				 
+				 </div>
+				<!-- 		===========================================================		  --> 
+				 
+				 <div class="col-xl-3">
+
+					<div class="card shadow mb-4">
+
+						<div class="card-header py-2 d-flex flex-row align-items-center">
+							
+							<h6 class="m-0 mr-sm-2 font-weight-bold text-primary">Pending Appointments</h6>
+					      <%
+					         Date dNow = new Date( );
+					         SimpleDateFormat ft = new SimpleDateFormat ("E MM.dd.yyyy");
+					         out.print( ft.format(dNow));
+					      %>
+							<span class="badge badge-pill badge-warning" id="noOfAppos"
+								style="font-size: 15px; font-weight: 900; color: black; border-radius: 50%;">
+							</span>
+
+						</div>
+	
+						<!-- Card Body -->
+						<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 630px">									
+							<div class="row">
+								<div class="col-lg" id="appoDiv"></div>
+							</div>
+						</div>
+						
+					</div>
+
+				 </div>
+				 
+				 	
+				 </div>	 	 
 				    </div>
-				   
 				  </div> 
 				
 					</div>
-				
+				<%@include file="vehicleStatusModel.jsp"%>
 			</div>	
 			<%@include file="../WEB-INF/jsp/footer.jsp"%>			
 		</div>
 	</div>
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
+<script src="resources/js/gateEntryAppointmentsCard.js"></script>
 
 	<script language="JavaScript">
 // 	var id;
@@ -582,14 +696,17 @@
 			    url: "takeAutoNo",
 		        success: function(data){
 
-		        	$("table tbody").empty();
+		        	//$("table tbody").empty();
+		        	
+		        	 var slctSubcat1=$('#ocrdetails4'), option="";
+			            slctSubcat1.empty();
 					for(var i=0; i<data.length; i++){
 					
-						var markup =  "<tr data-folder='ghjgh'><td>"+ data[i].number+ "</td>"
+						selected_option =  "<tr data-folder='ghjgh'><td>"+ data[i].number+ "</td>"
 				            +"<td style='display:none;'>"+ data[i].noimage+"</td>"
 				            +"</tr>";
-							
-							$("table tbody").append(markup);
+				            slctSubcat1.append(selected_option);
+							//$("table tbody").append(markup);
 		           	 }
    	
 		        },
@@ -597,13 +714,257 @@
 		        //	alert("Error");
 		        }
 			 });
-		
+		var g=0;
+			//pending Registation
+			$.ajax({
 
+			    type: 'POST',
+			    url: "getOcrVehicle",
+		        success: function(data){
+		            var slctSubcat=$('#ocrVehicle'), option="";
+		            slctSubcat.empty();
+		    
+		        	for(var i=0; i<data.length; i++){
+		        		
+		        		
+		        		var link="";
+	        			var statu="";
+		        		g=g+1;
+// 		        		if(data[i].vmStatus=="pending"){
+// 		        			statu="<div class='row'>"+
+// 						"<div class='col-sm-12'>"+
+// 							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Details    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+// 					"</div></div>";
+// 			        		if(data[i].vehicletype=="New"){
+// 			        			link="newVehicleMaster?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid;
+// 			        		}else if(data[i].vehicletype=="Old"){
+// 			        			link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid+"&appNo=0";
+// 			        		}
+					
+					
+// 								}else if(data[i].docStatus=="pending"){
+// 									statu="<div class='row'>"+
+// 									"<div class='col-sm-12'>"+
+// 										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Details    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+// 									"</div></div>"+
+// 									"<div class='row'>"+
+// 										"<div class='col-sm-12'>"+
+// 											"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Document Verification    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+// 										"</div>"+
+// 									"</div>";	
+// 								}else if(data[i].vrStatus=="pending"){
+									
+	
+									
+// 									link="vehicleRegistrationAuto?vid="+data[i].ocrVid+"&curMi=0"+"&id="+data[i].ocrid;
+									
+									
+// 								}
+		        		
+		        		if(data[i].vmStatus=="pending"){
+						statu=statu+"<div class='row'>"+
+						"<div class='col-sm-12'>"+
+						"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Details    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+						"</div></div>";
+			        		if(data[i].vehicletype=="New"){
+		        				link="newVehicleMaster?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid;
+			        		}else if(data[i].vehicletype=="Old"){
+			        			link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid+"&appNo=0";
+			        		}
+						
+		        		}else{
+		        			statu=statu+"<div class='row'>"+
+							"<div class='col-sm-12'>"+
+								"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Details    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+							"</div></div>";
+		        			link="vehicleRegistrationAuto?vid="+data[i].ocrVid+"&curMi=0"+"&id="+data[i].ocrid;
+		        		}
+		        		
+		        		if(data[i].docStatus=="pending"){
+							statu=statu+"<div class='row'>"+
+							"<div class='col-sm-12'>"+
+							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Document Verification    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+							"</div></div>";
+			        		}else{
+			        			statu=statu+"<div class='row'>"+
+								"<div class='col-sm-12'>"+
+									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Document Verification    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+								"</div></div>";
+			        			
+			        		}
+		        		
+		        		if(data[i].vrStatus=="pending"){
+							statu=statu+"<div class='row'>"+
+							"<div class='col-sm-12'>"+
+							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Regostration    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+							"</div></div>";
+			        		}else{
+			        			statu=statu+"<div class='row'>"+
+								"<div class='col-sm-12'>"+
+									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Regostration    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+								"</div></div>";
+			        			
+			        		}
+		        		
+						
+		        	//	var encodedString = btoa(data[i].noimage);
+
+		        	//	alert(data[i].noimage);
+		        		
+		        	//alert("dd");
+		        	
+		 
+	//  var enc =arrayBufferToBase64(data[i].noimage );// window.btoa(data[i].noimage);
+    
+// 	  alert(enc);
+		        	
+		        	var  img="";
+// 		        	if(data[i].noimage!=null){
+		        	//	onerror="this.src='resources/img/car-placeholder.jpg'"
+		       
+		        		img="<img src='data:image/jpg;base64,"+arrayBufferToBase64(data[i].noimage )+"' width='90' height='80' onerror='this.src='resources/img/car-placeholder.jpg';' alt='No Image'/>";	
+// 		        	}else{
+// 		        		img="<img src='resources/img/car-placeholder.jpg' width='90' height='80' alt='No image' />";	
+// 		        	}
+// 		   	<img src="resources/img/car-placeholder.jpg" class="capCam"  id="results"/>
+		        	
+		        		
+	        			 selected_option = 
+	        	"<div class='row'   > "+	        			 					
+	 					"<div class='col-sm-6' >"+
+		 					"<a href='"+link+"'>"+
+		 						"<div class='row'>"+
+		 							"<div class='col-sm-12'>"+
+		 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].ocrVid+"</div>"+
+		 							"</div>"+
+		 						"</div>"+
+	
+	 							"<div class='row'>"+
+									"<div class='col-sm-12'>"+
+										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+data[i].ocrid+"</div>"+
+									"</div>"+
+								"</div>"+
+								
+								statu+"<hr/>"+
+								"</a>"+
+						"</div>"+
+					
+						"<div class='col-sm-3'  style='padding-left:20px;'>"+
+							"<div class='row'>"+
+								"<div class='col-sm-12'>"+					
+									img+
+								"</div>"+
+							"</div>"+
+											
+						"</div>"+
+						"<div class='col-sm-3' style='padding-left:40px;>"+
+						"<div class='row'>"+
+							"<div class='col-sm-12' >"+					
+							
+							"<button type='button' onClick='ocrDeleteEntry("+data[i].ocrid+")' class='btn btn-xs btn-danger' style='border-radius: 8px;'>Remove</button>"+
+								
+							"</div>"+
+						"</div>"+
+					"</div>"+
+
+					
+					"</div>";
+	            	 slctSubcat.append(selected_option);	
+	            	 
+	         
+	        	}
+
+		        	document.getElementById('pendingVehic').innerHTML = g;
+		        },
+		        error:function(){
+		        //	alert("Error");
+		        }
+			 });
+			
+			
+			
+			
+			function clickNext(){
+				alert("");
+				
+			}
+			
 	//	});
 
 	}	
 		
+	function ocrDeleteEntry(str)
+	{
+	
+		swal({
+			  title: "Are you sure?",
+			  text: "Once deleted, you will not be able to recover this imaginary file!",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+				  
+				  
+				  
+					$.ajax({
+
+					    type: 'POST',
+					    url: "changeStatusOcr", 
+					    data: {"ocrid":str},
+				        success: function(data){
+				        	if(data=="1"){
+				        
+				        	    swal("Poof! Your imaginary file has been deleted!", {
+				  			      icon: "success",
+				  			    });		
+				        	}else {
+				        		alert("Data Not Delete");
+				        		
+				        	}
+				        	takeAutoNo();
+				        	
+				        },
+				        error:function(data){
+				        	alert("Data Not Delete");
+				           
+				        }
+					 }); 
+				  
+					
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
 		
+			  } else {
+			    swal("Your imaginary file is safe!");
+			  }
+			});
+		
+		
+	}
+	
+	
+		
+	function arrayBufferToBase64( buffer ) {
+		var binary = '';
+		var bytes = new Uint8Array( buffer );
+		var len = bytes.byteLength;
+		for (var i = 0; i < len; i++) {
+			binary += String.fromCharCode( bytes[ i ] );
+		}
+		return window.btoa( binary );
+	}	
 	</script>
 	
 	
@@ -694,8 +1055,9 @@
 		        url: "getFindVmaster",
 		        data: {"vehicleID" :x},
 		        success: function(data){
-		        	
-		        if(data!=null){
+		        
+		        if(data!=null&&data!=""){
+		       
 		        	$('#veclass').text(data.vmodel.vehicleClass.vehicleClass);
 		        	$('#vMnM').text( data.vmodel.vehicleMakeID.vehicleMake+' / '+data.vmodel.vehicleModel);
 		        	//$('#vModel').text(data.vmodel.vehicleModel);
@@ -714,9 +1076,10 @@
 					 document.getElementById("lod1").style.display = "none";
 
 		        }else{
+		        	
 		        	 document.getElementById('vdetails').hidden = true;
 		        	
-		        	//alert("sssssssssss");
+		        	
 		        	 status="0";
 		        	 document.getElementById("capButtion").style.display = "block";
 		        	 document.getElementById("lod1").style.display = "none";
@@ -750,7 +1113,7 @@
 		    });
    
 			}	
-			getAllPendingAppointment(x);
+			getApposByDate(x);
 		}
 	
 		function takeAutoCapMore(){
@@ -872,8 +1235,8 @@
 			if(status=="1"){	
 				//window.location.href = "checkDocumentAuto?vid="+vid+"&id="+y+"&curMi=0";
 				
-				window.location.href = "checkDocumentAuto?vecNo="+vid+"&id="+y+"&curMi=0";
-				
+				//window.location.href = "checkDocumentAuto?vecNo="+vid+"&id="+y+"&curMi=0";
+				vehicleMaster();
 				
 				
 			}else if(status=="3"){
@@ -903,7 +1266,7 @@
 				 // document.write("mobile device");
 				  document.getElementById("num_img").style.display = "block";
 				 // document.getElementById("num_img_g").style.display = "block";
-				  document.getElementById("cam-click").style.display = "none";
+			//	  document.getElementById("cam-click").style.display = "none";
 				  document.getElementById("more").style.display = "none";
 				  
 				  
@@ -912,9 +1275,9 @@
 				  // false for not mobile device
 				//    alert("error");
 				//  document.write("not mobile device");
-				  document.getElementById("num_img").style.display = "none";
+				
 				 // document.getElementById("num_img_g").style.display = "none";
-				  document.getElementById("cam-click").style.display = "block";
+				//  document.getElementById("cam-click").style.display = "block";
 				  document.getElementById("more").style.display = "block";
 				}
 			
@@ -1004,100 +1367,151 @@
 	
 			
 			
+		});
+		
+		
+		getApposByDate("");
+		
+		// getVehicleStatus();
+		function getVehicleStatus()
+		{
+		
+			var todayDate = new Date().toISOString().slice(0,10); 			
+						
+				var date2 = new Date(todayDate);
+			//	alert(todayDate);
+					  
+						$.ajax({
+
+						    type: 'GET',
+						    url: "getOCRVehiclesByDates", 
+						    data: {"todayDate":date2},
+					        success: function(data){
+					     var totEntry=0;
+					     var totComDoc=0;
+					     var totComVr=0;
+					     var totComLent=0;
+					            var slctSubcat1=$('#vehicleSta'), option="";
+					            slctSubcat1.empty();
+					        	for(var i=0; i<data.length; i++){
+					        	
+					        		totEntry=totEntry+1;
+					        		var docst="<td></td>";
+					        		var vmSta="<td></td>";
+					        		var vrcst="<td></td>";
+					        		var apo="";
+					        		
+									if(data[i].docStatus=="completed"){
+										docst="<td bgcolor='green' style='color: #000000; text-align: center;'>Completed</td>";											
+										totComDoc=totComDoc+1;
+									}else{
+										docst="<td bgcolor='red' style='color: #ffffff; text-align: center;'>Pending</td>";
+									}
+									if(data[i].vmStatus=="completed"){
+										vmSta="<td bgcolor='green' style='color: #000000; text-align: center;'>Completed</td>";
+										totComVr=totComVr+1;
+									}else{
+										vmSta="<td bgcolor='red' style='color: #ffffff; text-align: center;'>Pending</td>";
+									}					        		
+									if(data[i].vrStatus=="completed"){
+										
+										totComLent=totComLent+1;
+										vrcst="<td bgcolor='green' style='color: #000000; text-align: center;'>Completed</td>";
+									}else{
+										vrcst="<td bgcolor='red' style='color: #ffffff; text-align: center;'>Pending</td>";
+									}
+					        		
+					        		
+									if(data[i].appNo==0){
+										apo="N/A";
+									}else{
+										apo=data[i].appNo;
+									}
+									const event = new Date(data[i].ocrDate);
+									
+									
+					        		 selected_option="<tr class='d5' style='height: 80px; border: 10px solid #f0f0e6; '>"+
+					        		 
+					        		 					        		
+					        		 "<td><div class='pull-right' style='color: #0014ed;'>"+data[i].ocrVid+"</div></br><div>"+event.toTimeString().slice(0,5)+"</div></br><div style='color: #fa6a0a;'>Gate Entry ID-"+data[i].ocrid+"</div></td>"+
+					        		 "<td style='text-align: center;'>"+apo+"</td>"+	 
+					        		 "<td style='text-align: center;'>"+
+					        		"<img src='data:image/jpg;base64,"+arrayBufferToBase64(data[i].noimage )+"' width='90' height='80' onerror='this.src='resources/img/car-placeholder.jpg';' alt='No Image'/>"+
+					        		 
+					        		 "</td>"+docst+""+vmSta+""+vrcst+"</tr>"
+					        			 
+					        		slctSubcat1.append(selected_option);	 
+					        	}
+// 							     var totEntry=0;
+// 							     var totComDoc=0;
+// 							     var totComVr=0;
+// 							     var totComLent=0;
+					 document.getElementById("totgate").innerHTML=totEntry;       	
+					    		Circles.create({
+					    			id:'circles-1',
+					    			radius:35,
+					    			value:totComDoc,
+					    			maxValue:totEntry,
+					    			width:7,
+					    			text: totComDoc,
+					    			colors:['#f1f1f1', '#FF9E27'],
+					    			duration:400,
+					    			wrpClass:'circles-wrp',
+					    			textClass:'circles-text',
+					    			styleWrapper:true,
+					    			styleText:true
+					    		})
+					        	
+		Circles.create({
+			id:'circles-2',
+			radius:35,
+			value:totComVr,
+			maxValue:totEntry,
+			width:7,
+			text: totComVr,
+			colors:['#f1f1f1', '#F25961',],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
 		})
-		
-		
-		getAllPendingAppointment("");
-		
-		function getAllPendingAppointment(vno){
-			
-			appointmrntNo="0";
-			
-		//	alert(vno)
-			$.ajax({
-		        type: 'GET',
-		        url: "getAllPendingAppointment", 
-		        success: function(data){
-		        	
-		            var slctSubcat=$('#asss'), option="";
-		            slctSubcat.empty();
-		        	for(var i=0; i<data.length; i++){
-		
-		        		if(vno==data[i].vehicle_id.vehicleID){
-		        			 status="3";
-		        			 appointmrntNo=data[i].appointmentID;
-		        			 //alert(data[i].vehicle_id.vehicleID);
-		        			 
-		        			 selected_option = "<div class='row'style='background-color: green; background: rgba(0, 128, 0, 0.3)'>"+
-		 					
-		 					"<div class='col-sm-12'>"+
-		 						"<div class='row'>"+
-		 							"<div class='col-sm-12'>"+
-		 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicle_id.vehicleID+"</div>"+
-		 							"</div>"+
-		 						"</div>"+
-		 						"<div class='row'>"+
-		 							"<div class='col-sm-12'>"+
-		 								"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>"+data[i].appointmentDate+" "+data[i].appointmentTime+"</div>"+
-		 							"</div>"+
-		 						"</div>"+
-//		  						"<div class='row'>"+
-//		  							"<div class='col-sm-12'>"+
-//		  								"<div style='color: #000099; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>"+data[i].appointmentTime+"</div>"+
-//		  							"</div>"+
-//		  						"</div>"+
-		 					"</div>"+
-		 					
-		 					
-		 					"<hr/></div>";
-		        			 
-		        		}else{
-		        			
-		        			selected_option = "<div class='row'>"+
-							
-							"<div class='col-sm-12'>"+
-								"<div class='row'>"+
-									"<div class='col-sm-12'>"+
-										"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicle_id.vehicleID+"</div>"+
-									"</div>"+
-								"</div>"+
-								"<div class='row'>"+
-									"<div class='col-sm-12'>"+
-										"<div style='color: #3e34fa; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>"+data[i].appointmentDate+" "+data[i].appointmentTime+"</div>"+
-									"</div>"+
-								"</div>"+
-//		 						"<div class='row'>"+
-//		 							"<div class='col-sm-12'>"+
-//		 								"<div style='color: #000099; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>"+data[i].appointmentTime+"</div>"+
-//		 							"</div>"+
-//		 						"</div>"+
-							"</div>"+
-							
-							
-							"</div><hr/>";
-		        			
-		        		}  
-		            
-		            	 slctSubcat.append(selected_option);	
-		        	}
-	
 
-		        },
-		        error:function(){
-		         //   alert("error");
-		        }
+		Circles.create({
+			id:'circles-3',
+			radius:35,
+			value:totComLent,
+			maxValue:totEntry,
+			width:7,
+			text: totComLent,
+			colors:['#f1f1f1', '#2BB930'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+					        	 
+					        },
+					        error:function(data){
+					        	alert("Data Not Delete");
+					           
+					        }
+						 }); 
 
-		    });
-			//setTimeout(hideContinue,30);
 		}
-		
-		
-		
 		
 		
 		
 	
 	</script>
+<script>
 
+
+
+		
+
+
+	</script>
 </body>
 </html>
