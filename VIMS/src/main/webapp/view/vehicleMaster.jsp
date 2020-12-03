@@ -134,7 +134,6 @@
 	</style>
 	
     
-       
 	<link href="resources/assets/css/scrollbar.css" rel="stylesheet">
 </head>
 <body onload="getClassImage();getMakeLogo();getModelImage();">
@@ -362,7 +361,7 @@
 								<div class="row">
 									
 									<div class="col-sm-2">
-										<label for="manufactureYear" class="l-fontst">Make</label>
+										<label for="manu1" class="l-fontst">Make</label>
 									</div>	
 									<div class="col-sm-5">						             			             		
 										<form:select  path="vmodel.vehicleMakeID.vehicleMakeID" id="vMake" class="custom-select fontst" onchange="getModel(); getMakeLogo()" required="true">
@@ -390,7 +389,7 @@
 						 	<div class="col-sm-4">
 						 		<div class="row">
 									<div class="col-sm-3">
-										<label for="manufactureYear" class="l-fontst">Category</label>
+										<label for="ii" class="l-fontst">Category</label>
 									</div>	
 									<div class="col-sm-7">						             			             		
 					             		<label  id="cate" class="lacol"></label>		             		
@@ -405,7 +404,7 @@
 						 	<div class="col-sm-8">
 						 		<div class="row">
 									<div class="col-sm-2">
-										<label for="manufactureYear" class="l-fontst">Model</label>
+										<label for="t6" class="l-fontst">Model</label>
 									</div>	
 									<div class="col-sm-5">						             			             		
 							             <form:select  path="vmodel.vehicleModelID" id="vehicleModelID" class="custom-select fontst" onchange="getModelImage()" required="true">
@@ -464,7 +463,7 @@
 							<div class="col-sm-5">
 								<div class="row">
 									<div class="col-sm-4">
-										<label for="manufactureYear" class="l-fontst">No</label>	
+										<label for="u7" class="l-fontst">No</label>	
 									</div>	
 									<div class="col-sm-8">						             			             		
 					             		<form:input class="form-control fontst" path="engineNo"  id="engno" onkeyup="this.value = this.value.toUpperCase();checkEngNo();" required="true"/>
@@ -541,7 +540,7 @@
 							
 									<div class="row">
 									<div class="col-sm-4">
-										<label for="manufactureYear" class="l-fontst">Axles</label>
+										<label for="t4" class="l-fontst">Axles</label>
 									</div>	
 									<div class="col-sm-3">						             			             		
 					             		<form:select  path="noWheel"  class="custom-select numberfield fontst" required="true">
