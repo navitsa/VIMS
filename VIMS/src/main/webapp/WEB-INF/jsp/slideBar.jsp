@@ -247,7 +247,7 @@
 	<li class="nav-item"  hidden="true" id="Finance">
 							<a data-toggle="collapse" href="#Financef">
 								<i class="fas fa-pen-square"></i>
-								<p>Vehicle Inspection</p>
+								<p>Finance & Accounting</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="Financef">
