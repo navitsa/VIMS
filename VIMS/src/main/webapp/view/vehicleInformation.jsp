@@ -526,7 +526,7 @@
 				<!-- Card Header - Dropdown -->
 				<div class="card-header py-2 d-flex flex-row align-items-center">
 <!-- 					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/> -->
-					<h6 class="m-0 font-weight-bold text-primary">Pending Lane Registrations</h6><span class="badge badge-pill badge-warning" id="pendingVehic" style="font-size:15px; font-weight: 900; color:black; border-radius: 50%;"></span>
+					<h6 class="m-0 font-weight-bold text-primary">Pending Lane Entry</h6><span class="badge badge-pill badge-warning" id="pendingVehic" style="font-size:15px; font-weight: 900; color:black; border-radius: 50%;"></span>
 				</div>
 				<!-- Card Body -->
 				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 630px;">	
@@ -800,12 +800,12 @@
 		        		if(data[i].vrStatus=="pending"){
 							statu=statu+"<div class='row'>"+
 							"<div class='col-sm-12'>"+
-							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Regostration    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Lane Entry    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
 							"</div></div>";
 			        		}else{
 			        			statu=statu+"<div class='row'>"+
 								"<div class='col-sm-12'>"+
-									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Regostration    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Lane Entry    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
 								"</div></div>";
 			        			
 			        		}
@@ -902,7 +902,7 @@
 	
 		swal({
 			  title: "Are you sure?",
-			  text: "Once deleted, you will not be able to recover this imaginary file!",
+			  text: "Do you want to cancel this Lane Entry? Once canceled vehicle will not appear for Lane Entry.",
 			  icon: "warning",
 			  buttons: true,
 			  dangerMode: true,
@@ -920,38 +920,26 @@
 				        success: function(data){
 				        	if(data=="1"){
 				        
-				        	    swal("Poof! Your imaginary file has been deleted!", {
+				        	    swal("Lane Entry has been canceled!", {
 				  			      icon: "success",
 				  			    });		
 				        	}else {
-				        		alert("Data Not Delete");
+				        		swal("Lane Entry is not cancele!");
 				        		
 				        	}
 				        	takeAutoNo();
 				        	
 				        },
 				        error:function(data){
-				        	alert("Data Not Delete");
+				        	swal("Lane Entry is not cancele!");
 				           
 				        }
 					 }); 
 				  
-					
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
+
 		
 			  } else {
-			    swal("Your imaginary file is safe!");
+			    swal("Lane Entry is not canceled!");
 			  }
 			});
 		
