@@ -198,16 +198,19 @@ public class AppointmentController {
 		long difference = 0;
 		Date dateObj = null;
 		
-		if(choseDate.compareTo(todayDate)==0) {
-			// match
-			difference = ct.getTime() - currentTime.getTime();
-			dateObj=currentTime;
-			
-		}else if(choseDate.compareTo(todayDate)>0) {
-			// future date
-			difference = ct.getTime() - ot.getTime();
-			dateObj = ot;
-		}
+//		if(choseDate.compareTo(todayDate)==0) {
+//			// match
+//			difference = ct.getTime() - currentTime.getTime();
+//			dateObj=currentTime;
+//			
+//		}else if(choseDate.compareTo(todayDate)>0) {
+//			// future date
+//			difference = ct.getTime() - ot.getTime();
+//			dateObj = ot;
+//		}
+		
+		difference = ct.getTime() - ot.getTime();
+		dateObj = ot;
 		
 		long diffMinutes = difference / 60000;
 		//long diffHours = difference / (60 * 60 * 1000) % 24;
@@ -230,7 +233,6 @@ public class AppointmentController {
 				a[i]=df.format(dateObj);
 			}
 			
-			//System.out.println(df.format(date1));
 		}
 		
 		String[] reservedTimeList =  appointmentService.getReservedTimes(date2,laneID);
@@ -239,14 +241,17 @@ public class AppointmentController {
 		
 		for (int i = 0; i < a.length; i++) {
 			
-			boolean flag = true;
+			boolean flag = true;	
+			Date time_slot = df.parse(a[i]);
 			
-			Date date3 = df.parse(a[i]);
+			if(choseDate.compareTo(todayDate)==0 && time_slot.compareTo(currentTime)<0) {
+				continue;
+			}
 			
 			for (int j = 0; j < reservedTimeList.length; j++) {
-				Date date4 = df.parse(reservedTimeList[j]);
+				Date reserved_slot = df.parse(reservedTimeList[j]);
 				
-				if (date3.compareTo(date4)==0) {
+				if (time_slot.compareTo(reserved_slot)==0) {
 					flag = false;
 				}
 			}
