@@ -551,7 +551,7 @@ public class VehicleController {
 		
 		mav.addObject("imgVe",ocrDetails.getNoimageView());
 		mav.addObject("ocid",id);
-		
+		mav.addObject("milage",ocrDetails.getCurrentMilage());
 		VehicleMaster vm=new VehicleMaster();
 		
 		
@@ -611,9 +611,10 @@ public class VehicleController {
 				
 				OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(ocid));
 				ocrDetails.setVmStatus("completed");
+				ocrDetails.setCurrentMilage(Long.parseLong(currentMilage));
 				vehicleService.saveOcrDetailsRepo(ocrDetails);
 				
-				return "redirect:/vehicleRegistrationAuto?vid="+vmaster.getVehicleID()+"&curMi="+currentMilage+"&id="+ocid; 
+				return "redirect:/vehicleRegistrationAuto?vid="+vmaster.getVehicleID()+"&id="+ocid; 
 		
 	 
 				//return "redirect:/checkDocumentAuto?vecNo="+vmaster.getVehicleID()+"&curMi="+currentMilage+"&id="+ocid; 
@@ -742,7 +743,7 @@ public class VehicleController {
 	}
 	//////////////REGISTRATION///////
 	@RequestMapping("/vehicleRegistrationAuto")
-	public String getREG(Model m,@RequestParam String vid,@RequestParam String curMi,@RequestParam String id,HttpSession session) {
+	public String getREG(Model m,@RequestParam String vid,@RequestParam String id,HttpSession session) {
 		OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
 		VehicleRegistration vecir=new VehicleRegistration();
 		if(!ocrDetails.getAppNo().equals("0")) {
@@ -762,7 +763,7 @@ public class VehicleController {
 		VehicleMaster vm=vehicleService.getVMasterById(vid);
 		//vm.setVehicleID(vid);
 		vecir.setVid(vm);	
-		vecir.setCurrentMilage(Long.parseLong(curMi));
+		vecir.setCurrentMilage(ocrDetails.getCurrentMilage());
 		
 		m.addAttribute("vid",vid);
 		m.addAttribute("VehicleRegistration",vecir);
@@ -873,7 +874,7 @@ public class VehicleController {
 	//save vehicle registration data
 	
 	@RequestMapping(value="/vehicleRegAction" ,method=RequestMethod.POST)
-	public @ResponseBody String saveVehicleRegistration(@Valid @ModelAttribute("VehicleRegistration") VehicleRegistration vehiclereg,  BindingResult br,HttpServletRequest request,RedirectAttributes redirectAttributes) {
+	public @ResponseBody String saveVehicleRegistration(@Valid @ModelAttribute("VehicleRegistration") VehicleRegistration vehiclereg,  BindingResult br,HttpServletRequest request,RedirectAttributes redirectAttributes,HttpSession session) {
 	//	TransactionStatus transactionStatus = null;
 		
 		//EntityManagerFactory emf=Persistence.createEntityManagerFactory("VehicleRegistration");
@@ -896,7 +897,11 @@ public class VehicleController {
 	        	File texEsin = new File(checkTextFilePath);  
 	        	File xmlEsin = new File(checkXmlFilePath);  		
 	        	OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
+	    
+	        	 if (session.getAttribute("username")!=null) { 
 	        	
+	        	 if (ocrDetails.getNoimage().length>0) { 
+ 	
 	        if (ocrDetails.getDocStatus().equals("completed")) {  
 	            if (texEsin.isDirectory()) {
 	          
@@ -1250,7 +1255,13 @@ public class VehicleController {
 	        	  return "6"; 
 	          
 	          } 
-                
+	        	 }else {
+	        		 return "7"; 	 
+	        	 }
+	          }else {
+	        		 return "8"; 	 
+	        	 }
+	        	 
                 // "vehicleRegistration?vid="+"";	    	    	    	    	      	    	          	
             } catch (Exception e) {
             //	transaction.getRollbackOnly();
@@ -3651,7 +3662,7 @@ public class VehicleController {
 			VehicleMaster vm=vehicleService.getVMasterById(vecNo);
 			
 			documentCheckHead.setVehicleID(vm);
-			OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));;			
+			OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));			
 			documentCheckHead.setOcrid(ocrDetails);
 			documentCheckHead.setStatus("ACTIVE");
 			
@@ -3742,5 +3753,38 @@ public class VehicleController {
 			return vlist;
 		}
 	
+	  	
+		@RequestMapping(value = "saveNewOcrPlate", method = RequestMethod.POST)
+		public @ResponseBody String saveWNewOcrImage( @RequestParam ("json") String json, @RequestParam ("id") String id) 
+		{
+
+			try {
+		
+	
+		    byte[] imagedata = DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));
+		    
+		   
+			OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));;
+			
+			//ocrDetails.setOcrDate(dtf.format(now));
+			ocrDetails.setNoimage(imagedata);
+					
+			vehicleService.saveOcrDetailsRepo(ocrDetails);
+		    
+			return "1";
+		    
+		   }catch(Exception e) {
+			   
+			   System.out.println("An error occurred.");
+			      e.printStackTrace();
+			      return "0";
+		   }
+		   
+		   
+		   
+		}
+	  	
+	  	
+	  	
 }
 

@@ -25,10 +25,11 @@
 	
 	    .textred{
        font-family: Arial, Helvetica, sans-serif;
-        border: 1px solid #b30000;
-		font-size:20px;
+        border: 0px solid #b30000;
+		font-size:14px;
+		font-weight:bold;
        	text-align:center;
-       	color: #ffffff;	
+       	color: #2c03fc;	
      
        }  
 	      .fontst{
@@ -99,7 +100,7 @@
 					<div class="page-inner py-3">
 						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 							<div>
-								<h2 class="text-white pb-2 fw-bold">Vehicle Registrations</h2>
+								<h2 class="text-white pb-2 fw-bold">Lane Entry</h2>
 								<h5 class="text-white op-7 mb-2"></h5>
 							</div>
 							<div class="ml-md-auto py-2 py-md-4">
@@ -109,6 +110,7 @@
 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
 								<a href="vehicleMasterAuto?vehicleID=<%=session.getAttribute("vRvid")%>&id=<%=session.getAttribute("vRocr")%>&appNo=0" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a>
 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a>
+								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#capturePlateModal">Capture</a>
 <!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
 							</div>
 						</div>
@@ -565,7 +567,7 @@
 			<div class="card shadow mb-4">
 				<!-- Card Header - Dropdown -->
 				<div class="card-header py-2 d-flex flex-row align-items-center">
-					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/><h6 class="m-0 font-weight-bold text-primary">.  Previous Registrations </h6>
+					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/><h6 class="m-0 font-weight-bold text-primary">.  Previous Lane Entry </h6>
 				</div>
 				<!-- Card Body -->
 				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 540px;">	
@@ -629,9 +631,173 @@
 				
 				
 				</form:form>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<div id="capturePlateModal" class="modal fade bd-example-modal"  role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+<!--         <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+		<div class="col-sm-5">
+			<h4 class="modal-title">Capture Plate</h4>
+		</div>
+		<div class="col-sm-5">
+        	<input class="form-control textred" name="vehNO" value="${vvid}" id="vehNO" placeholder="Licence Plate NO..." readonly="true" />		
+		</div>
+
+      </div>
+      <div class="modal-body">
+       
+   								
+
+														<div class="form-group row">
+			
+															<div class="col-sm-12">
+															<div class="row">
+																	<div class="col-sm-5">
+																		<div class="form-group row">
+																			<div class="col-sm-12">
+																				
+																					<input class="form-control form-control-sm"
+																			name="ocrrid" id="ocrrid" value="${ocid}" type="hidden" />
+																			</div>
+																		</div>																	
+																		<div class="row">
+																			<div class="col-sm-6">
+																				
+																			</div>
+																			<div class="col-sm-5">
+																																	
+																			</div>
+
+																		</div>
+																	</div>
+																	<div class="col-sm-3">
+														
+
+																	</div>																	
+																</div>
+																
+																
+																
+																
+										 <div class="row">
+											<div class="col-sm-6">
+<!-- 												<div class="row"> -->
+												
+<!-- 							         			<a href="#" class="" onClick="takeAutoNo()" id="cam-click"> -->
+<!-- 							             		<i class="fa fa-refresh  fa-spin" style="font-size:24px"></i>  -->
+<!-- 							             		</a>														 -->
+<!-- 												</div> -->
+												<br>
+												<div class="row">
+													<div class="col-sm-12">
+														
+														<table id="ocrdetails" class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 112px;">                	
+					
+															<tbody id="ocrdetails4" >
+															
+															
+															</tbody>
+					
+														</table>	
+													</div>	
+												</div>
+												<br>
+												
+												<div class="row">
+													<div class="col-sm-12">
+<!-- 														<a href="#" class="" onClick="takeSnapshot();" id="more">More..</a>	 -->
+													
+<!-- 														<div class="spinner-grow" role="status" id="moreLoder" style="display: none;"> -->
+<!-- 													  	<span class="sr-only" >Loading...</span> -->
+<!-- 													 </div> -->
+												</div>
+																								
+												
+												
+												
+												
+												
+												
+												</div>
+												<div class="row">
+<!-- 													<input type="file" class="" id="num_img"  accept="image/*" capture="user"  style="display: none;" />	 -->
+												</div>
+												
+												
+											</div>
+											<div class="col-sm-6">
+											
+												<div class="row">
+													<div class="col-mb-12 col-sm-12">
+														<img src="resources/img/car-placeholder.jpg" class="capCam"  id="results1"/>
+								             			<input type="hidden" name="ImageData" id="ImageData"  />
+								             				
+													</div>
+												</div>
+												<br>
+												<div class="row">
+													<div class="col-mb-12 col-sm-12">
+														<input class="form-control fontst bgred" id="vehicleID" placeholder="Licence Plate NO..." oninput="checkVehicleNo(this.value)" onkeyup="this.value = this.value.toUpperCase();" />
+													</div>
+												</div>
+												<br>
+										
+											</div>
+									</div>															
+													
+															</div>
+															
+															
+															
+														</div>
+										
+<!--        style="display: none;" -->
+								      </div>
+								      <div class="modal-footer">
+								      <div class="col-sm-6 mb-sm-6">
+								      
+								      </div>
+								      <div class="col-sm-2 mb-sm-2">
+											<button type="button" class="btn btn-success" data-dismiss="modal" onclick="saveOcrImage()" style="display: none;" id="veButt">Save</button>
+									</div>
+								      <div class="col-sm-3 mb-sm-3">
+											<button type="button" class="btn btn-info" data-dismiss="modal" >Close</button>
+										</div>																
+								      </div>
+								    </div>
+								
+								  </div>
+								</div>
+
+	
+
+
+
+
+
+
+
+
+
+
+
 									
 				<%@include file="checkDocument.jsp"%>	
-				
+					<%@include file="capturePlateModal.jsp"%>	
 					</div>
 				
 			</div>	
@@ -641,6 +807,58 @@
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
 
 			<script>
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			takeAutoNo();
+			
+			function takeAutoNo() {
+	
+			setTimeout(takeAutoNo, 3000); 
+
+				$.ajax({
+
+				    type: 'POST',
+				    url: "takeAutoNo",
+			        success: function(data){
+
+			        	//$("table tbody").empty();
+			        	
+			        	 var slctSubcat1=$('#ocrdetails4'), option="";
+				            slctSubcat1.empty();
+						for(var i=0; i<data.length; i++){
+						
+							selected_option =  "<tr data-folder='ghjgh'><td>"+ data[i].number+ "</td>"
+					            +"<td style='display:none;'>"+ data[i].noimage+"</td>"
+					            +"</tr>";
+					            slctSubcat1.append(selected_option);
+								//$("table tbody").append(markup);
+			           	 }
+	   	
+			        },
+			        error:function(){
+			       //	alert("Error");
+			        }
+				 });	
+			
+			
+			}
+			
+
+			
+			
+			
+			
+			
 	function customerDate(){
 		
 		var cusid=document.getElementById("customer").value;
@@ -673,7 +891,7 @@
 		
 		
 		//
-	if(document.getElementById("currentMilage").value!="0"){
+	if(document.getElementById("currentMilage").value!="0"&&document.getElementById("currentMilage").value!=""){
 		
 		
 		if(document.getElementById("payType").value=="Credit"){
@@ -770,6 +988,14 @@
 				        			});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else if(data=="8"){
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'Session Expired'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		        			window.location.href = "logout";
 				        	}else{ 	
 	 			        	
 	 			       		window.location.href = data;
@@ -855,6 +1081,14 @@
 				        			});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else if(data=="8"){
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'Session Expired'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		        			window.location.href = "logout";
 				        	}else{ 	
 	 			        	
 	 			       		window.location.href = data;
@@ -1275,6 +1509,113 @@
 	
 	
 	</script>
+<script type="text/javascript">
 
+			var table = document.getElementsByTagName("table")[0];
+			var tbody = table.getElementsByTagName("tbody")[0];
+			  
+			tbody.onclick = function (e) {
+			    e = e || window.event;
+			    var data = [];
+			    var target = e.srcElement || e.target;
+			    while (target && target.nodeName !== "TR") {
+			        target = target.parentNode;
+			    }
+			    if (target) {
+			        var cells = target.getElementsByTagName("td");
+			        for (var i = 0; i < cells.length; i++) {
+			            data.push(cells[i].innerHTML);
+			        }
+			    }
+			
+	
+					document.getElementById('vehicleID').value = data[0];
+					checkVehicleNo(data[0]);
+					document.getElementById('results1').src = "data:image/jpg;base64,"+data[1];
+					document.getElementById("ImageData").value="data:image/jpg;base64,"+data[1];
+			};
+	 
+			function saveOcrImage(){
+				
+				
+				
+				var imagebase64=document.getElementById("ImageData").value;
+				if(imagebase64!=""){
+		 		var y=document.getElementById("ocrrid").value;
+				
+		 		var jsonfile={json:JSON.stringify(imagebase64),id:y};
+		 		$.ajax({
+
+		 		    type: 'POST',
+		 		    url: "saveNewOcrPlate", 
+		 		    data: jsonfile,
+		 	        success: function(data){
+		 	        	
+			      	if(data=="1"){
+			      		
+			      		document.getElementById("results").src=imagebase64;
+			      		
+			      		
+			      		Swal.fire({
+			      		  position: 'top-end',
+			      		  icon: 'success',
+			      		  title: 'Your work has been saved',
+			      		  showConfirmButton: false,
+			      		  timer: 1500
+			      		})
+			      	}else{
+			      		Swal.fire({
+							  icon: 'error',
+							  title: 'Oops...',
+							  text: 'Not Save License Plate!',
+							  
+							})
+			      		
+			      	}
+		 	        	
+		 	        	
+		 	        },
+		 	        error:function(data){
+		 	        	alert(data.responseText);
+			           
+		 	        }
+		 		 });
+				}else{
+					
+
+
+					Swal.fire({
+					  icon: 'error',
+					  title: 'Oops...',
+					  text: 'Not Save License Plate!',
+					  
+					})
+				}
+
+			}
+				
+		
+			function checkVehicleNo(str){
+// 					document.getElementById("veButt").style.display = "none";
+					var oldVno=document.getElementById("vehNO").value;
+					
+					if(oldVno==str){
+						document.getElementById("veButt").style.display = "block";
+					}else{
+						
+						document.getElementById("veButt").style.display = "none";	
+					}
+				
+			}
+			
+
+
+		
+			
+			
+			
+			
+			
+			</script>
 </body>
 </html>

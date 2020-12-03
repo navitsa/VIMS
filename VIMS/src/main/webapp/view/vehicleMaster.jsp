@@ -167,6 +167,7 @@
 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
 <!-- 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a> -->
 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a>
+		
 <!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
 							</div>
 						</div>
@@ -255,7 +256,7 @@
 						             	<label class="l-fontst">Mileage</label>
 						             </div>
 								 	<div class="col-sm-5">
-										<input class="form-control fontst" name="currentMilage" required="Required" id="currentMilage" required="true"/>
+										<input class="form-control fontst" name="currentMilage" required="Required" value="${milage}" id="currentMilage" required="true"/>
 <!-- 										<i class='fas fa-tachometer-alt iconali'></i>	 -->
 						             	
 						            </div>
@@ -794,7 +795,7 @@
 							
 	<%@include file="checkDocument.jsp"%>
 				
-				
+			
 				
 				
 				

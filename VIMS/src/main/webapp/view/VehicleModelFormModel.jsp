@@ -93,8 +93,7 @@
 												</div>
 												<div class="col-sm-5">
 							
-													<button type="button" class="btn btn-info" data-dismiss="modal"
-														onclick="getModelV();">Close</button>
+													<button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
 												</div>
 											</div>
 
