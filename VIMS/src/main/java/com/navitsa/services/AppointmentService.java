@@ -1,5 +1,6 @@
 package com.navitsa.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -99,5 +100,10 @@ public class AppointmentService {
 	public void cancellingAppointment(String appoID) {
 		// TODO Auto-generated method stub
 		appointmentRepo.cancellingAppointment(appoID);
+	}
+
+	public void reschedulingAppointment(String appoID, Date date, String time) {
+		// TODO Auto-generated method stub
+		appointmentRepo.reschedulingAppointment(appoID,date,time);
 	}
 }

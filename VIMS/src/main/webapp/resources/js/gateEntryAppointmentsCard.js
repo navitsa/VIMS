@@ -99,14 +99,13 @@ function lateNotify() {
         success: function(data){
 
         	 for(var i=0; i<data.length; i++){
-        		 
         			$.notify({
         				// options
         				icon: 'flaticon-alarm-1',
         				title: 'Appointment Alert !',
         				message: data[i].vehicle_id.vehicleID + ' Vehicle has not appeared at the gate !'+ 
         						'<br> Scheduled Time : '+data[i].appointmentTime+'<br><br>'+
-        						'<button class="btn btn-danger btn-sm" onclick="cancel('+data[i].appointmentID+')"><b>Cancel</b></button> '+
+        						'<button class="btn btn-danger btn-sm" onclick="cancel('+ data[i].appointmentID +')"><b>Cancel</b></button> '+
         						'<button class="btn btn-primary btn-sm"><b>Reschedule</b></button> '+
         						'<button class="btn btn-light btn-sm"><b>Wait !</b></button>'
         			},{
@@ -132,6 +131,31 @@ function lateNotify() {
 setInterval(lateNotify, 60000);
 
 function cancel(str) {
-	//alert("hello "+str);
+	$.ajax({
+        type: 'GET',
+        url: "cancelling",
+        data: {"appoID":str},
+        success: function(data){
+        	alert("wow ! successfully cancelled !");
+        },
+        error:function(){
+            //alert("error");
+        }
+
+    });
+}
+
+function reschedule(str) {
+	$.ajax({
+        type: 'GET',
+        url: "rescheduling",
+        data: {"appoID":str,"date":reshDate,"time":reshTime},
+        success: function(data){
+        },
+        error:function(){
+            //alert("error");
+        }
+
+    });
 }
 

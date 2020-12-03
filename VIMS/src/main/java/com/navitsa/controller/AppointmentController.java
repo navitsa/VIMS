@@ -419,9 +419,9 @@ public class AppointmentController {
 		
 		List<Appointment> lateApposList = appointmentService.getLateAppointments();
 		
-		for(Appointment x : lateApposList) {
-			System.out.println(x.getVehicle_id().getVehicleID());
-		}
+//		for(Appointment x : lateApposList) {
+//			System.out.println(x.getVehicle_id().getVehicleID());
+//		}
 		
 		return lateApposList;
 
@@ -429,8 +429,16 @@ public class AppointmentController {
 	
 	@RequestMapping(value="cancelling", method=RequestMethod.GET)
 	public @ResponseBody void cancelling(@RequestParam String appoID){
-		
+		System.out.println("appointment ID "+appoID);
 		appointmentService.cancellingAppointment(appoID);
+
+	}
+
+	@RequestMapping(value="rescheduling", method=RequestMethod.GET)
+	public @ResponseBody void rescheduling(@RequestParam String appoID,
+			@RequestParam Date date,@RequestParam String time){
+		
+		appointmentService.reschedulingAppointment(appoID,date,time);
 
 	}
 	

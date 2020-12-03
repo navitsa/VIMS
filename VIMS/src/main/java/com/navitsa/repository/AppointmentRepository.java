@@ -1,5 +1,6 @@
 package com.navitsa.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,6 +36,12 @@ public interface AppointmentRepository extends CrudRepository<Appointment , Stri
 	@Modifying
 	@Query(value = "UPDATE Appointment a SET a.status ='cancelled' WHERE a.appointmentID =:appoID")
 	public int cancellingAppointment(@Param("appoID") String appoID);
+
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE Appointment a SET a.status ='rescheduled',a.appointmentDate=:date,a.appointmentTime=:time WHERE a.appointmentID =:appoID")
+	public int reschedulingAppointment(@Param("appoID") String appoID, 
+			@Param("date") Date date, @Param("time") String time);
 	
 	
 }
