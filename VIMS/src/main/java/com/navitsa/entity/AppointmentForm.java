@@ -110,7 +110,10 @@ public class AppointmentForm {
 		return engineCapacity;
 	}
 	public void setEngineCapacity(String engineCapacity) {
-		this.engineCapacity = engineCapacity;
+		if(engineCapacity=="")
+			this.engineCapacity = null;
+		else
+			this.engineCapacity = engineCapacity;
 	}
 	public FuelType getFtype() {
 		return ftype;
@@ -164,7 +167,10 @@ public class AppointmentForm {
 		return emissionNorms;
 	}
 	public void setEmissionNorms(String emissionNorms) {
-		this.emissionNorms = emissionNorms;
+		if(emissionNorms=="")
+			this.emissionNorms=null;
+		else
+			this.emissionNorms = emissionNorms;
 	}
 	public String getCustomer_owner_status() {
 		return customer_owner_status;

@@ -114,12 +114,19 @@
 										</c:forEach>																																		
 									</select>
 									
-									<select class="form-control mb-4" id="testCat" onchange="findBestLane()" required>									
+<%-- 									<select class="form-control mb-4" id="testCat" onchange="findBestLane()" required>									
 										<option value="">Select testing category...</option>
 										<c:forEach items="${testCategory}" var="cat">
 											<option value="${cat.categoryId}">${cat.categoryType}</option>
 										</c:forEach>																																		
-									</select>
+									</select> --%>
+
+									<form:select path="categoryId.categoryId" class="form-control mb-4" id="testCat" onchange="findBestLane()" required="true">									
+										<form:option value="">Select testing category...</form:option>
+										<c:forEach items="${testCategory}" var="cat">
+											<form:option value="${cat.categoryId}">${cat.categoryType}</form:option>
+										</c:forEach>																																		
+									</form:select>
 									
 									<form:select path="lane.testLaneHeadId" class="form-control" 
 										onchange="getFreeTimes();deleteLanemsg();" required="true" id="laneID">									

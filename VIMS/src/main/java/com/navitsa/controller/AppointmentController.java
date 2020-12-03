@@ -97,10 +97,10 @@ public class AppointmentController {
 				vm.setEngineCapacity(form.getEngineCapacity());
 				vm.setFtype(form.getFtype());
 				vm.setNoWheel(form.getNoWheel());
-				vm.setEmissionNorms(form.getEmissionNorms());
-				VehiclesSubCategory vehiclesSubCategory=new VehiclesSubCategory();
-				vehiclesSubCategory.setSubCategoryID("0");
-				vm.setSubCategoryID(vehiclesSubCategory);
+				vm.setEmissionNorms(form.getEmissionNorms());				
+				VehiclesSubCategory vsc = new VehiclesSubCategory();
+				vsc.setSubCategoryID("0");
+				vm.setSubCategoryID(vsc);		
 				vehicleService.saveVMaster(vm);				
 			}
 			
