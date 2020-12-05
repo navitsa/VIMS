@@ -1375,15 +1375,13 @@ function saveModelV(){
 		cache : false,
 		success : function(data) {
 			
-// 			if (data == "1") {
-				swal("Good job!", "You clicked the button!", {
-					icon : "success",
-					buttons : {
-						confirm : {
-							className : 'btn btn-success'
-						}
-					},
-				});
+      		Swal.fire({
+	      		  position: 'top-end',
+	      		  icon: 'success',
+	      		  title: 'Successfully saved!',
+	      		  showConfirmButton: false,
+	      		  timer: 1500
+	      		})
 
 
 
@@ -1460,15 +1458,13 @@ function saveMakeV() {
 		cache : false,
 		success : function(data) {
 			
-// 			if (data == "1") {
-				swal("Good job!", "You clicked the button!", {
-					icon : "success",
-					buttons : {
-						confirm : {
-							className : 'btn btn-success'
-						}
-					},
-				});
+      		Swal.fire({
+	      		  position: 'top-end',
+	      		  icon: 'success',
+	      		  title: 'Successfully saved!',
+	      		  showConfirmButton: false,
+	      		  timer: 1500
+	      		})
 
 
 
@@ -1501,16 +1497,19 @@ function saveCheckDocment() {
 		success : function(data) {
 			
  			if (data == "1") {
-				swal("Good job!", "You clicked the button!", {
-					icon : "success",
-					buttons : {
-						confirm : {
-							className : 'btn btn-success'
-						}
-					},
-				});
+	      		Swal.fire({
+		      		  position: 'top-end',
+		      		  icon: 'success',
+		      		  title: 'Successfully saved!',
+		      		  showConfirmButton: false,
+		      		  timer: 1500
+		      		})
  			}else{
- 				alert("Data not Save");
+	      		Swal.fire({
+					  icon: 'error',
+					  title: 'Oops...',
+					  text: 'Data not saved!',
+					})
  			}
  			
 

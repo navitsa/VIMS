@@ -902,7 +902,7 @@
 	
 		swal({
 			  title: "Are you sure?",
-			  text: "Do you want to cancel this Lane Entry? Once canceled vehicle will not appear for Lane Entry.",
+			  text: "Do you want to remove this Lane Entry? Once removed vehicle will not appear at Lane Entry !",
 			  icon: "warning",
 			  buttons: true,
 			  dangerMode: true,
@@ -920,18 +920,18 @@
 				        success: function(data){
 				        	if(data=="1"){
 				        
-				        	    swal("Lane Entry has been canceled!", {
+				        	    swal("Lane Entry has been removed !", {
 				  			      icon: "success",
 				  			    });		
 				        	}else {
-				        		swal("Lane Entry is not cancele!");
+				        		swal("Lane Entry is not remove !");
 				        		
 				        	}
 				        	takeAutoNo();
 				        	
 				        },
 				        error:function(data){
-				        	swal("Lane Entry is not cancele!");
+				        	swal("Lane Entry is not remove !");
 				           
 				        }
 					 }); 
@@ -939,7 +939,7 @@
 
 		
 			  } else {
-			    swal("Lane Entry is not canceled!");
+			    swal("Lane Entry is not removed !");
 			  }
 			});
 		
@@ -1497,13 +1497,6 @@
 		
 	
 	</script>
-<script>
 
-
-
-		
-
-
-	</script>
 </body>
 </html>

@@ -1121,7 +1121,7 @@
  			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
-			        			  text: 'Data Transfer not Working'
+			        			  text: 'Data Transfer not Working !'
 			        			  //,footer: '<a href>Why do I have this issue?</a>'
 			        			});
  	 						document.getElementById("proceedLanBtn").style.display = "block";
@@ -1130,7 +1130,7 @@
  			        		Swal.fire({
  			        			  icon: 'error',
  			        			  title: 'Oops...',
- 			        			  text: 'Data Transfer Server not found'
+ 			        			  text: 'Data Transfer Server not Found !'
  			        			  //,footer: '<a href>Why do I have this issue?</a>'
  			        			});
  	 						document.getElementById("proceedLanBtn").style.display = "block";
@@ -1139,7 +1139,7 @@
 			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
-			        			  text: 'This Vehicle Already Assigned to a Lane'
+			        			  text: 'This vehicle already assigned to a lane !'
 			        			  //,footer: '<a href>Why do I have this issue?</a>'
 			        			});
 	 						document.getElementById("proceedLanBtn").style.display = "block";
@@ -1148,7 +1148,7 @@
 			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
-			        			  text: 'XML_IN Path not Found'
+			        			  text: 'XML_IN Path not Found !'
 			        			  //,footer: '<a href>Why do I have this issue?</a>'
 			        			});
 	 						document.getElementById("proceedLanBtn").style.display = "block";
@@ -1157,7 +1157,7 @@
 			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
-			        			  text: 'ES_IN Path not Found'
+			        			  text: 'ES_IN Path not Found !'
 			        			  //,footer: '<a href>Why do I have this issue?</a>'
 			        			});
 	 						document.getElementById("proceedLanBtn").style.display = "block";
@@ -1200,13 +1200,11 @@
 		
 	}else{
 		
-		alert("Enter Mileage");
-//  		Swal.fire({
-// 			  icon: 'error',
-// 			  title: 'Oops...',
-// 			  text: 'Enter Mileage'
-// 			  //,footer: '<a href>Why do I have this issue?</a>'
-// 			});
+ 		Swal.fire({
+			  icon: 'error',
+			  title: 'Oops...',
+			  text: 'Please Enter Current Mileage !'
+			});
 		
 	}
 		
@@ -1485,16 +1483,20 @@
 			success : function(data) {
 				
 	 			if (data == "1") {
-					swal("Good job!", "You clicked the button!", {
-						icon : "success",
-						buttons : {
-							confirm : {
-								className : 'btn btn-success'
-							}
-						},
-					});
+		      		Swal.fire({
+			      		  position: 'top-end',
+			      		  icon: 'success',
+			      		  title: 'Successfully saved!',
+			      		  showConfirmButton: false,
+			      		  timer: 1500
+			      		});
+					
 	 			}else{
-	 				alert("Data not Save");
+		      		Swal.fire({
+						  icon: 'error',
+						  title: 'Oops...',
+						  text: 'Data not saved!',
+						});
 	 			}
 	 			
 
@@ -1559,17 +1561,17 @@
 			      		Swal.fire({
 			      		  position: 'top-end',
 			      		  icon: 'success',
-			      		  title: 'Your work has been saved',
+			      		  title: 'License Plate Capturing is successfully !',
 			      		  showConfirmButton: false,
 			      		  timer: 1500
-			      		})
+			      		});
 			      	}else{
 			      		Swal.fire({
 							  icon: 'error',
 							  title: 'Oops...',
-							  text: 'Not Save License Plate!',
+							  text: 'License Plate is not captured ! Please capture and continue ..',
 							  
-							})
+							});
 			      		
 			      	}
 		 	        	
@@ -1587,9 +1589,9 @@
 					Swal.fire({
 					  icon: 'error',
 					  title: 'Oops...',
-					  text: 'Not Save License Plate!',
+					  text: 'License Plate is not captured ! Please capture and continue ..',
 					  
-					})
+					});
 				}
 
 			}
