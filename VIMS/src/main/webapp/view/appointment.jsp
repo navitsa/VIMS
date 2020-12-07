@@ -370,12 +370,16 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-lg-3">
-									<form:input class="form-control" path="postalCode" placeholder="P O Box"/>
+									<form:input class="form-control form-control-sm" path="postalCode" placeholder="P O Box"/>
 								</div>
 								<div class="col-lg">
-									<form:input class="form-control" path="city" placeholder="City"/>
+									<form:textarea path="address" id="address" class="form-control" placeholder="Address"/>
 								</div>
-
+							</div>
+							<div class="form-group row">
+								<div class="col-lg-6">
+									<form:input class="form-control form-control-sm" path="city" placeholder="City"/>
+								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-lg-6">						
@@ -389,14 +393,14 @@
 								</div>
 							</div>	
 							<div class="form-group row">
-								<div class="col-lg-6">
+								<div class="col-lg-8">
 								<form:input class="form-control form-control-sm" type="email" 
 									path="email" id="email" placeholder="example@gmail.com"  />
 								</div>
 							</div>
 							
 							<div class="alert alert-warning alert-dismissible" id="timeSlotValidateMsgBox" style="display:none">
-							  <button type="button" class="close" data-dismiss="alert">&times;</button>
+							  <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
 							  <strong>Info!</strong> <div id="timeSlotValidateMsg"><span></span></div>
 							</div>
 							
@@ -666,6 +670,7 @@ function getCurrentOwner(vehicleNo){
 		    		document.getElementById("cusTitle").value = data.title;
 			    	document.getElementById("firstName").value = data.ownerName;
 			    	document.getElementById("email").value = data.email;
+			    	document.getElementById("address").value = data.add01;
 			    	document.getElementById("postalCode").value = data.postalBox;
 			    	document.getElementById("city").value = data.city;
 			    	document.getElementById("stateid").value = data.stateid.stateid;
@@ -740,6 +745,7 @@ function goAsNewOne() {
 	document.getElementById("firstName").value = "";
 	document.getElementById("lastName").value = "";
 	document.getElementById("postalCode").value = "";
+	document.getElementById("address").value = "";
 	document.getElementById("city").value = "";
 	document.getElementById("stateid").value = "";
 	document.getElementById("email").value = "";
@@ -761,7 +767,7 @@ function goAsNewOne() {
 		if (!formValid){
 			//alert("Must check some option!");
 			$('#timeSlotValidateMsg span').text("Please Select an Appointment Time !");
-			document.getElementById("timeSlotValidateMsg").style.fontSize = "x-small";
+			document.getElementById("timeSlotValidateMsg").style.fontSize = "small";
 			document.getElementById("timeSlotValidateMsgBox").style.display = "block";
 
 		}

@@ -121,6 +121,7 @@ public class AppointmentController {
 					vowner.setTitle(form.getCusTitle());
 					vowner.setOwnerName(form.getFirstName()+" "+ form.getLastName());
 					vowner.setContactNo(form.getMobileNo());
+					vowner.setAdd01(form.getAddress());
 					vowner.setCity(form.getCity());
 					vowner.setStateid(form.getStateid());
 					vowner.setPostalBox(form.getPostalCode());
@@ -236,7 +237,7 @@ public class AppointmentController {
 		}
 		
 		String[] reservedTimeList =  appointmentService.getReservedTimes(date2,laneID);
-		String[] freeTimeList = new String[40];
+		String[] freeTimeList = new String[80];
 		SimpleDateFormat df3 = new SimpleDateFormat("hh:mm a");
 		
 		for (int i = 0; i < a.length; i++) {
@@ -394,7 +395,8 @@ public class AppointmentController {
 		
 		//AppointmentForm newApointment = new AppointmentForm();
 		//m.addAttribute("appointmentForm", newApointment);
-		return "gateEntryAppointmentCard";	
+		//return "gateEntryAppointmentCard";
+		return "appointmentOffline";
 	}
 	
 	@ModelAttribute("ocr_vehicles")
