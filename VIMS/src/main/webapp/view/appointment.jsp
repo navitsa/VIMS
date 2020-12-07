@@ -101,7 +101,7 @@
 					  </ul>
 					  
 					  <!-- fieldsets -->
-					  <fieldset>
+					  <fieldset class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400px">
 					    <h2 class="fs-title">Appointment ( offline )</h2>
 					    <!-- <h3 class="fs-subtitle">Choose a Date & Time</h3> -->
 
@@ -161,7 +161,7 @@
 					    <input type="button" name="next" class="next action-button" value="Next" />
 					  </fieldset>
 					  
-					  <fieldset>
+					  <fieldset class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400px">
 					    <h2 class="fs-title">Vehicle Details</h2>
 					    <h3 class="fs-subtitle"></h3>
 					    
@@ -324,7 +324,7 @@
 					    <input type="button" name="next" class="next action-button" value="Next" />
 					  </fieldset>
 					  
-					  <fieldset>
+					  <fieldset class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400px">
 					    <h2 class="fs-title">Customer Details</h2>
 					    <h3 class="fs-subtitle"></h3>
 								<form:input class="form-control form-control-sm" type="hidden" 

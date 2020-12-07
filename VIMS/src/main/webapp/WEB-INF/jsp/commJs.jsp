@@ -41,8 +41,8 @@
 	<script src="resources/assets/js/atlantis.min.js"></script>
 
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
-	<script src="resources/assets/js/setting-demo.js"></script>
-	<script src="resources/assets/js/demo.js"></script>
+<!-- 	<script src="resources/assets/js/setting-demo.js"></script> -->
+<!-- 	<script src="resources/assets/js/demo.js"></script> -->
 	
 	
 	<script src="resources/assets/js/file-input.js"></script>
