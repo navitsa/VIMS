@@ -29,27 +29,27 @@
 		<!-- End Sidebar -->
 		<div class="main-panel">
 			<div class="content">
-				<div class="page-inner">	
+				<div class="page-inner">
 					<div class="page-header">
-							<h4 class="page-title">Test Configurations</h4>
-							<ul class="breadcrumbs">
-								<li class="nav-home">
-									<a href="#">
-										<i class="flaticon-home"></i>
-									</a>
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								<li class="nav-item">
-									<a href="#">Type</a>
-								</li>
-							
-							</ul>
-						</div>
+						<h4 class="page-title">Test Types</h4>
+						<ul class="breadcrumbs">
+							<li class="nav-home">
+								<a href="#">
+									<i class="flaticon-home"></i>
+								</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="#">Test Types</a>
+							</li>
+						
+						</ul>
+					</div>
 				
-											<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-							<div class="col-xl-9 col-md-6mb-4 ">
+						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+							<div class="col-xl-9 col-md-6 mb-4">
 								<div class="card border-left-primary shadow h-100 py-2">
 									<div class="card-body">
 										<div class="row no-gutters align-items-center">
@@ -58,22 +58,22 @@
 												
 													<div class="form-group row">
 														<div class="col-sm-4">
-															<label  class="l-fontst">Test Type<span class="required text-danger ">*</span></label>
-																<form:input class="form-control fontst" path="type" />
+															<label>Test Type <span class="required text-danger ">*</span></label>
+																<form:input class="form-control" path="type" />
 																<form:errors path="type" cssClass="error1 text-danger" />
 														</div>
 														<div class="col-sm-5">
 														</div>
 														<div class="col-sm-3">
-															<label class="l-fontst">Test Type ID </label>
-															<form:input class="form-control fontst" path="typeId"/>
+															<label>Test Type ID <span class="required text-danger ">*</span></label>
+															<form:input class="form-control" path="typeId"/>
 																	
 														</div>
 													</div>
 													<div class="form-group row">
 														<div class="col-sm-4">
-															<label  class="l-fontst">Remarks </label>
-																<form:input class="form-control form-control-user fontst"
+															<label>Remarks </label>
+																<form:input class="form-control form-control-user"
 																	path="remarks" />
 														</div>
 													</div>

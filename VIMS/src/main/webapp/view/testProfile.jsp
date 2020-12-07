@@ -49,7 +49,7 @@
 						</div>
 				
 													
-										<div class="row">
+					<div class="row">
 						<div class="col-xl-8 col-md-6 mb-4">
 			              <div class="card shadow mb-4 border-left-primary">
 			                <div class="card-body">
@@ -100,11 +100,16 @@
 
 										</div>
 									</div>
-										<input type="submit" class="btn btn-success" value="Add Profile">
-										<input type="reset" class="btn btn-warning mr-sm-2" value="Clear">
+			                		<div class="form-group row">
+										<div class="col-lg">
+											<input type="submit" class="btn btn-success" value="Add Profile">
+											<input type="reset" class="btn btn-warning mr-sm-2" value="Clear">
+										</div>
+									</div>
+
 								</form:form>
-								<br>
-								<table class="display" id="example" style="width:100%">
+								<br><br>
+								<table id="example" class="display table table-bordered table-hover" cellspacing="0" width="100%">
 									<thead>
 										<tr>
 											<th>#</th>
@@ -140,12 +145,7 @@
 					</div>	
 
 	
-				
-				
-				
-				
-				
-					</div>
+				</div>
 				
 			</div>	
 			<%@include file="../WEB-INF/jsp/footer.jsp"%>			
@@ -154,13 +154,13 @@
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
 
 	<script>
-	$(document).ready(function() {
-	    $('#example').DataTable( {
-	    	"scrollY": "400px",
-	    	"processing": true,
-	        "columnDefs": [{ "orderable": false, "targets": 4 },{ "orderable": false, "targets": 5 }]
-	    } );
-	} );
+		$(document).ready(function() {
+		    $('#example').DataTable( {
+		    	//"scrollY": "400px",
+		    	"processing": true,
+		        "columnDefs": [{ "orderable": false, "targets": 4 },{ "orderable": false, "targets": 5 }]
+		    } );
+		} );
 	</script>
 </body>
 </html>
