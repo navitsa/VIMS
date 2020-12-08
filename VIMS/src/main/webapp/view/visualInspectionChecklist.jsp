@@ -378,13 +378,15 @@
 		if(x.value !="")
 		{
 		
-    	if (confirm("To Continue Please Click Ok ! ")) {
+/*     	if (confirm("To Continue Please Click Ok ! ")) {
 			  txt = "You pressed OK!";
 			  window.location.href = "gettingDataForVI?vReg_Id="+ x.value;
 			  
 			} else {
 			  txt = "You pressed Cancel!";
-			}
+			} */
+			
+			window.location.href = "gettingDataForVI?vReg_Id="+ x.value;			
 		}
 	}
 	</script>

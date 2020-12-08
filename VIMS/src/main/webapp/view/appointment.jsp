@@ -90,7 +90,7 @@
 		<div class="main-panel">
 			<div class="content">
 				<div class="page-inner">
-
+					<a href="vehicleInformation" class="btn btn-primary btn-sm btn-border btn-round">Gate Entry</a>
 					<form:form id="msform" action="saveAppointment" method="POST" modelAttribute="appointmentForm" onsubmit="return validateForm()">
 					
 					  <!-- progressbar -->

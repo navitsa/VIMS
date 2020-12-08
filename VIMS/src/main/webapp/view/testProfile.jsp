@@ -109,6 +109,7 @@
 
 								</form:form>
 								<br><br>
+								<div class="table-responsive">
 								<table id="example" class="display table table-bordered table-hover" cellspacing="0" width="100%">
 									<thead>
 										<tr>
@@ -136,6 +137,7 @@
 										</c:forEach>
 									</tbody>
 								</table>
+								</div>
 								
 			                </div>
 			               </div>
