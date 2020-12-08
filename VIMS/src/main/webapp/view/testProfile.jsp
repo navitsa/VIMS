@@ -31,7 +31,7 @@
 			<div class="content">
 				<div class="page-inner">	
 					<div class="page-header">
-							<h4 class="page-title">Test Profiles</h4>
+							<h4 class="page-title">Create Test Profile</h4>
 							<ul class="breadcrumbs">
 								<li class="nav-home">
 									<a href="#">
@@ -41,10 +41,15 @@
 								<li class="separator">
 									<i class="flaticon-right-arrow"></i>
 								</li>
-									<a href="#">Test Profiles</a>
 								<li class="nav-item">
+									<a href="#">Test Profiles</a>
 								</li>
-								
+								<li class="separator">
+									<i class="flaticon-right-arrow"></i>
+								</li>
+								<li class="nav-item">
+									<a href="#">Test Profile</a>
+								</li>
 							</ul>
 						</div>
 				

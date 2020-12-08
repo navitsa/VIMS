@@ -37,7 +37,6 @@ import com.navitsa.entity.TestProfile;
 import com.navitsa.entity.Test_type;
 import com.navitsa.entity.Users;
 import com.navitsa.entity.VisualProfile;
-import com.navitsa.repository.BusinessPartnerRepository;
 import com.navitsa.services.BusinessPartnerService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.RegionalService;
@@ -292,13 +291,23 @@ public class CentersController {
 		}
 	 
 	 @RequestMapping(value="/testTypeAction" ,method=RequestMethod.POST)
-		public String saveItems(@Valid @ModelAttribute("test_type") Test_type testType ,  BindingResult br ) {
+		public String saveItems(@Valid @ModelAttribute("test_type") Test_type testType ,
+				BindingResult br, RedirectAttributes redirectAttributes ) {
+		 
 		 	if(br.hasErrors()) {
 		 		return "test_type";
+		 	}else {
+		 		try {
+		 			centerService.saveTestType(testType);
+		 			redirectAttributes.addFlashAttribute("success", 1);
+		 			return "redirect:/testTYPE";
+				} catch (Exception e) {
+					redirectAttributes.addFlashAttribute("success", 0);
+				}
 		 	}
-			centerService.saveTestType(testType);
+			
 
-			return "redirect:/testTYPE";
+			return "test_type";
 		}
 	 
 	 @RequestMapping("/updatetestTypeInfo")

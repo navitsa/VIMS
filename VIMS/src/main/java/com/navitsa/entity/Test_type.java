@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class Test_type {
 
 	@Id
+	@NotEmpty(message = "Enter a valid Test Type ID")
 	@Column(name ="type_id")
 	private String typeId;
 	
@@ -33,6 +34,9 @@ public class Test_type {
 	
 	@Column(name ="evaluation_code")
 	private String evaluationCode;
+	
+	@Column(name ="status")
+	private String status;
 
 	public String getTypeId() {
 		return typeId;
@@ -108,6 +112,14 @@ public class Test_type {
 
 	public void setEvaluationCode(String evaluationCode) {
 		this.evaluationCode = evaluationCode;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

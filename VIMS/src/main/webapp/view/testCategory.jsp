@@ -31,27 +31,27 @@
 			<div class="content">
 				<div class="page-inner">	
 					<div class="page-header">
-							<h4 class="page-title">Test Profiles</h4>
-							<ul class="breadcrumbs">
-								<li class="nav-home">
-									<a href="#">
-										<i class="flaticon-home"></i>
-									</a>
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-									<a href="#">Visual Profile</a>
-								<li class="nav-item">
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-									<a href="#">Create a Test Category</a>
-								<li class="nav-item">
-								</li>
-							</ul>
-						</div>
+						<h4 class="page-title">Create Test Category</h4>
+						<ul class="breadcrumbs">
+							<li class="nav-home">
+								<a href="#">
+									<i class="flaticon-home"></i>
+								</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="#">Test Profiles</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="#">Test Categories</a>
+							</li>
+						</ul>
+					</div>
 				
 					
 								<div class="row">
