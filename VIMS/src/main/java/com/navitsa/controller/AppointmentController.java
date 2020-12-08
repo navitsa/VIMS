@@ -395,8 +395,8 @@ public class AppointmentController {
 		
 		//AppointmentForm newApointment = new AppointmentForm();
 		//m.addAttribute("appointmentForm", newApointment);
-		//return "gateEntryAppointmentCard";
-		return "appointmentOffline";
+		return "gateEntryAppointmentCard";
+		//return "appointmentOffline";
 	}
 	
 	@ModelAttribute("ocr_vehicles")
