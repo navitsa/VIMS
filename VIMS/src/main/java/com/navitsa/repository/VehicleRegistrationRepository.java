@@ -13,10 +13,10 @@ import com.navitsa.entity.VehicleRegistration;
 public interface VehicleRegistrationRepository  extends CrudRepository<VehicleRegistration, String>  {
 	
 
-	@Query(value = "SELECT v FROM VehicleRegistration v WHERE v.vid.vehicleID =:vehicle_no AND v.viTestStatus ='pending'")
+	@Query(value = "SELECT v FROM VehicleRegistration v WHERE v.vid.vehicleID =:vehicle_no AND v.viTestStatus ='pending' and v.status='ACTIVE'")
 	public VehicleRegistration getPendingVehicle(@Param("vehicle_no") String vehicle_no);
 	
-	@Query(value = "SELECT v FROM VehicleRegistration v WHERE v.viTestStatus ='pending' ORDER BY v.date DESC, v.time DESC")
+	@Query(value = "SELECT v FROM VehicleRegistration v WHERE v.viTestStatus ='pending' and v.status='ACTIVE' ORDER BY v.date DESC, v.time DESC")
 	public List<VehicleRegistration> getPendingVehicle();
 	
 	@Transactional
@@ -41,7 +41,7 @@ public interface VehicleRegistrationRepository  extends CrudRepository<VehicleRe
 	@Query(value="SELECT vr FROM VehicleRegistration vr WHERE vr.date =:vRdate and vr.payType=:payTyp group by vid.vehicleID order by vid.vehicleID")
 	public List<VehicleRegistration> getVechicalDetailByDate(@Param("vRdate") String vRdate,@Param("payTyp") String payTyp);
 		
-	@Query(value="SELECT v FROM VehicleRegistration v WHERE v.vid.vehicleID =:vehicle_no ORDER BY v.vregID DESC")
+	@Query(value="SELECT v FROM VehicleRegistration v WHERE v.vid.vehicleID =:vehicle_no and v.status='ACTIVE' ORDER BY v.vregID DESC")
 	public List<VehicleRegistration> getPerviousRegistrationVehicle(@Param("vehicle_no") String vehicle_no);
 	
 	@Query(value = "select vr From VehicleRegistration vr WHERE vr.testStatus ='pending' and vr.vid.vehicleID =:vehicle_no")
@@ -50,4 +50,9 @@ public interface VehicleRegistrationRepository  extends CrudRepository<VehicleRe
 	@Query(value = "select vr From VehicleRegistration vr WHERE  vr.date =:date and vr.centermaster.center_ID=:centerid")
 	public List<VehicleRegistration> getVehicleRegDetailByDate(@Param("date") String date,@Param("centerid") String centerid);
 
+	@Query(value="SELECT v FROM VehicleRegistration v WHERE v.vid.vehicleID =:vehicle_no and v.ocrid.ocrid=:oid and v.status='ACTIVE'")
+	public VehicleRegistration getRegistrationVehicleByOcrid(@Param("vehicle_no") String vehicle_no,@Param("oid") int ocrid);
+
+	@Query(value="SELECT vr FROM VehicleRegistration vr WHERE vr.vregID =:register_id")
+	public VehicleRegistration getRegistrationByRegisterId(@Param("register_id") String register_id);
 }

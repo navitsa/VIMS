@@ -586,6 +586,16 @@ public class VehicleService {
 	public List<OcrDetails> getOCRVehiclesByDates(@Param("todayDate")String todayDate){
 		return ocrDetailsRepo.getOCRVehiclesByDates(todayDate);	
 	}
+	public VehicleRegistration getRegistrationVehicleByOcrid(String vehicle_no,int ocrid) {
+		
+		return vehicleregRepo.getRegistrationVehicleByOcrid(vehicle_no,ocrid);
+	}
+	public VehicleRegistration getRegistrationByRegisterId(String register_id) {
+		
+		return vehicleregRepo.getRegistrationByRegisterId(register_id);
+	}
+	
+
 	
 }
 

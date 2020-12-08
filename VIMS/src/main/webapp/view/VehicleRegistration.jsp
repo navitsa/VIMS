@@ -99,18 +99,24 @@
 				<div class="panel-header bg-primary-gradient">
 					<div class="page-inner py-3">
 						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-							<div>
-								<h2 class="text-white pb-2 fw-bold">Lane Entry</h2>
-								<h5 class="text-white op-7 mb-2"></h5>
+							<div class="col-xl-2 col-lg-2">
+								<img src="data:image/jpg;base64,${imgVimg}" class="capCam"  id="results" onerror="this.onerror=null; this.src='resources/img/car-placeholder.jpg'" style="border-radius: 8px; border: 1px solid #ddd;"/>
+				
+								<br><br>
+							</div>
+							<div class="col-xl-2 col-lg-2">
+								<p class="vidSty" >${vid}</p>
 							</div>
 							<div class="ml-md-auto py-2 py-md-4">
-							<p class="vidSty" ><%=session.getAttribute("vRvid")%></p>
+							   <h2 class="text-white pb-2 fw-bold">Payment</h2>
+							
 							</div>
+						
 							<div class="ml-md-auto py-2 py-md-4">
 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
-								<a href="vehicleMasterAuto?vehicleID=<%=session.getAttribute("vRvid")%>&id=<%=session.getAttribute("vRocr")%>&appNo=0" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a>
+								<a href="vehicleMasterAuto?vehicleID=${vid}&id=${ocid}" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a>
 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a>
-								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#capturePlateModal">Capture</a>
+
 <!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
 							</div>
 						</div>
@@ -179,7 +185,7 @@
 			             	<div class="col-sm-3">
 <!-- 			             	 src="resources/img/car-placeholder.jpg" -->
 			             	<%-- 			             		<c:if test = "${imgVe == null}"> --%>
-			             			<img src="data:image/jpg;base64,${imgVimg}" class="capCam"  id="results" onerror="this.onerror=null; this.src='resources/img/car-placeholder.jpg'"/>
+<%-- 			             			<img src="data:image/jpg;base64,${imgVimg}" class="capCam"  id="results" onerror="this.onerror=null; this.src='resources/img/car-placeholder.jpg'"/> --%>
 <%-- 			             		</c:if>	 --%>
 			             	
 			             	
@@ -532,7 +538,7 @@
 			            <div class="col-sm-6">
 			            </div>
 						<div class="col-sm-6 justify-content-end">
-			             	<button type="button"  class="btn btn-success btn-block" onclick="checkCondition();" id="proceedLanBtn">Proceed to Lane Entry in Lane</button>
+			             	<button type="button"  class="btn btn-success btn-block" onclick="checkCondition();" id="proceedLanBtn">Payment</button>
 						
 								<div class="spinner-grow" role="status" id="moreLoder" style="display: none;">
 												  <span class="sr-only" >Loading...</span>
@@ -556,70 +562,7 @@
 					</div>
 
 				</div>
-				
-				
-				
-				
-				
-				
-		<!-- Pie Chart -->
-		<div class="col-xl-4 col-lg-5">
-			<div class="card shadow mb-4">
-				<!-- Card Header - Dropdown -->
-				<div class="card-header py-2 d-flex flex-row align-items-center">
-					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/><h6 class="m-0 font-weight-bold text-primary">.  Previous Lane Entry </h6>
-				</div>
-				<!-- Card Body -->
-				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 540px;">	
-					<div class="row" >
-								<div class="col-sm-12">
-<!-- 									<table id="eqTypeTable" -->
-<!-- 									class="table-sm table-wrapper-scroll-y my-custom-scrollbar" -->
-<!-- 									 style="height: 112px;"> -->
-
-								
-						<c:forEach items="${pre_vehicle}" var="prevehicle">
-							<c:if test = "${prevehicle!=null}">
-											
-											
-								<div class="row">
-									<div class="col-sm-2">
-										<img src="resources/img/icon/perviousVehicleicon.png" class="icon-pre-ve"/>
-									</div>	
-									<div class="col-sm-10">
-										<div class="row">
-											<div class="col-sm-12">
-												<div style="color: #000099; font-family: Arial, Helvetica, sans-serif; font-size: 12px">${prevehicle.vtype.vRegType}</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-sm-12">
-												<div style="color: #000099; font-family: Arial, Helvetica, sans-serif; font-size: 12px">${prevehicle.date} : ${prevehicle.time}</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-sm-12">
-												<div style="color: #000099; font-family: Arial, Helvetica, sans-serif; font-size: 12px">Mileage : ${prevehicle.currentMilage}</div>
-											</div>
-										</div>
-									</div>
-									
-								</div>	
-									<hr/>	
-
-					    	</c:if>										
-						</c:forEach>
-									
-									
-																	
-								</div>
-					</div>	
-					
-	
-				</div>
-			</div>
-		</div>
-				
+		
 				
 	</div>			
 				
@@ -633,171 +576,11 @@
 				</form:form>
 					
 					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div id="capturePlateModal" class="modal fade bd-example-modal"  role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-<!--         <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-		<div class="col-sm-5">
-			<h4 class="modal-title">Capture Plate</h4>
-		</div>
-		<div class="col-sm-5">
-        	<input class="form-control textred" name="vehNO" value="${vvid}" id="vehNO" placeholder="Licence Plate NO..." readonly="true" />		
-		</div>
-
-      </div>
-      <div class="modal-body">
-       
-   								
-
-														<div class="form-group row">
 			
-															<div class="col-sm-12">
-															<div class="row">
-																	<div class="col-sm-5">
-																		<div class="form-group row">
-																			<div class="col-sm-12">
-																				
-																					<input class="form-control form-control-sm"
-																			name="ocrrid" id="ocrrid" value="${ocid}" type="hidden" />
-																			</div>
-																		</div>																	
-																		<div class="row">
-																			<div class="col-sm-6">
-																				
-																			</div>
-																			<div class="col-sm-5">
-																																	
-																			</div>
-
-																		</div>
-																	</div>
-																	<div class="col-sm-3">
-														
-
-																	</div>																	
-																</div>
-																
-																
-																
-																
-										 <div class="row">
-											<div class="col-sm-6">
-<!-- 												<div class="row"> -->
-												
-<!-- 							         			<a href="#" class="" onClick="takeAutoNo()" id="cam-click"> -->
-<!-- 							             		<i class="fa fa-refresh  fa-spin" style="font-size:24px"></i>  -->
-<!-- 							             		</a>														 -->
-<!-- 												</div> -->
-												<br>
-												<div class="row">
-													<div class="col-sm-12">
-														
-														<table id="ocrdetails" class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 112px;">                	
-					
-															<tbody id="ocrdetails4" >
-															
-															
-															</tbody>
-					
-														</table>	
-													</div>	
-												</div>
-												<br>
-												
-												<div class="row">
-													<div class="col-sm-12">
-<!-- 														<a href="#" class="" onClick="takeSnapshot();" id="more">More..</a>	 -->
-													
-<!-- 														<div class="spinner-grow" role="status" id="moreLoder" style="display: none;"> -->
-<!-- 													  	<span class="sr-only" >Loading...</span> -->
-<!-- 													 </div> -->
-												</div>
-																								
-												
-												
-												
-												
-												
-												
-												</div>
-												<div class="row">
-<!-- 													<input type="file" class="" id="num_img"  accept="image/*" capture="user"  style="display: none;" />	 -->
-												</div>
-												
-												
-											</div>
-											<div class="col-sm-6">
-											
-												<div class="row">
-													<div class="col-mb-12 col-sm-12">
-														<img src="resources/img/car-placeholder.jpg" class="capCam"  id="results1"/>
-								             			<input type="hidden" name="ImageData" id="ImageData"  />
-								             				
-													</div>
-												</div>
-												<br>
-												<div class="row">
-													<div class="col-mb-12 col-sm-12">
-														<input class="form-control fontst bgred" id="vehicleID" placeholder="Licence Plate NO..." oninput="checkVehicleNo(this.value)" onkeyup="this.value = this.value.toUpperCase();" />
-													</div>
-												</div>
-												<br>
-										
-											</div>
-									</div>															
-													
-															</div>
-															
-															
-															
-														</div>
-										
-<!--        style="display: none;" -->
-								      </div>
-								      <div class="modal-footer">
-								      <div class="col-sm-6 mb-sm-6">
-								      
-								      </div>
-								      <div class="col-sm-2 mb-sm-2">
-											<button type="button" class="btn btn-success" data-dismiss="modal" onclick="saveOcrImage()" style="display: none;" id="veButt">Save</button>
-									</div>
-								      <div class="col-sm-3 mb-sm-3">
-											<button type="button" class="btn btn-info" data-dismiss="modal" >Close</button>
-										</div>																
-								      </div>
-								    </div>
-								
-								  </div>
-								</div>
-
-	
-
-
-
-
-
-
-
-
-
-
 
 									
 				<%@include file="checkDocument.jsp"%>	
-					<%@include file="capturePlateModal.jsp"%>	
+				<%@include file="capturePlateModal.jsp"%>	
 					</div>
 				
 			</div>	
@@ -1121,21 +904,29 @@
  			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
-			        			  text: 'Data Transfer not Working !'
+			        			  text: 'System Error'
 			        			  //,footer: '<a href>Why do I have this issue?</a>'
 			        			});
  	 						document.getElementById("proceedLanBtn").style.display = "block";
  	 						document.getElementById("moreLoder").style.display = "none";
- 			        	}else if(data=="2"){
- 			        		Swal.fire({
- 			        			  icon: 'error',
- 			        			  title: 'Oops...',
- 			        			  text: 'Data Transfer Server not Found !'
- 			        			  //,footer: '<a href>Why do I have this issue?</a>'
- 			        			});
- 	 						document.getElementById("proceedLanBtn").style.display = "block";
- 	 						document.getElementById("moreLoder").style.display = "none";
- 			        	}else if(data=="3"){
+ 			        	}else if(data=="1"){
+			        		Swal.fire({
+			        			  icon: 'error',
+			        			  title: 'Oops...',
+			        			  text: 'Session Expired'
+			        			  //,footer: '<a href>Why do I have this issue?</a>'
+			        			});
+	        			window.location.href = "logout";
+			        	}else if(data=="2"){
+			        		Swal.fire({
+			        			  icon: 'error',
+			        			  title: 'Oops...',
+			        			  text: 'Documents are not verified ! Please confirm document verification and continue'
+			        			  //,footer: '<a href>Why do I have this issue?</a>'
+			        			});
+	 						document.getElementById("proceedLanBtn").style.display = "block";
+	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="3"){
 			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
@@ -1145,33 +936,6 @@
 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 						document.getElementById("moreLoder").style.display = "none";
  			        	}else if(data=="4"){
-			        		Swal.fire({
-			        			  icon: 'error',
-			        			  title: 'Oops...',
-			        			  text: 'XML_IN Path not Found !'
-			        			  //,footer: '<a href>Why do I have this issue?</a>'
-			        			});
-	 						document.getElementById("proceedLanBtn").style.display = "block";
-	 						document.getElementById("moreLoder").style.display = "none";
-			        	}else if(data=="5"){
-			        		Swal.fire({
-			        			  icon: 'error',
-			        			  title: 'Oops...',
-			        			  text: 'ES_IN Path not Found !'
-			        			  //,footer: '<a href>Why do I have this issue?</a>'
-			        			});
-	 						document.getElementById("proceedLanBtn").style.display = "block";
-	 						document.getElementById("moreLoder").style.display = "none";
-			        	}else if(data=="6"){
-			        		Swal.fire({
-			        			  icon: 'error',
-			        			  title: 'Oops...',
-			        			  text: 'Documents are not verified ! Please confirm document verification and continue'
-			        			  //,footer: '<a href>Why do I have this issue?</a>'
-			        			});
-	 						document.getElementById("proceedLanBtn").style.display = "block";
-	 						document.getElementById("moreLoder").style.display = "none";
-			        	}else if(data=="7"){
 			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
@@ -1211,45 +975,7 @@
 		
 	
 	}
-		
-// 		var xhttp = new XMLHttpRequest();
-// 		var form = document.getElementById('saveAddressForm');
-		
-		
-// 		var data = new FormData(form);
-// 		xhttp.open("POST", "vehicleRegAction", true);
-// 		xhttp.send(data);
-		//window.location.href = "vehicleRegAction";
-		
-		//window.onunload = function() { submitForm("formVehicleRegistration"); };
-	
-	
-// 	    event.preventDefault(); 
-// 	    var request_method = $(this).attr("method"); //get form GET/POST method
-// 		var form_data = $(this).serialize(); //Creates new FormData object
-// 	    $.ajax({
-// 	        url : "vehicleRegAction",
-// 	        type: request_method,
-// 	        data : form_data,
-// 	        success: function(response) {
-			
-// 	        	window.location.href = response;
-	        	
-// 	        }
-// 	    }).done(function(response){ //
-// 	    	window.location.href = response;
-// 	    });
-// 	})
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	//load current date and time to jsp
 		var date = new Date();
 

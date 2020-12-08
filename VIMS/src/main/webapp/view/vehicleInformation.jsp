@@ -733,6 +733,7 @@
 		        		
 		        		var link="";
 	        			var statu="";
+	        			var btnRemo="";
 		        		g=g+1;
 // 		        		if(data[i].vmStatus=="pending"){
 // 		        			statu="<div class='row'>"+
@@ -776,14 +777,17 @@
 			        			link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid+"&appNo=0";
 			        		}
 						
-		        		}else{
+		        		}else{ 
 		        			statu=statu+"<div class='row'>"+
 							"<div class='col-sm-12'>"+
 								"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Details    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
 							"</div></div>";
-		        			link="vehicleRegistrationAuto?vid="+data[i].ocrVid+"&curMi=0"+"&id="+data[i].ocrid;
+		        			if(data[i].paymentStatus=="completed"){
+		        				link="LaneEntry?id="+data[i].ocrid;
+		        			}else{
+		        				link="vehicleRegistrationAuto?vid="+data[i].ocrVid+"&curMi=0"+"&id="+data[i].ocrid;
+		        			}
 		        		}
-		        		
 		        		if(data[i].docStatus=="pending"){
 							statu=statu+"<div class='row'>"+
 							"<div class='col-sm-12'>"+
@@ -793,6 +797,19 @@
 			        			statu=statu+"<div class='row'>"+
 								"<div class='col-sm-12'>"+
 									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Document Verification    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+								"</div></div>";
+			        			
+			        		}
+		        		if(data[i].paymentStatus!="completed"){
+							statu=statu+"<div class='row'>"+
+							"<div class='col-sm-12'>"+
+							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Payment    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+							"</div></div>";
+							btnRemo="<button type='button' onClick='ocrDeleteEntry("+data[i].ocrid+")' class='btn btn-xs btn-danger' style='border-radius: 8px;'>Remove</button>";
+		        		}else{
+			        			statu=statu+"<div class='row'>"+
+								"<div class='col-sm-12'>"+
+									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Payment    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
 								"</div></div>";
 			        			
 			        		}
@@ -863,9 +880,9 @@
 						"</div>"+
 						"<div class='col-sm-3' style='padding-left:40px;>"+
 						"<div class='row'>"+
-							"<div class='col-sm-12' >"+					
+							"<div class='col-sm-12' >"+btnRemo+					
 							
-							"<button type='button' onClick='ocrDeleteEntry("+data[i].ocrid+")' class='btn btn-xs btn-danger' style='border-radius: 8px;'>Remove</button>"+
+							
 								
 							"</div>"+
 						"</div>"+

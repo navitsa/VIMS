@@ -46,6 +46,10 @@ public class OcrDetails {
 	@Column(name = "Status")
 	private String status;
 	
+	@Column(name = "Pay_Status")
+	private String paymentStatus;
+	
+	
 	public String getDocStatus() {
 		return docStatus;
 	}
@@ -138,6 +142,14 @@ public class OcrDetails {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
 	}
 		
 	

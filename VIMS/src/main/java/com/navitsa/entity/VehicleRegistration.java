@@ -75,7 +75,8 @@ public class VehicleRegistration {
 	@Column(name="payType")
 	private String payType;
 	
-	
+	@Column(name="Status")
+	private String status;
 	
 	public String getPayType() {
 		return payType;
@@ -228,6 +229,14 @@ public class VehicleRegistration {
 
 	public void setOcrid(OcrDetails ocrid) {
 		this.ocrid = ocrid;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

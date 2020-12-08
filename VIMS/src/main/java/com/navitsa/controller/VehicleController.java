@@ -533,12 +533,14 @@ public class VehicleController {
 	
 	
 	@RequestMapping("/vehicleMasterAuto")
-	public ModelAndView logVehicleMaster(@RequestParam String vehicleID,@RequestParam String id,@RequestParam String appNo,HttpSession session) {
+	public ModelAndView logVehicleMaster(@RequestParam String vehicleID,@RequestParam String id,HttpSession session) {
 		ModelAndView mav = new ModelAndView("vehicleMaster");
 		
 		OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
 		//ocrDetails.setOcrVid(vehicleID);		
 		//vehicleService.saveOcrDetailsRepo(ocrDetails);
+		String appNo=ocrDetails.getAppNo();
+		
 		if(!appNo.equals("0")) {
 			Appointment appointment=new Appointment();
 			appointment=appointmentService.getAppointmentDetailsById(appNo);
@@ -573,10 +575,10 @@ public class VehicleController {
 		}else {
 		mav.addObject("veOwner", vo);
 		}
-		session.setAttribute("vMvid", vehicleID);
+		//session.setAttribute("vMvid", vehicleID);
 		
 
-		mav.addObject("vvid",vehicleID);
+		mav.addObject("vidn",vehicleID);
 		
 		return mav;
 	}
@@ -772,7 +774,7 @@ public class VehicleController {
 		m.addAttribute("vclassid",vm.getVmodel().getVehicleClass().getVehicleClassID());
 		
 		
-		session.setAttribute("vRvid", vid);
+	
 		session.setAttribute("vRocr", id);
 
 		m.addAttribute("ocid",id);
@@ -869,217 +871,130 @@ public class VehicleController {
 		List<TestLaneDetails> test1 = vehicleService.searchLaneDEtails(testLaneDetailsid);
 		return test1;
 	}
-	
-				
-	//save vehicle registration data
-	
-	@RequestMapping(value="/vehicleRegAction" ,method=RequestMethod.POST)
-	public @ResponseBody String saveVehicleRegistration(@Valid @ModelAttribute("VehicleRegistration") VehicleRegistration vehiclereg,  BindingResult br,HttpServletRequest request,RedirectAttributes redirectAttributes,HttpSession session) {
-	//	TransactionStatus transactionStatus = null;
+	@RequestMapping("/LaneEntry")
+	public String getLaneEntry(Model m,@RequestParam String id,HttpSession session) {
+		OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
+		VehicleRegistration vecir=vehicleService.getRegistrationVehicleByOcrid(ocrDetails.getOcrVid(),ocrDetails.getOcrid());
+
+		String vid=ocrDetails.getOcrVid();
+		m.addAttribute("VehicleRegistration",vecir);
+		if(vecir.getCusid().getId()=="0000") {
+			m.addAttribute("custom","Owner");
+		}else {
+			m.addAttribute("custom",vecir.getCusid().getName());	
+		}
+		m.addAttribute("imgVimg",ocrDetails.getNoimageView());
+	 	m.addAttribute("pre_vehicle",vehicleService.getPerviousRegistrationVehicle(vid));
+
 		
-		//EntityManagerFactory emf=Persistence.createEntityManagerFactory("VehicleRegistration");
-		//EntityManager entityManager=emf.createEntityManager();
-		//EntityTransaction transaction = entityManager.getTransaction();
-		
-		if(br.hasErrors())  
-	        {  
-			// System.out.println("jjjjjjjjjj");
-			 //redirectAttributes.addFlashAttribute("success", 0);
-			 	return "0";  
-	        }  
-	        else  
-	        { 
-	          try { 
-	        	CenterMaster centerMaster=centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID()); 
-	        	 String checkTextFilePath=centerMaster.getEsInPath();
-	             String checkXmlFilePath=centerMaster.getEsInXmlPath();
+		m.addAttribute("vehNo",vid);
+		m.addAttribute("ocid",id);
 	
+
+	 
+
+		return "LaneEntry";
+	}
+		
+	@RequestMapping(value="/saveLaneEntry" ,method=RequestMethod.POST)
+	public @ResponseBody String saveVehicleRegistration(@RequestParam String vregno,HttpSession session) {
+	
+        	try {
+        		
+        		VehicleRegistration vehiclereg=vehicleService.getRegistrationByRegisterId(vregno);
+        		CenterMaster centerMaster=centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
+	        	
+        		VehicleMaster vehicleMaster = vehicleService.getVMasterById(vehiclereg.getVid().getVehicleID());
+        		
+        		String checkTextFilePath=centerMaster.getEsInPath();
+	            String checkXmlFilePath=centerMaster.getEsInXmlPath();
 	        	File texEsin = new File(checkTextFilePath);  
 	        	File xmlEsin = new File(checkXmlFilePath);  		
 	        	OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
-	    
-	        	 if (session.getAttribute("username")!=null) { 
-	        	
-	        	 if (ocrDetails.getNoimage().length>0) { 
- 	
-	        if (ocrDetails.getDocStatus().equals("completed")) {  
-	            if (texEsin.isDirectory()) {
-	          
-	        	
-	            	if (xmlEsin.isDirectory()) {
 	        	
 	        	
-	           List<ConfigSystem> configSystem=vehicleService.getConfigSystemByCenter(vehiclereg.getCentermaster().getCenter_ID(),vehiclereg.getTestLaneHeadId().getTestLaneHeadId());	
-                  
-                boolean correct=false;
-                String hostname="";
-                String username="";
-                String password="";
-                String rootpath="";
-                String xmlPath="";
-                InetAddress inet = null;
-                for(ConfigSystem conSys:configSystem) {
-//                     hostname=conSys.getIpaddress();
-//                     username=conSys.getUserName();
-//                     password=conSys.getPassword();  
-//                     rootpath=conSys.getRootPath();
-//                     xmlPath=conSys.getXmlPath();
-                     inet = InetAddress.getByName(hostname);
-                     if(inet.isReachable(0)==true) {
-                    	 correct=true; 
-                     }else {
-                    	 correct=false; 
-                    	 break;
-                     }
+	        	
+	        	if (session.getAttribute("username")==null) {
+	        		return "1";	
+	        	}else if (ocrDetails.getNoimage().length==0) {
+        			return "2";  	 
+	        	}else if (!texEsin.isDirectory()) {
+        			return "3";  	 
+	        	}else if (!xmlEsin.isDirectory()) {
+        			return "4";  	 
+	        	}else if (ocrDetails.getVrStatus().equals("completed")) {
+        			return "5";  	 
+	        	}else {
+	        		
+	        		List<ConfigSystem> configSystem=vehicleService.getConfigSystemByCenter(vehiclereg.getCentermaster().getCenter_ID(),vehiclereg.getTestLaneHeadId().getTestLaneHeadId());	
+	                 
+	                boolean correct=false;
+	                String hostname="";
+	                String username="";
+	                String password="";
+	                String rootpath="";
+	                String xmlPath="";
+	                InetAddress inet = null;
+	        		
+	                for(ConfigSystem conSys:configSystem) {
+	                     inet = InetAddress.getByName(hostname);
+	                     if(inet.isReachable(0)==true) {
+	                    	 correct=true; 
+	                     }else {
+	                    	 correct=false; 
+	                    	 break;
+	                     }
 
-                }  	
-                
-                if((configSystem.size()==0)) {
-                 	correct=true;
-                 }  
-               
-                
-                
-	        	  
-                if(correct) {
-	        	  
-	        	  
-	        	  List<VehicleRegistration> isVehicale=vehicleService.getTestStatusVehicleRegistation(vehiclereg.getVid().getVehicleID());
-	        	  
-	        	 if(isVehicale.size()==0) { 
-	        	
-	        //	  transaction.begin();
-	           System.out.println("mmmmmmmmmmmm");
-	    	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-	    	    Date date = new Date();  
-	    	    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
-	    	    LocalTime time = LocalTime.now();
-	        
-	            //	transactionStatus=TransactionAspectSupport.currentTransactionStatus();
-	            //get next Transaction no	
-	        	String tansactionId = "0000".substring(transactionservice.maxtrID().length())+transactionservice.maxtrID();
-	        	//get next vehicle Register 
-	    		String vRegID = "0000".substring(vehicleService.maxVRegID().length())+vehicleService.maxVRegID();
-	    		
-	    		// insert Transaction Table data   		    	
-	    		Transaction tr = new Transaction();
-	    		tr.setTrID(tansactionId);
-	    		tr.setStatus("ACTIVE");
-	    		tr.setRemarks("New Vehicle Registration (vRegID)");
-	    		
-	    		//set Vehicle table to transaction id
-	    		
-	    		vehiclereg.setTime(time.format(formattertime));
-	    		vehiclereg.setDate(formatter.format(date));
-	    		vehiclereg.setViTestStatus("pending");
-	    		vehiclereg.setTestStatus("pending");
-	    		
-	    		vehiclereg.setTrid(tr);	    		
-	    		vehiclereg.setVregID(vRegID);
-	    		vehiclereg.setPayType("Cash");
-	    		//save transaction
-	    		transactionservice.saveTransaction(tr);
-	    		//save  VehicleRegister table
-	        	vehicleService.saveVehicleRegister(vehiclereg);
-	        	
-            	
-            	
-            	TestCategory testCategory=centerService.getCategoryId(vehiclereg.getTestCategory().getCategoryId());	            	
-            	String countrcode=centerMaster.getPartner_ID().getCountry_Code().getCountryCode();
-            	List<TaxConfiguration> getTaxFromCountrylist=vehicleService.getTaxFromCountry(countrcode);
-            	VehicleRegisterType vrtyp=vehicleService.getRegType(vehiclereg.getVtype().getvRegTypeID());
-            	
-            	VehicleMaster vehicleMaster = vehicleService.getVMasterById(vehiclereg.getVid().getVehicleID());
-            	
-            //	TestLaneHead testLaneHead=laneServices.getTestLaneHeadById(vehiclereg.getTestLaneHeadId().getTestLaneHeadId());
-            	
-            	int maxrecno=centerMaster.getPartner_ID().getMaxRecNo();
-            	String recFormate=centerMaster.getPartner_ID().getRecformate();
-            	String nextRecno=recFormate+(maxrecno+1);
-            	long testFee=testCategory.getCategoryFee();
-            	long testFeePresent=vrtyp.getvTestFeePre();
-            	long nettotal=0;
-            	
-            	long calTestFee=testFee*testFeePresent/100;
-            	
-            	//System.out.println("ghghg="+centerMaster.getEsInPath()+"\\"+vehiclereg.getTestLaneHeadId().getLaneName()+"\\"+vehiclereg.getVid().getVehicleID()+".txt");
-            	//create Next Receipt No
-            	businessPartnerService.setUpdateLastRecNo(centerMaster.getPartner_ID().getPartner_ID());
-            	
-            //	if(testFeePresent!=0) {
-	            	//insert ReceiptHead date & ReceiptDetails
-	            	ReceiptHead receiptHead=new ReceiptHead(nextRecno, vehiclereg, vehiclereg.getDate(),vehiclereg.getTime(),calTestFee,"New Vehicle Register",ocrDetails.getAppNo(),"ACTIVE");
-	            	
-	            	List<ReceiptDetails> eceiptDetailsArrayList = new ArrayList<ReceiptDetails>();
-	            	for(TaxConfiguration taxdetail:getTaxFromCountrylist) {
-	            		Long taxamt=Long.parseLong("0");
-	            		if(taxdetail.getType().equals("Rate")) {
-	            		 taxamt=calTestFee*taxdetail.getTaxRate()/10000;
-	            		}else {
-	            		 taxamt=taxdetail.getTaxRate();	
-	            			
-	            		}
-	            		
-	            		ReceiptDetails receiptDetails= new ReceiptDetails(receiptHead, taxdetail, taxdetail.getTaxRate(),taxamt);
-	            		nettotal=nettotal+taxamt;
-	            		eceiptDetailsArrayList.add(receiptDetails);
-	            	}
-	            	receiptHead.setNetTotal(nettotal+calTestFee);
-	            	//save ReceiptHead date & ReceiptDetails
-	            	vehicleService.saveReciptHead(receiptHead);
-	            	vehicleService.saveReciptDetailsAll(eceiptDetailsArrayList);
-	            	Users user=usersService.searchUser(vehiclereg.getUser().getUserId());
-	        //    }
-	            	
-					String path1 = this.getClass().getClassLoader().getResource("").getPath();
-					String fullPath = URLDecoder.decode(path1, "UTF-8");
-	
-					String pathArr[] = fullPath.split("/WEB-INF/classes/");
-//				
-//					String path= pathArr[0]+"/Upload/ES_IN/";	
-	            	
-	            	
-					String textFilePath=centerMaster.getEsInPath()+"\\"+vehiclereg.getVid().getVehicleID()+".txt";
-	            	
-	            
-                //create Text file & get ES in path
-	            //	String textFilePath=path+"/"+vehiclereg.getVid().getVehicleID()+".txt";
-	            	
-            	File file = new File(textFilePath);
-        
-	           if (!file.exists()) {
-	                file.createNewFile();
-	              }
-                    FileWriter fw = new FileWriter(file.getAbsoluteFile());
-                    BufferedWriter bw = new BufferedWriter(fw);
-                    bw.write("[HEADER]");
-	                bw.write("\r\n"); 
-	                bw.write("10100="+vehiclereg.getVid().getVehicleID());
-	                bw.write("\r\n"); 
-	                bw.write("15012="+user.getUserName());
-	                bw.write("\r\n"); 
-	                bw.write("10190="+vehicleMaster.getNoWheel());	                
-	                bw.write("\r\n"); 
-	                bw.write("10191="+vehicleMaster.getVmodel().getVehicleClass().getCategoryID().getCategoryID());                
+	                }
+	                if((configSystem.size()==0)) {
+	                 	correct=true;
+	                 }
+	                if(correct) {
 	                
-	                
-	                
-	                bw.write("\r\n");
-	                bw.write("\r\n");
-	                bw.write("[ENDOFFILE]");
-	               
-	                
-                    bw.close();
-                    
-                  //  String xpath= pathArr[0]+"/Upload/XML_ES_IN/";	
-                   	String xmlFilePath=centerMaster.getEsInXmlPath()+"\\"+vehiclereg.getVid().getVehicleID()+".xml";
-	            	
-                	File xmlfile = new File(xmlFilePath);
-            
-    	           if (!xmlfile.exists()) {
-    	        	   xmlfile.createNewFile();
-    	              }
-                        FileWriter fwX = new FileWriter(xmlfile.getAbsoluteFile());
+	                	Users user=usersService.searchUser(vehiclereg.getUser().getUserId());
+	                	
+	                	
+						String path1 = this.getClass().getClassLoader().getResource("").getPath();
+						String fullPath = URLDecoder.decode(path1, "UTF-8");		
+						String pathArr[] = fullPath.split("/WEB-INF/classes/");
+						String textFilePath=centerMaster.getEsInPath()+"\\"+vehiclereg.getVid().getVehicleID()+".txt";
+	                	
+						File file = new File(textFilePath);	                	
+				        if (!file.exists()) {
+				           file.createNewFile();
+				         }
+	                	
+	                    FileWriter fw = new FileWriter(file.getAbsoluteFile());
+	                    BufferedWriter bw = new BufferedWriter(fw);
+	                    bw.write("[HEADER]");
+		                bw.write("\r\n"); 
+		                bw.write("10100="+vehiclereg.getVid().getVehicleID());
+		                bw.write("\r\n"); 
+		                bw.write("15012="+user.getUserName());
+		                bw.write("\r\n"); 
+		                bw.write("10190="+vehicleMaster.getNoWheel());	                
+		                bw.write("\r\n"); 
+		                bw.write("10191="+vehicleMaster.getVmodel().getVehicleClass().getCategoryID().getCategoryID());                
+		                
+		                
+		                
+		                bw.write("\r\n");
+		                bw.write("\r\n");
+		                bw.write("[ENDOFFILE]");
+		               
+		                
+	                    bw.close();
+				        
+				        
+	                    //  String xpath= pathArr[0]+"/Upload/XML_ES_IN/";	
+	                   	String xmlFilePath=centerMaster.getEsInXmlPath()+"\\"+vehiclereg.getVid().getVehicleID()+".xml";
+	                   	
+	                   	File xmlfile = new File(xmlFilePath);
+	                   	if (!xmlfile.exists()) {
+	    	        	   xmlfile.createNewFile();
+	    	            }
+				        
+	                   	FileWriter fwX = new FileWriter(xmlfile.getAbsoluteFile());
                         BufferedWriter bwx = new BufferedWriter(fwX);
                         bwx.write("<?xml version=\"1.0\"?>"
                         		+ "\r\n");
@@ -1165,112 +1080,158 @@ public class VehicleController {
                         bwx.write("</ROW>");
                         bwx.write("\r\n"); 
                         bwx.write("</Report>");  
-                        bwx.close();   
-//                    
-                    
-            
-                    
+                        bwx.close(); 
+				        
+                        if(configSystem.size()!=0) {
 
-                 //  List<ConfigSystem> configSystem=vehicleService.getConfigSystemByCenter(vehiclereg.getCentermaster().getCenter_ID(),vehiclereg.getTestLaneHeadId().getTestLaneHeadId());	
-                  
-                   
-//                   String hostname="";
-//                   String username="";
-//                   String password="";
-//                   String rootpath="";
-//                   String xmlPath="";
-//                   for(ConfigSystem conSys:configSystem) {
-//                        hostname=conSys.getIpaddress();
-//                        username=conSys.getUserName();
-//                        password=conSys.getPassword();  
-//                        rootpath=conSys.getRootPath();
-//                        xmlPath=conSys.getXmlPath();
-//                   }
-                   
-                   
-                   if(configSystem.size()!=0) {
-                   System.out.println("Start");
-                   
-	                   for(ConfigSystem conSys:configSystem) {
-	                     hostname=conSys.getIpaddress();
-	                     username=conSys.getUserName();
-	                     password=conSys.getPassword();  
-	                     rootpath=conSys.getRootPath();
-	                     xmlPath=conSys.getXmlPath();
-	                     inet = InetAddress.getByName(hostname);
-	                 
+         	                   for(ConfigSystem conSys:configSystem) {
+         	                     hostname=conSys.getIpaddress();
+         	                     username=conSys.getUserName();
+         	                     password=conSys.getPassword();  
+         	                     rootpath=conSys.getRootPath();
+         	                     xmlPath=conSys.getXmlPath();
+         	                     inet = InetAddress.getByName(hostname);
+         	                 
+         	
+         	                   
+         	                    FTPUploader ftpUploader = new FTPUploader(hostname, username, password);
+         	
+         	                    //FTP server path is relative. So if FTP account HOME directory is "/home/pankaj/public_html/" and you need to upload
+         	                    // files to "/home/pankaj/public_html/wp-content/uploads/image2/", you should pass directory parameter as "/wp-content/uploads/image2/"
+         	                    ftpUploader.uploadFile(textFilePath, vehiclereg.getVid().getVehicleID()+".txt", rootpath+"/");//public_ftp
+         	                   
+         	                    //sava FTp to xml
+         	                    ftpUploader.uploadFile(xmlFilePath, vehiclereg.getVid().getVehicleID()+".xml", xmlPath+"/");//public_ftp
+         	                    
+         	                    
+         	                    ftpUploader.disconnect();
+         	                    file.delete();
+         	                    xmlfile.delete();
+         	                    
+         	                   }
+         	            }	
+                        
+                		ocrDetails.setVrStatus("completed");
+                		vehicleService.saveOcrDetailsRepo(ocrDetails);
+                        
+                		return "0";
+	                	
+	                }else {
+	  	        	  return "6"; 
+	  		          
+	  	          }
+	        	}
+        		
+        	} catch (Exception e) {
+        		return "7";
+        	}
+        
+				
+	 }
 	
-	                   
-	                    FTPUploader ftpUploader = new FTPUploader(hostname, username, password);
 	
-	                    //FTP server path is relative. So if FTP account HOME directory is "/home/pankaj/public_html/" and you need to upload
-	                    // files to "/home/pankaj/public_html/wp-content/uploads/image2/", you should pass directory parameter as "/wp-content/uploads/image2/"
-	                    ftpUploader.uploadFile(textFilePath, vehiclereg.getVid().getVehicleID()+".txt", rootpath+"/");//public_ftp
-	                   
-	                    //sava FTp to xml
-	                    ftpUploader.uploadFile(xmlFilePath, vehiclereg.getVid().getVehicleID()+".xml", xmlPath+"/");//public_ftp
-	                    
-	                    
-	                    ftpUploader.disconnect();
-	                    file.delete();
-	                    xmlfile.delete();
-	                    
-	                   }
-	            }
-                    System.out.println("Done");
-                    
-                   
-                    
-                  //  OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());	
-            		ocrDetails.setVrStatus("completed");
+	
+	//save vehicle registration data
+	@RequestMapping(value="/vehicleRegAction" ,method=RequestMethod.POST)
+	public @ResponseBody String saveVehicleRegistration(@Valid @ModelAttribute("VehicleRegistration") VehicleRegistration vehiclereg,  BindingResult br,HttpServletRequest request,RedirectAttributes redirectAttributes,HttpSession session) {
+		if(br.hasErrors())  
+        {  
+		 	return "0";  
+        }  
+        else  
+        {	
+        	try {
+        		CenterMaster centerMaster=centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID()); 
+        		OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
+        		List<VehicleRegistration> isVehicale=vehicleService.getTestStatusVehicleRegistation(vehiclereg.getVid().getVehicleID());
+        		
+           
+        		if (session.getAttribute("username")==null) {
+        			return "1";	
+        		}else if (ocrDetails.getNoimage().length==0) {
+        			return "4";  	 
+	        	}else if (!ocrDetails.getDocStatus().equals("completed")) {
+	        		return "2";  	 
+	        	}else if (isVehicale.size()!=0) {
+	        		return "3";  	 
+	        	}else {
+    	    	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+    	    	    Date date = new Date();  
+    	    	    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
+    	    	    LocalTime time = LocalTime.now();
+    	    	    
+    	    	    //get Token  no
+    	    	    String tansactionId = "0000".substring(transactionservice.maxtrID().length())+transactionservice.maxtrID();
+    	    	    
+    	    	    String vRegID = "0000".substring(vehicleService.maxVRegID().length())+vehicleService.maxVRegID();
+    	    	    
+    	    		Transaction tr = new Transaction();
+    	    		tr.setTrID(tansactionId);
+    	    		tr.setStatus("ACTIVE");
+    	    		tr.setRemarks("New Vehicle Registration ("+vRegID+")");
+    	    		transactionservice.saveTransaction(tr);
+    	    		
+    	    		vehiclereg.setTime(time.format(formattertime));
+    	    		vehiclereg.setDate(formatter.format(date));
+    	    		vehiclereg.setViTestStatus("pending");
+    	    		vehiclereg.setTestStatus("pending");	
+    	    		vehiclereg.setTrid(tr);	    		
+    	    		vehiclereg.setVregID(vRegID);
+    	    		vehiclereg.setPayType("Cash");
+    	    		vehiclereg.setStatus("ACTIVE");
+    	    		vehicleService.saveVehicleRegister(vehiclereg);
+	
+                	TestCategory testCategory=centerService.getCategoryId(vehiclereg.getTestCategory().getCategoryId());	            	
+                	String countrcode=centerMaster.getPartner_ID().getCountry_Code().getCountryCode();
+                	List<TaxConfiguration> getTaxFromCountrylist=vehicleService.getTaxFromCountry(countrcode);
+                	VehicleRegisterType vrtyp=vehicleService.getRegType(vehiclereg.getVtype().getvRegTypeID());
+                	
+                	VehicleMaster vehicleMaster = vehicleService.getVMasterById(vehiclereg.getVid().getVehicleID());
+                	//create Next Receipt No
+                	int maxrecno=centerMaster.getPartner_ID().getMaxRecNo();
+                	String recFormate=centerMaster.getPartner_ID().getRecformate();
+                	String nextRecno=recFormate+(maxrecno+1);
+                	long testFee=testCategory.getCategoryFee();
+                	long testFeePresent=vrtyp.getvTestFeePre();
+                	long nettotal=0;
+                	
+                	long calTestFee=testFee*testFeePresent/100;	
+                	//update  Last Receipt No
+                	businessPartnerService.setUpdateLastRecNo(centerMaster.getPartner_ID().getPartner_ID());
+                	
+                	ReceiptHead receiptHead=new ReceiptHead(nextRecno, vehiclereg, vehiclereg.getDate(),vehiclereg.getTime(),calTestFee,"New Vehicle Register",ocrDetails.getAppNo(),"ACTIVE");
+                	
+                	List<ReceiptDetails> eceiptDetailsArrayList = new ArrayList<ReceiptDetails>();
+                	
+	            	for(TaxConfiguration taxdetail:getTaxFromCountrylist) {
+	            		Long taxamt=Long.parseLong("0");
+	            		if(taxdetail.getType().equals("Rate")) {
+	            		 taxamt=calTestFee*taxdetail.getTaxRate()/10000;
+	            		}else {
+	            		 taxamt=taxdetail.getTaxRate();	
+	            			
+	            		} 		
+	            		ReceiptDetails receiptDetails= new ReceiptDetails(receiptHead, taxdetail, taxdetail.getTaxRate(),taxamt);
+	            		nettotal=nettotal+taxamt;
+	            		eceiptDetailsArrayList.add(receiptDetails);
+	            	}
+	            	receiptHead.setNetTotal(nettotal+calTestFee);
+	            	//save ReceiptHead date & ReceiptDetails
+	            	vehicleService.saveReciptHead(receiptHead);
+	            	vehicleService.saveReciptDetailsAll(eceiptDetailsArrayList);
+	            	
+                	
+                	
+            		ocrDetails.setPaymentStatus("completed");
             		vehicleService.saveOcrDetailsRepo(ocrDetails);
-            		
-            		//redirectAttributes.addFlashAttribute("success", 1);
-            		  System.out.println("1");
+                	
             		return "vehicalRecORG?recno="+nextRecno+"";
-            		
-	        	 }else {
-	        		// redirectAttributes.addFlashAttribute("success", 3);
-	        		//  System.out.println("3");
-	        		 return "3"; 
-	        		 
-	        	 }
-
-              
-	          }else {
-	        	  return "2"; 
-	          
-	          }
-              	
-                
-	          }else {
-	        	  return "4"; 
-	          
-	          } 
-                
-	        }else {
-	        	  return "5"; 
-	        }
-	         }else {
-	        	  return "6"; 
-	          
-	          } 
-	        	 }else {
-	        		 return "7"; 	 
-	        	 }
-	          }else {
-	        		 return "8"; 	 
-	        	 }
-	        	 
-                // "vehicleRegistration?vid="+"";	    	    	    	    	      	    	          	
-            } catch (Exception e) {
-            //	transaction.getRollbackOnly();
-            	//transactionStatus.setRollbackOnly();
-               e.printStackTrace();
-              
-               return "0";
-            }
-	     }
+        		}
+        		
+        	} catch (Exception e) {
+        		return "0";
+        	}
+        }
 				
 	 }
 	

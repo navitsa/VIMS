@@ -155,13 +155,22 @@
 				<div class="panel-header bg-primary-gradient">
 					<div class="page-inner py-3">
 						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-							<div>
-								<h2 class="text-white pb-2 fw-bold">Vehicle Details</h2>
-								<h5 class="text-white op-7 mb-2"></h5>
+							<div class="col-xl-2 col-lg-2">
+								<img src="data:image/jpg;base64,${imgVe}" class="capCam"  id="results" onerror="this.onerror=null; this.src='resources/img/car-placeholder.jpg'" style="border-radius: 8px; border: 1px solid #ddd;"/>
+				
+								<br><br>
+							</div>
+							<div class="col-xl-2 col-lg-2">
+								<p class="vidSty" >${vidn}</p>
 							</div>
 							<div class="ml-md-auto py-2 py-md-4">
-							<p class="vidSty" ><%=session.getAttribute("vMvid")%></p>
+							
+							
+							<h2 class="text-white pb-2 fw-bold">Vehicle Details</h2>
+							
 							</div>
+							
+					
 							<div class="ml-md-auto py-2 py-md-4">
 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
 <!-- 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a> -->
@@ -223,7 +232,7 @@
 			             <div class="row">
 			             	<div class="col-sm-3">
 <%-- 			             		<c:if test = "${imgVe == null}"> --%>
-			             			<img src="data:image/jpg;base64,${imgVe}" class="capCam"  id="results" onerror="this.onerror=null; this.src='resources/img/car-placeholder.jpg'"/>
+			             		
 			             			<input class="form-control textred" id="ocid" name="ocid"  value="${ocid}" type="hidden" />
 <%-- 			             		</c:if>	 --%>
 			             	</div>
