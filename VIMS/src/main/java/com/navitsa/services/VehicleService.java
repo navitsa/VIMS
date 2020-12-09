@@ -586,15 +586,18 @@ public class VehicleService {
 	public List<OcrDetails> getOCRVehiclesByDates(@Param("todayDate")String todayDate){
 		return ocrDetailsRepo.getOCRVehiclesByDates(todayDate);	
 	}
-	public VehicleRegistration getRegistrationVehicleByOcrid(String vehicle_no,int ocrid) {
+	public VehicleRegistration getRegistrationVehicleByOcrid(int ocrid) {
 		
-		return vehicleregRepo.getRegistrationVehicleByOcrid(vehicle_no,ocrid);
+		return vehicleregRepo.getRegistrationVehicleByOcrid(ocrid);
 	}
 	public VehicleRegistration getRegistrationByRegisterId(String register_id) {
 		
 		return vehicleregRepo.getRegistrationByRegisterId(register_id);
 	}
-	
+	public List<OcrDetails> pendingLaneEntryData(){
+		return ocrDetailsRepo.pendingLaneEntryData();
+		
+	}
 
 	
 }

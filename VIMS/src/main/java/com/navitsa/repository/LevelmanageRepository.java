@@ -19,7 +19,7 @@ public interface LevelmanageRepository extends CrudRepository<Levelmanage, Level
 	@Query(value="DELETE From Levelmanage  WHERE levelManagePK.levelID.ulid=:levelid")
 	public void deleteUserLevelManageByLevelid(@Param("levelid")String levelid);
 	
-	@Query(value = "SELECT ul FROM Levelmanage ul,Users u where u.userId=:userid and u.ulid.ulid=ul.levelManagePK.levelID.ulid ")
+	@Query(value = "SELECT ul FROM Levelmanage ul,Users u where u.userId=:userid and u.ulid.ulid=ul.levelManagePK.levelID.ulid and ul.status='ACTIVE'")
     public List<Levelmanage> getUserLevelmanageRole(@Param("userid")String userid);
 	
 }

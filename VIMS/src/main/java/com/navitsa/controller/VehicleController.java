@@ -871,10 +871,39 @@ public class VehicleController {
 		List<TestLaneDetails> test1 = vehicleService.searchLaneDEtails(testLaneDetailsid);
 		return test1;
 	}
+	@RequestMapping("/laneEntryView")
+	public String getLaneEntryView(Model m,HttpSession session) {
+	
+		VehicleRegistration vecir=new VehicleRegistration();
+
+	//	String vid=ocrDetails.getOcrVid();
+		m.addAttribute("VehicleRegistration",vecir);
+
+		
+		return "LaneEntryView";
+	}
+	@RequestMapping(value="/getPerviousVehicleRegistation" ,method=RequestMethod.POST)
+	public @ResponseBody List<VehicleRegistration> getVehicleRegistation(@RequestParam String veno) {
+		return vehicleService.getPerviousRegistrationVehicle(veno);
+		
+	
+	}
+	@RequestMapping(value="/getVehicleRegistation" ,method=RequestMethod.POST)
+	public @ResponseBody VehicleRegistration getVehicleRegistation(@RequestParam int ocrid) {
+		return vehicleService.getRegistrationVehicleByOcrid(ocrid);
+		
+	
+	}
+	@RequestMapping(value="/pendingLaneEntryData" ,method=RequestMethod.POST)
+	public @ResponseBody List<OcrDetails> getPendingLaneEntryData() {
+		return vehicleService.pendingLaneEntryData();
+		
+	
+	}
 	@RequestMapping("/LaneEntry")
 	public String getLaneEntry(Model m,@RequestParam String id,HttpSession session) {
 		OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
-		VehicleRegistration vecir=vehicleService.getRegistrationVehicleByOcrid(ocrDetails.getOcrVid(),ocrDetails.getOcrid());
+		VehicleRegistration vecir=vehicleService.getRegistrationVehicleByOcrid(ocrDetails.getOcrid());
 
 		String vid=ocrDetails.getOcrVid();
 		m.addAttribute("VehicleRegistration",vecir);
@@ -1148,9 +1177,7 @@ public class VehicleController {
            
         		if (session.getAttribute("username")==null) {
         			return "1";	
-        		}else if (ocrDetails.getNoimage().length==0) {
-        			return "4";  	 
-	        	}else if (!ocrDetails.getDocStatus().equals("completed")) {
+        		}else if (!ocrDetails.getDocStatus().equals("completed")) {
 	        		return "2";  	 
 	        	}else if (isVehicale.size()!=0) {
 	        		return "3";  	 

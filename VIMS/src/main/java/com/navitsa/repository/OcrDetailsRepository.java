@@ -36,5 +36,7 @@ public interface OcrDetailsRepository extends CrudRepository<OcrDetails, Integer
 	@Query(value = "SELECT count(*),COALESCE(sum(if(o.vm_Status='completed',1,0)),0),COALESCE(sum(if(o.vr_Status='completed',1,0)),0),COALESCE(sum(if(o.doc_Status='completed',1,0)),0) FROM ocr_details o where o.ocrDate like :selectedDate",nativeQuery = true)
     public String[][] getDashBordOCrDetails(@Param("selectedDate") String selectedDate);
 	
-
+	@Query(value = "SELECT oc FROM OcrDetails oc where oc.vmStatus='completed' and oc.vrStatus='pending' and oc.docStatus='completed' and oc.paymentStatus='completed' and oc.status='ACTIVE'")
+	public List<OcrDetails> pendingLaneEntryData();
+	
 }
