@@ -230,47 +230,29 @@
 				<div class="card-body">
 					<input type="hidden" value='<%=session.getAttribute("vehicleAutoConfig")%>' id="autoValue" >
 			             <div class="row">
-			             	<div class="col-sm-3">
-<%-- 			             		<c:if test = "${imgVe == null}"> --%>
+			             	<div class="col-sm-9">
+
 			             		
 			             			<input class="form-control textred" id="ocid" name="ocid"  value="${ocid}" type="hidden" />
-<%-- 			             		</c:if>	 --%>
-			             	</div>
-			             	<div class="col-sm-4">
+
+			             		<label for="chassisNo" class="l-chno">VIN(Chassis Number)</label>
+			             		<form:input class="form-control v-chno" path="chassisNo" onkeyup="this.value = this.value.toUpperCase();getChassisNumberDetails();checkVinNo();" onchange="getChassisNumberDetails();checkVinNo();" id="chassisNoid3" maxlength="17" required="true"/>
+			             		<form:errors path="chassisNo" cssClass="error1"/>			
+						
 			             			
 
 			             	
 			             	</div>
-			             	<div class="col-sm-5">
-			             		<div class="form-group row">
-			             			<div class="col-sm-12">
-<%-- 				                		<form:input class="form-control textred" path="vehicleID" id="vehicleID" placeholder="Licence Plate NO..."  onkeyup="this.value = this.value.toUpperCase();" readonly="true"  /> --%>
-<%-- 				                		<form:errors path="vehicleID" cssClass="error1"/> --%>
-				                	</div>		
-				               </div>
-<!-- 				                <div class="form-group row"> -->
-<!-- 				                	<div class="col-sm-6"> -->
-<!-- 				                		<label for="registeredYear" class="l-fontst">Registered Year</label> -->
-<!-- 				                	</div> -->
-<!-- 				                	<div class="col-sm-5">			             		 -->
-<%-- 					             		<form:input class="form-control fontst" path="registeredYear" id="registeredYear" pattern="{7}" title="Please Enter valid YEAR !" onchange="getChassisNumberDetails()" required="true"/> --%>
-<%-- 					             		<form:errors path="registeredYear" cssClass="error1"/> --%>
-<!-- 					             		<i class="fa fa-calendar iconali" for="registeredYear"></i> -->
-<!-- 									</div> -->
-								
-<!-- 				                </div> -->
-				                <div class="row">
-									<div class="col-sm-5">
+			             	<div class="col-sm-3">
+			             	
 						             	<label class="l-fontst">Mileage</label>
-						             </div>
-								 	<div class="col-sm-5">
+						             
 										<input class="form-control fontst" name="currentMilage" required="Required" value="${milage}" id="currentMilage" required="true"/>
 <!-- 										<i class='fas fa-tachometer-alt iconali'></i>	 -->
-						             	
-						            </div>
+						         
 						           
 															         
-				                </div>		
+				              		
 			             	</div>
 			             	
 			             </div>
@@ -285,27 +267,9 @@
 <!-- 		<div class="card-body"> -->
 
 
-						<div class="form-group row">						
-							<div class="col-sm-9">
-			             		<label for="chassisNo" class="l-chno">VIN(Chassis Number)</label>
-			             		<form:input class="form-control v-chno" path="chassisNo" onkeyup="this.value = this.value.toUpperCase();getChassisNumberDetails();checkVinNo();" onchange="getChassisNumberDetails();checkVinNo();" id="chassisNoid3" maxlength="17" required="true"/>
-			             		<form:errors path="chassisNo" cssClass="error1"/>			
-							</div>	
-							<div class="col-sm-3">
-																									
-										<label  class="l-fontst" id="manufaCur1">Manufactured in</label><br>									
-									<label  class="l-fontst" id="manufaCur"></label>	
-<!-- 								<div class="form-group row"> -->
-<!-- 									<a type="button" class="bt-sty btn btn-outline-primary waves-effect" data-toggle="modal" data-target="#myModal">New Make</a> -->
-<!-- 								</div> -->
-<!-- 								<div class="form-group row"> -->
-<!-- 									<a type="button" class="bt-sty btn btn-outline-success waves-effect" data-toggle="modal" data-target="#VecModal">New Model</a> -->
-<!-- 							</div> -->
-							</div>
-															
-						 </div>
+
 						
-										<div class="row">						
+						<div class="row">						
 							<div class="col-sm-4">
 								<div class="row">
 									<div class="col-sm-6">
@@ -336,9 +300,10 @@
 								</div>
 							
 							</div>
-<!-- 							<div class="col-sm-3">											 -->
-<!-- 										<label  class="l-fontst" id="manufaCur">Manufactured in</label>									 -->
-<!-- 							</div>										 -->
+							<div class="col-sm-4">											
+										<label  class="l-fontst" id="manufaCur1">Manufactured in</label><br>									
+									<label  class="l-fontst" id="manufaCur"></label>								 
+							</div>										
 						 </div>		 
 						 <br>
 						  <hr/>
@@ -369,7 +334,7 @@
 							<div class="col-sm-8">	
 								<div class="row">
 									
-									<div class="col-sm-2">
+									<div class="col-sm-1">
 										<label for="manu1" class="l-fontst">Make</label>
 									</div>	
 									<div class="col-sm-5">						             			             		
@@ -380,7 +345,7 @@
 											</c:forEach>
 										</form:select>		             		
 									</div>
-									<div class="col-sm-2">
+									<div class="col-sm-3">
 										<img src="" id="makeImg" class="img-responsive imgalign">
 									</div>
 									<div class="col-sm-3">
@@ -412,7 +377,7 @@
 						 	</div>
 						 	<div class="col-sm-8">
 						 		<div class="row">
-									<div class="col-sm-2">
+									<div class="col-sm-1">
 										<label for="t6" class="l-fontst">Model</label>
 									</div>	
 									<div class="col-sm-5">						             			             		
@@ -423,7 +388,7 @@
 											</c:forEach>
 										</form:select>		             		
 									</div>
-									<div class="col-sm-2">
+									<div class="col-sm-3">
 										<img src="" id="modelImg" class="img-responsive imgalign">
 									</div>
 									<div class="col-sm-3">
@@ -609,23 +574,15 @@
 				<!-- Card Header - Dropdown -->
 				<div class="card-header py-2 d-flex flex-row align-items-center">
 					<img src="resources/img/icon/vowner.png" class="iconstyle"/><h6 class="m-0 font-weight-bold text-primary">.  Owner Details </h6>
-				</div>
-				<!-- Card Body -->
-				<div class="card-body">
-					<div class="row">
-						<div class="col-sm-6">
-							<label class="l-fontst fontcol-peo"  >Current Owner</label>
-							
-				         </div> 
-				         <div class="col-sm-6 text-right">
+				
+				  <div class="col-sm-7 text-right">
 							<a href="#" class="w3-button w3-tiny fontst fontcol-peo" onClick="goNewOwner()"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #4dc3ff;"></i>
 							New Owner</a>
 							
-				         </div> 
-				         
-				              
-					</div>
-					<hr>
+				         </div> </div>
+				<!-- Card Body -->
+				<div class="card-body">
+	
 					<div class="row">
 				
 						<div class="col-sm-5">
@@ -757,7 +714,7 @@
 							<label class="l-fontst fontcol-peo"  >Previous Owners</label>
 					
 				         </div>      
-					</div>
+					</div>	<hr>
 					<div class=" row">
 								<div class="col-sm-12">
 									<table id="eqTypeTable"
@@ -769,7 +726,7 @@
 										</tr>
 									</thead>
 									<tbody id="myTable">
-									<hr>
+								
 										<c:forEach items="${pre_owners}" var="preOwners">
 											<c:if test = "${preOwners.status=='previousOwner'}">
 												<tr>    		
@@ -956,8 +913,7 @@
             slctSubcat.empty();
             
     	return;
-		}
-  		else{
+		}else{
   			
 			$.ajax({
 	        type: 'GET',
