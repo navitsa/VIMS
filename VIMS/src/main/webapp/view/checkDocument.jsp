@@ -22,7 +22,7 @@
 																		<div class="form-group row">
 																			<div class="col-sm-12">
 																				<input class="form-control textred"
-																					name="vehNO" value="${vidn}" id="vehNO"
+																					name="vehNO" value="${vid}" id="vehNO"
 																					placeholder="Licence Plate NO..."
 																					
 																					readonly="true" />
