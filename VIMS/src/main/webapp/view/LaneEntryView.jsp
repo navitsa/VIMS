@@ -793,7 +793,7 @@ setTimeout(takeAutoNo, 3000);
 						document.getElementById("lane").innerHTML=data.testLaneHeadId.laneName;
 						document.getElementById("insp").innerHTML=data.user.userName;
 						
-						
+						document.getElementById("results").src="data:image/jpg;base64,"+arrayBufferToBase64(data.ocrid.noimage );
 						getPerviousVehicleRegistation(data.vid.vehicleID);
 					
 			        },
@@ -816,6 +816,22 @@ setTimeout(takeAutoNo, 3000);
 				
 				
 			}
+			
+			
+			
+			function arrayBufferToBase64( buffer ) {
+				var binary = '';
+				var bytes = new Uint8Array( buffer );
+				var len = bytes.byteLength;
+				for (var i = 0; i < len; i++) {
+					binary += String.fromCharCode( bytes[ i ] );
+				}
+				return window.btoa( binary );
+			}
+			
+			
+			
+			
 			
 			function getPerviousVehicleRegistation(vno){
 				$.ajax({
