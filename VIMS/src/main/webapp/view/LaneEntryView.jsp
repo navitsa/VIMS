@@ -107,8 +107,7 @@
 							<div class="col-xl-2 col-lg-2">
 								<p class="vidSty" id="vvno" >${vehNo}</p>
 							</div>
-							<div class="ml-md-auto py-2 py-md-4">
-							
+							<div class="ml-md-auto py-2 py-md-4">							
 							
 							<h2 class="text-white pb-2 fw-bold">Lane Entry</h2>
 							
