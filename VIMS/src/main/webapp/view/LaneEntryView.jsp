@@ -114,7 +114,7 @@
 							
 							</div>	
 							<div class="ml-md-auto py-2 py-md-4">
-<!-- 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a> -->
+								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
 <%-- 								<a href="vehicleMasterAuto?vehicleID=<%=session.getAttribute("vRvid")%>&id=<%=session.getAttribute("vRocr")%>&appNo=0" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a> --%>
 <!-- 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#capturePlateModal">Capture</a>
