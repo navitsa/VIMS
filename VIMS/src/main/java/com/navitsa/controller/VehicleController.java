@@ -189,7 +189,7 @@ public class VehicleController {
 	}
 	
 	@RequestMapping(value = "/savevmodelFormModel", method = RequestMethod.POST)
-	public String saveVModelFormModel(@RequestParam String vehicleMakeID,@RequestParam String vehicleClassID,@RequestParam String vehicleModel,@RequestParam MultipartFile modelLogo){
+	public @ResponseBody String saveVModelFormModel(@RequestParam String vehicleMakeID,@RequestParam String vehicleClassID,@RequestParam String vehicleModel,@RequestParam MultipartFile modelLogo){
 
 		VehicleModel vModel=new VehicleModel();
 		try {
@@ -448,7 +448,7 @@ public class VehicleController {
 	}
 	// Save vehicle make data
 	@RequestMapping(value = "/saveVMakeModelForm", method = RequestMethod.POST)
-	public String saveVMakeModelForm(@RequestParam String vehicleMake,@RequestParam MultipartFile makeLogo,@RequestParam String remark){
+	public  @ResponseBody  String saveVMakeModelForm(@RequestParam String vehicleMake,@RequestParam MultipartFile makeLogo,@RequestParam String remark){
 
 		String vmid = vehicleService.maxVMakeID();
 	

@@ -1340,21 +1340,22 @@ function saveModelV(){
 		cache : false,
 		success : function(data) {
 			
-      		Swal.fire({
-	      		  position: 'top-end',
-	      		  icon: 'success',
-	      		  title: 'Successfully saved!',
-	      		  showConfirmButton: false,
-	      		  timer: 1500
-	      		})
-
+			swal("Good job!", "Successfully saved!", {
+				icon : "success",
+				buttons: {        			
+					confirm: {
+						className : 'btn btn-success'
+					}
+				},
+			});
+	      		getModelV();
 
 
 		}
 
 	});	
-	setTimeout(getModelV, 200); 
-	//getModelV();
+
+
 }   	
    	
    	
@@ -1423,20 +1424,27 @@ function saveMakeV() {
 		cache : false,
 		success : function(data) {
 			
-      		Swal.fire({
-	      		  position: 'top-end',
-	      		  icon: 'success',
-	      		  title: 'Successfully saved!',
-	      		  showConfirmButton: false,
-	      		  timer: 1500
-	      		})
+//       		Swal.fire({
+// 	      		  position: 'top-end',
+// 	      		  icon: 'success',
+// 	      		  title: 'Successfully saved!',
+// 	      		  showConfirmButton: false,
+// 	      		  timer: 1500
+// 	      		});
+			swal("Good job!", "Successfully saved!", {
+				icon : "success",
+				buttons: {        			
+					confirm: {
+						className : 'btn btn-success'
+					}
+				},
+			});
 
-
-
+	      		getMakeV();
 		}
 
 	});	
-	setTimeout(getMakeV, 200); 
+	 
 }
 
 function saveCheckDocment() {
