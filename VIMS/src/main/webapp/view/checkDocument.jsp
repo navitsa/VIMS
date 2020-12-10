@@ -80,10 +80,12 @@
 																var="doc1" varStatus="i"> <%--Loop Status --%>
 																<tr>
 																	<td><div>
-																	<input class="form-control form-control-sm" name="doc" id="doc" value="${doc1.documentid}"  />
+																	<input class="form-control form-control-sm" name="doc" id="doc" value="${doc1.documentid}"  readonly/>
 																	</div></td>
 																	<td><div>${doc1.description}</div></td>
-																	<td><div>${doc1.remarks}</div></td>
+																	<td><div>
+																	<input class="form-control form-control-sm" name="rem" id="rem" value=""  />
+																	</div></td>
 																	<td><div>
 <!-- 																<select class="custom-select"name="docStatus"  > -->
 <!-- 																		<option value="N/A">N/A</option> -->

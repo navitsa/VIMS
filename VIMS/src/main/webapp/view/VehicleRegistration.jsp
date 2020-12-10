@@ -182,14 +182,7 @@
 
 			             <div class="row">
 
-			             	<div class="col-sm-3">
-<!-- 			             	 src="resources/img/car-placeholder.jpg" -->
-			             	<%-- 			             		<c:if test = "${imgVe == null}"> --%>
-<%-- 			             			<img src="data:image/jpg;base64,${imgVimg}" class="capCam"  id="results" onerror="this.onerror=null; this.src='resources/img/car-placeholder.jpg'"/> --%>
-<%-- 			             		</c:if>	 --%>
-			             	
-			             	
-			             	</div>
+			         
 			             	<div class="col-sm-4">
 										             		<div class="row">
 									<div class="col-sm-6">
@@ -228,19 +221,6 @@
 										             		
 									</div>
 									
-								</div><br>
-									<div class="row">
-									<div class="col-sm-6">
-										<label  class="l-fontst">Mileage</label>
-									</div>	
-									<div class="col-sm-5">	
-									
-										<form:input class="form-control fontst" path="currentMilage" id="currentMilage" required="Required" />
-									<input class="form-control fontst " value='${vclassid}' type="hidden" id="vclassids"/>
-						             	
-										             		
-									</div>
-									
 								</div>
 								
 								
@@ -268,6 +248,20 @@
 				               </div>
 				           
 		
+			             	</div>
+			             	<div class="col-sm-4">
+			             		<div class="row">
+			             			<div class="col-sm-6">
+										<label  class="l-fontst">Mileage</label>
+									</div>	
+									<div class="col-sm-5">	
+									
+										<form:input class="form-control fontst" path="currentMilage" id="currentMilage" required="Required" />
+									<input class="form-control fontst " value='${vclassid}' type="hidden" id="vclassids"/>
+						             	
+										             		
+									</div>
+			             		</div>
 			             	</div>
 			             </div>
 <hr>
@@ -580,7 +574,7 @@
 
 									
 				<%@include file="checkDocument.jsp"%>	
-				<%@include file="capturePlateModal.jsp"%>	
+				
 					</div>
 				
 			</div>	
