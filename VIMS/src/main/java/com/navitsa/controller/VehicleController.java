@@ -3644,7 +3644,8 @@ public class VehicleController {
 		    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 		    Date date = new Date(); 
 		    String maxid="";
-		   if(docheadid=="") {
+		    System.out.println(" hh= "+docheadid.isEmpty());
+		   if(docheadid.isEmpty()) {
 			   System.out.println("new");
 			 maxid=documentScrvice.maxDocumentCheckHeadID();
 				DocumentCheckHead documentCheckHead=new DocumentCheckHead();
@@ -3697,6 +3698,10 @@ public class VehicleController {
 		    	   documentCheckDetails.setCheckStatus(docStatus[i]);
 		    	   
 		    	   documentScrvice.saveDocumentCheckDetails(documentCheckDetails);
+		    	   OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
+					ocrDetails.setDocStatus("completed");
+					
+		    		vehicleService.saveOcrDetailsRepo(ocrDetails);
 		       }
 		    
 		    
