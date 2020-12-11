@@ -7,7 +7,7 @@ import com.navitsa.entity.DocumentCheckHead;
 
 public interface DocumentCheckHeadRepository extends CrudRepository<DocumentCheckHead, String> {
 	
-	@Query(value="SELECT (max(d.documentcheckheadid)+1) FROM DocumentCheckHead d ")
+	@Query(value="SELECT (max(d.documentcheckheadid*1)+1) FROM DocumentCheckHead d ")
 	public String maxDocumentCheckHeadID();
 	
 

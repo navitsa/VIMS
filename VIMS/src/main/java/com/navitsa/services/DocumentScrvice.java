@@ -3,6 +3,7 @@ package com.navitsa.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.navitsa.entity.Document;
@@ -46,7 +47,9 @@ public class DocumentScrvice {
 		public void saveAllDocumentCheckDetails(List<DocumentCheckDetails> documentCheckDetails){	
 			 documentCheckDetailsRepo.saveAll(documentCheckDetails);
 		}
-		
+		public void saveDocumentCheckDetails(DocumentCheckDetails documentCheckDetails){	
+			 documentCheckDetailsRepo.save(documentCheckDetails);
+		}
 		public void saveDocument(Document document){	
 			documentRepository.save(document);
 		}
@@ -57,5 +60,13 @@ public class DocumentScrvice {
 		public Document listDocumentById(int id){	
 			return documentRepository.findById(id).get();
 		}
+		public DocumentCheckDetails getCheckDocumentDetailsByid(int headid){
+			return documentCheckDetailsRepo.findById(headid).get();
+			
+		}
 		
+		public List<DocumentCheckDetails> getCheckDocumentDetails(int ocrid){
+			return documentCheckDetailsRepo.getCheckDocumentDetails(ocrid);
+			
+		}
 }

@@ -28,6 +28,8 @@
 																					readonly="true" />
 																					<input class="form-control form-control-sm"
 																			name="mocrid" id="mocrid" value="${ocid}"  type="hidden"/>
+																						<input class="form-control form-control-sm"
+																			name="docheadid" id="docheadid" value="${docheadid}" type="hidden"/>
 																			</div>
 																		</div>
 																	
@@ -77,7 +79,7 @@
 														<tbody id="docTable1">
 														 
 															<c:forEach items="${documentlist}"
-																var="doc1" varStatus="i"> <%--Loop Status --%>
+																var="doc1" varStatus="z"> <%--Loop Status --%>
 																<tr>
 																	<td><div>
 																	<input class="form-control form-control-sm" name="doc" id="doc" value="${doc1.documentid}"  readonly/>
@@ -87,24 +89,23 @@
 																	<input class="form-control form-control-sm" name="rem" id="rem" value=""  />
 																	</div></td>
 																	<td><div>
-<!-- 																<select class="custom-select"name="docStatus"  > -->
-<!-- 																		<option value="N/A">N/A</option> -->
-<!-- 																		<option value="OK">OK</option> -->
-<!-- 																		<option value="Not OK">Not OK</option> -->
-<!-- 																	</select>		 -->
-																
-																	
-												<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									  <label class="btn btn-outline-success btn-sm">
-							    <input type="radio" name="docStatus" id="option1" value="OK" > OK
-									  </label>
-									  <label class="btn btn-outline-primary btn-sm">
-									    <input type="radio" name="docStatus" id="option2" value="Not OK" > Not OK
-									  </label>
-									  <label class="btn btn-outline-info btn-sm">
-									    <input type="radio" name="docStatus" id="option3" value="N/A" > N/A
-									  </label>
-									</div>
+																<select class="custom-select" name="docStatus"  >
+																		<option value="N/A">N/A</option>
+																		<option value="OK">OK</option>
+																		<option value="Not OK">Not OK</option>
+																	</select>		
+						
+<!-- 									<div class="btn-group btn-group-toggle" data-toggle="buttons"> -->
+<!-- 									  <label class="btn btn-outline-success btn-sm"> -->
+<%-- 							    		<input type="radio" name="docStatus[${z.index}]" id="option1" value="OK" > OK --%>
+<!-- 									  </label> -->
+<!-- 									  <label class="btn btn-outline-primary btn-sm"> -->
+<%-- 									    <input type="radio" name="docStatus[${z.index}]" id="option2" value="Not OK" > Not OK --%>
+<!-- 									  </label> -->
+<!-- 									  <label class="btn btn-outline-info btn-sm"> -->
+<%-- 									    <input type="radio" name="docStatus[${z.index}]" id="option3" value="N/A" > N/A --%>
+<!-- 									  </label> -->
+<!-- 									</div> -->
 												
 																	
 																	</div></td>

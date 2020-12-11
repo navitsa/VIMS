@@ -30,6 +30,9 @@ public class DocumentCheckDetails {
 	@Column(name="CheckStatus")	
 	private String  checkStatus;
 
+	@Column(name="Remarks")	
+	private String  remarks;
+	
 	public int getDocumentcheckDetailsid() {
 		return documentcheckDetailsid;
 	}
@@ -60,6 +63,14 @@ public class DocumentCheckDetails {
 
 	public void setCheckStatus(String checkStatus) {
 		this.checkStatus = checkStatus;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 

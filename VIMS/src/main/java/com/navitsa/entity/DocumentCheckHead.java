@@ -16,9 +16,8 @@ public class DocumentCheckHead {
 	@Column(name="DocumentCheckHeadID")	
 	private String  documentcheckheadid;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "Vehicle_ID", referencedColumnName = "Vehicle_ID")
-	private VehicleMaster vehicleID;
+	@Column(name = "Vehicle_ID")
+	String vehicleID;
 	
 	@Column(name="Date")	
 	private String  date;
@@ -26,9 +25,6 @@ public class DocumentCheckHead {
 	@Column(name="Status")	
 	private String  status;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "ocrid", referencedColumnName = "ocrid")
-	private OcrDetails ocrid;
 
 	public String getDocumentcheckheadid() {
 		return documentcheckheadid;
@@ -38,11 +34,13 @@ public class DocumentCheckHead {
 		this.documentcheckheadid = documentcheckheadid;
 	}
 
-	public VehicleMaster getVehicleID() {
+
+
+	public String getVehicleID() {
 		return vehicleID;
 	}
 
-	public void setVehicleID(VehicleMaster vehicleID) {
+	public void setVehicleID(String vehicleID) {
 		this.vehicleID = vehicleID;
 	}
 
@@ -62,13 +60,6 @@ public class DocumentCheckHead {
 		this.status = status;
 	}
 
-	public OcrDetails getOcrid() {
-		return ocrid;
-	}
-
-	public void setOcrid(OcrDetails ocrid) {
-		this.ocrid = ocrid;
-	}
 
 
 	

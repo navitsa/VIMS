@@ -579,7 +579,7 @@ public class VehicleController {
 		
 
 		mav.addObject("vidn",vehicleID);
-		
+		mav.addObject("vid",vehicleID);
 		return mav;
 	}
 
@@ -661,7 +661,9 @@ public class VehicleController {
 		mav.addObject("veOwner", vo);
 		mav.addObject("imgVe",ocrDetails.getNoimageView());
 		mav.addObject("ocid",id);
-		mav.addObject("vvid",vehicleID);
+		mav.addObject("vidn",vehicleID);
+		mav.addObject("vid",vehicleID);
+	
 		return mav;
 		
 	}
@@ -3636,55 +3638,98 @@ public class VehicleController {
 		 
 		
 		@RequestMapping(value = "/savaCheckDocument", method = RequestMethod.POST)
-		public @ResponseBody String savaCheckDocument(@RequestParam("vehNO") String vecNo,@RequestParam("mocrid") String id,@RequestParam("doc") String[] docid)/*,@RequestParam("docStatus") String[] docStatus)*/ {
+		public @ResponseBody String savaCheckDocument(@RequestParam("docheadid") String docheadid,@RequestParam("vehNO") String vecNo,@RequestParam("mocrid") String id,@RequestParam("doc") String[] docid,@RequestParam("rem") String[] rem,@RequestParam("docStatus") String[] docStatus)/*,@RequestParam("docStatus") String[] docStatus)*/ {
 
 			try {
 		    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 		    Date date = new Date(); 
-		   
-			String maxid=documentScrvice.maxDocumentCheckHeadID();
-			DocumentCheckHead documentCheckHead=new DocumentCheckHead();
-			documentCheckHead.setDocumentcheckheadid(maxid);
-			documentCheckHead.setDate(formatter.format(date));
-			
-			VehicleMaster vm=vehicleService.getVMasterById(vecNo);
-			
-			documentCheckHead.setVehicleID(vm);
-			OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));			
-			documentCheckHead.setOcrid(ocrDetails);
-			documentCheckHead.setStatus("ACTIVE");
-			
-			documentScrvice.saveDocumentCheckHead(documentCheckHead);
-			
-			List<DocumentCheckDetails>  docCheckDetailsList=new ArrayList<DocumentCheckDetails>();
+		    String maxid="";
+		   if(docheadid=="") {
+			   System.out.println("new");
+			 maxid=documentScrvice.maxDocumentCheckHeadID();
+				DocumentCheckHead documentCheckHead=new DocumentCheckHead();
+				documentCheckHead.setDocumentcheckheadid(maxid);
+				documentCheckHead.setDate(formatter.format(date));
+			 
+				documentCheckHead.setVehicleID(vecNo);
+				OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));			
+				
+				documentCheckHead.setStatus("ACTIVE");
+				
+				documentScrvice.saveDocumentCheckHead(documentCheckHead);
+				
+				List<DocumentCheckDetails>  docCheckDetailsList=new ArrayList<DocumentCheckDetails>();
+			       for(int i=0; i < docid.length; i++){
+			    	   DocumentCheckDetails documentCheckDetails=new DocumentCheckDetails();
+			    	   
+			    	   documentCheckDetails.setDocumentCheckHeadID(documentCheckHead);
+			    	  
+			    	   Document document=new Document();
+			    	   document.setDocumentid(Integer.parseInt(docid[i]));
+			    	   documentCheckDetails.setDocumentid(document); 
+			    	   documentCheckDetails.setRemarks(rem[i]); 
+			    	   documentCheckDetails.setCheckStatus(docStatus[i]);
+			    	   
+			    	   docCheckDetailsList.add(documentCheckDetails);
+			       }
+				
+				documentScrvice.saveAllDocumentCheckDetails(docCheckDetailsList);
+				
+				ocrDetails.setDocStatus("completed");
+				ocrDetails.setDocumentCheckHeadID(documentCheckHead);
+	    		vehicleService.saveOcrDetailsRepo(ocrDetails);
+		   }else {
+			   System.out.println("Edit"+docheadid);
+
+		    
+		    
 		       for(int i=0; i < docid.length; i++){
-		    	   DocumentCheckDetails documentCheckDetails=new DocumentCheckDetails();
+	
 		    	   
-		    	   documentCheckDetails.setDocumentCheckHeadID(documentCheckHead);
+		    	   DocumentCheckDetails documentCheckDetails=documentScrvice.getCheckDocumentDetailsByid(Integer.parseInt(docid[i]));
+		    	   
+		    	 
 		    	  
-		    	   Document document=new Document();
-		    	   document.setDocumentid(Integer.parseInt(docid[i]));
-		    	   documentCheckDetails.setDocumentid(document); 
-		    	   documentCheckDetails.setCheckStatus("");
+//		    	   Document document=new Document();
+//		    	   document.setDocumentid(Integer.parseInt(docid[i]));
 		    	   
-		    	   docCheckDetailsList.add(documentCheckDetails);
+		    	   documentCheckDetails.setRemarks(rem[i]); 
+		    	   documentCheckDetails.setCheckStatus(docStatus[i]);
+		    	   
+		    	   documentScrvice.saveDocumentCheckDetails(documentCheckDetails);
 		       }
+		    
+		    
+		   }
+
+		
 			
-			documentScrvice.saveAllDocumentCheckDetails(docCheckDetailsList);
+
 
           // OcrDetails ocrDetails=vehicleService.getOcrDetailsById();
 //			
-			ocrDetails.setDocStatus("completed");
-    		vehicleService.saveOcrDetailsRepo(ocrDetails);
+
 			
 			
 			//return "checkDocument";
 			return "1"; 
 			}catch (Exception e) {
+				e.printStackTrace();
 				return "0"; 
 			}
 			
 		}
+		
+		
+		
+	  	@RequestMapping(value="checkDocTable", method=RequestMethod.GET)		
+		public  @ResponseBody List<DocumentCheckDetails> getcheckDocTable(@RequestParam("ocrid") int ocrid){
+	  		
+	  		 List<DocumentCheckDetails> documentCheckDetails=documentScrvice.getCheckDocumentDetails(ocrid);
+	  		
+			return documentCheckDetails;
+		}
+		
 		
 		@RequestMapping("/document")
 		public String viewDocumente(Map<String, Object> model) {

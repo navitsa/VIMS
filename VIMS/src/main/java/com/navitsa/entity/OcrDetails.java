@@ -4,7 +4,10 @@ import java.util.Base64;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -49,7 +52,10 @@ public class OcrDetails {
 	@Column(name = "Pay_Status")
 	private String paymentStatus;
 	
-	
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "DocumentCheckHeadID", referencedColumnName = "DocumentCheckHeadID")
+	private DocumentCheckHead documentCheckHeadID;
+
 	public String getDocStatus() {
 		return docStatus;
 	}
@@ -150,6 +156,14 @@ public class OcrDetails {
 
 	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
+	}
+
+	public DocumentCheckHead getDocumentCheckHeadID() {
+		return documentCheckHeadID;
+	}
+
+	public void setDocumentCheckHeadID(DocumentCheckHead documentCheckHeadID) {
+		this.documentCheckHeadID = documentCheckHeadID;
 	}
 		
 	

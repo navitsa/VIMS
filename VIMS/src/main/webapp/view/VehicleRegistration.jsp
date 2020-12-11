@@ -115,7 +115,7 @@
 							<div class="ml-md-auto py-2 py-md-4">
 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
 								<a href="vehicleMasterAuto?vehicleID=${vid}&id=${ocid}" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a>
-								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a>
+								<button class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal" onclick="getDocumentCheck()">Document Check</button>
 
 <!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
 							</div>
@@ -544,7 +544,7 @@
 
 					</div>
 
-					<form:input type="hidden" path="ocrid.ocrid"  />
+					<form:input type="hidden" path="ocrid.ocrid" id="ocidd"  />
 
 
 <!-- 									<button type="submit" class="btn btn-primary">Register</button> -->
@@ -1330,13 +1330,56 @@
 				
 			}
 			
+			function getDocumentCheck(){
+				//	alert("ddddddddddd");
+				
+				var ocid = document.getElementById("ocidd").value;
+				 
+				 	$.ajax({
 
+				 	    type: 'GET',
+				 	    url: "checkDocTable",
+				 	    data: {"ocrid" : ocid},
+				         success: function(data){
+				        
+				         	//$("table tbody").empty();
+				        	if(data!=""){
+				        		var dohid="";
+				         	 var slctSubcat1=$('#checkDocTable'), option="";
+				 	            slctSubcat1.empty();
+				 			for(var i=0; i<data.length; i++){
+							
+				 				selected_option =  "<tr>"+
+				 				"<td><div><input class='form-control form-control-sm' name='doc' id='doc' value="+data[i].documentcheckDetailsid+"  readonly/></div></td>"+
+				 				"<td><div>"+data[i].documentid.description+"</div></td>"+
+				 				"<td><div><input class='form-control form-control-sm' name='rem' id='rem' value="+data[i].remarks+"  /></div></td>"+
+				 				"<td><div><select class='custom-select' name='docStatus' value="+data[i].checkStatus+" >"+
+				 								"<option value='N/A'>N/A</option>"+
+				 								"<option value='OK'>OK</option>"+
+				 								"<option value='Not OK'>Not OK</option>"+
+				 							"</select>"+		
+				 				"</div></td>"+
+				 			"</tr>"
+									
+									
+									dohid=data[i].documentCheckHeadID.documentcheckheadid;
+				 				 slctSubcat1.append(selected_option);	
+									
+				 			}
+									
+				 			
+				 			document.getElementById("docheadid").value=	dohid;
+				            	 }
 
-		
-			
-			
-			
-			
+				         },
+				         error:function(){
+				        	alert("Error");
+				         }
+				 	 });
+					
+					
+				}
+	
 			
 			</script>
 </body>
