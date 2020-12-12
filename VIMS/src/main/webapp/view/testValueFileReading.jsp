@@ -52,28 +52,27 @@
 			<div class="content">
 				<div class="page-inner">	
 					<div class="page-header">
-							<h4 class="page-title">Test Results</h4>
-							<ul class="breadcrumbs">
-								<li class="nav-home">
-									<a href="#">
-										<i class="flaticon-home"></i>
-									</a>
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								
-								
-							</ul>
-<div class="dropdown float-right">
-	<button type="button" class="btn btn-sm" data-toggle="dropdown">
-	   <i class="fa fa-ellipsis-v" style="font-size:22px;color:blue"></i>
-	</button>
-	<div class="dropdown-menu">
-		<a class="dropdown-item" href="previousResults">Previous Reports</a>
-	</div>
-</div>
-						</div>
+						<h4 class="page-title">Test Results</h4>
+						<ul class="breadcrumbs">
+							<li class="nav-home">
+								<a href="#">
+									<i class="flaticon-home"></i>
+								</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="#">Vehicle Inspection</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="#">Issue Test Report</a>
+							</li>
+						</ul>
+					</div>
 
 
 	              <!-- Card -->
@@ -103,12 +102,14 @@
 									        <td>${result.vehicle_id}</td>
 									        <td>${result.date}</td>
 									        <td>
-												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=1" class="btn btn-primary" role="button">
-												<i class="fas fa-print"></i> Color</a>
+												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=1" class="btn btn-success btn-sm" role="button">
+													<i class="fas fa-print"></i>
+												</a>
 											</td>
 											<td>
-												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=0" class="btn btn-secondary" role="button">
-												<i class="fas fa-print"></i> B/W</a>
+												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=0" class="btn btn-default btn-sm" role="button">
+													<i class="fas fa-print"></i>
+												</a>
 											</td>
 									      </tr>
 									  </c:forEach>							                
@@ -141,7 +142,7 @@
 		    	document.getElementById("overlay").style.display = "none";
 	        	$("table tbody").empty();
 				for(var i=0; i<data.length; i++){
-					var markup = "<tr><th scope='row'>"+data[i].test_value_file_id+"</th><td>"+data[i].vreg.vregID+"</td><td>"+data[i].vehicle_id+"</td><td>"+data[i].date+"</td><td><a href='getTestReport?register_id="+data[i].vreg.vregID+"&test_value_file_id="+data[i].test_value_file_id+"&color=1' class='btn btn-primary'><i class='fas fa-print'></i> Color</a></td><td><a href='getTestReport?register_id="+data[i].vreg.vregID+"&test_value_file_id="+data[i].test_value_file_id+"&color=0' class='btn btn-secondary'><i class='fas fa-print'></i> B/W</a></td></tr>";
+					var markup = "<tr><th scope='row'>"+data[i].test_value_file_id+"</th><td>"+data[i].vreg.vregID+"</td><td>"+data[i].vehicle_id+"</td><td>"+data[i].date+"</td><td><a href='getTestReport?register_id="+data[i].vreg.vregID+"&test_value_file_id="+data[i].test_value_file_id+"&color=1' class='btn btn-success btn-sm'><i class='fas fa-print'></i></a></td><td><a href='getTestReport?register_id="+data[i].vreg.vregID+"&test_value_file_id="+data[i].test_value_file_id+"&color=0' class='btn btn-default btn-sm'><i class='fas fa-print'></i></a></td></tr>";
 	           		 $("table tbody").append(markup);
 	           	 }
 		    },

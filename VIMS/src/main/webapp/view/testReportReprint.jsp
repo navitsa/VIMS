@@ -13,8 +13,6 @@
 <html lang="en">
 <head>
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
-
-	
 </head>
 <body>
 	<div class="wrapper">
@@ -35,22 +33,34 @@
 					<div class="page-header">
 						<h4 class="page-title">Previous Reports</h4>
 						<ul class="breadcrumbs">
-							<li class="nav-home"><a href="#"> <i
-									class="flaticon-home"></i>
-							</a></li>
-							<li class="separator"><i class="flaticon-right-arrow"></i></li>
-
-
+							<li class="nav-home">
+								<a href="#">
+									<i class="flaticon-home"></i>
+								</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="#">Vehicle Inspection</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="#">Reprint Test Report</a>
+							</li>
 						</ul>
 					</div>
+					
 	              <!-- Card -->
 	              <div class="card shadow mb-4">
 <!-- 	            <div class="card-header py-3">
 						<h6 class="m-0 font-weight-bold text-primary">Previous Reports</h6>
 	                </div> -->
 	                <div class="card-body">
-	                	
-								<table class="display" id="example" style="width:100%">
+	                	<div class="table-responsive">               	
+								<table class="display table table-bordered table-hover" id="example" cellspacing="0" style="width:100%">
 									<thead>
 									   <tr>
 									      <th>#</th>
@@ -70,18 +80,21 @@
 									        <td>${result.vehicle_id}</td>
 									        <td>${result.date}</td>
 									        <td>
-												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=1" class="btn btn-primary" onclick="checkAvailableResults()">
-												<i class="fas fa-print"></i> Color</a>
+												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=1" class="btn btn-success btn-sm" onclick="checkAvailableResults()">
+													<i class="fas fa-print"></i>
+												</a>
 											</td>
 									        <td>
-												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=0" class="btn btn-primary" onclick="checkAvailableResults()">
-												<i class="fas fa-print"></i> B/W</a>
+												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=0" class="btn btn-default btn-sm" onclick="checkAvailableResults()">
+													<i class="fas fa-print"></i>
+												</a>
 											</td>
 									      </tr>
 									  </c:forEach>
 									                       
 									</tbody>
 								</table>
+						</div>
 	
 		            </div> <!-- End of card body -->
 	              </div>
@@ -93,16 +106,16 @@
 		</div>
 	</div>
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
-
-	<script src="resources/assets/js/plugin/datatables/datatables.min.js"></script>
 	
 	<script>
 	$(document).ready(function() {
 	    $('#example').DataTable( {
-	    	"scrollY": "400px",
+	    	//"scrollY": "400px",
 	    	"processing": true,
 	        "order": [[ 0, "desc" ]],
-	        "columnDefs": [{ "orderable": false, "targets": 4 }]
+	        "columnDefs": [{ "orderable": false, "targets": 2 },
+	        				{ "orderable": false, "targets": 4 },
+	        				{ "orderable": false, "targets": 5 }]
 	    } );
 	} );
 	</script>
