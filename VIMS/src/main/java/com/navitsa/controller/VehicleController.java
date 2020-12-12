@@ -580,6 +580,8 @@ public class VehicleController {
 
 		mav.addObject("vidn",vehicleID);
 		mav.addObject("vid",vehicleID);
+		
+		mav.addObject("check","0");
 		return mav;
 	}
 
@@ -663,7 +665,7 @@ public class VehicleController {
 		mav.addObject("ocid",id);
 		mav.addObject("vidn",vehicleID);
 		mav.addObject("vid",vehicleID);
-	
+		mav.addObject("check","1");
 		return mav;
 		
 	}

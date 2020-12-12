@@ -1245,7 +1245,7 @@ function checkEngNo(){
             
         	function getChassisNumberDetails()
         	{
-        		
+        		if(${check}=="1"){
         		var str = document.getElementById("chassisNoid3").value;
         		if(str.length==17){
         		var regyea = document.getElementById("registeredYear").value;
@@ -1270,8 +1270,13 @@ function checkEngNo(){
         			    data: {"vinid" : str,"regyea" : regyea},
         			    success: function(data){
 		 
+        			    	if(data[0][1]!=null){
         					 document.getElementById("vMake").value=data[0][1];
+        					 
+        			    	}
+        			    	if(data[0][0]!=null){
         					 document.getElementById("manufactureYear").value=data[0][0];
+        			    	}
         					 if(data[0][2]!=null){
         					 document.getElementById("manufaCur").innerHTML=""+data[0][2];
         			    	}
@@ -1283,6 +1288,7 @@ function checkEngNo(){
         			});
         		}
         		}
+        	}
         	}   
             
         	
