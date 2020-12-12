@@ -219,13 +219,12 @@
 	</li>
 		
 	<li class="nav-item"  hidden="true" id="VehicleInspection">
-							<a data-toggle="collapse" href="#vehicleInspectionf">
-								<i class="fas fa-pen-square"></i>
-								<p>Vehicle Inspection</p>
-								<span class="caret"></span>
-							</a>
-							<div class="collapse" id="vehicleInspectionf">
-		
+		<a data-toggle="collapse" href="#vehicleInspectionf">
+			<i class="fas fa-pen-square"></i>
+			<p>Vehicle Inspection</p>
+			<span class="caret"></span>
+		</a>
+		<div class="collapse" id="vehicleInspectionf">	
 			<div class="bg-white py-2 collapse-inner rounded">
 				<a class="collapse-item fontst-sb-it" href="appointment" id="appointment">Make Appointment</a>
 				<a class="collapse-item fontst-sb-it" href="vehicleInformation" hidden="true" id="vehicleInformation">Gate Entry</a>
@@ -237,6 +236,7 @@
 				<a class="collapse-item fontst-sb-it" href="visualChecklist"  hidden="true" id="visualChecklist">Perform Visual Inspection</a>
 				<a class="collapse-item fontst-sb-it" href="getReport"  hidden="true" id="getReport">Issue VI Report</a>
 				<a class="collapse-item fontst-sb-it" href="testValueFile" hidden="true" id="testValueFile">Issue Test Report</a>
+				<a class="collapse-item fontst-sb-it" href="previousResults" id="reprintTestReport">Reprint Test Report</a>
 				<a class="collapse-item fontst-sb-it" href="VehicleReportPreview" id="vehicalDetailRpt">Vehicle Lane Entry Status</a>
 		
 			</div>
