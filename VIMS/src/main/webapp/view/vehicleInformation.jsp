@@ -257,6 +257,9 @@
 							</div>
 							<div class="ml-md-auto py-2 py-md-4">
 <!-- 								<a href="vechi" class="btn btn-white btn-border btn-round mr-2">Vehicle Status</a> -->
+								
+								
+								<a href="laneEntryView" class="btn btn-white btn-border btn-round mr-2">Lane Entry</a>
 								<a href="appointment" class="btn btn-white btn-border btn-round mr-2">Make Appointment</a>
 
 							<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#vehicleStatusModel" onclick="getVehicleStatus()">Vehicle Status</a>

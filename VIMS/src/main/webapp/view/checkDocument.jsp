@@ -69,9 +69,9 @@
 	
 														<thead>
 															<tr>
-																<th>Document ID</th>
+																<th style="width: 100px">Document ID</th>
 																<th>Description</th>
-																<th>Remarks</th>
+																<th style="width: 340px">Remarks</th>
 																<th>Status</th>
 																
 															</tr>

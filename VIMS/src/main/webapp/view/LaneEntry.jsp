@@ -117,7 +117,7 @@
 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
 <%-- 								<a href="vehicleMasterAuto?vehicleID=<%=session.getAttribute("vRvid")%>&id=<%=session.getAttribute("vRocr")%>&appNo=0" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a> --%>
 <!-- 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
-								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#capturePlateModal">Capture</a>
+								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#capturePlateModal">Capture License Plate</a>
 <!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
 							</div>
 						</div>
@@ -386,7 +386,7 @@
       <div class="modal-header">
 <!--         <button type="button" class="close" data-dismiss="modal">&times;</button> -->
 		<div class="col-sm-5">
-			<h4 class="modal-title">Capture Plate</h4>
+			<h4 class="modal-title">Capture License Plate</h4>
 		</div>
 		<div class="col-sm-5">
         	<input class="form-control textred" name="vehNO" value="${vehNo}" id="vehNO" placeholder="Licence Plate NO..." readonly="true" />		
@@ -406,7 +406,7 @@
 																			<div class="col-sm-12">
 																				
 																					<input class="form-control form-control-sm"
-																			name="ocrrid" id="ocrrid" value="${ocid}"  />
+																			name="ocrrid" id="ocrrid" value="${ocid}"  type="hidden" />
 																			</div>
 																		</div>																	
 																		<div class="row">

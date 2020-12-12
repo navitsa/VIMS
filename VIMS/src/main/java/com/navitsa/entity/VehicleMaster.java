@@ -39,7 +39,7 @@ public class VehicleMaster {
 
 	//@NotEmpty(message = "required")
 	//@Pattern(regexp="^([0-9]+$)?",message="Please Enter valid year")
-	@Size(max = 7,message = "Please Enter valid year")
+	@Size(max = 10,message = "Please Enter valid year")
 	@Column(name = "Registered_Year")
 	private String registeredYear;
 

@@ -285,14 +285,14 @@
 								</div>
 
 							</div>		
-							<div class="col-sm-4">	
+							<div class="col-sm-5">	
 								<div class="row">
 									
 									<div class="col-sm-6">
 										<label for="registeredYear" class="l-fontst">Registered Year</label>
 									</div>	
-									<div class="col-sm-5">						             			             		
-					             		<form:input class="form-control fontst" path="registeredYear" id="registeredYear" pattern="{7}" title="Please Enter valid YEAR !" onchange="getChassisNumberDetails()" required="true"/>
+									<div class="col-sm-6">						             			             		
+					             		<form:input type="date" class="form-control fontst" path="registeredYear" id="registeredYear" pattern="{12}" title="Please Enter valid YEAR !" onchange="getChassisNumberDetails()" required="true"/>
 					             		<form:errors path="registeredYear" cssClass="error1"/>
 					             		<i class="fa fa-calendar iconali" for="registeredYear"></i>	             		
 									</div>
@@ -300,7 +300,7 @@
 								</div>
 							
 							</div>
-							<div class="col-sm-4">											
+							<div class="col-sm-3">											
 										<label  class="l-fontst" id="manufaCur1">Manufactured in</label><br>									
 									<label  class="l-fontst" id="manufaCur"></label>								 
 							</div>										
@@ -799,7 +799,7 @@
 		         	//$("table tbody").empty();
 		        	if(data!=""){
 		        		var dohid="";
-		         	 var slctSubcat1=$('#checkDocTable'), option="";
+		         	 var slctSubcat1=$('#docTable1'), option="";
 		 	            slctSubcat1.empty();
 		 			for(var i=0; i<data.length; i++){
 					
@@ -1234,14 +1234,14 @@ function checkEngNo(){
 //                 });  
                         
 //             });
-            $(document).ready(function () {
-                $('#registeredYear').datepicker({
-                       minViewMode: 1,
-                       autoclose: true,
-                       format: 'yyyy-mm'
-                });  
+//             $(document).ready(function () {
+//                 $('#registeredYear').datepicker({
+//                        minViewMode: 1,
+//                        autoclose: true,
+//                        format: 'yyyy-mm-dd'
+//                 });  
                         
-            }); 
+//             }); 
             
         	function getChassisNumberDetails()
         	{
