@@ -31,7 +31,12 @@
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>
-								
+									<li >
+										
+										<a href="#" data-toggle="modal"data-target="#logoutModal">
+											<span class="link-collapse">Logout</span>
+										</a>									
+									</li>
 								</ul>
 							</div>
 						</div>

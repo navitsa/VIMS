@@ -37,8 +37,8 @@
 								<h5 class="text-white op-7 mb-2"></h5>
 							</div>
 							<div class="ml-md-auto py-2 py-md-0">
-									<a href="appointment" class="btn btn-white btn-border btn-round mr-2">Make Appointment</a>
-									<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
+<!-- 									<a href="appointment" class="btn btn-white btn-border btn-round mr-2">Make Appointment</a> -->
+<!-- 									<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a> -->
 <!-- 								<a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a> -->
 <!-- 								<a href="#" class="btn btn-secondary btn-round">Add Customer</a> -->
 							</div>

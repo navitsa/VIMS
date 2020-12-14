@@ -142,7 +142,14 @@ public class UsersController {
 		          	
 		          	Users user = usservice.profileItemByID(userId);
 		          	params.put("centername",user.getCenter_ID().getCenter());
+		          	System.out.println("hh="+user.getuser_ImgView());
+		          	if(!user.getuser_ImgView().isEmpty()) {
+		        
 		        	params.put("img",user.getUser_Img());
+		          	}else {
+		          		
+		          		params.put("img",null);
+		          	}
 		          	params.put("username",user.getUserName());
 		          	params.put("pw",user.getLogin());
 		          	params.put("userlevel",user.getUlid().getDsc());

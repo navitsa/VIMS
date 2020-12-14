@@ -1,6 +1,6 @@
 	<!--   Core JS Files   -->
 	
-	
+		<%@include file="logoutModel.jsp"%>
 
 	
 	<script src="resources/assets/js/core/jquery.3.2.1.min.js"></script>
