@@ -779,21 +779,5 @@ public class TestingReportConfigController {
 		return respone;
 	}
 	
-	@RequestMapping(value = "/checkAvailableTestResults", method = RequestMethod.GET)
-	public @ResponseBody void checkAvailableTestResults(@RequestParam("regID") String regID) {
-		
-		VisualChecklistMaster vi = inspectionServices.getChecklistMasterData(regID);
-		EmissionDieselCertificateData emd = service.getEmiDieselCerData(regID);
-		EmissionPetrolCertificateData empcdata = service.getEmiPetrolCerData(regID);
-		
-		System.out.println(emd);
-		
-		if(vi == null)
-			System.out.println("visual inspection data is missing !");
-		if(emd == null)
-			System.out.println("diesel data is missing !");
-		if(empcdata == null)
-			System.out.println("Petrol data is missing !");
 
-	}
 }

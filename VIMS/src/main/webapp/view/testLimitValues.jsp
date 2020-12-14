@@ -8,8 +8,6 @@
 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-
-
 <html lang="en">
 <head>
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
@@ -31,7 +29,7 @@
 			<div class="content">
 				<div class="page-inner">	
 					<div class="page-header">
-							<h4 class="page-title">Test Profiles</h4>
+							<h4 class="page-title">Set Codes & Limit Values</h4>
 							<ul class="breadcrumbs">
 								<li class="nav-home">
 									<a href="#">
@@ -41,28 +39,404 @@
 								<li class="separator">
 									<i class="flaticon-right-arrow"></i>
 								</li>
-									<a href="#">Test Profilesr</a>
+								<li class="nav-item">
+									<a href="#">Test Profiles</a>
+								</li>
 								<li class="separator">
 									<i class="flaticon-right-arrow"></i>
 								</li>
-									<a href="#">Mandatory Test Types</a>
-								
+								<li class="nav-item">
+									<a href="#">Set Codes & Limit Values</a>
+								</li>
 							</ul>
+					</div>
+
+					<!-- Card -->
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+			                <div class="row">
+			                	<div class="col-sm-8">
+			                		<h6 class="m-0 font-weight-bold text-primary">Set Codes & Limit Values</h6>
+			                	</div>
+			                
+				                <div class="col-sm-4">
+									 <div class="dropdown float-right">
+									  <button type="button" class="btn btn-sm" data-toggle="dropdown">
+									   <i class="fa fa-ellipsis-v" style="font-size:22px;color:blue"></i>
+									  </button>
+									  <div class="dropdown-menu">
+									    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModalCenter">Mandatory Test Types</a>
+									  </div>
+									</div>
+				                </div>
+			                </div>					
 						</div>
+						<div class="card-body">
+							<c:if test="${success ==1}">
+								<div class="alert alert-success alert-dismissible">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<strong>Success!</strong> Data Successfully Saved.
+								</div>
+							</c:if>
+							<c:if test="${success ==0}">
+								<div class="alert alert-danger alert-dismissible">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<strong>Warning!</strong>Something went wrong ! Please try
+									again!
+								</div>
+							</c:if>
+
+								<div class="form-group row">
+									<div class="col-lg-3">
+										<select id="testProfile" class="custom-select custom-select-sm" 
+											required="required">
+											<option value="0">Select test profile...</option>
+											<c:forEach items="${testProfile}" var="testProfile">
+												<option value="${testProfile.testProfileID}">${testProfile.testProfileName}</option>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+							<form:form action="setLimitValues" method="POST" modelAttribute="limitValues">
+								
+							<div class="form-group row">
+								<div class="col-lg-3">
+									<form:select id="testType" class="custom-select custom-select-sm"
+										onchange="getTestPoints(this.value)" required="required" path="testType.typeId">
+										<form:option value="">Select test type...</form:option>
+										<c:forEach items="${testTypes}" var="testTypes">
+											<form:option value="${testTypes.typeId}">${testTypes.type}</form:option>
+										</c:forEach>
+									</form:select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-lg-3">
+									<form:select id="testPoint" class="custom-select custom-select-sm"
+										onchange="getTestCodes3(this.value)" required="required" path="testPoint.testPointID">
+										<form:option value="">Select test point...</form:option>
+										<c:forEach items="${testPoints}" var="testPoints">
+											<form:option value="${testPoints.testPointID}">${testPoints.testPointName}</form:option>
+										</c:forEach>
+									</form:select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-lg-3">
+									<form:select id="testPara" class="custom-select custom-select-sm"
+										onchange="getTestAngles(this.value)" path="testParameter.testParameterId">
+										<form:option value="">Select test parameter...</form:option>
+										<c:forEach items="${testParameters}" var="testParameters">
+											<form:option value="${testParameters.testParameterId}">${testParameters.paraName}</form:option>
+										</c:forEach>
+									</form:select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-lg-3">
+									<form:select id="testAngle" class="custom-select custom-select-sm"
+										onchange="getTestCodes2(this.value)" path="testParameterAngle.paraAngleID">
+										<form:option value="">Select parameter direction...</form:option>
+										<c:forEach items="${parameterAngles}" var="paraAngles">
+											<form:option value="${paraAngles.paraAngleID}">${paraAngles.angleName}</form:option>
+										</c:forEach>
+									</form:select>
+								</div>
+							</div>
+	
+							<div class="form-group row">
+								<div class="col-lg-3">
+									<form:input path="code" id="paraCode" class="form-control form-control-sm" placeholder="Code"/>
+								</div>
+								<div class="col-lg-6">
+									<%-- <form:textarea path="description" class="form-control form-control-sm" placeholder="Description"/> --%>
+								</div>
+							</div>
+
+								<div class="row">
+									<div class="col-lg-6">
+
+										<h5>Single Limit Value <a href="#" data-toggle="tooltip" title="If you want to get pass fail status depending on your preference, you can set limit values, 
+											otherwise please skip it and save the code.">
+											<i class="fa fa-question-circle" style="font-size:14px"></i>
+											</a></h5>
+										<table class="table table-borderless table-sm">
+											<thead class="thead-light">
+												<tr>
+													<th></th>
+													<th>.</th>
+													<th>.</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>
+														<div
+															class="custom-control custom-radio  custom-control-inline">
+															<input type="radio" class="custom-control-input"
+																id="customRadio" name="example1" checked="checked"
+																value="pass"> 
+																<label class="custom-control-label" for="customRadio">PASS</label>
+														</div>
+													</td>
+													<td>
+														<form:select path="operator" id="select1"
+															class="custom-select custom-select-sm">
+															<form:option value="">Select operator</form:option>
+															<form:option value="=>"> equal or grater than </form:option>
+															<form:option value="<="> less than or equal </form:option>
+															<form:option value=">"> grater than </form:option>
+															<form:option value="<"> less than </form:option>
+														</form:select>
+													</td>
+													<td>
+														<form:input path="limitValue" id="input1"
+															placeholder="00.00" class="form-control form-control-sm"
+															maxlength="5" size="4"/>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div
+															class="custom-control custom-radio  custom-control-inline">
+															<input type="radio" class="custom-control-input"
+																id="customRadio2" name="example1" value="fail">
+															<label class="custom-control-label" for="customRadio2">FAIL</label>
+														</div>
+													</td>
+													<td><form:select path="operator" id="select2"
+															class="custom-select custom-select-sm" disabled="true">
+															<form:option value="">Select operator</form:option>
+															<form:option value="=>"> equal or grater than </form:option>
+															<form:option value="<="> less than or equal </form:option>
+															<form:option value=">"> grater than </form:option>
+															<form:option value="<"> less than </form:option>
+														</form:select></td>
+													<td><form:input path="limitValue" id="input2"
+															placeholder="00.00" class="form-control form-control-sm"
+															maxlength="5" size="4" disabled="true"/></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+									<div class="col-lg-6">
+										<h5>Limit Value in Range</h5>
+
+										<table class="table table-borderless table-sm">
+											<thead class="thead-light">
+												<tr>
+													<th></th>
+													<th>Min<=</th>
+													<th>Max=></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>
+														<div
+															class="custom-control custom-radio  custom-control-inline">
+															<input type="radio" class="custom-control-input"
+																id="customRadio3" name="example2" checked="checked"
+																value="pass"> <label
+																class="custom-control-label" for="customRadio3">PASS</label>
+														</div>
+													</td>
+													<td><form:input path="minValue" id="minValue1"
+															class="form-control form-control-sm" placeholder="00.00"
+															maxlength="5" size="4"/></td>
+													<td><form:input path="maxValue" id="maxValue1"
+															class="form-control form-control-sm" placeholder="00.00"
+															maxlength="5" size="4"/></td>
+												</tr>
+												<tr>
+													<td>
+														<div
+															class="custom-control custom-radio  custom-control-inline">
+															<input type="radio" class="custom-control-input"
+																id="customRadio4" name="example2" value="fail">
+															<label class="custom-control-label" for="customRadio4">FAIL</label>
+														</div>
+													</td>
+													<td><form:input path="minValue" id="minValue2"
+															class="form-control form-control-sm" placeholder="00.00"
+															maxlength="5" size="4" disabled="true"/></td>
+													<td><form:input path="maxValue" id="maxValue2"
+															class="form-control form-control-sm" placeholder="00.00"
+															maxlength="5" size="4" disabled="true"/></td>
+												</tr>
+											</tbody>
+										</table>
+
+									</div>
+								</div>
+								<button type="submit" class="btn btn-success"
+									onclick="return Validate()">Save</button>
+								<button type="reset" class="btn btn-warning">Clear</button>
+								<br>
+								<br>
+							</form:form>
+
+								<table class="display" id="example" style="width:100%">
+									<thead>
+										<tr>
+											<th>Code</th>
+											<th>Test Type</th>
+											<th>Test Point</th>
+											<th>Test Parameter</th>
+											<th>Direction</th>
+											<th>Limit</th>
+											<th>Min</th>
+											<th>Max</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${paraCodes}" var="paraCodes">
+											<tr>
+												<td>${paraCodes.code}</td>
+												<td>${paraCodes.testType.type}</td>
+												<td>${paraCodes.testPoint.testPointName}</td>
+												<td>${paraCodes.testParameter.paraName}</td>
+												<td>${paraCodes.testParameterAngle.angleName}</td>
+												<td>${paraCodes.limitValue}</td>
+												<td>${paraCodes.minValue}</td>
+												<td>${paraCodes.maxValue}</td>
+												<%-- <td><a href="editLimits?code=${paraCodes.code}"><i
+														class="material-icons">&#xE254;</i></a></td> --%>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+
+						</div>
+						<!-- End of card body -->
+
+					</div>
+					<!-- End of card-->
 				
+				
+				</div>	
+			</div>	
+			<%@include file="../WEB-INF/jsp/footer.jsp"%>			
+		</div>
+	</div>
+<%@include file="../WEB-INF/jsp/commJs.jsp"%>
+
+<!-- Page level custom scripts -->
+	<script src="resources/ajax/limit-values.js" type="text/javascript"></script>
+	<script>
+		$(document).ready(function(){
+		  $('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
 	
-							<div
-								class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-								<div class="col-xl-9 col-md-12 mb-4 ">
-									<div class="card border-left-primary shadow h-100 py-2">
-										<div class="card-body">
-											<div class="row no-gutters align-items-center">
-												<div class="col mr-2">
-
-
-
+   <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+	<script>
+	$(document).ready(function() {
+	    $('#example').DataTable( {
+	    	"scrollY": "400px",
+	    	"processing": true
+	    } );
+	} );
+	</script>
 	
-<form name="ProfileStatusForm" id="ProfileStatusForm" action="saveProfileStatus"
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('input[type=radio][name="example1"]').change(function() {
+				//alert($(this).val()); // or this.value
+
+				var rs = this.value;
+				if (rs == "pass") {
+					document.getElementById("select2").disabled = true;
+					document.getElementById("input2").disabled = true;
+					document.getElementById("select2").value = "";
+					document.getElementById("input2").value = "";
+					document.getElementById("select1").disabled = false;
+					document.getElementById("input1").disabled = false;
+				} else {
+					document.getElementById("select1").disabled = true;
+					document.getElementById("input1").disabled = true;
+					document.getElementById("select1").value = "";
+					document.getElementById("input1").value = "";
+					document.getElementById("select2").disabled = false;
+					document.getElementById("input2").disabled = false;
+				}
+
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('input[type=radio][name="example2"]').change(function() {
+				//alert($(this).val()); // or this.value
+
+				var rs = this.value;
+				if (rs == "pass") {
+					document.getElementById("minValue2").disabled = true;
+					document.getElementById("maxValue2").disabled = true;
+					document.getElementById("minValue2").value = "";
+					document.getElementById("maxValue2").value = "";
+					document.getElementById("minValue1").disabled = false;
+					document.getElementById("maxValue1").disabled = false;
+				} else {
+					document.getElementById("minValue1").disabled = true;
+					document.getElementById("maxValue1").disabled = true;
+					document.getElementById("minValue1").value = "";
+					document.getElementById("maxValue1").value = "";
+					document.getElementById("minValue2").disabled = false;
+					document.getElementById("maxValue2").disabled = false;
+				}
+
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		function Validate() {
+			var profile = document.getElementById("testProfile").value;
+			var type = document.getElementById("testType").value;
+			var point = document.getElementById("testPoint").value;
+			var paraCode = document.getElementById("paraCode").value;
+
+			if (profile == "0") {
+				//Swal.fire('Please select a test profile!', '', 'info')
+				alert("Please select a test profile !");
+				return false;
+			} else if (type == "") {
+				//Swal.fire('Please select a test type!', '', 'info')
+				alert("Please select a test type !");
+				return false;
+			} else if (point == "") {
+				//Swal.fire('Please select a test point!', '', 'info')
+				alert("Please select a test point !");
+				return false;
+			} else if (paraCode == "") {
+				//Swal.fire('No defined Paramneters!', '', 'warning')
+				alert("No defined Paramneters !");
+				return false;
+			}
+
+			return true;
+		}
+	</script>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Mandatory
+						Test Types</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form name="ProfileStatusForm" id="ProfileStatusForm" action="saveProfileStatus"
 					method="GET">
 					<div class="modal-body">
 
@@ -170,26 +544,11 @@
 							changes</button>
 					</div>
 				</form>
-	
-				
-				</div>
-				</div>
-				</div>
-				</div>
-				</div>
-				</div>
-				
-				
-				
-					</div>
-				
-			</div>	
-			<%@include file="../WEB-INF/jsp/footer.jsp"%>			
+			</div>
 		</div>
 	</div>
-<%@include file="../WEB-INF/jsp/commJs.jsp"%>
 
-	<script type="text/javascript">
+<script type="text/javascript">
 
 $("#ProfileStatusForm").submit(function(event) {
     event.preventDefault(); //prevent default action 

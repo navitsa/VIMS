@@ -80,12 +80,12 @@
 									        <td>${result.vehicle_id}</td>
 									        <td>${result.date}</td>
 									        <td>
-												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=1" class="btn btn-success btn-sm" onclick="checkAvailableResults()">
+												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=1"  class="btn btn-success btn-sm">
 													<i class="fas fa-print"></i>
 												</a>
 											</td>
 									        <td>
-												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=0" class="btn btn-default btn-sm" onclick="checkAvailableResults()">
+												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=0" class="btn btn-default btn-sm">
 													<i class="fas fa-print"></i>
 												</a>
 											</td>
@@ -95,7 +95,7 @@
 									</tbody>
 								</table>
 						</div>
-	
+
 		            </div> <!-- End of card body -->
 	              </div>
 
@@ -120,17 +120,17 @@
 	} );
 	</script>
 
-<script>
-function checkAvailableResults()
+<!-- <script>
+function checkAvailableResults(regID,test_value_file_id,color)
 {
-	//alert("hello...");
+	//alert(regID+" "+test_value_file_id+" "+color);
 	
 	$.ajax({
 	    type: 'GET',
 	    url: "checkAvailableTestResults",
-	    data: {"regID" : "0009"},
-	    success: function(data){
-	    	
+	    data: {"regID" : regID},
+	    success: function(map){
+	    	confirmMsg(regID,test_value_file_id,color,map);
 	    },
 	    error:function(){
 	        //alert("error");
@@ -140,6 +140,35 @@ function checkAvailableResults()
 	
 }
 </script>
+
+<script>
+function confirmMsg(regID,test_value_file_id,color,map) {
+	
+	swal({
+		title: 'Are you sure?',
+		text: "Available Results :\n1. Visual Inspection : "+map[1]+"\n2. Emission Petrol : "+map[3]+"\n3. Emission Diesel : "+map[2],
+		type: 'warning',
+		buttons:{
+			confirm: {
+				text : 'Yes, print it!',
+				className : 'btn btn-success'
+			},
+			cancel: {
+				visible: true,
+				className: 'btn btn-danger'
+			}
+		}
+	}).then((value) => {
+		if (value) {
+			//return fetch("http://localhost:8080/VIMS/getTestReport?register_id=0002&test_value_file_id=1&color=0");
+			window.location.href = "getTestReport?register_id="+regID+"&test_value_file_id="+test_value_file_id+"&color="+color;
+		} else {
+			swal.close();
+		}
+	});
+	
+}
+</script> -->
 
 
 </body>

@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,20 +20,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.navitsa.entity.ConfigSystem;
+import com.navitsa.entity.EmissionDieselCertificateData;
+import com.navitsa.entity.EmissionPetrolCertificateData;
 import com.navitsa.entity.TestValueFileDetail;
 import com.navitsa.entity.TestValueFileHeader;
 import com.navitsa.entity.VehicleRegistration;
+import com.navitsa.entity.VisualChecklistMaster;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.TestReportConfigService;
 import com.navitsa.services.TestValueFileService;
 import com.navitsa.services.VehicleService;
-
-
-
+import com.navitsa.services.VisualInspectionServices;
 
 @Controller
 public class TestValueFileController {
@@ -47,6 +51,9 @@ public class TestValueFileController {
 	
 	@Autowired
 	private TestReportConfigService testReportService;
+	
+	@Autowired
+	private VisualInspectionServices inspectionServices;
 	
 	/*Load Test Value File Reading JSP */
 	@RequestMapping("/testValueFile")
@@ -256,7 +263,7 @@ public class TestValueFileController {
 				testReportService.insertIntoEPCPetrol(id_no);
 				
 				
-			} catch (Exception e) {}
+			} catch (Exception e) {System.out.println(e);}
 			
 			
 		}
@@ -331,6 +338,36 @@ public class TestValueFileController {
 	        } 
 			
 		}
+	}
+	
+	@RequestMapping(value = "/checkAvailableTestResults", method = RequestMethod.GET)
+	public @ResponseBody Map<Integer, String> checkAvailableTestResults(@RequestParam("regID") String regID) {
+		
+		VehicleRegistration vr =  vehicleService.getRegistraionInfo(regID);
+		readingEmissionResults(vr.getVid().getVehicleID(),regID,vr.getVid().getFtype().getFuel());
+		
+		Map<Integer,String> a = new TreeMap<Integer,String>();
+		
+		VisualChecklistMaster vi = inspectionServices.getChecklistMasterData(regID);
+		EmissionDieselCertificateData emd = testReportService.getEmiDieselCerData(regID);
+		EmissionPetrolCertificateData empcdata = testReportService.getEmiPetrolCerData(regID);
+		
+		
+		if(vi == null)
+			a.put(1, "Not Available !");
+		else
+			a.put(1, "Available");
+		if(emd == null)
+			a.put(2, "Not Available !");
+		else
+			a.put(2, "Available");
+		if(empcdata == null)
+			a.put(3, "Not Available !");
+		else
+			a.put(3, "Available");
+		
+		return a;
+
 	}
 
 }
