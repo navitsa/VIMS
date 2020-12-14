@@ -237,7 +237,7 @@
 				<a class="collapse-item fontst-sb-it" href="getReport"  hidden="true" id="getReport">Issue VI Report</a>
 				<a class="collapse-item fontst-sb-it" href="testValueFile" hidden="true" id="testValueFile">Issue Test Report</a>
 				<a class="collapse-item fontst-sb-it" href="previousResults" hidden="true" id="reprintTestReport">Reprint Test Report</a>
-				<a class="collapse-item fontst-sb-it" href="VehicleReportPreview" id="vehicalDetailRpt">Vehicle Lane Entry Status</a>
+				<a class="collapse-item fontst-sb-it" href="VehicleReportPreview" hidden="true" id="vehicalDetailRpt">Vehicle Lane Entry Status</a>
 		
 			</div>
 		</div>
