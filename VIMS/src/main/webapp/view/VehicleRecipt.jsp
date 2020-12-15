@@ -59,7 +59,7 @@
 							</div>
 							<div class="ml-md-auto py-2 py-md-4">
 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
-								<a href="laneEntryView" class="btn btn-white btn-border btn-round mr-2">Lane Entry</a>
+<!-- 								<a href="laneEntryView" class="btn btn-white btn-border btn-round mr-2">Lane Entry</a> -->
 <!-- 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
 <!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
 							</div>

@@ -590,9 +590,9 @@ public class VehicleService {
 		
 		return vehicleregRepo.getRegistrationVehicleByOcrid(ocrid);
 	}
-	public VehicleRegistration getRegistrationByRegisterId(String register_id) {
+	public VehicleRegistration getRegistrationByRegisterId(String ocrid) {
 		
-		return vehicleregRepo.getRegistrationByRegisterId(register_id);
+		return vehicleregRepo.getRegistrationByRegisterId(Integer.parseInt(ocrid));
 	}
 	public List<OcrDetails> pendingLaneEntryData(){
 		return ocrDetailsRepo.pendingLaneEntryData();

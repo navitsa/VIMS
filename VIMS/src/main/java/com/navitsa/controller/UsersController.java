@@ -503,6 +503,12 @@ public class UsersController {
 				try {
 					 String cusid="0000".substring(usservice.maxCusID().length()) + usservice.maxCusID();
 					 customer.setId(cusid);
+					 
+					 if(customer.getIsCredeit()==null) {
+						 System.out.println("Cash");
+						 customer.setIsCredeit("Cash");
+					 }
+					 
 					usservice.saveCustomer(customer);
 				redirectAttributes.addFlashAttribute("success", 1);
 				}catch(Exception e) {

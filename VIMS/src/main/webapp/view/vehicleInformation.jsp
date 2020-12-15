@@ -127,6 +127,16 @@
 }     
          
          
+     
+
+.order-1 { order: 1; }
+.order-2 { order: 2; }
+.order-3 { order: 3; }
+
+.right-gap {
+  margin-right: auto;
+}
+
          
          
          
@@ -786,7 +796,7 @@
 								"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Details    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
 							"</div></div>";
 		        			if(data[i].paymentStatus=="completed"){
-		        				link="LaneEntry?id="+data[i].ocrid;
+		        				link="getProceedLane("+data[i].ocrid+")";
 		        			}else{
 		        				link="vehicleRegistrationAuto?vid="+data[i].ocrVid+"&curMi=0"+"&id="+data[i].ocrid;
 		        			}
@@ -808,13 +818,13 @@
 							"<div class='col-sm-12'>"+
 							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Payment    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
 							"</div></div>";
-							btnRemo="<button type='button' onClick='ocrDeleteEntry("+data[i].ocrid+")' class='btn btn-xs btn-danger' style='border-radius: 8px;'>Remove</button>";
+							btnRemo="<button type='button' onClick='ocrDeleteEntry("+data[i].ocrid+")' class='btn btn-xs btn-danger' style='border-radius: 8px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Remove&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </button>";
 		        		}else{
 			        			statu=statu+"<div class='row'>"+
 								"<div class='col-sm-12'>"+
 									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Payment    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
 								"</div></div>";
-			        			
+			        			btnRemo="<button type='button' onClick='getProceedLane("+data[i].ocrid+")' class='btn btn-xs btn-success' style='border-radius: 8px;'>Proceed Lane</button>";
 			        		}
 		        		
 		        		if(data[i].vrStatus=="pending"){
@@ -852,11 +862,11 @@
 // 		        	}
 // 		   	<img src="resources/img/car-placeholder.jpg" class="capCam"  id="results"/>
 		        	
-		        		
+		        if(data[i].paymentStatus=="completed"){		
 	        			 selected_option = 
 	        	"<div class='row'   > "+	        			 					
 	 					"<div class='col-sm-6' >"+
-		 					"<a href='"+link+"'>"+
+		 					"<a href='#' onclick='"+link+"'>"+
 		 						"<div class='row'>"+
 		 							"<div class='col-sm-12'>"+
 		 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].ocrVid+"</div>"+
@@ -893,6 +903,58 @@
 
 					
 					"</div>";
+					
+		        }else{
+		        	
+       			 selected_option = 
+     	        	"<div class='row'   > "+	        			 					
+     	 					"<div class='col-sm-6' >"+
+     		 					"<a href='"+link+"'>"+
+     		 						"<div class='row'>"+
+     		 							"<div class='col-sm-12'>"+
+     		 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].ocrVid+"</div>"+
+     		 							"</div>"+
+     		 						"</div>"+
+     	
+     	 							"<div class='row'>"+
+     									"<div class='col-sm-12'>"+
+     										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+data[i].ocrid+"</div>"+
+     									"</div>"+
+     								"</div>"+
+     								
+     								statu+"<hr/>"+
+     								"</a>"+
+     						"</div>"+
+     					
+     						"<div class='col-sm-3'  style='padding-left:20px;'>"+
+     							"<div class='row'>"+
+     								"<div class='col-sm-12'>"+					
+     									img+
+     								"</div>"+
+     							"</div>"+
+     											
+     						"</div>"+
+     						"<div class='col-sm-3' style='padding-left:40px;>"+
+     						"<div class='row'>"+
+     							"<div class='col-sm-12' >"+btnRemo+					
+     							
+     							
+     								
+     							"</div>"+
+     						"</div>"+
+     					"</div>"+
+
+     					
+     					"</div>"; 	
+		        	
+		        	
+		        	
+		        	
+		        }
+					
+					
+					
+					
 	            	 slctSubcat.append(selected_option);	
 	            	 
 	         
@@ -966,7 +1028,187 @@
 		
 	}
 	
+	function getProceedLane(ocrid)
+	{
 	
+
+
+		Swal.fire({
+		  title: 'Do you want to continue with inspection in Lane?',
+		  showDenyButton: false,
+		  showCancelButton: true,
+		  confirmButtonText: `Yes`,
+		  denyButtonText: `No`,
+		  customClass: {
+		    cancelButton: 'order-1 right-gap',
+		    confirmButton: 'order-2',
+		    denyButton: 'order-3',
+		  }
+		}).then((result) => {
+		  if (result.isConfirmed) {
+		   
+				$.ajax({
+
+ 		 		    type: 'POST',
+		 		    url: "saveLaneEntry", 
+		 		    data: {"ocrid" : ocrid},
+ 			        success: function(data){
+ 			        	if(data=="1"){
+ 			        		swal("Oops...", "Session Expired", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+
+ 	 						//document.getElementById("proceedLanBtn").style.display = "block";
+ 	 						//document.getElementById("moreLoder").style.display = "none";
+ 			        	}else if(data=="2"){
+ 			        		swal("Oops...", "License Plate is not captured ! Please go to Lane Entry ", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+ 			        					        		
+// 	 						document.getElementById("proceedLanBtn").style.display = "block";
+// 	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="3"){
+ 			        		swal("Oops...", "ES_IN Path not Found !", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+			     
+// 	 						document.getElementById("proceedLanBtn").style.display = "block";
+// 	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="4"){
+ 			        		swal("Oops...", "XML_IN Path not Found !", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+			        	}else if(data=="5"){
+ 			        		swal("Oops...", "This vehicle already assigned to a lane !", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+
+// 	 						document.getElementById("proceedLanBtn").style.display = "block";
+// 	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="6"){
+ 			        		swal("Oops...", "Data Transfer Server not Found !", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+
+// 	 						document.getElementById("proceedLanBtn").style.display = "block";
+// 	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else{ 	
+ 			        	
+							swal("Good job!", "This vehicle successfully assigned to the lane!", {
+								icon : "success",
+								buttons: {        			
+									confirm: {
+										className : 'btn btn-success'
+									}
+								},
+							});
+ 			        	}
+
+		 	
+ 			        },
+ 			        error:function(){
+ 			        	alert("Error");
+ 			        }
+ 				 });
+			  
+			  
+		  } 
+		})
+
+
+		
+		
+		
+		
+		
+		
+		
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+// 		swal({
+// 			  title: "Are you sure?",
+// 			  text: "Do you want to remove this Lane Entry? Once removed vehicle will not appear at Lane Entry !",
+// 			  icon: "warning",
+// 			  buttons: true,
+// 			  dangerMode: true,
+// 			})
+// 			.then((willDelete) => {
+// 			  if (willDelete) {
+				  
+				  
+				  
+// 					$.ajax({
+
+// 					    type: 'POST',
+// 					    url: "changeStatusOcr", 
+// 					    data: {"ocrid":str},
+// 				        success: function(data){
+// 				        	if(data=="1"){
+				        
+// 				        	    swal("Lane Entry has been removed !", {
+// 				  			      icon: "success",
+// 				  			    });		
+// 				        	}else {
+// 				        		swal("Lane Entry is not remove !");
+				        		
+// 				        	}
+// 				        	takeAutoNo();
+				        	
+// 				        },
+// 				        error:function(data){
+// 				        	swal("Lane Entry is not remove !");
+				           
+// 				        }
+// 					 }); 
+				  
+
+		
+// 			  } else {
+// 			    swal("Lane Entry is not removed !");
+// 			  }
+// 			});
+		
+		
+	}
 		
 	function arrayBufferToBase64( buffer ) {
 		var binary = '';

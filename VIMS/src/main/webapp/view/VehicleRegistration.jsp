@@ -287,14 +287,16 @@
 									<div class="col-sm-6">
 										<label  class="l-fontst">Payment Type</label>
 									</div>	
-									<div class="col-sm-6">						             			             		
-					             		<form:select path="payType" class="custom-select fontst" id="payType" onchange="" required="Required" readonly="true">
+									<div class="col-sm-6">	
+											<label  class="l-fontst" id="payType">Cash</label>
+														             			             		
+<%-- 					             		<form:select path="payType" class="custom-select fontst" id="payType" onchange="" required="Required" readonly="true"> --%>
 											
 <%-- 											<c:forEach items="${veclass}" var="VClass"> --%>
-												<form:option value="Cash">Cash</form:option>
-												<form:option value="Credit">Credit</form:option>
+<%-- 												<form:option value="Cash">Cash</form:option> --%>
+<%-- 												<form:option value="Credit">Credit</form:option> --%>
 <%-- 											</c:forEach> --%>
-										</form:select>			             		
+<%-- 										</form:select>			             		 --%>
 									</div>
 									
 								</div>
@@ -646,7 +648,7 @@
 		    data: {"cusid" : cusid},
 		    success: function(data){
 		    	
-		     document.getElementById("payType").value= data.isCredeit;
+		     document.getElementById("payType").innerHTML= data.isCredeit;
 		    	
 		    },
 		    error:function(){
@@ -671,7 +673,7 @@
 	if(document.getElementById("currentMilage").value!="0"&&document.getElementById("currentMilage").value!=""){
 		
 		
-		if(document.getElementById("payType").value=="Credit"){
+		if(document.getElementById("payType").innerHTML=="Credit"){
 			document.getElementById("proceedLanBtn").style.display = "none";
 			document.getElementById("moreLoder").style.display = "block";
 			
@@ -702,52 +704,24 @@
 				        data : form_data,
 				        success: function(data){
 				      
-				        	if(data=="0"){
+	 			        	if(data=="0"){
 	 			        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
-				        			  text: 'Data Transfer not Working'
+				        			  text: 'System Error'
 				        			  //,footer: '<a href>Why do I have this issue?</a>'
 				        			});
 	 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 	 						document.getElementById("moreLoder").style.display = "none";
-	 			        	}else if(data=="2"){
-	 			        		Swal.fire({
-	 			        			  icon: 'error',
-	 			        			  title: 'Oops...',
-	 			        			  text: 'Data Transfer Server not found'
-	 			        			  //,footer: '<a href>Why do I have this issue?</a>'
-	 			        			});
-	 	 						document.getElementById("proceedLanBtn").style.display = "block";
-	 	 						document.getElementById("moreLoder").style.display = "none";
-	 			        	}else if(data=="3"){
+	 			        	}else if(data=="1"){
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
-				        			  text: 'This Vehicle Already Assigned to a Lane'
+				        			  text: 'Session Expired'
 				        			  //,footer: '<a href>Why do I have this issue?</a>'
 				        			});
-		 						document.getElementById("proceedLanBtn").style.display = "block";
-		 						document.getElementById("moreLoder").style.display = "none";
-	 			        	}else if(data=="4"){
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'XML_IN Path not Found'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
-		 						document.getElementById("proceedLanBtn").style.display = "block";
-		 						document.getElementById("moreLoder").style.display = "none";
-				        	}else if(data=="5"){
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'ES_IN Path not Found'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
-		 						document.getElementById("proceedLanBtn").style.display = "block";
-		 						document.getElementById("moreLoder").style.display = "none";
-				        	}else if(data=="6"){
+		        			window.location.href = "logout";
+				        	}else if(data=="2"){
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -756,7 +730,16 @@
 				        			});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
-				        	}else if(data=="7"){
+				        	}else if(data=="3"){
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'This vehicle already Payment!'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+	 			        	}else if(data=="4"){
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -765,14 +748,6 @@
 				        			});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
-				        	}else if(data=="8"){
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'Session Expired'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
-		        			window.location.href = "logout";
 				        	}else{ 	
 	 			        	
 	 			       		window.location.href = data;
@@ -799,48 +774,20 @@
 	 			        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
-				        			  text: 'Data Transfer not Working'
+				        			  text: 'System Error'
 				        			  //,footer: '<a href>Why do I have this issue?</a>'
 				        			});
 	 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 	 						document.getElementById("moreLoder").style.display = "none";
-	 			        	}else if(data=="2"){
-	 			        		Swal.fire({
-	 			        			  icon: 'error',
-	 			        			  title: 'Oops...',
-	 			        			  text: 'Data Transfer Server not found'
-	 			        			  //,footer: '<a href>Why do I have this issue?</a>'
-	 			        			});
-	 	 						document.getElementById("proceedLanBtn").style.display = "block";
-	 	 						document.getElementById("moreLoder").style.display = "none";
-	 			        	}else if(data=="3"){
+	 			        	}else if(data=="1"){
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
-				        			  text: 'This Vehicle Already Assigned to a Lane'
+				        			  text: 'Session Expired'
 				        			  //,footer: '<a href>Why do I have this issue?</a>'
 				        			});
-		 						document.getElementById("proceedLanBtn").style.display = "block";
-		 						document.getElementById("moreLoder").style.display = "none";
-	 			        	}else if(data=="4"){
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'XML_IN Path not Found'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
-		 						document.getElementById("proceedLanBtn").style.display = "block";
-		 						document.getElementById("moreLoder").style.display = "none";
-				        	}else if(data=="5"){
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'ES_IN Path not Found'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
-		 						document.getElementById("proceedLanBtn").style.display = "block";
-		 						document.getElementById("moreLoder").style.display = "none";
-				        	}else if(data=="6"){
+		        			window.location.href = "logout";
+				        	}else if(data=="2"){
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -849,7 +796,16 @@
 				        			});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
-				        	}else if(data=="7"){
+				        	}else if(data=="3"){
+				        		Swal.fire({
+				        			  icon: 'error',
+				        			  title: 'Oops...',
+				        			  text: 'This vehicle already Payment !'
+				        			  //,footer: '<a href>Why do I have this issue?</a>'
+				        			});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+	 			        	}else if(data=="4"){
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -858,14 +814,6 @@
 				        			});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
-				        	}else if(data=="8"){
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'Session Expired'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
-		        			window.location.href = "logout";
 				        	}else{ 	
 	 			        	
 	 			       		window.location.href = data;
@@ -924,7 +872,7 @@
 			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
-			        			  text: 'This vehicle already assigned to a lane !'
+			        			  text: 'This vehicle already Payment !'
 			        			  //,footer: '<a href>Why do I have this issue?</a>'
 			        			});
 	 						document.getElementById("proceedLanBtn").style.display = "block";

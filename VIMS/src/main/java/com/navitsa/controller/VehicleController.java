@@ -930,13 +930,14 @@ public class VehicleController {
 	}
 		
 	@RequestMapping(value="/saveLaneEntry" ,method=RequestMethod.POST)
-	public @ResponseBody String saveVehicleRegistration(@RequestParam String vregno,HttpSession session) {
+	public @ResponseBody String saveVehicleRegistration(@RequestParam String ocrid,HttpSession session) {
 	
         	try {
         		
-        		VehicleRegistration vehiclereg=vehicleService.getRegistrationByRegisterId(vregno);
+        		VehicleRegistration vehiclereg=vehicleService.getRegistrationByRegisterId(ocrid);
+        		
         		CenterMaster centerMaster=centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
-	        	
+        	
         		VehicleMaster vehicleMaster = vehicleService.getVMasterById(vehiclereg.getVid().getVehicleID());
         		
         		String checkTextFilePath=centerMaster.getEsInPath();
@@ -1156,6 +1157,7 @@ public class VehicleController {
 	        	}
         		
         	} catch (Exception e) {
+        		e.printStackTrace();
         		return "7";
         	}
         
@@ -1268,383 +1270,123 @@ public class VehicleController {
 	
 
 	@RequestMapping(value="/vehicleInvoiceRegAction" ,method=RequestMethod.POST)
-	public @ResponseBody String saveVehicleInvoiceRegistration(@Valid @ModelAttribute("VehicleRegistration") VehicleRegistration vehiclereg,  BindingResult br,HttpServletRequest request) {
-
+	public @ResponseBody String saveVehicleInvoiceRegistration(@Valid @ModelAttribute("VehicleRegistration") VehicleRegistration vehiclereg,  BindingResult br,HttpServletRequest request,HttpSession session) {
 		if(br.hasErrors())  
         {  
-		// System.out.println("jjjjjjjjjj");
-		 //redirectAttributes.addFlashAttribute("success", 0);
 		 	return "0";  
         }  
         else  
-        { 
-          try { 
-        	  
-           List<ConfigSystem> configSystem=vehicleService.getConfigSystemByCenter(vehiclereg.getCentermaster().getCenter_ID(),vehiclereg.getTestLaneHeadId().getTestLaneHeadId());	
-              
-            boolean correct=false;
-            String hostname="";
-            String username="";
-            String password="";
-            String rootpath="";
-            String xmlPath="";
-            InetAddress inet = null;
-            for(ConfigSystem conSys:configSystem) {
-//                 hostname=conSys.getIpaddress();
-//                 username=conSys.getUserName();
-//                 password=conSys.getPassword();  
-//                 rootpath=conSys.getRootPath();
-//                 xmlPath=conSys.getXmlPath();
-                 inet = InetAddress.getByName(hostname);
-                 if(inet.isReachable(0)==true) {
-                	 correct=true; 
-                 }else {
-                	 correct=false; 
-                	 break;
-                 }
-
-            }  	
-            
-            if((configSystem.size()==0)) {
-             	correct=true;
-             }  
+        {	
+        	try {
+        		CenterMaster centerMaster=centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID()); 
+        		OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
+        		List<VehicleRegistration> isVehicale=vehicleService.getTestStatusVehicleRegistation(vehiclereg.getVid().getVehicleID());
+        		
            
-            
-            
-        	  
-            if(correct) {
-        	  
-        	  
-        	  List<VehicleRegistration> isVehicale=vehicleService.getTestStatusVehicleRegistation(vehiclereg.getVid().getVehicleID());
-        	  
-        	 if(isVehicale.size()==0) { 
-        	
-        //	  transaction.begin();
-           System.out.println("mmmmmmmmmmmm");
-    	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-    	    Date date = new Date();  
-    	    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
-    	    LocalTime time = LocalTime.now();
-        
-            //	transactionStatus=TransactionAspectSupport.currentTransactionStatus();
-            //get next Transaction no	
-        	String tansactionId = "0000".substring(transactionservice.maxtrID().length())+transactionservice.maxtrID();
-        	//get next vehicle Register 
-    		String vRegID = "0000".substring(vehicleService.maxVRegID().length())+vehicleService.maxVRegID();
-    		
-    		// insert Transaction Table data   		    	
-    		Transaction tr = new Transaction();
-    		tr.setTrID(tansactionId);
-    		tr.setStatus("ACTIVE");
-    		tr.setRemarks("New Vehicle Registration (vRegID)");
-    		
-    		//set Vehicle table to transaction id
-    		
-    		vehiclereg.setTime(time.format(formattertime));
-    		vehiclereg.setDate(formatter.format(date));
-    		vehiclereg.setViTestStatus("pending");
-    		vehiclereg.setTestStatus("pending");
-    		
-    		vehiclereg.setTrid(tr);	    		
-    		vehiclereg.setVregID(vRegID);
-    		vehiclereg.setPayType("Credit");
-    		//save transaction
-    		transactionservice.saveTransaction(tr);
-    		//save  VehicleRegister table
-        	vehicleService.saveVehicleRegister(vehiclereg);
-        	
-        	
-        	CenterMaster centerMaster=centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
-        	TestCategory testCategory=centerService.getCategoryId(vehiclereg.getTestCategory().getCategoryId());	            	
-        	String countrcode=centerMaster.getPartner_ID().getCountry_Code().getCountryCode();
-        	List<TaxConfiguration> getTaxFromCountrylist=vehicleService.getTaxFromCountry(countrcode);
-        	VehicleRegisterType vrtyp=vehicleService.getRegType(vehiclereg.getVtype().getvRegTypeID());
-        	
-        	VehicleMaster vehicleMaster = vehicleService.getVMasterById(vehiclereg.getVid().getVehicleID());
-        	
-        //	TestLaneHead testLaneHead=laneServices.getTestLaneHeadById(vehiclereg.getTestLaneHeadId().getTestLaneHeadId());
-        	
-
-        	long testFee=testCategory.getCategoryFee();
-        	long testFeePresent=vrtyp.getvTestFeePre();
-        	long nettotal=0;
-        	
-        	long calTestFee=testFee*testFeePresent/100;
-        	
-        	//System.out.println("ghghg="+centerMaster.getEsInPath()+"\\"+vehiclereg.getTestLaneHeadId().getLaneName()+"\\"+vehiclereg.getVid().getVehicleID()+".txt");
-        	//create Next Receipt No
-        	//businessPartnerService.setUpdateLastRecNo(centerMaster.getPartner_ID().getPartner_ID());
-        	OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
-        //	if(testFeePresent!=0) {
-        	//insert InvoiceHead date & InvoiceDetails
-        	int maxinvno=centerMaster.getPartner_ID().getMaxInvNo();
-        	String invFormate=centerMaster.getPartner_ID().getInvformate();
-        	String nextinvno=invFormate+(maxinvno+1);
-        	businessPartnerService.setUpdateLastInvNo(centerMaster.getPartner_ID().getPartner_ID());
-        	
-        	Customer  cusdetail=usersService.viewCustomersDetailByID(vehiclereg.getCusid().getId());
-			InvoiceHead invHead=new InvoiceHead(nextinvno, vehiclereg, vehiclereg.getDate(),vehiclereg.getTime(),calTestFee,"New Vehicle Register","ACTIVE","N/A","Open");
-			
+        		if (session.getAttribute("username")==null) {
+        			return "1";	
+        		}else if (!ocrDetails.getDocStatus().equals("completed")) {
+	        		return "2";  	 
+	        	}else if (isVehicale.size()!=0) {
+	        		return "3";  	 
+	        	}else {
+    	    	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+    	    	    Date date = new Date();  
+    	    	    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
+    	    	    LocalTime time = LocalTime.now();
+    	    	    
+    	    	    //get Token  no
+    	    	    String tansactionId = "0000".substring(transactionservice.maxtrID().length())+transactionservice.maxtrID();
+    	    	    
+    	    	    String vRegID = "0000".substring(vehicleService.maxVRegID().length())+vehicleService.maxVRegID();
+    	    	    
+    	    		Transaction tr = new Transaction();
+    	    		tr.setTrID(tansactionId);
+    	    		tr.setStatus("ACTIVE");
+    	    		tr.setRemarks("New Vehicle Registration Invoice ("+vRegID+")");
+    	    		transactionservice.saveTransaction(tr);
+    	    		
+    	    		vehiclereg.setTime(time.format(formattertime));
+    	    		vehiclereg.setDate(formatter.format(date));
+    	    		vehiclereg.setViTestStatus("pending");
+    	    		vehiclereg.setTestStatus("pending");	
+    	    		vehiclereg.setTrid(tr);	    		
+    	    		vehiclereg.setVregID(vRegID);
+    	    		vehiclereg.setPayType("Credit");
+    	    		vehiclereg.setStatus("ACTIVE");
+    	    		vehicleService.saveVehicleRegister(vehiclereg);
 	
-			List<InvoiceDetails> invDetailsList = new ArrayList<InvoiceDetails>();
-			
-			
-			
-        	for(TaxConfiguration taxdetail:getTaxFromCountrylist) {
-        		Long taxamt=Long.parseLong("0");
-        		if(taxdetail.getType().equals("Rate")) {
-        		 taxamt=calTestFee*taxdetail.getTaxRate()/10000;
-        		}else {
-        		 taxamt=taxdetail.getTaxRate();	
+                	TestCategory testCategory=centerService.getCategoryId(vehiclereg.getTestCategory().getCategoryId());	            	
+                	String countrcode=centerMaster.getPartner_ID().getCountry_Code().getCountryCode();
+                	List<TaxConfiguration> getTaxFromCountrylist=vehicleService.getTaxFromCountry(countrcode);
+                	VehicleRegisterType vrtyp=vehicleService.getRegType(vehiclereg.getVtype().getvRegTypeID());
+                	
+                	VehicleMaster vehicleMaster = vehicleService.getVMasterById(vehiclereg.getVid().getVehicleID());
+                	System.out.println("qqqqqqqqqqqqq");
+                	//create Next Receipt No
+                	int maxinvno=centerMaster.getPartner_ID().getMaxInvNo();
+                	String invFormate=centerMaster.getPartner_ID().getInvformate();
+                	String nextinvno=invFormate+(maxinvno+1);
+                	
+                	long testFee=testCategory.getCategoryFee();
+                	long testFeePresent=vrtyp.getvTestFeePre();
+                	long nettotal=0;
+                	
+                	long calTestFee=testFee*testFeePresent/100;	
+                	//update  Last Receipt No
+                	businessPartnerService.setUpdateLastInvNo(centerMaster.getPartner_ID().getPartner_ID());
+                	System.out.println("ttttttttttttt");
+                	Customer  cusdetail=usersService.viewCustomersDetailByID(vehiclereg.getCusid().getId());
+        			InvoiceHead invHead=new InvoiceHead(nextinvno, vehiclereg, vehiclereg.getDate(),vehiclereg.getTime(),calTestFee,"New Vehicle Register","ACTIVE","N/A","Open");
         			
+                
+        			List<InvoiceDetails> invDetailsList = new ArrayList<InvoiceDetails>();
+                	
+                	for(TaxConfiguration taxdetail:getTaxFromCountrylist) {
+                		Long taxamt=Long.parseLong("0");
+                		if(taxdetail.getType().equals("Rate")) {
+                		 taxamt=calTestFee*taxdetail.getTaxRate()/10000;
+                		}else {
+                		 taxamt=taxdetail.getTaxRate();	
+                			
+                		}
+                		
+                		InvoiceDetails invDetails= new InvoiceDetails(invHead, taxdetail, taxdetail.getTaxRate(),taxamt);
+                		nettotal=nettotal+taxamt;
+                		invDetailsList.add(invDetails);
+                	}	          
+                	invHead.setNetTotal(nettotal+calTestFee);
+                	invHead.setBalance(nettotal+calTestFee);
+                	System.out.println("wwwwwwwwwwwww");
+                	Long balance=nettotal+calTestFee+cusdetail.getCrBalance();
+                	cusdetail.setCrBalance(balance);
+                	usersService.saveCustomer(cusdetail);
+                	System.out.println("jjjjjjjjjjjjjjjjjj");
+                	invHead.setPayAmount(Long.parseLong("0"));
+                    //save invHead date & invDetails
+                	vehicleService.saveInvoiceHead(invHead);
+                	vehicleService.saveInvoiceDetailsAll(invDetailsList);
+                	System.out.println("oooooooooooooooooooo");
+            		ocrDetails.setPaymentStatus("completed");
+            		vehicleService.saveOcrDetailsRepo(ocrDetails);
+                	
+            		
+            		return "vehicalInvORG?invNo="+nextinvno+"";
         		}
         		
-        		InvoiceDetails invDetails= new InvoiceDetails(invHead, taxdetail, taxdetail.getTaxRate(),taxamt);
-        		nettotal=nettotal+taxamt;
-        		invDetailsList.add(invDetails);
+        	} catch (Exception e) {
+        		return "0";
         	}
-        	invHead.setNetTotal(nettotal+calTestFee);
-        	invHead.setBalance(nettotal+calTestFee);
-        	
-        	Long balance=nettotal+calTestFee+cusdetail.getCrBalance();
-        	cusdetail.setCrBalance(balance);
-        	usersService.saveCustomer(cusdetail);
-        	
-        	
-        	
-        	invHead.setPayAmount(Long.parseLong("0"));
-    //save invHead date & invDetails
-        	vehicleService.saveInvoiceHead(invHead);
-        	vehicleService.saveInvoiceDetailsAll(invDetailsList);
-        	Users user=usersService.searchUser(vehiclereg.getUser().getUserId());
-        //    }
-            	
-				String path1 = this.getClass().getClassLoader().getResource("").getPath();
-				String fullPath = URLDecoder.decode(path1, "UTF-8");
-
-				String pathArr[] = fullPath.split("/WEB-INF/classes/");
-//			
-//				String path= pathArr[0]+"/Upload/ES_IN/";	
-            	
-            	
-				String textFilePath=centerMaster.getEsInPath()+"\\"+vehiclereg.getVid().getVehicleID()+".txt";
-            	
-            
-            //create Text file & get ES in path
-            //	String textFilePath=path+"/"+vehiclereg.getVid().getVehicleID()+".txt";
-            	
-        	File file = new File(textFilePath);
-    
-           if (!file.exists()) {
-                file.createNewFile();
-              }
-                FileWriter fw = new FileWriter(file.getAbsoluteFile());
-                BufferedWriter bw = new BufferedWriter(fw);
-                bw.write("[HEADER]");
-                bw.write("\r\n"); 
-                bw.write("10100="+vehiclereg.getVid().getVehicleID());
-                bw.write("\r\n"); 
-                bw.write("15012="+user.getUserName());
-                bw.write("\r\n"); 
-                bw.write("10190="+vehicleMaster.getNoWheel());	                
-                bw.write("\r\n"); 
-                bw.write("10191="+vehicleMaster.getVmodel().getVehicleClass().getCategoryID().getCategoryID());                
-                
-                
-                
-                bw.write("\r\n");
-                bw.write("\r\n");
-                bw.write("[ENDOFFILE]");
-               
-                
-                bw.close();
-                
-              //  String xpath= pathArr[0]+"/Upload/XML_ES_IN/";	
-               	String xmlFilePath=centerMaster.getEsInXmlPath()+"\\"+vehiclereg.getVid().getVehicleID()+".xml";
-            	
-            	File xmlfile = new File(xmlFilePath);
-        
-	           if (!xmlfile.exists()) {
-	        	   xmlfile.createNewFile();
-	              }
-                    FileWriter fwX = new FileWriter(xmlfile.getAbsoluteFile());
-                    BufferedWriter bwx = new BufferedWriter(fwX);
-                    bwx.write("<?xml version=\"1.0\"?>"
-                    		+ "\r\n");
-                    
-                    bwx.write("<Report>"); 
-                    bwx.write("\r\n"); 
-                    bwx.write("<ROW num=\"Vehicle Registration No\">"
-                    		+ "\r\n<CODE>10100</CODE>");
-                    bwx.write("\r\n"); 
-                    bwx.write("<DATA>"+vehiclereg.getVid().getVehicleID()+"</DATA>");
-                    bwx.write("\r\n"); 
-                    bwx.write("</ROW>");
-                    bwx.write("\r\n"); 
-                    
-                    bwx.write("<ROW num=\"User\">"
-                    		+ "\r\n<CODE>15012</CODE>");
-                    bwx.write("\r\n"); 
-                    bwx.write("<DATA>"+user.getUserName()+"</DATA>");
-                    bwx.write("\r\n"); 
-                    bwx.write("</ROW>");                       
-                    bwx.write("\r\n"); 
-                    
-                    bwx.write("<ROW num=\"Make\">"
-                    		+ "\r\n<CODE>15015</CODE>");
-                    bwx.write("\r\n"); 
-                    bwx.write("<DATA>"+vehicleMaster.getVmodel().getVehicleMakeID().getVehicleMake()+"</DATA>");
-                    bwx.write("\r\n"); 
-                    bwx.write("</ROW>");                       
-                    bwx.write("\r\n"); 
-                    
-                    bwx.write("<ROW num=\"Model\">"
-                    		+ "\r\n<CODE>15016</CODE>");
-                    bwx.write("\r\n"); 
-                    bwx.write("<DATA>"+vehicleMaster.getVmodel().getVehicleModel()+"</DATA>");
-                    bwx.write("\r\n"); 
-                    bwx.write("</ROW>");  
-                    bwx.write("\r\n"); 
-                    
-                    bwx.write("<ROW num=\"Fuel Type\">"
-                    		+ "\r\n<CODE>15017</CODE>");
-                    bwx.write("\r\n"); 
-                    bwx.write("<DATA>"+vehicleMaster.getFtype().getFuel()+"</DATA>");
-                    bwx.write("\r\n"); 
-                    bwx.write("</ROW>");  
-                    bwx.write("\r\n"); 
-                    
-                    bwx.write("<ROW num='Engine Stroke'>"
-                    		+ "<CODE>15018</CODE>");
-                    bwx.write("<DATA>4 Stroke</DATA>");
-                    bwx.write("</ROW>");  
-                    bwx.write("\r\n"); 
-   
-                    bwx.write("<ROW num=\"Category\">"
-                    		+ "\r\n<CODE>10191</CODE>");
-                    bwx.write("\r\n"); 
-                    bwx.write("<DATA>"+vehicleMaster.getVmodel().getVehicleClass().getVehicleClass()+"</DATA>");
-                    bwx.write("\r\n"); 
-                    bwx.write("</ROW>"); 
-                    bwx.write("\r\n"); 
-                    
-                    bwx.write("<ROW num=\"Date of Mfg\">"
-                    		+ "\r\n<CODE>10199</CODE>");
-                    bwx.write("\r\n"); 
-                    bwx.write("<DATA>"+vehicleMaster.getManufactureYear()+"</DATA>");
-                    bwx.write("\r\n"); 
-                    bwx.write("</ROW>"); 
-                    bwx.write("\r\n");  
-                    
-                    
-                    bwx.write("<ROW num=\"Emission Norms\">"
-                    		+ "\r\n<CODE>10190</CODE>");
-                    bwx.write("\r\n"); 
-                    bwx.write("<DATA>"+vehicleMaster.getEmissionNorms()+"</DATA>");
-                    bwx.write("\r\n"); 
-                    bwx.write("</ROW>");
-                    bwx.write("\r\n"); 
-    
-                    bwx.write("<ROW num=\"Wheel\">"
-                    		+ "\r\n<CODE>10192</CODE>");
-                    bwx.write("\r\n"); 
-                    bwx.write("<DATA>"+vehicleMaster.getNoWheel()+"</DATA>");
-                    bwx.write("\r\n"); 
-                    bwx.write("</ROW>");
-                    bwx.write("\r\n"); 
-                    bwx.write("</Report>");  
-                    bwx.close();   
-//                
-                
-        
-                
-
-             //  List<ConfigSystem> configSystem=vehicleService.getConfigSystemByCenter(vehiclereg.getCentermaster().getCenter_ID(),vehiclereg.getTestLaneHeadId().getTestLaneHeadId());	
-              
-               
-//               String hostname="";
-//               String username="";
-//               String password="";
-//               String rootpath="";
-//               String xmlPath="";
-//               for(ConfigSystem conSys:configSystem) {
-//                    hostname=conSys.getIpaddress();
-//                    username=conSys.getUserName();
-//                    password=conSys.getPassword();  
-//                    rootpath=conSys.getRootPath();
-//                    xmlPath=conSys.getXmlPath();
-//               }
-               
-               
-               if(configSystem.size()!=0) {
-               System.out.println("Start");
-               
-                   for(ConfigSystem conSys:configSystem) {
-                     hostname=conSys.getIpaddress();
-                     username=conSys.getUserName();
-                     password=conSys.getPassword();  
-                     rootpath=conSys.getRootPath();
-                     xmlPath=conSys.getXmlPath();
-                     inet = InetAddress.getByName(hostname);
-                 
-
-                   
-                    FTPUploader ftpUploader = new FTPUploader(hostname, username, password);
-
-                    //FTP server path is relative. So if FTP account HOME directory is "/home/pankaj/public_html/" and you need to upload
-                    // files to "/home/pankaj/public_html/wp-content/uploads/image2/", you should pass directory parameter as "/wp-content/uploads/image2/"
-                    ftpUploader.uploadFile(textFilePath, vehiclereg.getVid().getVehicleID()+".txt", rootpath+"/");//public_ftp
-                   
-                    //sava FTp to xml
-                    ftpUploader.uploadFile(xmlFilePath, vehiclereg.getVid().getVehicleID()+".xml", xmlPath+"/");//public_ftp
-                    
-                    
-                    ftpUploader.disconnect();
-                    file.delete();
-                    xmlfile.delete();
-                    
-                   }
-            }
-                System.out.println("Done");
-                
-               
-                
-              //  OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());	
-        		ocrDetails.setVrStatus("completed");
-        		vehicleService.saveOcrDetailsRepo(ocrDetails);
-        		
-        		//redirectAttributes.addFlashAttribute("success", 1);
-        		  System.out.println("1");
-        		return "vehicalInvORG?invNo="+nextinvno+"";
-        		
-        	 }else {
-        		// redirectAttributes.addFlashAttribute("success", 3);
-        		//  System.out.println("3");
-        		 return "3"; 
-        		 
-        	 }
-                
-        		 
-        	//	transaction.commit();
-                
-          
-          
-          }else {
-        	 // redirectAttributes.addFlashAttribute("success", 2);
-        	//  System.out.println("2 vecNo="+vehiclereg.getVid().getVehicleID()+"&curMi="+vehiclereg.getCurrentMilage()+"&id="+vehiclereg.getOcrid().getOcrid());
-        	 // return "vehicleRegistrationAuto";
-        	  return "2"; 
-          
-          }
-          		// "vehicleRegistration?vid="+"";	    	    	    	    	      	    	          	
-        } catch (Exception e) {
-        //	transaction.getRollbackOnly();
-        	//transactionStatus.setRollbackOnly();
-           e.printStackTrace();
-          
-           return "0";
         }
-     }
+	
+        
+     
+		
+		
+		
+		
+		
+		
 				
 	 }
 	  @RequestMapping(value = "/vehicalInvCOPY", method=RequestMethod.GET) 
@@ -1671,10 +1413,25 @@ public class VehicleController {
 	  }	
 	
 	  public String vehicalInvoiceGeaerate(String invNo,HttpServletResponse response) {
-		  
+
+		  LocalDateTime now = LocalDateTime.now(); 
 		  	InvoiceHead invHed=vehicleService.getInvoiceHeadByInvNo(invNo);
 		//System.out.println("fffffffffffffffff"+invHed.getStatus());
-		  	if(invHed.getStatus().toString().equals("ACTIVE")) {
+		  	int days=DateHelperWeb.stringDateDiff(invHed.getInvoiceDate(),now.toString());
+		  	if(!invHed.getStatus().toString().equals("ACTIVE")) {
+		  		
+		  		
+					  
+					  return "INACTIVE";  
+					  
+				 
+		  		
+		  		
+		  	}else if(days!=0) {
+		  		
+		  		return "BACKDATE";
+		  		
+		  	}else {
 		  	//	invHed.getvRegisterID();
 		  	VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(invHed.getvRegisterID().getVregID());
 		  	Customer  cusdetail=usersService.viewCustomersDetailByID(vehiclereg.getCusid().getId());
@@ -1763,10 +1520,6 @@ public class VehicleController {
         		e.printStackTrace();          		
         	}
 		  return reptValue;
-		  }else {
-			  
-			  return "INACTIVE";  
-			  
 		  }
 		  
 	  }
@@ -1918,10 +1671,18 @@ public class VehicleController {
 	         return mav;
 		  }
 		  public String vehicalRescetGeaerate(String reccno,HttpServletResponse response) {
-			  
+			  LocalDateTime now = LocalDateTime.now(); 
 			  	ReceiptHead reciptHed=vehicleService.getReciptHedDetailByRecNo(reccno);
-			  
-			  	if(reciptHed.getStatus().toString().equals("ACTIVE")) {
+			  	int days=DateHelperWeb.stringDateDiff(reciptHed.getRecDate(),now.toString());
+			  	if(!reciptHed.getStatus().toString().equals("ACTIVE")) {
+			  		
+			  		return "INACTIVE";
+			  		
+			  	}else if(days!=0) {
+			  		
+			  		return "BACKDATE";
+			  		
+			  	}else{
 			  	reciptHed.getvRegisterID();
 			  	VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(reciptHed.getvRegisterID().getVregID());
 			  	Customer  cusdetail=usersService.viewCustomersDetailByID(vehiclereg.getCusid().getId());
@@ -2013,10 +1774,6 @@ public class VehicleController {
 			  return reptValue;
 			  
 			  
-			  	}else {
-			  		
-			return "INACTIVE";		
-			  		
 			  	}
 			  
 		  }

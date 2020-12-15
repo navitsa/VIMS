@@ -235,8 +235,6 @@
 				<a class="collapse-item fontst-sb-it" href="vehicleInformation" hidden="true" id="vehicleInformation">Gate Entry</a>
 				<a class="collapse-item fontst-sb-it" href="laneEntryView" hidden="true" id="laneEntryView">Lane Entry</a>
 				<a class="collapse-item fontst-sb-it" href="vehicleMaster" hidden="true" id="vehicleMaster">Vehicle Master</a>
-				<a class="collapse-item fontst-sb-it" href="checkDocument" hidden="true" id="checkDocument">Check Document</a>
-				<a class="collapse-item fontst-sb-it" href="vehicleRegistration" hidden="true" id="vehicleRegistration">Vehicle Registration</a>
 				
 				<a class="collapse-item fontst-sb-it" href="visualChecklist"  hidden="true" id="visualChecklist">Perform Visual Inspection</a>
 				<a class="collapse-item fontst-sb-it" href="getReport"  hidden="true" id="getReport">Issue VI Report</a>

@@ -19,7 +19,8 @@
          
 .fontcolor{color: blue;}
 </style>
-	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="build.css">
 </head>
 <body>
 	<div class="wrapper">
@@ -164,32 +165,65 @@
 								<div class="card shadow mb-4">
 									<div class="card-body">
 
-										<form:form modelAttribute="levelManage" id="form2">
-											<label class="text-gray-900">To assign a user-level role, please use the grid below</label>
-											<table>
-												<tr valign="top">
-													<td><select id="s" size="14" class="custom-select"
-														name="removesroleID" multiple>
-															<c:forEach items="${roleList}" var="role">
-																<option value="${role.roleID}">${role.roleName}</option>
-															</c:forEach>
-													</select></td>
-													<td valign="center"><br>
-													<br> <a href="#"
-														onclick="if (!window.__cfRLUnblockHandlers) return false; listbox_moveacross('s', 'd')"
-														data-cf-modified-46ada2dfb40708e7bf43261c-="">&gt;&gt;</a> <br />
-													<br /> <a href="#"
-														onclick="if (!window.__cfRLUnblockHandlers) return false; listbox_moveacross('d', 's')"
-														data-cf-modified-46ada2dfb40708e7bf43261c-="">&lt;&lt;</a></td>
-													<td><select id="d" size="14" class="custom-select"
-														name="sroleID" style="width: 200px;" multiple required>
-															<%-- <c:forEach items="${assignRoleList}" var="role"> --%>
-															<%-- <option value = "${role.roleID}">${role.roleName}</option> --%>
-															<%-- </c:forEach> --%>
-													</select></td>
-												</tr>
-											</table>
-										</form:form>
+												<table id="tableLevel"
+													class="table table-striped table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar">
+													<thead>
+														<tr>
+															<th>Role</th>														
+															<th>Status</th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach items="${roleList}" var="rolelist">
+															<tr>
+
+																<td>${rolelist.roleName}</td>
+																<td>
+																
+																      <div class="checkbox checkbox-success">
+                        <input id="check5" class="styled" type="checkbox" >
+                     
+                    </div>
+																
+																
+																
+																</td>
+																
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+
+
+
+
+<%-- 										<form:form modelAttribute="levelManage" id="form2"> --%>
+<!-- 											<label class="text-gray-900">To assign a user-level role, please use the grid below</label> -->
+<!-- 											<table> -->
+<!-- 												<tr valign="top"> -->
+<!-- 													<td><select id="s" size="14" class="custom-select" -->
+<!-- 														name="removesroleID" multiple> -->
+<%-- 															<c:forEach items="${roleList}" var="role"> --%>
+<%-- 																<option value="${role.roleID}">${role.roleName}</option> --%>
+<%-- 															</c:forEach> --%>
+<!-- 													</select></td> -->
+<!-- 													<td valign="center"><br> -->
+<!-- 													<br> <a href="#" -->
+<!-- 														onclick="if (!window.__cfRLUnblockHandlers) return false; listbox_moveacross('s', 'd')" -->
+<!-- 														data-cf-modified-46ada2dfb40708e7bf43261c-="">&gt;&gt;</a> <br /> -->
+<!-- 													<br /> <a href="#" -->
+<!-- 														onclick="if (!window.__cfRLUnblockHandlers) return false; listbox_moveacross('d', 's')" -->
+<!-- 														data-cf-modified-46ada2dfb40708e7bf43261c-="">&lt;&lt;</a></td> -->
+<!-- 													<td><select id="d" size="14" class="custom-select" -->
+<!-- 														name="sroleID" style="width: 200px;" multiple required> -->
+<%-- 															<c:forEach items="${assignRoleList}" var="role"> --%>
+<%-- 															<option value = "${role.roleID}">${role.roleName}</option> --%>
+<%-- 															</c:forEach> --%>
+<!-- 													</select></td> -->
+<!-- 												</tr> -->
+<!-- 											</table> -->
+<%-- 										</form:form> --%>
 
 									</div>
 								</div>

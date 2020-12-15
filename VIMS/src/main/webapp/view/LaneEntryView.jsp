@@ -107,7 +107,9 @@
 							<div class="col-xl-2 col-lg-2">
 								<p class="vidSty" id="vvno" >${vehNo}</p>
 							</div>
-							<div class="ml-md-auto py-2 py-md-4">							
+							<div class="col-xl-2 col-lg-2">	
+							</div>
+							<div class="col-xl-2 col-lg-2">							
 							
 							<h2 class="text-white pb-2 fw-bold">Lane Entry</h2>
 							
@@ -116,7 +118,7 @@
 <!-- 								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a> -->
 <%-- 								<a href="vehicleMasterAuto?vehicleID=<%=session.getAttribute("vRvid")%>&id=<%=session.getAttribute("vRocr")%>&appNo=0" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a> --%>
 <!-- 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
-								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#capturePlateModal">Capture</a>
+<!-- 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#capturePlateModal">Capture</a> -->
 <!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
 							</div>
 						</div>
@@ -181,14 +183,26 @@
 							<div class="col-sm-2">
 									<label for="manu1" class="l-fontst">Vehicle</label>
 								</div>	
-								<div class="col-sm-5">						             			             		
+								<div class="col-sm-4">						             			             		
 									<select  id="payVehicleNo" class="custom-select fontst" onchange="setPayVehicleNo(this.value);" >
 										<option value="NONE">Select...</option>
 										
 									</select>		             		
-								</div>	
+								</div>
+								<div class="col-sm-1">
+									
+								</div>		
+								<div class="col-sm-5">
+									<button type="button"  class="btn btn-primary btn-block" data-toggle="modal" data-target="#capturePlateModal">Capture License Plate</button>
+								</div>
+								
+								
+								
+									
+								
+						
 						</div>
-										
+							<br>			
 					<hr>			
 						<div class="form-group row">						
 							<div class="col-sm-6">
@@ -268,16 +282,16 @@
 							</div>
 										
 						 </div>	
-
+<br>
 <hr>
 
-	
+	<br><br><br><br><br><br><br>
 
 					<div class="row">
 
-			            <div class="col-sm-6">
+			            <div class="col-sm-7">
 			            </div>
-						<div class="col-sm-6 justify-content-end">
+						<div class="col-sm-5 justify-content-end">
 			             	<button type="button"  class="btn btn-success btn-block" onclick="checkCondition();" id="proceedLanBtn">Proceed to Lane Entry in Lane</button>
 						
 								<div class="spinner-grow" role="status" id="moreLoder" style="display: none;">
@@ -369,7 +383,7 @@
       <div class="modal-header">
 <!--         <button type="button" class="close" data-dismiss="modal">&times;</button> -->
 		<div class="col-sm-5">
-			<h4 class="modal-title">Capture Plate</h4>
+			<h4 class="modal-title">Capture License Plate</h4>
 		</div>
 		<div class="col-sm-5">
         	<input class="form-control textred" name="vehNO" value="${vehNo}" id="vehNO" placeholder="Licence Plate NO..." readonly="true" />		
@@ -389,7 +403,7 @@
 																			<div class="col-sm-12">
 																				
 																					<input class="form-control form-control-sm"
-																			name="ocrrid" id="ocrrid" value="${ocid}"  />
+																			name="ocrrid" id="ocrrid" value="${ocid}"  type="hidden"/>
 																			</div>
 																		</div>																	
 																		<div class="row">
@@ -777,6 +791,7 @@ setTimeout(takeAutoNo, 3000);
 				
 			}
 			function setPayVehicleNo(st){
+				clearAll();
 				document.getElementById("ocrrid").value=st;
 				$.ajax({
 			        type: 'POST',
@@ -816,7 +831,22 @@ setTimeout(takeAutoNo, 3000);
 				
 				
 			}
-			
+			function clearAll(){
+			    var slctSubcat1=$('#preReg');
+	            slctSubcat1.empty();
+				document.getElementById("vvno").innerHTML="";
+				document.getElementById("vehNO").value="";
+				document.getElementById("vregID").value="";
+				
+				
+				document.getElementById("tesCat").innerHTML="";
+				document.getElementById("verg").innerHTML="";
+				document.getElementById("lane").innerHTML="";
+				document.getElementById("insp").innerHTML="";
+				
+				document.getElementById("results").src=null;
+				
+			}
 			
 			
 			function arrayBufferToBase64( buffer ) {
@@ -886,14 +916,16 @@ setTimeout(takeAutoNo, 3000);
 				        type: 'POST',
 				        url: "pendingLaneEntryData",				      
 				        success: function(data){
-				        
+				       
 				            var slctSubcat=$('#payVehicleNo'), option="";
 				            slctSubcat.empty();
 				            selected_option = "<option value='' selected>Select Vehicle...</option>"
 				            slctSubcat.append(selected_option);
 		
 				            for(var i=0; i<data.length; i++){
+				             	if(data[i].noimage==""){
 				                option = option + "<option value='"+data[i].ocrid + "'>"+data[i].ocrVid + "</option>";
+				            }
 				            }
 				            slctSubcat.append(option);
 				        },
