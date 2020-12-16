@@ -542,13 +542,13 @@
 	
 	
 	function checkCondition(){
-				var mak=document.getElementById("vregID").value;
+				var mak=document.getElementById("ocrrid").value;
 				
  				$.ajax({
 
  		 		    type: 'POST',
 		 		    url: "saveLaneEntry", 
-		 		    data: {"vregno" : mak},
+		 		    data: {"ocrid" : mak},
  			        success: function(data){
  			        	if(data=="1"){
  			        		swal("Oops...", "Session Expired", {
@@ -620,7 +620,8 @@
 // 	 						document.getElementById("proceedLanBtn").style.display = "block";
 // 	 						document.getElementById("moreLoder").style.display = "none";
 			        	}else{ 	
- 			        	
+			        		clearAll();
+			        		getPayVehicleNo();
 							swal("Good job!", "This vehicle successfully assigned to the lane!", {
 								icon : "success",
 								buttons: {        			
