@@ -31,7 +31,7 @@
 			<div class="content">
 				<div class="page-inner">	
 					<div class="page-header">
-							<h4 class="page-title">Receipt Cancel</h4>
+							<h4 class="page-title">Invoice Summary</h4>
 							<ul class="breadcrumbs">
 								<li class="nav-home">
 									<a href="#">

@@ -198,7 +198,7 @@
 
 
 
-										<form:form modelAttribute="levelManage" id="form2">
+<form:form modelAttribute="levelManage" id="form2">
 											<label class="text-gray-900">To assign a user-level role, please use the grid below</label>
 											<table>
 												<tr valign="top">
@@ -217,9 +217,9 @@
 														data-cf-modified-46ada2dfb40708e7bf43261c-="">&lt;&lt;</a></td>
 													<td><select id="d" size="14" class="custom-select"
 														name="sroleID" style="width: 200px;" multiple required>
-															<c:forEach items="${assignRoleList}" var="role">
-															<option value = "${role.roleID}">${role.roleName}</option>
-															</c:forEach>
+															<%-- <c:forEach items="${assignRoleList}" var="role"> --%>
+															<%-- <option value = "${role.roleID}">${role.roleName}</option> --%>
+															<%-- </c:forEach> --%>
 													</select></td>
 												</tr>
 											</table>
