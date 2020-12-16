@@ -164,8 +164,8 @@ public class CentersController {
 				BusinessPartner bp=partnerRepo.getPartnerId(centerMaster.getPartner_ID().getPartner_ID());
 
 				centerMaster.setCountrycode(bp.getCountry_Code());
-				centerMaster.setGetAutoCaptureImgPath("E:\\ImageCap");
-				centerMaster.setVehicleAutoConfig("1-1-1-1");	
+//				centerMaster.setGetAutoCaptureImgPath("E:\\ImageCap");
+//				centerMaster.setVehicleAutoConfig("1-1-1-1");	
 				centerService.saveMaster(centerMaster);
 
 				InventoryLocation invloc = centerService.getInventoryLocationByCenterID(centerMaster.getCenter_ID());

@@ -711,6 +711,7 @@
 
 			    type: 'POST',
 			    url: "takeAutoNo",
+			    data: {"method":"1"},
 		        success: function(data){
 
 		        	//$("table tbody").empty();

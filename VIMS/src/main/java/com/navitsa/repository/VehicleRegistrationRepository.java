@@ -47,7 +47,7 @@ public interface VehicleRegistrationRepository  extends CrudRepository<VehicleRe
 	@Query(value = "select vr From VehicleRegistration vr WHERE vr.testStatus ='pending' and vr.vid.vehicleID =:vehicle_no")
 	public List<VehicleRegistration> getTestStatusVehicleRegistation(@Param("vehicle_no") String vehicleID);
 	
-	@Query(value = "select vr From VehicleRegistration vr WHERE  vr.date =:date and vr.centermaster.center_ID=:centerid")
+	@Query(value = "select vr From VehicleRegistration vr WHERE  vr.date =:date and vr.centermaster.center_ID=:centerid  and vr.status='ACTIVE' and vr.payType='Cash'")
 	public List<VehicleRegistration> getVehicleRegDetailByDate(@Param("date") String date,@Param("centerid") String centerid);
 
 	@Query(value="SELECT v FROM VehicleRegistration v WHERE v.ocrid.ocrid=:oid and v.status='ACTIVE'")

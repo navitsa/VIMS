@@ -145,11 +145,16 @@
 								var slctSubcat = $('#invView'), option = "";
 								slctSubcat.empty();
 								
-								if(data!="INACTIVE"){
-								selected_option = "<embed  type='application/pdf' src='data:application/pdf;base64,"+data+"#toolbar=0&navpanes=0&scrollbar=0' style='border: none; height:600px; width:100% '> </embed>"
-								slctSubcat.append(selected_option);
-								}else{
-									
+								if(data=="BACKDATE"){
+
+									swal({
+										  //title: "Are you sure?",
+										  text: "You can't Cancel this Invoice.",
+										  icon: "warning",
+										//  buttons: true,
+										//  dangerMode: true,
+										});
+								}else if(data=="INACTIVE"){
 									swal({
 										  //title: "Are you sure?",
 										  text: "This Invoice has been Canceled!",
@@ -157,9 +162,10 @@
 										//  buttons: true,
 										//  dangerMode: true,
 										});
-											
-									
-									
+								
+								}else{
+								selected_option = "<embed  type='application/pdf' src='data:application/pdf;base64,"+data+"#toolbar=0&navpanes=0&scrollbar=0' style='border: none; height:600px; width:100% '> </embed>"
+								slctSubcat.append(selected_option);
 								}
 
 							},

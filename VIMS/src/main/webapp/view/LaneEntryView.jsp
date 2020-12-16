@@ -662,6 +662,7 @@ setTimeout(takeAutoNo, 3000);
 
 	    type: 'POST',
 	    url: "takeAutoNo",
+	    data: {"method":"2"},
         success: function(data){
 
         	//$("table tbody").empty();

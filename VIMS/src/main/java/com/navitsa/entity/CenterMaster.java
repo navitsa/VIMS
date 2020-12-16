@@ -86,6 +86,9 @@ public class CenterMaster {
 	@Column(name="GET_Auto_Img_Path")
 	private String  getAutoCaptureImgPath;	
 	
+	@Column(name="lane_cam_img")
+	private String  laneCamImgPath;
+	
 	@Column(name="Vehicle_Auto_Config")
 	private String  vehicleAutoConfig;		
 	
@@ -269,6 +272,14 @@ public class CenterMaster {
 
 	public void setVehicleAutoConfig(String vehicleAutoConfig) {
 		this.vehicleAutoConfig = vehicleAutoConfig;
+	}
+
+	public String getLaneCamImgPath() {
+		return laneCamImgPath;
+	}
+
+	public void setLaneCamImgPath(String laneCamImgPath) {
+		this.laneCamImgPath = laneCamImgPath;
 	}
 
 	

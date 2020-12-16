@@ -507,6 +507,10 @@ public class VehicleService {
 		return receiptHeadRepository.getReceiptHeadDetailsByVRid(vregid);
 		
 	}
+	public List<ReceiptHead> getReceiptHeadByDate(@Param("recDate") String recDate) {
+		return receiptHeadRepository.getReceiptHeadByDate(recDate);
+		
+	}
 	public void saveInvoiceHead(InvoiceHead invoiceHead) {
 		invoiceHeadRepo.save(invoiceHead);			
 	}

@@ -15,9 +15,11 @@ public interface ReceiptHeadRepository extends CrudRepository<ReceiptHead,String
 	@Query(value="SELECT rh FROM ReceiptHead rh,VehicleRegistration vr WHERE vr.date =:vrdate and vr.vid.vehicleID=:vecid and vr.payType=:payTyp and vr.vregID=rh.vRegisterID.vregID and rh.status='ACTIVE' group by rh.recNo order by rh.recNo ")
 	public List<ReceiptHead> getReceiptHeadByVehicalRegID(@Param("vrdate") String vRdate,@Param("vecid") String vecid,@Param("payTyp") String payTyp);
 	
-	@Query(value="SELECT rh FROM ReceiptHead rh WHERE rh.vRegisterID.vregID=:vregid ")
+	@Query(value="SELECT rh FROM ReceiptHead rh WHERE rh.vRegisterID.vregID=:vregid and rh.status='ACTIVE' ")
 	public ReceiptHead getReceiptHeadDetailsByVRid(@Param("vregid") String vregid);
 	
+	@Query(value="SELECT rh FROM ReceiptHead rh WHERE rh.recDate=:recDate and rh.status='ACTIVE' ")
+	public List<ReceiptHead>  getReceiptHeadByDate(@Param("recDate") String recDate);
 	
 	@Transactional
 	@Modifying

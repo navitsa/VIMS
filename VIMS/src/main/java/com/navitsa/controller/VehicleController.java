@@ -2233,14 +2233,23 @@ public class VehicleController {
 		//Auto Capture License Plate Save Image in to DB
 			
 			@RequestMapping(value = "takeAutoNo", method = RequestMethod.POST)
-			public @ResponseBody List<NumberDataBeen> takeAutoNo( HttpSession session) 
+			public @ResponseBody List<NumberDataBeen> takeAutoNo(@RequestParam ("method") String method, HttpSession session) 
 			{
 			String centerid=session.getAttribute("centerid")+"";
 			CenterMaster centerMaster=centerService.getcenterById(centerid); 
 			
 			String autoCapPath=centerMaster.getGetAutoCaptureImgPath();
+			String laneimgpathPath=centerMaster.getLaneCamImgPath();
 			
-			File dir = new File(autoCapPath);
+			String path="";
+			if(method=="1") {
+				path=autoCapPath;
+			}else {
+				path=autoCapPath+laneimgpathPath;
+			}
+			
+				
+			File dir = new File(path);
 
 				
 			List<NumberDataBeen> numberDataBeenlist=new ArrayList<NumberDataBeen>();
@@ -2762,20 +2771,20 @@ public class VehicleController {
 				  String centerid=session.getAttribute("centerid")+"";
 				  CenterMaster centerMaster=centerService.getcenterById(centerid);
 				  
-				   List<VehicleRegistration> vehicleregdetail=vehicleService.getVehicleRegDetailByDate(recDate,centerid);
+				   List<ReceiptHead> receiptHeads=vehicleService.getReceiptHeadByDate(recDate);
 				  	
 				  	List<RevenueStatementBeen> vehicleReportByDateBeenList = new ArrayList<RevenueStatementBeen>();
-				  	for(VehicleRegistration vrData:vehicleregdetail) {
+				  	for(ReceiptHead rechead:receiptHeads) {
 				  		RevenueStatementBeen vehicleReportByDateBeen=new RevenueStatementBeen();
-				  		vehicleReportByDateBeen.setTestcat(vrData.getTestCategory().getCategoryType());
-				  		vehicleReportByDateBeen.setLregid(vrData.getTestLaneHeadId().getLaneName());
-				  		vehicleReportByDateBeen.setVclass(vrData.getVid().getVmodel().getVehicleClass().getVehicleClass());
-				  		vehicleReportByDateBeen.setVno(vrData.getVid().getVehicleID());
-				  		vehicleReportByDateBeen.setRegtime(vrData.getTime());
-				  		vehicleReportByDateBeen.setRegtype(vrData.getVtype().getvRegType());
-				  		vehicleReportByDateBeen.setInspecter(vrData.getUser().getUserName());
+				  		vehicleReportByDateBeen.setTestcat(rechead.getvRegisterID().getTestCategory().getCategoryType());
+				  		vehicleReportByDateBeen.setLregid(rechead.getvRegisterID().getTestLaneHeadId().getLaneName());
+				  		vehicleReportByDateBeen.setVclass(rechead.getvRegisterID().getVid().getVmodel().getVehicleClass().getVehicleClass());
+				  		vehicleReportByDateBeen.setVno(rechead.getvRegisterID().getVid().getVehicleID());
+				  		vehicleReportByDateBeen.setRegtime(rechead.getvRegisterID().getTime());
+				  		vehicleReportByDateBeen.setRegtype(rechead.getvRegisterID().getVtype().getvRegType());
+				  		vehicleReportByDateBeen.setInspecter(rechead.getvRegisterID().getUser().getUserName());
 				  	
-				  		ReceiptHead rechead=vehicleService.getReceiptHeadDetailsByVRid(vrData.getVregID());
+				  	//	ReceiptHead rechead=vehicleService.getReceiptHeadDetailsByVRid(vrData.getVregID());
 				  		
 				  		
 				  		vehicleReportByDateBeen.setRecno(rechead.getRecNo());
@@ -2785,14 +2794,14 @@ public class VehicleController {
 				  		vehicleReportByDateBeen.setVistatus("");
 				  		vehicleReportByDateBeen.setTeststatus("");
 			  	 
-					  	VehicleOwner vehicleOwner=vehicleService.getVehicleOwnerIDByVehicleID(vrData.getVid().getVehicleID());
+					  	VehicleOwner vehicleOwner=vehicleService.getVehicleOwnerIDByVehicleID(rechead.getvRegisterID().getVid().getVehicleID());
 				  		//System.out.println("ffffff="+vrData.getCusid().getId());
-				  		if(vrData.getCusid().getId().equals("0000")) {
+				  		if(rechead.getvRegisterID().getCusid().getId().equals("0000")) {
 				  			System.out.println("owner=");
 				  		vehicleReportByDateBeen.setCusname(vehicleOwner.getOwnerName());
 				  		}else {
 				  			System.out.println("customer=");
-				  			vehicleReportByDateBeen.setCusname(vrData.getCusid().getName());
+				  			vehicleReportByDateBeen.setCusname(rechead.getvRegisterID() .getCusid().getName());
 				  			
 				  		}
 				  		vehicleReportByDateBeen.setTax(((rechead.getNetTotal()/100)-(rechead.getTestFee()/100))+"");
