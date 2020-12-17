@@ -2242,7 +2242,7 @@ public class VehicleController {
 			String laneimgpathPath=centerMaster.getLaneCamImgPath();
 			
 			String path="";
-			if(method=="1") {
+			if(method.equals("1")) {
 				path=autoCapPath;
 			}else {
 				path=autoCapPath+laneimgpathPath;
