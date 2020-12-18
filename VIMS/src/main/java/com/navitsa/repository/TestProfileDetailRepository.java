@@ -52,8 +52,8 @@ public interface TestProfileDetailRepository extends CrudRepository<TestProfileD
 			"WHERE\r\n" + 
 			"    test_value_result_header.`Test_Value_File_ID` =:test_value_file_id\r\n" + 
 			"        AND test_profile_header.`profile_id` =:test_pro_id\r\n" + 
-			"        AND test_profile_detail.`vehicle_cat_id` = 1;",nativeQuery = true)
-	public String[][] getTestResult(@Param("test_pro_id") int test_pro_id,@Param("test_value_file_id") String test_value_file_id);
+			"        AND test_profile_detail.`vehicle_cat_id` =:vehicle_cat_id",nativeQuery = true)
+	public String[][] getTestResult(@Param("test_pro_id") int test_pro_id,@Param("test_value_file_id") String test_value_file_id,@Param("vehicle_cat_id") String vehicle_cat_id);
 	
 	@Query(value ="SELECT \r\n" + 
 			"    test_point.`test_point_name` AS test_point,\r\n" + 
@@ -86,7 +86,8 @@ public interface TestProfileDetailRepository extends CrudRepository<TestProfileD
 			"WHERE\r\n" + 
 			"    test_value_result_header.`Test_Value_File_ID` =:test_value_file_id\r\n" + 
 			"        AND test_profile_header.`profile_id` =:test_pro_id\r\n" + 
-			"        AND test_profile_detail.`vehicle_cat_id` = 1\r\n" + 
+			"        AND test_profile_detail.`vehicle_cat_id` =:vehicle_cat_id\r\n" + 
 			"        AND test_type.`type_id` = '37000-37999';",nativeQuery = true)
-	public String[][] getSpeedoTestResult(@Param("test_pro_id") int test_pro_id,@Param("test_value_file_id") String test_value_file_id);
+	public String[][] getSpeedoTestResult(@Param("test_pro_id") int test_pro_id,@Param("test_value_file_id") String test_value_file_id,@Param("vehicle_cat_id") String vehicle_cat_id);
+	
 }

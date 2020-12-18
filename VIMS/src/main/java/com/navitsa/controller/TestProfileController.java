@@ -9,15 +9,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.navitsa.entity.Ck_testProfileDetailId;
+import com.navitsa.entity.ParameterCodes;
 import com.navitsa.entity.TestParameter;
 import com.navitsa.entity.TestParameterAngle;
 import com.navitsa.entity.TestPoint;
+import com.navitsa.entity.TestProfile;
+import com.navitsa.entity.TestProfileDetail;
 import com.navitsa.entity.TestProfileStatus;
 import com.navitsa.entity.Test_type;
+import com.navitsa.entity.VehicleCategory;
 import com.navitsa.services.TestProfileService;
 import com.navitsa.services.TestTypeService;
+import com.navitsa.services.VehicleService;
 
 @Controller
 public class TestProfileController {
@@ -27,6 +34,9 @@ public class TestProfileController {
 
 	@Autowired
 	private TestTypeService testTypeService;
+	
+	@Autowired
+	private VehicleService vehicleService;
 	
 	@RequestMapping("/testPoints")
 	public String loadTestPointsForm(Model m) {
@@ -245,6 +255,76 @@ public class TestProfileController {
 	 public List<TestProfileStatus> getAllTestProfileStatus(){
 		 
 		 List<TestProfileStatus> ls = testProfileService.getAllTestProfileStatus();
+		 return ls;
+	 }
+	 
+	@RequestMapping("/limitValues")
+	public String loadLimitValuesForm(@RequestParam int proId, Model m) {
+		
+		TestProfile tp = new TestProfile();
+		tp.setTestProfileID(proId);
+		TestProfileDetail tpd = new TestProfileDetail();
+		tpd.setCk_testProfileDetailId(new Ck_testProfileDetailId(tp, null,null));
+		
+		m.addAttribute("limitValues", tpd);
+		return "testLimitValues";
+	}
+
+	@ModelAttribute("vehicleCat")
+	public List<VehicleCategory> getAllVehicleCats(){
+		List <VehicleCategory> vCats = vehicleService.getVehicleCategory();
+		return vCats;
+	} 
+
+	 @ModelAttribute("testProfile")
+	 public List<TestProfile> getAlltestProfiles(){
+		 
+		 List<TestProfile> ls = testProfileService.listAllProfiles();
+		 return ls;
+	 }
+
+	 @ModelAttribute("paraCodes")
+	 public List<ParameterCodes> getAllCodes(){
+		 
+		 List<ParameterCodes> ls = testProfileService.getAllCodes();
+		 return ls;
+	 }
+
+	@RequestMapping(value="/getTestCodes4", method=RequestMethod.GET)
+	public @ResponseBody List<ParameterCodes> getTestCodes4(@RequestParam String typeID) {
+		List<ParameterCodes> rs = testProfileService.getTestCodes4(typeID);
+		return rs;
+	}
+
+	//	save limit values
+	 @RequestMapping(value="/saveLimitValues" ,method=RequestMethod.POST)
+	 public String setLimitValues(@ModelAttribute("limitValues") TestProfileDetail tpd,
+			 RedirectAttributes redirectAttributes) {
+		 	 
+		 TestProfile testProfile = tpd.getCk_testProfileDetailId().getTestProfileHeaderID();
+		 ParameterCodes paraCode = tpd.getCk_testProfileDetailId().getParameterCode();
+		 String vehicle_cat_id = tpd.getCk_testProfileDetailId().getVehicleCat().getCategoryID();
+
+		 
+		 if(vehicle_cat_id.contains("all")) {
+			 List <VehicleCategory> vCats = vehicleService.getVehicleCategory();
+			 
+			 for (VehicleCategory vc : vCats) {
+				 tpd.setCk_testProfileDetailId(new Ck_testProfileDetailId(testProfile, paraCode, vc));
+				 testProfileService.saveTestProDetail(tpd);
+			 } 
+		 }else {
+			 testProfileService.saveTestProDetail(tpd);
+		 }
+			  
+		 return "redirect:/limitValues?proId="+testProfile.getTestProfileID();
+
+	 }
+	 
+	 @ModelAttribute("testProfileDetails")
+	 public List<TestProfileDetail> getAlltestProfilesDetails(){
+		 
+		 List<TestProfileDetail> ls = testProfileService.listAllProfileDetails();
 		 return ls;
 	 }
 }

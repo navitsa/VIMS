@@ -212,3 +212,37 @@ function getTestCodes3(str)
     });
 }
 
+function getTestCodes4(str)
+{
+	if (str=="") {
+		var dropDown = $('#paraCode'), option="";
+		dropDown.empty();
+        selected_option = "<option value='' selected>Select code...</option>"
+        dropDown.append(selected_option);
+        
+        return;
+	}else{
+		
+		$.ajax({
+			type: 'GET',
+			url: "getTestCodes4",
+			data: {"typeID" : str},
+			success: function(data){
+        
+				var dropDown=$('#paraCode'), option="";
+				dropDown.empty();
+				selected_option = "<option value='' selected>Select code...</option>"
+				dropDown.append(selected_option);
+
+	            for(var i=0; i<data.length; i++){
+	                option = option + "<option value='"+data[i].ck_paraCodeId.code+"'>"+data[i].ck_paraCodeId.code+" - "+data[i].testPoint.testPointName+" "+data[i].testParameter.paraName+" "+data[i].testParameterAngle.angleName+"</option>";
+	            }
+	            dropDown.append(option);
+			},
+			error:function(){
+				//alert("error");
+			}
+
+		});
+	}
+}

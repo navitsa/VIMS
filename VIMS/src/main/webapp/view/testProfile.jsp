@@ -134,7 +134,7 @@
 												<td>${tp.testProfileName}</td>
 												<td>${tp.description}</td>
 												<td>${tp.status}</td>
-												<td><a href="limitValues">Set Codes & Limit Values</a></td>
+												<td><a href="limitValues?proId=${tp.testProfileID}">Set Codes & Limit Values</a></td>
 												<td><a href="updateTestProfile?proId=${tp.testProfileID}"><i
 														class="fas fa-pen"></i></a>
 												</td>

@@ -36,6 +36,7 @@ import com.navitsa.entity.TestProfile;
 import com.navitsa.entity.TestProfileStatus;
 import com.navitsa.entity.TestProfileStatusJsonRespone;
 import com.navitsa.entity.Test_type;
+import com.navitsa.entity.VehicleCategory;
 import com.navitsa.entity.VehicleOwner;
 import com.navitsa.entity.VehicleRegistration;
 import com.navitsa.entity.VisualChecklistDetail;
@@ -164,7 +165,9 @@ public class TestingReportConfigController {
 		 int test_pro_id = centerService.getProfileID(cat_id);
 		 
 		 VehicleRegistration vr = vehicleService.getRegistraionInfo(register_id);
- 
+		 String vehicle_cat_id = vr.getVid().getVmodel().getVehicleClass().getCategoryID().getCategoryID();
+		 System.out.println("vehicle cat id "+vehicle_cat_id);
+		 
 		 String name,address,mobileNo;
 		 if(!vr.getCusid().getId().equals("0000"))
 		 {
@@ -221,7 +224,7 @@ public class TestingReportConfigController {
 		 params.put("appointmentNo", bookingNo);
 		 
 		 //getting test results from query
-		 String[][] result = service.getTestResult(test_pro_id,test_value_file_id);
+		 String[][] result = service.getTestResult(test_pro_id,test_value_file_id,vehicle_cat_id);
 		 List<TestResultBean> list = new ArrayList<>();
 		 
 		 for(int i=0; i<result.length;i++ )
@@ -327,7 +330,7 @@ public class TestingReportConfigController {
 		 params.put("limitValueDescription",list);
 
 /* ---------------------------------------------------------------------------------------------------------- */
-		 String[][] speedoResult = service.getSpeedoTestResult(test_pro_id,test_value_file_id);	
+		 String[][] speedoResult = service.getSpeedoTestResult(test_pro_id,test_value_file_id,vehicle_cat_id);	
 		 
 		 //String[][] a=new String[speedoResult.length/4+(speedoResult.length%4)/2][6];
 		 String[][] a=new String[3][6];
@@ -599,13 +602,13 @@ public class TestingReportConfigController {
 		 return ls;
 	 }
 	 
-	@RequestMapping("/limitValues")
+/*	@RequestMapping("/limitValues")
 	public String loadLimitValuesForm(Model m) {
 		
 		m.addAttribute("limitValues", new ParameterCodes());
 		//m.addAttribute("profileDetail", new TestProfileDetail());
 		return "testLimitValues";
-	}
+	}*/
 	
 	 @ModelAttribute("testProfile")
 	 public List<TestProfile> getAlltestProfiles(){
@@ -613,6 +616,12 @@ public class TestingReportConfigController {
 		 List<TestProfile> ls = service.listAllProfiles();
 		 return ls;
 	 }
+	 
+//	@ModelAttribute("vehicleCat")
+//	public List<VehicleCategory> getAllVehicleCats(){
+//		List <VehicleCategory> vCats = vehicleService.getVehicleCategory();
+//		return vCats;
+//	} 
 	 
 	 @ModelAttribute("testPoints")
 	 public List<TestPoint> getAlltestPoints(){
@@ -648,20 +657,20 @@ public class TestingReportConfigController {
 	}
 	
 	
-	@RequestMapping(value="/getTestCodes", method=RequestMethod.GET)
+/*	@RequestMapping(value="/getTestCodes", method=RequestMethod.GET)
 	public @ResponseBody List<ParameterCodes> getTestCodes(@RequestParam String typeID, String pointID, String paraID) {
 		List<ParameterCodes> rs = service.getTestCodes(typeID,pointID,paraID);
 		return rs;
-	}
+	}*/
 	
-	@RequestMapping(value="/getTestCodes2", method=RequestMethod.GET)
+/*	@RequestMapping(value="/getTestCodes2", method=RequestMethod.GET)
 	public @ResponseBody List<ParameterCodes> getTestCodes2(@RequestParam String typeID, String pointID, String paraID, String angleID) {
 		List<ParameterCodes> rs = service.getTestCodes2(typeID,pointID,paraID,angleID);
 		return rs;
-	}
+	}*/
 	
-	//	set limit values
-	 @RequestMapping(value="/setLimitValues" ,method=RequestMethod.POST)
+	//	save limit values
+/*	 @RequestMapping(value="/setLimitValues" ,method=RequestMethod.POST)
 	 public String setLimitValues(@ModelAttribute("limitValues") ParameterCodes pc,RedirectAttributes redirectAttributes) {
 		 
 		 Optional<ParameterCodes> obj = service.getDataByCode(pc.getCode());
@@ -691,7 +700,7 @@ public class TestingReportConfigController {
 		 
 		 return "redirect:/limitValues";
 
-	 }
+	 }*/
 	 
 	 @ModelAttribute("paraCodes")
 	 public List<ParameterCodes> getAllCodes(){
@@ -700,14 +709,14 @@ public class TestingReportConfigController {
 		 return ls;
 	 }
 	 
-	@RequestMapping(value="/getTestCodes3", method=RequestMethod.GET)
+/*	@RequestMapping(value="/getTestCodes3", method=RequestMethod.GET)
 	public @ResponseBody List<ParameterCodes> getTestCodes3(@RequestParam String typeID, String pointID) {
 		List<ParameterCodes> rs = service.getTestCodes3(typeID,pointID);
 		return rs;
-	}
+	}*/
 	
 	 // Edit limit values
-	 @RequestMapping("/editLimits")
+/*	 @RequestMapping("/editLimits")
 	 public ModelAndView getProfile(@RequestParam String code) {
 		 
 	     ModelAndView mav = new ModelAndView("testLimitValues");
@@ -727,7 +736,7 @@ public class TestingReportConfigController {
 	  
 	     return mav;
 	     
-	 }
+	 }*/
 
 	 @ModelAttribute("testProfileStatus")
 	 public List<TestProfileStatus> getAllTestProfileStatus(){
@@ -779,5 +788,4 @@ public class TestingReportConfigController {
 		return respone;
 	}
 	
-
 }

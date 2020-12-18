@@ -6,14 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.navitsa.entity.ParameterCodes;
 import com.navitsa.entity.TestParameter;
 import com.navitsa.entity.TestParameterAngle;
 import com.navitsa.entity.TestPoint;
 import com.navitsa.entity.TestProfile;
+import com.navitsa.entity.TestProfileDetail;
 import com.navitsa.entity.TestProfileStatus;
+import com.navitsa.repository.ParameterCodesRepository;
 import com.navitsa.repository.TestParameterAngleRepository;
 import com.navitsa.repository.TestParameterRepository;
 import com.navitsa.repository.TestPointRepository;
+import com.navitsa.repository.TestProfileDetailRepository;
 import com.navitsa.repository.TestProfileRepository;
 import com.navitsa.repository.TestProfileStatusRepository;
 
@@ -31,10 +35,17 @@ public class TestProfileService {
 	TestParameterAngleRepository paraAngleRepo;
 	
 	@Autowired
+	ParameterCodesRepository paraCodesRepo;
+	
+	@Autowired
 	TestProfileRepository tproRepo;
 	
 	@Autowired
+	TestProfileDetailRepository tproDetailRepo;
+	
+	@Autowired
 	TestProfileStatusRepository tproStatusRepo;
+	
 
 	public void save(TestPoint obj) {
 		// TODO Auto-generated method stub
@@ -82,6 +93,11 @@ public class TestProfileService {
 		// TODO Auto-generated method stub
 		return (List<TestProfile>) tproRepo.findAll();
 	}
+	
+	public List<TestProfileDetail> listAllProfileDetails() {
+		// TODO Auto-generated method stub
+		return (List<TestProfileDetail>) tproDetailRepo.findAll();
+	}
 
 	public List<TestProfileStatus> getAllTestProfileStatus() {
 		// TODO Auto-generated method stub
@@ -101,4 +117,19 @@ public class TestProfileService {
 		tproStatusRepo.updateRecord(s_id,status,serial_no);
 		
 	}
+
+	public List<ParameterCodes> getAllCodes() {
+		// TODO Auto-generated method stub
+		return (List<ParameterCodes>) paraCodesRepo.findAll();
+	}
+
+	public List<ParameterCodes> getTestCodes4(String typeID) {
+		return paraCodesRepo.getTestCodes4(typeID);
+	}
+
+	public void saveTestProDetail(TestProfileDetail tpd) {
+		tproDetailRepo.save(tpd);
+		
+	}
+
 }

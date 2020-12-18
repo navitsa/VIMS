@@ -113,9 +113,9 @@ public class TestReportConfigService {
 		tproDetailRepo.save(test_pro_detail);
 	}
 	
-	public String[][] getTestResult(int test_pro_id,String test_value_file_id) {
+	public String[][] getTestResult(int test_pro_id,String test_value_file_id,String vehicle_cat_id) {
 		
-		return tproDetailRepo.getTestResult(test_pro_id,test_value_file_id);
+		return tproDetailRepo.getTestResult(test_pro_id,test_value_file_id,vehicle_cat_id);
 	}
 	
 	public List<TestParameterCategory> getAllTestParaCat() {
@@ -138,29 +138,28 @@ public class TestReportConfigService {
 		return paraAngleRepo.findAllByTestParaID(paraID);
 	}
 
-	public List<ParameterCodes> getTestCodes(String typeID, String pointID, String paraID) {
-		
-		return paraCodesRepo.getTestCodes(typeID,pointID,paraID);
-	}
+//	public List<ParameterCodes> getTestCodes(String typeID, String pointID, String paraID) {
+//		
+//		return paraCodesRepo.getTestCodes(typeID,pointID,paraID);
+//	}
 	
-	public List<ParameterCodes> getTestCodes2(String typeID, String pointID, String paraID, String angleID) {
-		
-		return paraCodesRepo.getTestCodes2(typeID,pointID,paraID,angleID);
-	}
+//	public List<ParameterCodes> getTestCodes2(String typeID, String pointID, String paraID, String angleID) {
+//		
+//		return paraCodesRepo.getTestCodes2(typeID,pointID,paraID,angleID);
+//	}
 	
-	public void setLimitValues(String operator,Double limitValue,Double minValue,Double maxValue,String code) {
-		paraCodesRepo.setLimitValues(operator,limitValue,minValue,maxValue,code);
-	}
+//	public void setLimitValues(String operator,Double limitValue,Double minValue,Double maxValue,String code) {
+//		paraCodesRepo.setLimitValues(operator,limitValue,minValue,maxValue,code);
+//	}
 
 	public List<ParameterCodes> getAllCodes() {
 		// TODO Auto-generated method stub
 		return (List<ParameterCodes>) paraCodesRepo.findAll();
 	}
 
-	public List<ParameterCodes> getTestCodes3(String typeID, String pointID) {
-		// TODO Auto-generated method stub
-		return paraCodesRepo.getTestCodes3(typeID,pointID);
-	}
+//	public List<ParameterCodes> getTestCodes3(String typeID, String pointID) {
+//		return paraCodesRepo.getTestCodes3(typeID,pointID);
+//	}
 
 	public ParameterCodes getData(String code) {
 		// TODO Auto-generated method stub
@@ -277,9 +276,9 @@ public class TestReportConfigService {
 		return emissionDieselCerDataRepo.getEDCDataID(regId);
 	}
 
-	public String[][] getSpeedoTestResult(int test_pro_id,String test_value_file_id) {
+	public String[][] getSpeedoTestResult(int test_pro_id,String test_value_file_id,String vehicle_cat_id) {
 		
-		return tproDetailRepo.getSpeedoTestResult(test_pro_id,test_value_file_id);
+		return tproDetailRepo.getSpeedoTestResult(test_pro_id,test_value_file_id,vehicle_cat_id);
 	}
 
 }
