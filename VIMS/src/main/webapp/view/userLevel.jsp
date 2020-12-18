@@ -216,10 +216,10 @@
 														onclick="if (!window.__cfRLUnblockHandlers) return false; listbox_moveacross('d', 's')"
 														data-cf-modified-46ada2dfb40708e7bf43261c-="">&lt;&lt;</a></td>
 													<td><select id="d" size="14" class="custom-select"
-														name="sroleID" style="width: 200px;" multiple required>
-															<%-- <c:forEach items="${assignRoleList}" var="role"> --%>
-															<%-- <option value = "${role.roleID}">${role.roleName}</option> --%>
-															<%-- </c:forEach> --%>
+														name="sroleID" style="width: 200px;" multiple required >
+															<c:forEach items="${assignRoleList}" var="role" >
+																<option value = "${role.roleID}" selected="selected">${role.roleName}</option>
+															</c:forEach>
 													</select></td>
 												</tr>
 											</table>

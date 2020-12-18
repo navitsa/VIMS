@@ -207,6 +207,10 @@ public class UsersService {
 //		levelManageRepo.deleteUserLevelManageByLevelid(levelid);
 //		
 //	}
+	public List<Role> getAllNotAssignRole(String ulid){
+		return roleRepository.getAllNotAssignRole(ulid);		
+	}
+	
 	public List<Role> getAssignRoleByLevel(String ulid){
 		return roleRepository.getAssignRoleByLevel(ulid);
 	}

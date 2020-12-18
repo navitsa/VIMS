@@ -629,7 +629,7 @@ public class UsersController {
 					//ul.setUlid(ulid);
 				//	ul.
 					List<UserLevel> userLevel = usservice.getUserLevel();					
-					List<Role> roleList = usservice.getAll();
+					List<Role> roleList = usservice.getAllNotAssignRole(ulid);
 					
 					List<Role> assignRoleList = usservice.getAssignRoleByLevel(ulid);
 					model.put("userLevel", ul);
