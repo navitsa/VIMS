@@ -217,8 +217,8 @@ function getTestCodes4(str)
 	if (str=="") {
 		var dropDown = $('#paraCode'), option="";
 		dropDown.empty();
-        selected_option = "<option value='' selected>Select code...</option>"
-        dropDown.append(selected_option);
+        //selected_option = "<option value='' selected>Select code...</option>"
+        //dropDown.append(selected_option);
         
         return;
 	}else{
@@ -231,7 +231,7 @@ function getTestCodes4(str)
         
 				var dropDown=$('#paraCode'), option="";
 				dropDown.empty();
-				selected_option = "<option value='' selected>Select code...</option>"
+				selected_option = "<option></option>"
 				dropDown.append(selected_option);
 
 	            for(var i=0; i<data.length; i++){

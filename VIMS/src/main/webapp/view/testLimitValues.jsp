@@ -255,7 +255,7 @@
 											</div>
 										</div>
 										
-										<input name="tolerance" type="checkbox" value="true"> Tolerance (%)
+										<input name="tolerance" type="checkbox" name="tolerance" value="true"> Tolerance (%)
 										<div class="row">
 											<div class="col-lg-3">
 												<div class="input-group">
@@ -344,7 +344,10 @@
 		    $('#proDetailsTable').DataTable( {
 		    	//"scrollY": "400px",
 		    	"processing": true,
-		        //"columnDefs": [{ "orderable": false, "targets": 4 },{ "orderable": false, "targets": 5 }]
+		    	"order": [[ 0, "acs" ]],
+		        "columnDefs": [{ "orderable": false, "targets": 4 },
+		        				{ "orderable": false, "targets": 5 },
+		        				{ "orderable": false, "targets": 6 }]
 		    } );
 		});
 
@@ -373,6 +376,9 @@
 					document.getElementById("input2").disabled = false;
 				}
 
+			});
+			
+			$('input[type=checkbox][name="tolerance"]').change(function() {
 			});
 		});
 	</script>
