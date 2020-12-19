@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -36,7 +35,6 @@ import com.navitsa.entity.TestProfile;
 import com.navitsa.entity.TestProfileStatus;
 import com.navitsa.entity.TestProfileStatusJsonRespone;
 import com.navitsa.entity.Test_type;
-import com.navitsa.entity.VehicleCategory;
 import com.navitsa.entity.VehicleOwner;
 import com.navitsa.entity.VehicleRegistration;
 import com.navitsa.entity.VisualChecklistDetail;
@@ -56,16 +54,16 @@ import com.navitsa.utils.ReportViewe;
 public class TestingReportConfigController {
 
 	@Autowired
-	private TestReportConfigService service;
+	private CenterService centerService;
+
+	@Autowired
+	private VehicleService vehicleService;
 	
 	@Autowired
 	private TestTypeService testTypeService;
 	
 	@Autowired
-	private VehicleService vehicleService;
-	
-	@Autowired
-	private CenterService centerService;
+	private TestReportConfigService service;
 	
 	@Autowired
 	private VisualInspectionServices inspectionServices;
@@ -166,7 +164,6 @@ public class TestingReportConfigController {
 		 
 		 VehicleRegistration vr = vehicleService.getRegistraionInfo(register_id);
 		 String vehicle_cat_id = vr.getVid().getVmodel().getVehicleClass().getCategoryID().getCategoryID();
-		 System.out.println("vehicle cat id "+vehicle_cat_id);
 		 
 		 String name,address,mobileNo;
 		 if(!vr.getCusid().getId().equals("0000"))
@@ -326,8 +323,6 @@ public class TestingReportConfigController {
 			 
 			 //System.out.println(obj.getTest_type_test_type()+" "+pass_fail_status);
 		 }
-		 
-		 params.put("limitValueDescription",list);
 
 /* ---------------------------------------------------------------------------------------------------------- */
 		 String[][] speedoResult = service.getSpeedoTestResult(test_pro_id,test_value_file_id,vehicle_cat_id);	
@@ -451,27 +446,27 @@ public class TestingReportConfigController {
 				params.put("speedoPassStatus",status);}
 			
 /* ---------------------------------------------------------------------------------------------------------- */
-
+			
 			params.put("noiseResults",list);
 			params.put("brakeResults", list);
 /* ---------------------------------------------------------------------------------------------------------- */
 			
-		 try {
-			 // getting visual inspection records
-			 VisualChecklistMaster vi = inspectionServices.getChecklistMasterData(register_id);
-			 List<VisualChecklistDetail> b = inspectionServices.getCheckedData(vi.getCheklistID());
-			 params.put("checklistData",b );
+		try {
+			// getting visual inspection records
+			VisualChecklistMaster vi = inspectionServices.getChecklistMasterData(register_id);
+			List<VisualChecklistDetail> b = inspectionServices.getCheckedData(vi.getCheklistID());
+			params.put("checklistData", b);
 		} catch (Exception e) {
-			System.out.println("Error on getting visual inspection records "+e);
+			System.out.println("Error on getting visual inspection records " + e);
 		}
 		 
 		try {
-			// Emission diesel results 
+			// Emission diesel results
 			EmissionDieselCertificateData emd = service.getEmiDieselCerData(register_id);
 			List<EmissionDieselCertificateReadings> emr = service.getEmiDieselCerReadings(emd.getId_no());
-			params.put("emissionDieselReadings",emr);
+			params.put("emissionDieselReadings", emr);
 		} catch (Exception e) {
-			System.out.println("Error on getting Emission diesel results "+e);
+			System.out.println("Error on getting Emission diesel results " + e);
 		}
 		
 		try {
@@ -559,6 +554,7 @@ public class TestingReportConfigController {
 		 
 		 ReportViewe view =new ReportViewe();
 		 String pdf_result = null;
+		 params.put("limitValueDescription",list);
 		 
 		try {
 			pdf_result = view.pdfReportViewInlineSystemOpen("test_report.jasper","test_report",list,params,response);
