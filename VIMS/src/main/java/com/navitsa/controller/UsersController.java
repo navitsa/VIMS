@@ -46,6 +46,7 @@ import com.navitsa.services.AppointmentService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.FinanceAccountingService;
 import com.navitsa.services.UsersService;
+import com.navitsa.utils.DBBackup;
 import com.navitsa.utils.DateHelperWeb;
 import com.navitsa.utils.ReportViewe;
 import com.navitsa.utils.StringFormaterWeb;
@@ -641,6 +642,10 @@ public class UsersController {
 					//assignRoleList
 				}
 				
-			
+				@RequestMapping(value="/startDbBackup")
+				 public @ResponseBody String getDbBackup( HttpSession session) {	
+
+					return DBBackup.startDBBackup();
+				}
 }
 

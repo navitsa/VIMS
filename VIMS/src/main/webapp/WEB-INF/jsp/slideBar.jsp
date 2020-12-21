@@ -294,6 +294,12 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 				<a class="collapse-item fontst-sb-it" href="userLevel" hidden="true" id="userLevel">User Categories</a> 
 				<a class="collapse-item fontst-sb-it" href="register" hidden="true" id="register" >User Registration </a>
+
+				
+					<a href="#" data-toggle="modal"data-target="#dbbakModal" id="dbbak">
+											<span class="link-collapse">DBBakup</span>
+										</a>
+				
 				<!--<a class="collapse-item fontst-sb-it" href="editUserreg"  hidden="true" id="editUserreg">Edit Users</a>-->
 			</div>
 		</div>
