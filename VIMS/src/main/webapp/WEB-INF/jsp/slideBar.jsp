@@ -296,7 +296,7 @@
 				<a class="collapse-item fontst-sb-it" href="register" hidden="true" id="register" >User Registration </a>
 
 				
-					<a href="#" data-toggle="modal"data-target="#dbbakModal" id="dbbak">
+					<a href="#" data-toggle="modal"data-target="#dbbakModal" hidden="true"  id="dbbak">
 											<span class="link-collapse">DBBakup</span>
 										</a>
 				
