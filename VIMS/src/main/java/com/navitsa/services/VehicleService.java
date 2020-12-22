@@ -613,6 +613,15 @@ public class VehicleService {
 		
 		return laneAssignRepository.getLaneInspector(laneid,nowdate,nowtime);
 	}
+	
+	public void savelaneAllocation(LaneAssign laneAssign) {
+		
+		laneAssignRepository.save(laneAssign);
+	}
+	public List<LaneAssign> getAllLaneAssign() {
+		
+		return (List<LaneAssign>) laneAssignRepository.findAll();
+	}
 }
 
 

@@ -147,6 +147,7 @@
 				<a class="collapse-item fontst-sb-it" href="businessPartner" hidden="true" id="businessPartner">Business partner</a>	
 				<a class="collapse-item fontst-sb-it" href="#" hidden="true" id="CorporateCalendar">Partner Corporate Calendar</a>
 				<a class="collapse-item fontst-sb-it" href="vehicleRegTypes" hidden="true" id="vehicleRegTypes">Lane Registration Types</a>
+				<a class="collapse-item fontst-sb-it" href="laneAllocation" hidden="true" id="laneAllocation">Lane Allocation</a>
 			</div>
 		</div>
 	</li>
