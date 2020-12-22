@@ -255,23 +255,15 @@
 											</div>
 										</div>
 										
-										<input name="tolerance" type="checkbox" name="tolerance" value="true"> Tolerance (%)
+										<label for="plusTol">Tolerance</label>
 										<div class="row">
 											<div class="col-lg-3">
-												<div class="input-group">
-													<div class="input-group-prepend">
-														<span class="input-group-text">+</span>
-													</div>												
-													<input id="plusTol" type="text" class="form-control input-border-bottom">								
+												<div class="input-group">												
+													<form:input path="tolerance" id="plusTol" type="text" class="form-control input-border-bottom"/>
+													<div class="input-group-append">
+														<span class="input-group-text">%</span>
+													</div>							
 												</div>
-											</div>
-											<div class="col-lg-3">												
-												<div class="input-group">
-													<div class="input-group-prepend">
-														<span class="input-group-text">-</span>
-													</div>								
-													<input id="minusTol" type="text" class="form-control input-border-bottom">
-												</div>	
 											</div>
 										</div>
 										
@@ -344,7 +336,7 @@
 		    $('#proDetailsTable').DataTable( {
 		    	//"scrollY": "400px",
 		    	"processing": true,
-		    	"order": [[ 0, "acs" ]],
+		    	"order": [[ 0, "desc" ]],
 		        "columnDefs": [{ "orderable": false, "targets": 4 },
 		        				{ "orderable": false, "targets": 5 },
 		        				{ "orderable": false, "targets": 6 }]
@@ -377,9 +369,7 @@
 				}
 
 			});
-			
-			$('input[type=checkbox][name="tolerance"]').change(function() {
-			});
+
 		});
 	</script>
 

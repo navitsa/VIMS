@@ -21,6 +21,9 @@ public class VehiclesSubCategory {
 
 	@Column(name="maxSpeed")
 	private int maxSpeed;
+	
+	@Column(name="tolerance")
+	private double tolerance;
 
 	public String getSubCategoryID() {
 		return subCategoryID;
@@ -45,7 +48,13 @@ public class VehiclesSubCategory {
 	public void setMaxSpeed(int maxSpeed) {
 		this.maxSpeed = maxSpeed;
 	}
-	
-	
+
+	public double getTolerance() {
+		return tolerance;
+	}
+
+	public void setTolerance(double tolerance) {
+		this.tolerance = tolerance;
+	}		
 	
 }

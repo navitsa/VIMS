@@ -60,7 +60,8 @@ public interface TestProfileDetailRepository extends CrudRepository<TestProfileD
 			"    test_parameter.`para_name` AS para_name,\r\n" + 
 			"    test_value_result_detail.`Result` AS Result,\r\n" + 
 			"    test_type.`type_id` AS type_id,\r\n" + 
-			"    test_type.`test_type` AS test_type\r\n" + 
+			"    test_type.`test_type` AS test_type,\r\n" +
+			"    test_profile_detail.`tolerance` AS tolerance\r\n" +
 			"FROM\r\n" + 
 			"    test_profile_header\r\n" + 
 			"        INNER JOIN\r\n" + 

@@ -32,9 +32,12 @@ public class TestProfileDetail {
 	
 	@Column(name="max_value")
 	private Double maxValue;
+	
+	@Column(name="tolerance")
+	private Double tolerance;
 
 	public TestProfileDetail(Ck_testProfileDetailId ck_testProfileDetailId,
-			String limitValueDesc, String operator, Double limitValue, Double minValue, Double maxValue) {
+			String limitValueDesc, String operator, Double limitValue, Double minValue, Double maxValue, Double tolerance) {
 		super();
 		//this.testProfileDetailID = testProfileDetailID;
 		this.ck_testProfileDetailId = ck_testProfileDetailId;
@@ -43,6 +46,7 @@ public class TestProfileDetail {
 		this.limitValue = limitValue;
 		this.minValue = minValue;
 		this.maxValue = maxValue;
+		this.tolerance = tolerance;
 	}
 
 /*	public int getTestProfileDetailID() {
@@ -102,6 +106,14 @@ public class TestProfileDetail {
 
 	public void setMaxValue(Double maxValue) {
 		this.maxValue = maxValue;
+	}
+
+	public Double getTolerance() {
+		return tolerance;
+	}
+
+	public void setTolerance(Double tolerance) {
+		this.tolerance = tolerance;
 	}
 
 	public TestProfileDetail() {
