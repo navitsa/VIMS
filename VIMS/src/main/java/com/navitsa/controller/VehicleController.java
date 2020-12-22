@@ -75,6 +75,7 @@ import com.navitsa.entity.IncomingReceiptDetails;
 import com.navitsa.entity.IncomingReceiptHead;
 import com.navitsa.entity.InvoiceDetails;
 import com.navitsa.entity.InvoiceHead;
+import com.navitsa.entity.LaneAssign;
 import com.navitsa.entity.OcrDetails;
 import com.navitsa.entity.ReceiptDetails;
 import com.navitsa.entity.ReceiptHead;
@@ -3590,7 +3591,19 @@ public class VehicleController {
 		   
 		}
 	  	
-	  	
-	  	
+		@RequestMapping(value = "getLaneInspector", method = RequestMethod.GET)
+		public @ResponseBody List<LaneAssign> getLaneInspector( @RequestParam String laneid) 
+		{
+
+	    	 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+	    	Date date = new Date();  
+	    	DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
+	    	LocalTime time = LocalTime.now();
+			 
+			return vehicleService.getLaneInspector(laneid,formatter.format(date),time.format(formattertime));
+		   
+
+		}
+	
 }
 

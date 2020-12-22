@@ -355,7 +355,7 @@
 									<div class="col-sm-8">						             			             		
 										
 											
-											<form:select class="form-control fontst" path="testLaneHeadId.testLaneHeadId" onchange=""     
+											<form:select class="form-control fontst" path="testLaneHeadId.testLaneHeadId" onchange="getLaneInspector();"     
 												required="Required" id="tldid">
 									
 												<c:forEach items="${allLane}" var="lan">
@@ -374,11 +374,11 @@
 									</div>	
 									<div class="col-sm-6">						             			             		
 											<form:select class="form-control fontst" path="user"
-												required="Required" >
+												required="Required" id="users" >
 												<form:option value="">--SELECT--</form:option>
-												<c:forEach items="${usercombo}" var="use">
-													<form:option value="${use.userId}">${use.userName}</form:option>
-												</c:forEach>
+<%-- 												<c:forEach items="${usercombo}" var="use"> --%>
+<%-- 													<form:option value="${use.userId}">${use.userName}</form:option> --%>
+<%-- 												</c:forEach> --%>
 											</form:select>			             		
 									</div>
 									
@@ -966,7 +966,7 @@
     			    success: function(data){
     			    	
     			    	 document.getElementById("tldid").value= data[0][0];
-    		    		
+    			    	 getLaneInspector();
     			    },
     			    error:function(){
     			       
@@ -1327,7 +1327,34 @@
 					
 					
 				}
-	
+			getLaneInspector();
+			function getLaneInspector(){
+				
+				var tldid=document.getElementById("tldid").value;
+	            var slctSubcat=$('#users'), option="";
+	            slctSubcat.empty();
+	            option="<option value=''>--SELECT--</option>"
+				$.ajax({
+			        type: 'GET',
+			        url: "getLaneInspector",
+			        data: {"laneid" : tldid},
+			        success: function(data){
+			        	
+;
+			            for(var i=0; i<data.length; i++){
+			                option = option + "<option value='"+data[i].userId.userId + "'>"+data[i].userId.userName + "</option>";
+			               
+			            }
+			            slctSubcat.append(option);
+			           
+			        },
+			        error:function(){
+			            alert("No return vMake data");
+			        }
+
+			    });
+				
+			}
 			
 			</script>
 </body>

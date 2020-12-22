@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.navitsa.entity.BusinessPartner;
 import com.navitsa.entity.CenterMaster;
@@ -17,6 +19,7 @@ import com.navitsa.entity.IncomingReceiptDetails;
 import com.navitsa.entity.IncomingReceiptHead;
 import com.navitsa.entity.InvoiceDetails;
 import com.navitsa.entity.InvoiceHead;
+import com.navitsa.entity.LaneAssign;
 import com.navitsa.entity.OcrDetails;
 import com.navitsa.entity.ReceiptDetails;
 import com.navitsa.entity.ReceiptHead;
@@ -43,6 +46,7 @@ import com.navitsa.repository.IncomingReceiptDetailsRepository;
 import com.navitsa.repository.IncomingReceiptHeadRepository;
 import com.navitsa.repository.InvoiceDetailsRepository;
 import com.navitsa.repository.InvoiceHeadRepository;
+import com.navitsa.repository.LaneAssignRepository;
 import com.navitsa.repository.OcrDetailsRepository;
 import com.navitsa.repository.ReceiptDetailsRepository;
 import com.navitsa.repository.ReceiptHeadRepository;
@@ -147,6 +151,8 @@ public class VehicleService {
 	@Autowired
 	private VehiclesSubCategoryRepository vehiclesSubCategoryRepository;
 	
+	@Autowired
+	LaneAssignRepository laneAssignRepository;
 	
 	public List<VehicleMake> getMakelistAll() {
 		return (List<VehicleMake>) repo.findAll();
@@ -603,7 +609,10 @@ public class VehicleService {
 		
 	}
 
-	
+	public List<LaneAssign> getLaneInspector(String laneid,String nowdate,String nowtime) {
+		
+		return laneAssignRepository.getLaneInspector(laneid,nowdate,nowtime);
+	}
 }
 
 
