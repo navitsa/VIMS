@@ -288,6 +288,7 @@
 												<th>Limit</th>
 												<th>Min</th>
 												<th>Max</th>
+												<th>Tolerance</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -300,6 +301,7 @@
 													<td>${tpd.limitValue}</td>
 													<td>${tpd.minValue}</td>
 													<td>${tpd.maxValue}</td>
+													<td>${tpd.tolerance}</td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -336,10 +338,11 @@
 		    $('#proDetailsTable').DataTable( {
 		    	//"scrollY": "400px",
 		    	"processing": true,
-		    	"order": [[ 0, "desc" ]],
+		    	//"order": [[ 0, "desc" ]],
 		        "columnDefs": [{ "orderable": false, "targets": 4 },
 		        				{ "orderable": false, "targets": 5 },
-		        				{ "orderable": false, "targets": 6 }]
+		        				{ "orderable": false, "targets": 6 },
+		        				{ "orderable": false, "targets": 7 }]
 		    } );
 		});
 
