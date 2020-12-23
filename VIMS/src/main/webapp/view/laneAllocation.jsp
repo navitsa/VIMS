@@ -50,17 +50,17 @@
 					
 				 <form:form action="savelaneAllocation" modelAttribute="laneAllocation" method="POST" id="laneAllocation">		
 				 	 <div class="row">	
-		<div class="col-xl-8 col-lg-6">
-				 	<div class="card shadow mb-4">				
+		<div class="col-xl-5 col-lg-5">
+				 	<div class="card shadow mb-12">				
 						<div class="card-body">
 						
 						<div class="form-group row">						
-							<div class="col-sm-4">
+							<div class="col-sm-6">
 								<div class="row">
-									<div class="col-sm-8">
+									<div class="col-sm-9">
 										<label for="manufactureYear" class="l-fontst">Lane</label>	
-												             			             		
-										
+<!-- 												    type="hidden"         			             		 -->
+										<form:input path="id"  type="hidden"/>
 											
 											<form:select class="form-control fontst" path="testLaneHeadId.testLaneHeadId" onchange="getLaneInspector();"     
 												required="Required" id="tldid">
@@ -76,7 +76,7 @@
 							</div>		
 							<div class="col-sm-6">	
 								<div class="row">
-									<div class="col-sm-6">
+									<div class="col-sm-9">
 										<label  class="l-fontst">Lane Inspector</label>
 															             			             		
 											<form:select class="form-control fontst" path="userId.userId"
@@ -95,13 +95,13 @@
 						 </div>	
 						 
 						 
-						 						<div class="form-group row">						
-							<div class="col-sm-4">
+						 <div class="form-group row">						
+							<div class="col-sm-6">
 								<div class="row">
-									<div class="col-sm-8">
+									<div class="col-sm-9">
 										<label for="manufactureYear" class="l-fontst">From Date</label>	
 												             			             		
-										<form:input type="date"  class="form-control form-control-sm text-primary" path="fromDate" id="fromDate"/>
+										<form:input type="date"  class="form-control form-control-sm text-primary" path="fromDate" id="fromDate" required="Required"/>
 										
 													             		
 									</div>			
@@ -110,10 +110,10 @@
 							</div>		
 							<div class="col-sm-6">	
 								<div class="row">
-									<div class="col-sm-6">
+									<div class="col-sm-9">
 										<label  class="l-fontst">To Date</label>
 															             			             		
-											<form:input type="date"  class="form-control form-control-sm text-primary" path="toDate" id="toDate"/>
+											<form:input type="date"  class="form-control form-control-sm text-primary" path="toDate" id="toDate" required="Required"/>
 													             		
 									</div>
 									
@@ -125,12 +125,12 @@
 						 
 						 
 						 		<div class="form-group row">						
-							<div class="col-sm-4">
+							<div class="col-sm-6">
 								<div class="row">
 									<div class="col-sm-8">
 										<label class="l-fontst">From Time</label>	
 												             			             		
-										<form:input type="time"  class="form-control form-control-sm text-primary" path="fromTime" id="fromTime"/>
+										<form:input type="time"  class="form-control form-control-sm text-primary" path="fromTime" id="fromTime" required="Required"/>
 										
 													             		
 									</div>			
@@ -139,10 +139,10 @@
 							</div>		
 							<div class="col-sm-6">	
 								<div class="row">
-									<div class="col-sm-6">
+									<div class="col-sm-8">
 										<label  class="l-fontst">To Time</label>
 															             			             		
-											<form:input type="time"  class="form-control form-control-sm text-primary" path="toTime" id="toTime"/>
+											<form:input type="time"  class="form-control form-control-sm text-primary" path="toTime" id="toTime" required="Required"/>
 													             		
 									</div>
 									
@@ -170,10 +170,12 @@
 				 </div>	
 				 </div>	
 				 				 </div>	
-				 </div>		
-				</form:form>
-				
-				<table id="eqTypeTable"
+				 				 
+				 				<div class="col-xl-7 col-lg-7"> 
+				 					<div class="card shadow mb-12">				
+						<div class="card-body"> 
+				 				 
+				 				 <table id="eqTypeTable"
 														class="table table-striped table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
 														cellspacing="0">
 														<!--  <col width="150"> 
@@ -199,13 +201,22 @@
 																	<td><div>${lanAllo.fromDate} To ${lanAllo.toDate}</div></td>
 																	<td><div>${lanAllo.fromTime} To ${lanAllo.toTime}</div></td>
 																	<td><div>${lanAllo.status}</div></td>
-<!-- 																	<td><a -->
-<%-- 																		href="editLaneAllocation?id=${lanAllo.id}"><i --%>
-<!-- 																			class="material-icons">&#xE254;</i></a></td> -->
+																	<td><a
+																		href="editLaneAllocation?id=${lanAllo.id}"><i
+																			class="material-icons">&#xE254;</i></a></td>
 																</tr>
 															</c:forEach>
 														</tbody>
 													</table>
+				 				 
+				 				 </div>
+				 				 </div>
+				 				</div> 
+				 				 
+				 </div>		
+				</form:form>
+				
+				
 				
 				
 					</div>

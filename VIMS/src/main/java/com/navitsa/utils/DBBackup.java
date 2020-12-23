@@ -1,19 +1,26 @@
 package com.navitsa.utils;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public  class DBBackup {
 
 
-	public static String startDBBackup() {
+	public static String startDBBackup(String dbBackPath) {
 	
 		//String executeCmd = "mysqldump -h localhost -P 3307 -u root -pneV071it vinoddb>E:/CTB2/pqr0258.sql"; 
 		
 		Process p = null;
         try {
+        	
+    		Date backupDate = new Date();
+    		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+    		String backupDateStr = format.format(backupDate);
+        	
+        	
             Runtime runtime = Runtime.getRuntime();
-            p = runtime.exec("C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump -uroot -pneV071it -P 3307 --add-drop-database -B vinoddb -r E:/CTB2/pqr0258.sql");
+            p = runtime.exec("C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump -uroot -pneV071it -P 3307 --add-drop-database -B vinoddb -r "+dbBackPath+"DB_BAK_"+backupDateStr+".sql");
 //change the dbpass and dbname with your dbpass and dbname
             int processComplete = p.waitFor();
 

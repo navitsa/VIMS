@@ -3627,6 +3627,12 @@ public class VehicleController {
 
 			
 					try {
+						if(laneAssign.getId()==0) {
+							LaneAssign la=new LaneAssign();
+							laneAssign.setId(la.getId());
+						}
+						
+						
 						vehicleService.savelaneAllocation(laneAssign);
 					//	redirectAttributes.addFlashAttribute("success", 1);
 						return "redirect:/laneAllocation";
@@ -3638,6 +3644,25 @@ public class VehicleController {
 					return "laneAllocation";
 				
 		}	
+		
+		@RequestMapping("/editLaneAllocation")
+		public ModelAndView editLaneAllocation(@RequestParam int id,HttpSession session) {
+			ModelAndView mav = new ModelAndView("laneAllocation");
+			
+			LaneAssign laneAssign=vehicleService.getLaneAssignByid(id);
+					
+			mav.addObject("laneAllocation", laneAssign);
+			List<LaneAssign> allLaneAssign=vehicleService.getAllLaneAssign();
+			
+			mav.addObject("allLaneAllocation", allLaneAssign);
+			List<Users> users = usersService.listAll();
+			mav.addObject("users", users);
+			List<TestLaneHead> allCenterLane=laneServices.getTestLaneHeadDetailByCenter(session.getAttribute("centerid")+"");
+			mav.addObject("lanes", allCenterLane);
+			
+			return mav;
+		}
+		
 		
 		//editLaneAllocation
 }

@@ -622,6 +622,10 @@ public class VehicleService {
 		
 		return (List<LaneAssign>) laneAssignRepository.findAll();
 	}
+	public LaneAssign getLaneAssignByid(int id) {
+		
+		return laneAssignRepository.findById(id).get();
+	}
 }
 
 

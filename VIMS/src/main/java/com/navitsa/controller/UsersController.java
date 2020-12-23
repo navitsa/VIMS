@@ -645,7 +645,10 @@ public class UsersController {
 				@RequestMapping(value="/startDbBackup")
 				 public @ResponseBody String getDbBackup( HttpSession session) {	
 
-					return DBBackup.startDBBackup();
+					String centerid=session.getAttribute("centerid").toString();  
+					CenterMaster centerMaster=centerService.getcenterById(centerid);
+		        	
+					return DBBackup.startDBBackup(centerMaster.getPartner_ID().getDbBackupPath());
 				}
 }
 

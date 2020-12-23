@@ -105,6 +105,10 @@ public class BusinessPartner {
 	@Column(name="chequePrintConfig")
 	private String chequePrintConfig;
 	
+	@Column(name="dbBackupPath")
+	private String dbBackupPath;
+	
+
 	public String getPartner_ID() {
 		return partner_ID;
 	}
@@ -341,6 +345,14 @@ public class BusinessPartner {
 
 	public void setChequePrintConfig(String chequePrintConfig) {
 		this.chequePrintConfig = chequePrintConfig;
+	}
+
+	public String getDbBackupPath() {
+		return dbBackupPath;
+	}
+
+	public void setDbBackupPath(String dbBackupPath) {
+		this.dbBackupPath = dbBackupPath;
 	}
 	
 	
