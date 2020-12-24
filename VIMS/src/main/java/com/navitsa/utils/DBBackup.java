@@ -9,7 +9,12 @@ public  class DBBackup {
 
 	public static String startDBBackup(String dbBackPath) {
 	
-		//String executeCmd = "mysqldump -h localhost -P 3307 -u root -pneV071it vinoddb>E:/CTB2/pqr0258.sql"; 
+		String mysqlpath="C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\";
+		String userName="root";
+		String password="neV071it";
+		String port="3307";
+		String dbname="mani";
+		
 		
 		Process p = null;
         try {
@@ -20,7 +25,7 @@ public  class DBBackup {
         	
         	
             Runtime runtime = Runtime.getRuntime();
-            p = runtime.exec("C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump -uroot -pneV071it -P 3307 --add-drop-database -B vinoddb -r "+dbBackPath+"DB_BAK_"+backupDateStr+".sql");
+            p = runtime.exec(mysqlpath+"mysqldump -u"+userName+" -p"+password+" -P "+port+" --add-drop-database -B "+dbname+" -r "+dbBackPath+"DB_BAK_"+backupDateStr+".sql");
 //change the dbpass and dbname with your dbpass and dbname
             int processComplete = p.waitFor();
 
