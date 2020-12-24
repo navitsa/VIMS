@@ -453,7 +453,7 @@
 													<div class="col-sm-12">
 														<a href="#" class="" onClick="takeSnapshot();" id="more">More..</a>	
 													
-														<div class="loader" id="moreLoder" style="display: none;"></div>
+														<div class="loader" id="moreLoder1" style="display: none;"></div>
 												</div>
 																								
 												
@@ -937,7 +937,7 @@ setTimeout(takeAutoNo, 3000);
 			}
 			
 			function takeSnapshot() {
-				document.getElementById("moreLoder").style.display = "block";
+				document.getElementById("moreLoder1").style.display = "block";
 				document.getElementById("more").style.display = "none";
 			
 					$.ajax({
@@ -965,7 +965,7 @@ setTimeout(takeAutoNo, 3000);
 				        },
 				        error:function(){
 				        	//alert("Error");
-				        	document.getElementById("moreLoder").style.display = "none";
+				        	document.getElementById("moreLoder1").style.display = "none";
 				        	document.getElementById("more").style.display = "block";
 				        }
 					 });
