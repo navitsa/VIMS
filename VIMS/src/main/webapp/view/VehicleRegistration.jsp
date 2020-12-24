@@ -695,6 +695,15 @@
 			  switch (value) {
 			 
 			    case "invoice":
+			    	
+					Swal.fire ({
+						   title: 'Wait ...',
+						   onBeforeOpen: () => {
+						     Swal.showLoading ()
+						   }
+						})
+
+			    	
 				    var request_method = $("#formVehicleRegistration").attr("method"); //get form GET/POST method
 					var form_data = $("#formVehicleRegistration").serialize();
 					$.ajax({
@@ -703,8 +712,9 @@
 				        type: request_method,
 				        data : form_data,
 				        success: function(data){
-				      
+				        	
 	 			        	if(data=="0"){
+	 			        		Swal.close();
 	 			        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -714,6 +724,7 @@
 	 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 	 						document.getElementById("moreLoder").style.display = "none";
 	 			        	}else if(data=="1"){
+	 			        		Swal.close();
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -722,6 +733,7 @@
 				        			});
 		        			window.location.href = "logout";
 				        	}else if(data=="2"){
+				        		Swal.close();
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -731,6 +743,7 @@
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
 				        	}else if(data=="3"){
+				        		Swal.close();
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -740,6 +753,7 @@
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
 	 			        	}else if(data=="4"){
+	 			        		Swal.close();
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -751,8 +765,9 @@
 				        	}else{ 	
 	 			        	
 	 			       		window.location.href = data;
+	 			       	Swal.close();
 	 			        	}
-			 	
+	 			        	
 				        },
 				        error:function(){
 				        	alert("Error");
@@ -761,6 +776,15 @@
 			      break;
 			 
 			    case "receipt":
+			    	
+					Swal.fire ({
+						   title: 'Wait ...',
+						   onBeforeOpen: () => {
+						     Swal.showLoading ()
+						   }
+						})
+
+			    	
 	 			    var request_method = $("#formVehicleRegistration").attr("method"); //get form GET/POST method
 	 				var form_data = $("#formVehicleRegistration").serialize();
 	 				$.ajax({
@@ -769,8 +793,9 @@
 	 			        type: request_method,
 	 			        data : form_data,
 	 			        success: function(data){
-				      
+	 			        	
 	 			        	if(data=="0"){
+	 			        		Swal.close();
 	 			        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -780,6 +805,7 @@
 	 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 	 						document.getElementById("moreLoder").style.display = "none";
 	 			        	}else if(data=="1"){
+	 			        		Swal.close();
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -788,6 +814,7 @@
 				        			});
 		        			window.location.href = "logout";
 				        	}else if(data=="2"){
+				        		Swal.close();
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -797,6 +824,7 @@
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
 				        	}else if(data=="3"){
+				        		Swal.close();
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -806,6 +834,7 @@
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
 	 			        	}else if(data=="4"){
+	 			        		Swal.close();
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
@@ -817,8 +846,9 @@
 				        	}else{ 	
 	 			        	
 	 			       		window.location.href = data;
+	 			       	Swal.close();
 	 			        	}
-			 	
+	 			        	
 	 			        },
 	 			        error:function(){
 	 			        	alert("Error");
@@ -831,6 +861,13 @@
 			  }
 			});
 		}else{
+			Swal.fire ({
+				   title: 'Wait ...',
+				   onBeforeOpen: () => {
+				     Swal.showLoading ()
+				   }
+				})
+			
 			document.getElementById("proceedLanBtn").style.display = "none";
 			document.getElementById("moreLoder").style.display = "block";
 			    var request_method = $("#formVehicleRegistration").attr("method"); //get form GET/POST method
@@ -841,8 +878,9 @@
  			        type: request_method,
  			        data : form_data,
  			        success: function(data){
-			      
+ 			        	
  			        	if(data=="0"){
+ 			        		Swal.close();
  			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
@@ -852,6 +890,7 @@
  	 						document.getElementById("proceedLanBtn").style.display = "block";
  	 						document.getElementById("moreLoder").style.display = "none";
  			        	}else if(data=="1"){
+ 			        		Swal.close();
 			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
@@ -860,6 +899,7 @@
 			        			});
 	        			window.location.href = "logout";
 			        	}else if(data=="2"){
+			        		Swal.close();
 			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
@@ -869,6 +909,7 @@
 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 						document.getElementById("moreLoder").style.display = "none";
 			        	}else if(data=="3"){
+			        		Swal.close();
 			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
@@ -878,6 +919,7 @@
 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 						document.getElementById("moreLoder").style.display = "none";
  			        	}else if(data=="4"){
+ 			        		Swal.close();
 			        		Swal.fire({
 			        			  icon: 'error',
 			        			  title: 'Oops...',
@@ -889,12 +931,14 @@
 			        	}else{ 	
  			        	
  			       		window.location.href = data;
+ 			       	Swal.close();
  			        	}
-
+ 			        	
 		 	
  			        },
  			        error:function(){
  			        	alert("Error");
+ 			        	Swal.close();
  			        }
  				 });
 			
