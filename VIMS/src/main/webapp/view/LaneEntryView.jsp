@@ -541,7 +541,12 @@
 	
 	function checkCondition(){
 				var mak=document.getElementById("ocrrid").value;
-				
+				Swal.fire ({
+					   title: 'Wait ...',
+					   onBeforeOpen: () => {
+					     Swal.showLoading ()
+					   }
+					})
  				$.ajax({
 
  		 		    type: 'POST',
@@ -629,11 +634,12 @@
 								},
 							});
  			        	}
-
+ 			       	Swal.close();
 		 	
  			        },
  			        error:function(){
  			        	alert("Error");
+ 			       	Swal.close();
  			        }
  				 });
 			
@@ -957,7 +963,7 @@ setTimeout(takeAutoNo, 3000);
 						//	document.getElementById("loader").style.display = "none";
 						//	document.getElementById("cam-click").style.display = "block";
 							
-	  						document.getElementById("moreLoder").style.display = "none";
+	  						document.getElementById("moreLoder1").style.display = "none";
 	  						document.getElementById("more").style.display = "block";
 				            slctSubcat.append(option);	 
 				           
