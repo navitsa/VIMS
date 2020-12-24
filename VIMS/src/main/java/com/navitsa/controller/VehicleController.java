@@ -2326,7 +2326,7 @@ public class VehicleController {
 			
 			
 			@RequestMapping(value = "getLicensePlateip", method = RequestMethod.POST)
-			public @ResponseBody List<NumberDataBeen> getLicensePlateip(HttpSession session) 
+			public @ResponseBody List<NumberDataBeen> getLicensePlateip(@RequestParam ("type") String type,HttpSession session) 
 			{
 				
 				String centerid=session.getAttribute("centerid")+"";
@@ -2384,7 +2384,15 @@ public class VehicleController {
 				
 			BufferedImage bufferedImage; 
 			
-			List<ConfigSystem> configDetails=testValueFileServices.getFTPServerInfo(centerid, "IPC");
+			List<ConfigSystem> configDetails=null;
+					
+					if(type.equals("0")) {
+						configDetails=testValueFileServices.getFTPServerInfo(centerid, "IPCL");
+					}else {
+						configDetails=testValueFileServices.getFTPServerInfo(centerid, "IPC");
+					}
+					
+					
 			String ipAddress="";
 			String userName="";
 			String password="";

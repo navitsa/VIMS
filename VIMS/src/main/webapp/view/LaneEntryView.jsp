@@ -451,11 +451,9 @@
 												
 												<div class="row">
 													<div class="col-sm-12">
-<!-- 														<a href="#" class="" onClick="takeSnapshot();" id="more">More..</a>	 -->
+														<a href="#" class="" onClick="takeSnapshot();" id="more">More..</a>	
 													
-<!-- 														<div class="spinner-grow" role="status" id="moreLoder" style="display: none;"> -->
-<!-- 													  	<span class="sr-only" >Loading...</span> -->
-<!-- 													 </div> -->
+														<div class="loader" id="moreLoder" style="display: none;"></div>
 												</div>
 																								
 												
@@ -938,7 +936,43 @@ setTimeout(takeAutoNo, 3000);
 				    });	
 			}
 			
+			function takeSnapshot() {
+				document.getElementById("moreLoder").style.display = "block";
+				document.getElementById("more").style.display = "none";
 			
+					$.ajax({
+
+					    type: 'POST',
+					    url: "getLicensePlateip",
+					    data: {"type":"0"},
+				        success: function(data){
+				        	
+				        
+				              
+				        	document.getElementById('vehicleID').value = data[0].number;
+	      					getVMasterData(data[0].number);
+				            document.getElementById('results1').src = "data:image/jpg;base64,"+data[0].noimage;			    		
+				            document.getElementById("ImageData").value="data:image/jpg;base64,"+data[0].noimage;
+
+						//	document.getElementById("loader").style.display = "none";
+						//	document.getElementById("cam-click").style.display = "block";
+							
+	  						document.getElementById("moreLoder").style.display = "none";
+	  						document.getElementById("more").style.display = "block";
+				            slctSubcat.append(option);	 
+				           
+				           
+				        },
+				        error:function(){
+				        	//alert("Error");
+				        	document.getElementById("moreLoder").style.display = "none";
+				        	document.getElementById("more").style.display = "block";
+				        }
+					 });
+					
+					
+		
+			}
 			
 			</script>
 </body>

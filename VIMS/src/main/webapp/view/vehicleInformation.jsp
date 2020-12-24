@@ -341,10 +341,10 @@
 												<div class="row">
 													<div class="col-sm-12">
 														<a href="#" class="" onClick="takeSnapshot();" id="more">More..</a>	
-													
-														<div class="spinner-grow" role="status" id="moreLoder" style="display: none;">
-													  	<span class="sr-only" >Loading...</span>
-													 </div>
+													<div class="loader" id="moreLoder" style="display: none;"></div>
+<!-- 														<div class="spinner-grow" role="status" id="moreLoder" style="display: none;"> -->
+<!-- 													  	<span class="sr-only" >Loading...</span> -->
+<!-- 													 </div> -->
 												</div>
 																								
 												
@@ -632,38 +632,15 @@
 		function takeSnapshot() {
 			document.getElementById("moreLoder").style.display = "block";
 			document.getElementById("more").style.display = "none";
-				// var str = document.getElementById("ocrid").value;
-				// var y=0;
- 				// if(str!=""){
- 				//	 y=str;					 
- 				// }
- 				//document.getElementById("lice-msg").style.display = "none";
-				//document.getElementById("loader").style.display = "block";
-				//document.getElementById("cam-click").style.display = "none";
-					
-				
-			//	var jsonfile={id:y,mthod:meth};
+		
 				$.ajax({
 
 				    type: 'POST',
 				    url: "getLicensePlateip",
+				    data: {"type":"1"},
 			        success: function(data){
 			        	
-			        	//document.getElementById('ocrid').value=data[0].id;
-			        	
-// 			            var slctSubcat=$('#ocrdetails'), option="";
-// 			            slctSubcat.empty();
-// 			            selected_option = "  <tr><td></td></tr>"
-			            
-			           
-			            	
-// 			            slctSubcat.append(selected_option);
-
-			        //  if(data[0].number==""){
-			        	  
-			       // 	  document.getElementById("lice-msg").style.display = "block";
-			        	  
-			        //  }
+			        
 			              
 			        	document.getElementById('vehicleID').value = data[0].number;
       					getVMasterData(data[0].number);
