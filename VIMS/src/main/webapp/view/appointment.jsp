@@ -19,18 +19,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <style>
-	.fontst {
-		font-family: Arial, Helvetica, sans-serif;
-		font-size: 12px;
-		height: 30px;
-	}
-	
-	.fontcol-peo {
-		color: #ff8000;
-	}
 
-</style>
-<style>
 #overlay {
   position: fixed;
   display: none;
@@ -101,7 +90,7 @@
 					  </ul>
 					  
 					  <!-- fieldsets -->
-					  <fieldset class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400px">
+					  <fieldset>
 					    <h2 class="fs-title">Appointment ( offline )</h2>
 					    <!-- <h3 class="fs-subtitle">Choose a Date & Time</h3> -->
 
@@ -161,7 +150,7 @@
 					    <input type="button" name="next" class="next action-button" value="Next" />
 					  </fieldset>
 					  
-					  <fieldset class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400px">
+					  <fieldset>
 					    <h2 class="fs-title">Vehicle Details</h2>
 					    <h3 class="fs-subtitle"></h3>
 					    
@@ -324,7 +313,7 @@
 					    <input type="button" name="next" class="next action-button" value="Next" />
 					  </fieldset>
 					  
-					  <fieldset class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400px">
+					  <fieldset>
 					    <h2 class="fs-title">Customer Details</h2>
 					    <h3 class="fs-subtitle"></h3>
 								<form:input class="form-control form-control-sm" type="hidden" 
@@ -420,7 +409,7 @@
 
 				</div>		
 			</div>	
-			<%-- <%@include file="../WEB-INF/jsp/footer.jsp"%>	 --%>		
+			<%@include file="../WEB-INF/jsp/footer.jsp"%>	
 		</div>
 	</div>
 	
