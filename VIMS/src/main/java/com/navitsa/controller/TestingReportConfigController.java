@@ -549,14 +549,6 @@ public class TestingReportConfigController {
 		 List<TestParameterCategory> ls = service.getAllTestParaCat();
 		 return ls;
 	 }
-	 
-/*	@RequestMapping("/limitValues")
-	public String loadLimitValuesForm(Model m) {
-		
-		m.addAttribute("limitValues", new ParameterCodes());
-		//m.addAttribute("profileDetail", new TestProfileDetail());
-		return "testLimitValues";
-	}*/
 	
 	 @ModelAttribute("testProfile")
 	 public List<TestProfile> getAlltestProfiles(){
@@ -592,11 +584,11 @@ public class TestingReportConfigController {
 		 return ls;
 	 }
 	 
-	@RequestMapping(value="/getTestPointsByTestTypeID", method=RequestMethod.GET)
-	public @ResponseBody List<TestPoint> getTestPointsByTestTypeID(@RequestParam String typeID) {
-		List<TestPoint> rs = service.getTestPointsByTestTypeID(typeID);
-		return rs;
-	}
+//	@RequestMapping(value="/getTestPointsByTestTypeID", method=RequestMethod.GET)
+//	public @ResponseBody List<TestPoint> getTestPointsByTestTypeID(@RequestParam String typeID) {
+//		List<TestPoint> rs = service.getTestPointsByTestTypeID(typeID);
+//		return rs;
+//	}
 	
 	@RequestMapping(value="/getTestAnglesByTestPara", method=RequestMethod.GET)
 	public @ResponseBody List<TestParameterAngle> getTestAnglesByTestPara(@RequestParam String paraID) {

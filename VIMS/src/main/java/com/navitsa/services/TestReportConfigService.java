@@ -130,9 +130,9 @@ public class TestReportConfigService {
 		return (List<TestParameterAngle>) paraAngleRepo.findAll();
 	}
 
-	public List<TestPoint> getTestPointsByTestTypeID(String typeID) {
-		return testPointRepo.findAllByTestTypeID(typeID);
-	}
+//	public List<TestPoint> getTestPointsByTestTypeID(String typeID) {
+//		return testPointRepo.findAllByTestTypeID(typeID);
+//	}
 	
 	public List<TestParameterAngle> getTestAnglesByTestPara(String paraID) {
 		return paraAngleRepo.findAllByTestParaID(paraID);

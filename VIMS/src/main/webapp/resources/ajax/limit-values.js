@@ -4,7 +4,7 @@
 function getTestPoints(str)
 	{
 		if (str=="") {
-    		var dropDown = $('#testPoint'), option="";
+    		var dropDown = $('#testPointCombo'), option="";
     		dropDown.empty();
             selected_option = "<option value='' selected>Select test point...</option>"
             dropDown.append(selected_option);
@@ -16,11 +16,11 @@ function getTestPoints(str)
 	        url: "getTestPointsByTestTypeID",
 	        data: {"typeID" : str},
 	        success: function(data){
-	        
-	            var dropDown=$('#testPoint'), option="";
-	            dropDown.empty();
-	            selected_option = "<option value='' selected>Select test point...</option>"
-	            dropDown.append(selected_option);
+
+				var dropDown=$('#testPointCombo'), option="";
+				dropDown.empty();
+				selected_option = "<option value='' selected>Select test point...</option>"
+				dropDown.append(selected_option);
 	
 	            for(var i=0; i<data.length; i++){
 	                option = option + "<option value='"+data[i].testPointID + "'>"+data[i].testPointName + "</option>";

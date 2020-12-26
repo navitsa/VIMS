@@ -131,5 +131,14 @@ public class TestProfileService {
 		tproDetailRepo.save(tpd);
 		
 	}
-
+	public List<TestPoint> listAllTestPoints() {
+		return (List<TestPoint>) testPointRepo.findAll();
+	}
+	public List<TestParameterAngle> listAllTestParameterAngles() {
+		return (List<TestParameterAngle>) paraAngleRepo.findAll();
+	}
+	
+	public List<TestPoint> getTestPointsByTestTypeID(String typeID) {
+		return testPointRepo.findAllByTestTypeID(typeID);
+	}
 }

@@ -54,6 +54,13 @@ public class TestProfileController {
 		 return ls;
 	 }
 	 
+	 @ModelAttribute("testPoints")
+	 public List<TestPoint> getAlltestPoints(){
+		 
+		 List<TestPoint> ls = testProfileService.listAllTestPoints();
+		 return ls;
+	 }
+	 
 	@RequestMapping(value = "/saveTestPoints", method = RequestMethod.GET)
 	public String saveTestPoints(@ModelAttribute("testPointForm") TestPoint tpoint,
 			@RequestParam(value="testPointName") String[] tpname, RedirectAttributes redirectAttributes) {
@@ -177,6 +184,13 @@ public class TestProfileController {
 	 public List<TestParameter> getAlltestParameters(){
 		 
 		 List<TestParameter> ls = testProfileService.listAll();
+		 return ls;
+	 }
+	 
+	 @ModelAttribute("parameterAngles")
+	 public List<TestParameterAngle> getAllparameterAngles(){
+		 
+		 List<TestParameterAngle> ls = testProfileService.listAllTestParameterAngles();
 		 return ls;
 	 }
 	 
@@ -327,4 +341,21 @@ public class TestProfileController {
 		 List<TestProfileDetail> ls = testProfileService.listAllProfileDetails();
 		 return ls;
 	 }
+	 
+ 	@RequestMapping("/testCodes")
+	public String loadTestCodesForm(Model m) {
+		
+		m.addAttribute("testCodesM", new ParameterCodes());
+		return "testCodes";
+	}
+
+	@RequestMapping(value="/getTestPointsByTestTypeID", method=RequestMethod.GET)
+	public @ResponseBody List<TestPoint> getTestPointsByTestTypeID(@RequestParam String typeID) {
+		System.out.println("call");
+		List<TestPoint> rs = testProfileService.getTestPointsByTestTypeID(typeID);
+		for (TestPoint testPoint : rs) {
+			System.out.println(testPoint.getTestPointName());
+		}
+		return rs;
+	}
 }
