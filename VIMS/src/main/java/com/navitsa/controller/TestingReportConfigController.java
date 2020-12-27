@@ -345,48 +345,57 @@ public class TestingReportConfigController {
 			List<TestResultSpeedoBean> speedoList = new ArrayList<>();
 			
 			for (int i = 0; i < speedoResult.length; i++) {
-				
+				double targetTolerance1 = 0;
+				double targetTolerance2 = 0;
 				TestResultSpeedoBean speedoObj = new TestResultSpeedoBean();
-				speedoObj.setValue1(speedoResult[i][0]);
-				speedoObj.setValue2(speedoResult[i][2]);
 				
-				i = i +1;
-				speedoObj.setValue3(speedoResult[i][2]);
-				double targetTolerance1 = Double.parseDouble(speedoResult[i][5]);
-				
-				i = i +1;
-				speedoObj.setValue4(speedoResult[i][0]);
-				speedoObj.setValue5(speedoResult[i][2]);
-				
-				i = i +1;
-				speedoObj.setValue6(speedoResult[i][2]);
-				double targetTolerance2 = Double.parseDouble(speedoResult[i][5]);
-				
-				String desc = speedoObj.getValue1()+" ActualSpeed  < "+speedoObj.getValue3()+" Normal\n"+speedoObj.getValue4()+" ActualSpeed  < "+speedoObj.getValue6()+" Normal";
-				speedoObj.setLimitDes(desc);
-				
-				if (haveSpeedGovernor) {
-					if(status2=="PASS") {
-						if(speedoObj.getValue2() > lmaxSpeed)
-							status2="FAIL";
-						if(speedoObj.getValue5() > lmaxSpeed)
-							status2="FAIL";
-					}						
-				}else {
-					if(status=="PASS") {
-						
-						double lmaxSpeed1 = speedoObj.getValue3() + (speedoObj.getValue3() * targetTolerance1/100);
-						double lmaxSpeed2 = speedoObj.getValue6() + (speedoObj.getValue6() * targetTolerance2/100);
-						System.out.println(lmaxSpeed1+" "+lmaxSpeed2);
-						
-						if(speedoObj.getValue2() >  lmaxSpeed1)
-							status="FAIL";
-						if(speedoObj.getValue5() > lmaxSpeed2)
-							status="FAIL";
-					}					
+				try {
+					speedoObj.setValue1(speedoResult[i][0]);
+					speedoObj.setValue2(speedoResult[i][2]);
+					
+					i = i +1;
+					speedoObj.setValue3(speedoResult[i][2]);
+					if(speedoResult[i][5]!=null)
+						targetTolerance1 = Double.parseDouble(speedoResult[i][5]);
+					
+					i = i +1;
+					speedoObj.setValue4(speedoResult[i][0]);
+					speedoObj.setValue5(speedoResult[i][2]);
+					
+					i = i +1;
+					speedoObj.setValue6(speedoResult[i][2]);
+					if(speedoResult[i][5]!=null)
+						targetTolerance2 = Double.parseDouble(speedoResult[i][5]);
+					
+					String desc = speedoObj.getValue1()+" ActualSpeed  < "+speedoObj.getValue3()+" Normal\n"+speedoObj.getValue4()+" ActualSpeed  < "+speedoObj.getValue6()+" Normal";
+					speedoObj.setLimitDes(desc);
+					
+					if (haveSpeedGovernor) {
+						if(status2=="PASS") {
+							if(speedoObj.getValue2() > lmaxSpeed)
+								status2="FAIL";
+							if(speedoObj.getValue5() > lmaxSpeed)
+								status2="FAIL";
+						}						
+					}else {
+						if(status=="PASS") {
+							
+							double lmaxSpeed1 = speedoObj.getValue3() + (speedoObj.getValue3() * targetTolerance1/100);
+							double lmaxSpeed2 = speedoObj.getValue6() + (speedoObj.getValue6() * targetTolerance2/100);
+							System.out.println(lmaxSpeed1+" "+lmaxSpeed2);
+							
+							if(speedoObj.getValue2() >  lmaxSpeed1)
+								status="FAIL";
+							if(speedoObj.getValue5() > lmaxSpeed2)
+								status="FAIL";
+						}					
+					}
+					
+					speedoList.add(speedoObj);		
+				} catch (ArrayIndexOutOfBoundsException e) {
+					System.out.println(e);
 				}
-				
-				speedoList.add(speedoObj);
+
 			}
 			
 			params.put("speedoResults",speedoList);
