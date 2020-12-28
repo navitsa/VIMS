@@ -519,7 +519,7 @@
 										</div>
 										
 										<div class="col-sm-5">
-										<a href="#" class="btn btn-info btn-sm" onClick="ocrImageNumberSava('2')">Edit Vehicle</a>
+<!-- 										<a href="#" class="btn btn-info btn-sm" onClick="ocrImageNumberSava('2')">Edit Vehicle</a> -->
 										</div>
 										
 									</div>		
@@ -725,6 +725,7 @@
 		        		var link="";
 	        			var statu="";
 	        			var btnRemo="";
+	        			var ocid=data[i].ocrid;
 		        		g=g+1;
 // 		        		if(data[i].vmStatus=="pending"){
 // 		        			statu="<div class='row'>"+
@@ -763,9 +764,9 @@
 						"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Details    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
 						"</div></div>";
 			        		if(data[i].vehicletype=="New"){
-		        				link="newVehicleMaster?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid;
+		        				link="newVehicleMaster?vehicleID="+data[i].ocrVid+"&id="+ocid;
 			        		}else if(data[i].vehicletype=="Old"){
-			        			link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid+"&appNo=0";
+			        			link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+ocid+"&appNo=0";
 			        		}
 						
 		        		}else{ 
@@ -774,9 +775,9 @@
 								"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Details    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
 							"</div></div>";
 		        			if(data[i].paymentStatus=="completed"){
-		        				link="getProceedLane("+data[i].ocrid+")";
+		        				link="getProceedLane("+ocid+")";
 		        			}else{
-		        				link="vehicleRegistrationAuto?vid="+data[i].ocrVid+"&curMi=0"+"&id="+data[i].ocrid;
+		        				link="vehicleRegistrationAuto?vid="+data[i].ocrVid+"&curMi=0"+"&id="+ocid;
 		        			}
 		        		}
 		        		if(data[i].docStatus=="pending"){
@@ -796,13 +797,13 @@
 							"<div class='col-sm-12'>"+
 							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Payment    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
 							"</div></div>";
-							btnRemo="<button type='button' onClick='ocrDeleteEntry("+data[i].ocrid+")' class='btn btn-xs btn-danger' style='border-radius: 8px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Remove&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </button>";
+							btnRemo="<button type='button' onClick='ocrDeleteEntry("+ocid+")' class='btn btn-xs btn-danger' style='border-radius: 8px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Remove&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </button>";
 		        		}else{
 			        			statu=statu+"<div class='row'>"+
 								"<div class='col-sm-12'>"+
 									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Payment    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
 								"</div></div>";
-			        			btnRemo="<button type='button' onClick='getProceedLane("+data[i].ocrid+")' class='btn btn-xs btn-success' style='border-radius: 8px;'>Proceed Lane</button>";
+			        			btnRemo="<button type='button' onClick='getProceedLane("+ocid+")' class='btn btn-xs btn-success' style='border-radius: 8px;'>Proceed Lane</button>";
 			        		}
 		        		
 		        		if(data[i].vrStatus=="pending"){
@@ -853,7 +854,7 @@
 	
 	 							"<div class='row'>"+
 									"<div class='col-sm-12'>"+
-										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+data[i].ocrid+"</div>"+
+										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+ocid+"</div>"+
 									"</div>"+
 								"</div>"+
 								
@@ -896,7 +897,7 @@
      	
      	 							"<div class='row'>"+
      									"<div class='col-sm-12'>"+
-     										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+data[i].ocrid+"</div>"+
+     										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+ocid+"</div>"+
      									"</div>"+
      								"</div>"+
      								
@@ -1100,6 +1101,18 @@
 
 // 	 						document.getElementById("proceedLanBtn").style.display = "block";
 // 	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="7"){
+ 			        		swal("Oops...", "Datal not Found !", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+
+// 	 						document.getElementById("proceedLanBtn").style.display = "block";
+// 	 						document.getElementById("moreLoder").style.display = "none";
 			        	}else{ 	
  			        	
 							swal("Good job!", "This vehicle successfully assigned to the lane!", {
@@ -1111,8 +1124,8 @@
 								},
 							});
  			        	}
-
-		 	
+ 			        	alert(data+" "+ocrid);
+ 			        	
  			        },
  			        error:function(){
  			        	alert("Error");
@@ -1665,7 +1678,7 @@
 					        		 selected_option="<tr class='d5' style='height: 80px; border: 10px solid #f0f0e6; '>"+
 					        		 
 					        		 					        		
-					        		 "<td><div class='pull-right' style='color: #0014ed;'>"+data[i].ocrVid+"</div></br><div>"+event.toTimeString().slice(0,5)+"</div></br><div style='color: #fa6a0a;'>Gate Entry ID-"+data[i].ocrid+"</div></td>"+
+					        		 "<td><div class='pull-right' style='color: #0014ed;'>"+data[i].ocrVid+"</div></br><div>"+event.toTimeString().slice(0,5)+"</div></br><div style='color: #fa6a0a;'>Gate Entry ID-"+ocid+"</div></td>"+
 					        		 "<td style='text-align: center;'>"+apo+"</td>"+	 
 					        		 "<td style='text-align: center;'>"+
 					        		"<img src='data:image/jpg;base64,"+arrayBufferToBase64(data[i].noimage )+"' width='90' height='80' onerror='this.src='resources/img/car-placeholder.jpg';' alt='No Image'/>"+
