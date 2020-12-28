@@ -203,9 +203,10 @@ public class TestingReportConfigController {
 		 params.put("centerName", vr.getCentermaster().getCenter());
 		 params.put("centerContactNo", vr.getCentermaster().getTele());
 		 params.put("centerOpenTime", vr.getCentermaster().getOpenTime());	
-		 params.put("centerCloseTime", vr.getCentermaster().getCloseTime());	
-		 if(vr.getOcrid().getNoimage().length>0)
-			 params.put("vehicleImage",vr.getOcrid().getNoimage());
+		 params.put("centerCloseTime", vr.getCentermaster().getCloseTime());
+		 if(vr.getOcrid().getNoimage() != null)
+			 if(vr.getOcrid().getNoimage().length>0)
+				 params.put("vehicleImage",vr.getOcrid().getNoimage());
 		 
 		 params.put("noOfAxles",vr.getVid().getNoWheel());
 		 params.put("LicensePlateNo",vr.getVid().getVehicleID());
