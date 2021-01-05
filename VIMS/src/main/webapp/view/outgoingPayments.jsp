@@ -123,7 +123,7 @@
 	<div class="col-xl-12 col-lg-5" >
 		
 		
-			<form:form action="saveoutgoingPayments"  method="POST" modelAttribute="contactForm">		
+			<form:form method="POST" modelAttribute="contactForm">		
 					<div class="card shadow mb-4" style="height:640px;">
 						<div class="card border-left-primary shadow h-100 py-2" >
 							<div class="card-header py-2">
@@ -290,7 +290,7 @@
 							<div class="form-group row">
 								
 									<div class="col-sm-3">
-									<button type="submit" class="btn  btn-block btn-danger btn-rounded tabStyle" >Payment</button>
+									<button type="button" class="btn  btn-block btn-danger btn-rounded tabStyle"  id="btnSubmit">Payment</button>
 <!-- 											<a href="#" class="btn btn-primary" onclick="runCancelInvoice();">Invoice Cancel</a>																 -->
 									</div>		
 							
@@ -321,6 +321,128 @@
 
 			
 <script>
+
+
+
+
+$(function () {
+    //Assign Click event to Button.
+    $("#btnSubmit").click(function () {  
+  
+   	 var actype = document.querySelector('input[name="actype"]:checked').value;
+
+	 var payDueDate = document.getElementById('payDueDate').value;
+   	
+	 var toOrderOf = document.getElementById('toOrderOf').value;
+	 
+	 var payTo =document.getElementById('payTo').value;
+		
+	 
+	 var paytype =document.querySelector('input[name="paytype"]:checked').value;
+		 
+	 
+	 var chequeNo = document.getElementById('chequeNo').value;
+
+	
+	
+	// alert("fff"+chequeNo);
+        var myArray = Array.from(Array(y), () => new Array(9));// [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
+        //Loop through all checked CheckBoxes in GridView.
+        myArray[0][0]= actype;
+    
+      	myArray[0][1]= payDueDate;
+    	
+    	myArray[0][2]= toOrderOf;
+    	
+    	myArray[0][3]= payTo;
+    	
+    	myArray[0][4]= paytype;
+    	
+    	myArray[0][5]= chequeNo;
+    	
+        
+   
+        
+        
+        var x=0;
+        $("#tblIncomingPayment tbody").each(function () {
+       
+        	var row = $(this).closest("tr")[0];
+        	myArray[x][6]= row.cells[0].innerHTML;
+        	myArray[x][7]= row.cells[2].innerHTML;
+        	myArray[x][8]= row.cells[3].innerHTML;
+  //      	myArray[x][8]= row.cells[7].querySelector('input').value;
+        	
+//         	myArray[x][3]= row.cells[8].innerHTML;
+//        	myArray[x][4]= row.cells[9].querySelector('input').value;
+        	
+//         	myArray[x][5]= customerID;
+        	
+//         	myArray[x][6]= balCFAmt;
+        	
+//         	myArray[x][7]= totalAmt;
+        	
+//         	myArray[x][8]= totPayAmt;
+        	
+//         	myArray[x][9]= paidAmt;
+        	
+//         	myArray[x][10]= balance;
+        //	 alert("rrrrrrrrrr");
+        alert(row.cells[3].innerHTML);
+          x=x+1;
+        });
+
+        
+        
+        
+        
+        
+// 		  $.ajax({
+// 			  	contentType: "application/json",
+// 				type : 'POST',
+// 				url : "saveoutgoingPayments",
+// 				data: JSON.stringify(myArray),
+// 				success : function(data) {
+					
+// 				//	window.location.href = "receipt?recno="+data.reciptNo;
+					
+// 				},
+// 				error : function() {
+// 					 alert("error");
+// 				}
+
+// 			}); 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        return false;
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $(document).ready(function(){
         

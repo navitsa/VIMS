@@ -307,7 +307,27 @@
 	</li>
 
 				
+	<!-- User Management -->
+
+	<li class="nav-item"  id="maintenance">
+							<a data-toggle="collapse" href="#eMaintenance">
+								<i class="fas fa-pen-square"></i>
+								<p>Maintenance</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="eMaintenance">
+		
+			<div class="bg-white py-2 collapse-inner rounded">
+				<a class="collapse-item fontst-sb-it" href="serviceReport" id="serviceReport">Service Report</a> 
+				<a class="collapse-item fontst-sb-it" href="calibrationReport" id="calibrationReport" >Calibration Report</a>
+				<a class="collapse-item fontst-sb-it" href="calibrationCalendar" id="calibrationCalendar" >Calibration Calendar</a>
+				<a class="collapse-item fontst-sb-it" href="serviceCalendar" id="serviceCalendar" >Service Calendar</a>
 				
+				
+				<!--<a class="collapse-item fontst-sb-it" href="editUserreg"  hidden="true" id="editUserreg">Edit Users</a>-->
+			</div>
+		</div>
+	</li>			
 				
 				
 					</ul>

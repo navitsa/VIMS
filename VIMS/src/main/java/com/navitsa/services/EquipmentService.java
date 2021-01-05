@@ -1,8 +1,10 @@
 package com.navitsa.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.navitsa.entity.EquipmentMake;
@@ -139,4 +141,15 @@ public class EquipmentService {
 		return egMakeRepo.searchImg(eqMakeID);
 	}
 	
+	public List<EquipmentMaster> equmentServiceReport(String servicesDate,String center) {
+		return egMastRepo.equmentServiceReport(servicesDate,center);
+	}
+	public List<EquipmentMaster> equmentCalibrationReport(String nextCaliDate,String center) {
+		return egMastRepo.equmentCalibrationReport(nextCaliDate,center);
+	}
+	public List<EquipmentMaster> equmentCalendar(String center){
+		return egMastRepo.equmentCalendar(center);
+		
+	}
+
 }
