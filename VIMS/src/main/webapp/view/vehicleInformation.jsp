@@ -1124,7 +1124,7 @@
 								},
 							});
  			        	}
- 			        	alert(data+" "+ocrid);
+ 			        
  			        	
  			        },
  			        error:function(){
