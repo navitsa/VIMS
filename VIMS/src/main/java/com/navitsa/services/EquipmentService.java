@@ -1,20 +1,23 @@
 package com.navitsa.services;
 
-import java.util.Date;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.navitsa.entity.EquipmentMake;
 import com.navitsa.entity.EquipmentMaster;
 import com.navitsa.entity.EquipmentModel;
 import com.navitsa.entity.EquipmentType;
+import com.navitsa.entity.EquipmentsCalibration;
+import com.navitsa.entity.ServicesEquipment;
 import com.navitsa.repository.EquipmentMakeRepository;
 import com.navitsa.repository.EquipmentMasterRepository;
 import com.navitsa.repository.EquipmentModelRepository;
 import com.navitsa.repository.EquipmentTypeRepository;
+import com.navitsa.repository.EquipmentsCalibrationRepository;
+import com.navitsa.repository.ServicesEquipmentRepository;
 
 @Service
 public class EquipmentService {
@@ -27,7 +30,12 @@ public class EquipmentService {
 	EquipmentMakeRepository egMakeRepo;
 	@Autowired
 	EquipmentMasterRepository egMastRepo;
-
+	@Autowired
+	EquipmentsCalibrationRepository equipmentsCalibrationRepository;
+	@Autowired
+	ServicesEquipmentRepository servicesEquipmentRepository;
+	
+	
 	public void saveEquipmentTyp(EquipmentType equipmentType) {
 		eqTypeRepo.save(equipmentType);
 	}
@@ -151,5 +159,27 @@ public class EquipmentService {
 		return egMastRepo.equmentCalendar(center);
 		
 	}
-
+	public void saveEquipmentsCalibration(EquipmentsCalibration equipmentsCalibration) {
+		equipmentsCalibrationRepository.save(equipmentsCalibration);
+	}
+	public List<EquipmentsCalibration> getCalibrationAll() {
+		return (List<EquipmentsCalibration>) equipmentsCalibrationRepository.findAll();
+	}
+	public List<EquipmentMaster> getEquipmentCalibration(String eqtype,String calibrationDate,String center){
+		return egMastRepo.getEquipmentCalibration(eqtype,calibrationDate,center);
+		
+	}
+	public List<ServicesEquipment> getEquipmentServicesAll() {
+		return (List<ServicesEquipment>) servicesEquipmentRepository.findAll();
+	}
+	public List<EquipmentMaster> getEquipmentServices(String eqtype,String servicesDate,String center){
+		return egMastRepo.getEquipmentServices(eqtype,servicesDate,center);
+		
+	}
+	public void saveEquipmentsService(ServicesEquipment servicesEquipment) {
+		servicesEquipmentRepository.save(servicesEquipment);
+	}
+	
+	
+	
 }

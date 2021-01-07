@@ -121,7 +121,10 @@ public final class DateHelperWeb {
 		    }
     }
     
-    
+    public static String getFormatStringDate3(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(date);
+    }
     
     
     

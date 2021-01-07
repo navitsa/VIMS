@@ -31,6 +31,10 @@ public interface EquipmentMasterRepository extends CrudRepository<EquipmentMaste
 	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'")
 	public List<EquipmentMaster> equmentCalendar(@Param("center")String center);
 	
-	
-	
+	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.nextCalibrationDate=:calibrationDate and em.eqModelID.eqTypeID.eqTypeID=:eqtype and em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'")
+	public List<EquipmentMaster> getEquipmentCalibration(@Param("eqtype")String eqtype,@Param("calibrationDate")String calibrationDate,@Param("center")String center);
+
+	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.nextServiceDate=:servicesDate and em.eqModelID.eqTypeID.eqTypeID=:eqtype and em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'")
+	public List<EquipmentMaster> getEquipmentServices(@Param("eqtype")String eqtype,@Param("servicesDate")String servicesDate,@Param("center")String center);
+
 }
