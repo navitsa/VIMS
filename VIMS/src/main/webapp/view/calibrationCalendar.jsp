@@ -171,10 +171,19 @@
 //     	    		}
                    var events = [];
                	for(var i=0; i<data.length; i++){  
-               		
+                    events.push({
+                    	color: '#32cffa',   // a non-ajax option
+                    	textColor: '#ffffff', // a non-ajax option
+                        title:'('+data[i].eqModelID.eqTypeID.eqType+') '+data[i].serialNo,
+                        start: data[i].lastCalibrationDate // will be parsed
+                    });   		
                		
            		var date1 = new Date(data[i].nextCalibrationDate);	
      
+           		
+
+           		
+           		
 			      //  var nx=(date1 - date2);
                		
                		if((date1 - date2)<0){

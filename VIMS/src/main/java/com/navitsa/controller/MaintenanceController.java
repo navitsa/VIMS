@@ -26,8 +26,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.navitsa.Reports.AnalysisReportBeen;
+import com.navitsa.Reports.CalibratedEqupmentReportBeen;
 import com.navitsa.Reports.EqupmentCalibrationReportBeen;
 import com.navitsa.Reports.EqupmentServicesReportBeen;
+import com.navitsa.Reports.ServiceEqupmentReportBeen;
 import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.EquipmentMaster;
 import com.navitsa.entity.EquipmentModel;
@@ -253,49 +255,166 @@ public class MaintenanceController {
 				
 				  return "equipmentsService";
 			  }	
-				 @RequestMapping(value="/getEquipmentServices", method=RequestMethod.POST)
-					public   @ResponseBody List<EquipmentMaster> getEquipmentServices(@RequestParam String eqtype,@RequestParam String servicesDate,HttpSession session) {
-					 String centerid=session.getAttribute("centerid")+"";
-					 List<EquipmentMaster> equipmentMaster = eqervice.getEquipmentServices(eqtype,servicesDate,centerid);
-						return equipmentMaster;
-					}			
+			@RequestMapping(value="/getEquipmentServices", method=RequestMethod.POST)
+			public   @ResponseBody List<EquipmentMaster> getEquipmentServices(@RequestParam String eqtype,@RequestParam String servicesDate,HttpSession session) {
+			 String centerid=session.getAttribute("centerid")+"";
+			 List<EquipmentMaster> equipmentMaster = eqervice.getEquipmentServices(eqtype,servicesDate,centerid);
+				return equipmentMaster;
+			}			
 		
-					@RequestMapping(value = "/saveEquipmentsService", method = RequestMethod.POST)
-					public String saveEquipmentsService(@ModelAttribute("equipmentsService") ServicesEquipment servicesEquipment,HttpSession session)
-					 {		//System.out.println("dfffffffffff="+equipmentscalibration.getEquipmentID().getEquipmentID()); 							
-						try {
-							 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-							    Date date = new Date();
-							    
-							EquipmentMaster eequipmentMaster=eqervice.equipmentMasterByID(servicesEquipment.getEquipmentID().getEquipmentID());
-							
-							String centerid=session.getAttribute("centerid")+"";	
-							String userId=session.getAttribute("userId")+"";
-							
-							
-							CenterMaster cm=new CenterMaster();
-							cm.setCenter_ID(centerid);
-							//equipmentscalibration.setCalibrationDate("");
-							servicesEquipment.setLastServicesDate(eequipmentMaster.getLastServiceDate());
-							servicesEquipment.setCenterID(cm);
-							servicesEquipment.setStatus("ACTIVE");
-							servicesEquipment.setTranctionDate(formatter.format(date));
-							servicesEquipment.setTranctionUser(userId);
-							
-							eqervice.saveEquipmentsService(servicesEquipment);
-							
-							eequipmentMaster.setLastServiceDate(servicesEquipment.getServicedDate());					
-							eequipmentMaster.setNextServiceDate(servicesEquipment.getNextServicesDate());
-							eqervice.saveEquipmentMaster(eequipmentMaster);
-							
-						}catch(Exception e) {
-							System.out.println(e);
-							e.printStackTrace();
-						}
-						return "redirect:/equipmentsService.do";
-							
-					}	 
-			 
+			@RequestMapping(value = "/saveEquipmentsService", method = RequestMethod.POST)
+			public String saveEquipmentsService(@ModelAttribute("equipmentsService") ServicesEquipment servicesEquipment,HttpSession session)
+			 {		//System.out.println("dfffffffffff="+equipmentscalibration.getEquipmentID().getEquipmentID()); 							
+				try {
+					 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+					    Date date = new Date();
+					    
+					EquipmentMaster eequipmentMaster=eqervice.equipmentMasterByID(servicesEquipment.getEquipmentID().getEquipmentID());
+					
+					String centerid=session.getAttribute("centerid")+"";	
+					String userId=session.getAttribute("userId")+"";
+					
+					
+					CenterMaster cm=new CenterMaster();
+					cm.setCenter_ID(centerid);
+					//equipmentscalibration.setCalibrationDate("");
+					servicesEquipment.setLastServicesDate(eequipmentMaster.getLastServiceDate());
+					servicesEquipment.setCenterID(cm);
+					servicesEquipment.setStatus("ACTIVE");
+					servicesEquipment.setTranctionDate(formatter.format(date));
+					servicesEquipment.setTranctionUser(userId);
+					
+					eqervice.saveEquipmentsService(servicesEquipment);
+					
+					eequipmentMaster.setLastServiceDate(servicesEquipment.getServicedDate());					
+					eequipmentMaster.setNextServiceDate(servicesEquipment.getNextServicesDate());
+					eqervice.saveEquipmentMaster(eequipmentMaster);
+					
+				}catch(Exception e) {
+					System.out.println(e);
+					e.printStackTrace();
+				}
+				return "redirect:/equipmentsService.do";
+					
+			}	 
+			  @RequestMapping("/equipmentsCalibrationRpt") 
+			  public String equipmentsCalibrationRpt(Map<String, Object> model) { 
+			//	model.put("equipmentsService", new ServicesEquipment());
+				
+			//	model.put("allEquipmentsService", eqervice.getEquipmentServicesAll());
+				
+				  return "equipmentsCalibrationRpt";
+			  } 
+			  @RequestMapping(value = "/privewEquipmentsCalibratedReport", method=RequestMethod.POST) 
+			  public ModelAndView privewEquipmentsCalibratedReport(@RequestParam String calibratedDate,HttpServletResponse response,HttpSession session) { 
+				  String centerid=session.getAttribute("centerid")+"";
+				  CenterMaster centerMaster=centerService.getcenterById(centerid);
+				  
+				 // DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			     // String surrDate= dateFormat.format(DateHelperWeb.getDate(LocalDate.now().toString()));
+				  
+				  List<EquipmentsCalibration>  getEquipmentsCalib=eqervice.getCalibratedEquipmentsReport(calibratedDate,centerid);
+				 
+				  List<CalibratedEqupmentReportBeen> calibratedEqupmentReportBeenList = new ArrayList<CalibratedEqupmentReportBeen>();
+				 
+				  for(EquipmentsCalibration eqCalib:getEquipmentsCalib) {		
+					  CalibratedEqupmentReportBeen calibratedEqupmentReportBeen=new CalibratedEqupmentReportBeen();
+				  
+					  calibratedEqupmentReportBeen.setEqtype(eqCalib.getEquipmentID().getEqModelID().getEqTypeID().getEqType());
+					  calibratedEqupmentReportBeen.setEqmake(eqCalib.getEquipmentID().getEqModelID().getEqMakeID().getEqMake());
+					  calibratedEqupmentReportBeen.setEqmodel(eqCalib.getEquipmentID().getEqModelID().getEqModel());
+					  calibratedEqupmentReportBeen.setSerialno(eqCalib.getEquipmentID().getSerialNo());
+					  calibratedEqupmentReportBeen.setNextscalibrationdate(eqCalib.getNextCalibratedDate());
+					  calibratedEqupmentReportBeen.setLastcalibrationdate(eqCalib.getLastCalibrationDate());
+					  
+					  calibratedEqupmentReportBeen.setCalibrateddate(eqCalib.getCalibratedDate());
+					  calibratedEqupmentReportBeen.setCalibrationstatus(eqCalib.getCalibrationStatus());
+					  calibratedEqupmentReportBeen.setRemarks(eqCalib.getRemarks());
+					  calibratedEqupmentReportBeen.setCalibrationuser(eqCalib.getUserId().getUserName());
+					  
+					  
+					  calibratedEqupmentReportBeenList.add(calibratedEqupmentReportBeen);
+				  }
+			       	ReportViewe review=new ReportViewe();
+			      	Map<String,Object> params = new HashMap<>();
+			
+			    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
+			      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
+			      	params.put("address",centerMaster.getAdd03() );
+			      	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(LocalDate.now().toString())));
+			   
+			      	String reptValue="";
+		      	
+			      	try {
+			      		reptValue=review.pdfReportViewInlineSystemOpen("CalibratedEquipmentReport.jasper","Calibrated Equipment Report",calibratedEqupmentReportBeenList,params,response);
+			      		
+			      
+			      	}catch(Exception e) {	          		
+			      		e.printStackTrace();          		
+			      	}
+			     	ModelAndView mav = new ModelAndView("equipmentsCalibrationRpt");
+			     	mav.addObject("pdfViewEq", reptValue);
+			     	return mav;
+					  }
+			  
+			  
+			  @RequestMapping("/equipmentsServiceRpt") 
+			  public String equipmentsServiceRpt(Map<String, Object> model) { 
+				  return "equipmentsServiceRpt";
+			  }
+			  
+			  @RequestMapping(value = "/privewEquipmentsServiceReport", method=RequestMethod.POST) 
+			  public ModelAndView privewEquipmentsServiceReport(@RequestParam String serviceDate,HttpServletResponse response,HttpSession session) { 
+				  String centerid=session.getAttribute("centerid")+"";
+				  CenterMaster centerMaster=centerService.getcenterById(centerid);
+				  
+				 // DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			     // String surrDate= dateFormat.format(DateHelperWeb.getDate(LocalDate.now().toString()));
+				  
+				  List<ServicesEquipment>  getEquipmentsser=eqervice.getServicedEquipmentsReport(serviceDate,centerid);
+				 
+				  List<ServiceEqupmentReportBeen> serviceEqupmentReportBeenList = new ArrayList<ServiceEqupmentReportBeen>();
+				 
+				  for(ServicesEquipment eqser:getEquipmentsser) {		
+					  ServiceEqupmentReportBeen serviceEqupmentReportBeen=new ServiceEqupmentReportBeen();
+				  
+					  serviceEqupmentReportBeen.setEqtype(eqser.getEquipmentID().getEqModelID().getEqTypeID().getEqType());
+					  serviceEqupmentReportBeen.setEqmake(eqser.getEquipmentID().getEqModelID().getEqMakeID().getEqMake());
+					  serviceEqupmentReportBeen.setEqmodel(eqser.getEquipmentID().getEqModelID().getEqModel());
+					  serviceEqupmentReportBeen.setSerialno(eqser.getEquipmentID().getSerialNo());
+					  serviceEqupmentReportBeen.setNextservicedate(eqser.getNextServicesDate());
+					  serviceEqupmentReportBeen.setLastservicedate(eqser.getLastServicesDate());
+					  
+					  serviceEqupmentReportBeen.setServiceddate(eqser.getServicedDate());
+					
+					  serviceEqupmentReportBeen.setRemarks(eqser.getRemarks());
+					  serviceEqupmentReportBeen.setServiceuser(eqser.getUserId().getUserName());
+					  
+					  
+					  serviceEqupmentReportBeenList.add(serviceEqupmentReportBeen);
+				  }
+			       	ReportViewe review=new ReportViewe();
+			      	Map<String,Object> params = new HashMap<>();
+			
+			    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
+			      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
+			      	params.put("address",centerMaster.getAdd03() );
+			      	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(LocalDate.now().toString())));
+			   
+			      	String reptValue="";
+		      	
+			      	try {
+			      		reptValue=review.pdfReportViewInlineSystemOpen("ServiceEquipmentReport.jasper","Serviced Equipment Report",serviceEqupmentReportBeenList,params,response);
+			      		
+			      
+			      	}catch(Exception e) {	          		
+			      		e.printStackTrace();          		
+			      	}
+			     	ModelAndView mav = new ModelAndView("equipmentsServiceRpt");
+			     	mav.addObject("pdfViewEq", reptValue);
+			     	return mav;
+					  } 
+			  
 			//public void saveEquipmentsCalibration(EquipmentsCalibration equipmentsCalibration)
-		 
+					
 }

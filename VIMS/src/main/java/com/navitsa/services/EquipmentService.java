@@ -179,7 +179,12 @@ public class EquipmentService {
 	public void saveEquipmentsService(ServicesEquipment servicesEquipment) {
 		servicesEquipmentRepository.save(servicesEquipment);
 	}
-	
+	public List<EquipmentsCalibration> getCalibratedEquipmentsReport(String caliDate,String center) {
+		return (List<EquipmentsCalibration>) equipmentsCalibrationRepository.getCalibratedEquipmentsReport(caliDate,center);
+	}
+	public List<ServicesEquipment> getServicedEquipmentsReport(String servicedDate,String center) {
+		return (List<ServicesEquipment>) servicesEquipmentRepository.getServicedEquipmentsReport(servicedDate,center);
+	}
 	
 	
 }

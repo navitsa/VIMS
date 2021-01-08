@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CalibratedEquipmentReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
+	<property name="ireport.zoom" value="1.210000000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="img" class="java.lang.Object"/>
+	<parameter name="hedder" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="todate" class="java.lang.String"/>
+	<field name="eqtype" class="java.lang.String"/>
+	<field name="eqmake" class="java.lang.String"/>
+	<field name="eqmodel" class="java.lang.String"/>
+	<field name="serialno" class="java.lang.String"/>
+	<field name="nextscalibrationdate" class="java.lang.String"/>
+	<field name="lastcalibrationdate" class="java.lang.String"/>
+	<field name="calibrateddate" class="java.lang.String"/>
+	<field name="calibrationstatus" class="java.lang.String"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="calibrationuser" class="java.lang.String"/>
+	<pageHeader>
+		<band height="98">
+			<staticText>
+				<reportElement x="97" y="13" width="656" height="22" forecolor="#0066FF" uuid="702063fe-0ca1-4d2d-98fd-53343ba21a68"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Equipment Calibrated Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="97" y="35" width="656" height="20" uuid="6b49a67e-dc73-43a6-a53e-860b4ad24947"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hedder}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="55" width="656" height="20" uuid="e78af55c-a957-459f-9aae-c883000a5884"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="660" y="78" width="168" height="20" uuid="d6cd23e8-eec8-40bc-83c3-8f4b3d1c8cb9"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{todate}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="10" y="13" width="87" height="79" uuid="1ce96a92-d425-4bac-99e1-dfc6359e522b"/>
+				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{img})).getImage()]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement mode="Opaque" x="5" y="0" width="310" height="18" backcolor="#99B4D1" uuid="59c95dc5-aa49-4e78-954a-d10a042c0f1a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[   Type/ Make/ Model/Serial No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="315" y="0" width="83" height="18" backcolor="#99B4D1" uuid="a3393e7f-163e-4f5e-8cae-cba1f8d862d4"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calibrated Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="398" y="0" width="104" height="18" backcolor="#99B4D1" uuid="3f46c910-dc0d-401a-935c-9df8be9449c5"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Next Calibration Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="502" y="0" width="61" height="18" backcolor="#99B4D1" uuid="d449d1c8-1766-470e-b291-a7915e9f2bcd"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="733" y="0" width="95" height="18" backcolor="#99B4D1" uuid="b795af62-1d9c-4222-b000-1870eec81d9e"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calibration User]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="563" y="0" width="170" height="18" backcolor="#99B4D1" uuid="c1250f9d-ac5b-4ee7-a68a-5bd6b1b67abb"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remarks]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21">
+			<textField>
+				<reportElement x="398" y="0" width="104" height="20" uuid="c1e119a7-892e-4ddd-b33b-b63033edd144"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nextscalibrationdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="1" width="310" height="20" uuid="074e72c3-6766-467c-9080-3e3197afdf7d"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eqtype}+" / "+$F{eqmake}+" / "+$F{eqmodel}+" ("+$F{serialno}+")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="1" width="83" height="20" uuid="beb39e48-3a07-412a-8d08-e5bda9225798"/>
+				<textFieldExpression><![CDATA[$F{calibrateddate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="502" y="0" width="61" height="20" uuid="4a563910-21a4-4537-95ac-4f4d449aa38c"/>
+				<textFieldExpression><![CDATA[$F{calibrationstatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="563" y="1" width="170" height="20" uuid="5067d875-efed-470e-ac57-ffb7013bfd2f"/>
+				<textFieldExpression><![CDATA[$F{remarks}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="733" y="0" width="95" height="20" uuid="39ad6efc-2715-417d-813b-04830e84c699"/>
+				<textFieldExpression><![CDATA[$F{calibrationuser}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
