@@ -178,7 +178,7 @@ private CenterService centerService;
 							}else {
 								cint=Integer.parseInt(dt.getServiceInt());									
 							}
-							return DateHelperWeb.getFormatStringDate(DateHelperWeb.addMonths(DateHelperWeb.getDate(date), cint));
+							return DateHelperWeb.getFormatStringDate3(DateHelperWeb.addMonths(DateHelperWeb.getDate(date), cint));
  	 
 						 }				 
 						 //preview eqCal report
