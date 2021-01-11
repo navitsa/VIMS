@@ -393,10 +393,10 @@ public class AppointmentController {
 	@RequestMapping("/appointmentOffline")
 	public String loadingAppointmentOfflineForm(Model m) {
 		
-		//AppointmentForm newApointment = new AppointmentForm();
-		//m.addAttribute("appointmentForm", newApointment);
-		return "gateEntryAppointmentCard";
-		//return "appointmentOffline";
+		AppointmentForm newApointment = new AppointmentForm();
+		m.addAttribute("appointmentForm", newApointment);
+		//return "gateEntryAppointmentCard";
+		return "appointmentOffline";
 	}
 	
 	@ModelAttribute("ocr_vehicles")
