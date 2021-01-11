@@ -19,7 +19,6 @@ public class AccessDB {
 	@RequestMapping("/readingEmissionResults")
 	public void readingEmissionResults(){
 		// TODO Auto-generated method stub
-
 		try{  
 			   //String url="jdbc:odbc:mydsn";  
 			   Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
