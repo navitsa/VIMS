@@ -3,6 +3,8 @@ package com.navitsa.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,36 +13,34 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.navitsa.Reports.AnalysisReportBeen;
 import com.navitsa.Reports.CalibratedEqupmentReportBeen;
 import com.navitsa.Reports.EqupmentCalibrationReportBeen;
 import com.navitsa.Reports.EqupmentServicesReportBeen;
+import com.navitsa.Reports.IssueTicketReportBeen;
 import com.navitsa.Reports.ServiceEqupmentReportBeen;
+import com.navitsa.entity.Appointment;
 import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.EquipmentMaster;
-import com.navitsa.entity.EquipmentModel;
 import com.navitsa.entity.EquipmentType;
 import com.navitsa.entity.EquipmentsCalibration;
-import com.navitsa.entity.InvoiceHead;
-import com.navitsa.entity.ItemRemarks;
+import com.navitsa.entity.IssueTicket;
 import com.navitsa.entity.ServicesEquipment;
+import com.navitsa.entity.TestLane;
+import com.navitsa.entity.TestLaneHead;
 import com.navitsa.entity.Users;
+import com.navitsa.services.AppointmentService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.EquipmentService;
+import com.navitsa.services.LaneServices;
 import com.navitsa.services.UsersService;
 import com.navitsa.utils.DateHelperWeb;
 import com.navitsa.utils.ReportViewe;
@@ -54,6 +54,10 @@ public class MaintenanceController {
 	CenterService centerService;
 	@Autowired
 	UsersService usersService;	
+	@Autowired
+	LaneServices laneServices;
+	@Autowired
+	AppointmentService appointmentService;
 	
 	  @RequestMapping(value = "/serviceReport", method=RequestMethod.GET) 
 	  public ModelAndView getAgeAnalysisReport(Map<String, String> model,HttpServletResponse response,HttpSession session) { 
@@ -415,6 +419,194 @@ public class MaintenanceController {
 			     	return mav;
 					  } 
 			  
-			//public void saveEquipmentsCalibration(EquipmentsCalibration equipmentsCalibration)
+			  @RequestMapping("/issueTicket") 
+			  public String issueTicket(Map<String, Object> model) { 
+				  model.put("equipmentsIssue", new IssueTicket());
+	 
+				  return "issueTicket";
+			  }
+			 @RequestMapping(value="/getEquipmentByType", method=RequestMethod.POST)
+				public   @ResponseBody List<EquipmentMaster> getEquipmentByType(@RequestParam String eqtype,HttpSession session) {
+				 String centerid=session.getAttribute("centerid")+"";
+				 List<EquipmentMaster> equipmentMaster = eqervice.getEquipmentByType(eqtype,centerid);
+					return equipmentMaster;
+				}
+				
+				@RequestMapping(value = "/saveEquipmentsIssue", method = RequestMethod.POST)
+				public String saveEquipmentsIssue(@ModelAttribute("equipmentsIssue") IssueTicket issueTicket,HttpSession session)
+				 {		//System.out.println("dfffffffffff="+equipmentscalibration.getEquipmentID().getEquipmentID()); 							
+					try {
+						System.out.println(issueTicket.getEquipmentID().getEquipmentID());
+						if(issueTicket.getEquipmentID().getEquipmentID().toString().equals("000")) {
+							EquipmentMaster eqid=new EquipmentMaster();							
+							issueTicket.setEquipmentID(eqid);
+							System.out.println("ghjvhjh");
+						}
+						
+						if(issueTicket.getTestLaneHeadId().getTestLaneHeadId()=="000") {
+							TestLaneHead eqid=new TestLaneHead();							
+							issueTicket.setTestLaneHeadId(eqid);							
+						}
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+					    Date date = new Date();
+					    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
+	    	    	    LocalTime time = LocalTime.now();
+	    	    	    
+					    issueTicket.setIssueDate(formatter.format(date));
+					    issueTicket.setIssueTime(time.format(formattertime));
+					    issueTicket.setIssueStatus("Open");
+					    issueTicket.setStatus("ACTIVE");
+						eqervice.saveIssueTicket(issueTicket);
 					
+						
+					}catch(Exception e) {
+						System.out.println(e);
+						e.printStackTrace();
+					}
+					return "redirect:/issueTicket.do";
+						
+				}	
+				
+				@ModelAttribute("lanesissue")
+				 public List<TestLaneHead> listTestLaneHead(){
+					 List<TestLaneHead> lhlist = laneServices.listTestLaneHead();
+					 return lhlist;
+				 } 
+			  	@RequestMapping(value="getLaneAppointment", method=RequestMethod.POST)		
+				public  @ResponseBody List<Appointment> getApposByDate(@RequestParam String lane){
+			  		
+			
+			  		List<Appointment> todayAppoList = appointmentService.getPendingLaneAppointmentsByDate(lane);
+					return todayAppoList;
+				}
+				  @RequestMapping("/incidentReport") 
+				  public String incidentReport(Map<String, Object> model) { 
+//					  model.put("equipmentsIssue", new IssueTicket());
+		 
+					  return "incidentReport";
+				  }
+			  	
+				  
+				  @RequestMapping(value = "/privewIncidentReport", method=RequestMethod.POST) 
+				  public ModelAndView privewIncidentReport(@RequestParam String fromDate,@RequestParam String toDate,HttpServletResponse response,HttpSession session) { 
+					  String centerid=session.getAttribute("centerid")+"";
+					  CenterMaster centerMaster=centerService.getcenterById(centerid);
+
+					  List<IssueTicket>  issueTicketList=eqervice.getIncidentDetails(fromDate,toDate);
+					 
+					  List<IssueTicketReportBeen> incidentReportBeenList = new ArrayList<IssueTicketReportBeen>();
+					 
+					  
+					  
+					  
+					  for(IssueTicket issueTicket:issueTicketList) {		
+						  IssueTicketReportBeen issueTicketReportBeen=new IssueTicketReportBeen();
+						  issueTicketReportBeen.setTicketno(issueTicket.getTicketNo());
+						  issueTicketReportBeen.setIssue(issueTicket.getIssue());
+						  issueTicketReportBeen.setIssuetype(issueTicket.getIssueType());
+						  issueTicketReportBeen.setIssuedate(issueTicket.getIssueDate());
+						  issueTicketReportBeen.setIssuetime(issueTicket.getIssueTime());
+						  issueTicketReportBeen.setIssuestatus(issueTicket.getIssueStatus());
+						  issueTicketReportBeen.setLane(issueTicket.getTestLaneHeadId().getLaneName());
+						  issueTicketReportBeen.setLanestatus(issueTicket.getLaneStatus());
+						  issueTicketReportBeen.setLaneissuetyme(issueTicket.getLaneIssueTime());
+						  issueTicketReportBeen.setEquipment(issueTicket.getEquipmentID().getSerialNo());
+						  issueTicketReportBeen.setEquipmentstatus(issueTicket.getEqIsWorking());
+						  issueTicketReportBeen.setEqissuetime(issueTicket.getEquipmentIssueTime());
+						  issueTicketReportBeen.setStatus(issueTicket.getStatus());
+						 
+						  incidentReportBeenList.add(issueTicketReportBeen);
+					  }
+				       	ReportViewe review=new ReportViewe();
+				      	Map<String,Object> params = new HashMap<>();
+				
+				    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
+				      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
+				      	params.put("address",centerMaster.getAdd03() );
+				      	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromDate)) +" To "+DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
+				   
+				      	String reptValue="";
+			      	
+				      	try {
+				      		reptValue=review.pdfReportViewInlineSystemOpen("IncidentReport.jasper","Incident Report",incidentReportBeenList,params,response);
+				      		
+				      
+				      	}catch(Exception e) {	          		
+				      		e.printStackTrace();          		
+				      	}
+				     	ModelAndView mav = new ModelAndView("incidentReport");
+				     	mav.addObject("pdfViewEq", reptValue);
+				     	return mav;
+						  }	  
+				  
+				  
+				  
+				  @RequestMapping("/statusTicketReport") 
+				  public String statusTicketReport(Map<String, Object> model) { 
+//					  model.put("equipmentsIssue", new IssueTicket());
+		 
+					  return "statusTicketReport";
+				  }
+				  
+				  
+				  
+				  
+				  
+				  @RequestMapping(value = "/privewOpenTicketReport", method=RequestMethod.POST) 
+				  public ModelAndView getOpenTicketReport(@RequestParam String ticketStatus,HttpServletResponse response,HttpSession session) { 
+					  String centerid=session.getAttribute("centerid")+"";
+					  CenterMaster centerMaster=centerService.getcenterById(centerid);
+
+					  List<IssueTicket>  issueTicketList=eqervice.getOpenTicketDetails(ticketStatus);
+					 
+					  List<IssueTicketReportBeen> incidentReportBeenList = new ArrayList<IssueTicketReportBeen>();
+					 
+					  
+					  
+					  
+					  for(IssueTicket issueTicket:issueTicketList) {		
+						  IssueTicketReportBeen issueTicketReportBeen=new IssueTicketReportBeen();
+						  issueTicketReportBeen.setTicketno(issueTicket.getTicketNo());
+						  issueTicketReportBeen.setIssue(issueTicket.getIssue());
+						  issueTicketReportBeen.setIssuetype(issueTicket.getIssueType());
+						  issueTicketReportBeen.setIssuedate(issueTicket.getIssueDate());
+						  issueTicketReportBeen.setIssuetime(issueTicket.getIssueTime());
+						  issueTicketReportBeen.setIssuestatus(issueTicket.getIssueStatus());
+						  issueTicketReportBeen.setLane(issueTicket.getTestLaneHeadId().getLaneName());
+						  issueTicketReportBeen.setLanestatus(issueTicket.getLaneStatus());
+						  issueTicketReportBeen.setLaneissuetyme(issueTicket.getLaneIssueTime());
+						  issueTicketReportBeen.setEquipment(issueTicket.getEquipmentID().getSerialNo());
+						  issueTicketReportBeen.setEquipmentstatus(issueTicket.getEqIsWorking());
+						  issueTicketReportBeen.setEqissuetime(issueTicket.getEquipmentIssueTime());
+						  issueTicketReportBeen.setStatus(issueTicket.getStatus());
+						 
+						  incidentReportBeenList.add(issueTicketReportBeen);
+					  }
+				       	ReportViewe review=new ReportViewe();
+				      	Map<String,Object> params = new HashMap<>();
+				
+				    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
+				      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
+				      	params.put("address",centerMaster.getAdd03() );
+				      	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(LocalDate.now().toString())));
+				      	params.put("sta",ticketStatus);
+				      	String reptValue="";
+			      	
+				      	try {
+				      		reptValue=review.pdfReportViewInlineSystemOpen("TicketStatusReport.jasper","Ticket Status Report",incidentReportBeenList,params,response);
+				      		
+				      
+				      	}catch(Exception e) {	          		
+				      		e.printStackTrace();          		
+				      	}
+				     	ModelAndView mav = new ModelAndView("statusTicketReport");
+				     	mav.addObject("pdfViewEq", reptValue);
+				     	return mav;
+						  }
+				  
+				  
+				  
+				  
+				  
 }

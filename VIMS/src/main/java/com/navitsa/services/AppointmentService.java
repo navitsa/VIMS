@@ -106,4 +106,9 @@ public class AppointmentService {
 		// TODO Auto-generated method stub
 		appointmentRepo.reschedulingAppointment(appoID,date,time);
 	}
+	public List<Appointment> getPendingLaneAppointmentsByDate(String lane) {
+		
+		return appointmentRepo.getPendingLaneAppointmentsByDate(lane);
+	}
+	
 }

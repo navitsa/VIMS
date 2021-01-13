@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="IncidentReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
+	<property name="ireport.zoom" value="1.210000000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="img" class="java.lang.Object"/>
+	<parameter name="hedder" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="todate" class="java.lang.String"/>
+	<field name="ticketno" class="java.lang.Integer"/>
+	<field name="issue" class="java.lang.String"/>
+	<field name="issuetype" class="java.lang.String"/>
+	<field name="issuedate" class="java.lang.String"/>
+	<field name="issuetime" class="java.lang.String"/>
+	<field name="lane" class="java.lang.String"/>
+	<field name="lanestatus" class="java.lang.String"/>
+	<field name="laneissuetyme" class="java.lang.String"/>
+	<field name="equipment" class="java.lang.String"/>
+	<field name="equipmentstatus" class="java.lang.String"/>
+	<field name="eqissuetime" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="issuestatus" class="java.lang.String"/>
+	<pageHeader>
+		<band height="98">
+			<staticText>
+				<reportElement x="97" y="13" width="656" height="22" forecolor="#0066FF" uuid="702063fe-0ca1-4d2d-98fd-53343ba21a68"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Incident  Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="97" y="35" width="656" height="20" uuid="6b49a67e-dc73-43a6-a53e-860b4ad24947"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hedder}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="55" width="656" height="20" uuid="e78af55c-a957-459f-9aae-c883000a5884"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="523" y="78" width="305" height="20" uuid="d6cd23e8-eec8-40bc-83c3-8f4b3d1c8cb9"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{todate}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="10" y="13" width="87" height="79" uuid="1ce96a92-d425-4bac-99e1-dfc6359e522b"/>
+				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{img})).getImage()]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement x="10" y="1" width="60" height="20" uuid="1da4458d-eff1-4fd2-8548-0e6f20fab703"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ticket No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="0" width="193" height="20" uuid="3aeb1020-d9a1-4abf-a61a-9e8c80824dc0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Issue]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="0" width="87" height="20" uuid="32a99854-de9a-42d3-b4f9-124121af19a4"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Issue Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="1" width="115" height="20" uuid="e01182e6-8436-4b6f-b323-f80468e347ea"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Issue Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="1" width="80" height="20" uuid="97fd313f-35fa-4a9a-8d57-1f539f216e3e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Issue Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="544" y="1" width="55" height="20" uuid="b8323fa0-a83a-4baa-8f1e-c419ed45233c"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lane]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="599" y="1" width="94" height="20" uuid="0f85de96-75d7-4746-bdbd-2735e899c70e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lane Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="693" y="1" width="90" height="20" uuid="03c2ebb0-4652-49b5-8574-9394160e5d46"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Equipment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="783" y="1" width="59" height="20" uuid="57a42d55-fef7-43e6-9023-2e5241fa4c0e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Eq.Sattus]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21">
+			<textField>
+				<reportElement x="10" y="1" width="60" height="20" uuid="d2d69e80-f3a4-4b2e-ba6f-3b9bce7a1cf2"/>
+				<textFieldExpression><![CDATA[$F{ticketno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="1" width="193" height="20" uuid="ee13af95-7592-4331-9ebc-582b0fe94b28"/>
+				<textFieldExpression><![CDATA[$F{issue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="1" width="87" height="20" uuid="3193d904-f6f1-49c9-ae89-ab8488402df8"/>
+				<textFieldExpression><![CDATA[$F{issuetype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="1" width="115" height="20" uuid="752b0582-d267-4bf4-9f52-e485905f4f29"/>
+				<textFieldExpression><![CDATA[$F{issuedate}+"  "+$F{issuetime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="465" y="0" width="80" height="20" uuid="a93df1f4-a0fe-40ff-ac48-6a8bc455271a"/>
+				<textFieldExpression><![CDATA[$F{issuestatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="544" y="1" width="55" height="20" uuid="28af7a21-5721-4ac3-acbb-94c289bb4db6"/>
+				<textFieldExpression><![CDATA[$F{lane}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="599" y="1" width="94" height="20" uuid="67ad354f-2284-4d25-ba8a-c7c2b8454649"/>
+				<textFieldExpression><![CDATA[$F{lanestatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="693" y="1" width="90" height="20" uuid="d9655c83-1e03-4e43-a55c-9d951a4e315b"/>
+				<textFieldExpression><![CDATA[$F{equipment}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="783" y="1" width="59" height="20" uuid="c823d795-148f-4318-82c0-31cc5736de34"/>
+				<textFieldExpression><![CDATA[$F{equipmentstatus}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -43,5 +43,8 @@ public interface AppointmentRepository extends CrudRepository<Appointment , Stri
 	public int reschedulingAppointment(@Param("appoID") String appoID, 
 			@Param("date") Date date, @Param("time") String time);
 	
-	
+	@Query(value = "SELECT * FROM appointment WHERE date(appointment_date)=curdate() AND time(appointment_time) > curtime() AND status='pending' and lane=:lane",nativeQuery = true)
+    public List<Appointment> getPendingLaneAppointmentsByDate(@Param("lane") String lane);
+
+
 }

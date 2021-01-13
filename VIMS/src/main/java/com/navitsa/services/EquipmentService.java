@@ -11,12 +11,14 @@ import com.navitsa.entity.EquipmentMaster;
 import com.navitsa.entity.EquipmentModel;
 import com.navitsa.entity.EquipmentType;
 import com.navitsa.entity.EquipmentsCalibration;
+import com.navitsa.entity.IssueTicket;
 import com.navitsa.entity.ServicesEquipment;
 import com.navitsa.repository.EquipmentMakeRepository;
 import com.navitsa.repository.EquipmentMasterRepository;
 import com.navitsa.repository.EquipmentModelRepository;
 import com.navitsa.repository.EquipmentTypeRepository;
 import com.navitsa.repository.EquipmentsCalibrationRepository;
+import com.navitsa.repository.IssueTicketRepository;
 import com.navitsa.repository.ServicesEquipmentRepository;
 
 @Service
@@ -34,7 +36,8 @@ public class EquipmentService {
 	EquipmentsCalibrationRepository equipmentsCalibrationRepository;
 	@Autowired
 	ServicesEquipmentRepository servicesEquipmentRepository;
-	
+	@Autowired
+	IssueTicketRepository issueTicketRepository;
 	
 	public void saveEquipmentTyp(EquipmentType equipmentType) {
 		eqTypeRepo.save(equipmentType);
@@ -185,6 +188,18 @@ public class EquipmentService {
 	public List<ServicesEquipment> getServicedEquipmentsReport(String servicedDate,String center) {
 		return (List<ServicesEquipment>) servicesEquipmentRepository.getServicedEquipmentsReport(servicedDate,center);
 	}
-	
+	public List<EquipmentMaster> getEquipmentByType(String eqtype,String center){
+		return egMastRepo.getEquipmentByType(eqtype,center);
+	}
+		
+	public void saveIssueTicket(IssueTicket issueTicket) {
+		issueTicketRepository.save(issueTicket);
+	}
+	public List<IssueTicket> getIncidentDetails(String fromDate,String toDate){
+		return issueTicketRepository.getEquipmentByType(fromDate,toDate);
+	}
+	public List<IssueTicket> getOpenTicketDetails(String ticketStatus){
+		return issueTicketRepository.getOpenTicketDetails(ticketStatus);
+	}
 	
 }
