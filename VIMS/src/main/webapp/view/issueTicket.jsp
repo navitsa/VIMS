@@ -163,8 +163,8 @@
 						<form:select class="form-control fontst" path="laneStatus"
 												 id="laneStatus" onchange="">
 						<form:option value="">--SELECT--</form:option>
-						<form:option value="ACTIVE">Lane is Active</form:option>
-						<form:option value="INACTIVE">Temporarily close the lane</form:option>
+						<form:option value="Working">Lane is Active</form:option>
+						<form:option value="Temporarily close">Temporarily close the lane</form:option>
 						</form:select>
 						
 					</div>

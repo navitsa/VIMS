@@ -333,10 +333,10 @@
 				<h6 class="text-section">:</h6>
 					<a class="collapse-item fontst-sb-it" href="issueTicket" id="issueTicket"  hidden="true">Issue Ticket</a>
 					<a class="collapse-item fontst-sb-it" href="incidentReport" id="incidentReport"  hidden="true">Incident Report</a>
-<!-- 					<a class="collapse-item fontst-sb-it" href="closeTicket" id="closeTicket" >Close Ticket</a> -->
+					<a class="collapse-item fontst-sb-it" href="closeTicket" id="closeTicket" hidden="true">Ticket Close</a>
 					<a class="collapse-item fontst-sb-it" href="statusTicketReport" id="statusTicketReport"  hidden="true">Ticket Status Report</a>
 		
-					<a class="collapse-item fontst-sb-it" href="downTimeReport" id="downTimeReport"  hidden="true">Down Time Report</a>
+					<a class="collapse-item fontst-sb-it" href="downTimeReport" id="downTimeReport" hidden="true" >Down Time Report</a>
 <!-- 			</div> -->
 		</div>
 	</li>			

@@ -36,6 +36,7 @@ import com.navitsa.entity.IssueTicket;
 import com.navitsa.entity.ServicesEquipment;
 import com.navitsa.entity.TestLane;
 import com.navitsa.entity.TestLaneHead;
+import com.navitsa.entity.TicketClose;
 import com.navitsa.entity.Users;
 import com.navitsa.services.AppointmentService;
 import com.navitsa.services.CenterService;
@@ -446,6 +447,14 @@ public class MaintenanceController {
 						if(issueTicket.getTestLaneHeadId().getTestLaneHeadId()=="000") {
 							TestLaneHead eqid=new TestLaneHead();							
 							issueTicket.setTestLaneHeadId(eqid);							
+						}else {
+							
+							if(issueTicket.getLaneStatus()!="Working") {
+							TestLaneHead testLaneHead=laneServices.getTestLaneHeadById(issueTicket.getTestLaneHeadId().getTestLaneHeadId());
+							testLaneHead.setStatus("INACTIVE");
+							laneServices.saveTestLaneHead(testLaneHead);
+							}
+							
 						}
 						
 						SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
@@ -606,7 +615,127 @@ public class MaintenanceController {
 						  }
 				  
 				  
+				  @RequestMapping("/closeTicket") 
+				  public String closeTicket(Map<String, Object> model) { 
+					  model.put("closeTicket", new TicketClose());
+		 
+					  return "closeTicket";
+				  }				  
 				  
+					@ModelAttribute("openTicket")
+					 public List<IssueTicket>  getOpenTicketDetails(){
+						return eqervice.getOpenTicketDetails("Open");
+						
+					 } 
 				  
+					@RequestMapping(value = "/saveCloseTicket", method = RequestMethod.POST)
+					public String saveTicketClose(@ModelAttribute("closeTicket") TicketClose ticketClose,HttpSession session)
+					 {		//System.out.println("dfffffffffff="+equipmentscalibration.getEquipmentID().getEquipmentID()); 							
+						try {
+							IssueTicket issueTicket=eqervice.getTicketById(ticketClose.getTicketNo().getTicketNo());
+							if(issueTicket.getTestLaneHeadId()!=null) {
+							TestLaneHead testLaneHead=laneServices.getTestLaneHeadById(issueTicket.getTestLaneHeadId().getTestLaneHeadId());
+							testLaneHead.setStatus("ACTIVE");
+							laneServices.saveTestLaneHead(testLaneHead);
+							}
+							
+							SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+						    Date date = new Date();
+						    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
+		    	    	    LocalTime time = LocalTime.now();
+		    	    	    
+		    	    	    ticketClose.setCloseDate(formatter.format(date));						   
+						    ticketClose.setStatus("ACTIVE");
+							eqervice.saveCloseTicket(ticketClose);
+						
+							//update Issue Ticket
+							issueTicket.setIssueStatus("Close");
+							eqervice.saveIssueTicket(issueTicket);
+							
+							
+							
+						}catch(Exception e) {
+							System.out.println(e);
+							e.printStackTrace();
+						}
+						return "redirect:/closeTicket.do";
+							
+					}
+					
+					
+		  	@RequestMapping(value="getOpenTicketDetails", method=RequestMethod.POST)		
+			public  @ResponseBody IssueTicket getOpenTicketDetails(@RequestParam int ticketNo){
+		  		
+		  		IssueTicket issueTicket=eqervice.getTicketById(ticketNo);
+				return issueTicket;
+			}	
+					
+		  @RequestMapping("/downTimeReport") 
+		  public String downTimeReport(Map<String, Object> model) { 
+//				  model.put("equipmentsIssue", new IssueTicket());
+ 
+			  return "downTimeReport";
+		  }		
+				
+		  			
+					
+		  @RequestMapping(value = "/privewDownTimeReport", method=RequestMethod.POST) 
+		  public ModelAndView privewDownTimeReport(@RequestParam String status,HttpServletResponse response,HttpSession session) { 
+			  String centerid=session.getAttribute("centerid")+"";
+			  CenterMaster centerMaster=centerService.getcenterById(centerid);
+
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+			    Date date = new Date();
+
+			  
+			  List<TicketClose>  ticketCloseList=eqervice.privewDownTimeReport(formatter.format(date));
+			 
+			  List<IssueTicketReportBeen> incidentReportBeenList = new ArrayList<IssueTicketReportBeen>();
+			 
+			  
+			  
+			  
+			  for(TicketClose ticketClose:ticketCloseList) {		
+				  IssueTicketReportBeen issueTicketReportBeen=new IssueTicketReportBeen();
+				  issueTicketReportBeen.setTicketno(ticketClose.getTicketNo().getTicketNo());
+				  issueTicketReportBeen.setIssue(ticketClose.getTicketNo().getIssue());
+				  issueTicketReportBeen.setIssuetype(ticketClose.getTicketNo().getIssueType());
+				  issueTicketReportBeen.setIssuedate(ticketClose.getTicketNo().getIssueDate());
+				  issueTicketReportBeen.setIssuetime(ticketClose.getTicketNo().getIssueTime());
+				  issueTicketReportBeen.setIssuestatus(ticketClose.getTicketNo().getIssueStatus());
+				  issueTicketReportBeen.setLane(ticketClose.getTicketNo().getTestLaneHeadId().getLaneName());
+				  issueTicketReportBeen.setLanestatus(ticketClose.getTicketNo().getLaneStatus());
+			//Task Close time
+				  issueTicketReportBeen.setLaneissuetyme(ticketClose.getCloseTime()+" "+ticketClose.getCloseDate());
 				  
+				  issueTicketReportBeen.setEquipment(ticketClose.getTicketNo().getEquipmentID().getSerialNo());
+				  issueTicketReportBeen.setEquipmentstatus(ticketClose.getTicketNo().getEqIsWorking());
+				  issueTicketReportBeen.setEqissuetime(ticketClose.getTicketNo().getEquipmentIssueTime());
+				  issueTicketReportBeen.setStatus(ticketClose.getTicketNo().getStatus());
+				 
+				  incidentReportBeenList.add(issueTicketReportBeen);
+			  }
+		       	ReportViewe review=new ReportViewe();
+		      	Map<String,Object> params = new HashMap<>();
+		
+		    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
+		      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
+		      	params.put("address",centerMaster.getAdd03() );
+		      	params.put("todate",formatter.format(date));
+		    	params.put("sta",status);
+		      	String reptValue="";
+	      	
+		      	try {
+		      		reptValue=review.pdfReportViewInlineSystemOpen("downTimeReport.jasper","Down Time Report",incidentReportBeenList,params,response);
+		      		
+		      
+		      	}catch(Exception e) {	          		
+		      		e.printStackTrace();          		
+		      	}
+		     	ModelAndView mav = new ModelAndView("downTimeReport");
+		     	mav.addObject("pdfViewEq", reptValue);
+		     	return mav;
+				  }			
+					
+					
 }

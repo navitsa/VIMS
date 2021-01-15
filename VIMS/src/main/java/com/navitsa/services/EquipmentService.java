@@ -13,6 +13,7 @@ import com.navitsa.entity.EquipmentType;
 import com.navitsa.entity.EquipmentsCalibration;
 import com.navitsa.entity.IssueTicket;
 import com.navitsa.entity.ServicesEquipment;
+import com.navitsa.entity.TicketClose;
 import com.navitsa.repository.EquipmentMakeRepository;
 import com.navitsa.repository.EquipmentMasterRepository;
 import com.navitsa.repository.EquipmentModelRepository;
@@ -20,6 +21,7 @@ import com.navitsa.repository.EquipmentTypeRepository;
 import com.navitsa.repository.EquipmentsCalibrationRepository;
 import com.navitsa.repository.IssueTicketRepository;
 import com.navitsa.repository.ServicesEquipmentRepository;
+import com.navitsa.repository.TicketCloseRepository;
 
 @Service
 public class EquipmentService {
@@ -38,6 +40,8 @@ public class EquipmentService {
 	ServicesEquipmentRepository servicesEquipmentRepository;
 	@Autowired
 	IssueTicketRepository issueTicketRepository;
+	@Autowired
+	TicketCloseRepository ticketCloseRepository;
 	
 	public void saveEquipmentTyp(EquipmentType equipmentType) {
 		eqTypeRepo.save(equipmentType);
@@ -201,5 +205,14 @@ public class EquipmentService {
 	public List<IssueTicket> getOpenTicketDetails(String ticketStatus){
 		return issueTicketRepository.getOpenTicketDetails(ticketStatus);
 	}
-	
+	public IssueTicket getTicketById(int id){
+		return issueTicketRepository.findById(id).get();
+	}
+	public void saveCloseTicket(TicketClose ticketClose){
+		 ticketCloseRepository.save(ticketClose);
+	}
+	public List<TicketClose> privewDownTimeReport(String toDate){
+		
+		return  ticketCloseRepository.privewDownTimeReport(toDate);
+	}
 }
