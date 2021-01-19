@@ -31,6 +31,9 @@ public class IssueTicket {
 	@Column(name="issue_time")
 	private String issueTime;
 	
+	@Column(name = "issueLevel")
+	private String issueLevel;
+	
 	@Column(name = "Issue_Status")
 	private String issueStatus;
 	
@@ -59,7 +62,6 @@ public class IssueTicket {
 	
 	@Column(name = "Status")
 	private String status;
-
 
 
 	public int getTicketNo() {
@@ -214,6 +216,18 @@ public class IssueTicket {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+
+
+	public String getIssueLevel() {
+		return issueLevel;
+	}
+
+
+
+	public void setIssueLevel(String issueLevel) {
+		this.issueLevel = issueLevel;
 	}
 	
 	

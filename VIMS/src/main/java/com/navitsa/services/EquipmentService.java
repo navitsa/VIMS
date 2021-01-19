@@ -196,8 +196,8 @@ public class EquipmentService {
 		return egMastRepo.getEquipmentByType(eqtype,center);
 	}
 		
-	public void saveIssueTicket(IssueTicket issueTicket) {
-		issueTicketRepository.save(issueTicket);
+	public IssueTicket saveIssueTicket(IssueTicket issueTicket) {
+		return issueTicketRepository.save(issueTicket);
 	}
 	public List<IssueTicket> getIncidentDetails(String fromDate,String toDate){
 		return issueTicketRepository.getEquipmentByType(fromDate,toDate);
@@ -208,8 +208,8 @@ public class EquipmentService {
 	public IssueTicket getTicketById(int id){
 		return issueTicketRepository.findById(id).get();
 	}
-	public void saveCloseTicket(TicketClose ticketClose){
-		 ticketCloseRepository.save(ticketClose);
+	public TicketClose saveCloseTicket(TicketClose ticketClose){
+		return ticketCloseRepository.save(ticketClose);
 	}
 	public List<TicketClose> privewDownTimeReport(String toDate){
 		

@@ -123,7 +123,7 @@
 									<div class="card border-left-primary shadow h-100 py-2">
 										<div class="card-body">
 
-<form:form action="saveEquipmentsIssue" modelAttribute="equipmentsIssue" method="POST" enctype="multipart/form-data" > 
+<form:form  modelAttribute="equipmentsIssue" method="POST" enctype="multipart/form-data" id="eqissue"> 
 		<div class=" row">
 			<div class="col-sm-7">
 
@@ -149,7 +149,7 @@
 				<div class="form-group row">
 					<div class="col-sm-3">	
 						<label>Lane</label>
-							<form:select class="form-control fontst" path="testLaneHeadId.testLaneHeadId" onchange="getapoiment(this.value);"     
+							<form:select class="form-control fontst" path="testLaneHeadId.testLaneHeadId" onchange="getapoiment(this.value);getLaneStatus();"     
 								 id="tldid">
 								<form:option value="000">--SELECT--</form:option>
 								<c:forEach items="${lanesissue}" var="lan">
@@ -161,7 +161,7 @@
 					<div class="col-sm-3">	
 						<label >Lane Status</label>
 						<form:select class="form-control fontst" path="laneStatus"
-												 id="laneStatus" onchange="">
+												 id="laneStatus" onchange="getLaneStatus();">
 						<form:option value="">--SELECT--</form:option>
 						<form:option value="Working">Lane is Active</form:option>
 						<form:option value="Temporarily close">Temporarily close the lane</form:option>
@@ -216,11 +216,26 @@
 						<form:input type="time" path="equipmentIssueTime" class="form-control"/>
 				
 					</div>
+					<div class="col-sm-3">
+						<label >Issue Level</label>
+						<form:select class="form-control fontst" path="issueLevel"
+												required="Required" id="issueLevel" onchange="">
+						<form:option value="">--SELECT--</form:option>
+						<form:option value="Low">Low</form:option>
+						<form:option value="Medium">Medium</form:option>high
+						<form:option value="High">High</form:option>
+
+						</form:select>
+					</div>
+				</div>
+				<div class="form-group row">
+				<h1 style="color: #ff0516; font-family: Arial, Helvetica, sans-serif;" id="laneSta"></h1>
+				
 				</div>
 				<div class="form-group row">
 									<div class="col-sm-6">
-										<input type="submit" class="btn btn-success"
-																			value="Save">
+										<input type="button" class="btn btn-success"
+																			value="Save" onclick="saveEquimentIssue()">
 									
 									</div>
 									<div class="col-sm-6">
@@ -235,7 +250,7 @@
 				
 			</div>
 			<div class="col-sm-5">
-				
+				<h2 style="color: #ff0516; font-family: Arial, Helvetica, sans-serif;" >Management Appointment</h2>	
 			<div class="row table-striped table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar">
 								<div class="col-lg" id="apoimentData"></div>
 							</div>
@@ -258,6 +273,28 @@
 
 	<script type="text/javascript">
 
+		function getLaneStatus(){
+		//	var tldid=document.getElementById("tldid").value;
+			var laneStatus=document.getElementById("laneStatus").value;
+			
+			var e = document.getElementById("tldid");
+			var tldid = e.options[e.selectedIndex].text
+		
+			
+			if(laneStatus=="Temporarily close"&&$('#tldid').val()!="000"){
+				
+				document.getElementById("laneSta").innerHTML =tldid+" is Temporarily Close";
+			}else{
+				document.getElementById("laneSta").innerHTML ="";
+			}
+			
+			
+			
+			
+		}
+	
+	
+	
 		function getAllEquipmenteByEquipmenteType(){
 			var eqtype=document.getElementById("eqtype").value;
 			//alert(calibrationDate);
@@ -333,6 +370,77 @@
 		        		
 		        		
 		}
+		
+		
+		function saveEquimentIssue() {
+
+			var request_method = $("#eqissue").attr("method"); //get form GET/POST method
+
+			// Get form
+			var form = $('#eqissue')[0];
+
+			// Create an FormData object
+			var data = new FormData(form);
+
+			//alert("Error "+form_data);
+			$.ajax({
+
+				url : "saveEquipmentsIssue",
+				type : request_method,
+				enctype : 'multipart/form-data',
+				data : data,
+				processData : false,
+				contentType : false,
+				cache : false,
+
+				success : function(data) {
+				
+					if (data == "0") {
+						swal("Good job!", "You clicked the button!", {
+							icon : "error",
+							buttons : {
+								confirm : {
+									className : 'btn btn-danger'
+								}
+							},
+						});
+						
+						
+
+					} else {
+						swal("Good job!", "Ticket No : "+data, {
+							icon : "success",
+							buttons : {
+								confirm : {
+									className : 'btn btn-success'
+								}
+							},
+						});
+					}
+					document.getElementById("eqissue").reset();
+				},
+				error : function(e) {
+					swal("Good job!", "You clicked the button! err", {
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+					
+				}
+			});
+
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 	</script>
 
 

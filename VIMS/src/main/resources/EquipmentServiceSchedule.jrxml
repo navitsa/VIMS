@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EquipmentServiceSchedule" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
+	<property name="ireport.zoom" value="1.210000000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="img" class="java.lang.Object"/>
+	<parameter name="hedder" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="todate" class="java.lang.String"/>
+	<field name="eqtype" class="java.lang.String"/>
+	<field name="eqmake" class="java.lang.String"/>
+	<field name="eqmodel" class="java.lang.String"/>
+	<field name="serialno" class="java.lang.String"/>
+	<field name="nextservicesdate" class="java.lang.String"/>
+	<field name="lastservicesdate" class="java.lang.String"/>
+	<pageHeader>
+		<band height="98">
+			<staticText>
+				<reportElement x="97" y="13" width="403" height="22" forecolor="#0066FF" uuid="702063fe-0ca1-4d2d-98fd-53343ba21a68"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Equipment Service Schedule]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="97" y="35" width="403" height="20" uuid="6b49a67e-dc73-43a6-a53e-860b4ad24947"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hedder}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="55" width="403" height="20" uuid="e78af55c-a957-459f-9aae-c883000a5884"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="415" y="75" width="168" height="20" uuid="d6cd23e8-eec8-40bc-83c3-8f4b3d1c8cb9"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{todate}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="10" y="13" width="87" height="79" uuid="1ce96a92-d425-4bac-99e1-dfc6359e522b"/>
+				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{img})).getImage()]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="18">
+			<staticText>
+				<reportElement mode="Opaque" x="270" y="0" width="107" height="18" backcolor="#99B4D1" uuid="f3b34911-be53-4767-bda7-6c5d0eb02cb8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Serial No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="377" y="0" width="103" height="18" backcolor="#99B4D1" uuid="5fb2e1b2-8822-4e1a-8275-00bb2dd1a5e5"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Last services Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="480" y="1" width="112" height="17" backcolor="#99B4D1" uuid="a3393e7f-163e-4f5e-8cae-cba1f8d862d4"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Next services Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="1" width="260" height="17" backcolor="#99B4D1" uuid="1b05e14d-9d1c-4385-b77a-fc6e14f7846f"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[   Type/ Make/ Model]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21">
+			<textField>
+				<reportElement x="270" y="1" width="107" height="20" forecolor="#000000" uuid="d3d9b82f-63fc-497e-bc46-69dbc4590df5"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{serialno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="1" width="120" height="20" uuid="c1e119a7-892e-4ddd-b33b-b63033edd144"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nextservicesdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="377" y="1" width="103" height="20" uuid="e4449867-3304-4629-80a5-0334c41d457e"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lastservicesdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="0" width="260" height="20" uuid="81b56d8d-42a7-4083-9bb5-eb9e7f695f27"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eqtype}+" / "+$F{eqmake}+" / "+$F{eqmodel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

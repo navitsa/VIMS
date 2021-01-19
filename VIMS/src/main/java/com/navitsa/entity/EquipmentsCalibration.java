@@ -64,6 +64,8 @@ public class EquipmentsCalibration {
 	@Column(name = "TranctionUser")
 	private String tranctionUser;
 	
+	@Column(name = "calabriType")
+	private String calabriType;
 	
 	public String getTranctionDate() {
 		return tranctionDate;
@@ -183,6 +185,14 @@ public class EquipmentsCalibration {
 
 	public void setNextCalibratedDate(String nextCalibratedDate) {
 		this.nextCalibratedDate = nextCalibratedDate;
+	}
+
+	public String getCalabriType() {
+		return calabriType;
+	}
+
+	public void setCalabriType(String calabriType) {
+		this.calabriType = calabriType;
 	}
 	
 	

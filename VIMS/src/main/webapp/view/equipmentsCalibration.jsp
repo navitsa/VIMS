@@ -79,7 +79,60 @@
        
        }	
 </style>
-	
+	<style type="text/css">
+
+.imagePreview {
+    width: 100%;
+    height: 180px;
+    background-position: center center;
+  background:url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
+  background-color:#fff;
+    background-size: cover;
+  background-repeat:no-repeat;
+    display: inline-block;
+  box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
+}
+.btn-primary
+{
+  display:block;
+  border-radius:0px;
+  box-shadow:0px 4px 6px 2px rgba(0,0,0,0.2);
+  margin-top:-5px;
+}
+.imgUp
+{
+  margin-bottom:15px;
+}
+.del
+{
+  position:absolute;
+  top:0px;
+  right:15px;
+  width:30px;
+  height:30px;
+  text-align:center;
+  line-height:30px;
+  background-color:rgba(255,255,255,0.6);
+  cursor:pointer;
+}
+.imgAdd
+{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background-color:#4bd7ef;
+  color:#fff;
+  box-shadow:0px 0px 2px 1px rgba(0,0,0,0.2);
+  text-align:center;
+  line-height:30px;
+  margin-top:0px;
+  cursor:pointer;
+  font-size:15px;
+}
+
+
+
+</style>
 </head>
 <body >
 	<div class="wrapper">
@@ -125,38 +178,115 @@
 										<div class="card-body">
 
 		<form:form action="saveEquipmentsCalibration" modelAttribute="equipmentscalibration" method="POST" enctype="multipart/form-data" > 
+
+		
 		<div class=" row">
 			<div class="col-sm-7">
-				<div class="form-group row">
-					<div class="col-sm-3">
-						<label class="l-fontst">Calibration Date</label>
-						<form:input class="form-control fontst" type="date" path="calibrationDate" 
-						 required="true"	id="calibrationDate" onchange="getCalibrationDate();getCalibratedDate(this.value);"></form:input>
-					</div>
-					<div class="col-sm-3">
-						<label>Equipment Type</label>
-						<select class="form-control"   onchange="getCalibrationDate();" id="eqtype">
-							<option value="">--SELECT--</option>
-							<c:forEach items="${eqTypeCmbfor}" var="eq1">
-								<option value="${eq1.eqTypeID}">${eq1.eqType}</option>
-							</c:forEach>
-						</select>
-					</div>
-					<div class="col-sm-6">
-						<label>Equipment</label>
-						<form:select class="form-control" path="equipmentID.equipmentID" required="Required" id="eqid" onchange="setDate();">
-							<form:option value="equipmentID.equipmentID">--SELECT--</form:option>
-						</form:select>
-					</div>
-				</div>		
+					<div class=" row">
+						<div class="col-sm-6">		
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label class="l-fontst">Schedule Date</label>
+									<form:input class="form-control fontst" type="date" path="calibrationDate" 
+									 required="true"	id="calibrationDate" onchange="getCalibrationDate();getCalibratedDate(this.value);"></form:input>
+								</div>
+								<div class="col-sm-6">
+									<label>Equipment Type</label>
+									<select class="form-control"   onchange="getCalibrationDate();" id="eqtype">
+										<option value="">--SELECT--</option>
+										<c:forEach items="${eqTypeCmbfor}" var="eq1">
+											<option value="${eq1.eqTypeID}">${eq1.eqType}</option>
+										</c:forEach>
+									</select>
+								</div>				
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-6">
+										<label class="l-fontst">Calibrated Date</label>
+										<form:input class="form-control fontst" type="date" path="calibratedDate" 
+										 required="true"	id="calibratedDate" onchange="setDate();"></form:input>
+								</div>				
+								<div class="col-sm-6">
+									<label >Inspector/Supervised By</label>
+									<form:select class="form-control fontst" path="userId.userId"
+															required="Required" id="users" >
+										<form:option value="">--SELECT--</form:option>
+										<c:forEach items="${calibrationUsercombo}" var="use">
+										<form:option value="${use.userId}">${use.userName}</form:option>
+										</c:forEach>
+										</form:select>
+								</div>	
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<form:radiobutton path="calabriType" value="Schedule Calibration"/>
+										Schedule Calibration								
+								</div>
+								<div class="col-sm-6">
+									<form:radiobutton path="calabriType" value="Calibration on Demand" />
+									Calibration on Demand
+								</div>
+							</div>
 		
+		
+		
+									<div class="form-group">
+								<div class="row">
+									<div class="col-7">
+<%-- 										<img  class="zoom imagePreview"  src="<c:url value='/resources/img/user-default.jpg'/>" id="preview" class="img-thumbnail">		 --%>
+										<label class="btn btn-primary">Upload Calibration Report<input type="file"  accept="application/pdf"
+												class="uploadFile img" value="Upload Pdf" style="width: 0px;height: 0px;overflow: hidden;"  accept="image/*" id="user_Img"
+												name="calibrationReport"></label>
+									</div>
+								</div>
+							</div>
+		
+		
+		
+<!-- 							<input type="file" class="file" -->
+<!-- 							id="calibrationReport" name="calibrationReport"  accept="application/pdf"> -->
+<!-- 						<div class="input-group my-3"> -->
+<!-- 							<input type="text" -->
+<!-- 								class="form-control form-control form-control-user" -->
+<!-- 								disabled placeholder="Upload pdf " id="file"> -->
+<!-- 							<div class="input-group-append"> -->
+<!-- 								<button type="button" class="browse btn btn-primary">Browse</button> -->
+<!-- 							</div> -->
+<!-- 							<br> -->
+
+<!-- 						</div> -->
+		
+		
+		
+		
+		
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group row">
+								<div class="col-sm-8">
+											<label>Equipment</label>
+											<form:select class="form-control" path="equipmentID.equipmentID" required="Required" size="14" id="eqid" onchange="setDate();">
+												<form:option value="equipmentID.equipmentID">--SELECT--</form:option>
+											</form:select>																	
+								</div>
+							</div>
+		
+						</div>
+					</div>
+			
+			
+			
+			
+		
+
 		<div class="form-group row">
-				<div class="col-sm-3">
-						<label class="l-fontst">Calibrated Date</label>
-						<form:input class="form-control fontst" type="date" path="calibratedDate" 
-						 required="true"	id="calibratedDate" onchange="setDate();"></form:input>
+						<div class="col-sm-10">
+						<label >Remarks</label>
+						<form:textarea path="remarks" class="form-control"/>
 				</div>
-				<div class="col-sm-3">	
+		</div>
+		<div class="form-group row">
+						<div class="col-sm-3">	
 						<label >Calibration Status</label>
 						<form:select class="form-control fontst" path="calibrationStatus"
 												required="Required" id="calibrationStatus" onchange="setDate();">
@@ -165,19 +295,7 @@
 						<form:option value="FAIL">FAIL</form:option>
 						</form:select>
 					
-				</div>	
-				<div class="col-sm-6">
-						<label >Calibration Inspector</label>
-						<form:select class="form-control fontst" path="userId.userId"
-												required="Required" id="users" >
-							<form:option value="">--SELECT--</form:option>
-							<c:forEach items="${calibrationUsercombo}" var="use">
-							<form:option value="${use.userId}">${use.userName}</form:option>
-							</c:forEach>
-							</form:select>
-					</div>	
-		</div>
-		<div class="form-group row">
+				</div>
 				<div class="col-sm-3">
 						<label class="l-fontst">Next Calibration Date</label>
 						<form:input class="form-control fontst" type="date" path="nextCalibratedDate" 
@@ -186,10 +304,7 @@
 				<div class="col-sm-3">
 				
 				</div>
-				<div class="col-sm-6">
-						<label >Remarks</label>
-						<form:textarea path="remarks" class="form-control"/>
-				</div>
+
 									
 		</div>	
 
@@ -199,18 +314,7 @@
 					<div class="col-sm-8">
 						
 						
-						<input type="file" class="file"
-							id="calibrationReport" name="calibrationReport"  accept="application/pdf">
-						<div class="input-group my-3">
-							<input type="text"
-								class="form-control form-control form-control-user"
-								disabled placeholder="Upload pdf " id="file">
-							<div class="input-group-append">
-								<button type="button" class="browse btn btn-primary">Browse</button>
-							</div>
-							<br>
-
-						</div>
+	
 				
 						
 						

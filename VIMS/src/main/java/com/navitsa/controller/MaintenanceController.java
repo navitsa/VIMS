@@ -3,6 +3,7 @@ package com.navitsa.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class MaintenanceController {
 	@Autowired
 	AppointmentService appointmentService;
 	
-	  @RequestMapping(value = "/serviceReport", method=RequestMethod.GET) 
+	  @RequestMapping(value = "/serviceSchedule", method=RequestMethod.GET) 
 	  public ModelAndView getAgeAnalysisReport(Map<String, String> model,HttpServletResponse response,HttpSession session) { 
 
 		  String centerid=session.getAttribute("centerid")+"";
@@ -80,8 +81,8 @@ public class MaintenanceController {
 		  equpmentServicesReportBeen.setEqmake(eqMaster.getEqModelID().getEqMakeID().getEqMake());
 		  equpmentServicesReportBeen.setEqmodel(eqMaster.getEqModelID().getEqModel());
 		  equpmentServicesReportBeen.setSerialno(eqMaster.getSerialNo());
-		  equpmentServicesReportBeen.setNextservicesdate(eqMaster.getNextServiceDate());
-		  equpmentServicesReportBeen.setLastservicesdate(eqMaster.getLastServiceDate());
+		  equpmentServicesReportBeen.setNextservicesdate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(eqMaster.getNextServiceDate())));
+		  equpmentServicesReportBeen.setLastservicesdate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(eqMaster.getLastServiceDate())));
 		  equpmentServicesReportBeenList.add(equpmentServicesReportBeen);
 		  }
 	       	ReportViewe review=new ReportViewe();
@@ -90,18 +91,18 @@ public class MaintenanceController {
 	    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
 	      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
 	      	params.put("address",centerMaster.getAdd03() );
-	      	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(LocalDate.now().toString())));
+	      	params.put("todate",DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(LocalDate.now().toString())));
 	   
 	      	String reptValue="";
       	
 	      	try {
-	      		reptValue=review.pdfReportViewInlineSystemOpen("EquipmentServiceReport.jasper","Equipment Service Report",equpmentServicesReportBeenList,params,response);
+	      		reptValue=review.pdfReportViewInlineSystemOpen("EquipmentServiceSchedule.jasper","Equipment Service Report",equpmentServicesReportBeenList,params,response);
 	      		
 	      
 	      	}catch(Exception e) {	          		
 	      		e.printStackTrace();          		
 	      	}
-	     	ModelAndView mav = new ModelAndView("serviceReport");
+	     	ModelAndView mav = new ModelAndView("serviceSchedule");
 	     	mav.addObject("pdfViewEq", reptValue); 
 		  
 		  return mav;
@@ -109,8 +110,8 @@ public class MaintenanceController {
 	  
 	  
 	  
-	  @RequestMapping(value = "/calibrationReport", method=RequestMethod.GET) 
-	  public ModelAndView getCalibrationReport(HttpServletResponse response,HttpSession session) { 
+	  @RequestMapping(value = "/calibrationSchedule", method=RequestMethod.GET) 
+	  public ModelAndView calibrationSchedule(HttpServletResponse response,HttpSession session) { 
 		  String centerid=session.getAttribute("centerid")+"";
 		  CenterMaster centerMaster=centerService.getcenterById(centerid);
 		  
@@ -128,9 +129,12 @@ public class MaintenanceController {
 			  equpmentCalibrationReportBeen.setEqmake(eqMaster.getEqModelID().getEqMakeID().getEqMake());
 			  equpmentCalibrationReportBeen.setEqmodel(eqMaster.getEqModelID().getEqModel());
 			  equpmentCalibrationReportBeen.setSerialno(eqMaster.getSerialNo());
-			  equpmentCalibrationReportBeen.setNextscalibrationdate(eqMaster.getNextCalibrationDate());
-			  equpmentCalibrationReportBeen.setLastcalibrationdate(eqMaster.getLastCalibrationDate());
+			  equpmentCalibrationReportBeen.setNextscalibrationdate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(eqMaster.getNextCalibrationDate())));
+			  equpmentCalibrationReportBeen.setLastcalibrationdate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(eqMaster.getLastCalibrationDate())));
 			  equpmentCalibrationReportBeenList.add(equpmentCalibrationReportBeen);
+			  
+			  
+			  
 		  }
 	       	ReportViewe review=new ReportViewe();
 	      	Map<String,Object> params = new HashMap<>();
@@ -138,18 +142,18 @@ public class MaintenanceController {
 	    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
 	      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
 	      	params.put("address",centerMaster.getAdd03() );
-	      	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(LocalDate.now().toString())));
+	      	params.put("todate",DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(LocalDate.now().toString())));
 	   
 	      	String reptValue="";
       	
 	      	try {
-	      		reptValue=review.pdfReportViewInlineSystemOpen("EquipmentCalibrationReport.jasper","Equipment Calibration Report",equpmentCalibrationReportBeenList,params,response);
+	      		reptValue=review.pdfReportViewInlineSystemOpen("calibrationScheduleReport.jasper","Calibration Schedule",equpmentCalibrationReportBeenList,params,response);
 	      		
 	      
 	      	}catch(Exception e) {	          		
 	      		e.printStackTrace();          		
 	      	}
-	     	ModelAndView mav = new ModelAndView("serviceReport");
+	     	ModelAndView mav = new ModelAndView("calibrationSchedule");
 	     	mav.addObject("pdfViewEq", reptValue);
 	     	return mav;
 			  }
@@ -329,10 +333,10 @@ public class MaintenanceController {
 					  calibratedEqupmentReportBeen.setEqmake(eqCalib.getEquipmentID().getEqModelID().getEqMakeID().getEqMake());
 					  calibratedEqupmentReportBeen.setEqmodel(eqCalib.getEquipmentID().getEqModelID().getEqModel());
 					  calibratedEqupmentReportBeen.setSerialno(eqCalib.getEquipmentID().getSerialNo());
-					  calibratedEqupmentReportBeen.setNextscalibrationdate(eqCalib.getNextCalibratedDate());
-					  calibratedEqupmentReportBeen.setLastcalibrationdate(eqCalib.getLastCalibrationDate());
+					  calibratedEqupmentReportBeen.setNextscalibrationdate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(eqCalib.getNextCalibratedDate())));
+					  calibratedEqupmentReportBeen.setLastcalibrationdate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(eqCalib.getLastCalibrationDate())));
 					  
-					  calibratedEqupmentReportBeen.setCalibrateddate(eqCalib.getCalibratedDate());
+					  calibratedEqupmentReportBeen.setCalibrateddate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(eqCalib.getCalibratedDate())));
 					  calibratedEqupmentReportBeen.setCalibrationstatus(eqCalib.getCalibrationStatus());
 					  calibratedEqupmentReportBeen.setRemarks(eqCalib.getRemarks());
 					  calibratedEqupmentReportBeen.setCalibrationuser(eqCalib.getUserId().getUserName());
@@ -346,7 +350,7 @@ public class MaintenanceController {
 			    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
 			      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
 			      	params.put("address",centerMaster.getAdd03() );
-			      	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(LocalDate.now().toString())));
+			      	params.put("todate",DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(LocalDate.now().toString())));
 			   
 			      	String reptValue="";
 		      	
@@ -387,10 +391,10 @@ public class MaintenanceController {
 					  serviceEqupmentReportBeen.setEqmake(eqser.getEquipmentID().getEqModelID().getEqMakeID().getEqMake());
 					  serviceEqupmentReportBeen.setEqmodel(eqser.getEquipmentID().getEqModelID().getEqModel());
 					  serviceEqupmentReportBeen.setSerialno(eqser.getEquipmentID().getSerialNo());
-					  serviceEqupmentReportBeen.setNextservicedate(eqser.getNextServicesDate());
-					  serviceEqupmentReportBeen.setLastservicedate(eqser.getLastServicesDate());
+					  serviceEqupmentReportBeen.setNextservicedate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(eqser.getNextServicesDate())));
+					  serviceEqupmentReportBeen.setLastservicedate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(eqser.getLastServicesDate())));
 					  
-					  serviceEqupmentReportBeen.setServiceddate(eqser.getServicedDate());
+					  serviceEqupmentReportBeen.setServiceddate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(eqser.getServicedDate())));
 					
 					  serviceEqupmentReportBeen.setRemarks(eqser.getRemarks());
 					  serviceEqupmentReportBeen.setServiceuser(eqser.getUserId().getUserName());
@@ -404,7 +408,7 @@ public class MaintenanceController {
 			    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
 			      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
 			      	params.put("address",centerMaster.getAdd03() );
-			      	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(LocalDate.now().toString())));
+			      	params.put("todate",DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(LocalDate.now().toString())));
 			   
 			      	String reptValue="";
 		      	
@@ -434,7 +438,7 @@ public class MaintenanceController {
 				}
 				
 				@RequestMapping(value = "/saveEquipmentsIssue", method = RequestMethod.POST)
-				public String saveEquipmentsIssue(@ModelAttribute("equipmentsIssue") IssueTicket issueTicket,HttpSession session)
+				public @ResponseBody String saveEquipmentsIssue(@ModelAttribute("equipmentsIssue") IssueTicket issueTicket,HttpSession session)
 				 {		//System.out.println("dfffffffffff="+equipmentscalibration.getEquipmentID().getEquipmentID()); 							
 					try {
 						System.out.println(issueTicket.getEquipmentID().getEquipmentID());
@@ -466,14 +470,16 @@ public class MaintenanceController {
 					    issueTicket.setIssueTime(time.format(formattertime));
 					    issueTicket.setIssueStatus("Open");
 					    issueTicket.setStatus("ACTIVE");
-						eqervice.saveIssueTicket(issueTicket);
-					
+						//eqervice.saveIssueTicket(issueTicket);
+					    IssueTicket resIssueTicket= eqervice.saveIssueTicket(issueTicket);
+						return resIssueTicket.getTicketNo()+"";
 						
 					}catch(Exception e) {
 						System.out.println(e);
 						e.printStackTrace();
+						return "0";
 					}
-					return "redirect:/issueTicket.do";
+					
 						
 				}	
 				
@@ -514,7 +520,7 @@ public class MaintenanceController {
 						  issueTicketReportBeen.setTicketno(issueTicket.getTicketNo());
 						  issueTicketReportBeen.setIssue(issueTicket.getIssue());
 						  issueTicketReportBeen.setIssuetype(issueTicket.getIssueType());
-						  issueTicketReportBeen.setIssuedate(issueTicket.getIssueDate());
+						  issueTicketReportBeen.setIssuedate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(issueTicket.getIssueDate())));
 						  issueTicketReportBeen.setIssuetime(issueTicket.getIssueTime());
 						  issueTicketReportBeen.setIssuestatus(issueTicket.getIssueStatus());
 						  issueTicketReportBeen.setLane(issueTicket.getTestLaneHeadId().getLaneName());
@@ -524,7 +530,7 @@ public class MaintenanceController {
 						  issueTicketReportBeen.setEquipmentstatus(issueTicket.getEqIsWorking());
 						  issueTicketReportBeen.setEqissuetime(issueTicket.getEquipmentIssueTime());
 						  issueTicketReportBeen.setStatus(issueTicket.getStatus());
-						 
+						  issueTicketReportBeen.setIssuelevel(issueTicket.getIssueLevel());
 						  incidentReportBeenList.add(issueTicketReportBeen);
 					  }
 				       	ReportViewe review=new ReportViewe();
@@ -533,7 +539,7 @@ public class MaintenanceController {
 				    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
 				      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
 				      	params.put("address",centerMaster.getAdd03() );
-				      	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromDate)) +" To "+DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
+				      	params.put("todate",DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(fromDate)) +" To "+DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(toDate)));
 				   
 				      	String reptValue="";
 			      	
@@ -579,7 +585,7 @@ public class MaintenanceController {
 						  issueTicketReportBeen.setTicketno(issueTicket.getTicketNo());
 						  issueTicketReportBeen.setIssue(issueTicket.getIssue());
 						  issueTicketReportBeen.setIssuetype(issueTicket.getIssueType());
-						  issueTicketReportBeen.setIssuedate(issueTicket.getIssueDate());
+						  issueTicketReportBeen.setIssuedate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(issueTicket.getIssueDate())));
 						  issueTicketReportBeen.setIssuetime(issueTicket.getIssueTime());
 						  issueTicketReportBeen.setIssuestatus(issueTicket.getIssueStatus());
 						  issueTicketReportBeen.setLane(issueTicket.getTestLaneHeadId().getLaneName());
@@ -598,7 +604,7 @@ public class MaintenanceController {
 				    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
 				      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
 				      	params.put("address",centerMaster.getAdd03() );
-				      	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(LocalDate.now().toString())));
+				      	params.put("todate",DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(LocalDate.now().toString())));
 				      	params.put("sta",ticketStatus);
 				      	String reptValue="";
 			      	
@@ -629,7 +635,7 @@ public class MaintenanceController {
 					 } 
 				  
 					@RequestMapping(value = "/saveCloseTicket", method = RequestMethod.POST)
-					public String saveTicketClose(@ModelAttribute("closeTicket") TicketClose ticketClose,HttpSession session)
+					public   @ResponseBody String saveTicketClose(@ModelAttribute("closeTicket") TicketClose ticketClose,HttpSession session)
 					 {		//System.out.println("dfffffffffff="+equipmentscalibration.getEquipmentID().getEquipmentID()); 							
 						try {
 							IssueTicket issueTicket=eqervice.getTicketById(ticketClose.getTicketNo().getTicketNo());
@@ -646,19 +652,21 @@ public class MaintenanceController {
 		    	    	    
 		    	    	    ticketClose.setCloseDate(formatter.format(date));						   
 						    ticketClose.setStatus("ACTIVE");
-							eqervice.saveCloseTicket(ticketClose);
+						    TicketClose reTicclos=eqervice.saveCloseTicket(ticketClose);
 						
 							//update Issue Ticket
 							issueTicket.setIssueStatus("Close");
 							eqervice.saveIssueTicket(issueTicket);
-							
+							return reTicclos.getTicketNo().getTicketNo()+"";
 							
 							
 						}catch(Exception e) {
 							System.out.println(e);
 							e.printStackTrace();
+							//return "redirect:/closeTicket.do";
+							return "0";
 						}
-						return "redirect:/closeTicket.do";
+						
 							
 					}
 					
@@ -695,23 +703,42 @@ public class MaintenanceController {
 			  
 			  
 			  
-			  for(TicketClose ticketClose:ticketCloseList) {		
+			  for(TicketClose ticketClose:ticketCloseList) {
+				  
 				  IssueTicketReportBeen issueTicketReportBeen=new IssueTicketReportBeen();
 				  issueTicketReportBeen.setTicketno(ticketClose.getTicketNo().getTicketNo());
 				  issueTicketReportBeen.setIssue(ticketClose.getTicketNo().getIssue());
-				  issueTicketReportBeen.setIssuetype(ticketClose.getTicketNo().getIssueType());
-				  issueTicketReportBeen.setIssuedate(ticketClose.getTicketNo().getIssueDate());
+				  issueTicketReportBeen.setIssuetype(ticketClose.getTicketNo().getIssueType());				
+				  issueTicketReportBeen.setIssuedate(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(ticketClose.getTicketNo().getIssueDate())));
 				  issueTicketReportBeen.setIssuetime(ticketClose.getTicketNo().getIssueTime());
 				  issueTicketReportBeen.setIssuestatus(ticketClose.getTicketNo().getIssueStatus());
 				  issueTicketReportBeen.setLane(ticketClose.getTicketNo().getTestLaneHeadId().getLaneName());
 				  issueTicketReportBeen.setLanestatus(ticketClose.getTicketNo().getLaneStatus());
 			//Task Close time
-				  issueTicketReportBeen.setLaneissuetyme(ticketClose.getCloseTime()+" "+ticketClose.getCloseDate());
+				  issueTicketReportBeen.setLaneissuetyme(ticketClose.getCloseTime());
+			//Task Close Date 
+				  issueTicketReportBeen.setEqissuetime(DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(ticketClose.getCloseDate()))); 
+			//Down Time......................  
+				  DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+				  LocalDateTime dateTime1= LocalDateTime.parse(ticketClose.getTicketNo().getIssueDate()+" "+ticketClose.getTicketNo().getIssueTime(), formatter1);
+				  LocalDateTime dateTime2= LocalDateTime.parse(ticketClose.getCloseDate()+" "+ticketClose.getCloseTime(), formatter1);
+
+				  long diffInMilli = java.time.Duration.between(dateTime1, dateTime2).toMillis();
+				  long diffInSeconds = java.time.Duration.between(dateTime1, dateTime2).getSeconds();
+				  long diffInMinutes = java.time.Duration.between(dateTime1, dateTime2).toMinutes();
+				  
+				  issueTicketReportBeen.setStatus(diffInMinutes+" Minutes");
+				 
+				  
+				  
+			//.................................	  
 				  
 				  issueTicketReportBeen.setEquipment(ticketClose.getTicketNo().getEquipmentID().getSerialNo());
 				  issueTicketReportBeen.setEquipmentstatus(ticketClose.getTicketNo().getEqIsWorking());
-				  issueTicketReportBeen.setEqissuetime(ticketClose.getTicketNo().getEquipmentIssueTime());
-				  issueTicketReportBeen.setStatus(ticketClose.getTicketNo().getStatus());
+				
+			//	  issueTicketReportBeen.setEqissuetime(ticketClose.getTicketNo().getEquipmentIssueTime());
+				 // issueTicketReportBeen.setStatus(ticketClose.getTicketNo().getStatus());
 				 
 				  incidentReportBeenList.add(issueTicketReportBeen);
 			  }
@@ -721,7 +748,7 @@ public class MaintenanceController {
 		    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
 		      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
 		      	params.put("address",centerMaster.getAdd03() );
-		      	params.put("todate",formatter.format(date));
+		      	params.put("todate",DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(LocalDate.now().toString())));
 		    	params.put("sta",status);
 		      	String reptValue="";
 	      	

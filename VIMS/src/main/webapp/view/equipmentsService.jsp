@@ -127,89 +127,86 @@
 		<form:form action="saveEquipmentsService" modelAttribute="equipmentsService" method="POST" enctype="multipart/form-data" > 
 		<div class=" row">
 			<div class="col-sm-7">
-				<div class="form-group row">
-					<div class="col-sm-3">
-						<label class="l-fontst">Service Date</label>
-						<form:input class="form-control fontst" type="date" path="servicesDate" 
-						 required="true"	id="servicesDate" onchange="getSerVDate();getServiceDate(this.value);"></form:input>
-					</div>
-					<div class="col-sm-3">
-						<label>Equipment Type</label>
-						<select class="form-control"   onchange="getSerVDate()" id="eqtype">
-							<option value="">--SELECT--</option>
-							<c:forEach items="${eqTypeCmbfor}" var="eq1">
-								<option value="${eq1.eqTypeID}">${eq1.eqType}</option>
-							</c:forEach>
-						</select>
-					</div>
-					<div class="col-sm-6">
-						<label>Equipment</label>
-						<form:select class="form-control" path="equipmentID.equipmentID" required="Required" id="eqid" onchange="setDate();">
-							<form:option value="equipmentID.equipmentID">--SELECT--</form:option>
-						</form:select>
-					</div>
-				</div>		
-		
-		<div class="form-group row">
-				<div class="col-sm-3">
-						<label class="l-fontst">Serviced Date</label>
-						<form:input class="form-control fontst" type="date" path="servicedDate" 
-						 required="true"	id="servicedDate" onchange="setDate();"></form:input>
+				<div class=" row">
+						<div class="col-sm-6">
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label class="l-fontst">Schedule Date</label>
+									<form:input class="form-control fontst" type="date" path="servicesDate" 
+							 		required="true"	id="servicesDate" onchange="getSerVDate();getServiceDate(this.value);"></form:input>
+								</div>
+								<div class="col-sm-6">
+									<label>Equipment Type</label>
+									<select class="form-control"   onchange="getSerVDate()" id="eqtype">
+									<option value="">--SELECT--</option>
+									<c:forEach items="${eqTypeCmbfor}" var="eq1">
+									<option value="${eq1.eqTypeID}">${eq1.eqType}</option>
+									</c:forEach>
+									</select>
+								</div>
+							</div>	
+							<div class="form-group row">
+								<div class="col-sm-6">
+										<label class="l-fontst">Serviced Date</label>
+										<form:input class="form-control fontst" type="date" path="servicedDate" 
+										 required="true"	id="servicedDate" onchange="setDate();"></form:input>
+								</div>
+			
+								<div class="col-sm-6">
+									<label >Service Inspector</label>
+									<form:select class="form-control fontst" path="userId.userId"
+												required="Required" id="users" >
+									<form:option value="">--SELECT--</form:option>
+									<c:forEach items="${calibrationUsercombo}" var="use">
+									<form:option value="${use.userId}">${use.userName}</form:option>
+									</c:forEach>
+									</form:select>
+								</div>	
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-6">
+										<label class="l-fontst">Next Service Date</label>
+										<form:input class="form-control fontst" type="date" path="nextServicesDate" 
+										 required="true"	id="nextServicesDate" ></form:input>
+								</div>
+			
+			
+									
+							</div>	
+							<div class="form-group">
+								<div class="row">
+									<div class="col-7">
+<%-- 										<img  class="zoom imagePreview"  src="<c:url value='/resources/img/user-default.jpg'/>" id="preview" class="img-thumbnail">		 --%>
+										<label class="btn btn-primary">Upload Services Report<input type="file"  accept="application/pdf"
+												class="uploadFile img" value="Upload Pdf" style="width: 0px;height: 0px;overflow: hidden;"  accept="image/*" id="user_Img"
+												name="servicesReport"></label>
+									</div>
+								</div>
+							</div>
+									
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group row">
+								<div class="col-sm-8">
+									<label>Equipment</label>
+									<form:select class="form-control" path="equipmentID.equipmentID" required="Required" size="14"  id="eqid" onchange="setDate();">
+										<form:option value="equipmentID.equipmentID">--SELECT--</form:option>
+									</form:select>
+								</div>
+							</div>
+			
+			
+						</div>
 				</div>
 			
-				<div class="col-sm-6">
-						<label >Service Inspector</label>
-						<form:select class="form-control fontst" path="userId.userId"
-												required="Required" id="users" >
-							<form:option value="">--SELECT--</form:option>
-							<c:forEach items="${calibrationUsercombo}" var="use">
-							<form:option value="${use.userId}">${use.userName}</form:option>
-							</c:forEach>
-							</form:select>
-					</div>	
-		</div>
-		<div class="form-group row">
-				<div class="col-sm-3">
-						<label class="l-fontst">Next Service Date</label>
-						<form:input class="form-control fontst" type="date" path="nextServicesDate" 
-						 required="true"	id="nextServicesDate" ></form:input>
-				</div>
-				<div class="col-sm-3">
-				
-				</div>
-				<div class="col-sm-6">
-						<label >Remarks</label>
-						<form:textarea path="remarks" class="form-control"/>
-				</div>
-									
-		</div>	
+		
+		
+
+	
 
 	
 		
-				<div class="form-group row">
-					<div class="col-sm-5">
-						
-						
-						<input type="file" class="file"
-							id="servicesReport" name="servicesReport"  accept="application/pdf">
-						<div class="input-group my-3">
-							<input type="text"
-								class="form-control form-control form-control-user"
-								disabled placeholder="Upload pdf " id="file">
-							<div class="input-group-append">
-								<button type="button" class="browse btn btn-primary">Browse</button>
-							</div>
-							<br>
-
-						</div>
 				
-						
-						
-						
-						
-						
-					</div>
-				</div>
 		
 		
 		

@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="IncidentReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
 	<property name="ireport.zoom" value="1.210000000000003"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="340"/>
 	<property name="ireport.y" value="0"/>
+	<style name="style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{issuelevel}.equals("High")]]></conditionExpression>
+			<style forecolor="#990000"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{issuelevel}.equals("Medium")]]></conditionExpression>
+			<style forecolor="#FFCC00"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{issuelevel}.equals("Low")]]></conditionExpression>
+			<style forecolor="#00CC00"/>
+		</conditionalStyle>
+	</style>
 	<parameter name="img" class="java.lang.Object"/>
 	<parameter name="hedder" class="java.lang.String"/>
 	<parameter name="address" class="java.lang.String"/>
@@ -20,6 +34,18 @@
 	<field name="eqissuetime" class="java.lang.String"/>
 	<field name="status" class="java.lang.String"/>
 	<field name="issuestatus" class="java.lang.String"/>
+	<field name="issuelevel" class="java.lang.String"/>
+	<group name="issue date">
+		<groupExpression><![CDATA[$F{issuedate}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<textField>
+					<reportElement x="10" y="0" width="513" height="20" uuid="752b0582-d267-4bf4-9f52-e485905f4f29"/>
+					<textFieldExpression><![CDATA[$F{issuedate}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
 	<pageHeader>
 		<band height="98">
 			<staticText>
@@ -57,7 +83,7 @@
 	<columnHeader>
 		<band height="21">
 			<staticText>
-				<reportElement x="10" y="1" width="60" height="20" uuid="1da4458d-eff1-4fd2-8548-0e6f20fab703"/>
+				<reportElement x="10" y="0" width="60" height="21" uuid="1da4458d-eff1-4fd2-8548-0e6f20fab703"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -68,7 +94,7 @@
 				<text><![CDATA[Ticket No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="157" y="0" width="193" height="20" uuid="3aeb1020-d9a1-4abf-a61a-9e8c80824dc0"/>
+				<reportElement x="157" y="0" width="193" height="21" uuid="3aeb1020-d9a1-4abf-a61a-9e8c80824dc0"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -79,7 +105,7 @@
 				<text><![CDATA[Issue]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="70" y="0" width="87" height="20" uuid="32a99854-de9a-42d3-b4f9-124121af19a4"/>
+				<reportElement x="70" y="0" width="87" height="21" uuid="32a99854-de9a-42d3-b4f9-124121af19a4"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -90,7 +116,7 @@
 				<text><![CDATA[Issue Type]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="350" y="1" width="115" height="20" uuid="e01182e6-8436-4b6f-b323-f80468e347ea"/>
+				<reportElement x="350" y="0" width="115" height="21" uuid="e01182e6-8436-4b6f-b323-f80468e347ea"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -98,10 +124,10 @@
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Issue Date]]></text>
+				<text><![CDATA[Issue Time]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="465" y="1" width="80" height="20" uuid="97fd313f-35fa-4a9a-8d57-1f539f216e3e"/>
+				<reportElement x="465" y="0" width="80" height="21" uuid="97fd313f-35fa-4a9a-8d57-1f539f216e3e"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -112,7 +138,7 @@
 				<text><![CDATA[Issue Status]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="544" y="1" width="55" height="20" uuid="b8323fa0-a83a-4baa-8f1e-c419ed45233c"/>
+				<reportElement x="544" y="0" width="55" height="21" uuid="b8323fa0-a83a-4baa-8f1e-c419ed45233c"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -123,7 +149,7 @@
 				<text><![CDATA[Lane]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="599" y="1" width="94" height="20" uuid="0f85de96-75d7-4746-bdbd-2735e899c70e"/>
+				<reportElement x="599" y="0" width="94" height="21" uuid="0f85de96-75d7-4746-bdbd-2735e899c70e"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -134,7 +160,7 @@
 				<text><![CDATA[Lane Status]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="693" y="1" width="90" height="20" uuid="03c2ebb0-4652-49b5-8574-9394160e5d46"/>
+				<reportElement x="693" y="0" width="90" height="21" uuid="03c2ebb0-4652-49b5-8574-9394160e5d46"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -145,7 +171,7 @@
 				<text><![CDATA[Equipment]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="783" y="1" width="59" height="20" uuid="57a42d55-fef7-43e6-9023-2e5241fa4c0e"/>
+				<reportElement x="783" y="0" width="59" height="21" uuid="57a42d55-fef7-43e6-9023-2e5241fa4c0e"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -160,40 +186,40 @@
 	<detail>
 		<band height="21">
 			<textField>
-				<reportElement x="10" y="1" width="60" height="20" uuid="d2d69e80-f3a4-4b2e-ba6f-3b9bce7a1cf2"/>
+				<reportElement style="style1" x="10" y="1" width="60" height="20" uuid="d2d69e80-f3a4-4b2e-ba6f-3b9bce7a1cf2"/>
 				<textFieldExpression><![CDATA[$F{ticketno}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="157" y="1" width="193" height="20" uuid="ee13af95-7592-4331-9ebc-582b0fe94b28"/>
+				<reportElement style="style1" x="157" y="1" width="193" height="20" uuid="ee13af95-7592-4331-9ebc-582b0fe94b28"/>
 				<textFieldExpression><![CDATA[$F{issue}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="70" y="1" width="87" height="20" uuid="3193d904-f6f1-49c9-ae89-ab8488402df8"/>
+				<reportElement style="style1" x="70" y="1" width="87" height="20" uuid="3193d904-f6f1-49c9-ae89-ab8488402df8"/>
 				<textFieldExpression><![CDATA[$F{issuetype}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="350" y="1" width="115" height="20" uuid="752b0582-d267-4bf4-9f52-e485905f4f29"/>
-				<textFieldExpression><![CDATA[$F{issuedate}+"  "+$F{issuetime}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="465" y="0" width="80" height="20" uuid="a93df1f4-a0fe-40ff-ac48-6a8bc455271a"/>
+				<reportElement style="style1" x="465" y="0" width="80" height="20" uuid="a93df1f4-a0fe-40ff-ac48-6a8bc455271a"/>
 				<textFieldExpression><![CDATA[$F{issuestatus}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="544" y="1" width="55" height="20" uuid="28af7a21-5721-4ac3-acbb-94c289bb4db6"/>
+				<reportElement style="style1" x="544" y="1" width="55" height="20" uuid="28af7a21-5721-4ac3-acbb-94c289bb4db6"/>
 				<textFieldExpression><![CDATA[$F{lane}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="599" y="1" width="94" height="20" uuid="67ad354f-2284-4d25-ba8a-c7c2b8454649"/>
+				<reportElement style="style1" x="599" y="1" width="94" height="20" uuid="67ad354f-2284-4d25-ba8a-c7c2b8454649"/>
 				<textFieldExpression><![CDATA[$F{lanestatus}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="693" y="1" width="90" height="20" uuid="d9655c83-1e03-4e43-a55c-9d951a4e315b"/>
+				<reportElement style="style1" x="693" y="1" width="90" height="20" uuid="d9655c83-1e03-4e43-a55c-9d951a4e315b"/>
 				<textFieldExpression><![CDATA[$F{equipment}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="783" y="1" width="59" height="20" uuid="c823d795-148f-4318-82c0-31cc5736de34"/>
+				<reportElement style="style1" x="783" y="1" width="59" height="20" uuid="c823d795-148f-4318-82c0-31cc5736de34"/>
 				<textFieldExpression><![CDATA[$F{equipmentstatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="style1" x="350" y="1" width="115" height="20" uuid="5cd3cb1f-30b5-4a35-a4c9-6369232b4287"/>
+				<textFieldExpression><![CDATA[$F{issuetime}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -16,7 +16,7 @@ public class IssueTicketReportBeen {
 	String equipmentstatus;
 	String eqissuetime;
 	String status;
-
+	String issuelevel;
 	
 	public int getTicketno() {
 		return ticketno;
@@ -96,6 +96,12 @@ public class IssueTicketReportBeen {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getIssuelevel() {
+		return issuelevel;
+	}
+	public void setIssuelevel(String issuelevel) {
+		this.issuelevel = issuelevel;
 	}
 	
 	

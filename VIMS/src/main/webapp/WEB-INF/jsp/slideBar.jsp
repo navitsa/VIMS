@@ -319,18 +319,18 @@
 		
 <!-- 			<div class="bg-white py-2 collapse-inner rounded"> -->
 				<h6 class="text-section">Calibration :</h6>
-					<a class="collapse-item fontst-sb-it" href="calibrationReport" id="calibrationReport" hidden="true" >Calibration Report</a>
+					<a class="collapse-item fontst-sb-it" href="calibrationSchedule" id="calibrationSchedule" hidden="true" >Calibration Schedule</a>
 					<a class="collapse-item fontst-sb-it" href="calibrationCalendar" id="calibrationCalendar" hidden="true" >Calibration Calendar</a>			
 			<a class="collapse-item fontst-sb-it" href="equipmentsCalibration" id="equipmentsCalibration" hidden="true" >Equipment Calibration</a>	
 			<a class="collapse-item fontst-sb-it" href="equipmentsCalibrationRpt" id="equipmentsCalibrationRpt" hidden="true" >Equipment Calibration Report</a>	
 			
 				<h6 class="text-section">Service :</h6>
-					<a class="collapse-item fontst-sb-it" href="serviceReport" id="serviceReport" hidden="true">Service Report</a> 
+					<a class="collapse-item fontst-sb-it" href="serviceSchedule" id="serviceSchedule" hidden="true">Service Schedule</a> 
 					<a class="collapse-item fontst-sb-it" href="serviceCalendar" id="serviceCalendar" hidden="true">Service Calendar</a>
 				<a class="collapse-item fontst-sb-it" href="equipmentsService" id="equipmentsService" hidden="true">Equipment Service</a>
 				<a class="collapse-item fontst-sb-it" href="equipmentsServiceRpt" id="equipmentsServiceRpt" hidden="true">Equipment Service Report</a>
 
-				<h6 class="text-section">:</h6>
+				<h6 class="text-section">Incident :</h6>
 					<a class="collapse-item fontst-sb-it" href="issueTicket" id="issueTicket"  hidden="true">Issue Ticket</a>
 					<a class="collapse-item fontst-sb-it" href="incidentReport" id="incidentReport"  hidden="true">Incident Report</a>
 					<a class="collapse-item fontst-sb-it" href="closeTicket" id="closeTicket" hidden="true">Ticket Close</a>

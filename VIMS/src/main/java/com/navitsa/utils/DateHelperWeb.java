@@ -85,6 +85,10 @@ public final class DateHelperWeb {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         return dateFormat.format(date);
     }
+    public static String getFormatStringDate4(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(date);
+    }
     public static int dateFiff(Calendar date1, Calendar date2){
         if (date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR)) {
           return Math.abs(date1.get(Calendar.DAY_OF_YEAR) - date2.get(Calendar.DAY_OF_YEAR));

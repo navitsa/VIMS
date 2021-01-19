@@ -123,7 +123,7 @@
 									<div class="card border-left-primary shadow h-100 py-2">
 										<div class="card-body">
 
-<form:form action="saveCloseTicket" modelAttribute="closeTicket" method="POST" enctype="multipart/form-data" > 
+<form:form  modelAttribute="closeTicket" method="POST" enctype="multipart/form-data" id="closeTick"> 
 		<div class=" row">
 			<div class="col-sm-7">
 
@@ -174,11 +174,16 @@
 						
 					</div>
 				</div>
+	<div class="form-group row">
+		<div class="col-sm-12">
+			<h2 style="color: #ff0516; font-family: Arial, Helvetica, sans-serif;">Close this Issue will auto set Lane Status Active</h2>
+		</div>
+	</div>
 	
 				<div class="form-group row">
 									<div class="col-sm-6">
-										<input type="submit" class="btn btn-success"
-																			value="Save">
+										<input type="button" class="btn btn-success"
+																			value="Save" onclick="saveCloseTicket()">
 									
 									</div>
 									<div class="col-sm-6">
@@ -325,6 +330,72 @@
 		        		
 		        		
 		}
+		
+		
+		function saveCloseTicket() {
+
+			var request_method = $("#closeTick").attr("method"); //get form GET/POST method
+
+			// Get form
+			var form = $('#closeTick')[0];
+
+			// Create an FormData object
+			var data = new FormData(form);
+
+			//alert("Error "+form_data);
+			$.ajax({
+
+				url : "saveCloseTicket",
+				type : request_method,
+				enctype : 'multipart/form-data',
+				data : data,
+				processData : false,
+				contentType : false,
+				cache : false,
+
+				success : function(data) {
+				
+					if (data == "0") {
+						swal("Good job!", "You clicked the button!", {
+							icon : "error",
+							buttons : {
+								confirm : {
+									className : 'btn btn-danger'
+								}
+							},
+						});
+						
+						
+
+					} else {
+						swal("Successfuly Close Ticket!", "Ticket No : "+data, {
+							icon : "success",
+							buttons : {
+								confirm : {
+									className : 'btn btn-success'
+								}
+							},
+						});
+					}
+					document.getElementById("closeTick").reset();
+				},
+				error : function(e) {
+					swal("Good job!", "You clicked the button! err", {
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+					
+				}
+			});
+
+		}
+		
+		
+		
 </script>
 </body>
 </html>
