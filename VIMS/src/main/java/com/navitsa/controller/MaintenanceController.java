@@ -34,6 +34,7 @@ import com.navitsa.entity.EquipmentMaster;
 import com.navitsa.entity.EquipmentType;
 import com.navitsa.entity.EquipmentsCalibration;
 import com.navitsa.entity.IssueTicket;
+import com.navitsa.entity.Repair;
 import com.navitsa.entity.ServicesEquipment;
 import com.navitsa.entity.TestLane;
 import com.navitsa.entity.TestLaneHead;
@@ -43,6 +44,7 @@ import com.navitsa.services.AppointmentService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.EquipmentService;
 import com.navitsa.services.LaneServices;
+import com.navitsa.services.MaintenanceServices;
 import com.navitsa.services.UsersService;
 import com.navitsa.utils.DateHelperWeb;
 import com.navitsa.utils.ReportViewe;
@@ -60,6 +62,8 @@ public class MaintenanceController {
 	LaneServices laneServices;
 	@Autowired
 	AppointmentService appointmentService;
+	@Autowired
+	MaintenanceServices maintenanceServices;
 	
 	  @RequestMapping(value = "/serviceSchedule", method=RequestMethod.GET) 
 	  public ModelAndView getAgeAnalysisReport(Map<String, String> model,HttpServletResponse response,HttpSession session) { 
@@ -763,6 +767,33 @@ public class MaintenanceController {
 		     	mav.addObject("pdfViewEq", reptValue);
 		     	return mav;
 				  }			
+		  @RequestMapping("/repair") 
+		  public String repair(Map<String, Object> model) { 
+				  model.put("equipmentsRepair", new Repair());
+				  model.put("allRepair",  maintenanceServices.findAllRepair());
+				 
+			  return "repair";
+		  }		
+			@RequestMapping(value = "/saveRepair", method = RequestMethod.POST)
+			public   @ResponseBody String equipmentsRepair(@ModelAttribute("equipmentsRepair") Repair repair,HttpSession session)
+			 {		//System.out.println("dfffffffffff="+equipmentscalibration.getEquipmentID().getEquipmentID()); 							
+				try {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+				    Date date = new Date();
+				    
+					repair.setRepairDate(formatter.format(date));
+					repair.setStatus("ACTIVE");
+					 Repair repairReselt=maintenanceServices.saveRepair(repair);
+					return "1";
 					
 					
+				}catch(Exception e) {
+					System.out.println(e);
+					e.printStackTrace();
+					//return "redirect:/closeTicket.do";
+					return "0";
+				}
+				
+					
+			}
 }

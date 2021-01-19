@@ -337,6 +337,12 @@
 					<a class="collapse-item fontst-sb-it" href="statusTicketReport" id="statusTicketReport"  hidden="true">Ticket Status Report</a>
 		
 					<a class="collapse-item fontst-sb-it" href="downTimeReport" id="downTimeReport" hidden="true" >Down Time Report</a>
+
+				<h6 class="text-section">Repair :</h6>
+<!-- 					<a class="collapse-item fontst-sb-it" href="jobCard" id="jobCard"  hidden="true">Issue Job Card</a> -->
+					<a class="collapse-item fontst-sb-it" href="repair" id="repair"  hidden="true">Repair</a>
+
+
 <!-- 			</div> -->
 		</div>
 	</li>			
