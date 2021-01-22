@@ -202,7 +202,7 @@ function confirmMsg(regID,test_value_file_id,color,map) {
 	
 	swal({
 		title: 'Are you sure?',
-		text: "Available Results :\n1. Visual Inspection : "+map[1]+"\n2. Emission Petrol : "+map[3]+"\n3. Emission Diesel : "+map[2],
+		text: "Available Results :\n1. Visual Inspection : "+map[1]+"\n2. Emission : "+map[2],
 		type: 'warning',
 		buttons:{
 			confirm: {

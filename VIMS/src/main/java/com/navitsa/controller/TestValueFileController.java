@@ -357,14 +357,14 @@ public class TestValueFileController {
 			a.put(1, "Not Available !");
 		else
 			a.put(1, "Available");
-		if(emd == null)
+		if(emd == null || empcdata ==null)
 			a.put(2, "Not Available !");
 		else
 			a.put(2, "Available");
-		if(empcdata == null)
-			a.put(3, "Not Available !");
-		else
-			a.put(3, "Available");
+//		if(empcdata == null)
+//			a.put(3, "Not Available !");
+//		else
+//			a.put(3, "Available");
 		
 		return a;
 
