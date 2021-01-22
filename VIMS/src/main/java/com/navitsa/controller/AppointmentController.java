@@ -238,7 +238,7 @@ public class AppointmentController {
 		
 		String[] reservedTimeList =  appointmentService.getReservedTimes(date2,laneID);
 		String[] freeTimeList = new String[80];
-		SimpleDateFormat df3 = new SimpleDateFormat("hh:mm a");
+		//SimpleDateFormat df3 = new SimpleDateFormat("hh:mm a");
 		
 		for (int i = 0; i < a.length; i++) {
 			
@@ -436,7 +436,7 @@ public class AppointmentController {
 	
 	@RequestMapping(value="cancelling", method=RequestMethod.GET)
 	public @ResponseBody void cancelling(@RequestParam String appoID){
-		System.out.println("appointment ID "+appoID);
+		//System.out.println("appointment ID "+appoID);
 		appointmentService.cancellingAppointment(appoID);
 
 	}

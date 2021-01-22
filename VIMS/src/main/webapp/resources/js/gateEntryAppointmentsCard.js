@@ -105,7 +105,7 @@ function lateNotify() {
         				title: 'Appointment Alert !',
         				message: data[i].vehicle_id.vehicleID + ' Vehicle has not appeared at the gate !'+ 
         						'<br> Scheduled Time : '+data[i].appointmentTime+'<br><br>'+
-        						'<button class="btn btn-danger btn-sm" onclick="cancel('+ data[i].appointmentID +')"><b>Cancel</b></button> '+
+        						'<button class="btn btn-danger btn-sm" onclick="cancel(`'+data[i].appointmentID+'`)"><b>Cancel</b></button> '+
         						'<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal"><b>Reschedule</b></button> '+
         						'<button class="btn btn-light btn-sm"><b>Wait !</b></button>'
         			},{
@@ -131,12 +131,13 @@ function lateNotify() {
 setInterval(lateNotify, 60000);
 
 function cancel(str) {
+	
 	$.ajax({
         type: 'GET',
         url: "cancelling",
         data: {"appoID":str},
         success: function(data){
-        	alert("wow ! successfully cancelled !");
+        	alert("Successfully Cancelled !");
         },
         error:function(){
             //alert("error");
