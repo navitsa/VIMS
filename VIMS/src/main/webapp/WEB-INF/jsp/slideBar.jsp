@@ -305,8 +305,23 @@
 			</div>
 		</div>
 	</li>
-
-				
+<!-- Admin Panel -->
+		<li class="nav-item"  hidden="true" id="adminPanel">
+							<a data-toggle="collapse" href="#adminPan">
+								<i class="fas fa-pen-square"></i>
+								<p>Admin Panel</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="adminPan">
+		
+		
+			<div class="bg-white py-2 collapse-inner rounded">
+				<a class="collapse-item fontst-sb-it" href="esin" hidden="true" id="esin">ES_IN Create</a>
+				<a class="collapse-item fontst-sb-it" href="esout" hidden="true" id="esout">ES_OUT Create</a>
+			
+			</div>
+		</div>
+	</li>			
 	<!-- maintenance -->
 				
 	<li class="nav-item"  id="maintenance" hidden="true" >
@@ -318,17 +333,18 @@
 							<div class="nav-section collapse" id="eMaintenance">
 		
 <!-- 			<div class="bg-white py-2 collapse-inner rounded"> -->
-				<h6 class="text-section">Calibration :</h6>
+<a class="collapse-item fontst-sb-it" href="maintenanceDashboard" id="maintenanceDashboard" hidden="true" >Maintenance Dashboard</a>
+				<h6 class="text-section" >Calibration :</h6>
 					<a class="collapse-item fontst-sb-it" href="calibrationSchedule" id="calibrationSchedule" hidden="true" >Calibration Schedule</a>
 					<a class="collapse-item fontst-sb-it" href="calibrationCalendar" id="calibrationCalendar" hidden="true" >Calibration Calendar</a>			
 			<a class="collapse-item fontst-sb-it" href="equipmentsCalibration" id="equipmentsCalibration" hidden="true" >Equipment Calibration</a>	
-			<a class="collapse-item fontst-sb-it" href="equipmentsCalibrationRpt" id="equipmentsCalibrationRpt" hidden="true" >Equipment Calibration Report</a>	
+			<a class="collapse-item fontst-sb-it" href="equipmentsCalibrationRpt" id="equipmentsCalibrationRpt" hidden="true" >Calibration Report</a>	
 			
 				<h6 class="text-section">Service :</h6>
 					<a class="collapse-item fontst-sb-it" href="serviceSchedule" id="serviceSchedule" hidden="true">Service Schedule</a> 
 					<a class="collapse-item fontst-sb-it" href="serviceCalendar" id="serviceCalendar" hidden="true">Service Calendar</a>
 				<a class="collapse-item fontst-sb-it" href="equipmentsService" id="equipmentsService" hidden="true">Equipment Service</a>
-				<a class="collapse-item fontst-sb-it" href="equipmentsServiceRpt" id="equipmentsServiceRpt" hidden="true">Equipment Service Report</a>
+				<a class="collapse-item fontst-sb-it" href="equipmentsServiceRpt" id="equipmentsServiceRpt" hidden="true">Service Report</a>
 
 				<h6 class="text-section">Incident :</h6>
 					<a class="collapse-item fontst-sb-it" href="issueTicket" id="issueTicket"  hidden="true">Issue Ticket</a>
@@ -339,9 +355,9 @@
 					<a class="collapse-item fontst-sb-it" href="downTimeReport" id="downTimeReport" hidden="true" >Down Time Report</a>
 
 				<h6 class="text-section">Repair :</h6>
-<!-- 					<a class="collapse-item fontst-sb-it" href="jobCard" id="jobCard"  hidden="true">Issue Job Card</a> -->
+				<a class="collapse-item fontst-sb-it" href="jobCard" id="jobCard"  hidden="true">Issue Job Card</a>
 					<a class="collapse-item fontst-sb-it" href="repair" id="repair"  hidden="true">Repair</a>
-
+					<a class="collapse-item fontst-sb-it" href="equipmentRepairReport" id="equipmentRepairReport"  hidden="true">Repair Report</a>
 
 <!-- 			</div> -->
 		</div>
