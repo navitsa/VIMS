@@ -39,4 +39,6 @@ public interface OcrDetailsRepository extends CrudRepository<OcrDetails, Integer
 	@Query(value = "SELECT oc FROM OcrDetails oc where oc.vmStatus='completed' and oc.vrStatus='pending' and oc.docStatus='completed' and oc.paymentStatus='completed' and oc.status='ACTIVE'")
 	public List<OcrDetails> pendingLaneEntryData();
 	
+	@Query(value = "SELECT oc FROM OcrDetails oc where oc.vrStatus='completed' AND oc.ocrDate LIKE :todayDate || '%' and oc.status='ACTIVE'")
+	public List<OcrDetails> completedVehiclesPayment(@Param("todayDate")String todayDate);
 }

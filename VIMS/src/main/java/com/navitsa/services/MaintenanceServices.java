@@ -22,4 +22,10 @@ public class MaintenanceServices {
 		return  repairRepository.save(repair);
 
 	}
+	public List<Repair> getRepairtDataByDate(String repairDate) {
+		return repairRepository.getRepairtDataByDate(repairDate);
+
+	}
+	
+	
 }

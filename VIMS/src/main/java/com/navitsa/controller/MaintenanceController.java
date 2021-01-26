@@ -24,9 +24,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.navitsa.Reports.CalibratedEqupmentReportBeen;
+import com.navitsa.Reports.DashboardBeen;
 import com.navitsa.Reports.EqupmentCalibrationReportBeen;
 import com.navitsa.Reports.EqupmentServicesReportBeen;
 import com.navitsa.Reports.IssueTicketReportBeen;
+import com.navitsa.Reports.MaintenanceDashboardBeen;
+import com.navitsa.Reports.RepairReportBeen;
 import com.navitsa.Reports.ServiceEqupmentReportBeen;
 import com.navitsa.entity.Appointment;
 import com.navitsa.entity.CenterMaster;
@@ -233,10 +236,12 @@ public class MaintenanceController {
 					
 					eqervice.saveEquipmentsCalibration(equipmentscalibration);
 					
+					if(equipmentscalibration.getCalabriType()=="Schedule Calibration") {
+					
 					eequipmentMaster.setLastCalibrationDate(equipmentscalibration.getCalibratedDate());					
 					eequipmentMaster.setNextCalibrationDate(equipmentscalibration.getNextCalibratedDate());
 					eqervice.saveEquipmentMaster(eequipmentMaster);
-					
+					}
 				}catch(Exception e) {
 					System.out.println(e);
 					e.printStackTrace();
@@ -576,8 +581,12 @@ public class MaintenanceController {
 				  public ModelAndView getOpenTicketReport(@RequestParam String ticketStatus,HttpServletResponse response,HttpSession session) { 
 					  String centerid=session.getAttribute("centerid")+"";
 					  CenterMaster centerMaster=centerService.getcenterById(centerid);
-
-					  List<IssueTicket>  issueTicketList=eqervice.getOpenTicketDetails(ticketStatus);
+					  	String sst=ticketStatus;
+					  if(ticketStatus.equals("All")) {
+						  sst="%";
+					  }
+					  
+					  List<IssueTicket>  issueTicketList=eqervice.getOpenTicketDetails(sst);
 					 
 					  List<IssueTicketReportBeen> incidentReportBeenList = new ArrayList<IssueTicketReportBeen>();
 					 
@@ -777,11 +786,20 @@ public class MaintenanceController {
 			@RequestMapping(value = "/saveRepair", method = RequestMethod.POST)
 			public   @ResponseBody String equipmentsRepair(@ModelAttribute("equipmentsRepair") Repair repair,HttpSession session)
 			 {		//System.out.println("dfffffffffff="+equipmentscalibration.getEquipmentID().getEquipmentID()); 							
+				
+				 //System.out.println(calibrationU[0]);
+				
 				try {
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-				    Date date = new Date();
+				//	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+				  //  Date date = new Date();
 				    
-					repair.setRepairDate(formatter.format(date));
+					//repair.setRepairDate(formatter.format(date));
+					
+					   
+					
+					//System.out.println(calibrationU);
+					
+					
 					repair.setStatus("ACTIVE");
 					 Repair repairReselt=maintenanceServices.saveRepair(repair);
 					return "1";
@@ -796,4 +814,94 @@ public class MaintenanceController {
 				
 					
 			}
+			
+			  @RequestMapping("/equipmentRepairReport") 
+			  public String equipmentRepairReport(Map<String, Object> model) { 
+
+				  return "equipmentRepairReport";
+			  }	
+			
+			  @RequestMapping(value = "/privewEquipmentRepairReport", method=RequestMethod.POST) 
+			  public ModelAndView privewEquipmentRepairReport(@RequestParam String repairDate,HttpServletResponse response,HttpSession session) { 
+				  String centerid=session.getAttribute("centerid")+"";
+				  CenterMaster centerMaster=centerService.getcenterById(centerid);
+				
+				  
+				  List<Repair>  repairtList=maintenanceServices.getRepairtDataByDate(repairDate);
+				 
+				  List<RepairReportBeen> repairReportBeenList = new ArrayList<RepairReportBeen>();
+				 
+				  
+				  
+				  
+				  for(Repair repair:repairtList) {		
+					  RepairReportBeen repairReportBeen=new RepairReportBeen();
+					  repairReportBeen.setIdRepair(repair.getIdRepair());
+					  repairReportBeen.setTicketNo(repair.getTicketNo().getTicketNo());
+					  repairReportBeen.setJobNo(repair.getJobNo());
+					  repairReportBeen.setRepairDate(repair.getRepairDate());
+					  repairReportBeen.setMaintenanceCost(repair.getMaintenanceCost());
+					  repairReportBeen.setLaboCost(repair.getLaboCost());
+					  repairReportBeen.setTotalCost(repair.getMaintenanceCost()+repair.getLaboCost());
+					
+					  repairReportBeen.setRemarks(repair.getRemarks());
+					  repairReportBeen.setStatus(repair.getStatus());
+					  repairReportBeen.setCalibrationPre(repair.getCalibrationPre());
+					  repairReportBeen.setCalibrationStatus(repair.getCalibrationStatus());
+					  
+					  
+					  
+					  
+					 
+					  repairReportBeenList.add(repairReportBeen);
+				  }
+			       	ReportViewe review=new ReportViewe();
+			      	Map<String,Object> params = new HashMap<>();
+			
+			    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
+			      	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
+			      	params.put("address",centerMaster.getAdd03() );
+			      	params.put("todate",DateHelperWeb.getFormatStringDate4(DateHelperWeb.getDate(LocalDate.now().toString())));
+//			      	params.put("sta",ticketStatus);
+			      	String reptValue="";
+		      	
+			      	try {
+			      		reptValue=review.pdfReportViewInlineSystemOpen("repairReport.jasper","repairReport",repairReportBeenList,params,response);
+			      		
+			      
+			      	}catch(Exception e) {	          		
+			      		e.printStackTrace();          		
+			      	}
+			     	ModelAndView mav = new ModelAndView("equipmentRepairReport");
+			     	mav.addObject("pdfViewEq", reptValue);
+			     	return mav;
+					  }
+			  
+			  
+			  @RequestMapping("/maintenanceDashboard") 
+			  public String maintenanceDashboard(Map<String, Object> model) { 
+
+				  return "maintenanceDashboard";
+			  }	
+			  
+				 @RequestMapping(value="/getMaintenanceDashboard", method=RequestMethod.GET)
+				 public @ResponseBody MaintenanceDashboardBeen getMaintenanceDashboard(@RequestParam String date) {	
+					 MaintenanceDashboardBeen maintenanceDashboardBeen = new MaintenanceDashboardBeen();
+				        
+					 maintenanceDashboardBeen.setTotcal("56");
+					 maintenanceDashboardBeen.setCalib("10");
+					 maintenanceDashboardBeen.setTotSer("45");   
+					 maintenanceDashboardBeen.setSer("5");   
+					 maintenanceDashboardBeen.setTotTicket("78");
+					 maintenanceDashboardBeen.setOpenTicket("65");
+					 maintenanceDashboardBeen.setCloseTicket("13");
+	
+					 
+				        return  maintenanceDashboardBeen;
+					 
+				} 
+			  
+			  
+			  
+			  
 }
