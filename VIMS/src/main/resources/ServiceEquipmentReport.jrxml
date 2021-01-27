@@ -23,7 +23,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Equipment Serviced Report]]></text>
+				<text><![CDATA[Service Report]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="97" y="35" width="656" height="20" uuid="6b49a67e-dc73-43a6-a53e-860b4ad24947"/>

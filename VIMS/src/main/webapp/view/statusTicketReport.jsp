@@ -131,7 +131,7 @@
 							<label >Status</label>
 							<select class="form-control fontst" name="ticketStatus"
 													 id="eqIsWorking" onchange="">
-							
+							<option value="All">All</option>
 							<option value="Open">Open</option>
 							<option value="Close">Close</option>
 							</select>

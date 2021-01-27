@@ -152,8 +152,8 @@
 				<div class="panel-header bg-primary-gradient">
 					<div class="page-inner py-3">
 						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-							<div class="col-xl-2 col-lg-2">
-								 <h2 class="text-white pb-2 fw-bold">Equipments Calibration</h2>
+							<div class="col-xl-4 col-lg-4">
+								 <h2 class="text-white pb-2 fw-bold">Equipment Calibration</h2>
 							</div>
 							<div class="col-xl-2 col-lg-2">
 								
@@ -220,16 +220,18 @@
 							<div class="form-group row">
 								<div class="col-sm-6">
 									<form:radiobutton path="calabriType" value="Schedule Calibration"/>
-										Schedule Calibration								
+										&nbsp;Schedule Calibration								
 								</div>
 								<div class="col-sm-6">
 									<form:radiobutton path="calabriType" value="Calibration on Demand" />
-									Calibration on Demand
+								 &nbsp;Calibration on Demand
 								</div>
 							</div>
-		
-		
-		
+							<div class="form-group row">
+								<div class="col-sm-12">
+								  <h3 style="color: #ff0516; font-family: Arial, Helvetica, sans-serif;" >By Selecting on Demand Calibration will not Update Equipment Calibration Status</h3>
+								</div>
+							</div>
 									<div class="form-group">
 								<div class="row">
 									<div class="col-7">

@@ -73,7 +73,7 @@
 				<textElement>
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Last services Date]]></text>
+				<text><![CDATA[Last Services Date]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="480" y="1" width="112" height="17" backcolor="#99B4D1" uuid="a3393e7f-163e-4f5e-8cae-cba1f8d862d4"/>
@@ -86,7 +86,7 @@
 				<textElement>
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Next services Date]]></text>
+				<text><![CDATA[Next Services Date]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="10" y="1" width="260" height="17" backcolor="#99B4D1" uuid="1b05e14d-9d1c-4385-b77a-fc6e14f7846f"/>

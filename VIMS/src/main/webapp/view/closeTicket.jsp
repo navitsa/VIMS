@@ -176,14 +176,14 @@
 				</div>
 	<div class="form-group row">
 		<div class="col-sm-12">
-			<h2 style="color: #ff0516; font-family: Arial, Helvetica, sans-serif;">Close this Issue will auto set Lane Status Active</h2>
+			<h2 style="color: #ff0516; font-family: Arial, Helvetica, sans-serif;">Closing this issue will Automatically set Lane Status to Active</h2>
 		</div>
 	</div>
 	
 				<div class="form-group row">
 									<div class="col-sm-6">
 										<input type="button" class="btn btn-success"
-																			value="Save" onclick="saveCloseTicket()">
+																			value="Close Ticket" onclick="saveCloseTicket()">
 									
 									</div>
 									<div class="col-sm-6">
@@ -356,7 +356,7 @@
 				success : function(data) {
 				
 					if (data == "0") {
-						swal("Good job!", "You clicked the button!", {
+						swal("Not Close Ticket", "You clicked the button!", {
 							icon : "error",
 							buttons : {
 								confirm : {
@@ -380,7 +380,7 @@
 					document.getElementById("closeTick").reset();
 				},
 				error : function(e) {
-					swal("Good job!", "You clicked the button! err", {
+					swal("Not Close Ticket", "You clicked the button! err", {
 						icon : "error",
 						buttons : {
 							confirm : {

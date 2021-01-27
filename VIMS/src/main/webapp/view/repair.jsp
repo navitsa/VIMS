@@ -100,7 +100,7 @@
 					<div class="page-inner py-3">
 						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 							<div class="col-xl-2 col-lg-2">
-								 <h2 class="text-white pb-2 fw-bold">Repair</h2>
+								 <h2 class="text-white pb-2 fw-bold">Equipment Repair</h2>
 							</div>
 							<div class="col-xl-2 col-lg-2">
 								
@@ -143,15 +143,25 @@
 					<form:input  path="jobNo" class="form-control"/>
 						
 					</div>
+					<div class="col-sm-3">	
+							<label>Repair Date</label>
+					<form:input type="date" path="repairDate" class="form-control"/>
+						
+					</div>
+					
 					</div>
 									<div class="form-group row">
 					<div class="col-sm-3">	
-						<label>Maintenance Cost</label>
-						<form:input type="number" path="maintenanceCost" class="form-control"/>	
+						<label>Material Cost</label>
+						<form:input type="number" path="maintenanceCost" class="form-control" id="meCost" onchange="calTotalCost();"/>	
 					</div>
 					<div class="col-sm-3">	
 						<label>Labor Cost</label>
-						<form:input type="number" path="laboCost" class="form-control"/>	
+						<form:input type="number" path="laboCost" class="form-control"  id="labCost" onchange="calTotalCost();"/>	
+					</div>
+					<div class="col-sm-3">	
+						<label>Total Cost</label>
+						<input name="totCost"  class="form-control"  id="totCost"/>	
 					</div>
 				</div>
 					
@@ -161,10 +171,54 @@
 						<label >Remarks</label>
 						<form:textarea path="remarks" class="form-control"/>
 					</div>
-					<div class="col-sm-6">
-						
-					</div>
+
 				</div>
+				
+				
+				<div class="row form-group">
+				<div class="col-sm-3">
+			
+				
+									<label >Calibration Status</label>
+						<form:select class="form-control fontst" path="calibrationPre"
+												required="Required" id="calibrationPre" onchange="">
+						<form:option value="N/A">N/A</form:option>
+						<form:option value="Calibration perform update Repair">Calibration perform update Repair</form:option>
+				
+						
+
+						</form:select>
+				
+				
+				</div>
+					<div class="col-sm-3">
+						<label >Calibration Status</label>
+						<form:select class="form-control fontst" path="calibrationStatus"
+												required="Required" id="calibrationStatus" onchange="">
+						<form:option value="N/A">--SELECT--</form:option>
+						<form:option value="PASS">PASS</form:option>
+						<form:option value="FAIL">FAIL</form:option>
+						
+
+						</form:select>
+					</div>
+					<div class="col-6">
+	<%-- 										<img  class="zoom imagePreview"  src="<c:url value='/resources/img/user-default.jpg'/>" id="preview" class="img-thumbnail">		 --%>
+						<label class="btn btn-primary">Upload Calibration Report<input type="file"  accept="application/pdf"
+								class="uploadFile img" value="Upload Pdf" style="width: 0px;height: 0px;overflow: hidden;"  accept="image/*" id="user_Img"
+								name="calibrationReport"></label>
+					</div>
+							
+				</div>	
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				</div>
 				<div class="col-sm-5">
 					
@@ -182,7 +236,7 @@
 																<th>Ticket No</th>
 																<th>Job No</th>
 																<th>Repair Date</th>
-																<th>Maintenance Cost</th>
+																<th>Material Cost</th>
 																<th>Labor Cost</th>													
 																<th>Remarks</th>
 																<th></th>
@@ -259,7 +313,29 @@
 	</div>
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
 <script type="text/javascript">
+
+			function calTotalCost() {
+				
+				var meCost=document.getElementById("meCost").value;
+				var labCost=document.getElementById("labCost").value;
+				if(parseFloat(meCost)>=0&&parseFloat(labCost)>=0){
+				document.getElementById("totCost").value=(parseFloat(meCost)+parseFloat(labCost));
+				}
+			}
+
 		function saveRepair() {
+			
+			
+			
+// 			var type;
+// 			$("input[name='calibst']:checked").each(function (i) {
+// 				type="Calibration perform update Repair"      
+// 			            });
+			
+// 			alert(type);
+			
+			
+			
 			
 			var request_method = $("#eqRepair").attr("method"); //get form GET/POST method
 

@@ -100,7 +100,7 @@
 					<div class="page-inner py-3">
 						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 							<div class="col-xl-3 col-lg-2">
-								 <h2 class="text-white pb-2 fw-bold">Calibration Report</h2>
+								 <h2 class="text-white pb-2 fw-bold">Equipment Repair Report</h2>
 							</div>
 							<div class="col-xl-2 col-lg-2">
 								
@@ -120,17 +120,17 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-xl-2 col-lg-2" >								
-								<form:form action="privewEquipmentsCalibratedReport"  method="POST">
+								<form:form action="privewEquipmentRepairReport"  method="POST">
 									<div class="card shadow mb-4" style="height:640px;">
 										<div class="card border-left-primary shadow h-100 py-2" >
 											<div class="card-body">
 
 												<div class="form-group row">
 													<div class="col-sm-12">
-														<label class="l-fontst">Calibrated Date</label>
-														<input class="form-control fontst" type="date" name="calibratedDate" 
+														<label class="l-fontst">Repair Date</label>
+														<input class="form-control fontst" type="date" name="repairDate" 
 														 required
-														id="calibratedDate"
+														id="repairDate"
 														/>
 													</div>
 												</div>	

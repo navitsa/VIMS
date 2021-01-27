@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="downTimeReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
 	<property name="ireport.zoom" value="1.210000000000003"/>
-	<property name="ireport.x" value="334"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="img" class="java.lang.Object"/>
 	<parameter name="hedder" class="java.lang.String"/>
@@ -68,7 +68,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{sta}+" Down Time Report"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ "Downed Time Analysis"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

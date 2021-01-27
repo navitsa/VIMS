@@ -13,7 +13,7 @@ public interface IssueTicketRepository extends CrudRepository<IssueTicket, Integ
 	@Query(value = "SELECT it FROM IssueTicket it WHERE it.issueDate between :fromDate and :toDate and it.status='ACTIVE'")	
 	List<IssueTicket> getEquipmentByType(@Param("fromDate")String fromDate,@Param("toDate")String toDate);
 
-	@Query(value = "SELECT it FROM IssueTicket it WHERE it.issueStatus=:ticketStatu and it.status='ACTIVE'")	
+	@Query(value = "SELECT it FROM IssueTicket it WHERE it.issueStatus like :ticketStatu and it.status='ACTIVE'")	
 	List<IssueTicket> getOpenTicketDetails(@Param("ticketStatu")String ticketStatu);
 
 	

@@ -164,7 +164,7 @@
 												 id="laneStatus" onchange="getLaneStatus();">
 						<form:option value="">--SELECT--</form:option>
 						<form:option value="Working">Lane is Active</form:option>
-						<form:option value="Temporarily close">Temporarily close the lane</form:option>
+						<form:option value="Temporally close">Temporally close the lane</form:option>
 						</form:select>
 						
 					</div>
@@ -235,7 +235,7 @@
 				<div class="form-group row">
 									<div class="col-sm-6">
 										<input type="button" class="btn btn-success"
-																			value="Save" onclick="saveEquimentIssue()">
+																			value="Issue Ticket" onclick="saveEquimentIssue()">
 									
 									</div>
 									<div class="col-sm-6">
@@ -250,7 +250,7 @@
 				
 			</div>
 			<div class="col-sm-5">
-				<h2 style="color: #ff0516; font-family: Arial, Helvetica, sans-serif;" >Management Appointment</h2>	
+				<h2 style="color: #ff0516; font-family: Arial, Helvetica, sans-serif;" >Manage Appointment</h2>	
 			<div class="row table-striped table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar">
 								<div class="col-lg" id="apoimentData"></div>
 							</div>
@@ -283,7 +283,7 @@
 			
 			if(laneStatus=="Temporarily close"&&$('#tldid').val()!="000"){
 				
-				document.getElementById("laneSta").innerHTML =tldid+" is Temporarily Close";
+				document.getElementById("laneSta").innerHTML =tldid+" is Temporally Close";
 			}else{
 				document.getElementById("laneSta").innerHTML ="";
 			}
@@ -396,7 +396,7 @@
 				success : function(data) {
 				
 					if (data == "0") {
-						swal("Good job!", "You clicked the button!", {
+						swal("Not Create Ticket", "You clicked the button!", {
 							icon : "error",
 							buttons : {
 								confirm : {
@@ -408,7 +408,7 @@
 						
 
 					} else {
-						swal("Good job!", "Ticket No : "+data, {
+						swal("Successfully Issued Ticket!", "Ticket No : "+data, {
 							icon : "success",
 							buttons : {
 								confirm : {
@@ -420,7 +420,7 @@
 					document.getElementById("eqissue").reset();
 				},
 				error : function(e) {
-					swal("Good job!", "You clicked the button! err", {
+					swal("Not Create Ticket", "You clicked the button! err", {
 						icon : "error",
 						buttons : {
 							confirm : {

@@ -962,7 +962,7 @@ public class VehicleController {
 	        	}else {
 	        		
 	        		List<ConfigSystem> configSystem=vehicleService.getConfigSystemByCenter(vehiclereg.getCentermaster().getCenter_ID(),vehiclereg.getTestLaneHeadId().getTestLaneHeadId());	
-	                 
+	        		
 	                boolean correct=false;
 	                String hostname="";
 	                String username="";
@@ -970,14 +970,19 @@ public class VehicleController {
 	                String rootpath="";
 	                String xmlPath="";
 	                InetAddress inet = null;
-	        		
+	             
 	                for(ConfigSystem conSys:configSystem) {
-	                     inet = InetAddress.getByName(hostname);
+	                	
+	                	 System.out.println("fff="+conSys.getIpaddress());
+	                	
+	                     inet = InetAddress.getByName(conSys.getIpaddress());
 	                     if(inet.isReachable(0)==true) {
 	                    	 correct=true; 
+	                    	 System.out.println("fff="+true);
 	                     }else {
-	                    	 correct=false; 
-	                    	 break;
+	                    	 correct=true; 
+	                    	 System.out.println("fff="+false);
+	                    	// break;
 	                     }
 
 	                }
@@ -1118,7 +1123,7 @@ public class VehicleController {
                         bwx.close(); 
 				        
                         if(configSystem.size()!=0) {
-
+System.out.println("ftp");
          	                   for(ConfigSystem conSys:configSystem) {
          	                     hostname=conSys.getIpaddress();
          	                     username=conSys.getUserName();
