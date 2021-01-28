@@ -48,8 +48,6 @@ import com.navitsa.services.VehicleService;
 import com.navitsa.services.VisualInspectionServices;
 import com.navitsa.utils.ReportViewe;
 
-
-
 @Controller
 public class TestingReportConfigController {
 
