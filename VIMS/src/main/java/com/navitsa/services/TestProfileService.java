@@ -113,8 +113,8 @@ public class TestProfileService {
 		return tproStatusRepo.findBy(pro_id,type_id);	 
 	}
 
-	public void updateRecord(int s_id,int status,int serial_no) {
-		tproStatusRepo.updateRecord(s_id,status,serial_no);
+	public void updateRecord(int s_id,int status) {
+		tproStatusRepo.updateRecord(s_id,status);
 		
 	}
 

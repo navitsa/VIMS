@@ -20,8 +20,8 @@ public interface TestProfileStatusRepository extends CrudRepository<TestProfileS
 
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE TestProfileStatus s SET s.status=:status, s.serial_no=:serial_no WHERE s.s_id=:s_id")
-	public void updateRecord(@Param("s_id") int s_id,@Param("status") int status,@Param("serial_no") int serial_no);
+	@Query(value = "UPDATE TestProfileStatus s SET s.status=:status WHERE s.s_id=:s_id")
+	public void updateRecord(@Param("s_id") int s_id,@Param("status") int status);
 	
 	@Query(value = "SELECT s FROM TestProfileStatus s ORDER BY s.profile_id.testProfileID")
 	public List<TestProfileStatus> getAll();

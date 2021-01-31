@@ -27,7 +27,11 @@
 		<!-- End Sidebar -->
 		<div class="main-panel">
 			<div class="content">
-				<div class="page-inner">	
+				<div class="page-inner">
+				
+					<a href="#" class="btn btn-sm btn-success pull-right" data-toggle="modal" 
+						data-target="#exampleModalCenter">Mandatory Test Types</a>
+									
 					<div class="page-header">
 							<h4 class="page-title">Set Codes & Limit Values</h4>
 							<ul class="breadcrumbs">
@@ -48,9 +52,9 @@
 								<li class="nav-item">
 									<a href="#">Set Codes & Limit Values</a>
 								</li>
-							</ul>
+							</ul>							
 					</div>
-
+								
 					<!-- Card -->
 					<div class="card shadow mb-4">
 						<div class="card-body">
@@ -174,7 +178,7 @@
 															</td>
 															<td>
 																<form:input path="limitValue" id="input1"
-																	placeholder="00.00" class="form-control"
+																	placeholder="0" class="form-control"
 																	maxlength="5" size="4" onkeypress="return onlyNumber(event)"/>
 															</td>
 														</tr>
@@ -196,7 +200,7 @@
 																	<form:option value="<"> less than </form:option>
 																</form:select></td>
 															<td><form:input path="limitValue" id="input2"
-																	placeholder="00.00" class="form-control"
+																	placeholder="0" class="form-control"
 																	maxlength="5" size="4" disabled="true" onkeypress="return onlyNumber(event)"/></td>
 														</tr>
 													</tbody>
@@ -227,10 +231,10 @@
 																</div>
 															</td>
 															<td><form:input path="minValue" id="minValue1"
-																	class="form-control" placeholder="00.00"
+																	class="form-control" placeholder="0"
 																	maxlength="5" size="4" onkeypress="return onlyNumber(event)"/></td>
 															<td><form:input path="maxValue" id="maxValue1"
-																	class="form-control" placeholder="00.00"
+																	class="form-control" placeholder="0"
 																	maxlength="5" size="4" onkeypress="return onlyNumber(event)"/></td>
 														</tr>
 														<tr>
@@ -243,10 +247,10 @@
 																</div>
 															</td>
 															<td><form:input path="minValue" id="minValue2"
-																	class="form-control" placeholder="00.00"
+																	class="form-control" placeholder="0"
 																	maxlength="5" size="4" disabled="true" onkeypress="return onlyNumber(event)"/></td>
 															<td><form:input path="maxValue" id="maxValue2"
-																	class="form-control" placeholder="00.00"
+																	class="form-control" placeholder="0"
 																	maxlength="5" size="4" disabled="true" onkeypress="return onlyNumber(event)" /></td>
 														</tr>
 													</tbody>
@@ -430,14 +434,142 @@
 			return true;
 		}
 
-		function onlyNumber(evt) {
+		/*function onlyNumber(evt) {
 			var keyCode = (evt.which) ? evt.which : evt.keyCode
 			
 			if ( (keyCode != 8 || keyCode ==32 ) && (keyCode < 48 || keyCode > 57))
 				return false;
-		}
+		}*/
 
 	</script>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true">
+		
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Mandatory
+						Test Types</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form name="ProfileStatusForm" id="ProfileStatusForm" action="saveProfileStatus"
+					method="GET">
+					<div class="modal-body">
+
+						<div class="alert alert-success alert-dismissible" style="display: none;" id="saveMessage">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<strong>Success!</strong> Data Successfully Saved.
+						</div>
+						<div class="alert alert-success alert-dismissible" style="display: none;" id="updateMessage">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<strong>Success!</strong> Data Successfully Updated.
+						</div>
+						<div class="alert alert-danger alert-dismissible" style="display: none;" id="errorMessage">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<strong>Warning!</strong>Something went wrong ! Please try
+							again!
+						</div>
+
+						<div class="form-group row">
+							<div class="col-lg-6">
+								<select id="testProfile" class="form-control"
+									required name="profile_id">
+									<option value="0">Select test profile...</option>
+									<c:forEach items="${testProfile}" var="testProfile">
+										<option value="${testProfile.testProfileID}">${testProfile.testProfileName}</option>
+									</c:forEach>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-6">
+								<select class="form-control"
+									required name="type_id">
+									<option value="">Select test type...</option>
+									<c:forEach items="${testTypes}" var="testTypes">
+										<option value="${testTypes.typeId}">${testTypes.type}</option>
+									</c:forEach>
+								</select>
+							</div>
+<!-- 							<div class="col-lg">
+								<div class="form-inline">
+									<label for="ordering_no" class="mr-sm-2">Serial No</label>
+									<select class="custom-select custom-select-sm" name="serial_no" required>
+										<option value=1 selected>1</option>
+										<option value=2 >2</option>
+										<option value=3 >3</option>
+										<option value=4 >4</option>
+										<option value=5 >5</option>
+										<option value=6 >6</option>
+									</select>
+									<a href="#" data-toggle="tooltip" 
+										title="The test result report is printed in the order of serial number of the test type">
+									<i class="fa fa-question-circle" style="font-size:14px"></i>
+									</a>
+								</div>
+							</div> -->
+						</div>
+						
+						<br>
+						<div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" class="custom-control-input" id="mandatory"
+								name="status" value=0 checked="checked"> <label
+								class="custom-control-label" for="mandatory">Mandatory</label>
+						</div>
+						<div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" class="custom-control-input"
+								id="nonmandatory" name="status" value=1> <label
+								class="custom-control-label" for="nonmandatory">Non-Mandatory</label>
+						</div>
+						<br>
+						<br>
+						<div style="height: 300px; overflow: auto;">
+							<table class="table table-sm" id="profileStatus">
+								<thead>
+									<tr>
+										<th>Profile</th>
+										<th>Test Type</th>
+										<th>Mandatory</th>
+<!-- 										<th>Serial No</th> -->
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${testProfileStatus}" var="status">
+										<tr>
+											<td>${status.profile_id.testProfileName}</td>
+											<td>${status.type_id.type}</td>
+											<td><c:if test="${status.status==0}">
+													<i class="fa fa-check-circle"
+														style="font-size: 24px; color: green"></i>
+												</c:if> <c:if test="${status.status==1}">
+													<i class="fa fa-times-circle"
+														style="font-size: 24px; color: red"></i>
+												</c:if>
+											</td>
+<%-- 											<td>${status.serial_no}</td> --%>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning"
+							data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-success">Save
+							Changes</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 	
 </body>
 </html>

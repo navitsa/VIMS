@@ -29,7 +29,7 @@ public class VehicleModel {
 	@JoinColumn(name = "Vehicle_Make_ID" , referencedColumnName="Vehicle_Make_ID")
 	private VehicleMake vehicleMakeID;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(optional = false,fetch = FetchType.EAGER)
 	@JoinColumn(name = "Vehicle_Class_ID" , referencedColumnName="Vehicle_Class_ID")
 	private VehicleClass vehicleClass;
 	
@@ -42,7 +42,23 @@ public class VehicleModel {
 	
 	@Column(name = "Status")
 	private String status;
-	
+
+	public VehicleModel() {
+		super();
+	}
+
+	public VehicleModel(String vehicleModelID, VehicleMake vehicleMakeID,
+			VehicleClass vehicleClass,String vehicleModel,
+			MultipartFile modelLogo, String status) throws IOException {
+		super();
+		this.vehicleModelID = vehicleModelID;
+		this.vehicleMakeID = vehicleMakeID;
+		this.vehicleClass = vehicleClass;
+		this.vehicleModel = vehicleModel;
+		this.modelLogo = modelLogo.getBytes();
+		this.status = status;
+	}
+
 	public String getVehicleModelID() {
 		return vehicleModelID;
 	}
@@ -51,13 +67,20 @@ public class VehicleModel {
 		this.vehicleModelID = vehicleModelID;
 	}
 
-	
 	public VehicleMake getVehicleMakeID() {
 		return vehicleMakeID;
 	}
 
 	public void setVehicleMakeID(VehicleMake vehicleMakeID) {
 		this.vehicleMakeID = vehicleMakeID;
+	}
+
+	public VehicleClass getVehicleClass() {
+		return vehicleClass;
+	}
+
+	public void setVehicleClass(VehicleClass vehicleClass) {
+		this.vehicleClass = vehicleClass;
 	}
 
 	public String getVehicleModel() {
@@ -71,7 +94,11 @@ public class VehicleModel {
 	public byte[] getModelLogo() {
 		return modelLogo;
 	}
-	
+
+//	public void setModelLogo(byte[] modelLogo) {
+//		this.modelLogo = modelLogo;
+//	}
+
 	public void setModelLogo(MultipartFile modelLogo) throws IOException {
 		if(modelLogo.isEmpty()) {
 			modelLogo = null;
@@ -81,7 +108,7 @@ public class VehicleModel {
 		}
 		
 	}
-
+	
 	public String getModelLogoView() {
 		return Base64.getEncoder().encodeToString(this.modelLogo);
 	}
@@ -92,30 +119,6 @@ public class VehicleModel {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	
-
-	public VehicleModel(String vehicleModelID, VehicleMake vehicleMakeID, String vehicleModel,MultipartFile modelLogo,
-			String status) throws IOException {
-		
-		this.vehicleModelID = vehicleModelID;
-		this.vehicleMakeID = vehicleMakeID;
-		this.vehicleModel = vehicleModel;
-		this.modelLogo = modelLogo.getBytes();
-		this.status = status;
-	}
-
-	public VehicleModel() {
-		
-	}
-
-	public VehicleClass getVehicleClass() {
-		return vehicleClass;
-	}
-
-	public void setVehicleClass(VehicleClass vehicleClass) {
-		this.vehicleClass = vehicleClass;
 	}
 
 }

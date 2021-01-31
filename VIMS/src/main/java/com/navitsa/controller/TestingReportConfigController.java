@@ -309,10 +309,10 @@ public class TestingReportConfigController {
 					 if(obj.getTest_value_result_detail_Result()<=obj.getT_max_value() && 
 							 obj.getTest_value_result_detail_Result()>=obj.getT_min_value())
 						pass_fail_status = 1;
-					else {
+					else
 						pass_fail_status = 0;
-					}
-					
+						 
+					 
 					 limit_value_desc = obj.getT_test_point_name()+" "+obj.getTa_para_name()+" "+obj.getTaa_angle_name()+" "+"min "+obj.getT_min_value()+" "+"max "+obj.getT_max_value();
 				 }
 				 
@@ -343,6 +343,7 @@ public class TestingReportConfigController {
 			
 			String status="PASS";
 			String status2="PASS";
+			String mandatory_status = null;
 			List<TestResultSpeedoBean> speedoList = new ArrayList<>();
 			
 			for (int i = 0; i < speedoResult.length; i++) {
@@ -368,27 +369,30 @@ public class TestingReportConfigController {
 					if(speedoResult[i][5]!=null)
 						targetTolerance2 = Double.parseDouble(speedoResult[i][5]);
 					
-					String desc = speedoObj.getValue1()+" ActualSpeed  < "+speedoObj.getValue3()+" Normal\n"+speedoObj.getValue4()+" ActualSpeed  < "+speedoObj.getValue6()+" Normal";
-					speedoObj.setLimitDes(desc);
-					
-					if (haveSpeedGovernor) {
-						if(status2=="PASS") {
-							if(speedoObj.getValue2() > lmaxSpeed)
-								status2="FAIL";
-							if(speedoObj.getValue5() > lmaxSpeed)
-								status2="FAIL";
-						}						
-					}else {
-						if(status=="PASS") {
-							
-							double lmaxSpeed1 = speedoObj.getValue3() + (speedoObj.getValue3() * targetTolerance1/100);
-							double lmaxSpeed2 = speedoObj.getValue6() + (speedoObj.getValue6() * targetTolerance2/100);
-							System.out.println(lmaxSpeed1+" "+lmaxSpeed2);
-							
-							if(speedoObj.getValue2() >  lmaxSpeed1)
-								status="FAIL";
-							if(speedoObj.getValue5() > lmaxSpeed2)
-								status="FAIL";
+					mandatory_status = speedoResult[i][6];
+					if(mandatory_status=="0") {
+						String desc = speedoObj.getValue1()+" ActualSpeed  < "+speedoObj.getValue3()+" Normal\n"+speedoObj.getValue4()+" ActualSpeed  < "+speedoObj.getValue6()+" Normal";
+						speedoObj.setLimitDes(desc);
+						
+						if (haveSpeedGovernor) {
+							if(status2=="PASS") {
+								if(speedoObj.getValue2() > lmaxSpeed)
+									status2="FAIL";
+								if(speedoObj.getValue5() > lmaxSpeed)
+									status2="FAIL";
+							}						
+						}else {
+							if(status=="PASS") {
+								
+								double lmaxSpeed1 = speedoObj.getValue3() + (speedoObj.getValue3() * targetTolerance1/100);
+								double lmaxSpeed2 = speedoObj.getValue6() + (speedoObj.getValue6() * targetTolerance2/100);
+								System.out.println(lmaxSpeed1+" "+lmaxSpeed2);
+								
+								if(speedoObj.getValue2() >  lmaxSpeed1)
+									status="FAIL";
+								if(speedoObj.getValue5() > lmaxSpeed2)
+									status="FAIL";
+							}					
 						}					
 					}
 					
@@ -400,12 +404,18 @@ public class TestingReportConfigController {
 			}
 			
 			params.put("speedoResults",speedoList);
-			if (haveSpeedGovernor) {
-				params.put("speedoPassStatus2", status2);
-				params.put("speedoGovernorLimit", "<= "+lmaxSpeed+" km/h");
-			}	
-			else {
-				params.put("speedoPassStatus",status);}
+			
+			if(mandatory_status=="0") {
+				if (haveSpeedGovernor) {
+					params.put("speedoPassStatus2", status2);
+					params.put("speedoGovernorLimit", "<= "+lmaxSpeed+" km/h");
+				}	
+				else {
+					params.put("speedoPassStatus",status);}
+			}
+
+			
+
 			
 /* ---------------------------------------------------------------------------------------------------------- */
 			
@@ -695,7 +705,7 @@ public class TestingReportConfigController {
 		 return ls;
 	 }
 
-	@RequestMapping(value = "/saveProfileStatus", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/saveProfileStatus", method = RequestMethod.GET)
 	public @ResponseBody TestProfileStatusJsonRespone saveTestProfileStatus(@RequestParam("profile_id") int pro_id,
 			@RequestParam("type_id") String type_id,
 			@RequestParam("status") int status,@RequestParam("serial_no") int serial_no) {
@@ -737,5 +747,6 @@ public class TestingReportConfigController {
 		
 		return respone;
 	}
+	*/
 	
 }

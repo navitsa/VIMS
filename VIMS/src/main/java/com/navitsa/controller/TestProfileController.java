@@ -20,6 +20,7 @@ import com.navitsa.entity.TestPoint;
 import com.navitsa.entity.TestProfile;
 import com.navitsa.entity.TestProfileDetail;
 import com.navitsa.entity.TestProfileStatus;
+import com.navitsa.entity.TestProfileStatusJsonRespone;
 import com.navitsa.entity.Test_type;
 import com.navitsa.entity.VehicleCategory;
 import com.navitsa.services.TestProfileService;
@@ -357,5 +358,46 @@ public class TestProfileController {
 			System.out.println(testPoint.getTestPointName());
 		}
 		return rs;
+	}
+	
+	@RequestMapping(value = "/saveProfileStatus", method = RequestMethod.GET)
+	public @ResponseBody void saveTestProfileStatus(@RequestParam("profile_id") int pro_id,
+			@RequestParam("type_id") String type_id,
+			@RequestParam("status") int status) {
+
+		int success=2;
+		//new record = 0
+		//update = 1
+		//error = 2
+
+		TestProfileStatus tps = new TestProfileStatus();
+		TestProfile tp = new TestProfile(); tp.setTestProfileID(pro_id);
+		Test_type tt = new Test_type(); tt.setTypeId(type_id);
+		tps.setProfile_id(tp); 
+		tps.setType_id(tt);
+		tps.setStatus(status);
+
+		//TestProfileStatusJsonRespone respone = new TestProfileStatusJsonRespone();
+		
+		try {
+			
+			TestProfileStatus obj = testProfileService.findBy(pro_id,type_id);
+			
+			if (obj != null) {
+				testProfileService.updateRecord(obj.getS_id(), status);
+				success = 1;
+			} else {
+				testProfileService.saveTestProStatus(tps);
+				success = 0;
+			}
+				
+		} catch (Exception e) {
+			success = 2;
+			System.out.println(e);
+		}
+		
+		//respone.setSuccess(success);
+		//respone.setProfile_status_list(testProfileService.getAllTestProfileStatus());
+		
 	}
 }
