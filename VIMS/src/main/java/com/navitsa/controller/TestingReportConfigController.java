@@ -370,7 +370,8 @@ public class TestingReportConfigController {
 						targetTolerance2 = Double.parseDouble(speedoResult[i][5]);
 					
 					mandatory_status = speedoResult[i][6];
-					if(mandatory_status=="0") {
+					System.out.println(mandatory_status);
+					if(mandatory_status.equals("0")) {
 						String desc = speedoObj.getValue1()+" ActualSpeed  < "+speedoObj.getValue3()+" Normal\n"+speedoObj.getValue4()+" ActualSpeed  < "+speedoObj.getValue6()+" Normal";
 						speedoObj.setLimitDes(desc);
 						
@@ -405,7 +406,7 @@ public class TestingReportConfigController {
 			
 			params.put("speedoResults",speedoList);
 			
-			if(mandatory_status=="0") {
+			if(mandatory_status.equals("0")) {
 				if (haveSpeedGovernor) {
 					params.put("speedoPassStatus2", status2);
 					params.put("speedoGovernorLimit", "<= "+lmaxSpeed+" km/h");

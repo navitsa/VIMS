@@ -361,7 +361,7 @@ public class TestProfileController {
 	}
 	
 	@RequestMapping(value = "/saveProfileStatus", method = RequestMethod.GET)
-	public @ResponseBody void saveTestProfileStatus(@RequestParam("profile_id") int pro_id,
+	public String saveTestProfileStatus(@RequestParam("profile_id") int pro_id,
 			@RequestParam("type_id") String type_id,
 			@RequestParam("status") int status) {
 
@@ -399,5 +399,6 @@ public class TestProfileController {
 		//respone.setSuccess(success);
 		//respone.setProfile_status_list(testProfileService.getAllTestProfileStatus());
 		
+		return "redirect:/limitValues?proId=1";
 	}
 }
