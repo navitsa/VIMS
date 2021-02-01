@@ -17,7 +17,7 @@ function getApposByDate(vno){
         	for(var i=0; i<data.length; i++){
         		count = count + 1;
         		
-        		if(vno==data[i].vehicle_id.vehicleID){
+        		if(vno==data[i].vehicleNo){
         			 status="3";
         			 appointmrntNo=data[i].appointmentID;
 
@@ -27,7 +27,7 @@ function getApposByDate(vno){
  					"<div class='col-sm-12'>"+
  						"<div class='row'>"+
  							"<div class='col-sm-12'>"+
- 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicle_id.vehicleID+"</div>"+
+ 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicleNo+"</div>"+
  							"</div>"+
  						"</div>"+
  						"<div class='row'>"+
@@ -48,7 +48,7 @@ function getApposByDate(vno){
 					"<div class='col-sm-12'>"+
 						"<div class='row'>"+
 							"<div class='col-sm-12'>"+
-								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicle_id.vehicleID+"</div>"+
+								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicleNo+"</div>"+
 							"</div>"+
 						"</div>"+
 						"<div class='row'>"+
@@ -129,6 +129,7 @@ function lateNotify() {
 }
 
 setInterval(lateNotify, 60000);
+setInterval(getApposByDate, 5000);
 
 function cancel(str) {
 	

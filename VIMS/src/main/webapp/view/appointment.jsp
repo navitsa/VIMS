@@ -96,12 +96,12 @@
 
 							<div class="form-group row">
 							   <div class="col-lg">
-									<select class="form-control mb-4" id="vClass" onchange="findBestLane()" required>									
+									<form:select path="vclassId.vehicleClassID" class="form-control mb-4" id="vClass" onchange="findBestLane()" required="true">									
 										<option value="">Select vehicle class...</option>
 										<c:forEach items="${vClass}" var="vClass">
-											<option value="${vClass.vehicleClassID}">${vClass.vehicleClass}</option>
+											<form:option value="${vClass.vehicleClassID}">${vClass.vehicleClass}</form:option>
 										</c:forEach>																																		
-									</select>
+									</form:select>
 									
 <%-- 									<select class="form-control mb-4" id="testCat" onchange="findBestLane()" required>									
 										<option value="">Select testing category...</option>

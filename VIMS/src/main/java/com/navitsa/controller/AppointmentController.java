@@ -1,5 +1,6 @@
 package com.navitsa.controller;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.navitsa.entity.Appointment;
 import com.navitsa.entity.AppointmentForm;
+import com.navitsa.entity.AppointmentOnline;
 import com.navitsa.entity.CountryMaster;
 import com.navitsa.entity.CountryState;
 import com.navitsa.entity.Customer;
@@ -170,7 +172,37 @@ public class AppointmentController {
 			  newAppointment.setCategoryId(form.getCategoryId());
 			  appointmentService.save(newAppointment);
 			 
+			/* Following code is to push data to host database */
+			  
+			SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+			SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");
+
+			String todayDate = df2.format(new Date());
+			String currentTime = df.format(new Date());
+
+			String id = todayDate + "/" + currentTime;
 			
+			AppointmentOnline ao = new AppointmentOnline();
+			ao.setAppointmentID(id);		
+			ao.setCusName(form.getFirstName()+" "+ form.getLastName());
+			ao.setCusMobileNo(form.getMobileNo());
+			ao.setCusEmail(form.getEmail());
+			ao.setVehicleNo(form.getVehicleID());
+			ao.setVehicleClassId(form.getVclassId());
+			ao.setCategoryId(form.getCategoryId());
+			ao.setAppointmentDate(form.getAppointmentDate());
+			ao.setAppointmentTime(form.getAppointmentTime());
+			ao.setStatus("pending");
+			
+			JDBCSingleton jdbc= JDBCSingleton.getInstance();
+			
+			try {
+				int recordCount = jdbc.insert(ao);
+				System.out.println("Insert "+recordCount+" record to hosted database");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+					
 			redirectAttributes.addFlashAttribute("success", 1);
 			return "redirect:/appointment";
 
@@ -411,14 +443,27 @@ public class AppointmentController {
 	}
 	
   	@RequestMapping(value="getApposByDate", method=RequestMethod.GET)		
-	public  @ResponseBody List<Appointment> getApposByDate(@RequestParam String selectedDate){
+	public  @ResponseBody List<AppointmentOnline> getApposByDate(@RequestParam String selectedDate){
   		
-		SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-		String todayDate = df2.format(new Date());
+		//SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+		//String todayDate = df2.format(new Date());
 		
 		//System.out.println("Selected Date is "+selectedDate);
-  		List<Appointment> todayAppoList = appointmentService.getPendingAppointmentsByDate(selectedDate);
-		return todayAppoList;
+  		//List<Appointment> todayAppoList = appointmentService.getPendingAppointmentsByDate(selectedDate);
+  		
+		JDBCSingleton jdbc= JDBCSingleton.getInstance();
+		List<AppointmentOnline > list = null;
+		
+		try {
+			
+			list = jdbc.view();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
   	
 	@RequestMapping(value="getLateAppos", method=RequestMethod.GET)

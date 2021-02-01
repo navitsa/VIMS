@@ -46,5 +46,7 @@ public interface AppointmentRepository extends CrudRepository<Appointment , Stri
 	@Query(value = "SELECT * FROM appointment WHERE date(appointment_date)=curdate() AND time(appointment_time) > curtime() AND status='pending' and lane=:lane",nativeQuery = true)
     public List<Appointment> getPendingLaneAppointmentsByDate(@Param("lane") String lane);
 
+	@Query(value = "SELECT appointment_time FROM appointment where appointment_date =:selectedDate AND Category_id =:catID",nativeQuery = true)
+	public String[] viewReservedTimes(@Param("selectedDate") String selectedDate,@Param("catID") String catID);
 
 }

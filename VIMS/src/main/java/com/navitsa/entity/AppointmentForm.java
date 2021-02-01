@@ -31,7 +31,9 @@ public class AppointmentForm {
 	private String postalCode;
 	private String city;
 	private CountryState stateid;
+	
 	private TestCategory categoryId;
+	private VehicleClass vclassId;
 	
 	public String getAppointmentID() {
 		return appointmentID;
@@ -208,5 +210,11 @@ public class AppointmentForm {
 	public void setCategoryId(TestCategory categoryId) {
 		this.categoryId = categoryId;
 	}
-	
+	public VehicleClass getVclassId() {
+		return vclassId;
+	}
+	public void setVclassId(VehicleClass vclassId) {
+		this.vclassId = vclassId;
+	}
+
 }
