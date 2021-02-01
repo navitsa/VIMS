@@ -40,7 +40,7 @@ public class JDBCSingleton {
 
 		Connection con = null;
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/online_appointment?serverTimezone=UTC","root","Lion311");
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/online_appointment?serverTimezone=UTC","root","peLa071it");
 		return con;
 
 	}
