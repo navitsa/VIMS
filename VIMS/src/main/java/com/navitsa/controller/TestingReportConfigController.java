@@ -33,7 +33,6 @@ import com.navitsa.entity.TestParameterCategory;
 import com.navitsa.entity.TestPoint;
 import com.navitsa.entity.TestProfile;
 import com.navitsa.entity.TestProfileStatus;
-import com.navitsa.entity.TestProfileStatusJsonRespone;
 import com.navitsa.entity.Test_type;
 import com.navitsa.entity.VehicleOwner;
 import com.navitsa.entity.VehicleRegistration;
@@ -370,7 +369,7 @@ public class TestingReportConfigController {
 						targetTolerance2 = Double.parseDouble(speedoResult[i][5]);
 					
 					mandatory_status = speedoResult[i][6];
-					System.out.println(mandatory_status);
+
 					if(mandatory_status.equals("0")) {
 						String desc = speedoObj.getValue1()+" ActualSpeed  < "+speedoObj.getValue3()+" Normal\n"+speedoObj.getValue4()+" ActualSpeed  < "+speedoObj.getValue6()+" Normal";
 						speedoObj.setLimitDes(desc);
@@ -399,7 +398,7 @@ public class TestingReportConfigController {
 					
 					speedoList.add(speedoObj);		
 				} catch (ArrayIndexOutOfBoundsException e) {
-					System.out.println("speedo meter try catch handle"+e);
+					System.out.println(e);
 				}
 
 			}

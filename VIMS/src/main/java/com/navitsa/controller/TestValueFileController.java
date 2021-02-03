@@ -96,7 +96,7 @@ public class TestValueFileController {
 	      
 	      if(filesList.length<=0) {
 	    	  //redirectAttributes.addFlashAttribute("result",false);
-	    	System.out.println("data na ...");  
+	    	System.out.println("ES_OUT folder is Empty !");  
 	      }
 
 		      
@@ -116,13 +116,13 @@ public class TestValueFileController {
 			        	  
 			        	  String rs = myReader.nextLine();
 			        	  
-			        	  if(rs.contains("10100"))
+			        	  if(rs.contains("10100="))
 			        	  {
 			        		 vehicleNo =  rs.split("=");
 			        		 vehicleID = vehicleNo[1].replace(" ","");
 			        	  }
 			        	  
-			        	  if(rs.contains("15001"))
+			        	  if(rs.contains("15001="))
 			        	  {
 			        		  String dateTime[] =  rs.split("=");
 			        		  
