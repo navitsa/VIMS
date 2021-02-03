@@ -399,24 +399,24 @@ public class TestingReportConfigController {
 					
 					speedoList.add(speedoObj);		
 				} catch (ArrayIndexOutOfBoundsException e) {
-					System.out.println(e);
+					System.out.println("speedo meter try catch handle"+e);
 				}
 
 			}
 			
 			params.put("speedoResults",speedoList);
 			
-			if(mandatory_status.equals("0")) {
-				if (haveSpeedGovernor) {
-					params.put("speedoPassStatus2", status2);
-					params.put("speedoGovernorLimit", "<= "+lmaxSpeed+" km/h");
-				}	
-				else {
-					params.put("speedoPassStatus",status);}
+			if(!speedoList.isEmpty()) {
+				if(mandatory_status.equals("0")) {
+					if (haveSpeedGovernor) {
+						params.put("speedoPassStatus2", status2);
+						params.put("speedoGovernorLimit", "<= "+lmaxSpeed+" km/h");
+					}	
+					else {
+						params.put("speedoPassStatus",status);}
+				}				
 			}
-
 			
-
 			
 /* ---------------------------------------------------------------------------------------------------------- */
 			
