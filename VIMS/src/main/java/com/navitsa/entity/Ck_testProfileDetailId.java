@@ -29,6 +29,10 @@ public class Ck_testProfileDetailId implements Serializable{
 	@ManyToOne(optional = false,fetch = FetchType.EAGER)
 	@JoinColumn(name = "vehicle_cat_id",referencedColumnName = "categoryID")
 	private VehicleCategory vehicleCat;
+	
+	@ManyToOne(optional = false,fetch = FetchType.EAGER)
+	@JoinColumn(name = "vehicle_sub_cat_id",referencedColumnName = "subCategoryID")
+	private VehiclesSubCategory subCategoryID;
 
 	public TestProfile getTestProfileHeaderID() {
 		return testProfileHeaderID;
@@ -54,12 +58,21 @@ public class Ck_testProfileDetailId implements Serializable{
 		this.vehicleCat = vehicleCat;
 	}
 
+	public VehiclesSubCategory getSubCategoryID() {
+		return subCategoryID;
+	}
+
+	public void setSubCategoryID(VehiclesSubCategory subCategoryID) {
+		this.subCategoryID = subCategoryID;
+	}
+
 	public Ck_testProfileDetailId(TestProfile testProfileHeaderID, ParameterCodes parameterCode,
-			VehicleCategory vehicleCat) {
+			VehicleCategory vehicleCat, VehiclesSubCategory subCategoryID) {
 		super();
 		this.testProfileHeaderID = testProfileHeaderID;
 		this.parameterCode = parameterCode;
 		this.vehicleCat = vehicleCat;
+		this.subCategoryID = subCategoryID;
 	}
 
 	public Ck_testProfileDetailId() {

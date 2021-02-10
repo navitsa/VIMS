@@ -43,6 +43,12 @@ public class TestCategory {
 	@Column(name="testAproTime")
 	private String testAproTime;
 	
+//	@Column(name="no_of_lanes")
+//	private int noOfLanes;
+//	
+//	@Column(name="total_lane_capacity")
+//	private int totalLaneCapacity;	
+	
 	public TestCategory(String categoryId) {
 		this.categoryId = categoryId;
 	}
@@ -120,6 +126,22 @@ public class TestCategory {
 
 	public void setTestAproTime(String testAproTime) {
 		this.testAproTime = testAproTime;
-	}	
+	}
+
+//	public int getNoOfLanes() {
+//		return noOfLanes;
+//	}
+//
+//	public void setNoOfLanes(int noOfLanes) {
+//		this.noOfLanes = noOfLanes;
+//	}
+//
+//	public int getTotalLaneCapacity() {
+//		return totalLaneCapacity;
+//	}
+//
+//	public void setTotalLaneCapacity(int totalLaneCapacity) {
+//		this.totalLaneCapacity = totalLaneCapacity;
+//	}	
 	
 }

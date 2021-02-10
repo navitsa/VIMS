@@ -329,15 +329,23 @@ public class TestingReportConfigController {
 					
 			String subCat = vr.getVid().getSubCategoryID().getDescription();
 			boolean haveSpeedGovernor = false;
-			double lmaxSpeed = 0 ;
-			// last max speed with tolerance
+			double tol_add_limit = 0; // last limit speed with tolerance
+			String speed_governor_mandatory_status = "1";
+			double max_actual_result = 0;
 			
 			if (!subCat.equalsIgnoreCase("N/A")) {
-				int imaxSpeed = vr.getVid().getSubCategoryID().getMaxSpeed();
-				double tol = vr.getVid().getSubCategoryID().getTolerance();
-				lmaxSpeed = imaxSpeed + (imaxSpeed * tol/100);
-				
-				haveSpeedGovernor =  true;
+				try {
+					String vehicle_sub_cat_id = vr.getVid().getSubCategoryID().getSubCategoryID();
+					String[][] maxSpeedResult = service.getMaxSpeedResult(test_pro_id,test_value_file_id,vehicle_cat_id,vehicle_sub_cat_id);
+					
+					double limit = Double.valueOf(maxSpeedResult[0][5]);
+					double tol =  Double.valueOf(maxSpeedResult[0][6]);
+					tol_add_limit = limit + (limit * tol/100);
+					speed_governor_mandatory_status = maxSpeedResult[0][7];
+					max_actual_result = Double.valueOf(maxSpeedResult[0][3]);
+					haveSpeedGovernor =  true;					
+				} catch (Exception e) {
+				}
 			}
 			
 			String status="PASS";
@@ -375,18 +383,17 @@ public class TestingReportConfigController {
 						speedoObj.setLimitDes(desc);
 						
 						if (haveSpeedGovernor) {
-							if(status2=="PASS") {
+							/*if(status2=="PASS") {
 								if(speedoObj.getValue2() > lmaxSpeed)
 									status2="FAIL";
 								if(speedoObj.getValue5() > lmaxSpeed)
 									status2="FAIL";
-							}						
+							}*/						
 						}else {
 							if(status=="PASS") {
 								
 								double lmaxSpeed1 = speedoObj.getValue3() + (speedoObj.getValue3() * targetTolerance1/100);
 								double lmaxSpeed2 = speedoObj.getValue6() + (speedoObj.getValue6() * targetTolerance2/100);
-								System.out.println(lmaxSpeed1+" "+lmaxSpeed2);
 								
 								if(speedoObj.getValue2() >  lmaxSpeed1)
 									status="FAIL";
@@ -408,14 +415,25 @@ public class TestingReportConfigController {
 			if(!speedoList.isEmpty()) {
 				if(mandatory_status.equals("0")) {
 					if (haveSpeedGovernor) {
-						params.put("speedoPassStatus2", status2);
-						params.put("speedoGovernorLimit", "<= "+lmaxSpeed+" km/h");
+						//params.put("speedoPassStatus2", status2);
+						//params.put("speedoGovernorLimit", "<= "+lmaxSpeed+" km/h");
 					}	
 					else {
 						params.put("speedoPassStatus",status);}
 				}				
 			}
 			
+			if(!speedoList.isEmpty()) {
+				if(haveSpeedGovernor) {
+					if (speed_governor_mandatory_status.equals("0")) {
+						if(max_actual_result > tol_add_limit)
+							status2 ="FAIL";
+						
+						params.put("speedoPassStatus2", status2);
+						params.put("speedoGovernorLimit", "<= "+tol_add_limit+" km/h");
+					}
+				}
+			}
 			
 /* ---------------------------------------------------------------------------------------------------------- */
 			

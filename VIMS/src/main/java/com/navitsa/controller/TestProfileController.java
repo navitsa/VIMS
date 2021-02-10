@@ -20,12 +20,13 @@ import com.navitsa.entity.TestPoint;
 import com.navitsa.entity.TestProfile;
 import com.navitsa.entity.TestProfileDetail;
 import com.navitsa.entity.TestProfileStatus;
-import com.navitsa.entity.TestProfileStatusJsonRespone;
 import com.navitsa.entity.Test_type;
 import com.navitsa.entity.VehicleCategory;
+import com.navitsa.entity.VehiclesSubCategory;
 import com.navitsa.services.TestProfileService;
 import com.navitsa.services.TestTypeService;
 import com.navitsa.services.VehicleService;
+import com.navitsa.services.VehicleSubCategoryService;
 
 @Controller
 public class TestProfileController {
@@ -38,6 +39,9 @@ public class TestProfileController {
 	
 	@Autowired
 	private VehicleService vehicleService;
+	
+	@Autowired
+	private VehicleSubCategoryService vSubCatService;
 	
 	@RequestMapping("/testPoints")
 	public String loadTestPointsForm(Model m) {
@@ -279,7 +283,7 @@ public class TestProfileController {
 		TestProfile tp = new TestProfile();
 		tp.setTestProfileID(proId);
 		TestProfileDetail tpd = new TestProfileDetail();
-		tpd.setCk_testProfileDetailId(new Ck_testProfileDetailId(tp, null,null));
+		tpd.setCk_testProfileDetailId(new Ck_testProfileDetailId(tp, null,null,null));
 		
 		m.addAttribute("limitValues", tpd);
 		return "testLimitValues";
@@ -289,6 +293,12 @@ public class TestProfileController {
 	public List<VehicleCategory> getAllVehicleCats(){
 		List <VehicleCategory> vCats = vehicleService.getVehicleCategory();
 		return vCats;
+	}
+
+	@ModelAttribute("vehicleSubCat")
+	public List<VehiclesSubCategory> getAllVehicleSubCats(){
+		List <VehiclesSubCategory> vSubCats = vSubCatService.findAll();
+		return vSubCats;
 	} 
 
 	 @ModelAttribute("testProfile")
@@ -319,13 +329,14 @@ public class TestProfileController {
 		 TestProfile testProfile = tpd.getCk_testProfileDetailId().getTestProfileHeaderID();
 		 ParameterCodes paraCode = tpd.getCk_testProfileDetailId().getParameterCode();
 		 String vehicle_cat_id = tpd.getCk_testProfileDetailId().getVehicleCat().getCategoryID();
+		 VehiclesSubCategory vSub = tpd.getCk_testProfileDetailId().getSubCategoryID();
 
 		 
 		 if(vehicle_cat_id.contains("all")) {
 			 List <VehicleCategory> vCats = vehicleService.getVehicleCategory();
 			 
 			 for (VehicleCategory vc : vCats) {
-				 tpd.setCk_testProfileDetailId(new Ck_testProfileDetailId(testProfile, paraCode, vc));
+				 tpd.setCk_testProfileDetailId(new Ck_testProfileDetailId(testProfile, paraCode, vc,vSub));
 				 testProfileService.saveTestProDetail(tpd);
 			 } 
 		 }else {

@@ -11,6 +11,11 @@
 <html lang="en">
 <head>
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
+<style>
+	#hidden-panel {
+		display: none;
+	}	
+</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -95,7 +100,7 @@
 											<div class="col-lg-6">
 												<div class="form-group form-floating-label">
 													<form:select id="testType" class="form-control input-border-bottom"
-														onchange="getTestCodes4(this.value)" required="required" path="ck_testProfileDetailId.parameterCode.ck_paraCodeId.testType.typeId">
+														onchange="getTestCodes4(this.value);showHide();" required="required" path="ck_testProfileDetailId.parameterCode.ck_paraCodeId.testType.typeId">
 														<option></option>
 														<c:forEach items="${testTypes}" var="testType">
 															<c:if test = "${testType.typeId != '0'}">
@@ -134,6 +139,22 @@
 														<form:option value="all">Apply to all categories</form:option>
 													</form:select>
 													<label for="vehicleCateory" class="placeholder">Select vehicle category</label>
+												</div>
+											</div>
+											<div class="col-lg-6">
+												<div id="hidden-panel">
+													<div class="form-group form-floating-label">
+														<form:select id="vSubCat" class="form-control input-border-bottom" 
+															required="required" path="ck_testProfileDetailId.subCategoryID.subCategoryID">
+															<option value="0">N/A</option>
+															<c:forEach items="${vehicleSubCat}" var="vSubCat">
+																<c:if test = "${vSubCat.subCategoryID != '0'}">
+																	<form:option value="${vSubCat.subCategoryID}">${vSubCat.description}</form:option>
+																</c:if>
+															</c:forEach>
+														</form:select>
+														<label for="vSubCat" class="placeholder">Select speed category</label>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -570,6 +591,17 @@
 			</div>
 		</div>
 	</div>
-	
+
+<script>
+function showHide() {
+    let testType = document.getElementById('testType')
+
+    if (testType.value == "37000-37999-1") {
+        document.getElementById('hidden-panel').style.display = 'block'
+    } else {
+        document.getElementById('hidden-panel').style.display = 'none'
+    }
+}
+</script>
 </body>
 </html>

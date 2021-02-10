@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="ec418a8c-8cf1-4514-bbae-1d80ca383f29">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="29"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="161"/>
+	<property name="ireport.y" value="536"/>
 	<property name="ireport.callouts" value="##Thu Sep 17 11:59:31 IST 2020"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<style name="table">
@@ -107,7 +107,7 @@
 		<groupExpression><![CDATA[$F{test_type_type_id}]]></groupExpression>
 		<groupHeader>
 			<band height="18">
-				<printWhenExpression><![CDATA[!$F{test_type_type_id}.equals("34000-34499") && !$F{test_type_type_id}.equals("37000-37999") && !$F{test_type_type_id}.equals("40000-49999") && !$F{test_type_type_id}.equals("50000-69999")]]></printWhenExpression>
+				<printWhenExpression><![CDATA[!$F{test_type_type_id}.equals("34000-34499") && !$F{test_type_type_id}.equals("37000-37999") && !$F{test_type_type_id}.equals("40000-49999") && !$F{test_type_type_id}.equals("50000-69999") && !$F{test_type_type_id}.equals("37000-37999-1")]]></printWhenExpression>
 				<frame>
 					<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#EAEAEA" uuid="cc382300-7ad6-4353-92cf-e99649a05fc5"/>
 					<box>
@@ -142,7 +142,7 @@
 		</groupHeader>
 		<groupFooter>
 			<band height="28">
-				<printWhenExpression><![CDATA[!$F{test_type_type_id}.equals("34000-34499") && !$F{test_type_type_id}.equals("37000-37999") && !$F{test_type_type_id}.equals("40000-49999") && !$F{test_type_type_id}.equals("50000-69999")]]></printWhenExpression>
+				<printWhenExpression><![CDATA[!$F{test_type_type_id}.equals("34000-34499") && !$F{test_type_type_id}.equals("37000-37999") && !$F{test_type_type_id}.equals("40000-49999") && !$F{test_type_type_id}.equals("50000-69999") && !$F{test_type_type_id}.equals("37000-37999-1")]]></printWhenExpression>
 				<crosstab ignoreWidth="false">
 					<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="1" y="0" width="356" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="d3d96321-1254-4463-b644-0ddb58524aa3"/>
 					<crosstabDataset isDataPreSorted="true">
@@ -598,7 +598,7 @@ $P{centerAddress}+"<br>"+
 		</band>
 	</lastPageFooter>
 	<summary>
-		<band height="100">
+		<band height="128">
 			<subreport isUsingCache="true" runToBottom="false">
 				<reportElement positionType="Float" x="0" y="33" width="553" height="10" isRemoveLineWhenBlank="true" uuid="3395d491-6400-4e76-afec-6067ed262d4a"/>
 				<subreportParameter name="reportColor">
@@ -649,7 +649,7 @@ $P{centerAddress}+"<br>"+
 				<subreportExpression><![CDATA["test_report_noiselevel_subreport.jasper"]]></subreportExpression>
 			</subreport>
 			<image scaleImage="RealSize" vAlign="Top" onErrorType="Blank">
-				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="396" y="64" width="157" height="36" uuid="af167c8a-bbaa-4610-95c7-650e4cd7dd68"/>
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="394" y="74" width="159" height="54" uuid="af167c8a-bbaa-4610-95c7-650e4cd7dd68"/>
 				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{vehicleImage})).getImage()]]></imageExpression>
 			</image>
 			<subreport>
@@ -663,6 +663,13 @@ $P{centerAddress}+"<br>"+
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{brakeResults})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["test_report_brake_subreport.jasper"]]></subreportExpression>
 			</subreport>
+			<staticText>
+				<reportElement x="394" y="62" width="159" height="12" uuid="ec9db13b-1365-4c85-9109-2ed8ab89f5ca"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Tested Vehicle Photo]]></text>
+			</staticText>
 		</band>
 	</summary>
 	<noData>
