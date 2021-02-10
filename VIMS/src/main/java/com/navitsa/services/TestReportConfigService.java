@@ -280,5 +280,10 @@ public class TestReportConfigService {
 		
 		return tproDetailRepo.getSpeedoTestResult(test_pro_id,test_value_file_id,vehicle_cat_id);
 	}
+	
+	public String[][] getMaxSpeedResult(int test_pro_id,String test_value_file_id,String vehicle_cat_id, String vehicle_sub_cat_id) {
+		
+		return tproDetailRepo.getMaxSpeedResult(test_pro_id,test_value_file_id,vehicle_cat_id,vehicle_sub_cat_id);
+	}
 
 }
