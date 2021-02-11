@@ -747,7 +747,7 @@
 				        		Swal.fire({
 				        			  icon: 'error',
 				        			  title: 'Oops...',
-				        			  text: 'This vehicle already Payment!'
+				        			  text: 'Payment Receipt Already Issued for this Vehicle!'
 				        			  //,footer: '<a href>Why do I have this issue?</a>'
 				        			});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
