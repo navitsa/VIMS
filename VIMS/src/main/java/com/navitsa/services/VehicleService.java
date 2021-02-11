@@ -626,6 +626,10 @@ public class VehicleService {
 		
 		return laneAssignRepository.findById(id).get();
 	}
+	public List<ConfigSystem> getPcDataCheckByCenter(String centerid){	
+		return configSystemRepo.getPcDataCheckByCenter(centerid);
+	}
+	
 }
 
 

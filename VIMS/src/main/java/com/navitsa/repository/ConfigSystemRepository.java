@@ -15,4 +15,9 @@ public interface ConfigSystemRepository extends CrudRepository<ConfigSystem, Int
 
 	@Query(value = "SELECT cs FROM ConfigSystem cs WHERE cs.centermaster.center_ID =:center_id AND cs.type=:type")
 	public List<ConfigSystem> getFTPServerInfo(@Param("center_id") String center_id,@Param("type") String type);
+	
+	@Query(value = "SELECT cs FROM ConfigSystem cs WHERE cs.centermaster.center_ID =:center_id group by cs.ipaddress order by cs.ipaddress  ")
+	public List<ConfigSystem> getPcDataCheckByCenter(@Param("center_id") String center_id);
+	
+	
 }

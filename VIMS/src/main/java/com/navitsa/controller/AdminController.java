@@ -106,11 +106,11 @@ public class AdminController {
 		                	 System.out.println("fff="+conSys.getIpaddress());
 		                	
 		                     inet = InetAddress.getByName(conSys.getIpaddress());
-		                     if(inet.isReachable(0)==true) {
+		                     if(inet.isReachable(5000)==true) {
 		                    	 correct=true; 
 		                    	 System.out.println("fff="+true);
 		                     }else {
-		                    	 correct=true; 
+		                    	 correct=false; 
 		                    	 System.out.println("fff="+false);
 		                    	// break;
 		                     }

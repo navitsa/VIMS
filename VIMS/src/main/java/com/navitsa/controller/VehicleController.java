@@ -3,6 +3,7 @@ package com.navitsa.controller;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URLDecoder;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -54,6 +55,7 @@ import com.navitsa.Reports.AnalysisReportBeen;
 import com.navitsa.Reports.IncomingReceiptBeen;
 import com.navitsa.Reports.IncomingReceiptSummaryBeen;
 import com.navitsa.Reports.InvoiceSummaryReportBeen;
+import com.navitsa.Reports.NetworkIpBeen;
 import com.navitsa.Reports.NumberDataBeen;
 import com.navitsa.Reports.RevenueStatementBeen;
 import com.navitsa.Reports.VehicleInvoiceBeen;
@@ -976,11 +978,11 @@ public class VehicleController {
 	                	 System.out.println("fff="+conSys.getIpaddress());
 	                	
 	                     inet = InetAddress.getByName(conSys.getIpaddress());
-	                     if(inet.isReachable(0)==true) {
+	                     if(inet.isReachable(3000)==true) {
 	                    	 correct=true; 
 	                    	 System.out.println("fff="+true);
 	                     }else {
-	                    	 correct=true; 
+	                    	 correct=false; 
 	                    	 System.out.println("fff="+false);
 	                    	// break;
 	                     }
@@ -2234,8 +2236,61 @@ System.out.println("ftp");
 		            }
 		        }
 		    };
-			
-			
+		    @RequestMapping(value = "takemanulcapNo", method = RequestMethod.POST)
+			public @ResponseBody String takemanulcapNo(@RequestParam ("method") String method, HttpSession session) 
+			{
+				String centerid=session.getAttribute("centerid")+"";
+				CenterMaster centerMaster=centerService.getcenterById(centerid); 
+				String autoCapPath=centerMaster.getGetAutoCaptureImgPath();
+				String capimPath="\\capimg";
+				
+				String path=autoCapPath+capimPath;
+				String result="";
+				
+				File dir = new File(path);
+
+				
+				
+					
+			        if (dir.isDirectory()) { // make sure it's a directory
+			        	
+			        	int daysBack=1;
+			        	
+			            for (final File f : dir.listFiles(IMAGE_FILTER)) {
+			                BufferedImage img = null;
+
+			                try {
+			                	long purgeTime = System.currentTimeMillis() - (daysBack  * 1 * 15 * 60 * 1000);
+			                	
+						        if(f.lastModified() < purgeTime) {
+						            if(!f.delete()) {
+						            	logger.info("Unable to delete file: " + f);
+						               // System.err.println("Unable to delete file: " + f);
+						            }
+						         }
+			                	
+			                	
+			                    img = ImageIO.read(f); 
+			                    byte[] imgbyte=toByteArrayAutoClosable(img, "jpg");							
+							  
+			                    result=Base64.getEncoder().encodeToString(imgbyte);
+
+
+			                } catch (final IOException e) {
+			                    // handle errors here
+			                
+			                }
+			            }
+			        }
+				
+				
+				return result;
+				
+				
+				
+				
+				
+			}
 		//Auto Capture License Plate Save Image in to DB
 			
 			@RequestMapping(value = "takeAutoNo", method = RequestMethod.POST)
@@ -2246,9 +2301,13 @@ System.out.println("ftp");
 			
 			String autoCapPath=centerMaster.getGetAutoCaptureImgPath();
 			String laneimgpathPath=centerMaster.getLaneCamImgPath();
+			String capimPath="\\capimg";
 			
 			String path="";
-			if(method.equals("1")) {
+			
+			if(method.equals("0")) {
+				path=autoCapPath+capimPath;
+			}else if(method.equals("1")) {
 				path=autoCapPath;
 			}else {
 				path=autoCapPath+laneimgpathPath;
@@ -3604,6 +3663,38 @@ System.out.println("ftp");
 		   
 		}
 	  	
+		@RequestMapping(value = "saveChangeImage", method = RequestMethod.POST)
+		public @ResponseBody String saveChangeImage( @RequestParam ("json") String json, @RequestParam ("id") String id) 
+		{
+
+			try {
+		
+	
+		    byte[] imagedata = DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));
+		    
+		   
+			OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));;
+			
+			//ocrDetails.setOcrDate(dtf.format(now));
+			ocrDetails.setCapimg(ocrDetails.getNoimage());
+			ocrDetails.setNoimage(imagedata);
+					
+			vehicleService.saveOcrDetailsRepo(ocrDetails);
+		    
+			return "1";
+		    
+		   }catch(Exception e) {
+			   
+			   System.out.println("An error occurred.");
+			      e.printStackTrace();
+			      return "0";
+		   }
+		   
+		   
+		   
+		}
+		
+		
 		@RequestMapping(value = "getLaneInspector", method = RequestMethod.GET)
 		public @ResponseBody List<LaneAssign> getLaneInspector( @RequestParam String laneid) 
 		{
@@ -3675,6 +3766,41 @@ System.out.println("ftp");
 			
 			return mav;
 		}
+		
+		@RequestMapping(value = "getPcDetails", method = RequestMethod.POST)
+		public @ResponseBody List<NetworkIpBeen> getPcDetails( @RequestParam String centerid) throws UnknownHostException, IOException 
+		{
+
+			
+			List<ConfigSystem> configSystem=vehicleService.getPcDataCheckByCenter(centerid);	
+    		
+
+			  List<NetworkIpBeen> networkIpBeenList = new ArrayList<NetworkIpBeen>();
+			for(ConfigSystem result:configSystem) {
+				
+				NetworkIpBeen networkIpBeen=new NetworkIpBeen();
+				networkIpBeen.setIpaddress(result.getIpaddress());
+				networkIpBeen.setHostname(InetAddress.getByName(result.getIpaddress()).getHostName());
+				if(InetAddress.getByName(result.getIpaddress()).isReachable(3000)) {
+					networkIpBeen.setStatus("true");	
+				}else {
+					networkIpBeen.setStatus("false");
+				}
+				
+				
+				
+				networkIpBeenList.add(networkIpBeen);
+			}
+			
+			
+		
+			
+			return networkIpBeenList;
+		   
+
+		}
+		
+		
 		
 		
 		//editLaneAllocation

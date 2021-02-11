@@ -56,6 +56,9 @@ public class OcrDetails {
 	@JoinColumn(name = "DocumentCheckHeadID", referencedColumnName = "DocumentCheckHeadID")
 	private DocumentCheckHead documentCheckHeadID;
 
+	@Column(name = "capimg")
+	private byte[] capimg;
+	
 	public String getDocStatus() {
 		return docStatus;
 	}
@@ -164,6 +167,14 @@ public class OcrDetails {
 
 	public void setDocumentCheckHeadID(DocumentCheckHead documentCheckHeadID) {
 		this.documentCheckHeadID = documentCheckHeadID;
+	}
+
+	public byte[] getCapimg() {
+		return capimg;
+	}
+
+	public void setCapimg(byte[] capimg) {
+		this.capimg = capimg;
 	}
 		
 	
