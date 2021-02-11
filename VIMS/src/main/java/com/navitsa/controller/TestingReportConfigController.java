@@ -1,5 +1,6 @@
 package com.navitsa.controller;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -337,14 +338,19 @@ public class TestingReportConfigController {
 				try {
 					String vehicle_sub_cat_id = vr.getVid().getSubCategoryID().getSubCategoryID();
 					String[][] maxSpeedResult = service.getMaxSpeedResult(test_pro_id,test_value_file_id,vehicle_cat_id,vehicle_sub_cat_id);
+					double limit = 0;
+					double tol = 0;
+					if(maxSpeedResult[0][5] != null)
+						limit = Double.valueOf(maxSpeedResult[0][5]);
+					if(maxSpeedResult[0][6] != null)
+						tol =  Double.valueOf(maxSpeedResult[0][6]);
 					
-					double limit = Double.valueOf(maxSpeedResult[0][5]);
-					double tol =  Double.valueOf(maxSpeedResult[0][6]);
 					tol_add_limit = limit + (limit * tol/100);
 					speed_governor_mandatory_status = maxSpeedResult[0][7];
 					max_actual_result = Double.valueOf(maxSpeedResult[0][3]);
 					haveSpeedGovernor =  true;					
 				} catch (Exception e) {
+					System.out.println(e.getMessage());
 				}
 			}
 			
