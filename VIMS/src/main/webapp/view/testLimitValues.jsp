@@ -310,6 +310,7 @@
 												<th>Test Type</th>
 												<th>Code</th>
 												<th>Category</th>
+												<th>Speed Category</th>
 												<th>Limit</th>
 												<th>Min</th>
 												<th>Max</th>
@@ -323,6 +324,7 @@
 													<td>${tpd.ck_testProfileDetailId.parameterCode.ck_paraCodeId.testType.type}</td>
 													<td>${tpd.ck_testProfileDetailId.parameterCode.ck_paraCodeId.code}</td>
 													<td>${tpd.ck_testProfileDetailId.vehicleCat.vehicleCategory}</td>
+													<td>${tpd.ck_testProfileDetailId.subCategoryID.description}</td>
 													<td>${tpd.limitValue}</td>
 													<td>${tpd.minValue}</td>
 													<td>${tpd.maxValue}</td>
