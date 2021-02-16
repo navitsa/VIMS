@@ -495,8 +495,8 @@
 											<form:option value="4W Bh.II or III">4W Bh.II or III</form:option>
 											<form:option value="4W Bh.IV">4W Bh.IV</form:option>
 											<form:option value="Pre Bh. Stage IV">Pre Bh. Stage IV</form:option>
-											<form:option value="BH. Stage IV">4W Bh.IV</form:option>
-											
+											<form:option value="2/3W Bh.VI">2/3W Bh.VI</form:option>
+											<form:option value="4W Bh.VI">4W Bh.VI</form:option>
 											
 										</form:select>
 								</div>

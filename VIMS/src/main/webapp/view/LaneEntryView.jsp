@@ -189,11 +189,12 @@
 										
 									</select>		             		
 								</div>
-								<div class="col-sm-1">
-									
-								</div>		
-								<div class="col-sm-5">
+								
+								<div class="col-sm-3">
 									<button type="button"  class="btn btn-primary btn-block" data-toggle="modal" data-target="#capturePlateModal">Capture License Plate</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button"  class="btn btn-primary btn-block" data-toggle="modal" data-target="#manualCapPlateModal" onClick='getMCaptureImage();'>Manual Capture</button>
 								</div>
 								
 								
@@ -519,7 +520,76 @@
 
 
 
+<div id="manualCapPlateModal" class="modal fade bd-example-modal"  role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+<!--         <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+		<div class="col-sm-5">
+			<h4 class="modal-title">Manual License Plate</h4>
+		</div>
+		<div class="col-sm-5">
+        	<input class="form-control textred" name="cocrrid"  id="cocrrid" placeholder="Gate Entry ID ..." readonly="true" />		
+		</div>
+
+      </div>
+      <div class="modal-body">
+       
+   								
+
+														<div class="form-group row">
+			
+															<div class="col-sm-12">
+															
+																
+																
+																
+																
+										 <div class="row">
+										
+											<div class="col-sm-6">
+											
+												<div class="row">
+													<div class="col-mb-12 col-sm-12">
+														<img src="resources/img/car-placeholder.jpg" class="capCam"  id="results5"/>
+								             			<input  name="ImageData5" id="ImageData5"  type="hidden"/>
+								             				
+													</div>
+												</div>
+												<br>
+												<div class="row">
+													
+												</div>
+												<br>
+										
+											</div>
+									</div>															
+													
+															</div>
+															
+															
+															
+														</div>
+										
+<!--        style="display: none;" -->
+								      </div>
+								      <div class="modal-footer">
+								      <div class="col-sm-6 mb-sm-6">
+								      
+								      </div>
+								      <div class="col-sm-2 mb-sm-2">
+											<button type="button" class="btn btn-success" data-dismiss="modal" onclick="saveOcrMImage()"  id="veButt">Save</button>
+									</div>
+								      <div class="col-sm-3 mb-sm-3">
+											<button type="button" class="btn btn-info" data-dismiss="modal" >Close</button>
+										</div>																
+								      </div>
+								    </div>
+								
+								  </div>
+								</div>
 
 
 
@@ -980,6 +1050,108 @@ setTimeout(takeAutoNo, 3000);
 		
 			}
 			
+			
+			function getMCaptureImage(ocrid){
+				
+				document.getElementById("cocrrid").value=document.getElementById("ocrrid").value;
+
+					$.ajax({
+
+					    type: 'POST',
+					    url: "takemanulcapNo",
+					    data: {"method":"0"},
+				        success: function(data){
+				        	
+				        	//$("table tbody").empty();
+				        	
+				        	
+//	 			        	 var slctSubcat1=$('#ocrdetails4'), option="";
+//	 				            slctSubcat1.empty();
+//	 						for(var i=0; i<data.length; i++){
+							
+//	 							selected_option =  "<tr data-folder='ghjgh'><td>"+ data[i].number+ "</td>"
+//	 					            +"<td style='display:none;'>"+ data[i].noimage+"</td>"
+//	 					            +"</tr>";
+//	 					            slctSubcat1.append(selected_option);
+									//$("table tbody").append(markup);
+//	 			           	 }
+				            document.getElementById('results5').src = "data:image/jpg;base64,"+data;			    		
+				            document.getElementById("ImageData5").value="data:image/jpg;base64,"+data;
+				            
+				     
+
+				        },
+				        error:function(){
+				       //	alert("Error");
+				        }
+					 });
+
+				}
+			
+			function saveOcrMImage(){
+				
+				
+				
+				var imagebase64=document.getElementById("ImageData5").value;
+				if(imagebase64!=""){
+		 		var y=document.getElementById("cocrrid").value;		 
+		 		var jsonfile={json:JSON.stringify(imagebase64),id:y};
+		 		$.ajax({
+
+		 		    type: 'POST',
+		 		    url: "saveChangeImage", 
+		 		    data: jsonfile,
+		 	        success: function(data){
+		 	        
+			      	if(data=="1"){
+			      		
+			      		document.getElementById("results").src=imagebase64;
+			      		
+						swal("Good job!", "Capturing is successfully !", {
+							icon : "success",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-success'
+								}
+							},
+						});
+			      
+			      	}else{
+			      		
+		        		swal("Oops...", "Not captured ! Please capture and continue ..", {
+							icon : "error",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-danger'
+								}
+							},
+						});
+			      		
+
+			      		
+			      	}
+		 	        	
+		 	        	
+		 	        },
+		 	        error:function(data){
+		 	        	alert(data.responseText);
+			           
+		 	        }
+		 		 });
+				}else{
+					
+		        		swal("Oops...", "Not captured ! Please capture and continue ..", {
+								icon : "error",
+								buttons: {        			
+									confirm: {
+										className : 'btn btn-danger'
+									}
+								},
+							});
+
+				}
+
+			}
 			</script>
 </body>
 </html>
