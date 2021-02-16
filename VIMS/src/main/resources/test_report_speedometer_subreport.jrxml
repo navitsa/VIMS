@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_speedometer_subreport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="6230b4c9-97d8-4045-89e3-3b84779a4f8c">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="62"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="pass fail color style">
 		<conditionalStyle>
@@ -45,6 +45,7 @@
 	<parameter name="passStatus2" class="java.lang.String"/>
 	<parameter name="speedoGovernorLimit" class="java.lang.String"/>
 	<parameter name="reportColor" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="actualMaxSpeed" class="java.lang.String"/>
 	<field name="value1" class="java.lang.String"/>
 	<field name="value2" class="java.lang.Double"/>
 	<field name="value3" class="java.lang.Double"/>
@@ -221,6 +222,13 @@
 						<font fontName="Arial" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{speedoGovernorLimit}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="223" y="0" width="100" height="14" uuid="15af3408-b539-47ba-b27e-514028988949"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{actualMaxSpeed}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
