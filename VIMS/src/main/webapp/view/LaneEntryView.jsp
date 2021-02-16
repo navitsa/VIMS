@@ -1090,7 +1090,7 @@ setTimeout(takeAutoNo, 3000);
 			
 			function saveOcrMImage(){
 				
-				
+			
 				
 				var imagebase64=document.getElementById("ImageData5").value;
 				if(imagebase64!=""){
