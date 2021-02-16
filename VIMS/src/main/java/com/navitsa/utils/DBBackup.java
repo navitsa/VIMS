@@ -11,9 +11,9 @@ public  class DBBackup {
 	
 		String mysqlpath="C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\";
 		String userName="root";
-		String password="neV071it";
-		String port="3307";
-		String dbname="mani";
+		String password="peLa071it";
+		String port="3306";
+		String dbname="vetest";
 		
 		
 		Process p = null;
