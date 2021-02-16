@@ -343,7 +343,7 @@ public class TestingReportConfigController {
 					
 			String subCat = vr.getVid().getSubCategoryID().getDescription();
 			boolean haveSpeedGovernor = false;
-			double tol_add_limit = 0; // last limit speed with tolerance
+			double tol_add_limit = 0; // limit + tolerance
 			String speed_governor_mandatory_status = "1";
 			double max_actual_result = 0;
 			
@@ -368,7 +368,7 @@ public class TestingReportConfigController {
 			}
 			
 			String status="PASS";
-			String status2="PASS";
+			String status2="PASS";	
 			String mandatory_status = null;
 			List<TestResultSpeedoBean> speedoList = new ArrayList<>();
 			
@@ -401,14 +401,7 @@ public class TestingReportConfigController {
 						String desc = speedoObj.getValue1()+" ActualSpeed  < "+speedoObj.getValue3()+" Normal\n"+speedoObj.getValue4()+" ActualSpeed  < "+speedoObj.getValue6()+" Normal";
 						speedoObj.setLimitDes(desc);
 						
-						if (haveSpeedGovernor) {
-							/*if(status2=="PASS") {
-								if(speedoObj.getValue2() > lmaxSpeed)
-									status2="FAIL";
-								if(speedoObj.getValue5() > lmaxSpeed)
-									status2="FAIL";
-							}*/						
-						}else {
+						if (!haveSpeedGovernor) {
 							if(status=="PASS") {
 								
 								double lmaxSpeed1 = speedoObj.getValue3() + (speedoObj.getValue3() * targetTolerance1/100);
@@ -433,12 +426,9 @@ public class TestingReportConfigController {
 			
 			if(!speedoList.isEmpty()) {
 				if(mandatory_status.equals("0")) {
-					if (haveSpeedGovernor) {
-						//params.put("speedoPassStatus2", status2);
-						//params.put("speedoGovernorLimit", "<= "+lmaxSpeed+" km/h");
+					if (!haveSpeedGovernor) {
+						params.put("speedoPassStatus",status);
 					}	
-					else {
-						params.put("speedoPassStatus",status);}
 				}				
 			}
 			
@@ -450,6 +440,7 @@ public class TestingReportConfigController {
 						
 						params.put("speedoPassStatus2", status2);
 						params.put("speedoGovernorLimit", "<= "+tol_add_limit+" km/h");
+						params.put("speedoActualMaxSpeed","Actual Maximum Speed   "+max_actual_result);
 					}
 				}
 			}

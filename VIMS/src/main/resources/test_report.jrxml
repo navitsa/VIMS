@@ -83,6 +83,7 @@
 	<parameter name="speedoPassStatus2" class="java.lang.String"/>
 	<parameter name="speedoGovernorLimit" class="java.lang.String"/>
 	<parameter name="reportColor" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="speedoActualMaxSpeed" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -628,11 +629,14 @@ $P{centerAddress}+"<br>"+
 				<subreportParameter name="passStatus">
 					<subreportParameterExpression><![CDATA[$P{speedoPassStatus}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="passStatus2">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus2}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="reportColor">
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="passStatus2">
-					<subreportParameterExpression><![CDATA[$P{speedoPassStatus2}]]></subreportParameterExpression>
+				<subreportParameter name="actualMaxSpeed">
+					<subreportParameterExpression><![CDATA[$P{speedoActualMaxSpeed}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{speedoResults})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["test_report_speedometer_subreport.jasper"]]></subreportExpression>
