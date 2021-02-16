@@ -26,7 +26,9 @@ public interface TestProfileDetailRepository extends CrudRepository<TestProfileD
 			"    test_profile_status.`status` AS test_profile_status_status,\r\n" + 
 			"    test_point.`unit` AS point_unit,\r\n" + 
 			"    test_parameter.`unit` AS para_unit,\r\n" + 
-			"    test_parameter_angle.`unit` AS angle_unit\r\n" + 
+			"    test_parameter_angle.`unit` AS angle_unit,\r\n" +
+			"    test_profile_detail.`tolerance_plus` AS tolerance_plus,\r\n" +
+			"    test_profile_detail.`tolerance_minus` AS tolerance_minus\r\n" + 
 			"FROM\r\n" + 
 			"    test_profile_header\r\n" + 
 			"        INNER JOIN\r\n" + 
@@ -61,7 +63,7 @@ public interface TestProfileDetailRepository extends CrudRepository<TestProfileD
 			"    test_value_result_detail.`Result` AS Result,\r\n" + 
 			"    test_type.`type_id` AS type_id,\r\n" + 
 			"    test_type.`test_type` AS test_type,\r\n" +
-			"    test_profile_detail.`tolerance` AS tolerance,\r\n" +
+			"    test_profile_detail.`tolerance_plus` AS tolerance,\r\n" +
 			"    test_profile_status.`status` AS test_profile_status_status\r\n" +
 			"FROM\r\n" + 
 			"    test_profile_header\r\n" + 
@@ -100,7 +102,7 @@ public interface TestProfileDetailRepository extends CrudRepository<TestProfileD
 			"    test_value_result_detail.`Result` AS Result,\r\n" + 
 			"    test_profile_detail.operator AS operator,\r\n" + 
 			"    test_profile_detail.limit_value AS limit_value,\r\n" + 
-			"    test_profile_detail.`tolerance` AS tolerance,\r\n" + 
+			"    test_profile_detail.`tolerance_plus` AS tolerance,\r\n" + 
 			"    test_profile_status.`status` AS test_profile_status_status\r\n" + 
 			"FROM\r\n" + 
 			"    test_profile_header\r\n" + 

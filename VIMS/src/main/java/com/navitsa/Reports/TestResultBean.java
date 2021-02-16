@@ -20,8 +20,8 @@ public class TestResultBean {
 	private int pass_fail_status;
 	private String finalize_pass_fail_status;
 	private String unit;
-	
-	
+	private Double tolerance_plus;
+	private Double tolerance_minus;
 	
 	public String getTest_value_result_header_Vehicle_ID() {
 		return test_value_result_header_Vehicle_ID;
@@ -126,6 +126,18 @@ public class TestResultBean {
 	}
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+	public Double getTolerance_plus() {
+		return tolerance_plus;
+	}
+	public void setTolerance_plus(Double tolerance_plus) {
+		this.tolerance_plus = tolerance_plus;
+	}
+	public Double getTolerance_minus() {
+		return tolerance_minus;
+	}
+	public void setTolerance_minus(Double tolerance_minus) {
+		this.tolerance_minus = tolerance_minus;
 	}
 	
 }

@@ -280,18 +280,25 @@
 											</div>
 										</div>
 										
-										<label for="plusTol">Tolerance</label>
+										<label for="plusTol">Tolerance (%)</label>
 										<div class="row">
 											<div class="col-lg-3">
 												<div class="input-group">												
-													<form:input path="tolerance" id="plusTol" type="text" class="form-control input-border-bottom"/>
+													<form:input path="tolerance_plus" id="plusTol" type="text" class="form-control input-border-bottom"/>
 													<div class="input-group-append">
-														<span class="input-group-text">%</span>
+														<span class="input-group-text">+</span>
+													</div>							
+												</div>
+											</div>										
+											<div class="col-lg-3">
+												<div class="input-group">												
+													<form:input path="tolerance_minus" id="minusTol" type="text" class="form-control input-border-bottom"/>
+													<div class="input-group-append">
+														<span class="input-group-text">-</span>
 													</div>							
 												</div>
 											</div>
-										</div>
-										
+										</div>										
 										<br>
 										<button type="submit" class="btn btn-success"
 											onclick="return Validate()">Save</button>
@@ -314,7 +321,8 @@
 												<th>Limit</th>
 												<th>Min</th>
 												<th>Max</th>
-												<th>Tolerance</th>
+												<th>Tolerance (+)</th>
+												<th>Tolerance (-)</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -328,7 +336,8 @@
 													<td>${tpd.limitValue}</td>
 													<td>${tpd.minValue}</td>
 													<td>${tpd.maxValue}</td>
-													<td>${tpd.tolerance}</td>
+													<td>${tpd.tolerance_plus}</td>
+													<td>${tpd.tolerance_minus}</td>
 												</tr>
 											</c:forEach>
 										</tbody>

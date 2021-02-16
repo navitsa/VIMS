@@ -31,20 +31,23 @@ public class TestProfileDetail {
 	@Column(name="max_value")
 	private Double maxValue;
 	
-	@Column(name="tolerance")
-	private Double tolerance;
+	@Column(name="tolerance_plus")
+	private Double tolerance_plus;
+	
+	@Column(name="tolerance_minus")
+	private Double tolerance_minus;
 
-	public TestProfileDetail(Ck_testProfileDetailId ck_testProfileDetailId,
-			String limitValueDesc, String operator, Double limitValue, Double minValue, Double maxValue, Double tolerance) {
+public TestProfileDetail(Ck_testProfileDetailId ck_testProfileDetailId, String limitValueDesc, String operator,
+			Double limitValue, Double minValue, Double maxValue, Double tolerance_plus, Double tolerance_minus) {
 		super();
-		//this.testProfileDetailID = testProfileDetailID;
 		this.ck_testProfileDetailId = ck_testProfileDetailId;
 		this.limitValueDesc = limitValueDesc;
 		this.operator = operator;
 		this.limitValue = limitValue;
 		this.minValue = minValue;
 		this.maxValue = maxValue;
-		this.tolerance = tolerance;
+		this.tolerance_plus = tolerance_plus;
+		this.tolerance_minus = tolerance_minus;
 	}
 
 /*	public int getTestProfileDetailID() {
@@ -106,12 +109,20 @@ public class TestProfileDetail {
 		this.maxValue = maxValue;
 	}
 
-	public Double getTolerance() {
-		return tolerance;
+	public Double getTolerance_plus() {
+		return tolerance_plus;
 	}
 
-	public void setTolerance(Double tolerance) {
-		this.tolerance = tolerance;
+	public void setTolerance_plus(Double tolerance_plus) {
+		this.tolerance_plus = tolerance_plus;
+	}
+
+	public Double getTolerance_minus() {
+		return tolerance_minus;
+	}
+
+	public void setTolerance_minus(Double tolerance_minus) {
+		this.tolerance_minus = tolerance_minus;
 	}
 
 	public TestProfileDetail() {

@@ -1,6 +1,5 @@
 package com.navitsa.controller;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -259,6 +258,15 @@ public class TestingReportConfigController {
 			 if(result[i][16] !=null)
 				 obj.setUnit(result[i][16]);
 			 
+			 if(result[i][17] !=null)
+				 obj.setTolerance_plus(Double.valueOf(result[i][17]));
+			 else
+				 obj.setTolerance_plus(0.0);
+			 if(result[i][18] !=null)
+				 obj.setTolerance_minus(Double.valueOf(result[i][18]));
+			 else
+				 obj.setTolerance_minus(0.0);
+			 
 			 int pass_fail_status = 2;
 			 String limit_value_desc = null;
 			 
@@ -268,10 +276,12 @@ public class TestingReportConfigController {
 				 
 				 if(obj.getT_limit_value() != null)
 				 {
+					 double limit = obj.getT_limit_value() + (obj.getT_limit_value() * obj.getTolerance_plus()/100);
+					 
 					    switch(obj.getOperator()){
 					    case "<=":
 					    	
-							 if(obj.getTest_value_result_detail_Result() <= obj.getT_limit_value())
+							 if(obj.getTest_value_result_detail_Result() <= limit)
 								 pass_fail_status = 1;
 							 else
 								 pass_fail_status = 0;
@@ -279,35 +289,38 @@ public class TestingReportConfigController {
 					        
 					    case "<":
 					    	
-							 if(obj.getTest_value_result_detail_Result() < obj.getT_limit_value())
+							 if(obj.getTest_value_result_detail_Result() < limit)
 								 pass_fail_status = 1;
 							 else
 								 pass_fail_status = 0;
 					        break;
 					       
 					    case "=>":
-							 if(obj.getTest_value_result_detail_Result() >= obj.getT_limit_value())
+							 if(obj.getTest_value_result_detail_Result() >= limit)
 								 pass_fail_status = 1;
 							 else
 								 pass_fail_status = 0;
 					        break;
 					    
 					    case ">":
-							 if(obj.getTest_value_result_detail_Result() > obj.getT_limit_value())
+							 if(obj.getTest_value_result_detail_Result() > limit)
 								 pass_fail_status = 1;
 							 else
 								 pass_fail_status = 0;
 					        break;
 					    }
 					    
-					    limit_value_desc = obj.getT_test_point_name()+" "+obj.getTa_para_name()+" "+obj.getTaa_angle_name()+" "+obj.getOperator()+" "+obj.getT_limit_value()+" "+"Normal";
+					    limit_value_desc = obj.getT_test_point_name()+" "+obj.getTa_para_name()+" "+obj.getTaa_angle_name()+" "+obj.getOperator()+" "+limit+" "+"Normal";
 
 				 }
 				 
 				 if(obj.getT_min_value()!=null || obj.getT_max_value()!=null)
 				 {
-					 if(obj.getTest_value_result_detail_Result()<=obj.getT_max_value() && 
-							 obj.getTest_value_result_detail_Result()>=obj.getT_min_value())
+					 double max = obj.getT_max_value() + (obj.getT_max_value() * obj.getTolerance_plus()/100);
+					 double min = obj.getT_min_value() - (obj.getT_min_value() * obj.getTolerance_minus()/100);
+					 
+					 if(obj.getTest_value_result_detail_Result()<=max && 
+							 obj.getTest_value_result_detail_Result()>=min)
 						pass_fail_status = 1;
 					else
 						pass_fail_status = 0;
@@ -441,8 +454,7 @@ public class TestingReportConfigController {
 				}
 			}
 			
-/* ---------------------------------------------------------------------------------------------------------- */
-			
+/* ---------------------------------------------------------------------------------------------------------- */			
 			params.put("noiseResults",list);
 			params.put("brakeResults", list);
 /* ---------------------------------------------------------------------------------------------------------- */
