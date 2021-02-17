@@ -223,7 +223,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$P{speedoGovernorLimit}]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="223" y="0" width="100" height="14" uuid="15af3408-b539-47ba-b27e-514028988949"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>

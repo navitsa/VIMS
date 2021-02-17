@@ -228,7 +228,7 @@ public class TestValueFileController {
 		 return result;
 	 }
 	 
-	 @RequestMapping("/previousResults")
+	 @RequestMapping("/previousTestReports")
 	 public String previousResults() {
 		 return "testReportReprint";
 		 }
