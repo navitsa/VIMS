@@ -372,7 +372,7 @@
 												<br>
 												<div class="row">
 													<div class="col-mb-12 col-sm-12">
-														<input class="form-control fontst bgred" id="vehicleID" placeholder="Licence Plate NO..." oninput="getVMasterData(this.value)" onkeyup="this.value = this.value.toUpperCase();" />
+														<input class="form-control fontst bgred" id="vehicleID" placeholder="Licence Plate NO..." oninput="getVMasterData(this.value)" onkeyup="this.value = this.value.toUpperCase().replace(' ', '');" />
 													</div>
 												</div>
 												<br>
@@ -1101,21 +1101,26 @@
 	{
 	
 
+		swal({
+			title: 'Are you sure?',
+			text: "Do you want to continue with inspection in Lane?",
+			type: 'warning',
+			buttons:{
+				cancel: {
+					visible: true,
+					text : 'Cancel!',
+					className: 'btn btn-danger'
+				},        			
+				confirm: {
+					text : 'Yes, Proceed Lane!',
+					className : 'btn btn-success'
+				}
+			}
+		}).then((willDelete) => {
+			if (willDelete) {
 
-		Swal.fire({
-		  title: 'Do you want to continue with inspection in Lane?',
-		  showDenyButton: false,
-		  showCancelButton: true,
-		  confirmButtonText: `Yes`,
-		  denyButtonText: `No`,
-		  customClass: {
-		    cancelButton: 'order-1 right-gap',
-		    confirmButton: 'order-2',
-		    denyButton: 'order-3',
-		  }
-		}).then((result) => {
-		  if (result.isConfirmed) {
-		   
+
+				   
 				$.ajax({
 
  		 		    type: 'POST',
@@ -1222,11 +1227,28 @@
  			        }
  				 });
 			  
-			  
-		  } 
-		})
+				
+				
+				
+			} else {
+// 				swal("Your imaginary file is safe!", {
+// 					buttons : {
+// 						confirm : {
+// 							className: 'btn btn-success'
+// 						}
+// 					}
+// 				});
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
 
-
+	
 		
 		
 		

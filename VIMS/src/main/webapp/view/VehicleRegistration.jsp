@@ -558,11 +558,21 @@
 					</div>
 
 				</div>
-		
+				<div class="col-xl-1 col-lg-1">
+				
+				</div>
+				<div class="col-xl-2 col-lg-2">
+				<br/><br/><br/><br/><br/><br/><br/>
+					<div id="overlay" style="display: none;" >
+					  <div id="loading-effect"><img alt="" src="resources/img/96x96.gif"></div>
+					  <div id="text">Payment in Progress ....</div>
+					</div>
+				
+				</div>
 				
 	</div>			
 				
-				
+	
 				
 				
 				
@@ -668,7 +678,7 @@
 	
 	function checkCondition(){
 		
-		
+		document.getElementById("overlay").style.display = "block";
 		//
 	if(document.getElementById("currentMilage").value!="0"&&document.getElementById("currentMilage").value!=""){
 		
@@ -696,12 +706,7 @@
 			 
 			    case "invoice":
 			    	
-					Swal.fire ({
-						   title: 'Wait ...',
-						   onBeforeOpen: () => {
-						     Swal.showLoading ()
-						   }
-						})
+				
 
 			    	
 				    var request_method = $("#formVehicleRegistration").attr("method"); //get form GET/POST method
@@ -714,75 +719,89 @@
 				        success: function(data){
 				        	
 	 			        	if(data=="0"){
-	 			        		Swal.close();
-	 			        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'System Error'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
+// 	 			        		Swal.close();
+	 			        	document.getElementById("overlay").style.display = "none";
+	 			        		swal("Oops...", "System Error", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
 	 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 	 						document.getElementById("moreLoder").style.display = "none";
 	 			        	}else if(data=="1"){
-	 			        		Swal.close();
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'Session Expired'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
+// 	 			        		Swal.close();
+ 				        	document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "Session Expired", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
 		        			window.location.href = "logout";
 				        	}else if(data=="2"){
-				        		Swal.close();
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'Documents are not verified ! Please confirm document verification and continue'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
+// 				        		Swal.close();
+document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "Documents are not verified ! Please confirm document verification and continue", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
+				        		
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
 				        	}else if(data=="3"){
-				        		Swal.close();
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'Payment Receipt Already Issued for this Vehicle!'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
+// 				        		Swal.close();
+				        	document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "Payment Receipt Already Issued for this Vehicle!", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
+				        		
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
 	 			        	}else if(data=="4"){
-	 			        		Swal.close();
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'License Plate is not captured ! Please capture and continue'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
+// 	 			        		Swal.close();
+				        		document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "License Plate is not captured ! Please capture and continue", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
 				        	}else{ 	
-	 			        	
+				        		
 	 			       		window.location.href = data;
-	 			       	Swal.close();
+	 			       	document.getElementById("overlay").style.display = "none";
+// 	 			       	Swal.close();
 	 			        	}
 	 			        	
 				        },
 				        error:function(){
 				        	alert("Error");
+				        	document.getElementById("overlay").style.display = "none";
 				        }
 					 }); 
 			      break;
 			 
 			    case "receipt":
 			    	
-					Swal.fire ({
-						   title: 'Wait ...',
-						   onBeforeOpen: () => {
-						     Swal.showLoading ()
-						   }
-						})
+			
 
 			    	
 	 			    var request_method = $("#formVehicleRegistration").attr("method"); //get form GET/POST method
@@ -795,63 +814,80 @@
 	 			        success: function(data){
 	 			        	
 	 			        	if(data=="0"){
-	 			        		Swal.close();
-	 			        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'System Error'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
+// 	 			        		Swal.close();
+	 			     document.getElementById("overlay").style.display = "none";
+	 	 			       		swal("Oops...", "System Error", {
+	 								icon : "error",
+	 								buttons: {        			
+	 									confirm: {
+	 										className : 'btn btn-danger'
+	 									}
+	 								},
+	 							});
 	 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 	 						document.getElementById("moreLoder").style.display = "none";
 	 			        	}else if(data=="1"){
-	 			        		Swal.close();
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'Session Expired'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
+// 	 			        		Swal.close();
+document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "Session Expired", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
 		        			window.location.href = "logout";
 				        	}else if(data=="2"){
-				        		Swal.close();
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'Documents are not verified ! Please confirm document verification and continue'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
+// 				        		Swal.close();
+				        		document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "Documents are not verified ! Please confirm document verification and continue", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
 				        	}else if(data=="3"){
-				        		Swal.close();
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'This vehicle already Payment !'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
+// 				        		Swal.close();
+				        		document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "This vehicle already Payment !", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
 	 			        	}else if(data=="4"){
-	 			        		Swal.close();
-				        		Swal.fire({
-				        			  icon: 'error',
-				        			  title: 'Oops...',
-				        			  text: 'License Plate is not captured ! Please capture and continue'
-				        			  //,footer: '<a href>Why do I have this issue?</a>'
-				        			});
+// 	 			        		Swal.close();
+	 			        		document.getElementById("overlay").style.display = "none";
+	 			        		swal("Oops...", "License Plate is not captured ! Please capture and continue", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
 		 						document.getElementById("proceedLanBtn").style.display = "block";
 		 						document.getElementById("moreLoder").style.display = "none";
 				        	}else{ 	
 	 			        	
 	 			       		window.location.href = data;
-	 			       	Swal.close();
+	 			       	document.getElementById("overlay").style.display = "none";
+// 	 			       	Swal.close();
 	 			        	}
 	 			        	
 	 			        },
 	 			        error:function(){
 	 			        	alert("Error");
+	 			        	document.getElementById("overlay").style.display = "none";
 	 			        }
 	 				 });
 			      break;
@@ -861,12 +897,12 @@
 			  }
 			});
 		}else{
-			Swal.fire ({
-				   title: 'Wait ...',
-				   onBeforeOpen: () => {
-				     Swal.showLoading ()
-				   }
-				})
+// 			Swal.fire ({
+// 				   title: 'Wait ...',
+// 				   onBeforeOpen: () => {
+// 				     Swal.showLoading ()
+// 				   }
+// 				})
 			
 			document.getElementById("proceedLanBtn").style.display = "none";
 			document.getElementById("moreLoder").style.display = "block";
@@ -880,65 +916,95 @@
  			        success: function(data){
  			        	
  			        	if(data=="0"){
- 			        		Swal.close();
- 			        		Swal.fire({
-			        			  icon: 'error',
-			        			  title: 'Oops...',
-			        			  text: 'System Error'
-			        			  //,footer: '<a href>Why do I have this issue?</a>'
-			        			});
+//  			        		Swal.close();
+ 			        	document.getElementById("overlay").style.display = "none";
+ 			       		swal("Oops...", "System Error", {
+							icon : "error",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-danger'
+								}
+							},
+						});
+ 			        		
  	 						document.getElementById("proceedLanBtn").style.display = "block";
  	 						document.getElementById("moreLoder").style.display = "none";
  			        	}else if(data=="1"){
- 			        		Swal.close();
-			        		Swal.fire({
-			        			  icon: 'error',
-			        			  title: 'Oops...',
-			        			  text: 'Session Expired'
-			        			  //,footer: '<a href>Why do I have this issue?</a>'
-			        			});
+//  			        		Swal.close();
+			        	
+			        		document.getElementById("overlay").style.display = "none";
+			        		swal("Oops...", "Session Expired", {
+								icon : "error",
+								buttons: {        			
+									confirm: {
+										className : 'btn btn-danger'
+									}
+								},
+							});
+			        		
+			        		
 	        			window.location.href = "logout";
 			        	}else if(data=="2"){
-			        		Swal.close();
-			        		Swal.fire({
-			        			  icon: 'error',
-			        			  title: 'Oops...',
-			        			  text: 'Documents are not verified ! Please confirm document verification and continue'
-			        			  //,footer: '<a href>Why do I have this issue?</a>'
-			        			});
+// 			        		Swal.close();
+			        document.getElementById("overlay").style.display = "none";
+			        		
+			        		swal("Oops...", "Documents are not verified ! Please confirm document verification and continue", {
+								icon : "error",
+								buttons: {        			
+									confirm: {
+										className : 'btn btn-danger'
+									}
+								},
+							});
+			        		
 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 						document.getElementById("moreLoder").style.display = "none";
 			        	}else if(data=="3"){
-			        		Swal.close();
-			        		Swal.fire({
-			        			  icon: 'error',
-			        			  title: 'Oops...',
-			        			  text: 'This vehicle already Payment !'
-			        			  //,footer: '<a href>Why do I have this issue?</a>'
-			        			});
+// 			        		Swal.close();
+			        		document.getElementById("overlay").style.display = "none";
+			        		
+			        		swal("Oops...", "This vehicle already Payment !", {
+								icon : "error",
+								buttons: {        			
+									confirm: {
+										className : 'btn btn-danger'
+									}
+								},
+							});
+			        		
+			        		
+			        		
+			        		
 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 						document.getElementById("moreLoder").style.display = "none";
  			        	}else if(data=="4"){
- 			        		Swal.close();
-			        		Swal.fire({
-			        			  icon: 'error',
-			        			  title: 'Oops...',
-			        			  text: 'License Plate is not captured ! Please capture and continue'
-			        			  //,footer: '<a href>Why do I have this issue?</a>'
-			        			});
+//  			        		Swal.close();
+		
+			        		document.getElementById("overlay").style.display = "none";
+			        		swal("Oops...", "License Plate is not captured ! Please capture and continue", {
+								icon : "error",
+								buttons: {        			
+									confirm: {
+										className : 'btn btn-danger'
+									}
+								},
+							});
+			        		
 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 						document.getElementById("moreLoder").style.display = "none";
 			        	}else{ 	
  			        	
  			       		window.location.href = data;
- 			       	Swal.close();
+//  			       	Swal.close();
+ 			       	document.getElementById("overlay").style.display = "none";
  			        	}
  			        	
 		 	
  			        },
  			        error:function(){
  			        	alert("Error");
- 			        	Swal.close();
+//  			        	Swal.close();
+ 			        	document.getElementById("overlay").style.display = "none";
  			        }
  				 });
 			
@@ -950,11 +1016,15 @@
 		
 	}else{
 		
- 		Swal.fire({
-			  icon: 'error',
-			  title: 'Oops...',
-			  text: 'Please Enter Current Mileage !'
-			});
+
+		swal("Oops...", "Please Enter Current Mileage !", {
+			icon : "error",
+			buttons: {        			
+				confirm: {
+					className : 'btn btn-danger'
+				}
+			},
+		});
 		
 	}
 		
@@ -1195,20 +1265,24 @@
 			success : function(data) {
 				
 	 			if (data == "1") {
-		      		Swal.fire({
-			      		  position: 'top-end',
-			      		  icon: 'success',
-			      		  title: 'Successfully saved!',
-			      		  showConfirmButton: false,
-			      		  timer: 1500
-			      		});
+					swal("Good job!", "Document Check is Successfully Completed!", {
+						icon : "success",
+						buttons: {        			
+							confirm: {
+								className : 'btn btn-success'
+							}
+						},
+					});
 					
 	 			}else{
-		      		Swal.fire({
-						  icon: 'error',
-						  title: 'Oops...',
-						  text: 'Data not saved!',
-						});
+	        		swal("Oops...", "Document Check is not Save ", {
+						icon : "error",
+						buttons: {        			
+							confirm: {
+								className : 'btn btn-danger'
+							}
+						},
+					});
 	 			}
 	 			
 
@@ -1270,20 +1344,27 @@
 			      		document.getElementById("results").src=imagebase64;
 			      		
 			      		
-			      		Swal.fire({
-			      		  position: 'top-end',
-			      		  icon: 'success',
-			      		  title: 'License Plate Capturing is successfully !',
-			      		  showConfirmButton: false,
-			      		  timer: 1500
-			      		});
+
+						swal("Good job!", "License Plate Capturing is successfully !", {
+							icon : "success",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-success'
+								}
+							},
+						});
+			      		
 			      	}else{
-			      		Swal.fire({
-							  icon: 'error',
-							  title: 'Oops...',
-							  text: 'License Plate is not captured ! Please capture and continue ..',
-							  
-							});
+			      	
+						swal("Oops...", "License Plate is not captured ! Please capture and continue ..", {
+							icon : "error",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-danger'
+								}
+							},
+						});
+			      		
 			      		
 			      	}
 		 	        	
@@ -1296,14 +1377,16 @@
 		 		 });
 				}else{
 					
-
-
-					Swal.fire({
-					  icon: 'error',
-					  title: 'Oops...',
-					  text: 'License Plate is not captured ! Please capture and continue ..',
-					  
+					swal("Oops...", "License Plate is not captured ! Please capture and continue ..", {
+						icon : "error",
+						buttons: {        			
+							confirm: {
+								className : 'btn btn-danger'
+							}
+						},
 					});
+
+				
 				}
 
 			}

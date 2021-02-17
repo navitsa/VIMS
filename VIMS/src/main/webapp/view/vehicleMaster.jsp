@@ -1524,19 +1524,30 @@ function saveCheckDocment() {
 		success : function(data) {
 			
  			if (data == "1") {
-	      		Swal.fire({
-		      		  position: 'top-end',
-		      		  icon: 'success',
-		      		  title: 'Successfully saved!',
-		      		  showConfirmButton: false,
-		      		  timer: 1500
-		      		})
+	    
+		      		
+					swal("Good job!", "Document Check is Successfully Completed!", {
+						icon : "success",
+						buttons: {        			
+							confirm: {
+								className : 'btn btn-success'
+							}
+						},
+					});
+		      		
+		      		
  			}else{
-	      		Swal.fire({
-					  icon: 'error',
-					  title: 'Oops...',
-					  text: 'Data not saved!',
-					})
+ 				
+	        		swal("Oops...", "Document Check is not Save ", {
+							icon : "error",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-danger'
+								}
+							},
+						});
+ 				
+ 			
  			}
  			
 

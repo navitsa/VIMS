@@ -286,14 +286,21 @@
 <br>
 <hr>
 
-	<br><br><br><br><br><br><br>
+	<br><br><br>
 
 					<div class="row">
-
-			            <div class="col-sm-7">
+ 						<div class="col-sm-4 "></div>
+			            <div class="col-sm-3 ">
+			            
+				            <div id="overlay"  style="display: none;" >
+							  <div id="loading-effect"><img alt="" src="resources/img/96x96.gif"></div>
+							  <div id="text">Entering Lane...</div>
+							</div>
+			            <br><br><br>
 			            </div>
 						<div class="col-sm-5 justify-content-end">
-			             	<button type="button"  class="btn btn-success btn-block" onclick="checkCondition();" id="proceedLanBtn">Proceed to Lane Entry in Lane</button>
+						<br><br><br><br>
+			             	<button type="button" style="display: none;"  class="btn btn-success btn-block" onclick="checkCondition();" id="proceedLanBtn">Proceed to Lane Entry in Lane</button>
 						
 								<div class="spinner-grow" role="status" id="moreLoder" style="display: none;">
 												  <span class="sr-only" >Loading...</span>
@@ -611,12 +618,21 @@
 	
 	function checkCondition(){
 				var mak=document.getElementById("ocrrid").value;
-				Swal.fire ({
-					   title: 'Wait ...',
-					   onBeforeOpen: () => {
-					     Swal.showLoading ()
-					   }
-					})
+				
+// 				swal({
+// 				     title: 'Loading cars from data base'
+// 				});
+// 				swal.showLoading();
+				
+// 				Swal.fire ({
+// 					   title: 'Wait ...',
+// 					   onBeforeOpen: () => {
+// 					     Swal.showLoading ()
+// 					   }
+// 					})
+              document.getElementById("proceedLanBtn").style.display = "none";
+					document.getElementById("overlay").style.display = "block";				
+				
  				$.ajax({
 
  		 		    type: 'POST',
@@ -704,12 +720,14 @@
 								},
 							});
  			        	}
- 			       	Swal.close();
-		 	
+ 			       
+ 			        	document.getElementById("overlay").style.display = "none";
+ 			        	document.getElementById("proceedLanBtn").style.display = "block";
  			        },
  			        error:function(){
  			        	alert("Error");
- 			       	Swal.close();
+ 			        	document.getElementById("overlay").style.display = "none";
+ 			        	document.getElementById("proceedLanBtn").style.display = "block";
  			        }
  				 });
 			
@@ -874,6 +892,8 @@ setTimeout(takeAutoNo, 3000);
 			        url: "getVehicleRegistation",
 			        data: {"ocrid":st},
 			        success: function(data){
+			        	document.getElementById("proceedLanBtn").style.display = "block";
+			        	
 						document.getElementById("vvno").innerHTML=data.vid.vehicleID;
 						document.getElementById("vehNO").value=data.vid.vehicleID;
 						document.getElementById("vregID").value=data.vregID;
@@ -890,6 +910,7 @@ setTimeout(takeAutoNo, 3000);
 			        },
 			        error:function(){
 			          //  alert("No return Model data for this Class ID");
+			        	document.getElementById("proceedLanBtn").style.display = "none";
 			        }
 	
 			    });	
