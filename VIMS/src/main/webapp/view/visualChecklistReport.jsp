@@ -79,7 +79,7 @@
 											<td>${chMaster.date}</td>
 											<td>${chMaster.time}</td>
 											<td>${chMaster.endtime}</td>
-											<td><a href="printVisualInspectReport?chMasterID=${chMaster.cheklistID}&status=true" class="btn btn-success btn-sm" role="button"><i class="fas fa-print"></i></a></td>
+											<td><a href="visualInspectReport?id=${chMaster.cheklistID}&status=true" class="btn btn-success btn-sm" role="button"><i class="fas fa-print"></i></a></td>
 										</tr>
 									</c:forEach>
 								</tbody>

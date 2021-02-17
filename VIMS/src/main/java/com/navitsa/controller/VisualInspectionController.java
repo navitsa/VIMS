@@ -449,13 +449,13 @@ public class VisualInspectionController {
 
 		 }
 
-		 @RequestMapping("/printVisualInspectReport")
-		 public ModelAndView print(@RequestParam String chMasterID,String status,HttpServletResponse response)
+		 @RequestMapping("/visualInspectReport")
+		 public ModelAndView print(@RequestParam String id,String status,HttpServletResponse response)
 		 {
 			 //List<Object> ls = new ArrayList<Object>();
 
 			 ModelAndView mav = new ModelAndView("comPdfReportView");
-			 VisualChecklistMaster a = inspectionServices.getLastRecord(chMasterID);
+			 VisualChecklistMaster a = inspectionServices.getLastRecord(id);
 			 List<VisualChecklistDetail> b = null;
 			 
 			 if(status.equals("true")) {
@@ -511,8 +511,8 @@ public class VisualInspectionController {
 		 }
 		 
 		 // Request visual inspection report page
-			@RequestMapping("/getReport")
-			public ModelAndView getReport()
+			@RequestMapping("/visualInspectReports")
+			public ModelAndView viewReportPage()
 			{
 				ModelAndView mav=new ModelAndView("visualChecklistReport");
 				List<VisualChecklistMaster> a = inspectionServices.getAll();
