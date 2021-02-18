@@ -49,8 +49,9 @@
 	<script src="resources/assets/js/file-input.js"></script>
 	
 	<!-- font awesome -->
-	 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-	 
+<!-- 	 <script src='https://kit.fontawesome.com/a076d05399.js'></script> -->
+	 <script src="resources/assets/js/downloadjs/a076d05399.js"></script>
+	  
 	 <!-- bootstrap datepicker -->
 	 <script src="resources/assets/js/downloadjs/bootstrap-datepicker.js"></script>
 	 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
@@ -65,12 +66,16 @@
         			
         			var str='<%=session.getAttribute("userId")%>';
         			if(<%=session.getAttribute("userId")%>==null){
-		        		Swal.fire({
-		        			  icon: 'error',
-		        			  title: 'Oops...',
-		        			  text: 'Session Expired'
-		        			  //,footer: '<a href>Why do I have this issue?</a>'
-		        			});
+
+		        		swal("Oops...", "Session Expired", {
+							icon : "error",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-danger'
+								}
+							},
+						});
+		        		
         			window.location.href = "logout";
         			}else{
         				
