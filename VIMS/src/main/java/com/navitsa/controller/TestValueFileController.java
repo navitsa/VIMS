@@ -240,35 +240,39 @@ public class TestValueFileController {
 		
 		if(fuelType.equalsIgnoreCase("Diesel"))
 		{
-			//System.out.println("This is a diesel vehicle");
+			//This is a diesel vehicle			
+			EmissionDieselCertificateData emd =null;
 			
 			try{
-				//int id_no = 5;
-				testReportService.insertIntoEDCData(vehicleID,RegId);
-				int id_no = testReportService.getEDCDataID(RegId);
-				testReportService.insertIntoEDCReadings(id_no);
+				emd = testReportService.getEmiDieselCerData(RegId);
+				if(emd == null) {
+					testReportService.insertIntoEDCData(vehicleID,RegId);
+					int id_no = testReportService.getEDCDataID(RegId);
+					testReportService.insertIntoEDCReadings(id_no);					
+				}
 				  
-				}catch(Exception e){System.out.println(e);}
+				}catch(Exception e){System.out.println("try catch /n reading diesel emmision results");}
 			
 		}
 		else if(fuelType.equalsIgnoreCase("Petrol") || fuelType.equalsIgnoreCase("LPG") ) 
 		{
-			//System.out.println("This is a petrol or lpg vehicle");
+			//This is a petrol or lpg vehicle
+			EmissionPetrolCertificateData empcdata = null;
+			
 			try {
-
-				testReportService.insertIntoEPCData(vehicleID,RegId);
-				int id_no = testReportService.getEPCDataID(RegId);
-				testReportService.insertIntoEPCGas(id_no);
-				testReportService.insertIntoEPCLambda(id_no);
-				testReportService.insertIntoEPCPetrol(id_no);
-				
-				
-			} catch (Exception e) {System.out.println(e);}
+				empcdata = testReportService.getEmiPetrolCerData(RegId);
+				if(empcdata == null) {
+					testReportService.insertIntoEPCData(vehicleID,RegId);
+					int id_no = testReportService.getEPCDataID(RegId);
+					testReportService.insertIntoEPCGas(id_no);
+					testReportService.insertIntoEPCLambda(id_no);
+					testReportService.insertIntoEPCPetrol(id_no);					
+				}				
+			} catch (Exception e) {System.out.println("try catch /n reading petrol emmision results");}
 			
 			
 		}
 
-  
 	}
 	
 	@RequestMapping("/downloadFromFTP")
@@ -343,14 +347,22 @@ public class TestValueFileController {
 	@RequestMapping(value = "/checkAvailableTestResults", method = RequestMethod.GET)
 	public @ResponseBody Map<Integer, String> checkAvailableTestResults(@RequestParam("regID") String regID) {
 		
-		VehicleRegistration vr =  vehicleService.getRegistraionInfo(regID);
-		readingEmissionResults(vr.getVid().getVehicleID(),regID,vr.getVid().getFtype().getFuel());
+		VisualChecklistMaster vi = null;
+		EmissionDieselCertificateData emd = null;
+		EmissionPetrolCertificateData empcdata = null;
 		
+		try {
+			VehicleRegistration vr =  vehicleService.getRegistraionInfo(regID);
+			readingEmissionResults(vr.getVid().getVehicleID(),regID,vr.getVid().getFtype().getFuel());
+			
+			vi = inspectionServices.getChecklistMasterData(regID);
+			emd = testReportService.getEmiDieselCerData(regID);
+			empcdata = testReportService.getEmiPetrolCerData(regID);
+		} catch (Exception e) {
+			System.out.println("Something went wrong when checking available test results /n checkAvailableTestResults try catch");
+		}
+	
 		Map<Integer,String> a = new TreeMap<Integer,String>();
-		
-		VisualChecklistMaster vi = inspectionServices.getChecklistMasterData(regID);
-		EmissionDieselCertificateData emd = testReportService.getEmiDieselCerData(regID);
-		EmissionPetrolCertificateData empcdata = testReportService.getEmiPetrolCerData(regID);
 		
 		
 		if(vi == null)
