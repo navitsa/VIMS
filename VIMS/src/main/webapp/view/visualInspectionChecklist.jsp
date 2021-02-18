@@ -20,7 +20,10 @@
 <!--     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"/> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<!--     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
+    
+    <!-- Date Time Picker CSS -->
+    <link rel="stylesheet" href="resources/build/css/bootstrap-datetimepicker.min.css">
 
     
 <style>
@@ -56,7 +59,7 @@
 	                
 						<div class="accordion js-accordion">
 						
-						 	<form:form action="saveCheckListData" method="POST" modelAttribute="checklistMaster" id="form1" enctype="multipart/form-data">
+						 	<form:form action="saveCheckListData" method="POST" modelAttribute="checklistMaster" id="form1" enctype="multipart/form-data" onsubmit="return checkForm(this);">
 							<div class="accordion__item js-accordion-item active">
 	
 							    <div class="accordion-header js-accordion-header">General Information</div> 
@@ -262,22 +265,26 @@
 									 <label for="status" class="text-gray-900 mb-2 mr-sm-2">Rate the overall condition of the vehicle</label>
 	<!-- 									<input type="text" name="overallstatus" class="form-control mb-2 mr-sm-2" form="form1"/> -->
 										<br>
-										<div class="btn-group btn-group-toggle" data-toggle="buttons">
-										  <label class="btn btn-outline-success btn-sm">
-										    <input type="radio" name="overallstatus" id="option1" value="Excellent" form="form1"> Excellent
-										  </label>
-										  <label class="btn btn-outline-primary btn-sm">
-										    <input type="radio" name="overallstatus" id="option2" value="Good" form="form1"> Good
-										  </label>
-										  <label class="btn btn-outline-info btn-sm">
-										    <input type="radio" name="overallstatus" id="option3" value="Average" form="form1"> Average
-										  </label>
-										  <label class="btn btn-outline-warning btn-sm">
-										    <input type="radio" name="overallstatus" id="option4" value="Poor" form="form1"> Poor
-										  </label>
-										  <label class="btn btn-outline-danger btn-sm">
-										    <input type="radio" name="overallstatus" id="option5" value="High Risk" form="form1"> High Risk
-										  </label>
+										<div class="row">
+											<div class="col-lg">
+												<div class="btn-group btn-group-toggle" data-toggle="buttons">
+												  <label class="btn btn-outline-success btn-sm">
+												    <input type="radio" name="overallstatus" id="option1" value="Excellent" form="form1"> Excellent
+												  </label>
+												  <label class="btn btn-outline-primary btn-sm">
+												    <input type="radio" name="overallstatus" id="option2" value="Good" form="form1"> Good
+												  </label>
+												  <label class="btn btn-outline-info btn-sm">
+												    <input type="radio" name="overallstatus" id="option3" value="Average" form="form1"> Average
+												  </label>
+												  <label class="btn btn-outline-warning btn-sm">
+												    <input type="radio" name="overallstatus" id="option4" value="Poor" form="form1"> Poor
+												  </label>
+												  <label class="btn btn-outline-danger btn-sm">
+												    <input type="radio" name="overallstatus" id="option5" value="High Risk" form="form1"> High Risk
+												  </label>
+												</div>
+											</div>
 										</div>
 										<br><br>
 								       <label for="remark" class="text-gray-900 mb-2 mr-sm-2">Overall Remark</label>
@@ -305,7 +312,7 @@
 										</div>
 								</div><br> -->
 							<label for="submitButton" class="required text-danger">Mandatory</label>
-						    <input type="submit" value="MARK AS COMPLETE" class="btn btn-success form-control" id="submitButton" form="form1"/>
+						    <input type="submit" value="MARK AS COMPLETE" class="btn btn-success form-control" id="submitButton" name="submitButton" form="form1"/>
 	
 							</form:form>
 						  </div><!-- end of accordion item -->
@@ -324,11 +331,13 @@
 <!-- Page level custom scripts -->
 	<script src="resources/js/accordion.js"></script>
 
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script> -->
+	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
+<script src="resources/build/js/bootstrap-datetimepicker.min.js"></script>
 
   <script>
-  
   	function getPending() {
 		
   		var x = document.getElementById("vehicleID");
@@ -421,24 +430,34 @@
     
 <c:if test = "${success ==1}">    
 	<script type="text/javascript">
-		Swal.fire(
-			'Good job!',
-			'Visual Inspection Successfully Completed!',
-			'success'
-		)
+		swal({
+			title: 'Good job!',
+			text: 'Visual Inspection Successfully Completed!',
+			type: 'success'
+		})
 	</script>
 </c:if>
 <c:if test = "${success ==0}">
 	<script type="text/javascript">
-		Swal.fire({
-		  icon: 'error',
-		  title: 'Oops...',
-		  text: 'Something went wrong!'
+		swal({
+			title: 'Oops...',
+			text: 'Something went wrong!',
+			type: 'error'
 		})
 	</script>
 </c:if>
 
  <script src="resources/ajax/get_remarks_in_vi.js"></script>
+ 
+<script type="text/javascript">
+
+  function checkForm(form) // Submit button clicked
+  {
+    form.submitButton.disabled = true;
+    form.submitButton.value = "Saving...";
+    return true;
+  }
+</script>
  
 </body>
 </html>
