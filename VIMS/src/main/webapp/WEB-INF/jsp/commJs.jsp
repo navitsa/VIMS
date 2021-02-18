@@ -45,31 +45,18 @@
 <!-- 	<script src="resources/assets/js/setting-demo.js"></script> -->
 <!-- 	<script src="resources/assets/js/demo.js"></script> -->
 	
-	
+	<!-- File input -->
 	<script src="resources/assets/js/file-input.js"></script>
-	  <script src="resources/assets/js/downloadjs/a076d05399.js"></script>
-	  <script src="resources/assets/js/downloadjs/bootstrap-datepicker.js"></script>
+	
+	<!-- font awesome -->
+	 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	 
+	 <!-- bootstrap datepicker -->
+	 <script src="resources/assets/js/downloadjs/bootstrap-datepicker.js"></script>
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
 
 
-	  
-	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
-	  
-	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-	  
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-	   
-<!-- 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>	   -->
-<!-- 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
-	 
-	 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
-
-    
-	 
-	 
-	 
-	 
+ 
 	<script type="text/javascript">
 
 	
