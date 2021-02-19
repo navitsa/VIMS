@@ -58,10 +58,10 @@
 				<%@include file="../WEB-INF/jspf/header.jsp"%>
 
 				<!-- Begin Page Content -->
-			
+				<div class="container-fluid">
 
 <div class="row">				
-	<div class="col-xl-2 col-lg-2" >			
+	<div class="col-xl-3 col-lg-5" >			
 					<!-- Card -->
 			<form:form action="privewInvoiceSummaryReport"  method="POST">		
 					<div class="card shadow mb-4" style="height:600px;">
@@ -122,7 +122,7 @@
 		</form:form>
 		</div>
 
-		<div class="col-xl-10 col-lg-10">			
+		<div class="col-xl-9 col-lg-5">			
 			<div class="col-sm-12">
 					<c:if test="${pdfViewEq != null }">
 									<embed type="application/pdf" src="data:application/pdf;base64,${pdfViewEq}"
@@ -136,7 +136,7 @@
 
 
 
-				
+				</div>
 				<!-- /.container-fluid -->
 			</div>
 			<!-- End of Main Content -->

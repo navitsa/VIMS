@@ -13,6 +13,13 @@
 <html lang="en">
 <head>
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
+	
+	<style>
+.error1{color:red;font-size: 12px }
+         
+.fontcolor{color: blue;}
+</style>
+	
 </head>
 <body>
 	<div class="wrapper">
@@ -31,77 +38,82 @@
 			<div class="content">
 				<div class="page-inner">	
 					<div class="page-header">
-						<h4 class="page-title">Issue VI Report</h4>
-						<ul class="breadcrumbs">
-							<li class="nav-home">
-								<a href="#">
-									<i class="flaticon-home"></i>
-								</a>
-							</li>
-							<li class="separator">
-								<i class="flaticon-right-arrow"></i>
-							</li>
-							<li class="nav-item">
-								<a href="#">Vehicle Inspection</a>
-							</li>
-							<li class="separator">
-								<i class="flaticon-right-arrow"></i>
-							</li>
-							<li class="nav-item">
-								<a href="#">Issue VI Report</a>
-							</li>
-						</ul>
-					</div>
-
-	              <div class="card shadow mb-4">
-	                <div class="card-body">
-					  <input name="status" type="checkbox" value="true" checked> Only inspected parts
-					  <br><br>
-					
-						<div class="table-responsive">
-							<table id="viTable" class="display table table-bordered table-hover" cellspacing="0" width="100%">
-								<thead>
-									<tr>
-										<th>Registration #</th>
-										<th>License Plate #</th>
-										<th>Date</th>
-										<th>Start Time</th>
-										<th>End Time</th>
-										<th>Actions</th>
-									</tr>
-								</thead>
-						
-								<tbody>
-									<c:forEach items="${checklistMaster}" var="chMaster">
-										<tr>
-											<td>${chMaster.vr.vregID}</td>
-											<td>${chMaster.vehicleID}</td>
-											<td>${chMaster.date}</td>
-											<td>${chMaster.time}</td>
-											<td>${chMaster.endtime}</td>
-											<td><a href="visualInspectReport?id=${chMaster.cheklistID}&status=true" class="btn btn-success btn-sm" role="button"><i class="fas fa-print"></i></a></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+							<h4 class="page-title">Completed Visual Inspections</h4>
+							<ul class="breadcrumbs">
+								<li class="nav-home">
+									<a href="#">
+										<i class="flaticon-home"></i>
+									</a>
+								</li>
+								<li class="separator">
+									<i class="flaticon-right-arrow"></i>
+								</li>
+								
+								
+							</ul>
 						</div>
-						
-					</div>
-				  </div>
-				  
+				
+		               <div class="card-body">
+<!-- 					<h4>Completed Visual Inspections</h4> -->
+					
+					  <div class="custom-control custom-switch">
+					    <input type="checkbox" class="custom-control-input" id="switch1" value="true" name="status">
+					    <label class="custom-control-label" for="switch1">only the checked parts</label>
+					  </div>
+					  
+					  <br>
+					  <div class="table-responsive-lg">
+						<table class="table table-sm table-striped">
+						  <thead>
+						    <tr>
+						      <th scope="col">Registration #</th>
+						      <th scope="col">License Plate #</th>
+						      <th scope="col">Date</th>
+						      <th scope="col">Start Time</th>
+						      <th scope="col">End Time</th>
+						      <th scope="col">Actions<th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						  	<c:forEach items="${checklistMaster}" var="chMaster">
+							    <tr>
+							      <th scope="row">${chMaster.vr.vregID}</th>
+							      <td>${chMaster.vehicleID}</td>
+							      <td>${chMaster.date}</td>
+							      <td>${chMaster.time}</td>
+							      <td>${chMaster.endtime}</td>
+							      <td>
+							      	<a href="printVisualInspectReport?chMasterID=${chMaster.cheklistID}&status=true" class="btn btn-success" role="button"><i class="fas fa-print"></i> Print</a>
+							      </td>
+							    </tr>
+							</c:forEach>
+						  </tbody>
+					</table>
 				</div>
+								
+	            </div> 				
+				
+							
+	
+				
+				
+				
+				
+				
+					</div>
+				
 			</div>	
 			<%@include file="../WEB-INF/jsp/footer.jsp"%>			
 		</div>
 	</div>
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
 
-<script>
+		<script>
 	function setStatus(){
 		if ($('#switch1').is(":checked")) {
 		      //alert($('#switch1').val());
 		      //document.getElementById("status").innerHTML=$('#switch1').val(); 
-		}
+		}	
 	} 
 </script>
 <script>
@@ -109,20 +121,6 @@
 	    $(".loader-wrapper").fadeOut("slow");
 	});
 </script>
-
-	<script>
-		$(document).ready(function() {
-		    $('#viTable').DataTable( {
-		    	//"scrollY": "400px",
-		    	"processing": true,
-		    	"order": [[ 0, "desc" ]],
-		        "columnDefs": [{ "orderable": false, "targets": 1 },
-		        				{ "orderable": false, "targets": 3 },
-		        				{ "orderable": false, "targets": 4 },
-		        				{ "orderable": false, "targets": 5 }]
-		    } );
-		} );
-	</script>
 
 </body>
 </html>

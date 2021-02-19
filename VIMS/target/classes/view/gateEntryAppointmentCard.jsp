@@ -12,8 +12,9 @@
 
 <html lang="en">
 <head>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"/>
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"/>
+
 </head>
 <body onload="getApposByDate('')">
 
@@ -24,11 +25,10 @@
 							
 							<h6 class="m-0 mr-sm-2 font-weight-bold text-primary">Upcoming Appointments</h6>
 
-							<!-- Button trigger modal -->
-							<button type="button" class="btn btn-primary btn-sm" 
-								id="alertbtn" onclick="lateNotify()" >
-								Alert
-							</button>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-sm" id="alertbtn" onclick="lateNotify()" >
+	Alert
+</button>
 
 							<span class="badge badge-pill badge-warning" id="noOfAppos"
 								style="font-size: 15px; font-weight: 900; color: black; border-radius: 50%;">
@@ -163,16 +163,15 @@ function lateNotify() {
         success: function(data){
 
         	 for(var i=0; i<data.length; i++){
-        		 var v=""+data[i].appointmentID;
-        		// alert(v);
+        		 
         			$.notify({
         				// options
         				icon: 'flaticon-alarm-1',
         				title: 'Appointment Alert !',
         				message: data[i].vehicle_id.vehicleID + ' Vehicle has not appeared at the gate !'+ 
         						'<br> Scheduled Time : '+data[i].appointmentTime+'<br><br>'+
-        						'<button class="btn btn-danger btn-sm" onclick="cancel('+v+')"><b>Cancel</b></button> '+
-        						'<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal"><b>Reschedule</b></button> '+
+        						'<button class="btn btn-danger btn-sm" onclick="cancel('+data[i].appointmentID+')"><b>Cancel</b></button> '+
+        						'<button class="btn btn-primary btn-sm"><b>Reschedule</b></button> '+
         						'<button class="btn btn-light btn-sm"><b>Wait !</b></button>'
         			},{
         				// settings
@@ -196,7 +195,7 @@ function lateNotify() {
 setInterval(lateNotify, 60000);
 
 function cancel(str) {
-	alert(str);
+	alert("hello "+str);
 }
 
 </script>
@@ -207,71 +206,5 @@ function cancel(str) {
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
 
-
-<!-- Modal -->
-<div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Vehicle No :</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="form-group row">
-					<div class="col-lg">
-						<select class="form-control form-control-sm" id="vClass" onchange="findBestLane()" required>									
-							<option value="">Select vehicle class...</option>
-							<c:forEach items="${vClass}" var="vClass">
-								<option value="${vClass.vehicleClassID}">${vClass.vehicleClass}</option>
-							</c:forEach>																																		
-						</select>
-					</div>
-					<div class="col-lg">
-						<select class="form-control form-control-sm" id="testCat" onchange="findBestLane()" required>									
-							<option value="">Select testing category...</option>
-							<c:forEach items="${testCategory}" var="cat">
-								<option value="${cat.categoryId}">${cat.categoryType}</option>
-							</c:forEach>																																		
-						</select>
-					</div>
-				</div>
-				<div class="form-group row">
-					<div class="col-lg-6">
-						<select class="form-control form-control-sm" onchange="getFreeTimes()" id="laneID" required>									
-							<option value=""> Select lane...</option>
-							<c:forEach items="${lanes}" var="lane">
-								<option value="${lane.testLaneHeadId}">${lane.laneName}</option>
-							</c:forEach>																																	
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Reschedule</button>
-			</div>
-
-		</div>
-	</div>
-</div>
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="form-group">
-                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
-            });
-        </script>
-    </div>
 </body>
 </html>

@@ -53,9 +53,7 @@
 							enctype="multipart/form-data">
 							
 							<form:input type="hidden" path="center_ID" value="${saveCMaster.center_ID}"/>
-							<form:input type="hidden"  path="getAutoCaptureImgPath" value="${saveCMaster.getAutoCaptureImgPath}"/>
-							<form:input type="hidden"  path="vehicleAutoConfig" value="${saveCMaster.vehicleAutoConfig}"/>
-							<form:input type="hidden"  path="laneCamImgPath" value="${saveCMaster.laneCamImgPath}"/>
+
 						<div class="row">
 							<div class="col-xl-6 col-md-6 mb-4">
 

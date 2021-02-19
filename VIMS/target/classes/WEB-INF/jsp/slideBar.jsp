@@ -31,33 +31,26 @@
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>
-									<li >
-										
-										<a href="#" data-toggle="modal"data-target="#logoutModal">
-											<span class="link-collapse">Logout</span>
-										</a>									
-									</li>
+								
 								</ul>
 							</div>
 						</div>
 					</div>
 					<ul class="nav nav-primary">
 						<li class="nav-item active">
-<!-- 							<a data-toggle="collapse" href="Dashboard" > -->
-								
-								<a href="Dashboard" >
+							<a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
 								<i class="fas fa-home"></i>
-								<p>Dashboard</p></a>
-								
-<!-- 							</a> -->
+								<p>Dashboard</p>
+								<span class="caret"></span>
+							</a>
 							
 						</li>
-<!-- 						<li class="nav-section"> -->
-<!-- 							<span class="sidebar-mini-icon"> -->
-<!-- 								<i class="fa fa-ellipsis-h"></i> -->
-<!-- 							</span> -->
-<!-- 							<h4 class="text-section">Components</h4> -->
-<!-- 						</li> -->
+						<li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+							<h4 class="text-section">Components</h4>
+						</li>
 						
 						<li class="nav-item" hidden="true" id="MangeVehic">
 							<a data-toggle="collapse" href="#fmanv">
@@ -147,7 +140,6 @@
 				<a class="collapse-item fontst-sb-it" href="businessPartner" hidden="true" id="businessPartner">Business partner</a>	
 				<a class="collapse-item fontst-sb-it" href="#" hidden="true" id="CorporateCalendar">Partner Corporate Calendar</a>
 				<a class="collapse-item fontst-sb-it" href="vehicleRegTypes" hidden="true" id="vehicleRegTypes">Lane Registration Types</a>
-				<a class="collapse-item fontst-sb-it" href="laneAllocation" hidden="true" id="laneAllocation">Lane Allocation</a>
 			</div>
 		</div>
 	</li>
@@ -225,23 +217,24 @@
 	</li>
 		
 	<li class="nav-item"  hidden="true" id="VehicleInspection">
-		<a data-toggle="collapse" href="#vehicleInspectionf">
-			<i class="fas fa-pen-square"></i>
-			<p>Vehicle Inspection</p>
-			<span class="caret"></span>
-		</a>
-		<div class="collapse" id="vehicleInspectionf">	
+							<a data-toggle="collapse" href="#vehicleInspectionf">
+								<i class="fas fa-pen-square"></i>
+								<p>Vehicle Inspection</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="vehicleInspectionf">
+		
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item fontst-sb-it" href="appointment" hidden="true" id="appointment">Make Appointment</a>
-				<a class="collapse-item fontst-sb-it" href="vehicleInformation" hidden="true" id="vehicleInformation">Gate Entry</a>
-				<a class="collapse-item fontst-sb-it" href="laneEntryView" hidden="true" id="laneEntryView">Lane Entry</a>
+				<a class="collapse-item fontst-sb-it" href="appointment" id="appointment">Make Appointment</a>
+				<a class="collapse-item fontst-sb-it" href="vehicleInformation" hidden="true" id="vehicleInformation">Capture License Plate</a>
 				<a class="collapse-item fontst-sb-it" href="vehicleMaster" hidden="true" id="vehicleMaster">Vehicle Master</a>
+				<a class="collapse-item fontst-sb-it" href="checkDocument" hidden="true" id="checkDocument">Check Document</a>
+				<a class="collapse-item fontst-sb-it" href="vehicleRegistration" hidden="true" id="vehicleRegistration">Vehicle Registration</a>
 				
 				<a class="collapse-item fontst-sb-it" href="visualChecklist"  hidden="true" id="visualChecklist">Perform Visual Inspection</a>
-				<a class="collapse-item fontst-sb-it" href="visualInspectReports"  hidden="true" id="getReport">Issue VI Report</a>
+				<a class="collapse-item fontst-sb-it" href="getReport"  hidden="true" id="getReport">Issue VI Report</a>
 				<a class="collapse-item fontst-sb-it" href="testValueFile" hidden="true" id="testValueFile">Issue Test Report</a>
-				<a class="collapse-item fontst-sb-it" href="previousTestReports" hidden="true" id="reprintTestReport">Reprint Test Report</a>
-				<a class="collapse-item fontst-sb-it" href="VehicleReportPreview" hidden="true" id="vehicalDetailRpt">Vehicle Lane Entry Status</a>
+				<a class="collapse-item fontst-sb-it" href="VehicleReportPreview" id="vehicalDetailRpt">Vehicle Lane Entry Status</a>
 		
 			</div>
 		</div>
@@ -252,7 +245,7 @@
 	<li class="nav-item"  hidden="true" id="Finance">
 							<a data-toggle="collapse" href="#Financef">
 								<i class="fas fa-pen-square"></i>
-								<p>Finance & Accounting</p>
+								<p>Vehicle Inspection</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="Financef">
@@ -266,7 +259,7 @@
 				<a class="collapse-item fontst-sb-it" href="vehicalRecCOPY" hidden="true" id="vehicalRecCOPY">Reprint Receipts</a>
 				<a class="collapse-item fontst-sb-it" href="vehicalRecCancel" hidden="true" id="vehicalRecCancel">Receipt Cancel</a>
 				<a class="collapse-item fontst-sb-it" href="vehicalInvCOPY"  id="vehicalInvCOPY">Reprint Credit Invoice</a>
-				<a class="collapse-item fontst-sb-it" href="vehicalInvCancel"  hidden="true" hidden="true" id="vehicalInvCancel">Invoice Cancel</a>
+				<a class="collapse-item fontst-sb-it" href="vehicalInvCancel" hidden="true" id="vehicalInvCancel">Invoice Cancel</a>
 				<a class="collapse-item fontst-sb-it" href="revenueStatementPrivew" hidden="true" id="revenueStatementRpt">Revenue Statement</a>
 				<a class="collapse-item fontst-sb-it" href="invoiceSummaryReport" hidden="true" id="invoiceSummaryReport">Invoice Summary Report</a>
 				<a class="collapse-item fontst-sb-it" href="incomingPayment"  hidden="true" id="incomingPayment">Incoming Payment</a>				
@@ -277,7 +270,7 @@
 				<a class="collapse-item fontst-sb-it" href="outgoingPayments"  hidden="true" id="outgoingPayments">Outgoing Payments</a>
 				<a class="collapse-item fontst-sb-it" href="reprintOutgoingPayments" hidden="true"  id="reprintOutgoingPayments">Reprint Outgoing Payments</a>
 				<a class="collapse-item fontst-sb-it" href="OutgoingPaymentsDetailsReport"  hidden="true" id="OutgoingPaymentsDetailsReport">Outgoing Payments Report</a>
-				<a class="collapse-item fontst-sb-it" href="chequePrint"  hidden="true" id="chequePrint">Cheque Print</a>
+				<a class="collapse-item fontst-sb-it" href="chequePrint"   id="chequePrint">Cheque Print</a>
 			</div>
 		</div>
 	</li>
@@ -295,73 +288,13 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 				<a class="collapse-item fontst-sb-it" href="userLevel" hidden="true" id="userLevel">User Categories</a> 
 				<a class="collapse-item fontst-sb-it" href="register" hidden="true" id="register" >User Registration </a>
-
-				
-					<a href="#" data-toggle="modal"data-target="#dbbakModal" hidden="true"  id="dbbak">
-											<span class="link-collapse">DBBakup</span>
-										</a>
-				
 				<!--<a class="collapse-item fontst-sb-it" href="editUserreg"  hidden="true" id="editUserreg">Edit Users</a>-->
 			</div>
 		</div>
 	</li>
-<!-- Admin Panel -->
-		<li class="nav-item"  hidden="true" id="adminPanel">
-							<a data-toggle="collapse" href="#adminPan">
-								<i class="fas fa-pen-square"></i>
-								<p>Admin Panel</p>
-								<span class="caret"></span>
-							</a>
-							<div class="collapse" id="adminPan">
-		
-		
-			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item fontst-sb-it" href="esin" hidden="true" id="esin">ES_IN Create</a>
-				<a class="collapse-item fontst-sb-it" href="esout" hidden="true" id="esout">ES_OUT Create</a>
-			
-			</div>
-		</div>
-	</li>			
-	<!-- maintenance -->
+
 				
-	<li class="nav-item"  id="maintenance" hidden="true" >
-							<a data-toggle="collapse" href="#eMaintenance" >
-								<i class="fas fa-pen-square"></i>
-								<p>Maintenance</p>
-								<span class="caret"></span>
-							</a>
-							<div class="nav-section collapse" id="eMaintenance">
-		
-<!-- 			<div class="bg-white py-2 collapse-inner rounded"> -->
-<a class="collapse-item fontst-sb-it" href="maintenanceDashboard" id="maintenanceDashboard" hidden="true" >Maintenance Dashboard</a>
-				<h6 class="text-section" >Calibration :</h6>
-					<a class="collapse-item fontst-sb-it" href="calibrationSchedule" id="calibrationSchedule" hidden="true" >Calibration Schedule</a>
-					<a class="collapse-item fontst-sb-it" href="calibrationCalendar" id="calibrationCalendar" hidden="true" >Calibration Calendar</a>			
-			<a class="collapse-item fontst-sb-it" href="equipmentsCalibration" id="equipmentsCalibration" hidden="true" >Equipment Calibration</a>	
-			<a class="collapse-item fontst-sb-it" href="equipmentsCalibrationRpt" id="equipmentsCalibrationRpt" hidden="true" >Calibration Report</a>	
-			
-				<h6 class="text-section">Service :</h6>
-					<a class="collapse-item fontst-sb-it" href="serviceSchedule" id="serviceSchedule" hidden="true">Service Schedule</a> 
-					<a class="collapse-item fontst-sb-it" href="serviceCalendar" id="serviceCalendar" hidden="true">Service Calendar</a>
-				<a class="collapse-item fontst-sb-it" href="equipmentsService" id="equipmentsService" hidden="true">Equipment Service</a>
-				<a class="collapse-item fontst-sb-it" href="equipmentsServiceRpt" id="equipmentsServiceRpt" hidden="true">Service Report</a>
-
-				<h6 class="text-section">Incident :</h6>
-					<a class="collapse-item fontst-sb-it" href="issueTicket" id="issueTicket"  hidden="true">Issue Ticket</a>
-					<a class="collapse-item fontst-sb-it" href="incidentReport" id="incidentReport"  hidden="true">Incident Report</a>
-					<a class="collapse-item fontst-sb-it" href="closeTicket" id="closeTicket" hidden="true">Ticket Close</a>
-					<a class="collapse-item fontst-sb-it" href="statusTicketReport" id="statusTicketReport"  hidden="true">Ticket Status Report</a>
-		
-					<a class="collapse-item fontst-sb-it" href="downTimeReport" id="downTimeReport" hidden="true" >Down Time Report</a>
-
-				<h6 class="text-section">Repair :</h6>
-				<a class="collapse-item fontst-sb-it" href="jobCard" id="jobCard"  hidden="true">Issue Job Card</a>
-					<a class="collapse-item fontst-sb-it" href="repair" id="repair"  hidden="true">Repair</a>
-					<a class="collapse-item fontst-sb-it" href="equipmentRepairReport" id="equipmentRepairReport"  hidden="true">Repair Report</a>
-
-<!-- 			</div> -->
-		</div>
-	</li>			
+				
 				
 				
 					</ul>

@@ -17,7 +17,7 @@ function getApposByDate(vno){
         	for(var i=0; i<data.length; i++){
         		count = count + 1;
         		
-        		if(vno==data[i].vehicleNo){
+        		if(vno==data[i].vehicle_id.vehicleID){
         			 status="3";
         			 appointmrntNo=data[i].appointmentID;
 
@@ -27,7 +27,7 @@ function getApposByDate(vno){
  					"<div class='col-sm-12'>"+
  						"<div class='row'>"+
  							"<div class='col-sm-12'>"+
- 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicleNo+"</div>"+
+ 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicle_id.vehicleID+"</div>"+
  							"</div>"+
  						"</div>"+
  						"<div class='row'>"+
@@ -48,7 +48,7 @@ function getApposByDate(vno){
 					"<div class='col-sm-12'>"+
 						"<div class='row'>"+
 							"<div class='col-sm-12'>"+
-								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicleNo+"</div>"+
+								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicle_id.vehicleID+"</div>"+
 							"</div>"+
 						"</div>"+
 						"<div class='row'>"+
@@ -105,8 +105,8 @@ function lateNotify() {
         				title: 'Appointment Alert !',
         				message: data[i].vehicle_id.vehicleID + ' Vehicle has not appeared at the gate !'+ 
         						'<br> Scheduled Time : '+data[i].appointmentTime+'<br><br>'+
-        						'<button class="btn btn-danger btn-sm" onclick="cancel(`'+data[i].appointmentID+'`)"><b>Cancel</b></button> '+
-        						'<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal"><b>Reschedule</b></button> '+
+        						'<button class="btn btn-danger btn-sm" onclick="cancel('+ data[i].appointmentID +')"><b>Cancel</b></button> '+
+        						'<button class="btn btn-primary btn-sm"><b>Reschedule</b></button> '+
         						'<button class="btn btn-light btn-sm"><b>Wait !</b></button>'
         			},{
         				// settings
@@ -129,16 +129,14 @@ function lateNotify() {
 }
 
 setInterval(lateNotify, 60000);
-setInterval(getApposByDate, 5000);
 
 function cancel(str) {
-	
 	$.ajax({
         type: 'GET',
         url: "cancelling",
         data: {"appoID":str},
         success: function(data){
-        	alert("Successfully Cancelled !");
+        	alert("wow ! successfully cancelled !");
         },
         error:function(){
             //alert("error");
@@ -160,3 +158,4 @@ function reschedule(str) {
 
     });
 }
+

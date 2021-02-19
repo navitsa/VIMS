@@ -31,7 +31,7 @@
 			<div class="content">
 				<div class="page-inner">	
 					<div class="page-header">
-							<h4 class="page-title">Create Test Profile</h4>
+							<h4 class="page-title">Test Profiles</h4>
 							<ul class="breadcrumbs">
 								<li class="nav-home">
 									<a href="#">
@@ -41,20 +41,15 @@
 								<li class="separator">
 									<i class="flaticon-right-arrow"></i>
 								</li>
-								<li class="nav-item">
 									<a href="#">Test Profiles</a>
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
 								<li class="nav-item">
-									<a href="#">Test Profile</a>
 								</li>
+								
 							</ul>
 						</div>
 				
 													
-					<div class="row">
+										<div class="row">
 						<div class="col-xl-8 col-md-6 mb-4">
 			              <div class="card shadow mb-4 border-left-primary">
 			                <div class="card-body">
@@ -105,17 +100,11 @@
 
 										</div>
 									</div>
-			                		<div class="form-group row">
-										<div class="col-lg">
-											<input type="submit" class="btn btn-success" value="Add Profile">
-											<input type="reset" class="btn btn-warning mr-sm-2" value="Clear">
-										</div>
-									</div>
-
+										<input type="submit" class="btn btn-success" value="Add Profile">
+										<input type="reset" class="btn btn-warning mr-sm-2" value="Clear">
 								</form:form>
-								<br><br>
-								<div class="table-responsive">
-								<table id="example" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+								<br>
+								<table class="display" id="example" style="width:100%">
 									<thead>
 										<tr>
 											<th>#</th>
@@ -134,7 +123,7 @@
 												<td>${tp.testProfileName}</td>
 												<td>${tp.description}</td>
 												<td>${tp.status}</td>
-												<td><a href="limitValues?proId=${tp.testProfileID}">Set Codes & Limit Values</a></td>
+												<td><a href="limitValues">Set Codes & Limit Values</a></td>
 												<td><a href="updateTestProfile?proId=${tp.testProfileID}"><i
 														class="fas fa-pen"></i></a>
 												</td>
@@ -142,7 +131,6 @@
 										</c:forEach>
 									</tbody>
 								</table>
-								</div>
 								
 			                </div>
 			               </div>
@@ -152,7 +140,12 @@
 					</div>	
 
 	
-				</div>
+				
+				
+				
+				
+				
+					</div>
 				
 			</div>	
 			<%@include file="../WEB-INF/jsp/footer.jsp"%>			
@@ -161,13 +154,13 @@
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
 
 	<script>
-		$(document).ready(function() {
-		    $('#example').DataTable( {
-		    	//"scrollY": "400px",
-		    	"processing": true,
-		        "columnDefs": [{ "orderable": false, "targets": 4 },{ "orderable": false, "targets": 5 }]
-		    } );
-		} );
+	$(document).ready(function() {
+	    $('#example').DataTable( {
+	    	"scrollY": "400px",
+	    	"processing": true,
+	        "columnDefs": [{ "orderable": false, "targets": 4 },{ "orderable": false, "targets": 5 }]
+	    } );
+	} );
 	</script>
 </body>
 </html>

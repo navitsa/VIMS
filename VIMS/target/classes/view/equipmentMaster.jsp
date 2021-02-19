@@ -187,7 +187,7 @@
 												<form:errors path="lastCalibrationDate" class="bg-danger text-white" />
 												<br>
 												<label class="form-control-sm text-primary">Next Calibration Date</label>
-												<form:input type="date" class="form-control form-control-sm text-primary"  path="nextCalibrationDate" id="nextCalDate"/>
+												<form:input class="form-control form-control-sm text-primary"  path="nextCalibrationDate" id="nextCalDate"/>
 										</div>
 										<div class="col-lg">
 
@@ -230,7 +230,7 @@
 												<form:errors path="lastServiceDate" class="bg-danger text-white" />
 												<br>
 												<label class="form-control-sm text-primary">Next Service Date</label>
-												<form:input type="date" class="form-control form-control-sm text-primary" path="nextServiceDate" id="nextServiceDate"/>
+												<form:input class="form-control form-control-sm text-primary" path="nextServiceDate" id="nextServiceDate"/>
 
 										</div>
 										<div class="col-lg">

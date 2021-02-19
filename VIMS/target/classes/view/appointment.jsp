@@ -19,7 +19,18 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <style>
+	.fontst {
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		height: 30px;
+	}
+	
+	.fontcol-peo {
+		color: #ff8000;
+	}
 
+</style>
+<style>
 #overlay {
   position: fixed;
   display: none;
@@ -79,7 +90,7 @@
 		<div class="main-panel">
 			<div class="content">
 				<div class="page-inner">
-					
+
 					<form:form id="msform" action="saveAppointment" method="POST" modelAttribute="appointmentForm" onsubmit="return validateForm()">
 					
 					  <!-- progressbar -->
@@ -96,26 +107,19 @@
 
 							<div class="form-group row">
 							   <div class="col-lg">
-									<form:select path="vclassId.vehicleClassID" class="form-control mb-4" id="vClass" onchange="findBestLane()" required="true">									
+									<select class="form-control mb-4" id="vClass" onchange="findBestLane()" required>									
 										<option value="">Select vehicle class...</option>
 										<c:forEach items="${vClass}" var="vClass">
-											<form:option value="${vClass.vehicleClassID}">${vClass.vehicleClass}</form:option>
+											<option value="${vClass.vehicleClassID}">${vClass.vehicleClass}</option>
 										</c:forEach>																																		
-									</form:select>
+									</select>
 									
-<%-- 									<select class="form-control mb-4" id="testCat" onchange="findBestLane()" required>									
+									<select class="form-control mb-4" id="testCat" onchange="findBestLane()" required>									
 										<option value="">Select testing category...</option>
 										<c:forEach items="${testCategory}" var="cat">
 											<option value="${cat.categoryId}">${cat.categoryType}</option>
 										</c:forEach>																																		
-									</select> --%>
-
-									<form:select path="categoryId.categoryId" class="form-control mb-4" id="testCat" onchange="findBestLane()" required="true">									
-										<form:option value="">Select testing category...</form:option>
-										<c:forEach items="${testCategory}" var="cat">
-											<form:option value="${cat.categoryId}">${cat.categoryType}</form:option>
-										</c:forEach>																																		
-									</form:select>
+									</select>
 									
 									<form:select path="lane.testLaneHeadId" class="form-control" 
 										onchange="getFreeTimes();deleteLanemsg();" required="true" id="laneID">									
@@ -228,17 +232,18 @@
 											<div class="form-inline">
 
 												<label for="registeredYear" class="mr-sm-2">Registered Year</label>
-												<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2 datetimepicker-input" 
-													id="registeredYear" data-toggle="datetimepicker" 
-													data-target="#registeredYear" style="width: 80px" path="registeredYear"/>
+<%-- 												<form:input type="text" class="form-control mb-2 mr-sm-2 datetimepicker-input" 
+													id="datetimepicker2" data-toggle="datetimepicker" 
+													data-target="#datetimepicker2" style="width: 90px" path="registeredYear"/> --%>
 
-<%-- 													<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2" 
-													style="width: 80px" path="registeredYear" id="registeredYear"/> --%>
+													<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2" 
+													style="width: 80px" path="registeredYear" id="registeredYear"/>
 												
 												<i class="fa fa-calendar mb-2" style="color:black;"></i>
 
 											</div>
-
+												<!-- <input class="form-control form-control-sm  mb-2 mr-sm-2"
+												  id="registeredYear" style="width: 80px" /> -->
 										</div>
 										<div class="form-group row">
 											<label for="chassisNo">VIN (Chassis Number)</label>
@@ -248,12 +253,12 @@
 										<div class="form-group row">
 											<div class="form-inline">
 												<label for="manufactureYear" class="mr-sm-2">Manufactured Year</label>
-												<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2 datetimepicker-input" 
-													id="manufactureYear" data-toggle="datetimepicker" 
-													data-target="#manufactureYear" style="width: 80px" path="manufactureYear"/>
+<%-- 												<form:input type="text" class="form-control mb-2 mr-sm-2 datetimepicker-input" 
+													id="datetimepicker3" data-toggle="datetimepicker" 
+													data-target="#datetimepicker3" style="width: 80px" path="manufactureYear"/> --%>
 													
-<%-- 													<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2" 
-													style="width: 80px" path="manufactureYear" id="manufactureYear"/> --%>
+													<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2" 
+													style="width: 80px" path="manufactureYear" id="manufactureYear"/>
 												<i class="fa fa-calendar mb-2 mr-sm-4" style="color:black;"></i>
 											</div>
 										</div>
@@ -359,16 +364,12 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-lg-3">
-									<form:input class="form-control form-control-sm" path="postalCode" placeholder="P O Box"/>
+									<form:input class="form-control" path="postalCode" placeholder="P O Box"/>
 								</div>
 								<div class="col-lg">
-									<form:textarea path="address" id="address" class="form-control" placeholder="Address"/>
+									<form:input class="form-control" path="city" placeholder="City"/>
 								</div>
-							</div>
-							<div class="form-group row">
-								<div class="col-lg-6">
-									<form:input class="form-control form-control-sm" path="city" placeholder="City"/>
-								</div>
+
 							</div>
 							<div class="form-group row">
 								<div class="col-lg-6">						
@@ -382,14 +383,14 @@
 								</div>
 							</div>	
 							<div class="form-group row">
-								<div class="col-lg-8">
+								<div class="col-lg-6">
 								<form:input class="form-control form-control-sm" type="email" 
 									path="email" id="email" placeholder="example@gmail.com"  />
 								</div>
 							</div>
 							
 							<div class="alert alert-warning alert-dismissible" id="timeSlotValidateMsgBox" style="display:none">
-							  <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
+							  <button type="button" class="close" data-dismiss="alert">&times;</button>
 							  <strong>Info!</strong> <div id="timeSlotValidateMsg"><span></span></div>
 							</div>
 							
@@ -409,7 +410,7 @@
 
 				</div>		
 			</div>	
-			<%@include file="../WEB-INF/jsp/footer.jsp"%>	
+			<%-- <%@include file="../WEB-INF/jsp/footer.jsp"%>	 --%>		
 		</div>
 	</div>
 	
@@ -417,7 +418,7 @@
 
 	<!-- Page level custom scripts -->
 	<script src="resources/jQuery/appointmentForm.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+	
 	<script
 		src="<c:url value='resources/vendor/jquery-easing/jquery.easing.min.js'/>"
 		type="text/javascript"></script>
@@ -434,22 +435,21 @@
                 minDate: moment(1, 'h')
             });
         	
-             $('#registeredYear').datetimepicker({
-                 viewMode: 'years',
-                 format: 'MM/YYYY'
-            });
+//             $('#datetimepicker2').datetimepicker({
+//                 viewMode: 'years',
+//                 format: 'MM/YYYY'
+//             });
             
-             $('#manufactureYear').datetimepicker({
-                 viewMode: 'years',
-                 format: 'YYYY'
-             });
+//             $('#datetimepicker3').datetimepicker({
+//                 viewMode: 'years',
+//                 format: 'MM/YYYY'
+//             });
 
              $('#datetimepicker1').on("change.datetimepicker", function (e) {
              	getFreeTimes();
               });
             
         });
-        
     </script>
     
 <script>
@@ -659,7 +659,6 @@ function getCurrentOwner(vehicleNo){
 		    		document.getElementById("cusTitle").value = data.title;
 			    	document.getElementById("firstName").value = data.ownerName;
 			    	document.getElementById("email").value = data.email;
-			    	document.getElementById("address").value = data.add01;
 			    	document.getElementById("postalCode").value = data.postalBox;
 			    	document.getElementById("city").value = data.city;
 			    	document.getElementById("stateid").value = data.stateid.stateid;
@@ -734,7 +733,6 @@ function goAsNewOne() {
 	document.getElementById("firstName").value = "";
 	document.getElementById("lastName").value = "";
 	document.getElementById("postalCode").value = "";
-	document.getElementById("address").value = "";
 	document.getElementById("city").value = "";
 	document.getElementById("stateid").value = "";
 	document.getElementById("email").value = "";
@@ -756,7 +754,7 @@ function goAsNewOne() {
 		if (!formValid){
 			//alert("Must check some option!");
 			$('#timeSlotValidateMsg span').text("Please Select an Appointment Time !");
-			document.getElementById("timeSlotValidateMsg").style.fontSize = "small";
+			document.getElementById("timeSlotValidateMsg").style.fontSize = "x-small";
 			document.getElementById("timeSlotValidateMsgBox").style.display = "block";
 
 		}

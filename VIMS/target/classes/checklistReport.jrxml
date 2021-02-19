@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="checklistReport" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="523" leftMargin="36" rightMargin="36" topMargin="36" bottomMargin="36" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="86940fa7-be60-4b36-8bb7-f941352637a3">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2"/>
+	<property name="ireport.y" value="0"/>
 	<style name="style1">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{status.vprofileItemStatus}.equals("Ok")]]></conditionExpression>
@@ -56,7 +56,6 @@
 	<field name="vcm.vr.cusid.tpno" class="java.lang.String"/>
 	<field name="image" class="java.lang.Object"/>
 	<field name="vcm.vr.vid.noWheel" class="java.lang.String"/>
-	<field name="vcm.date" class="java.util.Date"/>
 	<variable name="remarkName_1" class="java.lang.Integer" resetType="Group" resetGroup="item group" calculation="Count">
 		<variableExpression><![CDATA[$F{remarkName}]]></variableExpression>
 	</variable>
@@ -119,9 +118,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="134" splitType="Stretch">
+		<band height="122" splitType="Stretch">
 			<staticText>
-				<reportElement x="278" y="112" width="45" height="10" uuid="bea5128d-cb1c-442d-83b5-6c0478d43416"/>
+				<reportElement x="278" y="101" width="45" height="10" uuid="bea5128d-cb1c-442d-83b5-6c0478d43416"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
@@ -135,35 +134,35 @@
 				<textFieldExpression><![CDATA[$F{vcm.vr.centermaster.center}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="56" y="63" width="72" height="10" uuid="b0900754-02f1-4634-93b4-988c5fead19b"/>
+				<reportElement x="56" y="52" width="72" height="10" uuid="b0900754-02f1-4634-93b4-988c5fead19b"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vcm.vehicleID}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="278" y="122" width="45" height="10" uuid="fc06857c-e516-420d-8de1-d40c540a2bd8"/>
+				<reportElement x="278" y="111" width="45" height="10" uuid="fc06857c-e516-420d-8de1-d40c540a2bd8"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[End time:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="132" width="523" height="1" uuid="79c6a1f0-ee43-48cb-8796-c12097ea9721"/>
+				<reportElement x="0" y="121" width="523" height="1" uuid="79c6a1f0-ee43-48cb-8796-c12097ea9721"/>
 			</line>
-			<textField pattern="h.mm a" isBlankWhenNull="true">
-				<reportElement x="323" y="122" width="62" height="10" isRemoveLineWhenBlank="true" uuid="b48b57e2-a3b5-47d1-9f33-ed99cf95ea12"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="323" y="111" width="62" height="10" isRemoveLineWhenBlank="true" uuid="b48b57e2-a3b5-47d1-9f33-ed99cf95ea12"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="7" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{vcm.endtime}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vcm.endtime}.toString()]]></textFieldExpression>
 			</textField>
-			<textField pattern="h.mm a" isBlankWhenNull="true">
-				<reportElement x="323" y="112" width="62" height="10" isRemoveLineWhenBlank="true" uuid="53e2fa4a-296c-4799-98f3-057cc9da3dae"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="323" y="101" width="62" height="10" isRemoveLineWhenBlank="true" uuid="53e2fa4a-296c-4799-98f3-057cc9da3dae"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="7" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{vcm.time}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vcm.time}.toString()]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="99" y="0" width="324" height="20" uuid="b028a9ba-7d65-4a4a-9200-b6770991523d"/>
@@ -181,101 +180,101 @@
 				<textFieldExpression><![CDATA[$F{vcm.vr.centermaster.add03}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="398" y="61" width="72" height="10" uuid="b96cd416-7569-4c43-8658-499d4a8b232d"/>
+				<reportElement x="398" y="50" width="72" height="10" uuid="b96cd416-7569-4c43-8658-499d4a8b232d"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Customer Details]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="73" width="56" height="9" uuid="ed92114d-0a00-48c4-b5f3-892311cb31d9"/>
+				<reportElement x="0" y="62" width="56" height="9" uuid="ed92114d-0a00-48c4-b5f3-892311cb31d9"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fuel:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="60" width="523" height="1" uuid="f5ecebb6-ddc2-4f6c-8997-8ac2686cd0e0"/>
+				<reportElement x="0" y="50" width="523" height="1" uuid="f5ecebb6-ddc2-4f6c-8997-8ac2686cd0e0"/>
 			</line>
 			<staticText>
-				<reportElement x="0" y="100" width="56" height="10" uuid="10ad6b45-4e27-477c-a6cf-1049877d43f4"/>
+				<reportElement x="0" y="89" width="56" height="10" uuid="10ad6b45-4e27-477c-a6cf-1049877d43f4"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Mileage (Km)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="128" y="73" width="74" height="9" uuid="585a5ada-723d-4c2b-a252-358628f2163f"/>
+				<reportElement x="128" y="62" width="74" height="9" uuid="585a5ada-723d-4c2b-a252-358628f2163f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Veh. Engine  No.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="128" y="82" width="74" height="10" uuid="2d5c2ce8-4218-45b5-8084-8ccf43212b75"/>
+				<reportElement x="128" y="71" width="74" height="10" uuid="2d5c2ce8-4218-45b5-8084-8ccf43212b75"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Veh. Chessis No.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="82" width="56" height="10" uuid="9892f424-935e-4a27-967f-0c7b4dd6a04c"/>
+				<reportElement x="0" y="71" width="56" height="10" uuid="9892f424-935e-4a27-967f-0c7b4dd6a04c"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[No.of Axies:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="63" width="56" height="10" uuid="88759d76-7827-4410-9ae5-b4f40029e2d6"/>
+				<reportElement x="0" y="52" width="56" height="10" uuid="88759d76-7827-4410-9ae5-b4f40029e2d6"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[License PL. No.:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="55" y="100" width="99" height="10" isRemoveLineWhenBlank="true" forecolor="#0000FD" uuid="9932a7e3-6438-48cd-ad2d-4a20e6f79c7b"/>
+				<reportElement x="55" y="89" width="99" height="10" isRemoveLineWhenBlank="true" forecolor="#0000FD" uuid="9932a7e3-6438-48cd-ad2d-4a20e6f79c7b"/>
 				<textElement>
 					<font fontName="SansSerif" size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vcm.vr.currentMilage}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="128" y="63" width="52" height="10" forecolor="#0000FD" uuid="41e916c8-c94d-4aec-890a-6edd095549aa"/>
+				<reportElement x="128" y="52" width="52" height="10" forecolor="#0000FD" uuid="41e916c8-c94d-4aec-890a-6edd095549aa"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vcm.vr.vid.vmodel.vehicleClass.vehicleClass}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="255" y="63" width="100" height="10" forecolor="#0000FD" uuid="35b978d9-00e8-4ee9-9364-76be3a8d3def"/>
+				<reportElement x="255" y="52" width="100" height="10" forecolor="#0000FD" uuid="35b978d9-00e8-4ee9-9364-76be3a8d3def"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vcm.vr.vid.vmodel.vehicleModel}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="180" y="63" width="75" height="10" forecolor="#0000FD" uuid="7150cb9d-fa6a-4d42-8cff-5b72940de13f"/>
+				<reportElement x="180" y="52" width="75" height="10" forecolor="#0000FD" uuid="7150cb9d-fa6a-4d42-8cff-5b72940de13f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vcm.vr.vid.vmodel.vehicleMakeID.vehicleMake}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="202" y="82" width="100" height="10" isRemoveLineWhenBlank="true" uuid="da0973b9-f360-4db2-8c10-032188a6e430"/>
+				<reportElement x="202" y="71" width="100" height="10" isRemoveLineWhenBlank="true" uuid="da0973b9-f360-4db2-8c10-032188a6e430"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vcm.vr.vid.chassisNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="202" y="73" width="100" height="9" isRemoveLineWhenBlank="true" uuid="ae4bd80a-d31e-4853-b7a4-93272c7066fa"/>
+				<reportElement x="202" y="62" width="100" height="9" isRemoveLineWhenBlank="true" uuid="ae4bd80a-d31e-4853-b7a4-93272c7066fa"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vcm.vr.vid.engineNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="56" y="73" width="72" height="9" isRemoveLineWhenBlank="true" uuid="b6af3b06-841c-4758-adf0-a656cc223ce0"/>
+				<reportElement x="56" y="62" width="72" height="9" isRemoveLineWhenBlank="true" uuid="b6af3b06-841c-4758-adf0-a656cc223ce0"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="7" isBold="false"/>
 				</textElement>
@@ -286,21 +285,21 @@
 				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{bpartnerLogo})).getImage()]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
-				<reportElement x="398" y="71" width="125" height="9" isRemoveLineWhenBlank="true" uuid="787d8f6c-4b7b-429a-90f1-6fa54650824c"/>
+				<reportElement x="398" y="60" width="125" height="9" isRemoveLineWhenBlank="true" uuid="787d8f6c-4b7b-429a-90f1-6fa54650824c"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="398" y="80" width="125" height="12" isRemoveLineWhenBlank="true" uuid="ec3249ce-04a4-4625-84d4-ca4f587c4ce9"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="398" y="69" width="125" height="20" isRemoveLineWhenBlank="true" uuid="ec3249ce-04a4-4625-84d4-ca4f587c4ce9"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="398" y="92" width="125" height="12" isRemoveLineWhenBlank="true" uuid="99339993-b764-4315-ae73-aaf7a6be506f"/>
+				<reportElement x="398" y="89" width="125" height="12" isRemoveLineWhenBlank="true" uuid="99339993-b764-4315-ae73-aaf7a6be506f"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
@@ -311,18 +310,11 @@
 				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(new com.google.zxing.qrcode.QRCodeWriter().encode("Cheklist ID -"+$F{vcm.cheklistID}+"<br>"+"Registration ID -"+$F{vcm.vr.vregID},com.google.zxing.BarcodeFormat.QR_CODE,300,300) )]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
-				<reportElement x="56" y="82" width="72" height="10" isRemoveLineWhenBlank="true" uuid="28b86c25-5042-45fc-b027-18291f939a33"/>
+				<reportElement x="56" y="71" width="72" height="10" isRemoveLineWhenBlank="true" uuid="28b86c25-5042-45fc-b027-18291f939a33"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vcm.vr.vid.noWheel}]]></textFieldExpression>
-			</textField>
-			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
-				<reportElement x="278" y="100" width="107" height="12" uuid="77f858fc-fd56-4118-b6ec-d694973df720"/>
-				<textElement>
-					<font size="7"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{vcm.date}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

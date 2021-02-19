@@ -13,20 +13,6 @@
 <html lang="en">
 <head>
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
-	<style type="text/css">
-	
-			.vidSty{
-			font-family: Arial, Helvetica, sans-serif;	
-			font-size:30px;
-			font-weight: bold;
-			color: #02d41b;	
-			}
-	
-	</style>
-	
-	
-	
-	
 </head>
 <body>
 	<div class="wrapper">
@@ -43,57 +29,45 @@
 		<!-- End Sidebar -->
 		<div class="main-panel">
 			<div class="content">
-			
-							<div class="panel-header bg-primary-gradient">
-					<div class="page-inner py-4">
-						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-							<div>
-								<h2 class="text-white pb-2 fw-bold">Vehicle Receipt</h2>
-								<h5 class="text-white op-7 mb-2"></h5>
-							</div>
-							<div class="ml-md-auto  col-md-2">
-							<p class="vidSty" >${vecno}</p>	
-							</div>
-							<div class="col-md-2">
-							<p class="vidSty" >${reccno}</p>	
-							</div>
-							<div class="ml-md-auto py-2 py-md-4">
-								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
-<!-- 								<a href="laneEntryView" class="btn btn-white btn-border btn-round mr-2">Lane Entry</a> -->
-<!-- 								<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
-<!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
-							</div>
-						</div>
-					</div>
-				</div>
-						
-			
-			
-			
-			
-				<div class="page-inner mt--5">	
-			
-<!-- 												<div class="form-group row"> -->
+				<div class="page-inner">	
+					<div class="page-header">
+							<h4 class="page-title">Vehicle Receipt</h4>
+							<ul class="breadcrumbs">
+								<li class="nav-home">
+									<a href="#">
+										<i class="flaticon-home"></i>
+									</a>
+								</li>
+								<li class="separator">
+									<i class="flaticon-right-arrow"></i>
+								</li>
 								
-<!-- 										<div class="col-sm-3"> -->
-<%-- 											<input class="form-control fontst" type="date" name="recDate" value="${recDate}" --%>
-<!-- 											readonly  -->
-<!-- 											id="recDate" -->
-<!-- 											/> -->
-<!-- 										</div> -->
-<!-- 										<div class="col-sm-3"> -->
+								
+							</ul>
+						</div>
+												<div class="form-group row">
+									<div class="col-sm-3">
+										<h6 class="m-0 font-weight-bold text-primary">Vehicle Receipt</h6>
+										</div>
+										<div class="col-sm-3">
+											<input class="form-control fontst" type="date" name="recDate" value="${recDate}"
+											readonly 
+											id="recDate"
+											/>
+										</div>
+										<div class="col-sm-3">
 
-<%-- 											<input class="form-control fontst" type="text" name="vecno"  value="${vecno}" readonly --%>
-<!-- 											id="vecno" -->
-<!-- 											 /> -->
-<!-- 											</div> -->
-<!-- 										<div class="col-sm-3"> -->
+											<input class="form-control fontst" type="text" name="vecno"  value="${vecno}" readonly
+											id="vecno"
+											 />
+											</div>
+										<div class="col-sm-3">
 	
-<%-- 											<input class="form-control fontst" type="text" name="reccno" value="${reccno}" readonly --%>
-<!-- 											id="reccno" -->
-<!-- 											 />									 -->
-<!-- 									</div> -->
-<!-- 							</div> -->
+											<input class="form-control fontst" type="text" name="reccno" value="${reccno}" readonly
+											id="reccno"
+											 />									
+									</div>
+							</div>
 						
 				
 							
@@ -105,7 +79,7 @@
 							
 								<c:if test="${pdfViewEq != null }">
 									<embed type="application/pdf" src="data:application/pdf;base64,${pdfViewEq}"
-										style="height:700px; width:100%">
+										style="height:500px; width:100%">
 										</embed>
 										</c:if>
 										
@@ -117,7 +91,7 @@
 									
 								<c:if test="${pdftokValue != null }">
 									<embed type="application/pdf" src="data:application/pdf;base64,${pdftokValue}"
-										style="height:700px; width:100%">
+										style="height:500px; width:100%">
 										</embed>
 										</c:if>
 									

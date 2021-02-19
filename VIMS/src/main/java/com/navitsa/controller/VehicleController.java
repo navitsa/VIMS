@@ -2242,10 +2242,9 @@ System.out.println("ftp");
 				String centerid=session.getAttribute("centerid")+"";
 				CenterMaster centerMaster=centerService.getcenterById(centerid); 
 				String autoCapPath=centerMaster.getGetAutoCaptureImgPath();
-				String laneimgpathPath=centerMaster.getLaneCamImgPath();
 				String capimPath="\\capimg";
 				
-				String path=autoCapPath+laneimgpathPath+capimPath;
+				String path=autoCapPath+capimPath;
 				String result="";
 				
 				File dir = new File(path);

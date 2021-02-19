@@ -14,10 +14,10 @@
 
 													<div class="form-group row">
 														<div class="col-lg-6">
-																<label>Vehicle Make</label>
+																<label for="vehicleMakeID">Vehicle Make</label>
 
 																<select class="custom-select"
-																	id="mvehicleMakeID" name="vehicleMakeID" onchange="checkModel();"
+																	id="mvehicleMakeID" name="vehicleMakeID" 
 																	required="true">
 																	<option value="">Select Vehicle Make</option>
 																	<c:forEach items="${veMake}" var="partner">
@@ -31,10 +31,10 @@
 													<div class="form-group row">
 														<div class="col-lg-6">
 	
-															<label>Vehicle Class</label>
+															<label for="vehicleClassID">Vehicle Class</label>
 	
 															<select class="custom-select"
-																id="vehicleClassID" name="vehicleClassID" onchange="checkModel();"
+																id="vehicleClassID" name="vehicleClassID"
 																required  >
 																<option value="">Select Vehicle Class</option>
 																<c:forEach items="${vclass}" var="cl">
@@ -46,8 +46,8 @@
 													
 													<div class="form-group row">
 														<div class="col-lg-6">
-															<label >Vehicle Model </label>
-															<input class="form-control form-control-user" id="vehicleModel" name="vehicleModel" onkeyup="checkModel();"/>
+															<label for="vehicleModel">Vehicle Model </label>
+															<input class="form-control form-control-user" id="vehicleModel" name="vehicleModel" />
 														</div>
 													</div>
 
@@ -84,26 +84,17 @@
 													<br><br>
 
 												</form>
-											<div class="row">
-							
-												<div class="col-sm-3">
-							
-													<button type="button" class="btn btn-success" data-dismiss="modal"
-														id="sub" onclick="saveModelV();">Add Model</button>
-												</div>
-												<div class="col-sm-5">
-							
-													<button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-												</div>
-											</div>
-
-
-
-
-
-
-
-			</div>
+										    <button type="button" class="btn btn-success" data-dismiss="modal"  onclick="saveModelV();">Add Model</button>
+												<button type="button" class="btn btn-info" data-dismiss="modal"  onclick="getModelV();">Close</button>											
+    
+    
+    
+    
+    
+    
+    
+    
+      </div>
       <div class="modal-footer">
 <!--         <button type="button" class="btn btn-default" data-dismiss="modal" onclick="getModel()">Close</button> -->
       </div>
@@ -114,52 +105,13 @@
 
 
 
-<script type="text/javascript">
-document.getElementById("sub").style.display = "none";
-function checkModel(){
-	
-	document.getElementById("sub").style.display = "none";
-	var sta = document.getElementById("vehicleModel").value;
-	var mak = document.getElementById("mvehicleMakeID").value;
-	var cls = document.getElementById("vehicleClassID").value;
-	
-
-if(sta!=""){
-	$.ajax({
-		type : 'GET',
-		url : "getCheckModelValue",
-		data : {"make" : mak,"clas":cls,"modelname":sta},
-		success : function(model) {
-		
-			if(model=="0"){
-				
-				document.getElementById("vehicleModel").value = "";
-				document.getElementById("sub").style.display = "none";
-				//alert("Model is found");	
-				
-				Swal.fire({
-        			  icon: 'error',
-        			  title: 'Oops...',
-        			  text: 'Model is already found'
-        			  //,footer: '<a href>Why do I have this issue?</a>'
-        			});
-				
-				
-			}else{
-				 document.getElementById("sub").style.display = "block";
-			}
-			
-			
-		
-		
-		}
-
-	});
-}else{
-	//document.getElementById("sub").style.display = "none";
-}
-}
- </script> 
+<!-- <script type="text/javascript"> -->
+<!-- //     $(function () { -->
+<!-- //         $('#approve-btn').click(function () { -->
+<!-- //             $('#myModal').modal('hide'); -->
+<!-- //         }); -->
+<!-- //     }); -->
+<!-- </script> -->
 
 
 

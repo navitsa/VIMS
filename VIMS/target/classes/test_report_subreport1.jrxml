@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_subreport1" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="b2ad84dd-1aef-4516-aadb-91b955bab766">
-	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="stage.stage" class="java.lang.String"/>
@@ -13,11 +13,11 @@
 	<group name="stage_group">
 		<groupExpression><![CDATA[$F{stage.stage}]]></groupExpression>
 		<groupHeader>
-			<band height="27">
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement x="0" y="11" width="125" height="11" isRemoveLineWhenBlank="true" uuid="0e542807-ee93-4e8f-8aae-956f0c140b53"/>
+			<band height="28">
+				<textField>
+					<reportElement x="0" y="10" width="125" height="11" uuid="0e542807-ee93-4e8f-8aae-956f0c140b53"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{stage.stage}]]></textFieldExpression>
 				</textField>
@@ -28,18 +28,31 @@
 		<groupExpression><![CDATA[$F{item.itemName}]]></groupExpression>
 		<groupHeader>
 			<band height="13">
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement x="0" y="0" width="238" height="13" isRemoveLineWhenBlank="true" uuid="bf57f172-5528-4fb9-bed1-0245eb6ad53d"/>
-					<box leftPadding="0"/>
+				<textField>
+					<reportElement x="0" y="0" width="191" height="13" uuid="bf57f172-5528-4fb9-bed1-0245eb6ad53d"/>
+					<box leftPadding="5">
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+						<font fontName="Calibri" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{item.itemName}]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement x="238" y="0" width="121" height="13" isRemoveLineWhenBlank="true" uuid="f1b339d7-376f-4ae4-afbe-864c717732b8"/>
-					<textElement textAlignment="Justified" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="false"/>
+				<textField>
+					<reportElement x="191" y="0" width="100" height="13" uuid="f1b339d7-376f-4ae4-afbe-864c717732b8"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Calibri" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{status.vprofileItemStatus}]]></textFieldExpression>
 				</textField>
@@ -50,9 +63,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="19">
+		<band height="39">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="359" height="14" backcolor="#EAEAEA" uuid="bd61c0d0-8459-4e16-b9fb-b1219211adb4"/>
+				<reportElement mode="Opaque" x="0" y="21" width="291" height="18" backcolor="#EAEAEA" uuid="bd61c0d0-8459-4e16-b9fb-b1219211adb4"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.25"/>
@@ -61,9 +74,9 @@
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<staticText>
-					<reportElement x="12" y="0" width="157" height="14" uuid="fc47189d-8b4f-4071-8b88-9be77726990a"/>
+					<reportElement x="12" y="0" width="157" height="18" uuid="fc47189d-8b4f-4071-8b88-9be77726990a"/>
 					<textElement verticalAlignment="Middle">
-						<font size="9" isBold="false"/>
+						<font size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Visual Inspection]]></text>
 				</staticText>
@@ -72,17 +85,29 @@
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="10" width="359" height="10" isRemoveLineWhenBlank="true" forecolor="#0000FF" uuid="5f273643-7a72-4bb8-b886-4e27102348a4"/>
-				<box leftPadding="5"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="10" width="291" height="10" isRemoveLineWhenBlank="true" forecolor="#0000FF" uuid="5f273643-7a72-4bb8-b886-4e27102348a4"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Calibri" size="8" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{remarkName}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="359" height="10" isRemoveLineWhenBlank="true" forecolor="#0000FF" uuid="0d3caddb-bee4-4c55-807a-f940a9e8396e"/>
-				<box leftPadding="5"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="291" height="10" isRemoveLineWhenBlank="true" forecolor="#0000FF" uuid="0d3caddb-bee4-4c55-807a-f940a9e8396e"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
 				<textElement>
 					<font fontName="Calibri" size="8" isItalic="true"/>
 				</textElement>
@@ -91,30 +116,30 @@
 		</band>
 	</detail>
 	<summary>
-		<band height="34">
+		<band height="50">
 			<textField isBlankWhenNull="true">
-				<reportElement x="100" y="10" width="455" height="12" isRemoveLineWhenBlank="true" uuid="2360f45e-8956-4069-a4cc-b8d164e53150"/>
+				<reportElement x="100" y="0" width="455" height="20" isRemoveLineWhenBlank="true" uuid="2360f45e-8956-4069-a4cc-b8d164e53150"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vcm.overallstatus}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="100" y="22" width="455" height="12" isRemoveLineWhenBlank="true" uuid="d5464280-2fb9-43fe-ba4f-52e7f1bdea97"/>
+				<reportElement x="100" y="20" width="455" height="20" isRemoveLineWhenBlank="true" uuid="d5464280-2fb9-43fe-ba4f-52e7f1bdea97"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vcm.overallremark}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="22" width="100" height="12" uuid="de26a51c-5022-4dc2-a176-1a5cc4883ad7"/>
+				<reportElement x="0" y="20" width="100" height="20" uuid="de26a51c-5022-4dc2-a176-1a5cc4883ad7"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Overall Remark]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="10" width="100" height="12" uuid="92b4cbf7-49ca-49eb-a090-a4c4b4834ce6"/>
+				<reportElement x="0" y="0" width="100" height="20" uuid="92b4cbf7-49ca-49eb-a090-a4c4b4834ce6"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>

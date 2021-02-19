@@ -31,7 +31,7 @@
 			<div class="content">
 				<div class="page-inner">	
 					<div class="page-header">
-							<h4 class="page-title">Test Points</h4>
+							<h4 class="page-title">Test Configurations</h4>
 							<ul class="breadcrumbs">
 								<li class="nav-home">
 									<a href="#">
@@ -42,19 +42,15 @@
 									<i class="flaticon-right-arrow"></i>
 								</li>
 								<li class="nav-item">
-									<a href="#">Test Configurations</a>
+									<a href="#">Points</a>
 								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								<li class="nav-item">
-									<a href="#">Test Points</a>
-								</li>
-							</ul>
-					</div>
 								
+							</ul>
+						</div>
+				
+						<div
+								class="card-header py-3 d-flex flex-row align-items-center justify-content-between">								
 						<div class="col-xl-8 col-md-6 mb-4">
-						
 		                	<c:if test = "${success ==1}">
 								<div class="alert alert-success alert-dismissible">
 								  <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -68,7 +64,7 @@
 							  </div>
 							</c:if>
 							
-							<div class="card shadow mb-4">
+							<div class="card shadow mb-4 border-left-primary">
 			                	<div class="card-body">
 
 									 <div id="accordion">				
@@ -198,12 +194,16 @@
 
 			                	</div>
 			                </div>
-			                
-						</div>	<!-- End of column -->					
+						</div>						
 
-
-	
-				</div>
+	</div>
+				
+				
+				
+				
+				
+					</div>
+				
 			</div>	
 			<%@include file="../WEB-INF/jsp/footer.jsp"%>			
 		</div>

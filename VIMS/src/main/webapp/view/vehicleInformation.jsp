@@ -750,14 +750,12 @@
 		function takeAutoNo() {
 			
 			if(<%=session.getAttribute("userId")%>==null){
-        		swal("Oops...", "Session Expired", {
-					icon : "error",
-					buttons: {        			
-						confirm: {
-							className : 'btn btn-danger'
-						}
-					},
-				});
+        		Swal.fire({
+        			  icon: 'error',
+        			  title: 'Oops...',
+        			  text: 'Session Expired'
+        			  //,footer: '<a href>Why do I have this issue?</a>'
+        			});
 			window.location.href = "logout";
 			}	
 			

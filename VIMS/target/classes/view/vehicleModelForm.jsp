@@ -120,7 +120,7 @@
 													<div class="form-group row">
 														<div class="col-lg-6">
 															<label for="vehicleModel">Vehicle Model </label>
-															<form:input class="form-control form-control-user" id="vehicleModel"  path="vehicleModel" onkeyup="checkModel(this.value);"/>
+															<form:input class="form-control form-control-user" id="vehicleModel" path="vehicleModel" />
 														</div>
 													</div>
 
@@ -156,7 +156,7 @@
 														</div>
 
 													</div>
-												
+
 													<div class="col-sm-6 mb-1 mb-sm-3">
 														<label>Status</label> <br>
 														<form:radiobutton path="status" value="ACTIVE" checked="checked" />
@@ -165,14 +165,9 @@
 														INACTIVE
 													</div>
 													
-													<div class="row">
-														<div class="col-sm-2 mb-1 mb-sm-3">
-															<input type="submit" id="sub" class="btn btn-success" value="Add Model" />
-														</div>
-														<div class="col-sm-6 mb-1 mb-sm-3">
-															<input type="button" class="btn btn-warning" onclick="clear1()" value="Clear">
-														</div>
-													</div>
+													<br>
+													<input type="submit" class="btn btn-success" value="Add Model" />
+													<input type="button" class="btn btn-warning" onclick="clear1()" value="Clear">
 													<br><br>
 
 												</form:form>
@@ -225,10 +220,6 @@
 
 	<script type="text/javascript">
 
-	document.getElementById("sub").style.display = "none";
-	
-	
-	
 		//clear form after/before submiting 
 		function clear1() {
 			/*Put all the data posting code here*/
@@ -270,45 +261,7 @@
 			});
 		}
 	}
-	function checkModel(sta){
-		document.getElementById("sub").style.display = "none";
-		var mak = document.getElementById("vehicleMakeID").value;
-		var cls = document.getElementById("vehicleClassID").value;
-	if(sta!=""){
-		$.ajax({
-			type : 'GET',
-			url : "getCheckModelValue",
-			data : {"make" : mak,"clas":cls,"modelname":sta},
-			success : function(model) {
-				
-				if(model=="0"){
-					
-					document.getElementById("vehicleModel").value = "";
-					document.getElementById("sub").style.display = "none";
-					//alert("Model is found");	
-					
-					Swal.fire({
-	        			  icon: 'error',
-	        			  title: 'Oops...',
-	        			  text: 'Model is already found'
-	        			  //,footer: '<a href>Why do I have this issue?</a>'
-	        			});
-					
-					
-				}else{
-					 document.getElementById("sub").style.display = "block";
-				}
-				
-				
-			
-			
-			}
-
-		});
-	}else{
-		document.getElementById("sub").style.display = "none";
-	}
-	}
+	
 	
 	function getModelData() {
 		

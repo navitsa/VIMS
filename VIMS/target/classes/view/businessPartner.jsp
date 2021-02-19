@@ -73,7 +73,7 @@
 			                <div class="card-body">
 			                		
 			                		<form:input path="partner_ID" type="hidden"/>
-			                		<form:input path="dbBackupPath" type="hidden"/>
+			                		
 			                		<div class="form-group row">
 										<div class="col-lg">
 											<label for="pname">Partner Name <span class="required text-danger">*</span></label>
