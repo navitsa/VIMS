@@ -19,7 +19,8 @@
          
 .fontcolor{color: blue;}
 </style>
-	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="build.css">
 </head>
 <body>
 	<div class="wrapper">
@@ -38,7 +39,7 @@
 			<div class="content">
 				<div class="page-inner">	
 					<div class="page-header">
-							<h4 class="page-title">Vehicle Lane Entry Status</h4>
+							<h4 class="page-title">User Categories</h4>
 							<ul class="breadcrumbs">
 								<li class="nav-home">
 									<a href="#">
@@ -47,6 +48,7 @@
 								</li>
 								<li class="separator">
 									<i class="flaticon-right-arrow"></i>
+									Create a User Level
 								</li>
 								
 								
@@ -56,11 +58,7 @@
 						
 				<div class="container-fluid">
 
-					<!-- Page Heading -->
-					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Create a User Level</h1>
-					</div>
+				
 
 					<form:form action="saveUserLevel" method="post" modelAttribute="userLevel" id="form1">
 						<div class="row">
@@ -167,7 +165,40 @@
 								<div class="card shadow mb-4">
 									<div class="card-body">
 
-										<form:form modelAttribute="levelManage" id="form2">
+<!-- 												<table id="tableLevel" -->
+<!-- 													class="table table-striped table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"> -->
+<!-- 													<thead> -->
+<!-- 														<tr> -->
+<!-- 															<th>Role</th>														 -->
+<!-- 															<th>Status</th> -->
+<!-- 															<th></th> -->
+<!-- 														</tr> -->
+<!-- 													</thead> -->
+<!-- 													<tbody> -->
+<%-- 														<c:forEach items="${roleList}" var="rolelist"> --%>
+<!-- 															<tr> -->
+
+<%-- 																<td>${rolelist.roleName}</td> --%>
+<!-- 																<td> -->
+																
+<!-- 																      <div class="checkbox checkbox-success"> -->
+<!--                         <input id="check5" class="styled" type="checkbox" > -->
+                     
+<!--                     </div> -->
+																
+																
+																
+<!-- 																</td> -->
+																
+<!-- 															</tr> -->
+<%-- 														</c:forEach> --%>
+<!-- 													</tbody> -->
+<!-- 												</table> -->
+
+
+
+
+<form:form modelAttribute="levelManage" id="form2">
 											<label class="text-gray-900">To assign a user-level role, please use the grid below</label>
 											<table>
 												<tr valign="top">
@@ -185,10 +216,10 @@
 														onclick="if (!window.__cfRLUnblockHandlers) return false; listbox_moveacross('d', 's')"
 														data-cf-modified-46ada2dfb40708e7bf43261c-="">&lt;&lt;</a></td>
 													<td><select id="d" size="14" class="custom-select"
-														name="sroleID" style="width: 200px;" multiple required>
-															<%-- <c:forEach items="${assignRoleList}" var="role"> --%>
-															<%-- <option value = "${role.roleID}">${role.roleName}</option> --%>
-															<%-- </c:forEach> --%>
+														name="sroleID" style="width: 200px;" multiple required >
+															<c:forEach items="${assignRoleList}" var="role" >
+																<option value = "${role.roleID}" selected="selected">${role.roleName}</option>
+															</c:forEach>
 													</select></td>
 												</tr>
 											</table>

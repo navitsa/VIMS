@@ -15,13 +15,22 @@
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
 	
 	<style>
+	.vidSty{
+	font-family: Arial, Helvetica, sans-serif;	
+	font-size:30px;
+	font-weight: bold;
+	color: #02d41b;	
+	}
+	
+	
 	    .textred{
        font-family: Arial, Helvetica, sans-serif;
-        border: 1px solid #b30000;
-		font-size:20px;
+        border: 0px solid #b30000;
+		font-size:14px;
+		font-weight:bold;
        	text-align:center;
-       	color: #b30000;	
-       	 pointer-events: none;
+       	color: #2c03fc;	
+     
        }  
 	      .fontst{
          font-family: Arial, Helvetica, sans-serif;
@@ -87,36 +96,75 @@
 		<!-- End Sidebar -->
 		<div class="main-panel">
 			<div class="content">
-				<div class="page-inner">	
-					<div class="page-header">
-							<h4 class="page-title"> Vehicle Details</h4>
-							<ul class="breadcrumbs">
-								<li class="nav-home">
-									<a href="#">
-										<i class="flaticon-home"></i>
-									</a>
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								<li class="nav-item">
-									<a href="#">Capture License Plate</a>
-								</li>
+				<div class="panel-header bg-primary-gradient">
+					<div class="page-inner py-3">
+						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+							<div class="col-xl-2 col-lg-2">
+								<img src="data:image/jpg;base64,${imgVimg}" class="capCam"  id="results" onerror="this.onerror=null; this.src='resources/img/car-placeholder.jpg'" style="border-radius: 8px; border: 1px solid #ddd;"/>
+				
+								<br><br>
+							</div>
+							<div class="col-xl-2 col-lg-2">
+								<p class="vidSty" >${vid}</p>
+							</div>
+							<div class="ml-md-auto py-2 py-md-4">
+							   <h2 class="text-white pb-2 fw-bold">Payment</h2>
 							
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								<li class="nav-item">
-									<a href="#">Document Check</a>
-								</li>
-							</ul>
+							</div>
+						
+							<div class="ml-md-auto py-2 py-md-4">
+								<a href="vehicleInformation" class="btn btn-white btn-border btn-round mr-2">Gate Entry</a>
+								<a href="vehicleMasterAuto?vehicleID=${vid}&id=${ocid}" class="btn btn-white btn-border btn-round mr-2">Vehicle Details</a>
+								<button class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#checkDocumentModal" onclick="getDocumentCheck()">Document Check</button>
+
+<!-- <a  class="btn btn-secondary btn-round" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
+							</div>
 						</div>
+					</div>
+				</div>
+				
+				<div class="page-inner mt--5">	
+				
+		
+				
+				
+<!-- 					<div class="page-header"> -->
+<!-- 						<div class="col-xl-8 col-lg-6"> -->
+					
+<!-- 							<h4 class="page-title"> Vehicle Registrations</h4> -->
+<!-- 							<ul class="breadcrumbs"> -->
+<!-- 								<li class="nav-home"> -->
+<!-- 									<a href="#"> -->
+<!-- 										<i class="flaticon-home"></i> -->
+<!-- 									</a> -->
+<!-- 								</li> -->
+<!-- 								<li class="separator"> -->
+<!-- 									<i class="flaticon-right-arrow"></i> -->
+<!-- 								</li> -->
+<!-- 								<li class="nav-item"> -->
+<!-- 									<a href="vehicleInformation">Gate Entry</a> -->
+<!-- 								</li> -->
+							
+<!-- 								<li class="separator"> -->
+<!-- 									<i class="flaticon-right-arrow"></i> -->
+<!-- 								</li> -->
+<!-- 								<li class="nav-item"> -->
+<!-- 									<a href="vehicleInformation">Vehicle Details</a> -->
+<!-- 								</li> -->
+<!-- 							</ul> -->
+<!-- 						</div>	 -->
+<!-- 						<div class="col-xl-4 col-lg-6">	 -->
+<!-- 							 <a type="button" class="bt-sty btn btn-outline-primary waves-effect" data-toggle="modal" data-target="#checkDocumentModal">Document Check</a> -->
+									
+							
+<!-- 						</div>	 -->
+<!-- 						</div> -->
 				
 						
 				<form:form  modelAttribute="VehicleRegistration" method="POST" id="formVehicleRegistration">
 					<!-- Card -->
 		<!-- Area Chart -->
-		
+		<form:input class="form-control" path="centermaster.center_ID" id="icenterId" value='<%=session.getAttribute("centerid")%>'  readonly="true" type="hidden"  />
 	 <div class="row">	
 		<div class="col-xl-8 col-lg-6">
 			<div class="card shadow mb-4">
@@ -133,52 +181,11 @@
 
 
 			             <div class="row">
-			             	<div class="col-sm-3">
-								<table id="ocrdetails" class="table1 myTable table table-sm table-wrapper-scroll-y my-custom-scrollbar" style="height: 112px;">                	
-									<tbody id="ocrdetailstbody">									
-									
-									</tbody>
-								</table>
-			             
-			             	</div>
+
+			         
 			             	<div class="col-sm-4">
-			             	<%-- 			             		<c:if test = "${imgVe == null}"> --%>
-			             			<img src="data:image/jpg;base64,${imgVimg}" class="capCam"  id="results"/>
-<%-- 			             		</c:if>	 --%>
-			             	
-			             	
-			             	</div>
-			             	<div class="col-sm-5">
-			             		<div class="form-group row">
-			             			<div class="col-sm-12">
-				                		<form:input class="form-control textred" path="vid.vehicleID" id="vid" placeholder="Licence Plate NO..." readonly="true"  />
-<%-- 				                		<form:errors path="vehicleID" cssClass="error1"/> --%>
-				                	</div>		
-				               </div>
-				           
-				                <div class="row">
+										             		<div class="row">
 									<div class="col-sm-6">
-						             	<label class="l-fontst">Mileage</label>
-						             	<form:input class="form-control fontst " path="centermaster" value='<%=session.getAttribute("centerid")%>' type="hidden" id="icenterId"/>
-						             	<input class="form-control fontst " value='${vclassid}' type="hidden" id="vclassids"/>
-						             	
-						             </div>
-								 	<div class="col-sm-5">
-										<form:input class="form-control fontst" path="currentMilage" id="currentMilage" required="Required" />
-						             	<i class='fas fa-tachometer-alt iconali'></i>
-						            </div>
-						           
-															         
-				                </div>		
-			             	</div>
-			             </div>
-
-<hr>
-
-						<div class="form-group row">						
-							<div class="col-sm-6">
-								<div class="row">
-									<div class="col-sm-4">
 										<label for="manufactureYear" class="l-fontst">Appointment ID</label>
 										 	
 									</div>	
@@ -193,12 +200,12 @@
 									</div>
 
 												             		
-									</div>			
-								</div>
-
-									
-							<div class="col-sm-6">	
-								<div class="row">
+									</div>
+			             
+			             	</div>
+			             	<div class="col-sm-4">
+	
+			             			<div class="row">
 									<div class="col-sm-6">
 										<label  class="l-fontst">Appointment Time</label>
 									</div>	
@@ -215,12 +222,49 @@
 									</div>
 									
 								</div>
+								
+								
+			             								<div class="col-sm-6">	
+
 							
 							</div>
-										
-						 </div>	
-
-
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             	
+			             		<div class="form-group row">
+			             			<div class="col-sm-12">
+				                		<form:input class="form-control textred" path="vid.vehicleID" id="vid" placeholder="Licence Plate NO..." readonly="true" type="hidden" />
+<%-- 				                		<form:errors path="vehicleID" cssClass="error1"/> --%>
+				                	</div>		
+				               </div>
+				           
+		
+			             	</div>
+			             	<div class="col-sm-4">
+			             		<div class="row">
+			             			<div class="col-sm-6">
+										<label  class="l-fontst">Mileage</label>
+									</div>	
+									<div class="col-sm-5">	
+									
+										<form:input class="form-control fontst" path="currentMilage" id="currentMilage" required="Required" />
+									<input class="form-control fontst " value='${vclassid}' type="hidden" id="vclassids"/>
+						             	
+										             		
+									</div>
+			             		</div>
+			             	</div>
+			             </div>
+<hr>
 						<div class="form-group row">						
 							<div class="col-sm-6">
 								<div class="row">
@@ -243,14 +287,16 @@
 									<div class="col-sm-6">
 										<label  class="l-fontst">Payment Type</label>
 									</div>	
-									<div class="col-sm-6">						             			             		
-					             		<form:select path="payType" class="custom-select fontst" id="payType" onchange="" required="Required" readonly="true">
+									<div class="col-sm-6">	
+											<label  class="l-fontst" id="payType">Cash</label>
+														             			             		
+<%-- 					             		<form:select path="payType" class="custom-select fontst" id="payType" onchange="" required="Required" readonly="true"> --%>
 											
 <%-- 											<c:forEach items="${veclass}" var="VClass"> --%>
-												<form:option value="Cash">Cash</form:option>
-												<form:option value="Credit">Credit</form:option>
+<%-- 												<form:option value="Cash">Cash</form:option> --%>
+<%-- 												<form:option value="Credit">Credit</form:option> --%>
 <%-- 											</c:forEach> --%>
-										</form:select>			             		
+<%-- 										</form:select>			             		 --%>
 									</div>
 									
 								</div>
@@ -309,7 +355,7 @@
 									<div class="col-sm-8">						             			             		
 										
 											
-											<form:select class="form-control fontst" path="testLaneHeadId.testLaneHeadId" onchange=""     
+											<form:select class="form-control fontst" path="testLaneHeadId.testLaneHeadId" onchange="getLaneInspector();"     
 												required="Required" id="tldid">
 									
 												<c:forEach items="${allLane}" var="lan">
@@ -328,11 +374,11 @@
 									</div>	
 									<div class="col-sm-6">						             			             		
 											<form:select class="form-control fontst" path="user"
-												required="Required" >
+												required="Required" id="users" >
 												<form:option value="">--SELECT--</form:option>
-												<c:forEach items="${usercombo}" var="use">
-													<form:option value="${use.userId}">${use.userName}</form:option>
-												</c:forEach>
+<%-- 												<c:forEach items="${usercombo}" var="use"> --%>
+<%-- 													<form:option value="${use.userId}">${use.userName}</form:option> --%>
+<%-- 												</c:forEach> --%>
 											</form:select>			             		
 									</div>
 									
@@ -488,7 +534,7 @@
 			            <div class="col-sm-6">
 			            </div>
 						<div class="col-sm-6 justify-content-end">
-			             	<button type="button"  class="btn btn-success btn-block" onclick="checkCondition();" id="proceedLanBtn">Proceed to Lane Register in Lane</button>
+			             	<button type="button"  class="btn btn-success btn-block" onclick="checkCondition();" id="proceedLanBtn">Payment</button>
 						
 								<div class="spinner-grow" role="status" id="moreLoder" style="display: none;">
 												  <span class="sr-only" >Loading...</span>
@@ -500,7 +546,7 @@
 
 					</div>
 
-					<form:input type="hidden" path="ocrid.ocrid"  />
+					<form:input type="hidden" path="ocrid.ocrid" id="ocidd"  />
 
 
 <!-- 									<button type="submit" class="btn btn-primary">Register</button> -->
@@ -512,74 +558,21 @@
 					</div>
 
 				</div>
+				<div class="col-xl-1 col-lg-1">
 				
-				
-				
-				
-				
-				
-		<!-- Pie Chart -->
-		<div class="col-xl-4 col-lg-5">
-			<div class="card shadow mb-4">
-				<!-- Card Header - Dropdown -->
-				<div class="card-header py-2 d-flex flex-row align-items-center">
-					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/><h6 class="m-0 font-weight-bold text-primary">.  Pervious Registrations </h6>
 				</div>
-				<!-- Card Body -->
-				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 540px;">	
-					<div class="row" >
-								<div class="col-sm-12">
-<!-- 									<table id="eqTypeTable" -->
-<!-- 									class="table-sm table-wrapper-scroll-y my-custom-scrollbar" -->
-<!-- 									 style="height: 112px;"> -->
-
-								
-						<c:forEach items="${pre_vehicle}" var="prevehicle">
-							<c:if test = "${prevehicle!=null}">
-											
-											
-								<div class="row">
-									<div class="col-sm-2">
-										<img src="resources/img/icon/perviousVehicleicon.png" class="icon-pre-ve"/>
-									</div>	
-									<div class="col-sm-10">
-										<div class="row">
-											<div class="col-sm-12">
-												<div style="color: #000099; font-family: Arial, Helvetica, sans-serif; font-size: 12px">${prevehicle.vtype.vRegType}</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-sm-12">
-												<div style="color: #000099; font-family: Arial, Helvetica, sans-serif; font-size: 12px">${prevehicle.date} : ${prevehicle.time}</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-sm-12">
-												<div style="color: #000099; font-family: Arial, Helvetica, sans-serif; font-size: 12px">Mileage : ${prevehicle.currentMilage}</div>
-											</div>
-										</div>
-									</div>
-									
-								</div>	
-									<hr/>	
-
-					    	</c:if>										
-						</c:forEach>
-									
-									
-																	
-								</div>
-					</div>	
-					
-	
-				</div>
-			</div>
-		</div>
+				<div class="col-xl-2 col-lg-2">
+				<br/><br/><br/><br/><br/><br/><br/>
+					<div id="overlay" style="display: none;" >
+					  <div id="loading-effect"><img alt="" src="resources/img/96x96.gif"></div>
+					  <div id="text">Payment in Progress ....</div>
+					</div>
 				
+				</div>
 				
 	</div>			
 				
-				
+	
 				
 				
 				
@@ -587,12 +580,12 @@
 				
 				
 				</form:form>
-							
-	
-				
-				
-				
-				
+					
+					
+			
+
+									
+				<%@include file="checkDocument.jsp"%>	
 				
 					</div>
 				
@@ -603,6 +596,58 @@
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
 
 			<script>
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			takeAutoNo();
+			
+			function takeAutoNo() {
+	
+			setTimeout(takeAutoNo, 3000); 
+
+				$.ajax({
+
+				    type: 'POST',
+				    url: "takeAutoNo",
+			        success: function(data){
+
+			        	//$("table tbody").empty();
+			        	
+			        	 var slctSubcat1=$('#ocrdetails4'), option="";
+				            slctSubcat1.empty();
+						for(var i=0; i<data.length; i++){
+						
+							selected_option =  "<tr data-folder='ghjgh'><td>"+ data[i].number+ "</td>"
+					            +"<td style='display:none;'>"+ data[i].noimage+"</td>"
+					            +"</tr>";
+					            slctSubcat1.append(selected_option);
+								//$("table tbody").append(markup);
+			           	 }
+	   	
+			        },
+			        error:function(){
+			       //	alert("Error");
+			        }
+				 });	
+			
+			
+			}
+			
+
+			
+			
+			
+			
+			
 	function customerDate(){
 		
 		var cusid=document.getElementById("customer").value;
@@ -613,7 +658,7 @@
 		    data: {"cusid" : cusid},
 		    success: function(data){
 		    	
-		     document.getElementById("payType").value= data.isCredeit;
+		     document.getElementById("payType").innerHTML= data.isCredeit;
 		    	
 		    },
 		    error:function(){
@@ -633,12 +678,12 @@
 	
 	function checkCondition(){
 		
-		
+		document.getElementById("overlay").style.display = "block";
 		//
-	if(document.getElementById("currentMilage").value!="0"){
+	if(document.getElementById("currentMilage").value!="0"&&document.getElementById("currentMilage").value!=""){
 		
 		
-		if(document.getElementById("payType").value=="Credit"){
+		if(document.getElementById("payType").innerHTML=="Credit"){
 			document.getElementById("proceedLanBtn").style.display = "none";
 			document.getElementById("moreLoder").style.display = "block";
 			
@@ -660,6 +705,10 @@
 			  switch (value) {
 			 
 			    case "invoice":
+			    	
+				
+
+			    	
 				    var request_method = $("#formVehicleRegistration").attr("method"); //get form GET/POST method
 					var form_data = $("#formVehicleRegistration").serialize();
 					$.ajax({
@@ -668,56 +717,93 @@
 				        type: request_method,
 				        data : form_data,
 				        success: function(data){
-				      
+				        	
 	 			        	if(data=="0"){
-	 			        		swal({
-	 			        			  title: "Are you sure?",
-	 			        			  text: "Your will not be able to recover this imaginary file!",
-	 			        			  type: "warning",
-	 			        			  showCancelButton: true,
-	 			        			  confirmButtonClass: "btn-danger",
-	 			        			  confirmButtonText: "Yes, delete it!",
-	 			        			  closeOnConfirm: false
-	 			        			},
-	 			        			function(){
-	 			        			  swal("Deleted!", "Your imaginary file has been deleted.", "success");
-	 			        			});
-	 			        	}else if(data=="2"){
-	 			        		swal({
-	 			        			  title: "Are you sure?",
-	 			        			  text: "Your will not be able to recover this imaginary file!",
-	 			        			  type: "warning",
-	 			        			  showCancelButton: true,
-	 			        			  confirmButtonClass: "btn-danger",
-	 			        			  confirmButtonText: "Yes, delete it!",
-	 			        			  closeOnConfirm: false
-	 			        			},
-	 			        			function(){
-	 			        			  swal("Deleted!", "Your imaginary file has been deleted.", "success");
-	 			        			});
-	 			        	}else if(data=="3"){
-	 			        		swal({
-	 			        			  title: "Are you sure?",
-	 			        			  text: "Your will not be able to recover this imaginary file!",
-	 			        			  type: "warning",
-	 			        			  showCancelButton: true,
-	 			        			  confirmButtonClass: "btn-danger",
-	 			        			  confirmButtonText: "Yes, delete it!",
-	 			        			  closeOnConfirm: false
-	 			        			});
-	 			        	}else{ 	
-	 			        	
+// 	 			        		Swal.close();
+	 			        	document.getElementById("overlay").style.display = "none";
+	 			        		swal("Oops...", "System Error", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
+	 	 						document.getElementById("proceedLanBtn").style.display = "block";
+	 	 						document.getElementById("moreLoder").style.display = "none";
+	 			        	}else if(data=="1"){
+// 	 			        		Swal.close();
+ 				        	document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "Session Expired", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
+		        			window.location.href = "logout";
+				        	}else if(data=="2"){
+// 				        		Swal.close();
+document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "Documents are not verified ! Please confirm document verification and continue", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
+				        		
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else if(data=="3"){
+// 				        		Swal.close();
+				        	document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "Payment Receipt Already Issued for this Vehicle!", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
+				        		
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+	 			        	}else if(data=="4"){
+// 	 			        		Swal.close();
+				        		document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "License Plate is not captured ! Please capture and continue", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else{ 	
+				        		
 	 			       		window.location.href = data;
+	 			       	document.getElementById("overlay").style.display = "none";
+// 	 			       	Swal.close();
 	 			        	}
-			 	
+	 			        	
 				        },
 				        error:function(){
 				        	alert("Error");
+				        	document.getElementById("overlay").style.display = "none";
 				        }
 					 }); 
 			      break;
 			 
 			    case "receipt":
+			    	
+			
+
+			    	
 	 			    var request_method = $("#formVehicleRegistration").attr("method"); //get form GET/POST method
 	 				var form_data = $("#formVehicleRegistration").serialize();
 	 				$.ajax({
@@ -726,51 +812,82 @@
 	 			        type: request_method,
 	 			        data : form_data,
 	 			        success: function(data){
-				      
+	 			        	
 	 			        	if(data=="0"){
-	 			        		swal({
-	 			        			  title: "Are you sure?",
-	 			        			  text: "Your will not be able to recover this imaginary file!",
-	 			        			  type: "warning",
-	 			        			  showCancelButton: true,
-	 			        			  confirmButtonClass: "btn-danger",
-	 			        			  confirmButtonText: "Yes, delete it!",
-	 			        			  closeOnConfirm: false
-	 			        			},
-	 			        			function(){
-	 			        			  swal("Deleted!", "Your imaginary file has been deleted.", "success");
-	 			        			});
-	 			        	}else if(data=="2"){
-	 			        		swal({
-	 			        			  title: "Are you sure?",
-	 			        			  text: "Your will not be able to recover this imaginary file!",
-	 			        			  type: "warning",
-	 			        			  showCancelButton: true,
-	 			        			  confirmButtonClass: "btn-danger",
-	 			        			  confirmButtonText: "Yes, delete it!",
-	 			        			  closeOnConfirm: false
-	 			        			},
-	 			        			function(){
-	 			        			  swal("Deleted!", "Your imaginary file has been deleted.", "success");
-	 			        			});
-	 			        	}else if(data=="3"){
-	 			        		swal({
-	 			        			  title: "Are you sure?",
-	 			        			  text: "Your will not be able to recover this imaginary file!",
-	 			        			  type: "warning",
-	 			        			  showCancelButton: true,
-	 			        			  confirmButtonClass: "btn-danger",
-	 			        			  confirmButtonText: "Yes, delete it!",
-	 			        			  closeOnConfirm: false
-	 			        			});
-	 			        	}else{ 	
+// 	 			        		Swal.close();
+	 			     document.getElementById("overlay").style.display = "none";
+	 	 			       		swal("Oops...", "System Error", {
+	 								icon : "error",
+	 								buttons: {        			
+	 									confirm: {
+	 										className : 'btn btn-danger'
+	 									}
+	 								},
+	 							});
+	 	 						document.getElementById("proceedLanBtn").style.display = "block";
+	 	 						document.getElementById("moreLoder").style.display = "none";
+	 			        	}else if(data=="1"){
+// 	 			        		Swal.close();
+document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "Session Expired", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
+		        			window.location.href = "logout";
+				        	}else if(data=="2"){
+// 				        		Swal.close();
+				        		document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "Documents are not verified ! Please confirm document verification and continue", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else if(data=="3"){
+// 				        		Swal.close();
+				        		document.getElementById("overlay").style.display = "none";
+				        		swal("Oops...", "This vehicle already Payment !", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+	 			        	}else if(data=="4"){
+// 	 			        		Swal.close();
+	 			        		document.getElementById("overlay").style.display = "none";
+	 			        		swal("Oops...", "License Plate is not captured ! Please capture and continue", {
+									icon : "error",
+									buttons: {        			
+										confirm: {
+											className : 'btn btn-danger'
+										}
+									},
+								});
+		 						document.getElementById("proceedLanBtn").style.display = "block";
+		 						document.getElementById("moreLoder").style.display = "none";
+				        	}else{ 	
 	 			        	
 	 			       		window.location.href = data;
+	 			       	document.getElementById("overlay").style.display = "none";
+// 	 			       	Swal.close();
 	 			        	}
-			 	
+	 			        	
 	 			        },
 	 			        error:function(){
 	 			        	alert("Error");
+	 			        	document.getElementById("overlay").style.display = "none";
 	 			        }
 	 				 });
 			      break;
@@ -780,6 +897,13 @@
 			  }
 			});
 		}else{
+// 			Swal.fire ({
+// 				   title: 'Wait ...',
+// 				   onBeforeOpen: () => {
+// 				     Swal.showLoading ()
+// 				   }
+// 				})
+			
 			document.getElementById("proceedLanBtn").style.display = "none";
 			document.getElementById("moreLoder").style.display = "block";
 			    var request_method = $("#formVehicleRegistration").attr("method"); //get form GET/POST method
@@ -790,61 +914,97 @@
  			        type: request_method,
  			        data : form_data,
  			        success: function(data){
-			      
+ 			        	
  			        	if(data=="0"){
- 			        		Swal.fire({
-			        			  icon: 'error',
-			        			  title: 'Oops...',
-			        			  text: 'Data Transfer not Working'
-			        			  //,footer: '<a href>Why do I have this issue?</a>'
-			        			});
+//  			        		Swal.close();
+ 			        	document.getElementById("overlay").style.display = "none";
+ 			       		swal("Oops...", "System Error", {
+							icon : "error",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-danger'
+								}
+							},
+						});
+ 			        		
  	 						document.getElementById("proceedLanBtn").style.display = "block";
  	 						document.getElementById("moreLoder").style.display = "none";
- 			        	}else if(data=="2"){
- 			        		Swal.fire({
- 			        			  icon: 'error',
- 			        			  title: 'Oops...',
- 			        			  text: 'Data Transfer Server not found'
- 			        			  //,footer: '<a href>Why do I have this issue?</a>'
- 			        			});
- 	 						document.getElementById("proceedLanBtn").style.display = "block";
- 	 						document.getElementById("moreLoder").style.display = "none";
- 			        	}else if(data=="3"){
-			        		Swal.fire({
-			        			  icon: 'error',
-			        			  title: 'Oops...',
-			        			  text: 'This Vehicle Already Assigned to a Lane'
-			        			  //,footer: '<a href>Why do I have this issue?</a>'
-			        			});
+ 			        	}else if(data=="1"){
+//  			        		Swal.close();
+			        	
+			        		document.getElementById("overlay").style.display = "none";
+			        		swal("Oops...", "Session Expired", {
+								icon : "error",
+								buttons: {        			
+									confirm: {
+										className : 'btn btn-danger'
+									}
+								},
+							});
+			        		
+			        		
+	        			window.location.href = "logout";
+			        	}else if(data=="2"){
+// 			        		Swal.close();
+			        document.getElementById("overlay").style.display = "none";
+			        		
+			        		swal("Oops...", "Documents are not verified ! Please confirm document verification and continue", {
+								icon : "error",
+								buttons: {        			
+									confirm: {
+										className : 'btn btn-danger'
+									}
+								},
+							});
+			        		
+	 						document.getElementById("proceedLanBtn").style.display = "block";
+	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="3"){
+// 			        		Swal.close();
+			        		document.getElementById("overlay").style.display = "none";
+			        		
+			        		swal("Oops...", "This vehicle already Payment !", {
+								icon : "error",
+								buttons: {        			
+									confirm: {
+										className : 'btn btn-danger'
+									}
+								},
+							});
+			        		
+			        		
+			        		
+			        		
 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 						document.getElementById("moreLoder").style.display = "none";
  			        	}else if(data=="4"){
-			        		Swal.fire({
-			        			  icon: 'error',
-			        			  title: 'Oops...',
-			        			  text: 'XML_IN Path not Found'
-			        			  //,footer: '<a href>Why do I have this issue?</a>'
-			        			});
-	 						document.getElementById("proceedLanBtn").style.display = "block";
-	 						document.getElementById("moreLoder").style.display = "none";
-			        	}else if(data=="5"){
-			        		Swal.fire({
-			        			  icon: 'error',
-			        			  title: 'Oops...',
-			        			  text: 'ES_IN Path not Found'
-			        			  //,footer: '<a href>Why do I have this issue?</a>'
-			        			});
+//  			        		Swal.close();
+		
+			        		document.getElementById("overlay").style.display = "none";
+			        		swal("Oops...", "License Plate is not captured ! Please capture and continue", {
+								icon : "error",
+								buttons: {        			
+									confirm: {
+										className : 'btn btn-danger'
+									}
+								},
+							});
+			        		
 	 						document.getElementById("proceedLanBtn").style.display = "block";
 	 						document.getElementById("moreLoder").style.display = "none";
 			        	}else{ 	
  			        	
  			       		window.location.href = data;
+//  			       	Swal.close();
+ 			       	document.getElementById("overlay").style.display = "none";
  			        	}
-
+ 			        	
 		 	
  			        },
  			        error:function(){
  			        	alert("Error");
+//  			        	Swal.close();
+ 			        	document.getElementById("overlay").style.display = "none";
  			        }
  				 });
 			
@@ -856,58 +1016,22 @@
 		
 	}else{
 		
-		alert("Enter Mileage");
-//  		Swal.fire({
-// 			  icon: 'error',
-// 			  title: 'Oops...',
-// 			  text: 'Enter Mileage'
-// 			  //,footer: '<a href>Why do I have this issue?</a>'
-// 			});
+
+		swal("Oops...", "Please Enter Current Mileage !", {
+			icon : "error",
+			buttons: {        			
+				confirm: {
+					className : 'btn btn-danger'
+				}
+			},
+		});
 		
 	}
 		
 		
 	
 	}
-		
-// 		var xhttp = new XMLHttpRequest();
-// 		var form = document.getElementById('saveAddressForm');
-		
-		
-// 		var data = new FormData(form);
-// 		xhttp.open("POST", "vehicleRegAction", true);
-// 		xhttp.send(data);
-		//window.location.href = "vehicleRegAction";
-		
-		//window.onunload = function() { submitForm("formVehicleRegistration"); };
-	
-	
-// 	    event.preventDefault(); 
-// 	    var request_method = $(this).attr("method"); //get form GET/POST method
-// 		var form_data = $(this).serialize(); //Creates new FormData object
-// 	    $.ajax({
-// 	        url : "vehicleRegAction",
-// 	        type: request_method,
-// 	        data : form_data,
-// 	        success: function(response) {
-			
-// 	        	window.location.href = response;
-	        	
-// 	        }
-// 	    }).done(function(response){ //
-// 	    	window.location.href = response;
-// 	    });
-// 	})
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	//load current date and time to jsp
 		var date = new Date();
 
@@ -942,11 +1066,11 @@
 	//getLanes();
 	
 		function getLanes() {
-	
+			
 			var icenterId=document.getElementById("icenterId").value;
 			var vci=document.getElementById("vclassids").value;
 			var catid=document.getElementById("testCat").value;
-			
+		
 
 			//	alert("ffaaaaaaff="+icenterId+"-"+vci+"-"+catid);
 				$.ajax({
@@ -956,7 +1080,7 @@
     			    success: function(data){
     			    	
     			    	 document.getElementById("tldid").value= data[0][0];
-    		    		
+    			    	 getLaneInspector();
     			    },
     			    error:function(){
     			       
@@ -1071,84 +1195,35 @@
     		
     		 
     	}
-     	takeAutoNo();
-     	function takeAutoNo() {
-     		 
-//     		 var str = document.getElementById("ocrid").value;
-//     		 var y=0;
-//     		 if(str!=""){
-//     			 y=str;					 
-//     		 }
-//     		document.getElementById("lice-msg").style.display = "none";
-//     		document.getElementById("loader").style.display = "block";
-//     		document.getElementById("cam-click").style.display = "none";
-     			
-     		
-//     		var jsonfile={id:y,mthod:meth};
-     		$.ajax({
+//      	setvechileDateNo();
+//      	function setvechileDateNo() {
+//      		var str = document.getElementById("viewVid").innerHTML=document.getElementById("vid").value;
 
-     		    type: 'POST',
-     		    url: "takeOcrNo", 
-     		    data: {"method":"vrStatus"},
-     	       success: function(data){
-     	       	
-//     	            var slctSubcat=$('#ocrdetails'), option="";
-//     	            slctSubcat.empty();
-//     	            selected_option = "  <tr><td></td></tr>"
-//     	            slctSubcat.append(selected_option);
-     	       	
-     	      	$("#ocrdetails tbody").empty();
-     				for(var i=0; i<data.length; i++){
-     				
-     					var markup =  "<tr data-folder='ghjgh'><td>"+ data[i].ocrVid+ "</td>"
-     			           // +"<td><img src=data:image/jpg;base64,"+ data[i].noimage+" style='height:20px; width:30px;'></td>"
-     			            +"<td style='display:none;'>"+ data[i].noimage+"</td>"
-     			            +"<td style='display:none;'>"+ data[i].ocrid+"</td>"
-     			            +"<td style='display:none;'>"+ data[i].vehicletype+"</td>"
-     			           +"<td style='display:none;'>"+ data[i].currentMilage+"</td>"
-     			            +"</tr>";
-     						
-     			            //;
-     			            $("#ocrdetails tbody").append(markup);
-     	          	 }
-     	       	
-     	       	
-     	   
-     	  	
-     	     	
-     	       },
-     	       error:function(){
-     	       	alert("Error");
-     	       }
-     		 });
-
-
-//     		});
-
-     	}
+//      		link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid+"&appNo=0";
+//      	}
      	
-     	var table = document.getElementsByTagName("table")[0];
-     	var tbody = table.getElementsByTagName("tbody")[0];
-     	tbody.onclick = function (e) {
-     	    e = e || window.event;
-     	    var data = [];
-     	    var target = e.srcElement || e.target;
-     	    while (target && target.nodeName !== "TR") {
-     	        target = target.parentNode;
-     	    }
-     	    if (target) {
-     	        var cells = target.getElementsByTagName("td");
-     	        for (var i = 0; i < cells.length; i++) {
-     	            data.push(cells[i].innerHTML);
-     	        }
-     	    }
-     			document.getElementById('vid').value = data[0];
-     			//document.getElementById('ocid').value = data[2];
-     		//	getVMasterData(data[0]);
-     		document.getElementById('currentMilage').value = data[4];
-     			document.getElementById('results').src = "data:image/jpg;base64,"+data[1];
+//      	var table = document.getElementsByTagName("table")[0];
+//      	var tbody = table.getElementsByTagName("tbody")[0];
+//      	tbody.onclick = function (e) {
+//      	    e = e || window.event;
+//      	    var data = [];
+//      	    var target = e.srcElement || e.target;
+//      	    while (target && target.nodeName !== "TR") {
+//      	        target = target.parentNode;
+//      	    }
+//      	    if (target) {
+//      	        var cells = target.getElementsByTagName("td");
+//      	        for (var i = 0; i < cells.length; i++) {
+//      	            data.push(cells[i].innerHTML);
+//      	        }
+//      	    }
+//      			document.getElementById('vid').value = data[0];
+//      			//document.getElementById('ocid').value = data[2];
+//      		//	getVMasterData(data[0]);
+//      		document.getElementById('currentMilage').value = data[4];
+//      			document.getElementById('results').src = "data:image/jpg;base64,"+data[1];
 
-     	};
+//      	};
      	
      	
 	</script>
@@ -1166,7 +1241,248 @@
 		    }
 		  });
 	});
-	</script>
+	
+	function saveCheckDocment() {
 
+		var request_method = $("#savaCheckdocid").attr("method"); //get form GET/POST method
+		
+		// Get form
+		var form = $('#savaCheckdocid')[0];
+
+		// Create an FormData object
+		var data = new FormData(form);
+		
+		//alert("Error "+form_data);
+		$.ajax({
+
+			url : "savaCheckDocument",
+			type : request_method,
+			enctype : 'multipart/form-data',
+			data : data,
+			processData : false,
+			contentType : false,
+			cache : false,
+			success : function(data) {
+				
+	 			if (data == "1") {
+					swal("Good job!", "Document Check is Successfully Completed!", {
+						icon : "success",
+						buttons: {        			
+							confirm: {
+								className : 'btn btn-success'
+							}
+						},
+					});
+					
+	 			}else{
+	        		swal("Oops...", "Document Check is not Save ", {
+						icon : "error",
+						buttons: {        			
+							confirm: {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+	 			}
+	 			
+
+
+			}
+
+		});
+		
+
+
+	}
+	
+	
+	</script>
+<script type="text/javascript">
+
+			var table = document.getElementsByTagName("table")[0];
+			var tbody = table.getElementsByTagName("tbody")[0];
+			  
+			tbody.onclick = function (e) {
+			    e = e || window.event;
+			    var data = [];
+			    var target = e.srcElement || e.target;
+			    while (target && target.nodeName !== "TR") {
+			        target = target.parentNode;
+			    }
+			    if (target) {
+			        var cells = target.getElementsByTagName("td");
+			        for (var i = 0; i < cells.length; i++) {
+			            data.push(cells[i].innerHTML);
+			        }
+			    }
+			
+	
+					document.getElementById('vehicleID').value = data[0];
+					checkVehicleNo(data[0]);
+					document.getElementById('results1').src = "data:image/jpg;base64,"+data[1];
+					document.getElementById("ImageData").value="data:image/jpg;base64,"+data[1];
+			};
+	 
+			function saveOcrImage(){
+				
+				
+				
+				var imagebase64=document.getElementById("ImageData").value;
+				if(imagebase64!=""){
+		 		var y=document.getElementById("ocrrid").value;
+				
+		 		var jsonfile={json:JSON.stringify(imagebase64),id:y};
+		 		$.ajax({
+
+		 		    type: 'POST',
+		 		    url: "saveNewOcrPlate", 
+		 		    data: jsonfile,
+		 	        success: function(data){
+		 	        	
+			      	if(data=="1"){
+			      		
+			      		document.getElementById("results").src=imagebase64;
+			      		
+			      		
+
+						swal("Good job!", "License Plate Capturing is successfully !", {
+							icon : "success",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-success'
+								}
+							},
+						});
+			      		
+			      	}else{
+			      	
+						swal("Oops...", "License Plate is not captured ! Please capture and continue ..", {
+							icon : "error",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-danger'
+								}
+							},
+						});
+			      		
+			      		
+			      	}
+		 	        	
+		 	        	
+		 	        },
+		 	        error:function(data){
+		 	        	alert(data.responseText);
+			           
+		 	        }
+		 		 });
+				}else{
+					
+					swal("Oops...", "License Plate is not captured ! Please capture and continue ..", {
+						icon : "error",
+						buttons: {        			
+							confirm: {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+
+				
+				}
+
+			}
+				
+		
+			function checkVehicleNo(str){
+// 					document.getElementById("veButt").style.display = "none";
+					var oldVno=document.getElementById("vehNO").value;
+					
+					if(oldVno==str){
+						document.getElementById("veButt").style.display = "block";
+					}else{
+						
+						document.getElementById("veButt").style.display = "none";	
+					}
+				
+			}
+			
+			function getDocumentCheck(){
+				//	alert("ddddddddddd");
+				
+				var ocid = document.getElementById("ocidd").value;
+				 
+				 	$.ajax({
+
+				 	    type: 'GET',
+				 	    url: "checkDocTable",
+				 	    data: {"ocrid" : ocid},
+				         success: function(data){
+				        
+				         	//$("table tbody").empty();
+				        	if(data!=""){
+				        		var dohid="";
+				         	 var slctSubcat1=$('#checkDocTable'), option="";
+				 	            slctSubcat1.empty();
+				 			for(var i=0; i<data.length; i++){
+							
+				 				selected_option =  "<tr>"+
+				 				"<td><div><input class='form-control form-control-sm' name='doc' id='doc' value="+data[i].documentcheckDetailsid+"  readonly/></div></td>"+
+				 				"<td><div>"+data[i].documentid.description+"</div></td>"+
+				 				"<td><div><input class='form-control form-control-sm' name='rem' id='rem' value="+data[i].remarks+"  /></div></td>"+
+				 				"<td><div><select class='custom-select' name='docStatus' value="+data[i].checkStatus+" >"+
+				 								"<option value='N/A'>N/A</option>"+
+				 								"<option value='OK'>OK</option>"+
+				 								"<option value='Not OK'>Not OK</option>"+
+				 							"</select>"+		
+				 				"</div></td>"+
+				 			"</tr>"
+									
+									
+									dohid=data[i].documentCheckHeadID.documentcheckheadid;
+				 				 slctSubcat1.append(selected_option);	
+									
+				 			}
+									
+				 			
+				 			document.getElementById("docheadid").value=	dohid;
+				            	 }
+
+				         },
+				         error:function(){
+				        	alert("Error");
+				         }
+				 	 });
+					
+					
+				}
+			getLaneInspector();
+			function getLaneInspector(){
+				
+				var tldid=document.getElementById("tldid").value;
+	            var slctSubcat=$('#users'), option="";
+	            slctSubcat.empty();
+	            option="<option value=''>--SELECT--</option>"
+				$.ajax({
+			        type: 'GET',
+			        url: "getLaneInspector",
+			        data: {"laneid" : tldid},
+			        success: function(data){
+			        	
+;
+			            for(var i=0; i<data.length; i++){
+			                option = option + "<option value='"+data[i].userId.userId + "'>"+data[i].userId.userName + "</option>";
+			               
+			            }
+			            slctSubcat.append(option);
+			           
+			        },
+			        error:function(){
+			            alert("No return vMake data");
+			        }
+
+			    });
+				
+			}
+			
+			</script>
 </body>
 </html>
