@@ -172,11 +172,11 @@ public class AppointmentController {
 			  newAppointment.setCategoryId(form.getCategoryId());
 			  appointmentService.save(newAppointment);
 			 
-			/* Following code is to push data to host database */
+			/* Following code is to save data to appointment_online table */
 			  
 			SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
 			SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");
-
+			
 			String todayDate = df2.format(new Date());
 			String currentTime = df.format(new Date());
 
@@ -192,20 +192,12 @@ public class AppointmentController {
 			ao.setCategoryId(form.getCategoryId());
 			ao.setAppointmentDate(form.getAppointmentDate());
 			ao.setAppointmentTime(form.getAppointmentTime());
-			ao.setStatus("pending");
+			ao.setAppointmentStatus("pending");
+			ao.setPushStatus(false);
+			appointmentService.saveAppointmentOnline(ao);
 			
-			JDBCSingleton jdbc= JDBCSingleton.getInstance();
-			
-			try {
-				int recordCount = jdbc.insert(ao);
-				System.out.println("Insert "+recordCount+" record to hosted database");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-					
 			redirectAttributes.addFlashAttribute("success", 1);
 			return "redirect:/appointment";
-
 
 		}
 

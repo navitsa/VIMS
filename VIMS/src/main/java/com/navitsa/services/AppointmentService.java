@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.navitsa.entity.Appointment;
+import com.navitsa.entity.AppointmentOnline;
 import com.navitsa.entity.Customer;
 import com.navitsa.entity.OcrDetails;
 import com.navitsa.entity.VehicleMaster;
+import com.navitsa.repository.AppointmentOnlineRepository;
 import com.navitsa.repository.AppointmentRepository;
 import com.navitsa.repository.CustomerRepository;
 import com.navitsa.repository.OcrDetailsRepository;
@@ -36,6 +38,9 @@ public class AppointmentService {
 	
 	@Autowired
 	private OcrDetailsRepository ocrDetailsRepo;
+	
+	@Autowired
+	private AppointmentOnlineRepository appointmentOnlineRepo;
 
     public String nextAppointmentId() {
     	
@@ -110,5 +115,8 @@ public class AppointmentService {
 		
 		return appointmentRepo.getPendingLaneAppointmentsByDate(lane);
 	}
-	
+
+	public void saveAppointmentOnline(AppointmentOnline ao) {
+		appointmentOnlineRepo.save(ao);
+	}
 }

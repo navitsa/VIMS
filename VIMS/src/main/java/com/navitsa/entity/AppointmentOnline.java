@@ -5,8 +5,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,10 +15,6 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="appointment_online")
 public class AppointmentOnline {
-
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ai_id")
-	private String autoIncrementId;
 	
 	@Id
 	@Column(name="appointment_id")
@@ -29,7 +23,7 @@ public class AppointmentOnline {
 	@Column(name="customer_name")
 	private String cusName;
 	
-	@Column(name="customer_mobileNo")
+	@Column(name="customer_mobile_no")
 	private String cusMobileNo;
 	
 	@Column(name="customer_email")
@@ -54,17 +48,19 @@ public class AppointmentOnline {
 	@Column(name="appointment_time")
 	private String appointmentTime;
 	
-	@Column(name="status")
-	private String status;
+	@Column(name="appointment_status")
+	private String appointmentStatus;
+	
+	@Column(name="push_status")
+	private Boolean pushStatus;
 
 	public AppointmentOnline() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public AppointmentOnline(String appointmentID, String cusName, String cusMobileNo, String cusEmail,
 			String vehicleNo, VehicleClass vehicleClassId, TestCategory categoryId, Date appointmentDate,
-			String appointmentTime, String status) {
+			String appointmentTime, String appointmentStatus, Boolean pushStatus) {
 		super();
 		this.appointmentID = appointmentID;
 		this.cusName = cusName;
@@ -75,7 +71,8 @@ public class AppointmentOnline {
 		this.categoryId = categoryId;
 		this.appointmentDate = appointmentDate;
 		this.appointmentTime = appointmentTime;
-		this.status = status;
+		this.appointmentStatus = appointmentStatus;
+		this.pushStatus = pushStatus;
 	}
 
 	public String getAppointmentID() {
@@ -150,12 +147,20 @@ public class AppointmentOnline {
 		this.appointmentTime = appointmentTime;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getAppointmentStatus() {
+		return appointmentStatus;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setAppointmentStatus(String appointmentStatus) {
+		this.appointmentStatus = appointmentStatus;
 	}
 
+	public Boolean getPushStatus() {
+		return pushStatus;
+	}
+
+	public void setPushStatus(Boolean pushStatus) {
+		this.pushStatus = pushStatus;
+	}
+	
 }
