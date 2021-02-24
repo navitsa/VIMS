@@ -558,16 +558,13 @@
 				<!-- 		===========================================================		  --> 
 				 
 				 <div class="col-xl-3">
-
 					<div class="card shadow mb-4">
-
 						<div class="card-header py-2 d-flex flex-row align-items-center">
 							
 							<h6 class="m-0 mr-sm-2 font-weight-bold text-primary">Pending Appointments</h6>
 					      <%
-					         Date dNow = new Date( );
-					         SimpleDateFormat ft = new SimpleDateFormat ("E MM.dd.yyyy");
-					         out.print( ft.format(dNow));
+					         SimpleDateFormat df = new SimpleDateFormat ("E MM.dd.yyyy");
+					         out.print( df.format(new Date()));
 					      %>
 							<span class="badge badge-pill badge-warning" id="noOfAppos"
 								style="font-size: 15px; font-weight: 900; color: black; border-radius: 50%;">
@@ -577,13 +574,9 @@
 	
 						<!-- Card Body -->
 						<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 630px">									
-							<div class="row">
-								<div class="col-lg" id="appoDiv"></div>
-							</div>
-						</div>
-						
+							<div id="appoDiv"></div>
+						</div>						
 					</div>
-
 				 </div>
 				 
 				 	

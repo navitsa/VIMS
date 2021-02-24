@@ -7,7 +7,7 @@ public class AppointmentForm {
 	private String appointmentID;
 	private Date appointmentDate;
 	private String appointmentTime;
-	private TestLaneHead lane;
+	//private TestLaneHead lane;
 	
 	private String vehicleID;
 	private VehicleModel vmodel;
@@ -53,12 +53,12 @@ public class AppointmentForm {
 	public void setAppointmentTime(String appointmentTime) {
 		this.appointmentTime = appointmentTime;
 	}
-	public TestLaneHead getLane() {
-		return lane;
-	}
-	public void setLane(TestLaneHead lane) {
-		this.lane = lane;
-	}
+//	public TestLaneHead getLane() {
+//		return lane;
+//	}
+//	public void setLane(TestLaneHead lane) {
+//		this.lane = lane;
+//	}
 	public String getVehicleID() {
 		return vehicleID;
 	}

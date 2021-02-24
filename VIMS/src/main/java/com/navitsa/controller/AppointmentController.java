@@ -1,6 +1,5 @@
 package com.navitsa.controller;
 
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -158,7 +157,7 @@ public class AppointmentController {
 			
 			  Appointment newAppointment = new Appointment();
 			  newAppointment.setAppointmentID(form.getAppointmentID());
-			  newAppointment.setLane(form.getLane()); 
+			  //newAppointment.setLane(form.getLane()); 
 			  newAppointment.setVehicle_id(vm);	
 			  if(customer.getId() != null) {
 				  newAppointment.setCustomer_id(customer);
@@ -204,77 +203,60 @@ public class AppointmentController {
 	}
 
 	@RequestMapping(value="/getFreeTimeSlots", method=RequestMethod.GET)
-	public @ResponseBody String[] getFreeTimeSlots(@RequestParam String catID,@RequestParam String laneID,@RequestParam String selectedDate,@RequestParam String date2,HttpSession session) throws ParseException{
+	public @ResponseBody String[] getFreeTimeSlots(@RequestParam String catID,@RequestParam String selectedDate,HttpSession session) throws ParseException{
 	
 		String centerid=(String) session.getAttribute("centerid");
 		String open_time = centerService.getcenterById(centerid).getOpenTime();
 		String close_time = centerService.getcenterById(centerid).getCloseTime();
 		
-		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-		SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat tf = new SimpleDateFormat("HH:mm");  // time format
+		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");  // date format
 		
-		Date ot = df.parse(open_time);
-		Date ct = df.parse(close_time);
+		Date ot = tf.parse(open_time);
+		Date ct = tf.parse(close_time);
 		
-		Date choseDate = df2.parse(selectedDate);  
-		Date todayDate = df2.parse(df2.format(new Date()));
-		Date currentTime = df.parse(df.format(new Date()));
+		Date choseDate = df.parse(selectedDate);  
+		Date todayDate = df.parse(df.format(new Date()));
+		Date currentTime = tf.parse(tf.format(new Date()));
 		
 		long difference = 0;
-		Date dateObj = null;
 		
-//		if(choseDate.compareTo(todayDate)==0) {
-//			// match
-//			difference = ct.getTime() - currentTime.getTime();
-//			dateObj=currentTime;
-//			
-//		}else if(choseDate.compareTo(todayDate)>0) {
-//			// future date
-//			difference = ct.getTime() - ot.getTime();
-//			dateObj = ot;
-//		}
-		
-		difference = ct.getTime() - ot.getTime();
-		dateObj = ot;
-		
+		difference = ct.getTime() - ot.getTime();	
 		long diffMinutes = difference / 60000;
-		//long diffHours = difference / (60 * 60 * 1000) % 24;
 		
 		long testAproTime = Long.valueOf(centerService.getCategoryId(catID).getTestAproTime());
 		long noOfTimeSlots = diffMinutes/testAproTime;
 		
 		String a[]=new String[(int) noOfTimeSlots];	
 		Calendar calender = Calendar.getInstance();
-		//System.out.println(df.format(calender.getTime()));
 		
 		for (int i = 0; i < noOfTimeSlots; i++) {
 			
 			if(i ==0) {
-				a[i]=df.format(dateObj);
+				a[i]=tf.format(ot);
 			}else {
-				calender.setTime(dateObj);
+				calender.setTime(ot);
 				calender.add(Calendar.MINUTE, (int) testAproTime);
-				dateObj = calender.getTime();
-				a[i]=df.format(dateObj);
+				ot = calender.getTime();
+				a[i]=tf.format(ot);
 			}
 			
 		}
 		
-		String[] reservedTimeList =  appointmentService.getReservedTimes(date2,laneID);
+		String[] reservedTimeList =  appointmentService.getReservedTimes(choseDate,catID);
 		String[] freeTimeList = new String[80];
-		//SimpleDateFormat df3 = new SimpleDateFormat("hh:mm a");
 		
 		for (int i = 0; i < a.length; i++) {
 			
 			boolean flag = true;	
-			Date time_slot = df.parse(a[i]);
+			Date time_slot = tf.parse(a[i]);
 			
 			if(choseDate.compareTo(todayDate)==0 && time_slot.compareTo(currentTime)<0) {
 				continue;
 			}
 			
 			for (int j = 0; j < reservedTimeList.length; j++) {
-				Date reserved_slot = df.parse(reservedTimeList[j]);
+				Date reserved_slot = tf.parse(reservedTimeList[j]);
 				
 				if (time_slot.compareTo(reserved_slot)==0) {
 					flag = false;
@@ -283,7 +265,6 @@ public class AppointmentController {
 			
 			if(flag==true)
 				freeTimeList[i]=a[i];
-				//freeTimeList[i]=df3.format(date3);
 		}
 
 		
@@ -365,10 +346,10 @@ public class AppointmentController {
 		return "appointmentCancel";	
 	}
 	
-	@RequestMapping(value="/getPendigAppointments", method=RequestMethod.GET)
-	public @ResponseBody List<Appointment> getPendigAppointments(@RequestParam String selectedDate){	
-		return appointmentService.getPendingAppointmentsByDate(selectedDate);	
-	}
+//	@RequestMapping(value="/getPendigAppointments", method=RequestMethod.GET)
+//	public @ResponseBody List<Appointment> getPendigAppointments(@RequestParam String selectedDate){	
+//		return appointmentService.getPendingAppointmentsByDate(selectedDate);	
+//	}
 
 	@RequestMapping(value="/getCurrentOwner", method=RequestMethod.GET)
 	public @ResponseBody VehicleOwner getCurrentOwner(@RequestParam String vehicelNo){
@@ -434,38 +415,18 @@ public class AppointmentController {
 		return ocrList;
 	}
 	
-  	@RequestMapping(value="getApposByDate", method=RequestMethod.GET)		
-	public  @ResponseBody List<AppointmentOnline> getApposByDate(@RequestParam String selectedDate){
+  	@RequestMapping(value="viewAppointmentsAtGate", method=RequestMethod.GET)		
+	public  @ResponseBody List<AppointmentOnline> viewAppointmentsAtGate(@RequestParam String selectedDate){
   		
-		//SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-		//String todayDate = df2.format(new Date());
-		
-		//System.out.println("Selected Date is "+selectedDate);
-  		//List<Appointment> todayAppoList = appointmentService.getPendingAppointmentsByDate(selectedDate);
-  		
-		JDBCSingleton jdbc= JDBCSingleton.getInstance();
-		List<AppointmentOnline > list = null;
-		
-		try {
-			
-			list = jdbc.view();
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+  		List<AppointmentOnline> list = appointmentService.viewAppointmentsAtGate(selectedDate);
+
 		return list;
 	}
   	
 	@RequestMapping(value="getLateAppos", method=RequestMethod.GET)
-	public @ResponseBody List<Appointment> getLateAppos(){
+	public @ResponseBody List<AppointmentOnline> getLateAppos(){
 		
-		List<Appointment> lateApposList = appointmentService.getLateAppointments();
-		
-//		for(Appointment x : lateApposList) {
-//			System.out.println(x.getVehicle_id().getVehicleID());
-//		}
+		List<AppointmentOnline> lateApposList = appointmentService.getLateAppointments();
 		
 		return lateApposList;
 

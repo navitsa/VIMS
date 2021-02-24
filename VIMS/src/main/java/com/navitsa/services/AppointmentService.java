@@ -59,9 +59,9 @@ public class AppointmentService {
 		return customerRepo.getCustomerByMobileNo(mobileNo);
 	}
 
-	public String[] getReservedTimes(String selectedDate, String laneID) {
+	public String[] getReservedTimes(Date selectedDate, String catID) {
 		
-		return appointmentRepo.getReservedTimes(selectedDate,laneID);
+		return appointmentOnlineRepo.getReservedTimes(selectedDate,catID);
 	}
 	
 	public List<Appointment> getAllPendingAppointment() {
@@ -73,10 +73,10 @@ public class AppointmentService {
 		return appointmentRepo.findById(id).get();
 	}
 	
-	public List<Appointment> getPendingAppointmentsByDate(String selectedDate) {
-		
-		return appointmentRepo.getPendingAppointmentsByDate(selectedDate);
-	}
+//	public List<Appointment> getPendingAppointmentsByDate(String selectedDate) {
+//		
+//		return appointmentRepo.getPendingAppointmentsByDate(selectedDate);
+//	}
 
 	public Optional<VehicleMaster> getVehicleByID(String vehicleID) {
 		// TODO Auto-generated method stub
@@ -97,15 +97,15 @@ public class AppointmentService {
 		return appointmentRepo.getDashBordApoymentDetails(selectedDate);
 		
 	}
-	public List<Appointment> getLateAppointments() {
-		// TODO Auto-generated method stub
-		return appointmentRepo.getLateAppos();
-	}
+//	public List<Appointment> getLateAppointments() {
+//		// TODO Auto-generated method stub
+//		return appointmentRepo.getLateAppos();
+//	}
 
-	public void cancellingAppointment(String appoID) {
-		// TODO Auto-generated method stub
-		appointmentRepo.cancellingAppointment(appoID);
-	}
+//	public void cancellingAppointment(String appoID) {
+//		// TODO Auto-generated method stub
+//		appointmentRepo.cancellingAppointment(appoID);
+//	}
 
 	public void reschedulingAppointment(String appoID, Date date, String time) {
 		// TODO Auto-generated method stub
@@ -116,7 +116,22 @@ public class AppointmentService {
 		return appointmentRepo.getPendingLaneAppointmentsByDate(lane);
 	}
 
+	/* New */
+	
 	public void saveAppointmentOnline(AppointmentOnline ao) {
 		appointmentOnlineRepo.save(ao);
+	}
+	
+	public List<AppointmentOnline> viewAppointmentsAtGate(String selectedDate) {		
+		return appointmentOnlineRepo.viewAppointmentsAtGate(selectedDate);
+	}
+	
+	public List<AppointmentOnline> getLateAppointments() {
+		return appointmentOnlineRepo.getLateAppos();
+	}
+	
+	public void cancellingAppointment(String appoID) {
+		
+		appointmentOnlineRepo.cancellingAppointment(appoID);
 	}
 }

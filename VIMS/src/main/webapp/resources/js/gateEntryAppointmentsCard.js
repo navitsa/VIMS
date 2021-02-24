@@ -1,13 +1,12 @@
 function getApposByDate(vno){
 	
 	var date="";
-	//var date = $('#datetimepicker4').datetimepicker('viewDate').format('YYYY-MM-DD');
 	appointmrntNo = "0";
 	var count=0;
 
 	$.ajax({
         type: 'GET',
-        url: "getApposByDate", 
+        url: "viewAppointmentsAtGate", 
         data: {"selectedDate":date},
         success: function(data){
         	
@@ -16,61 +15,51 @@ function getApposByDate(vno){
             
         	for(var i=0; i<data.length; i++){
         		count = count + 1;
-        		
-        		if(vno==data[i].vehicleNo){
-        			 status="3";
-        			 appointmrntNo=data[i].appointmentID;
-
-        			 
-        			 selected_option = "<div class='row'style='background-color: green; background: rgba(0, 128, 0, 0.3)'>"+
- 					
- 					"<div class='col-sm-12'>"+
- 						"<div class='row'>"+
- 							"<div class='col-sm-12'>"+
- 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicleNo+"</div>"+
- 							"</div>"+
- 						"</div>"+
- 						"<div class='row'>"+
- 							"<div class='col-sm-12'>"+
- 								"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>"+data[i].appointmentDate+" "+data[i].appointmentTime+"</div>"+
- 							"</div>"+
- 						"</div>"+
-
- 					"</div>"+
- 					
- 					
- 					"<hr/></div>";
-        			 
-        		}else{
-        			
+        		if(data[i].pushStatus==true || data[i].pushStatus==false){
         			selected_option = "<div class='row'>"+
-					
-					"<div class='col-sm-12'>"+
-						"<div class='row'>"+
-							"<div class='col-sm-12'>"+
-								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicleNo+"</div>"+
-							"</div>"+
-						"</div>"+
-						"<div class='row'>"+
-							"<div class='col-sm-12'>"+
-								"<div style='color: #3e34fa; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>"+data[i].appointmentDate+" "+data[i].appointmentTime+"</div>"+
-							"</div>"+
-						"</div>"+
-					"</div>"+
-					
-					
-					"</div><hr/>";
-        			
-        		}  
-            
-            	 slctSubcat.append(selected_option);	
+    				
+    				"<div class='col-sm-12'>"+
+    					"<div class='row'>"+
+    						"<div class='col-sm-12'>"+
+    							"<div style='font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicleNo+" "+data[i].cusName+"</div>"+
+    						"</div>"+
+    					"</div>"+
+    					"<div class='row'>"+
+    						"<div class='col-sm-12'>"+
+    							"<div style='color: #3e34fa; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>"+data[i].appointmentDate+" "+data[i].appointmentTime+"</div>"+
+    						"</div>"+
+    					"</div>"+
+    				"</div>"+
+    				
+    				
+    				"</div><hr/>";          			
+        		}
+        		else{
+        			selected_option = "<div class='row'>"+
+    				
+    				"<div class='col-sm-12'>"+
+    					"<div class='row'>"+
+    						"<div class='col-sm-12'>"+
+    							"<div style='font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].vehicleNo+" "+data[i].cusName+"</div>"+
+    						"</div>"+
+    					"</div>"+
+    					"<div class='row'>"+
+    						"<div class='col-sm-12'>"+
+    							"<div style='color: #3e34fa; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>"+data[i].appointmentDate+" "+data[i].appointmentTime+" <span class='badge badge-primary'>ONLINE</span></div>"+
+    						"</div>"+
+    					"</div>"+
+    				"</div>"+
+    				
+    				
+    				"</div><hr/>";   	
+        		}
+        		slctSubcat.append(selected_option);	
         	}
         	
          	document.getElementById('noOfAppos').innerHTML = count;
 
         },
         error:function(){
-         //   alert("error");
         }
 
     });
@@ -103,7 +92,7 @@ function lateNotify() {
         				// options
         				icon: 'flaticon-alarm-1',
         				title: 'Appointment Alert !',
-        				message: data[i].vehicle_id.vehicleID + ' Vehicle has not appeared at the gate !'+ 
+        				message: data[i].vehicleNo + ' Vehicle has not appeared at the gate !'+ 
         						'<br> Scheduled Time : '+data[i].appointmentTime+'<br><br>'+
         						'<button class="btn btn-danger btn-sm" onclick="cancel(`'+data[i].appointmentID+'`)"><b>Cancel</b></button> '+
         						'<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal"><b>Reschedule</b></button> '+
@@ -129,7 +118,7 @@ function lateNotify() {
 }
 
 setInterval(lateNotify, 60000);
-setInterval(getApposByDate, 5000);
+setInterval(getApposByDate, 30000);
 
 function cancel(str) {
 	

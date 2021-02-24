@@ -96,35 +96,28 @@
 
 							<div class="form-group row">
 							   <div class="col-lg">
-									<form:select path="vclassId.vehicleClassID" class="form-control mb-4" id="vClass" onchange="findBestLane()" required="true">									
-										<option value="">Select vehicle class...</option>
+									<form:select path="vclassId.vehicleClassID" class="form-control mb-4" id="vClass" onchange="getFreeTimes()" required="true">									
+										<option value="">Select vehicle type...</option>
 										<c:forEach items="${vClass}" var="vClass">
 											<form:option value="${vClass.vehicleClassID}">${vClass.vehicleClass}</form:option>
 										</c:forEach>																																		
 									</form:select>
-									
-<%-- 									<select class="form-control mb-4" id="testCat" onchange="findBestLane()" required>									
-										<option value="">Select testing category...</option>
-										<c:forEach items="${testCategory}" var="cat">
-											<option value="${cat.categoryId}">${cat.categoryType}</option>
-										</c:forEach>																																		
-									</select> --%>
 
-									<form:select path="categoryId.categoryId" class="form-control mb-4" id="testCat" onchange="findBestLane()" required="true">									
-										<form:option value="">Select testing category...</form:option>
+									<form:select path="categoryId.categoryId" class="form-control mb-4" id="testCat" onchange="getFreeTimes()" required="true">									
+										<form:option value="">Select test type...</form:option>
 										<c:forEach items="${testCategory}" var="cat">
 											<form:option value="${cat.categoryId}">${cat.categoryType}</form:option>
 										</c:forEach>																																		
 									</form:select>
 									
-									<form:select path="lane.testLaneHeadId" class="form-control" 
+<%-- 									<form:select path="lane.testLaneHeadId" class="form-control" 
 										onchange="getFreeTimes();deleteLanemsg();" required="true" id="laneID">									
 										<form:option value=""> Select lane...</form:option>
 										<c:forEach items="${lanes}" var="lane">
 											<form:option value="${lane.testLaneHeadId}">${lane.laneName}</form:option>
 										</c:forEach>																																	
 									</form:select>
-									<div id="lanemsg"><span></span></div>
+									<div id="lanemsg"><span></span></div> --%>
 							   </div>
 							   <div class="col-lg">
 							   
@@ -456,19 +449,16 @@
 function getFreeTimes()
 {
 	var catID = document.getElementById("testCat").value;
-	var str = document.getElementById("laneID").value;
-	//var date = document.getElementById("appointmentDate").value;
 	var date = $('#datetimepicker1').datetimepicker('viewDate').format('DD-MM-YYYY');
-	var date2 = $('#datetimepicker1').datetimepicker('viewDate').format('YYYY-MM-DD');
 
-	if (str=="" || catID == "" || date == "" ) {
+	if (catID == "" || date == "" ) {
         return;
 	}
 	else{
 		$.ajax({
 	    	type: 'GET',
 	    	url: "getFreeTimeSlots",
-	    	data: {"catID" :catID, "laneID":str,"selectedDate":date,"date2":date2},
+	    	data: {"catID" :catID,"selectedDate":date},
 		    success: function(data){
 		    	 $('#timeSlots').empty();
 	            for(var i=0; i<data.length; i++){
@@ -693,7 +683,7 @@ function getCurrentOwner(vehicleNo){
 
 </script>
 
-<script>
+<!-- <script>
 function findBestLane(){
 
 	var vClass = document.getElementById("vClass").value;
@@ -724,7 +714,7 @@ function findBestLane(){
 function deleteLanemsg(){
 	$('#lanemsg span').text("");
 }
-</script>
+</script> -->
 
 <script>
 function goAsNewOne() {
