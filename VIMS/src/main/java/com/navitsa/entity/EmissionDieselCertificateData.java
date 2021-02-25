@@ -36,7 +36,6 @@ public class EmissionDieselCertificateData {
 
 	public EmissionDieselCertificateData() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public EmissionDieselCertificateData(String id_no, String vehicle_no, String result,
