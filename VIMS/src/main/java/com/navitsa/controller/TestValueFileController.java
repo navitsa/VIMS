@@ -24,8 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.navitsa.Reports.EmissionDieselResult;
+import com.navitsa.Reports.EmissionPetrolResultBean;
 import com.navitsa.entity.ConfigSystem;
 import com.navitsa.entity.EmissionDieselCertificateData;
+import com.navitsa.entity.EmissionDieselCertificateReadings;
 import com.navitsa.entity.EmissionPetrolCertificateData;
 import com.navitsa.entity.TestValueFileDetail;
 import com.navitsa.entity.TestValueFileHeader;
@@ -36,6 +39,7 @@ import com.navitsa.services.TestReportConfigService;
 import com.navitsa.services.TestValueFileService;
 import com.navitsa.services.VehicleService;
 import com.navitsa.services.VisualInspectionServices;
+import com.navitsa.utils.JDBCSingletonAVL;
 
 @Controller
 public class TestValueFileController {
@@ -95,7 +99,6 @@ public class TestValueFileController {
 	      String filesList[] = directoryPath.list(textFilefilter);
 	      
 	      if(filesList.length<=0) {
-	    	  //redirectAttributes.addFlashAttribute("result",false);
 	    	System.out.println("ES_OUT folder is Empty !");  
 	      }
 
@@ -198,7 +201,8 @@ public class TestValueFileController {
 				          myObj.delete();
 				         
 				          String fuelType = vehicleService.getRegistraionInfo(RegId).getVid().getFtype().getFuel();
-				          readingEmissionResults(vehicleID,RegId,fuelType);
+				          String avlPath = vehicleService.getRegistraionInfo(RegId).getTestLaneHeadId().getAvlPath();
+				          readingEmissionResults(vehicleID,vrobj,fuelType,avlPath);
 			          }
 			          
 
@@ -233,15 +237,32 @@ public class TestValueFileController {
 		 return "testReportReprint";
 		 }
 	 
-	public void readingEmissionResults(String vehicleID,String RegId, String fuelType){
-		
-		//String centerid=(String) session.getAttribute("centerid");
-		//String ESOUT_path = centerService.getcenterById(centerid).getEsOutPath();
+	public void readingEmissionResults(String vehicleID,VehicleRegistration vrobj,
+			String fuelType, String avlPath){
 		
 		if(fuelType.equalsIgnoreCase("Diesel"))
 		{
-			//This is a diesel vehicle			
-			EmissionDieselCertificateData emd =null;
+			JDBCSingletonAVL jdbc= JDBCSingletonAVL.getInstance();
+			try {
+				
+				EmissionDieselResult edresult = jdbc.pullDieselData(vehicleID, vrobj, avlPath, "DieselTest.mdb");				
+				if(edresult.getEdcd() != null) {
+					edresult.getEdcd().setId_no(avlPath+"/"+edresult.getEdcd().getId_no());
+					testReportService.saveEmissionDieselCertificateData(edresult.getEdcd());
+					
+					List<EmissionDieselCertificateReadings> list = edresult.getList();
+					for(EmissionDieselCertificateReadings edcr : list) {
+						edcr.setEdc_id(edresult.getEdcd());
+						testReportService.saveEmissionDieselCertificateReadings(edcr);
+					}					
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			
+	/*		EmissionDieselCertificateData emd =null;
 			
 			try{
 				emd = testReportService.getEmiDieselCerData(RegId);
@@ -252,12 +273,35 @@ public class TestValueFileController {
 				}
 				  
 				}catch(Exception e){System.out.println("try catch /n reading diesel emmision results");}
-			
+	*/		
 		}
 		else if(fuelType.equalsIgnoreCase("Petrol") || fuelType.equalsIgnoreCase("LPG") ) 
 		{
-			//This is a petrol or lpg vehicle
-			EmissionPetrolCertificateData empcdata = null;
+
+			JDBCSingletonAVL jdbc= JDBCSingletonAVL.getInstance();
+			
+			try {
+				EmissionPetrolResultBean epresult = jdbc.pullPetrolData(vehicleID, vrobj, avlPath, "PetrolTest.mdb");
+				
+				if(epresult.getEmpcdata() != null) {
+					epresult.getEmpcdata().setId_no(avlPath+"/"+epresult.getEmpcdata().getId_no());
+					testReportService.saveEmissionPetrolCertificateData(epresult.getEmpcdata());
+					
+					epresult.getEmpcgas().setId_no(epresult.getEmpcdata());
+					testReportService.saveEmissionPetrolCertificateGas(epresult.getEmpcgas());
+					
+					epresult.getEmpclambda().setId_no(epresult.getEmpcdata());
+					testReportService.saveEmissionPetrolCertificateLambda(epresult.getEmpclambda());
+					
+					epresult.getEmpcpetrol().setId_no(epresult.getEmpcdata());
+					testReportService.saveEmissionPetrolCertificatePetrol(epresult.getEmpcpetrol());					
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+/*			EmissionPetrolCertificateData empcdata = null;
 			
 			try {
 				empcdata = testReportService.getEmiPetrolCerData(RegId);
@@ -269,7 +313,7 @@ public class TestValueFileController {
 					testReportService.insertIntoEPCPetrol(id_no);					
 				}				
 			} catch (Exception e) {System.out.println("try catch /n reading petrol emmision results");}
-			
+*/			
 			
 		}
 
@@ -353,7 +397,7 @@ public class TestValueFileController {
 		
 		try {
 			VehicleRegistration vr =  vehicleService.getRegistraionInfo(regID);
-			readingEmissionResults(vr.getVid().getVehicleID(),regID,vr.getVid().getFtype().getFuel());
+			//readingEmissionResults(vr.getVid().getVehicleID(),regID,vr.getVid().getFtype().getFuel());
 			
 			vi = inspectionServices.getChecklistMasterData(regID);
 			emd = testReportService.getEmiDieselCerData(regID);
