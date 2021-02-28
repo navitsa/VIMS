@@ -397,7 +397,8 @@ public class TestValueFileController {
 		
 		try {
 			VehicleRegistration vr =  vehicleService.getRegistraionInfo(regID);
-			//readingEmissionResults(vr.getVid().getVehicleID(),regID,vr.getVid().getFtype().getFuel());
+			String avlPath = vr.getTestLaneHeadId().getAvlPath();
+			readingEmissionResults(vr.getVid().getVehicleID(),vr,vr.getVid().getFtype().getFuel(),avlPath);
 			
 			vi = inspectionServices.getChecklistMasterData(regID);
 			emd = testReportService.getEmiDieselCerData(regID);
