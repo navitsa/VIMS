@@ -1,21 +1,9 @@
 package com.navitsa.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -28,20 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.googlecode.javacv.OpenCVFrameGrabber;
-import com.googlecode.javacv.cpp.opencv_core.IplImage;
 import com.navitsa.Reports.Contact;
 import com.navitsa.Reports.ContactForm;
-import com.navitsa.Reports.IncomingReceiptBeen;
-import com.navitsa.Reports.IncomingReceiptSummaryBeen;
-import com.navitsa.Reports.NumberDataBeen;
 import com.navitsa.Reports.OutgoingPaymentBeen;
 import com.navitsa.Reports.OutgoingPaymentDetailsReportBeen;
 import com.navitsa.entity.CenterMaster;
-import com.navitsa.entity.Customer;
-import com.navitsa.entity.IncomingReceiptDetails;
-import com.navitsa.entity.IncomingReceiptHead;
-import com.navitsa.entity.OcrDetails;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
 import com.navitsa.services.BusinessPartnerService;
@@ -248,8 +227,9 @@ public class FinanceAccountingController {
 		  }
 		  @RequestMapping(value = "/OutgoingPaymentsDetailsReport", method=RequestMethod.GET) 
 		  public String getOutgoingPaymentsDetailsReport(Map<String, String> model) { 
-			 // incomingReceiptSummaryRpt
-			  return "OutgoingPaymentsDetailsReport";
+			  
+			  return "outgoingPaymentDetailReport";
+			  
 		  }
 		  
 		  @RequestMapping(value = "/previewIOutgoingPaymentsDetailsReport",method=RequestMethod.POST)
