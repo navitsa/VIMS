@@ -114,8 +114,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="363" y="0" width="106" height="9" uuid="0df64a0a-b890-4693-a482-5a20c0eb5594"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="363" y="0" width="106" height="9" isRemoveLineWhenBlank="true" uuid="0df64a0a-b890-4693-a482-5a20c0eb5594"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
