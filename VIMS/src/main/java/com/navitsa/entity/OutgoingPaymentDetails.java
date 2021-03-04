@@ -24,17 +24,13 @@ public class OutgoingPaymentDetails {
 	private OutgoingPaymentHead paymentVoucherNo;	
 	
 	@Column(name="GLAccNo")	
-	private String gLAccNo;
+	private String glAccNo;
 	
 	@Column(name="Amount")	
 	private long amount;
 	
 	@Column(name="Remarks")	
 	private String remarks;
-
-	public OutgoingPaymentDetails() {
-		
-	}
 
 	public int getOutgoingPaymentDetailId() {
 		return outgoingPaymentDetailId;
@@ -52,12 +48,12 @@ public class OutgoingPaymentDetails {
 		this.paymentVoucherNo = paymentVoucherNo;
 	}
 
-	public String getgLAccNo() {
-		return gLAccNo;
+	public String getGlAccNo() {
+		return glAccNo;
 	}
 
-	public void setgLAccNo(String gLAccNo) {
-		this.gLAccNo = gLAccNo;
+	public void setGlAccNo(String glAccNo) {
+		this.glAccNo = glAccNo;
 	}
 
 	public long getAmount() {
@@ -75,6 +71,19 @@ public class OutgoingPaymentDetails {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	
-	
+
+	public OutgoingPaymentDetails() {
+		super();
+	}
+
+	public OutgoingPaymentDetails(int outgoingPaymentDetailId, OutgoingPaymentHead paymentVoucherNo, String glAccNo,
+			long amount, String remarks) {
+		super();
+		this.outgoingPaymentDetailId = outgoingPaymentDetailId;
+		this.paymentVoucherNo = paymentVoucherNo;
+		this.glAccNo = glAccNo;
+		this.amount = amount;
+		this.remarks = remarks;
+	}	
+
 }

@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +26,6 @@ import com.navitsa.Reports.OutgoingPaymentDetailsReportBeen;
 import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
-import com.navitsa.services.BusinessPartnerService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.FinanceAccountingService;
 import com.navitsa.utils.DateHelperWeb;
@@ -34,30 +36,76 @@ import com.navitsa.utils.StringFormaterWeb;
 public class FinanceAccountingController {
 
 	@Autowired
-	FinanceAccountingService financeAccountingService;
+	private FinanceAccountingService financeAccountingService;
 	
 	@Autowired
-	CenterService centerService;
-	
-	@Autowired
-	BusinessPartnerService businessPartnerService;
+	private CenterService centerService;
 	
 
-	
-	  @RequestMapping(value = "/outgoingPayments", method=RequestMethod.GET) 
-	  public String getAgeAnalysisReport(Map<String, String> model) { 
-		 // incomingReceiptSummaryRpt ageAnalysisReport
+	  @RequestMapping("/outgoingPayments")
+	  public String viewOutgoingPaymentForm(Model m,HttpSession session) {
+		  
+		  String centerid=(String) session.getAttribute("centerid");
+		  CenterMaster centerMaster=centerService.getcenterById(centerid);
+		  
+		  String nextVoucherNo = centerMaster.getPartner_ID().getOutVouFormate()+(centerMaster.getPartner_ID().getMaxVouNo()+1);
+	    
+		  OutgoingPaymentHead obj = new OutgoingPaymentHead();
+		  obj.setPaymentVoucherNo(nextVoucherNo);
+		  m.addAttribute("outgoingPaymentForm",obj);
 		  return "outgoingPayments";
 	  }
+	 
+	 @RequestMapping(value="/saveOutgoingPayment" ,method=RequestMethod.POST)
+	 public String saveOutgoingPayment(@Valid @ModelAttribute("outgoingPaymentForm") OutgoingPaymentHead outgoingPaymentHead, BindingResult br,
+			 @RequestParam(value = "glAccNo") String[] glAccNo,
+			 @RequestParam(value = "amount") long[] amount,
+			 @RequestParam(value = "remarks") String[] remarks,
+			 Model m,HttpSession session) {
+		 
+			 if(br.hasErrors())  
+		        {  
+				 return "outgoingPayments";  
+		        }  
+		        else  
+		        { 		        	
+		        	try {
+		        		String centerid=(String) session.getAttribute("centerid");
+		        		CenterMaster cm=new CenterMaster(centerid);
+		      		
+		        		outgoingPaymentHead.setCenter_ID(cm);
+		        		outgoingPaymentHead.setStatus("Active");
+		        		outgoingPaymentHead.setChequePrint("Pending");
+		        		financeAccountingService.saveOutgoingPaymentHead(outgoingPaymentHead);
+
+		        		List<OutgoingPaymentDetails> list = new ArrayList<OutgoingPaymentDetails>();
+			       		 for(int i=0; i < glAccNo.length; i++){
+			       			OutgoingPaymentDetails paymentDetail = new OutgoingPaymentDetails();
+			       			paymentDetail.setGlAccNo(glAccNo[i]);
+			       			paymentDetail.setAmount(amount[i]);
+			       			paymentDetail.setRemarks(remarks[i]);
+			       			paymentDetail.setPaymentVoucherNo(outgoingPaymentHead);
+			       			list.add(paymentDetail);
+			    		 }
+			       		financeAccountingService.saveAllOutgoingPaymentDetails(list);
+
+			        	return "redirect:/outgoingPayments";
+						
+					} catch (Exception e) {
+						m.addAttribute("success",0);
+					}
+
+		        }
+			 
+			 return "outgoingPayments";  
+	
+	 }
 	  
 	  @RequestMapping(value = "saveoutgoingPayments", method = RequestMethod.POST)
 	  public ModelAndView saveNewUsers(
 			  @ModelAttribute("contactForm") ContactForm contactForm,HttpServletResponse response,HttpSession session) {
 		ModelAndView mav = new ModelAndView("outgoingPaymentsPreiew");
-		
-		System.out.println("ppppppppppppppppp=");
-		System.out.println(contactForm);
-		System.out.println(contactForm.getContacts());
+
 		List<Contact> contacts = contactForm.getContacts();
 		
 		if(null != contacts && contacts.size() > 0) {
@@ -137,7 +185,7 @@ public class FinanceAccountingController {
 						
 						for(OutgoingPaymentDetails outgoingPayDetails:outgoingPaymentDetails) {
 							OutgoingPaymentBeen outgoingPaymentBeen=new OutgoingPaymentBeen();
-							outgoingPaymentBeen.setGlaccno(outgoingPayDetails.getgLAccNo());
+							outgoingPaymentBeen.setGlaccno(outgoingPayDetails.getGlAccNo());
 							outgoingPaymentBeen.setGlaccname("");
 							outgoingPaymentBeen.setAmount(StringFormaterWeb.formatToRupees(outgoingPayDetails.getAmount()));
 							outgoingPaymentBeen.setRemarks(outgoingPayDetails.getRemarks());
@@ -250,7 +298,7 @@ public class FinanceAccountingController {
 				  		OutgoingPaymentDetailsReportBeen outgoingPaymentDetailsReportBeen=new OutgoingPaymentDetailsReportBeen();
 				  		
 				  		outgoingPaymentDetailsReportBeen.setVoucherno(ihData.getPaymentVoucherNo().getPaymentVoucherNo());
-				  		outgoingPaymentDetailsReportBeen.setGlaccno(ihData.getgLAccNo());
+				  		outgoingPaymentDetailsReportBeen.setGlaccno(ihData.getGlAccNo());
 				  		outgoingPaymentDetailsReportBeen.setGlaccname("");
 				  		outgoingPaymentDetailsReportBeen.setAmount(StringFormaterWeb.formatToRupees(ihData.getAmount()));
 				  		outgoingPaymentDetailsReportBeen.setRemarks(ihData.getRemarks());
