@@ -27,6 +27,18 @@ public class EmissionDieselCertificateData {
 	@Column(name="k_pres")
 	private String k_pres;
 	
+	@Column(name="hsu_measured")
+	private String hsu_measured;
+	
+	@Column(name="k_measured")
+	private String k_measured;
+	
+	@Column(name="rpm_min_measured")
+	private String rpm_min_measured;
+	
+	@Column(name="rpm_max_measured")
+	private String rpm_max_measured;
+	
 	@Column(name="result")
 	private String result;
 	
@@ -38,11 +50,18 @@ public class EmissionDieselCertificateData {
 		super();
 	}
 
-	public EmissionDieselCertificateData(String id_no, String vehicle_no, String result,
+	public EmissionDieselCertificateData(String id_no, String vehicle_no, String hsu_pres, String k_pres,
+			String hsu_measured, String k_measured, String rpm_min_measured, String rpm_max_measured, String result,
 			VehicleRegistration reg_id) {
 		super();
 		this.id_no = id_no;
 		this.vehicle_no = vehicle_no;
+		this.hsu_pres = hsu_pres;
+		this.k_pres = k_pres;
+		this.hsu_measured = hsu_measured;
+		this.k_measured = k_measured;
+		this.rpm_min_measured = rpm_min_measured;
+		this.rpm_max_measured = rpm_max_measured;
 		this.result = result;
 		this.reg_id = reg_id;
 	}
@@ -94,5 +113,37 @@ public class EmissionDieselCertificateData {
 	public void setK_pres(String k_pres) {
 		this.k_pres = k_pres;
 	}
-	
+
+	public String getHsu_measured() {
+		return hsu_measured;
+	}
+
+	public void setHsu_measured(String hsu_measured) {
+		this.hsu_measured = hsu_measured;
+	}
+
+	public String getK_measured() {
+		return k_measured;
+	}
+
+	public void setK_measured(String k_measured) {
+		this.k_measured = k_measured;
+	}
+
+	public String getRpm_min_measured() {
+		return rpm_min_measured;
+	}
+
+	public void setRpm_min_measured(String rpm_min_measured) {
+		this.rpm_min_measured = rpm_min_measured;
+	}
+
+	public String getRpm_max_measured() {
+		return rpm_max_measured;
+	}
+
+	public void setRpm_max_measured(String rpm_max_measured) {
+		this.rpm_max_measured = rpm_max_measured;
+	}
+
 }

@@ -15,8 +15,8 @@ public interface EmissionDieselCertificateDataRepo extends CrudRepository<Emissi
 	
 	@Transactional
 	@Modifying
-	@Query(value="INSERT INTO emission_diesel_certificate_data (id_no,vehicle_no,hsu_pres,k_pres,result,V_Register_ID)\n" + 
-			"SELECT ID_No,Vehicle_No,HSUmean_Pres,Kmean_Pres,Result,:regId FROM edt_certificate_data\n" + 
+	@Query(value="INSERT INTO emission_diesel_certificate_data (id_no,vehicle_no,hsu_pres,k_pres,hsu_measured,k_measured,rpm_min_measured,rpm_max_measured,result,V_Register_ID)\n" + 
+			"SELECT ID_No,Vehicle_No,HSUmean_Pres,Kmean_Pres,HSUmean_Pretuned,Kmean_Pretuned,Flushing_RPM_MIN_Mean_Pretuned,Flushing_RPM_MAX_Mean_Pretuned,Result,:regId FROM edt_certificate_data\n" + 
 			"WHERE Vehicle_No=:vehicleID ORDER BY ID_No DESC LIMIT 1;",nativeQuery=true)
 	public void insertIntoEDCData(@Param("vehicleID") String vehicleID,@Param("regId") String regId);
 

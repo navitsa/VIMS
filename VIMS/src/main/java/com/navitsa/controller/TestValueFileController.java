@@ -24,11 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.navitsa.Reports.EmissionDieselResult;
-import com.navitsa.Reports.EmissionPetrolResultBean;
 import com.navitsa.entity.ConfigSystem;
 import com.navitsa.entity.EmissionDieselCertificateData;
-import com.navitsa.entity.EmissionDieselCertificateReadings;
 import com.navitsa.entity.EmissionPetrolCertificateData;
 import com.navitsa.entity.TestValueFileDetail;
 import com.navitsa.entity.TestValueFileHeader;
@@ -39,7 +36,6 @@ import com.navitsa.services.TestReportConfigService;
 import com.navitsa.services.TestValueFileService;
 import com.navitsa.services.VehicleService;
 import com.navitsa.services.VisualInspectionServices;
-import com.navitsa.utils.JDBCSingletonAVL;
 
 @Controller
 public class TestValueFileController {
@@ -275,7 +271,7 @@ public class TestValueFileController {
 				}catch(Exception e){System.out.println("try catch /n reading diesel emmision results");}
 	
 		}
-		else if(fuelType.equalsIgnoreCase("Petrol") || fuelType.equalsIgnoreCase("LPG") ) 
+		else if(fuelType.equalsIgnoreCase("Petrol") || fuelType.equalsIgnoreCase("LPG") || fuelType.equalsIgnoreCase("CNG")) 
 		{
 
 /*			JDBCSingletonAVL jdbc= JDBCSingletonAVL.getInstance();
