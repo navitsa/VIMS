@@ -27,7 +27,7 @@ public class OutgoingPaymentDetails {
 	private String glAccNo;
 	
 	@Column(name="Amount")	
-	private long amount;
+	private Double amount;
 	
 	@Column(name="Remarks")	
 	private String remarks;
@@ -56,11 +56,11 @@ public class OutgoingPaymentDetails {
 		this.glAccNo = glAccNo;
 	}
 
-	public long getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(long amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 
@@ -77,7 +77,7 @@ public class OutgoingPaymentDetails {
 	}
 
 	public OutgoingPaymentDetails(int outgoingPaymentDetailId, OutgoingPaymentHead paymentVoucherNo, String glAccNo,
-			long amount, String remarks) {
+			Double amount, String remarks) {
 		super();
 		this.outgoingPaymentDetailId = outgoingPaymentDetailId;
 		this.paymentVoucherNo = paymentVoucherNo;

@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.navitsa.Reports.Contact;
-import com.navitsa.Reports.ContactForm;
-import com.navitsa.Reports.OutgoingPaymentBeen;
 import com.navitsa.Reports.OutgoingPaymentDetailsReportBeen;
 import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.OutgoingPaymentDetails;
@@ -57,15 +54,15 @@ public class FinanceAccountingController {
 	  }
 	 
 	 @RequestMapping(value="/saveOutgoingPayment" ,method=RequestMethod.POST)
-	 public String saveOutgoingPayment(@Valid @ModelAttribute("outgoingPaymentForm") OutgoingPaymentHead outgoingPaymentHead, BindingResult br,
+	 public ModelAndView saveOutgoingPayment(@Valid @ModelAttribute("outgoingPaymentForm") OutgoingPaymentHead outgoingPaymentHead, BindingResult br,
 			 @RequestParam(value = "glAccNo") String[] glAccNo,
-			 @RequestParam(value = "amount") long[] amount,
+			 @RequestParam(value = "amount") Double[] amount,
 			 @RequestParam(value = "remarks") String[] remarks,
-			 Model m,HttpSession session) {
+			 Model m,HttpSession session,HttpServletResponse response) {
 		 
 			 if(br.hasErrors())  
 		        {  
-				 return "outgoingPayments";  
+				 //return "outgoingPayments";  
 		        }  
 		        else  
 		        { 		        	
@@ -88,163 +85,34 @@ public class FinanceAccountingController {
 			       			list.add(paymentDetail);
 			    		 }
 			       		financeAccountingService.saveAllOutgoingPaymentDetails(list);
-
-			        	return "redirect:/outgoingPayments";
-						
-					} catch (Exception e) {
-						m.addAttribute("success",0);
-					}
-
-		        }
-			 
-			 return "outgoingPayments";  
-	
-	 }
-	  
-	  @RequestMapping(value = "saveoutgoingPayments", method = RequestMethod.POST)
-	  public ModelAndView saveNewUsers(
-			  @ModelAttribute("contactForm") ContactForm contactForm,HttpServletResponse response,HttpSession session) {
-		ModelAndView mav = new ModelAndView("outgoingPaymentsPreiew");
-
-		List<Contact> contacts = contactForm.getContacts();
-		
-		if(null != contacts && contacts.size() > 0) {
-		//	ContactController.contacts = contacts;
-			for (Contact contact : contacts) {
-				System.out.printf("%s \t %s \n", contact.getAmount());
-			}
-		}
-		
-//		
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-//	    Date date = new Date(); 
-//	    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm:ss");
-//	    LocalTime time = LocalTime.now();
-//		
-//		  String centerid=session.getAttribute("centerid")+"";
-//		  CenterMaster centerMaster=centerService.getcenterById(centerid);
-//		  
-//	       	int maxVouNo=centerMaster.getPartner_ID().getMaxVouNo();
-//	    	String outVouFormate=centerMaster.getPartner_ID().getOutVouFormate();
-//	    	String nextoutVouFormate=outVouFormate+(maxVouNo+1);
-//	    
-//		OutgoingPaymentHead outgoingPaymentHead=new OutgoingPaymentHead();
-//		outgoingPaymentHead.setPaymentVoucherNo(nextoutVouFormate);
-//		outgoingPaymentHead.setDueDate(payDueDate);
-//		outgoingPaymentHead.setPaymentDate(formatter.format(date));
-//		outgoingPaymentHead.setPaymentTime(time.format(formattertime));
-//		outgoingPaymentHead.setToOrderOf(toOrderOf);
-//		outgoingPaymentHead.setPayTo(payTo);
-//		outgoingPaymentHead.setPayType(paytype);
-//		outgoingPaymentHead.setChequeNo(chequeNo);
-//		outgoingPaymentHead.setAcType(actype);
-//		outgoingPaymentHead.setStatus("ACTIVE");
-//		outgoingPaymentHead.setCenter_ID(centerMaster);
-//		outgoingPaymentHead.setChequePrint("NO");
-//		
-//		List<OutgoingPaymentDetails> OutgoingPaymentDetailsList=new ArrayList<OutgoingPaymentDetails>();
-//		
-//		
-//		
-//		OutgoingPaymentDetails outgoingPaymentDetails=new OutgoingPaymentDetails();
-//		outgoingPaymentDetails.setPaymentVoucherNo(outgoingPaymentHead);
-//		
-//		outgoingPaymentDetails.setgLAccNo("dfdf");
-//		outgoingPaymentDetails.setRemarks("rrrrr");
-//		outgoingPaymentDetails.setAmount(0);
-//		
-//		OutgoingPaymentDetailsList.add(outgoingPaymentDetails);
-//		
-//		
-//		
-//		
-//		outgoingPaymentHead.setTotalPayment(0);
-//		
-//		
-//		financeAccountingService.saveOutgoingPaymentHead(outgoingPaymentHead);
-//		
-//		
-//		financeAccountingService.saveAllOutgoingPaymentDetails(OutgoingPaymentDetailsList);
-//		
-//		businessPartnerService.setUpdateLastinRecNo(centerMaster.getPartner_ID().getPartner_ID());
-//		
-//		 String reptValue=outgoingPaymentReceiptGeaerate(outgoingPaymentHead,OutgoingPaymentDetailsList,response);
-//		 mav.addObject("pdfViewEq", reptValue);
-//		
-		return mav;
-	  }	  
-	  
-	
-		public String outgoingPaymentReceiptGeaerate(OutgoingPaymentHead outgoingPaymentHead,
-				   List<OutgoingPaymentDetails> outgoingPaymentDetails, HttpServletResponse response) {
-
-					if (outgoingPaymentHead.getStatus().toString().equals("ACTIVE")) {
-						
-
-						List<OutgoingPaymentBeen> outgoingPaymentBeenList=new ArrayList<OutgoingPaymentBeen>();
-						
-						for(OutgoingPaymentDetails outgoingPayDetails:outgoingPaymentDetails) {
-							OutgoingPaymentBeen outgoingPaymentBeen=new OutgoingPaymentBeen();
-							outgoingPaymentBeen.setGlaccno(outgoingPayDetails.getGlAccNo());
-							outgoingPaymentBeen.setGlaccname("");
-							outgoingPaymentBeen.setAmount(StringFormaterWeb.formatToRupees(outgoingPayDetails.getAmount()));
-							outgoingPaymentBeen.setRemarks(outgoingPayDetails.getRemarks());
-							outgoingPaymentBeen.setStyle(false);
-							outgoingPaymentBeenList.add(outgoingPaymentBeen);
-						
-						//totalPay=totalPay+incomingReceiptDetails.getPayAmount();
-						}
-						
-						
-//						IncomingReceiptBeen incomingReceiptBeen2=new IncomingReceiptBeen();
-//						incomingReceiptBeen2.setInvno("TOTAL");
-//						incomingReceiptBeen2.setVecno("");
-//						incomingReceiptBeen2.setInctotal("");
-//						incomingReceiptBeen2.setPayamount(StringFormaterWeb.formatToRupees(totalPay));
-//						incomingReceiptBeen2.setBalance("");
-//						incomingReceiptBeen2.setStyle(true);
-//						incomingReceiptBeenList.add(incomingReceiptBeen2);
-						
-						
-						
-						
-//						CenterMaster centerMaster = centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
-
-						ReportViewe review = new ReportViewe();
-						Map<String, Object> params = new HashMap<>();
-						params.put("img", outgoingPaymentHead.getCenter_ID().getPartner_ID().getPartner_Logo());
-						params.put("hedder", outgoingPaymentHead.getCenter_ID().getPartner_ID().getReceiptHeader());
-						params.put("address", outgoingPaymentHead.getCenter_ID().getAdd03());
-						params.put("footer", outgoingPaymentHead.getCenter_ID().getPartner_ID().getReceiptFooter());
-	
-						params.put("payvouchno", outgoingPaymentHead.getPaymentVoucherNo());
-						params.put("paytime", outgoingPaymentHead.getPaymentTime());
-						params.put("paydate", outgoingPaymentHead.getPaymentDate());
-						params.put("paytype", outgoingPaymentHead.getPayType());
-						
-						params.put("toorderof", outgoingPaymentHead.getToOrderOf());
-						params.put("payto", outgoingPaymentHead.getPayTo());
-						params.put("chequeno", outgoingPaymentHead.getChequeNo());
-						params.put("duedate", outgoingPaymentHead.getDueDate());
-						params.put("acctyp", outgoingPaymentHead.getAcType());
-						
-						String reptValue = "";
-
+			       		
+			       		ModelAndView mav = new ModelAndView("comPdfReportView");		       		
+			       		ReportViewe view =new ReportViewe();
+			       		String pdf_result = null;
+						 
 						try {
-							reptValue = review.pdfReportViewInlineSystemOpen("outgoingPayment.jasper", "Outgoing Payment",
-									outgoingPaymentBeenList, params, response);
-
+							pdf_result = view.pdfReportViewInlineSystemOpen("outgoingPayment.jasper", "outgoingPayment",list, null, response);
+							
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						return reptValue;
-					} else {
-
-						return "INACTIVE";
-
+						
+						mav.addObject("pdfViewEq", pdf_result); 
+						return mav;
+			       		
+			        	//return "redirect:/outgoingPayments";
+						
+					} catch (Exception e) {
+						//m.addAttribute("success",0);
 					}
 
-				}
+		        }
+			return null;
+			 
+			 //return "outgoingPayments";  
+	
+	 }  
+
 	  
 		  
 	  
@@ -262,8 +130,8 @@ public class FinanceAccountingController {
 			  	List<OutgoingPaymentDetails> outgoingPaymentDetailsList=financeAccountingService.getOutgoingPaymentDetailsByVoucherNo(voucherNo);
 			  	
 			  	
-				 String reptValue=outgoingPaymentReceiptGeaerate(outgoingPaymentHead,outgoingPaymentDetailsList,response);
-				 mav.addObject("pdfViewEq", reptValue);
+				 //String reptValue=outgoingPaymentReceiptGenerate(outgoingPaymentHead,outgoingPaymentDetailsList,response);
+				 //mav.addObject("pdfViewEq", reptValue);
 
 	         return mav;
 		  }
@@ -300,7 +168,7 @@ public class FinanceAccountingController {
 				  		outgoingPaymentDetailsReportBeen.setVoucherno(ihData.getPaymentVoucherNo().getPaymentVoucherNo());
 				  		outgoingPaymentDetailsReportBeen.setGlaccno(ihData.getGlAccNo());
 				  		outgoingPaymentDetailsReportBeen.setGlaccname("");
-				  		outgoingPaymentDetailsReportBeen.setAmount(StringFormaterWeb.formatToRupees(ihData.getAmount()));
+				  		outgoingPaymentDetailsReportBeen.setAmount(ihData.getAmount().toString());
 				  		outgoingPaymentDetailsReportBeen.setRemarks(ihData.getRemarks());
 				  		outgoingPaymentDetailsReportBeen.setPaydate(ihData.getPaymentVoucherNo().getPaymentDate());
 				  		outgoingPaymentDetailsReportBeen.setPaytype(ihData.getPaymentVoucherNo().getPayType());

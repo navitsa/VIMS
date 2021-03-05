@@ -1,7 +1,7 @@
 package com.navitsa.Reports;
 
 public class OutgoingPaymentBeen {
-
+	
 	private String glaccno;
 	private String glaccname;
 	private String amount;
@@ -38,7 +38,5 @@ public class OutgoingPaymentBeen {
 	public void setStyle(boolean style) {
 		this.style = style;
 	}
-	
-	
-	
+
 }

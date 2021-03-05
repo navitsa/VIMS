@@ -38,7 +38,7 @@ public class OutgoingPaymentHead {
 	
 	//should calculate
 	@Column(name = "totalPayment")
-	private long totalPayment;
+	private Double totalPayment;
 	
 	@Column(name = "PayType")
 	private String payType;
@@ -118,11 +118,11 @@ public class OutgoingPaymentHead {
 		this.payTo = payTo;
 	}
 
-	public long getTotalPayment() {
+	public Double getTotalPayment() {
 		return totalPayment;
 	}
 
-	public void setTotalPayment(long totalPayment) {
+	public void setTotalPayment(Double totalPayment) {
 		this.totalPayment = totalPayment;
 	}
 
@@ -179,7 +179,7 @@ public class OutgoingPaymentHead {
 	}
 
 	public OutgoingPaymentHead(String paymentVoucherNo, String acType, String paymentDate, String paymentTime,
-			String dueDate, String toOrderOf, String payTo, long totalPayment, String payType, String chequeNo,
+			String dueDate, String toOrderOf, String payTo, Double totalPayment, String payType, String chequeNo,
 			String status, String chequePrint, CenterMaster center_ID, String refNo) {
 		super();
 		this.paymentVoucherNo = paymentVoucherNo;
