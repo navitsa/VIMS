@@ -2,7 +2,10 @@ package com.navitsa.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
@@ -33,9 +36,10 @@ public class TaxConfiguration {
 	
 	@Column(name ="status")
 	private String status;
-	
-	@Column(name ="gl_acc")
-	private String gl_acc;
+
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "GlAccNo", referencedColumnName = "GlAccNo")
+	private Glaccount glAccNo;
 	
 	@NotEmpty(message = "Please select a sequence no")
 	@Column(name ="sequence_id")
@@ -89,12 +93,12 @@ public class TaxConfiguration {
 		this.status = status;
 	}
 
-	public String getGl_acc() {
-		return gl_acc;
+	public Glaccount getGlAccNo() {
+		return glAccNo;
 	}
 
-	public void setGl_acc(String gl_acc) {
-		this.gl_acc = gl_acc;
+	public void setGlAccNo(Glaccount glAccNo) {
+		this.glAccNo = glAccNo;
 	}
 
 	public String getSequenceId() {
@@ -118,14 +122,14 @@ public class TaxConfiguration {
 	public TaxConfiguration(String taxCode,String tax,
 		 Long taxRate, String remarks,
 		 String status,
-		 String gl_acc,
+		 Glaccount glAccNo,
 		 String sequenceId,String countryCode,String type) {
 		this.taxCode = taxCode;
 		this.tax = tax;
 		this.taxRate = taxRate;
 		this.remarks = remarks;
 		this.status = status;
-		this.gl_acc = gl_acc;
+		this.glAccNo = glAccNo;
 		this.sequenceId = sequenceId;
 		this.countryCode=countryCode;
 		this.type = type;

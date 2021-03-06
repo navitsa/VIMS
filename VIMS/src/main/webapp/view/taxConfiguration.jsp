@@ -128,7 +128,7 @@
 															<div class="col-lg-4">
 
 																<label for="gl_acc">GL Account</label>
-																<form:input class="form-control form-control-sm" path="gl_acc"
+																<form:input class="form-control form-control-sm" path="glAccNo.glAccNo"
 																	id="gl_acc" readonly="true"/>
 																<form:errors path="gl_acc" class="bg-danger text-white"/>
 

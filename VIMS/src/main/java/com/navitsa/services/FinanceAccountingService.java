@@ -3,15 +3,13 @@ package com.navitsa.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.navitsa.entity.IncomingReceiptDetails;
-import com.navitsa.entity.IncomingReceiptHead;
+import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
-import com.navitsa.entity.ReceiptHead;
+import com.navitsa.repository.GlaccountRepository;
 import com.navitsa.repository.IncomingReceiptHeadRepository;
 import com.navitsa.repository.OutgoingPaymentDetailsRepository;
 import com.navitsa.repository.OutgoingPaymentHeadRepository;
@@ -33,6 +31,8 @@ public class FinanceAccountingService {
 	@Autowired
 	ReceiptHeadRepository  receiptHeadRepository;
 	
+	@Autowired
+	GlaccountRepository  glaccountRepository;
 	
 	public void saveOutgoingPaymentHead(OutgoingPaymentHead outgoingPaymentHead) {
 		outgoingPaymentHeadRepo.save(outgoingPaymentHead);
@@ -65,5 +65,19 @@ public class FinanceAccountingService {
 		return receiptHeadRepository.getReceiptHeadNetAndTestFeeTotal(recDate);
 	}
 	
+	public List<Glaccount> getAllGlaccounts(){
+		return (List<Glaccount>) glaccountRepository.findAll();
+	}
+	public Glaccount saveGlaccount(Glaccount glaccount) {
+		return  glaccountRepository.save(glaccount);
+		
+	}
 	
+	public List<Glaccount> getglaccountByPrimary(String priAccount) {
+		return  glaccountRepository.getglaccountByPrimary(priAccount);
+		
+	}
+	public Glaccount getGlaccountbyId(String glaccno) {
+		return  glaccountRepository.getById(glaccno);
+	}
 }

@@ -39,6 +39,10 @@ public class TestLaneHead {
 	@Column(name = "Avl_Path")
 	private String avlPath;
 	
+	@ManyToOne(optional = false,fetch = FetchType.EAGER)
+	@JoinColumn(name="GateID" , referencedColumnName="GateID" )
+	private Gate gateID;
+	
 	public String getTestLaneHeadId() {
 		return testLaneHeadId;
 	}

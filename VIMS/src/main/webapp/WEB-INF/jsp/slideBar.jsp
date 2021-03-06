@@ -148,6 +148,7 @@
 				<a class="collapse-item fontst-sb-it" href="#" hidden="true" id="CorporateCalendar">Partner Corporate Calendar</a>
 				<a class="collapse-item fontst-sb-it" href="vehicleRegTypes" hidden="true" id="vehicleRegTypes">Lane Registration Types</a>
 				<a class="collapse-item fontst-sb-it" href="laneAllocation" hidden="true" id="laneAllocation">Lane Allocation</a>
+				<a class="collapse-item fontst-sb-it" href="createGate"  id="createGate">Create Gate</a>
 			</div>
 		</div>
 	</li>
@@ -248,39 +249,54 @@
 	</li>
 
 <!-- Finance & Accounting -->
-		
-	<li class="nav-item"  hidden="true" id="Finance">
-							<a data-toggle="collapse" href="#Financef">
+	<li class="nav-item" hidden="true" id="Finance" >
+							<a data-toggle="collapse" href="#Financef" >
 								<i class="fas fa-pen-square"></i>
 								<p>Finance & Accounting</p>
 								<span class="caret"></span>
 							</a>
-							<div class="collapse" id="Financef">
+							<div class="nav-section collapse" id="Financef">
 		
 		
-			<div class="bg-white py-2 collapse-inner rounded">
-<!-- 				  	<h6 class="collapse-header">General:</h6> -->
+		<h6 class="text-section" >General:</h6>
+			
 				<a class="collapse-item fontst-sb-it" href="taxConfiguration" hidden="true" id="taxConfiguration">Tax Settings</a>
-<!-- 					<h6 class="collapse-header">Accounts Receivables:</h6> -->
-				
-				<a class="collapse-item fontst-sb-it" href="vehicalRecCOPY" hidden="true" id="vehicalRecCOPY">Reprint Receipts</a>
-				<a class="collapse-item fontst-sb-it" href="vehicalRecCancel" hidden="true" id="vehicalRecCancel">Receipt Cancel</a>
+				<a class="collapse-item fontst-sb-it" href="chartOfAccounts"  id="chartOfAccounts">Chart of Accounts</a>
+
+			<p class="text-section" >Accounts Receivables(AR):</p>
+				<a class="collapse-item fontst-sb-it" href="incomingPayment"  hidden="true" id="incomingPayment">Incoming Payment</a>
+			
+							
+				<a class="collapse-item fontst-sb-it" href="vehicalRecCOPY" hidden="true" id="vehicalRecCOPY">Reprint Receipt</a>
 				<a class="collapse-item fontst-sb-it" href="vehicalInvCOPY"  id="vehicalInvCOPY">Reprint Credit Invoice</a>
-				<a class="collapse-item fontst-sb-it" href="vehicalInvCancel"  hidden="true" hidden="true" id="vehicalInvCancel">Invoice Cancel</a>
-				<a class="collapse-item fontst-sb-it" href="revenueStatementPrivew" hidden="true" id="revenueStatementRpt">Revenue Statement</a>
+				<a class="collapse-item fontst-sb-it" href="reprintIncomingReceipt" hidden="true" id="reprintIncomingReceipt">Reprint Payment Receipt</a>	
+									
+				<a class="collapse-item fontst-sb-it" href="vehicalRecCancel" hidden="true" id="vehicalRecCancel">Cancel Receipt</a>						
+				<a class="collapse-item fontst-sb-it" href="vehicalInvCancel"  hidden="true" hidden="true" id="vehicalInvCancel">Cancel Invoice</a>
+							
 				<a class="collapse-item fontst-sb-it" href="invoiceSummaryReport" hidden="true" id="invoiceSummaryReport">Invoice Summary Report</a>
-				<a class="collapse-item fontst-sb-it" href="incomingPayment"  hidden="true" id="incomingPayment">Incoming Payment</a>				
-				<a class="collapse-item fontst-sb-it" href="reprintIncomingReceipt" hidden="true" id="reprintIncomingReceipt">Reprint Incoming Receipt</a>	
 				<a class="collapse-item fontst-sb-it" href="incomingReceiptSummary" hidden="true" id="incomingReceiptSummary">Incoming Receipt Summary</a>
-				<a class="collapse-item fontst-sb-it" href="ageAnalysisReport" hidden="true"  id="ageAnalysisReport">Age Analysis Report</a>
-<!-- 					<h6 class="collapse-header">Accounts Payables:</h6> -->
+				
+	
+		<h6 class="text-section">Accounts Payable(AP):</h6> 
 				<a class="collapse-item fontst-sb-it" href="outgoingPayments"  hidden="true" id="outgoingPayments">Outgoing Payments</a>
 				<a class="collapse-item fontst-sb-it" href="reprintOutgoingPayments" hidden="true"  id="reprintOutgoingPayments">Reprint Outgoing Payments</a>
 				<a class="collapse-item fontst-sb-it" href="OutgoingPaymentsDetailsReport"  hidden="true" id="OutgoingPaymentsDetailsReport">Outgoing Payments Report</a>
 				<a class="collapse-item fontst-sb-it" href="chequePrint"  hidden="true" id="chequePrint">Cheque Print</a>
-			</div>
-		</div>
-	</li>
+		<h6 class="text-section">Finance:</h6>	
+				<a class="collapse-item fontst-sb-it" href="revenueStatementPrivew" hidden="true" id="revenueStatementRpt">Revenue Statement</a>
+				<a class="collapse-item fontst-sb-it" href="ageAnalysisReport" hidden="true"  id="ageAnalysisReport">Age Analysis Report</a>
+			
+		<a class="collapse-item fontst-sb-it" href=trialBalance  id="trialBalance">Trial Balance</a>
+		
+		<a class="collapse-item fontst-sb-it" href="profitsAndLoss"   id="profitsAndLoss">Profits & Loss(P&L)</a>
+
+						  </div>
+	</li>		
+		
+		
+		
+		
 
 <!-- User Management -->
 

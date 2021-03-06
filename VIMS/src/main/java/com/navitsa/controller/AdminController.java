@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.ConfigSystem;
 import com.navitsa.entity.DocumentCheckDetails;
+import com.navitsa.entity.Gate;
 import com.navitsa.entity.IssueTicket;
 import com.navitsa.entity.OcrDetails;
 import com.navitsa.entity.TestLaneHead;
@@ -307,4 +308,19 @@ public class AdminController {
 			return vehicleRegistration;
 		}
 
+		 @RequestMapping(value = "/createGate", method=RequestMethod.GET) 
+		 public String createGate(Map<String, Object> model) {
+			 Gate gate=new Gate();
+//	    	 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");  
+//	    	 Date date = new Date(); 
+//			 List<OcrDetails> ocrDetails=adminServices.completedVehiclesPayment(formatter.format(date));
+			 model.put("allGate", adminServices.getAllGeats());
+			 return "createGate";
+		  }
+	  	
+//			public void saveGates(Gate gate) {
+//				gateRepository.save(gate);
+//			}
+//			
+//			public List<Gate> getAllGeats(){
 }

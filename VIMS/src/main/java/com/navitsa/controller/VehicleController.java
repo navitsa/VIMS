@@ -68,11 +68,16 @@ import com.navitsa.entity.ConfigSystem;
 import com.navitsa.entity.CountryMaster;
 import com.navitsa.entity.CountryState;
 import com.navitsa.entity.Customer;
+import com.navitsa.entity.DocType;
 import com.navitsa.entity.Document;
 import com.navitsa.entity.DocumentCheckDetails;
 import com.navitsa.entity.DocumentCheckHead;
 import com.navitsa.entity.EquipmentType;
 import com.navitsa.entity.FuelType;
+import com.navitsa.entity.GlPostingDetails;
+import com.navitsa.entity.GlPostingHead;
+import com.navitsa.entity.Glaccount;
+import com.navitsa.entity.GlaccountMapping;
 import com.navitsa.entity.IncomingReceiptDetails;
 import com.navitsa.entity.IncomingReceiptHead;
 import com.navitsa.entity.InvoiceDetails;
@@ -102,6 +107,7 @@ import com.navitsa.services.AppointmentService;
 import com.navitsa.services.BusinessPartnerService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.DocumentScrvice;
+import com.navitsa.services.GlAccountService;
 import com.navitsa.services.LaneServices;
 import com.navitsa.services.RegionalService;
 import com.navitsa.services.TestValueFileService;
@@ -160,7 +166,9 @@ public class VehicleController {
 	
 	@Autowired
 	private TestValueFileService testValueFileServices;
-
+	
+	@Autowired
+	GlAccountService glAccountService;
 	
 	@ModelAttribute("statusMap")
 	public Map<String, String> getCountryList() {
@@ -1242,7 +1250,35 @@ System.out.println("ftp");
                 	
                 	ReceiptHead receiptHead=new ReceiptHead(nextRecno, vehiclereg, vehiclereg.getDate(),vehiclereg.getTime(),calTestFee,"New Vehicle Register",ocrDetails.getAppNo(),"ACTIVE");
                 	
-                	List<ReceiptDetails> eceiptDetailsArrayList = new ArrayList<ReceiptDetails>();
+                
+                	
+                	//gl posting
+                	 List<GlPostingDetails> glPostingDetailsList=new ArrayList<>();
+                	
+                	
+                	 List<GlaccountMapping> glMappingResult=glAccountService.getGlaccountMappingByDocId(1);
+ 	            	
+     	            
+     	            GlPostingHead glPostingHead=new GlPostingHead();
+     	            glPostingHead.setDocNo(nextRecno);
+     	            
+     	            DocType docType=new DocType();
+     	            docType.setDocid(1);
+     	            
+     	            glPostingHead.setDocid(docType);
+     	            glPostingHead.setDate(formatter.format(date));
+     	            glPostingHead.setTime(time.format(formattertime));
+     	           glPostingHead.setCenterID(centerMaster);
+     	            glPostingHead.setStatus("ACTIVE");
+     	            
+     	           
+      
+     	           
+     	            
+  
+     	       	List<ReceiptDetails> eceiptDetailsArrayList = new ArrayList<ReceiptDetails>();
+                	
+                	Long totTax=Long.parseLong("0");
                 	
 	            	for(TaxConfiguration taxdetail:getTaxFromCountrylist) {
 	            		Long taxamt=Long.parseLong("0");
@@ -1255,12 +1291,55 @@ System.out.println("ftp");
 	            		ReceiptDetails receiptDetails= new ReceiptDetails(receiptHead, taxdetail, taxdetail.getTaxRate(),taxamt);
 	            		nettotal=nettotal+taxamt;
 	            		eceiptDetailsArrayList.add(receiptDetails);
+	            		
+	            		totTax=totTax+taxamt;
+	            		
+		            	GlPostingDetails glPostingDetails3=new GlPostingDetails();
+		            	glPostingDetails3.setJournalNo(glPostingHead);
+		            	
+		            	glPostingDetails3.setGlAccNo(taxdetail.getGlAccNo());
+		            	
+		            	glPostingDetails3.setType("C");
+		            	glPostingDetails3.setAmount(receiptDetails.getTaxAmount());
+		            	glPostingDetailsList.add(glPostingDetails3);
+	            		
+	            		
+	            		
 	            	}
 	            	receiptHead.setNetTotal(nettotal+calTestFee);
 	            	//save ReceiptHead date & ReceiptDetails
 	            	vehicleService.saveReciptHead(receiptHead);
 	            	vehicleService.saveReciptDetailsAll(eceiptDetailsArrayList);
 	            	
+	            	//GL Posting   -- Cash Receipt--------- Doc id=1
+	   	            for(GlaccountMapping gmresult:glMappingResult) {
+     	            	GlPostingDetails glPostingDetails1=new GlPostingDetails();
+     	            	glPostingDetails1.setJournalNo(glPostingHead);
+     	            	
+     	            	glPostingDetails1.setGlAccNo(new Glaccount(gmresult.getdR()));
+     	            	
+     	            	glPostingDetails1.setType("D");
+     	            	glPostingDetails1.setAmount(receiptHead.getNetTotal());
+     	            	glPostingDetailsList.add(glPostingDetails1);
+     	            	
+     	            	
+     	            	GlPostingDetails glPostingDetails2=new GlPostingDetails();
+     	            	glPostingDetails2.setJournalNo(glPostingHead);
+     	            	glPostingDetails2.setGlAccNo(new Glaccount(gmresult.getcR()));
+     	            	glPostingDetails2.setType("C");
+     	            	glPostingDetails2.setAmount(receiptHead.getTestFee());
+     	            	glPostingDetailsList.add(glPostingDetails2);
+     	            	
+     	            	
+     	            		
+     	            	}
+	   	         glPostingHead.setTotalDR(receiptHead.getNetTotal());
+  	            glPostingHead.setTotalCR(receiptHead.getNetTotal());
+	   	         GlPostingHead result = glAccountService.saveGlPostingHeadRepository(glPostingHead);
+     	            glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+
+	            	
+	           
                 	
                 	
             		ocrDetails.setPaymentStatus("completed");
@@ -1270,6 +1349,7 @@ System.out.println("ftp");
         		}
         		
         	} catch (Exception e) {
+        		System.out.println(e.getMessage());
         		return "0";
         	}
         }
@@ -1347,6 +1427,32 @@ System.out.println("ftp");
                 	Customer  cusdetail=usersService.viewCustomersDetailByID(vehiclereg.getCusid().getId());
         			InvoiceHead invHead=new InvoiceHead(nextinvno, vehiclereg, vehiclereg.getDate(),vehiclereg.getTime(),calTestFee,"New Vehicle Register","ACTIVE","N/A","Open");
         			
+        			
+        			
+                	//gl posting
+               	 List<GlPostingDetails> glPostingDetailsList=new ArrayList<>();
+               	
+               	
+               	 List<GlaccountMapping> glMappingResult=glAccountService.getGlaccountMappingByDocId(2);
+        			
+  	            GlPostingHead glPostingHead=new GlPostingHead();
+  	            glPostingHead.setDocNo(nextinvno);
+  	            
+  	            DocType docType=new DocType();
+  	            docType.setDocid(2);
+  	            
+  	            glPostingHead.setDocid(docType);
+  	            glPostingHead.setDate(formatter.format(date));
+  	            glPostingHead.setTime(time.format(formattertime));
+  	            glPostingHead.setCenterID(centerMaster);
+  	            glPostingHead.setStatus("ACTIVE");	
+        			
+        			
+        			
+        			
+        			
+        			
+        			
                 
         			List<InvoiceDetails> invDetailsList = new ArrayList<InvoiceDetails>();
                 	
@@ -1362,6 +1468,26 @@ System.out.println("ftp");
                 		InvoiceDetails invDetails= new InvoiceDetails(invHead, taxdetail, taxdetail.getTaxRate(),taxamt);
                 		nettotal=nettotal+taxamt;
                 		invDetailsList.add(invDetails);
+                		
+		            	GlPostingDetails glPostingDetails3=new GlPostingDetails();
+		            	glPostingDetails3.setJournalNo(glPostingHead);
+		            	
+		            	glPostingDetails3.setGlAccNo(taxdetail.getGlAccNo());
+		            	
+		            	glPostingDetails3.setType("C");
+		            	glPostingDetails3.setAmount(invDetails.getTaxAmount());
+		            	glPostingDetailsList.add(glPostingDetails3);
+                		
+                		
+                		
+                		
+                		
+                		
+                		
+                		
+                		
+                		
+                		
                 	}	          
                 	invHead.setNetTotal(nettotal+calTestFee);
                 	invHead.setBalance(nettotal+calTestFee);
@@ -1378,6 +1504,48 @@ System.out.println("ftp");
             		ocrDetails.setPaymentStatus("completed");
             		vehicleService.saveOcrDetailsRepo(ocrDetails);
                 	
+            		
+            		
+	            	//GL Posting   -- Cash Receipt--------- Doc id=1
+	   	            for(GlaccountMapping gmresult:glMappingResult) {
+     	            	GlPostingDetails glPostingDetails1=new GlPostingDetails();
+     	            	glPostingDetails1.setJournalNo(glPostingHead);
+     	            	
+     	            	glPostingDetails1.setGlAccNo(new Glaccount(gmresult.getdR()));
+     	            	
+     	            	glPostingDetails1.setType("D");
+     	            	glPostingDetails1.setAmount(invHead.getNetTotal());
+     	            	glPostingDetailsList.add(glPostingDetails1);
+     	            	
+     	            	
+     	            	GlPostingDetails glPostingDetails2=new GlPostingDetails();
+     	            	glPostingDetails2.setJournalNo(glPostingHead);
+     	            	glPostingDetails2.setGlAccNo(new Glaccount(gmresult.getcR()));
+     	            	glPostingDetails2.setType("C");
+     	            	glPostingDetails2.setAmount(invHead.getTestFee());
+     	            	glPostingDetailsList.add(glPostingDetails2);
+     	            	
+     	            	
+     	            		
+     	            	}
+	   	         glPostingHead.setTotalDR(invHead.getNetTotal());
+	   	         glPostingHead.setTotalCR(invHead.getNetTotal());
+	   	         glAccountService.saveGlPostingHeadRepository(glPostingHead);
+     	         glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+
+	            	
+            		
+            		
+            		
+            		
+            		
+            		
+            		
+            		
+            		
+            		
+            		
+            		
             		
             		return "vehicalInvORG?invNo="+nextinvno+"";
         		}
@@ -3166,6 +3334,57 @@ System.out.println("ftp");
 		
 		vehicleService.saveIncomingReceiptHead(incomingReceiptHead);
 		vehicleService.saveAllIncomingReceiptDetails(incomingReceiptDetailsList);
+		
+		if(paytype.equals("Cash")) {
+		
+		//GL Posting   -- Cash Receipt--------- Doc id=1
+		 List<GlPostingDetails> glPostingDetailsList=new ArrayList<>();
+		List<GlaccountMapping> glMappingResult=glAccountService.getGlaccountMappingByDocId(3);
+		
+		GlPostingHead glPostingHead=new GlPostingHead();
+          glPostingHead.setDocNo(incomingReceiptHead.getInRecNo());
+          
+          DocType docType=new DocType();
+          docType.setDocid(3);
+          
+          glPostingHead.setDocid(docType);
+          glPostingHead.setDate(formatter.format(date));
+          glPostingHead.setTime(time.format(formattertime));
+          glPostingHead.setCenterID(centerMaster);
+          glPostingHead.setStatus("ACTIVE");
+		
+		
+          
+      	
+	            for(GlaccountMapping gmresult:glMappingResult) {
+           	GlPostingDetails glPostingDetails1=new GlPostingDetails();
+           	glPostingDetails1.setJournalNo(glPostingHead);
+           	
+           	glPostingDetails1.setGlAccNo(new Glaccount(gmresult.getdR()));
+           	
+           	glPostingDetails1.setType("D");
+           	glPostingDetails1.setAmount(incomingReceiptHead.getPayAmt());
+           	glPostingDetailsList.add(glPostingDetails1);
+           	
+           	
+           	GlPostingDetails glPostingDetails2=new GlPostingDetails();
+           	glPostingDetails2.setJournalNo(glPostingHead);
+           	glPostingDetails2.setGlAccNo(new Glaccount(gmresult.getcR()));
+           	glPostingDetails2.setType("C");
+           	glPostingDetails2.setAmount(incomingReceiptHead.getPayAmt());
+           	glPostingDetailsList.add(glPostingDetails2);
+           	
+           	
+           		
+           	}
+          
+	   	   glPostingHead.setTotalDR(incomingReceiptHead.getPayAmt());
+	  	   glPostingHead.setTotalCR(incomingReceiptHead.getPayAmt());
+		   glAccountService.saveGlPostingHeadRepository(glPostingHead);
+	     	glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+          
+		}
+		
 		
 		
 		

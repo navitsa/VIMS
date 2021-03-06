@@ -25,10 +25,6 @@ public class EquipmentTypeController {
 	@Autowired
 	private EquipmentService eqervice;
 
-	   
- 
-	   
-	
 	@RequestMapping("/equipmenttype")
 	public String equipmentType(Map<String, Object> model) {
 		EquipmentType eqtyp = new EquipmentType();
