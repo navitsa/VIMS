@@ -57,12 +57,11 @@
 	<field name="amount" class="java.lang.Double"/>
 	<field name="paymentVoucherNo.refNo" class="java.lang.String"/>
 	<field name="paymentVoucherNo.paymentVoucherNo" class="java.lang.String"/>
-	<field name="paymentVoucherNo.acType" class="java.lang.String"/>
+	<field name="paymentVoucherNo.paymentType" class="java.lang.String"/>
 	<field name="paymentVoucherNo.toOrderOf" class="java.lang.String"/>
 	<field name="paymentVoucherNo.payTo" class="java.lang.String"/>
 	<field name="paymentVoucherNo.dueDate" class="java.lang.String"/>
-	<field name="paymentVoucherNo.payType" class="java.lang.String"/>
-	<field name="paymentVoucherNo.chequeNo" class="java.lang.String"/>
+	<field name="paymentVoucherNo.paymentMean" class="java.lang.String"/>
 	<variable name="sumOfAmount" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -74,7 +73,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Outgoing Payment Receipt]]></text>
+				<text><![CDATA[Outgoing Payment Voucher]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="108" width="100" height="14" uuid="2146d3d8-38a2-4ba2-84cd-f48b4ef2be60"/>
@@ -98,13 +97,6 @@
 					<font fontName="SansSerif" size="11" isStrikeThrough="false"/>
 				</textElement>
 				<text><![CDATA[To Order of	:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="360" y="66" width="95" height="14" uuid="6bb59b0c-cf5b-455c-a3b5-bf77cdadeb78"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="11" isStrikeThrough="false"/>
-				</textElement>
-				<text><![CDATA[Cheque No	:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="122" width="100" height="14" uuid="e5340af4-84fd-437e-8a3b-1109e794ffc1"/>
@@ -142,42 +134,42 @@
 				<text><![CDATA[Ref. No.	:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="100" y="52" width="100" height="14" isRemoveLineWhenBlank="true" uuid="d3e0508f-fe95-4e80-8d12-b00f3a8c4e1d"/>
+				<reportElement x="100" y="52" width="198" height="14" isRemoveLineWhenBlank="true" uuid="d3e0508f-fe95-4e80-8d12-b00f3a8c4e1d"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{paymentVoucherNo.refNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="100" y="66" width="100" height="14" isRemoveLineWhenBlank="true" uuid="552098d6-6e46-49e2-9201-8b06b31ab454"/>
+				<reportElement x="100" y="66" width="198" height="14" isRemoveLineWhenBlank="true" uuid="552098d6-6e46-49e2-9201-8b06b31ab454"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{paymentVoucherNo.paymentVoucherNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="100" y="80" width="100" height="14" isRemoveLineWhenBlank="true" uuid="53059a64-9d85-43f7-84ac-d6df483b2a4e"/>
+				<reportElement x="100" y="80" width="198" height="14" isRemoveLineWhenBlank="true" uuid="53059a64-9d85-43f7-84ac-d6df483b2a4e"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{paymentVoucherNo.acType}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{paymentVoucherNo.paymentType}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="100" y="94" width="100" height="14" isRemoveLineWhenBlank="true" uuid="2d6e5eb4-1a67-4a37-ac78-efc7a2234cda"/>
+				<reportElement x="100" y="94" width="260" height="14" isRemoveLineWhenBlank="true" uuid="2d6e5eb4-1a67-4a37-ac78-efc7a2234cda"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{paymentVoucherNo.toOrderOf}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="100" y="108" width="100" height="14" isRemoveLineWhenBlank="true" uuid="4bb90ea9-3d44-49ea-9e4d-f01da78734f2"/>
+				<reportElement x="100" y="108" width="260" height="14" isRemoveLineWhenBlank="true" uuid="4bb90ea9-3d44-49ea-9e4d-f01da78734f2"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{paymentVoucherNo.payTo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="100" y="122" width="100" height="14" isRemoveLineWhenBlank="true" uuid="ea149a69-2f85-42f0-b9aa-4309a8d89b99"/>
+				<reportElement x="100" y="122" width="198" height="14" isRemoveLineWhenBlank="true" uuid="ea149a69-2f85-42f0-b9aa-4309a8d89b99"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
@@ -188,14 +180,7 @@
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{paymentVoucherNo.payType}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="455" y="66" width="100" height="14" isRemoveLineWhenBlank="true" uuid="a560188f-0110-4547-b497-28949efbf328"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{paymentVoucherNo.chequeNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{paymentVoucherNo.paymentMean}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -240,7 +225,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{glAccNo}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="408" y="1" width="100" height="15" uuid="3c50431d-e0cf-4330-9396-9ac0d6410934"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="11"/>
@@ -261,7 +246,7 @@
 			<staticText>
 				<reportElement x="17" y="13" width="83" height="13" uuid="67bd06b6-cf98-4431-8793-11c9d3ca1389"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Approved By]]></text>
+				<text><![CDATA[Checked By]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="17" y="0" width="83" height="13" uuid="9211405b-8d1f-4aaf-a256-65e0b92254a4"/>
@@ -282,7 +267,7 @@
 	</pageFooter>
 	<summary>
 		<band height="17">
-			<textField isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="408" y="0" width="100" height="17" uuid="acfa68c7-e229-480e-839a-54885d5fa363"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="11" isBold="true" isUnderline="true"/>

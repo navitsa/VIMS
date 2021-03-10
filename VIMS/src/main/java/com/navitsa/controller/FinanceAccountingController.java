@@ -43,7 +43,7 @@ public class FinanceAccountingController {
 	@Autowired
 	private CenterService centerService;
 	@Autowired
-	GlAccountService glAccountService;
+	private GlAccountService glAccountService;
 
 	  @RequestMapping("/outgoingPayments")
 	  public String viewOutgoingPaymentForm(Model m,HttpSession session) {
@@ -119,7 +119,11 @@ public class FinanceAccountingController {
 	
 	 }  
 
-	  
+	  @RequestMapping(value = "/getOutgoingPaymentDetails", method=RequestMethod.GET) 
+	  public @ResponseBody List<OutgoingPaymentDetails> getOutgoingPaymentDetails(@RequestParam String voucherNo) { 			  
+		  List<OutgoingPaymentDetails> list = financeAccountingService.getOutgoingPaymentDetailsByVoucherNo(voucherNo);
+		  return list;
+	  }  
 		  
 	  
 		  @RequestMapping(value = "/reprintOutgoingPayments", method=RequestMethod.GET) 
@@ -177,7 +181,7 @@ public class FinanceAccountingController {
 				  		outgoingPaymentDetailsReportBeen.setAmount(ihData.getAmount().toString());
 				  		outgoingPaymentDetailsReportBeen.setRemarks(ihData.getRemarks());
 				  		outgoingPaymentDetailsReportBeen.setPaydate(ihData.getPaymentVoucherNo().getPaymentDate());
-				  		outgoingPaymentDetailsReportBeen.setPaytype(ihData.getPaymentVoucherNo().getPayType());
+				  		outgoingPaymentDetailsReportBeen.setPaytype(ihData.getPaymentVoucherNo().getPaymentMean());
 				  		outgoingPaymentDetailsReportBeen.setDuedate(ihData.getPaymentVoucherNo().getDueDate());
 				  		outgoingPaymentDetailsReportBeen.setPaytime(ihData.getPaymentVoucherNo().getPaymentTime());
 				  		outgoingPaymentDetailsReportBeen.setToorderrof(ihData.getPaymentVoucherNo().getToOrderOf());
@@ -212,18 +216,17 @@ public class FinanceAccountingController {
 			  return mav;
 		  }
 		  
-		  @RequestMapping(value = "/chequePrint", method=RequestMethod.GET) 
-		  public String getchequePrint(Map<String, String> model) { 
-			 // incomingReceiptSummaryRpt ageAnalysisReport
+		  @RequestMapping("/chequePrint") 
+		  public String getchequePrint() { 
 			  return "chequePrint";
 		  }
 		  
 		  @RequestMapping(value = "/chequePreview",method=RequestMethod.POST)
 		  public ModelAndView chequePreview(HttpServletResponse response,HttpSession session) {
-			 // System.out.println("repStatu="+repStatu);
+			  
 			  ModelAndView mav = new ModelAndView("chequePrint");
 			  
-			  String centerid=session.getAttribute("centerid")+"";
+			  String centerid=(String) session.getAttribute("centerid");
 			  CenterMaster centerMaster=centerService.getcenterById(centerid);
 			 
 			  String chequePrintconfig=centerMaster.getPartner_ID().getChequePrintConfig();

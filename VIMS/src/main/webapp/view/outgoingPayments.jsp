@@ -124,16 +124,16 @@ table.table td .add {
 											
 												<fieldset>
 												  <legend> Payment Type </legend>
-												  <label><form:radiobutton path="acType" value="Vendor" /> Vendor </label>
-												  <label><form:radiobutton path="acType" value="Account" /> Account </label>
+												  <label><form:radiobutton path="paymentType" value="Vendor" disabled="true"/> Vendor </label>
+												  <label><form:radiobutton path="paymentType" value="Account" checked="checked"/> Account </label>
 												</fieldset>
 
 												<div class="row">
 													<div class="col-sm-3">
-														<label class="l-fontst">Payment Due Date</label>
+														<label>Payment Due Date</label>
 													</div>
 													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="date"
+														<form:input class="form-control" type="date"
 															path="dueDate" onchange="" id="payDueDate"
 															required="required" />
 
@@ -142,31 +142,31 @@ table.table td .add {
 												<br>
 												<div class="row">
 													<div class="col-sm-3">
-														<label class="l-fontst">To Order of</label>
+														<label>To Order of</label>
 													</div>
 													<div class="col-sm">
-														<form:input class="form-control fontst"
+														<form:input class="form-control"
 															path="toOrderOf" onchange="" id="toOrderOf" />
 													</div>
 												</div>
 												<br>
 												<div class="row">
 													<div class="col-sm-3">
-														<label class="l-fontst">Pay To</label>
+														<label>Pay To</label>
 													</div>
 													<div class="col-sm">
-														<form:input class="form-control fontst"
+														<form:input class="form-control"
 															path="payTo" onchange="" id="payTo" />
 													</div>
 												</div>
 												<br>
 												<div class="row">
 													<div class="col-sm-3">
-														<label class="l-fontst">Ref. No</label>
+														<label>Ref. No</label>
 													</div>
 													<div class="col-sm-6">
-														<form:input class="form-control fontst"
-															path="refNo" onchange="" id="payTo" />
+														<form:input class="form-control"
+															path="refNo" onchange="" id="refNo" />
 													</div>
 												</div>
 												
@@ -175,9 +175,9 @@ table.table td .add {
 
 												<fieldset>
 													<legend> Payment Mean</legend>
-													<label><form:radiobutton path="payType" value="Cash" /> Cash</label>
-													<label><form:radiobutton path="payType" value="Cheque" /> Cheque</label> 
-													<label><form:radiobutton path="payType" value="BankTransfer" /> Bank Transfer</label>
+													<label><form:radiobutton path="paymentMean" value="Cash" /> Cash</label>
+													<label><form:radiobutton path="paymentMean" value="Cheque" /> Cheque</label> 
+													<label><form:radiobutton path="paymentMean" value="BankTransfer" disabled="true"/> Bank Transfer</label>
 												</fieldset>
 
 
@@ -200,14 +200,14 @@ table.table td .add {
 										
 										<div class="form-group row">
 											<div class="col-lg-4">
-												<label class="l-fontst">GL Account</label>
-												<input class="form-control fontst" type="text"
+												<label>GL Account</label>
+												<input class="form-control" type="text"
 													 id="glAccNo" />
 
 											</div>
 											<div class="col-lg-3">
-												<label class="l-fontst">Amount</label>
-												<input class="form-control fontst" type="text"
+												<label>Amount</label>
+												<input class="form-control" type="text"
 													 id="amount" />
 											</div>
 											<div class="col-lg">
@@ -216,15 +216,15 @@ table.table td .add {
 										</div>
 										<div class="form-group row">
 											<div class="col-lg-4">
-												<label class="l-fontst">Remarks</label>
-												<textarea class="form-control fontst" 
+												<label>Remarks</label>
+												<textarea class="form-control" 
 													id="remarks"></textarea>
 											</div>										
 										</div>
 										
 									    <div class="table-responsive">
 									        <div class="table-wrapper">
-									            <table class="table table-bordered">
+									            <table class="table table-bordered" id="table1">
 									                <thead>
 									                    <tr>
 									                        <th>GL Ac No</th>
@@ -242,7 +242,7 @@ table.table td .add {
 									    </div>
 
     
-										<div class="row">
+<%-- 										<div class="row">
 											<div class="col-lg-4">
 											</div>
 											<div class="col-lg-4">
@@ -250,14 +250,18 @@ table.table td .add {
 											</div>
 											<div class="col-lg">
 												<form:input class="form-control" path="totalPayment" placeholder="0.00"/>
+												<span id="sumval"></span>
 											</div>
 											<div class="col-lg">
 											</div>
-										</div>
+										</div> --%>
 
 										<button type="submit"
-											class="btn btn-success tabStyle"
+											class="btn btn-success"
 											id="btnSubmit">Process Payment</button>
+										<button type="reset"
+											class="btn btn-warning"
+											id="btnClear">Clear</button>
 
 									</form:form>
 
@@ -299,7 +303,8 @@ $(document).ready(function(){
             '<td><input type="text" class="form-control" name="amount" value="'+amount+'"></td>' +
 			'<td>' + actions + '</td>' +
         '</tr>';
-    	$("table tbody").append(row);		
+    	$("table tbody").append(row);
+    	//caltotalAmount();
 		$("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
         $('[data-toggle="tooltip"]').tooltip();
     });
@@ -338,6 +343,20 @@ $(document).ready(function(){
 		$(".add-new").removeAttr("disabled");
     });
 });
+
+</script>
+<script>
+function caltotalAmount(){
+	var table = document.getElementById("table1"), sumVal = 0;
+
+	for(var i = 1; i < table.rows.length; i++)
+	{
+	    sumVal = sumVal + parseInt(table.rows[i].cells[3].innerHTML);
+	}
+
+	document.getElementById("sumval").innerHTML = "Sum Value = " + sumVal;
+	console.log(sumVal)	
+}
 </script>
 
 </body>

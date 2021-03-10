@@ -16,35 +16,27 @@ public class OutgoingPaymentHead {
 	@Column(name = "PaymentVoucherNo")
 	private String paymentVoucherNo;
 	
-	@Column(name = "AcType")
-	private String acType;
-	
-	//not set
-	@Column(name = "PaymentDate")
-	private String paymentDate;
-	
-	//not set
-	@Column(name = "PaymentTime")
-	private String paymentTime;
+	@Column(name = "RefNo")
+	private String refNo;
 	
 	@Column(name = "DueDate")
 	private String dueDate;
+	
+	@Column(name = "PaymentType")
+	private String paymentType;
 	
 	@Column(name = "ToOrderOf")
 	private String toOrderOf;
 	
 	@Column(name = "payTo")
 	private String payTo;
-	
+
+	@Column(name = "PaymentMean")
+	private String paymentMean;
+
 	//should calculate
 	@Column(name = "totalPayment")
 	private Double totalPayment;
-	
-	@Column(name = "PayType")
-	private String payType;
-	
-	@Column(name = "ChequeNo")
-	private String chequeNo;
 	
 	//set as active
 	@Column(name = "Status")
@@ -54,13 +46,41 @@ public class OutgoingPaymentHead {
 	@Column(name = "ChequePrint")
 	private String chequePrint;
 	
+	//not set
+	@Column(name = "PaymentDate")
+	private String paymentDate;
+	
+	//not set
+	@Column(name = "PaymentTime")
+	private String paymentTime;
+	
 	//set default center
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "Center_ID", referencedColumnName = "Center_ID")
 	private CenterMaster center_ID;
-	
-	@Column(name = "RefNo")
-	private String refNo;
+
+	public OutgoingPaymentHead() {
+		super();
+	}
+
+	public OutgoingPaymentHead(String paymentVoucherNo, String refNo, String dueDate, String paymentType,
+			String toOrderOf, String payTo, String paymentMean, Double totalPayment, String status, String chequePrint,
+			String paymentDate, String paymentTime, CenterMaster center_ID) {
+		super();
+		this.paymentVoucherNo = paymentVoucherNo;
+		this.refNo = refNo;
+		this.dueDate = dueDate;
+		this.paymentType = paymentType;
+		this.toOrderOf = toOrderOf;
+		this.payTo = payTo;
+		this.paymentMean = paymentMean;
+		this.totalPayment = totalPayment;
+		this.status = status;
+		this.chequePrint = chequePrint;
+		this.paymentDate = paymentDate;
+		this.paymentTime = paymentTime;
+		this.center_ID = center_ID;
+	}
 
 	public String getPaymentVoucherNo() {
 		return paymentVoucherNo;
@@ -70,28 +90,12 @@ public class OutgoingPaymentHead {
 		this.paymentVoucherNo = paymentVoucherNo;
 	}
 
-	public String getAcType() {
-		return acType;
+	public String getRefNo() {
+		return refNo;
 	}
 
-	public void setAcType(String acType) {
-		this.acType = acType;
-	}
-
-	public String getPaymentDate() {
-		return paymentDate;
-	}
-
-	public void setPaymentDate(String paymentDate) {
-		this.paymentDate = paymentDate;
-	}
-
-	public String getPaymentTime() {
-		return paymentTime;
-	}
-
-	public void setPaymentTime(String paymentTime) {
-		this.paymentTime = paymentTime;
+	public void setRefNo(String refNo) {
+		this.refNo = refNo;
 	}
 
 	public String getDueDate() {
@@ -100,6 +104,14 @@ public class OutgoingPaymentHead {
 
 	public void setDueDate(String dueDate) {
 		this.dueDate = dueDate;
+	}
+
+	public String getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
 	}
 
 	public String getToOrderOf() {
@@ -118,28 +130,20 @@ public class OutgoingPaymentHead {
 		this.payTo = payTo;
 	}
 
+	public String getPaymentMean() {
+		return paymentMean;
+	}
+
+	public void setPaymentMean(String paymentMean) {
+		this.paymentMean = paymentMean;
+	}
+
 	public Double getTotalPayment() {
 		return totalPayment;
 	}
 
 	public void setTotalPayment(Double totalPayment) {
 		this.totalPayment = totalPayment;
-	}
-
-	public String getPayType() {
-		return payType;
-	}
-
-	public void setPayType(String payType) {
-		this.payType = payType;
-	}
-
-	public String getChequeNo() {
-		return chequeNo;
-	}
-
-	public void setChequeNo(String chequeNo) {
-		this.chequeNo = chequeNo;
 	}
 
 	public String getStatus() {
@@ -158,6 +162,22 @@ public class OutgoingPaymentHead {
 		this.chequePrint = chequePrint;
 	}
 
+	public String getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(String paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+
+	public String getPaymentTime() {
+		return paymentTime;
+	}
+
+	public void setPaymentTime(String paymentTime) {
+		this.paymentTime = paymentTime;
+	}
+
 	public CenterMaster getCenter_ID() {
 		return center_ID;
 	}
@@ -165,38 +185,5 @@ public class OutgoingPaymentHead {
 	public void setCenter_ID(CenterMaster center_ID) {
 		this.center_ID = center_ID;
 	}
-
-	public String getRefNo() {
-		return refNo;
-	}
-
-	public void setRefNo(String refNo) {
-		this.refNo = refNo;
-	}
-
-	public OutgoingPaymentHead() {
-		super();
-	}
-
-	public OutgoingPaymentHead(String paymentVoucherNo, String acType, String paymentDate, String paymentTime,
-			String dueDate, String toOrderOf, String payTo, Double totalPayment, String payType, String chequeNo,
-			String status, String chequePrint, CenterMaster center_ID, String refNo) {
-		super();
-		this.paymentVoucherNo = paymentVoucherNo;
-		this.acType = acType;
-		this.paymentDate = paymentDate;
-		this.paymentTime = paymentTime;
-		this.dueDate = dueDate;
-		this.toOrderOf = toOrderOf;
-		this.payTo = payTo;
-		this.totalPayment = totalPayment;
-		this.payType = payType;
-		this.chequeNo = chequeNo;
-		this.status = status;
-		this.chequePrint = chequePrint;
-		this.center_ID = center_ID;
-		this.refNo = refNo;
-	}
-
 
 }
