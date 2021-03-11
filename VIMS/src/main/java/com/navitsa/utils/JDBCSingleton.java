@@ -13,11 +13,6 @@ import com.navitsa.entity.TestCategory;
 import com.navitsa.entity.VehicleClass;
 
 public class JDBCSingleton {
-	
-	//https://www.javatpoint.com/singleton-design-pattern-in-java#advantage
-	// Step 1
-
-	// create a JDBCSingleton class.
 
 	// static member holds only one instance of the JDBCSingleton class.
 
@@ -40,7 +35,7 @@ public class JDBCSingleton {
 
 		Connection con = null;
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/online_appointment?serverTimezone=UTC","root","peLa071it");
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/online_appointment?serverTimezone=UTC","root","Lion311");
 		return con;
 
 	}
@@ -71,7 +66,6 @@ public class JDBCSingleton {
                 ps.setString(7, a.getCategoryId().getCategoryId());
                 ps.setDate(8, convertUtilToSql(a.getAppointmentDate()));
                 ps.setString(9, a.getAppointmentTime());
-                ps.setString(10, a.getStatus());
                 
                 recordCounter=ps.executeUpdate();
                 
@@ -129,7 +123,6 @@ public class JDBCSingleton {
 				
 				ao.setAppointmentDate(rs.getDate(9));
 				ao.setAppointmentTime(rs.getString(10));
-				ao.setStatus(rs.getString(11));
 				
 				list.add(ao);
 			}
