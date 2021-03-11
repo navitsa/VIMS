@@ -27,6 +27,7 @@ import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
+import com.navitsa.services.BusinessPartnerService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.FinanceAccountingService;
 import com.navitsa.services.GlAccountService;
@@ -44,20 +45,25 @@ public class FinanceAccountingController {
 	private CenterService centerService;
 	@Autowired
 	private GlAccountService glAccountService;
+	
+	@Autowired
+	private BusinessPartnerService bPartnerService;
+	
 
 	  @RequestMapping("/outgoingPayments")
 	  public String viewOutgoingPaymentForm(Model m,HttpSession session) {
-		  
-		  String centerid=(String) session.getAttribute("centerid");
-		  CenterMaster centerMaster=centerService.getcenterById(centerid);
-		  
-		  String nextVoucherNo = centerMaster.getPartner_ID().getOutVouFormate()+(centerMaster.getPartner_ID().getMaxVouNo()+1);
 	    
 		  OutgoingPaymentHead obj = new OutgoingPaymentHead();
-		  obj.setPaymentVoucherNo(nextVoucherNo);
 		  m.addAttribute("outgoingPaymentForm",obj);
 		  return "outgoingPayments";
 	  }
+	  
+	//Return all GLs
+	 @ModelAttribute("listGLAccounts")
+	 	public List<Glaccount> findAll(){
+		 List<Glaccount> list = glAccountService.findAll();
+		 return list;
+	 }
 	 
 	 @RequestMapping(value="/saveOutgoingPayment" ,method=RequestMethod.POST)
 	 public ModelAndView saveOutgoingPayment(@Valid @ModelAttribute("outgoingPaymentForm") OutgoingPaymentHead outgoingPaymentHead, BindingResult br,
@@ -74,14 +80,18 @@ public class FinanceAccountingController {
 		        { 		        	
 		        	try {
 		        		String centerid=(String) session.getAttribute("centerid");
-		        		CenterMaster cm=new CenterMaster(centerid);
-		      		
+		        		CenterMaster cm=centerService.getcenterById(centerid);
+		        		String nextVoucherNo = cm.getPartner_ID().getOutVouFormate()+(cm.getPartner_ID().getMaxVouNo()+1);
+		        		
+		        		outgoingPaymentHead.setPaymentVoucherNo(nextVoucherNo);
 		        		outgoingPaymentHead.setCenter_ID(cm);
 		        		outgoingPaymentHead.setStatus("Active");
-		        		outgoingPaymentHead.setChequePrint("Pending");
-		        		financeAccountingService.saveOutgoingPaymentHead(outgoingPaymentHead);
+		        		if(outgoingPaymentHead.getPaymentMean().equalsIgnoreCase("Cheque")) {
+		        			outgoingPaymentHead.setChequePrint("Pending");
+		        		}
 
 		        		List<OutgoingPaymentDetails> list = new ArrayList<OutgoingPaymentDetails>();
+		        		double totalAmount = 0;
 			       		 for(int i=0; i < glAccNo.length; i++){
 			       			OutgoingPaymentDetails paymentDetail = new OutgoingPaymentDetails();
 			       			paymentDetail.setGlAccNo(glAccNo[i]);
@@ -89,9 +99,14 @@ public class FinanceAccountingController {
 			       			paymentDetail.setRemarks(remarks[i]);
 			       			paymentDetail.setPaymentVoucherNo(outgoingPaymentHead);
 			       			list.add(paymentDetail);
+			       			totalAmount = totalAmount+amount[i];
 			    		 }
+			       		 
+			       		outgoingPaymentHead.setTotalPayment(totalAmount);
+		        		financeAccountingService.saveOutgoingPaymentHead(outgoingPaymentHead);
+		        		bPartnerService.setUpdateLastPaymentVoucherNo(cm.getPartner_ID().getPartner_ID());
 			       		financeAccountingService.saveAllOutgoingPaymentDetails(list);
-			       		
+			       		      		
 			       		ModelAndView mav = new ModelAndView("comPdfReportView");		       		
 			       		ReportViewe view =new ReportViewe();
 			       		String pdf_result = null;
@@ -221,40 +236,38 @@ public class FinanceAccountingController {
 			  return "chequePrint";
 		  }
 		  
-		  @RequestMapping(value = "/chequePreview",method=RequestMethod.POST)
+		  @RequestMapping(value = "/chequePreview",method=RequestMethod.GET)
 		  public ModelAndView chequePreview(HttpServletResponse response,HttpSession session) {
 			  
 			  ModelAndView mav = new ModelAndView("chequePrint");
 			  
 			  String centerid=(String) session.getAttribute("centerid");
 			  CenterMaster centerMaster=centerService.getcenterById(centerid);
-			 
-			  String chequePrintconfig=centerMaster.getPartner_ID().getChequePrintConfig();
-			  String cpconList[]=chequePrintconfig.split("-");
-		
 			  
-	          	ReportViewe review=new ReportViewe();
-	          	Map<String,Object> params = new HashMap<>();
-
-	        	params.put("date",StringFormaterWeb.setLineAndSpace(Integer.parseInt(cpconList[0]),Integer.parseInt(cpconList[1]))+"20/01/2020");
-	          	params.put("chequeno",StringFormaterWeb.setLineAndSpace(Integer.parseInt(cpconList[2]),Integer.parseInt(cpconList[3]))+"34343-3423525");
-	          	params.put("amount",StringFormaterWeb.setLineAndSpace(Integer.parseInt(cpconList[4]),Integer.parseInt(cpconList[5]))+"500");
-	          	params.put("amountinword",StringFormaterWeb.setLineAndSpace(Integer.parseInt(cpconList[6]),Integer.parseInt(cpconList[7]))+"fgf");
-	          	params.put("duedata",StringFormaterWeb.setLineAndSpace(Integer.parseInt(cpconList[8]),Integer.parseInt(cpconList[9]))+"01/01/2020");
-	       
-	          	String reptValue="";
+			  String coordinate = centerMaster.getPartner_ID().getChequePrintConfig();
+			  String xy[]=coordinate.split("-");
+		
+	          Map<String,Object> params = new HashMap<>();
+	          params.put("date",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[0]),Integer.parseInt(xy[1]))+"1 5 0 3 2 0 2 1");
+	          params.put("pay",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[2]),Integer.parseInt(xy[3]))+"National Institute Of Business Management");
+	          params.put("moneyInWords",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[4]),Integer.parseInt(xy[5]))+"** twelve million three hundred forty-five thousand six hundred seventy-eight Only **");
+	          params.put("moneyInNumbers",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[6]),Integer.parseInt(xy[7]))+"** 12,345,678.00 **");
+	          
+	          ReportViewe view=new ReportViewe();
+	          String pdf_result=null;
 	          	
 	         try {
-	          		reptValue=review.pdfReportViewInlineSystemOpen("chequePre.jasper","Cheque",null,params,response);
+	        	 pdf_result=view.pdfReportViewInlineSystemOpen("chequePreview.jasper","chequePreview",null,params,response);
 	          		
 	          
 	          	}catch(Exception e) {	          		
 	          		e.printStackTrace();          		
 	          	}
 	         
-			  mav.addObject("pdfViewEq", reptValue); 
+			  mav.addObject("pdfViewEq", pdf_result); 
 			  return mav;
-		  } 
+		  }
+		  
 		  @RequestMapping(value = "/chartOfAccounts", method=RequestMethod.GET) 
 		  public String createGlaccounts(Map<String, Object> model) { 
 			  Glaccount glaccount=new Glaccount();			 			  

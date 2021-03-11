@@ -116,7 +116,7 @@ table.table td .add {
 			                		<form:form action="saveOutgoingPayment" method="POST" modelAttribute="outgoingPaymentForm" id="form1">
 			                		
 			                		<div class="topcorner bg-success">
-			                			<form:input type="hidden" path="paymentVoucherNo"></form:input>
+			                			<%-- <form:input type="hidden" path="paymentVoucherNo"></form:input> --%>
 			                		</div>
 
 										<div class="form-group row">
@@ -201,8 +201,12 @@ table.table td .add {
 										<div class="form-group row">
 											<div class="col-lg-4">
 												<label>GL Account</label>
-												<input class="form-control" type="text"
-													 id="glAccNo" />
+												<select id="glAccNo" class="form-control" required>										
+													<option value=""> --SELECT--</option>																																			
+														<c:forEach items="${listGLAccounts}" var="gl">
+															<option value="${gl.glAccNo}">${gl.glAccNo} ${gl.glAccountName}</option>
+														</c:forEach>
+												</select>
 
 											</div>
 											<div class="col-lg-3">

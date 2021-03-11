@@ -149,6 +149,11 @@
 						</div>
 					</div>	
 
+					<c:if test="${pdfViewEq != null }">
+						<embed type="application/pdf" src="data:application/pdf;base64,${pdfViewEq}" 
+						style="height:600px; width:100%">
+						</embed>
+					</c:if>
 	
 				</div>			
 			</div>	

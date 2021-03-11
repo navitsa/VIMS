@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.navitsa.entity.GlPostingDetails;
 import com.navitsa.entity.GlPostingHead;
+import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.GlaccountMapping;
 import com.navitsa.repository.DocTypeRepository;
 import com.navitsa.repository.GlPostingDetailsRepository;
@@ -52,5 +53,10 @@ public class GlAccountService {
 		
 		return glPostingDetailsRepository.getProfitsAndLossData(todate,centerid);
 		
+	}
+
+	public List<Glaccount> findAll() {
+		// TODO Auto-generated method stub
+		return (List<Glaccount>) glaccountRepository.findAll();
 	}
 }
