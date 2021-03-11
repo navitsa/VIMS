@@ -16,8 +16,8 @@ public interface OutgoingPaymentHeadRepository extends CrudRepository<OutgoingPa
 	
 	@Query(value = "SELECT opd From OutgoingPaymentHead oh,OutgoingPaymentDetails opd WHERE oh.paymentDate between :fromdate and :todate and opd.paymentVoucherNo.paymentVoucherNo=oh.paymentVoucherNo order by oh.paymentDate,opd.paymentVoucherNo.paymentVoucherNo")
 	public List<OutgoingPaymentDetails> getOutgoingPaymentHeadDetailsBetweenTwoDays(@Param("fromdate") String fromdate,@Param("todate") String todate);
-	
-	
-	
-	
+
+	@Query(value = "SELECT oh From OutgoingPaymentHead oh WHERE oh.paymentMean='Cheque' AND oh.chequePrint='Pending' ")
+	public List<OutgoingPaymentHead> getPendingChequePayments();
+		
 }

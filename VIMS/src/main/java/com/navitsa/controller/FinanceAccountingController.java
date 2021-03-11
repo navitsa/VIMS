@@ -1,6 +1,9 @@
 package com.navitsa.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +35,7 @@ import com.navitsa.services.CenterService;
 import com.navitsa.services.FinanceAccountingService;
 import com.navitsa.services.GlAccountService;
 import com.navitsa.utils.DateHelperWeb;
+import com.navitsa.utils.EnglishNumberToWords;
 import com.navitsa.utils.ReportViewe;
 import com.navitsa.utils.StringFormaterWeb;
 
@@ -235,9 +239,20 @@ public class FinanceAccountingController {
 		  public String getchequePrint() { 
 			  return "chequePrint";
 		  }
+
+		//Return all Pending Cheque Payments
+		 @ModelAttribute("pendingChequePayments")
+		 	public List<OutgoingPaymentHead> getPendingChequePayments(){
+			 List<OutgoingPaymentHead> list = financeAccountingService.getPendingChequePayments();
+			 return list;
+		 }
 		  
 		  @RequestMapping(value = "/chequePreview",method=RequestMethod.GET)
-		  public ModelAndView chequePreview(HttpServletResponse response,HttpSession session) {
+		  public ModelAndView chequePreview(
+				  @RequestParam(value = "voucherNo") String voucherNo,
+				  @RequestParam(value = "chequeDate") String chequeDate,
+				  HttpServletResponse response,
+				  HttpSession session) throws ParseException {
 			  
 			  ModelAndView mav = new ModelAndView("chequePrint");
 			  
@@ -246,12 +261,15 @@ public class FinanceAccountingController {
 			  
 			  String coordinate = centerMaster.getPartner_ID().getChequePrintConfig();
 			  String xy[]=coordinate.split("-");
+			  
+			  OutgoingPaymentHead rs = financeAccountingService.getOutgoingPaymentHeadbyVoucherNo(voucherNo);
 		
 	          Map<String,Object> params = new HashMap<>();
-	          params.put("date",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[0]),Integer.parseInt(xy[1]))+"1 5 0 3 2 0 2 1");
-	          params.put("pay",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[2]),Integer.parseInt(xy[3]))+"National Institute Of Business Management");
-	          params.put("moneyInWords",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[4]),Integer.parseInt(xy[5]))+"** twelve million three hundred forty-five thousand six hundred seventy-eight Only **");
-	          params.put("moneyInNumbers",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[6]),Integer.parseInt(xy[7]))+"** 12,345,678.00 **");
+	          params.put("date",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[0]),Integer.parseInt(xy[1]))+chequeDate);
+	          params.put("pay",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[2]),Integer.parseInt(xy[3]))+rs.getPayTo());
+	          params.put("moneyInWords",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[4]),Integer.parseInt(xy[5]))+"** "+EnglishNumberToWords.convert(rs.getTotalPayment().longValue())+" only **");
+	          Double a = rs.getTotalPayment()*100;
+	          params.put("moneyInNumbers",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[6]),Integer.parseInt(xy[7]))+"** "+StringFormaterWeb.formatToRupees(a.longValue())+" **");
 	          
 	          ReportViewe view=new ReportViewe();
 	          String pdf_result=null;

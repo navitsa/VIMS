@@ -15,6 +15,9 @@
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>       
+.fontColor{color: blue;}
+</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -47,32 +50,43 @@
 						<div class="col-xl-4 mb-4">
 			              <div class="card shadow mb-4 border-left-primary">
 			                <div class="card-body">
-			                	<form:form action="chequePreview"  method="POST">
+			                	<form:form action="chequePreview"  method="GET">
 			                		
 			                		<div class="form-group row">
 			                			<div class="col-lg">
-											<select id="pendingPayment" class="form-control" required="true" onchange="getPaymentDetails(this.value)">									
+											<select name="voucherNo" id="pendingPayment" class="form-control" required onchange="getPaymentDetails(this.value)">									
 												<option value="">Select Pending Payment</option>
-												<option value="ORE1">ORE1</option>																																			
+												<c:forEach items="${pendingChequePayments}" var="x">
+													<option value="${x.paymentVoucherNo}">${x.paymentVoucherNo}</option>
+												</c:forEach>																																		
 											</select>
 			                			</div>
 			                		</div>
 			                		<div class="form-group row">
 			                			<div class="col-lg">
-											<label for="chequeNo" class="text-gray-900">Cheque No.</label>
+			                				<label for="chequeDate">Cheque Date</label>
+											<input class="form-control" type="date" name="chequeDate" required/>
+			                			</div>
+			                		</div>
+			                		<div class="form-group row">
+			                			<div class="col-lg">
+											<label for="chequeNo">Cheque No.</label>
 											<input class="form-control"/>
 										</div>
 									</div>
 			                		<div class="form-group row">
 			                			<div class="col-lg">
-											<select id="bank" class="form-control" required="true">									
-												<option value="">Select Bank</option>																																			
+											<select id="bank" class="form-control">									
+												<option value="">Select Bank</option>
+												<option value="">HNB</option>
+												<option value="">COMMERCIAL</option>
+												<option value="">SEYLAN</option>																																			
 											</select>
 			                			</div>
 			                		</div>
 			                		<div class="form-group row">
 			                			<div class="col-lg">
-											<select id="bankAccount" class="form-control" required="true">									
+											<select id="bankAccount" class="form-control">									
 												<option value="">Select Bank Account</option>																																			
 											</select>
 			                			</div>
@@ -92,39 +106,39 @@
 		                		<div class="form-group row">
 		                			<div class="col-lg">
 		                				<label>Voucher No. :</label>
-		                				<label id="voucherNo"></label>
+		                				<label id="voucherNo" class="fontColor"></label>
 		                			</div>
 		                			<div class="col-lg">
 		                				<label>Ref No. :</label>
-		                				<label id="refNo"></label>
+		                				<label id="refNo" class="fontColor"></label>
 		                			</div>
 		                		</div>
 		                		<div class="form-group row">
 		                			<div class="col-lg">
 		                				<label>Payment Type :</label>
-		                				<label id="paymentType"></label>
+		                				<label id="paymentType" class="fontColor"></label>
 		                			</div>
 		                			<div class="col-lg">
 		                				<label>Due Date :</label>
-		                				<label id="dueDate"></label>
+		                				<label id="dueDate" class="fontColor"></label>
 		                			</div>
 		                		</div>
 		                		<div class="form-group row">
 		                			<div class="col-lg">
 		                				<label>To Order of :</label>
-		                				<label id="toOrderof"></label>
+		                				<label id="toOrderof" class="fontColor"></label>
 		                			</div>
 		                		</div>
 		                		<div class="form-group row">
 		                			<div class="col-lg">
 		                				<label>Pay to :</label>
-		                				<label id="payTo"></label>
+		                				<label id="payTo" class="fontColor"></label>
 		                			</div>
 		                		</div>
 		                		<div class="form-group row">
 		                			<div class="col-lg">
 		                				<label>Payment Mean :</label>
-		                				<label id="paymentMean"></label>
+		                				<label id="paymentMean" class="fontColor"></label>
 		                			</div>
 		                		</div>
 		                		<div class="form-group row">

@@ -80,4 +80,7 @@ public class FinanceAccountingService {
 	public Glaccount getGlaccountbyId(String glaccno) {
 		return  glaccountRepository.getById(glaccno);
 	}
+	public List<OutgoingPaymentHead> getPendingChequePayments() {
+		return outgoingPaymentHeadRepo.getPendingChequePayments();
+	}
 }

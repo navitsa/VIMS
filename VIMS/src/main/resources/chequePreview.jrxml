@@ -12,31 +12,31 @@
 	</background>
 	<pageHeader>
 		<band height="35" splitType="Stretch">
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="536" height="35" uuid="bbc11d50-eb54-4938-8809-3584ae391a2d"/>
 				<textElement>
-					<font size="12"/>
+					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="536" height="35" uuid="5f87e3e8-a320-4704-b36c-e6958a4c971a"/>
 				<textElement>
-					<font size="12"/>
+					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{pay}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="536" height="35" uuid="3e50e9ae-6806-4b53-a21f-c9b861611e8c"/>
 				<textElement>
-					<font size="12"/>
+					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{moneyInWords}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="536" height="35" uuid="817db3e5-f7c6-4bac-bf28-cc5c1c964481"/>
 				<textElement>
-					<font size="12"/>
+					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{moneyInNumbers}]]></textFieldExpression>
 			</textField>
