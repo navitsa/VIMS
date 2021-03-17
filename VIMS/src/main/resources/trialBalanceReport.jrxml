@@ -110,11 +110,11 @@
 				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="336" y="72" width="489" height="19" uuid="efbe7fb6-ff52-48e6-bc96-db9ab839cdd9"/>
-				<textElement textAlignment="Right">
+				<reportElement x="112" y="72" width="622" height="19" uuid="efbe7fb6-ff52-48e6-bc96-db9ab839cdd9"/>
+				<textElement textAlignment="Center">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{fromdate}+" To "+$P{todate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["For the Period of "+$P{fromdate}+" To "+$P{todate}]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="12" y="11" width="100" height="79" uuid="636fcc76-f4a0-44f3-ab11-9cb9423558a4"/>
@@ -134,7 +134,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[GL Account]]></text>
+				<text><![CDATA[ Account]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="414" y="0" width="205" height="23" backcolor="#CCFFFF" uuid="a0bae441-93b5-4065-92e3-20bf3220e09f"/>

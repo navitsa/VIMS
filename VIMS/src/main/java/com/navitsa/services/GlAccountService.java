@@ -59,4 +59,10 @@ public class GlAccountService {
 		// TODO Auto-generated method stub
 		return (List<Glaccount>) glaccountRepository.findAll();
 	}
+	public String[][] getGlPostingDateByGlaccno(String fromdate,String todate,String glaccno,String centerid){
+		
+		return glPostingDetailsRepository.getGlPostingDateByGlaccno(fromdate,todate,glaccno,centerid);
+		  	
+	}
+	
 }

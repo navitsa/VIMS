@@ -107,6 +107,7 @@ import com.navitsa.services.AppointmentService;
 import com.navitsa.services.BusinessPartnerService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.DocumentScrvice;
+import com.navitsa.services.FinanceAccountingService;
 import com.navitsa.services.GlAccountService;
 import com.navitsa.services.LaneServices;
 import com.navitsa.services.RegionalService;
@@ -119,6 +120,9 @@ import com.navitsa.utils.EnglishNumberToWords;
 import com.navitsa.utils.FTPUploader;
 import com.navitsa.utils.ReportViewe;
 import com.navitsa.utils.StringFormaterWeb;
+import com.prime.hrm.entity.Bank;
+import com.prime.hrm.entity.BankMaster;
+import com.prime.hrm.entity.PartnerBankAccount;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
@@ -169,6 +173,9 @@ public class VehicleController {
 	
 	@Autowired
 	GlAccountService glAccountService;
+	
+	@Autowired
+	private FinanceAccountingService financeAccountingService;
 	
 	@ModelAttribute("statusMap")
 	public Map<String, String> getCountryList() {
@@ -1835,7 +1842,8 @@ System.out.println("ftp");
 				  	VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(reciptHed.getvRegisterID().getVregID());
 			  	String tokValue=vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),reciptHed.getNetTotal(),reciptHed.getvRegisterID().getVregID(),response);
 			  	mav.addObject("pdftokValue", tokValue);
-			  	System.out.println("jjjjj="+tokValue);
+			  	System.out.println("reptValue="+reptValue);
+			 	System.out.println("pdftokValue="+tokValue);
 	         return mav;
 		  }
 		  
@@ -1850,15 +1858,19 @@ System.out.println("ftp");
 			  LocalDateTime now = LocalDateTime.now(); 
 			  	ReceiptHead reciptHed=vehicleService.getReciptHedDetailByRecNo(reccno);
 			  	int days=DateHelperWeb.stringDateDiff(reciptHed.getRecDate(),now.toString());
+			  System.out.println(reciptHed);
+			  	
 			  	if(!reciptHed.getStatus().toString().equals("ACTIVE")) {
 			  		
 			  		return "INACTIVE";
 			  		
-			  	}else if(days!=0) {
+			  	}
+			  	else if(days!=0) {
 			  		
 			  		return "BACKDATE";
 			  		
-			  	}else{
+			  	}
+			  	else{
 			  	reciptHed.getvRegisterID();
 			  	VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(reciptHed.getvRegisterID().getVregID());
 			  	Customer  cusdetail=usersService.viewCustomersDetailByID(vehiclereg.getCusid().getId());
@@ -3335,7 +3347,7 @@ System.out.println("ftp");
 		vehicleService.saveIncomingReceiptHead(incomingReceiptHead);
 		vehicleService.saveAllIncomingReceiptDetails(incomingReceiptDetailsList);
 		
-		if(paytype.equals("Cash")) {
+		if(paytype.equals("Cash")||paytype.equals("CreditCard")||paytype.equals("Cheque")) {
 		
 		//GL Posting   -- Cash Receipt--------- Doc id=1
 		 List<GlPostingDetails> glPostingDetailsList=new ArrayList<>();
@@ -3357,6 +3369,7 @@ System.out.println("ftp");
           
       	
 	            for(GlaccountMapping gmresult:glMappingResult) {
+	          if(gmresult.getType().equals(paytype)) {  	
            	GlPostingDetails glPostingDetails1=new GlPostingDetails();
            	glPostingDetails1.setJournalNo(glPostingHead);
            	
@@ -3373,7 +3386,7 @@ System.out.println("ftp");
            	glPostingDetails2.setType("C");
            	glPostingDetails2.setAmount(incomingReceiptHead.getPayAmt());
            	glPostingDetailsList.add(glPostingDetails2);
-           	
+	          }
            	
            		
            	}
@@ -3383,7 +3396,57 @@ System.out.println("ftp");
 		   glAccountService.saveGlPostingHeadRepository(glPostingHead);
 	     	glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
           
-		}
+		}else if(paytype.equals("BankTransfer")) {
+			
+			//GL Posting   -- Cash Receipt--------- Doc id=1
+			 List<GlPostingDetails> glPostingDetailsList=new ArrayList<>();
+			List<GlaccountMapping> glMappingResult=glAccountService.getGlaccountMappingByDocId(3);
+			
+			GlPostingHead glPostingHead=new GlPostingHead();
+	          glPostingHead.setDocNo(incomingReceiptHead.getInRecNo());
+	          
+	          DocType docType=new DocType();
+	          docType.setDocid(3);
+	          
+	          glPostingHead.setDocid(docType);
+	          glPostingHead.setDate(formatter.format(date));
+	          glPostingHead.setTime(time.format(formattertime));
+	          glPostingHead.setCenterID(centerMaster);
+	          glPostingHead.setStatus("ACTIVE");
+			
+			
+	          
+	      	
+		            for(GlaccountMapping gmresult:glMappingResult) {
+		            	  if(gmresult.getType().equals("BankTransfer")) {     	
+	           	GlPostingDetails glPostingDetails1=new GlPostingDetails();
+	           	glPostingDetails1.setJournalNo(glPostingHead);
+	           	
+	           	glPostingDetails1.setGlAccNo(new Glaccount(glAccno));
+	           	
+	           	glPostingDetails1.setType("D");
+	           	glPostingDetails1.setAmount(incomingReceiptHead.getPayAmt());
+	           	glPostingDetailsList.add(glPostingDetails1);
+	           	
+	           	
+	           	GlPostingDetails glPostingDetails2=new GlPostingDetails();
+	           	glPostingDetails2.setJournalNo(glPostingHead);
+	           	glPostingDetails2.setGlAccNo(new Glaccount(gmresult.getcR()));
+	           	glPostingDetails2.setType("C");
+	           	glPostingDetails2.setAmount(incomingReceiptHead.getPayAmt());
+	           	glPostingDetailsList.add(glPostingDetails2);
+	           	
+		            	  }
+	           	
+	           		
+	           	}
+	          
+		   	   glPostingHead.setTotalDR(incomingReceiptHead.getPayAmt());
+		  	   glPostingHead.setTotalCR(incomingReceiptHead.getPayAmt());
+			   glAccountService.saveGlPostingHeadRepository(glPostingHead);
+		     	glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+	          
+			}
 		
 		
 		
@@ -3394,6 +3457,15 @@ System.out.println("ftp");
 	 
 	 return mav;
 	}	
+	
+	@ModelAttribute("getBankAccount")
+	public List<PartnerBankAccount> getbankBranchListDetails() {
+		List<PartnerBankAccount> allBank=financeAccountingService.getPartnerBankAccountAll();
+		return allBank;
+	}
+	
+	
+	
 	
 	public String incomingReceiptGeaerate(IncomingReceiptHead incomingReceiptHead,
 	   List<IncomingReceiptDetails> incomingReceiptDetailsList, HttpServletResponse response) {
@@ -4019,8 +4091,20 @@ System.out.println("ftp");
 
 		}
 		
+		@ModelAttribute("bankNameMasterList")
+		public List<BankMaster> getBankMasterDetails() {
+			List<BankMaster> allBank=financeAccountingService.getBankMasterAll();
+			return allBank;
+		}
 		
-		
+		@RequestMapping(value = "getBankAccountByBank", method = RequestMethod.GET)
+		public @ResponseBody List<PartnerBankAccount> getBankAccountByBank( @RequestParam String bankid) 
+		{
+ 
+			return financeAccountingService.getBankAccountByBank(bankid);
+		   
+
+		}
 		
 		//editLaneAllocation
 }

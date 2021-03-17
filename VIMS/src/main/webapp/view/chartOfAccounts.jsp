@@ -34,7 +34,7 @@
 					<div class="page-inner py-3">
 						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 							<div class="col-xl-4 col-lg-4">
-								 <h2 class="text-white pb-2 fw-bold">Chart Of Accounts</h2>
+								 <h2 class="text-white pb-2 fw-bold">Chart Of Account</h2>
 							</div>
 							<div class="col-xl-2 col-lg-2">
 								
@@ -131,7 +131,7 @@
 														<div class="form-group row">
 															<div class="col-sm-3">
 																<div class="col-sm-60 mb-1 mb-sm-3">
-																	<label >Parents Account</label>
+																	<label >Parent Account</label>
 																	<form:select class="custom-select custom-select-mb"
 																		id="parentsAccount" path="parentsAccount"
 																		>
@@ -186,7 +186,7 @@
 														<thead>
 															<tr>
 															<th>Primary Account</th>
-															<th>Parents Account</th>
+															<th>Parent Account</th>
 																<th>GL Account No</th>
 																<th>GL Account Name</th>
 																

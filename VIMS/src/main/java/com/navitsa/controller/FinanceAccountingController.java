@@ -2,6 +2,8 @@ package com.navitsa.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,13 +25,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.navitsa.Reports.GlTranctionReportBeen;
 import com.navitsa.Reports.OutgoingPaymentDetailsReportBeen;
 import com.navitsa.Reports.ProfitsAndLossBeen;
 import com.navitsa.Reports.TrialBalanceBeen;
+import com.navitsa.entity.BusinessPartner;
 import com.navitsa.entity.CenterMaster;
+import com.navitsa.entity.GlPostingDetails;
+import com.navitsa.entity.GlPostingHead;
 import com.navitsa.entity.Glaccount;
+import com.navitsa.entity.GlaccountMapping;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
+import com.navitsa.entity.VehicleModel;
 import com.navitsa.services.BusinessPartnerService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.FinanceAccountingService;
@@ -38,6 +46,9 @@ import com.navitsa.utils.DateHelperWeb;
 import com.navitsa.utils.EnglishNumberToWords;
 import com.navitsa.utils.ReportViewe;
 import com.navitsa.utils.StringFormaterWeb;
+import com.prime.hrm.entity.Bank;
+import com.prime.hrm.entity.BankMaster;
+import com.prime.hrm.entity.PartnerBankAccount;
 
 @Controller
 public class FinanceAccountingController {
@@ -49,11 +60,9 @@ public class FinanceAccountingController {
 	private CenterService centerService;
 	@Autowired
 	private GlAccountService glAccountService;
-	
 	@Autowired
-	private BusinessPartnerService bPartnerService;
+	private BusinessPartnerService bPartnerService; 
 	
-
 	  @RequestMapping("/outgoingPayments")
 	  public String viewOutgoingPaymentForm(Model m,HttpSession session) {
 	    
@@ -138,11 +147,12 @@ public class FinanceAccountingController {
 	
 	 }  
 
+
 	  @RequestMapping(value = "/getOutgoingPaymentDetails", method=RequestMethod.GET) 
 	  public @ResponseBody List<OutgoingPaymentDetails> getOutgoingPaymentDetails(@RequestParam String voucherNo) { 			  
 		  List<OutgoingPaymentDetails> list = financeAccountingService.getOutgoingPaymentDetailsByVoucherNo(voucherNo);
 		  return list;
-	  }  
+	  }
 		  
 	  
 		  @RequestMapping(value = "/reprintOutgoingPayments", method=RequestMethod.GET) 
@@ -235,57 +245,55 @@ public class FinanceAccountingController {
 			  return mav;
 		  }
 		  
-		  @RequestMapping("/chequePrint") 
-		  public String getchequePrint() { 
+		  @RequestMapping(value = "/chequePrint", method=RequestMethod.GET) 
+		  public String getchequePrint(Map<String, String> model) { 
+			 // incomingReceiptSummaryRpt ageAnalysisReport
 			  return "chequePrint";
 		  }
-
-		//Return all Pending Cheque Payments
-		 @ModelAttribute("pendingChequePayments")
-		 	public List<OutgoingPaymentHead> getPendingChequePayments(){
-			 List<OutgoingPaymentHead> list = financeAccountingService.getPendingChequePayments();
-			 return list;
-		 }
-		  
-		  @RequestMapping(value = "/chequePreview",method=RequestMethod.GET)
-		  public ModelAndView chequePreview(
-				  @RequestParam(value = "voucherNo") String voucherNo,
-				  @RequestParam(value = "chequeDate") String chequeDate,
-				  HttpServletResponse response,
-				  HttpSession session) throws ParseException {
-			  
-			  ModelAndView mav = new ModelAndView("chequePrint");
-			  
-			  String centerid=(String) session.getAttribute("centerid");
-			  CenterMaster centerMaster=centerService.getcenterById(centerid);
-			  
-			  String coordinate = centerMaster.getPartner_ID().getChequePrintConfig();
-			  String xy[]=coordinate.split("-");
-			  
-			  OutgoingPaymentHead rs = financeAccountingService.getOutgoingPaymentHeadbyVoucherNo(voucherNo);
-		
-	          Map<String,Object> params = new HashMap<>();
-	          params.put("date",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[0]),Integer.parseInt(xy[1]))+chequeDate);
-	          params.put("pay",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[2]),Integer.parseInt(xy[3]))+rs.getPayTo());
-	          params.put("moneyInWords",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[4]),Integer.parseInt(xy[5]))+"** "+EnglishNumberToWords.convert(rs.getTotalPayment().longValue())+" only **");
-	          Double a = rs.getTotalPayment()*100;
-	          params.put("moneyInNumbers",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[6]),Integer.parseInt(xy[7]))+"** "+StringFormaterWeb.formatToRupees(a.longValue())+" **");
-	          
-	          ReportViewe view=new ReportViewe();
-	          String pdf_result=null;
-	          	
-	         try {
-	        	 pdf_result=view.pdfReportViewInlineSystemOpen("chequePreview.jasper","chequePreview",null,params,response);
-	          		
-	          
-	          	}catch(Exception e) {	          		
-	          		e.printStackTrace();          		
-	          	}
-	         
-			  mav.addObject("pdfViewEq", pdf_result); 
-			  return mav;
-		  }
-		  
+			//Return all Pending Cheque Payments
+			 @ModelAttribute("pendingChequePayments")
+			 	public List<OutgoingPaymentHead> getPendingChequePayments(){
+				 List<OutgoingPaymentHead> list = financeAccountingService.getPendingChequePayments();
+				 return list;
+			 }
+			 @RequestMapping(value = "/chequePreview",method=RequestMethod.GET)
+			  public ModelAndView chequePreview(
+					  @RequestParam(value = "voucherNo") String voucherNo,
+					  @RequestParam(value = "chequeDate") String chequeDate,
+					  HttpServletResponse response,
+					  HttpSession session) throws ParseException {
+				  
+				  ModelAndView mav = new ModelAndView("chequePrint");
+				  
+				  String centerid=(String) session.getAttribute("centerid");
+				  CenterMaster centerMaster=centerService.getcenterById(centerid);
+				  
+				  String coordinate = centerMaster.getPartner_ID().getChequePrintConfig();
+				  String xy[]=coordinate.split("-");
+				  
+				  OutgoingPaymentHead rs = financeAccountingService.getOutgoingPaymentHeadbyVoucherNo(voucherNo);
+			
+		          Map<String,Object> params = new HashMap<>();
+		          params.put("date",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[0]),Integer.parseInt(xy[1]))+chequeDate);
+		          params.put("pay",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[2]),Integer.parseInt(xy[3]))+rs.getPayTo());
+		          params.put("moneyInWords",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[4]),Integer.parseInt(xy[5]))+"** "+EnglishNumberToWords.convert(rs.getTotalPayment().longValue())+" only **");
+		          Double a = rs.getTotalPayment()*100;
+		          params.put("moneyInNumbers",StringFormaterWeb.setLineAndSpace(Integer.parseInt(xy[6]),Integer.parseInt(xy[7]))+"** "+StringFormaterWeb.formatToRupees(a.longValue())+" **");
+		          
+		          ReportViewe view=new ReportViewe();
+		          String pdf_result=null;
+		          	
+		         try {
+		        	 pdf_result=view.pdfReportViewInlineSystemOpen("chequePreview.jasper","chequePreview",null,params,response);
+		          		
+		          
+		          	}catch(Exception e) {	          		
+		          		e.printStackTrace();          		
+		          	}
+		         
+				  mav.addObject("pdfViewEq", pdf_result); 
+				  return mav;
+			  }
 		  @RequestMapping(value = "/chartOfAccounts", method=RequestMethod.GET) 
 		  public String createGlaccounts(Map<String, Object> model) { 
 			  Glaccount glaccount=new Glaccount();			 			  
@@ -410,7 +418,7 @@ public class FinanceAccountingController {
 				  
 				  List<ProfitsAndLossBeen> profitsAndLossBeenList = new ArrayList<ProfitsAndLossBeen>();
 				  
-				
+				System.out.println(pnldata);
 				  	for(int i=0;i<pnldata.length;i++) {
 				  		ProfitsAndLossBeen profitsAndLossBeen=new ProfitsAndLossBeen();
 				  		
@@ -447,4 +455,231 @@ public class FinanceAccountingController {
 		 
 				
 			  }  
+			  
+			  @RequestMapping(value = "/journalVoucher", method=RequestMethod.GET) 
+			  public String journalVoucher(Map<String, Object> model) { 			  
+				  return "journalVoucher";
+			  }
+				@ModelAttribute("glaccountList")
+				public List<Glaccount> glaccountList() {
+					List<Glaccount> models = financeAccountingService.getAllGlaccounts();
+					return models;
+				}
+				@RequestMapping(value = ("/saveJournalVoucher"), method = RequestMethod.POST)
+				public String saveJournalVoucher(@RequestParam("glaccno") String[] glaccno,@RequestParam("dramt") String[] dramt,@RequestParam("cramt") String[] cramt , HttpServletResponse response,HttpSession session) {
+				
+					try {
+					    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+					    Date date = new Date();  
+					    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm:ss");
+					    LocalTime time = LocalTime.now();
+
+						  String centerid=session.getAttribute("centerid")+"";
+						  CenterMaster centerMaster=centerService.getcenterById(centerid);
+						  
+						 List<GlPostingDetails> glPostingDetailsList=new ArrayList<>();
+							List<GlaccountMapping> glMappingResult=glAccountService.getGlaccountMappingByDocId(3);
+							
+							GlPostingHead glPostingHead=new GlPostingHead();
+					          glPostingHead.setDocNo(null);
+			
+					          
+					          glPostingHead.setDocid(null);
+					          glPostingHead.setDate(formatter.format(date));
+					          glPostingHead.setTime(time.format(formattertime));
+					          glPostingHead.setCenterID(centerMaster);
+					          glPostingHead.setStatus("ACTIVE"); 
+					        
+					          long crtot=0;
+					          long drtot=0;
+					         for(int i=0;i<glaccno.length;i++) {
+					        	 
+					            	GlPostingDetails glPostingDetails1=new GlPostingDetails();
+					               	glPostingDetails1.setJournalNo(glPostingHead);
+					               	
+					               	glPostingDetails1.setGlAccNo(new Glaccount(glaccno[i]));
+					               	if(Long.parseLong(dramt[i])>0) {
+					               	glPostingDetails1.setType("D");
+					               	glPostingDetails1.setAmount(Long.parseLong(dramt[i])*100);
+					                drtot=drtot+Long.parseLong(dramt[i]);
+					               	}
+					               	
+					               	if(Long.parseLong(cramt[i])>0) {
+					               	glPostingDetails1.setType("C");
+					               	glPostingDetails1.setAmount(Long.parseLong(cramt[i])*100);
+					               	crtot=crtot+Long.parseLong(cramt[i]);
+					               	}
+							           
+							          
+					               	glPostingDetailsList.add(glPostingDetails1);
+					        	 
+					        	 
+					         }
+					          
+						   	   glPostingHead.setTotalDR(drtot);
+						  	   glPostingHead.setTotalCR(crtot);
+					          
+							   glAccountService.saveGlPostingHeadRepository(glPostingHead);
+						     	glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+					          
+					          
+					          
+					
+					}catch(Exception e) {
+						System.out.println(e);
+					
+					}
+					return "redirect:/journalVoucher.do";
+					
+				}
+				  @RequestMapping(value = "/glTranctionReport", method=RequestMethod.GET) 
+				  public String glTranctionReport(Map<String, Object> model) { 			  
+					  return "glTranctionReport";
+				  }
+					
+				  @RequestMapping(value = "/glTranctionReportPreview",method=RequestMethod.POST)
+				  public ModelAndView trialBalancePreview(String fromdate,String todate,String glaccno,HttpServletResponse response,HttpSession session) {
+					 // System.out.println("repStatu="+repStatu);
+					  ModelAndView mav = new ModelAndView("glTranctionReport");
+					  
+					  String centerid=session.getAttribute("centerid")+"";
+					  CenterMaster centerMaster=centerService.getcenterById(centerid);
+					  
+					 String title="";
+					  String[][] glpostData=glAccountService.getGlPostingDateByGlaccno(fromdate,todate,glaccno,centerid);
+					  
+					  List<GlTranctionReportBeen> glTranctionReportBeenList = new ArrayList<GlTranctionReportBeen>();
+					 //  System.out.println(glpostData);
+					
+					  	for(int i=0;i<glpostData.length;i++) {
+					  		//System.out.println(glpostData[i][0].toString());
+					  		GlTranctionReportBeen glTranctionReportBeen=new GlTranctionReportBeen();
+					  		
+					  		glTranctionReportBeen.setJournalno(glpostData[i][0].toString());
+					  		glTranctionReportBeen.setDoctype(glpostData[i][1].toString());
+					  		glTranctionReportBeen.setDocument(glpostData[i][2].toString());
+					  		glTranctionReportBeen.setPrimaryaccount(glpostData[i][4].toString());
+					  		glTranctionReportBeen.setDr(Double.parseDouble(glpostData[i][5].toString())/100);
+					  		glTranctionReportBeen.setCr(Double.parseDouble(glpostData[i][6].toString())/100);
+					  		glTranctionReportBeen.setDate(glpostData[i][7].toString());
+					  		title=glaccno+"-"+glpostData[i][3].toString();
+					  		glTranctionReportBeenList.add(glTranctionReportBeen);
+					  	}
+					  	
+			          	ReportViewe review=new ReportViewe();
+			          	Map<String,Object> params = new HashMap<>();
+
+			        	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
+			          	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
+			          	params.put("address",centerMaster.getAdd03() );
+			          	params.put("fromdate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromdate)));
+			          	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(todate)));
+			          	params.put("title",title);
+					       
+			          	String reptValue="";
+			          	
+			         try {
+			          		reptValue=review.pdfReportViewInlineSystemOpen("glTranctionReport.jasper","GL Tranction Report",glTranctionReportBeenList,params,response);
+			          		
+			          
+			          	}catch(Exception e) {	          		
+			          		e.printStackTrace();          		
+			          	}
+					  
+					  mav.addObject("pdfViewEq", reptValue); 
+					  return mav;
+				  }
+				  
+				  
+				  
+				    
+
+				  @RequestMapping(value = "/createBank", method=RequestMethod.GET) 
+				  public ModelAndView createBank() { 
+					ModelAndView mav = new ModelAndView("createBank");
+					mav.addObject("bankMaster", new BankMaster());
+					List<BankMaster> allBank=financeAccountingService.getBankMasterAll();
+					mav.addObject("allBankMasterDetails", allBank);
+					  return mav;
+				  }	  
+				  
+					@RequestMapping(value = ("/saveBankMaster"), method = RequestMethod.POST)
+					public String saveBank(@ModelAttribute("bankMaster")BankMaster bankMaster,HttpSession session) {
+						//System.out.println("ccc="+glaccount.getParentsAccount());
+
+						 String centerid=session.getAttribute("centerid")+"";
+									  CenterMaster centerMaster=centerService.getcenterById(centerid);
+						try {
+						
+							
+							bankMaster.setCompany(centerMaster.getPartner_ID());
+							financeAccountingService.saveBankMaster(bankMaster);
+						//redirectAttributes.addFlashAttribute("success",1);
+						}catch(Exception e) {
+							System.out.println(e);
+							//redirectAttributes.addFlashAttribute("success",0);
+						}
+						return "redirect:/createBank.do";
+					}
+					
+				  
+					  @RequestMapping(value = "/createBankBranch", method=RequestMethod.GET) 
+					  public ModelAndView createBankBranch() { 
+						ModelAndView mav = new ModelAndView("createBankBranch");
+						mav.addObject("branch", new Bank());
+						List<Bank> allBank=financeAccountingService.getBankBranchAll();
+						mav.addObject("allBankDetails", allBank);
+						  return mav;
+					  }		  
+				  
+						@ModelAttribute("bankNameList")
+						public List<BankMaster> getBankMasterDetails() {
+							List<BankMaster> allBank=financeAccountingService.getBankMasterAll();
+							return allBank;
+						}
+					  
+					  
+						@RequestMapping(value = ("/saveBranch"), method = RequestMethod.POST)
+						public String saveBank(@ModelAttribute("branch")Bank branch) {
+							//System.out.println("ccc="+glaccount.getParentsAccount());
+						
+							try {
+								financeAccountingService.saveBankBranch(branch);;
+							//redirectAttributes.addFlashAttribute("success",1);
+							}catch(Exception e) {
+								System.out.println(e);
+							//	redirectAttributes.addFlashAttribute("success",0);
+							}
+							return "redirect:/createBankBranch.do";
+						}	
+						
+						@ModelAttribute("bankBranchList")
+						public List<Bank> getbankBranchListDetails() {
+							List<Bank> allBank=financeAccountingService.getBankBranchAll();
+							return allBank;
+						}
+					  
+						  @RequestMapping(value = "/partnerBankAccount", method=RequestMethod.GET) 
+						  public ModelAndView bankAccount() { 
+							ModelAndView mav = new ModelAndView("partnerBankAccount");
+							mav.addObject("bankAccount", new PartnerBankAccount());
+							List<PartnerBankAccount> allaccount=financeAccountingService.getPartnerBankAccountAll();
+							mav.addObject("allaccountetails", allaccount);
+							  return mav;
+						  }	
+						  
+							@RequestMapping(value = ("/saveBankAccount"), method = RequestMethod.POST)
+							public String saveBankAccount(@ModelAttribute("bankAccount")PartnerBankAccount partnerBankAccount) {
+								//System.out.println("ccc="+glaccount.getParentsAccount());
+							
+								try {
+									financeAccountingService.savePartnerBankAccount(partnerBankAccount);
+								//redirectAttributes.addFlashAttribute("success",1);
+								}catch(Exception e) {
+									System.out.println(e);
+								//	redirectAttributes.addFlashAttribute("success",0);
+								}
+								return "redirect:/partnerBankAccount";
+							}  
+						  
 }

@@ -9,7 +9,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 
 @Configuration
-@EnableJpaRepositories(basePackages= {"com.navitsa.repository"})
+@EnableJpaRepositories(basePackages= {"com.navitsa.repository","com.prime.hrm.repository"})
 public class JpaConfig {
     @Bean
 	public LocalEntityManagerFactoryBean entityManagerFactory() {

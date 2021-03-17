@@ -259,11 +259,20 @@
 		
 		
 		<h6 class="text-section" >General:</h6>
-			
+			<a class="collapse-item fontst-sb-it" href="newCustomer" hidden="true" id="newCustomer">Corporate Customers</a> 
 				<a class="collapse-item fontst-sb-it" href="taxConfiguration" hidden="true" id="taxConfiguration">Tax Settings</a>
 				<a class="collapse-item fontst-sb-it" href="chartOfAccounts"  id="chartOfAccounts">Chart of Accounts</a>
+<a class="collapse-item fontst-sb-it" href="createBank"  id="createBank">Bank</a>
+<a class="collapse-item fontst-sb-it" href="createBankBranch"  id="createBankBranch">Bank Branch</a>
+<a class="collapse-item fontst-sb-it" href="partnerBankAccount"  id="partnerBankAccount">Partner Bank Account</a>
 
-			<p class="text-section" >Accounts Receivables(AR):</p>
+<a class="collapse-item fontst-sb-it" href="journalVoucher"  id="journalVoucher">Journal Voucher</a>
+
+
+
+
+
+			<p class="text-section" >Account Receivables:</p>
 				<a class="collapse-item fontst-sb-it" href="incomingPayment"  hidden="true" id="incomingPayment">Incoming Payment</a>
 			
 							
@@ -278,19 +287,19 @@
 				<a class="collapse-item fontst-sb-it" href="incomingReceiptSummary" hidden="true" id="incomingReceiptSummary">Incoming Receipt Summary</a>
 				
 	
-		<h6 class="text-section">Accounts Payable(AP):</h6> 
+		<h6 class="text-section">Account Payable:</h6> 
 				<a class="collapse-item fontst-sb-it" href="outgoingPayments"  hidden="true" id="outgoingPayments">Outgoing Payments</a>
 				<a class="collapse-item fontst-sb-it" href="reprintOutgoingPayments" hidden="true"  id="reprintOutgoingPayments">Reprint Outgoing Payments</a>
 				<a class="collapse-item fontst-sb-it" href="OutgoingPaymentsDetailsReport"  hidden="true" id="OutgoingPaymentsDetailsReport">Outgoing Payments Report</a>
 				<a class="collapse-item fontst-sb-it" href="chequePrint"  hidden="true" id="chequePrint">Cheque Print</a>
-		<h6 class="text-section">Finance:</h6>	
+		<h6 class="text-section">Financials:</h6>	
 				<a class="collapse-item fontst-sb-it" href="revenueStatementPrivew" hidden="true" id="revenueStatementRpt">Revenue Statement</a>
 				<a class="collapse-item fontst-sb-it" href="ageAnalysisReport" hidden="true"  id="ageAnalysisReport">Age Analysis Report</a>
 			
 		<a class="collapse-item fontst-sb-it" href=trialBalance  id="trialBalance">Trial Balance</a>
 		
-		<a class="collapse-item fontst-sb-it" href="profitsAndLoss"   id="profitsAndLoss">Profits & Loss(P&L)</a>
-
+		<a class="collapse-item fontst-sb-it" href="profitsAndLoss"   id="profitsAndLoss">Profit & Loss(P&L)</a>
+<a class="collapse-item fontst-sb-it" href="glTranctionReport"   id="glTranctionReport">GL Tranction Report</a>
 						  </div>
 	</li>		
 		

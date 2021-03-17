@@ -14,7 +14,12 @@ import com.navitsa.repository.IncomingReceiptHeadRepository;
 import com.navitsa.repository.OutgoingPaymentDetailsRepository;
 import com.navitsa.repository.OutgoingPaymentHeadRepository;
 import com.navitsa.repository.ReceiptHeadRepository;
-
+import com.prime.hrm.entity.Bank;
+import com.prime.hrm.entity.BankMaster;
+import com.prime.hrm.entity.PartnerBankAccount;
+import com.prime.hrm.repository.BankMasterRepository;
+import com.prime.hrm.repository.BankRepository;
+import com.prime.hrm.repository.PartnerBankAccountRepository;
 
 @Service
 @Transactional
@@ -33,6 +38,15 @@ public class FinanceAccountingService {
 	
 	@Autowired
 	GlaccountRepository  glaccountRepository;
+	
+	@Autowired
+	BankMasterRepository  bankMasterRepository;
+		
+	@Autowired
+	BankRepository  bankRepository;
+	
+	@Autowired
+	PartnerBankAccountRepository  partnerBankAccountRepository;
 	
 	public void saveOutgoingPaymentHead(OutgoingPaymentHead outgoingPaymentHead) {
 		outgoingPaymentHeadRepo.save(outgoingPaymentHead);
@@ -82,5 +96,31 @@ public class FinanceAccountingService {
 	}
 	public List<OutgoingPaymentHead> getPendingChequePayments() {
 		return outgoingPaymentHeadRepo.getPendingChequePayments();
+	}
+	public void saveBankMaster(BankMaster bankMaster) {
+		  bankMasterRepository.save(bankMaster);
+	}
+	
+	
+	public void saveBankBranch(Bank bank) {
+		  bankRepository.save(bank);
+	}
+	
+	public void savePartnerBankAccount(PartnerBankAccount partnerBankAccount) {
+		partnerBankAccountRepository.save(partnerBankAccount);
+	}
+	
+	public List<BankMaster> getBankMasterAll() {
+		return (List<BankMaster>) bankMasterRepository.findAll();
+	}
+	public List<Bank> getBankBranchAll() {
+		return (List<Bank>) bankRepository.findAll();
+	}
+	public List<PartnerBankAccount> getPartnerBankAccountAll() {
+		return (List<PartnerBankAccount>) partnerBankAccountRepository.findAll();
+	}
+	
+	public List<PartnerBankAccount> getBankAccountByBank( String bankid){
+		return (List<PartnerBankAccount>) partnerBankAccountRepository.getBankAccountByBank(bankid);
 	}
 }

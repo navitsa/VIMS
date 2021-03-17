@@ -138,11 +138,21 @@
 										<div class="col-sm-8">
 										
 										 <div class="form-inline active-cyan-4">
-											<input class="form-control form-control-sm mr-3 w-75 fontst"
-														name="customer" id="customer" type="text" placeholder="Search"
-														aria-label="Search" onchange="getIncomingPaymentDetail();"  required="required">
-													<i class="fas fa-search" aria-hidden="true"
-														onclick="getIncomingPaymentDetail();"></i>
+<!-- 											<input class="form-control form-control-sm mr-3 w-75 fontst" -->
+<!-- 														name="customer" id="customer" type="text" placeholder="Search" -->
+<!-- 														aria-label="Search" onchange="getIncomingPaymentDetail();"  required="required"> -->
+<!-- 													<i class="fas fa-search" aria-hidden="true" -->
+<!-- 														onclick="getIncomingPaymentDetail();"></i> -->
+														
+														
+											<select class="form-control fontst" name="customer" id="customer" onclick="customerDate();" required="Required" onchange="getIncomingPaymentDetail();">
+												
+												<c:forEach items="${cusallCombo}" var="cus">
+													<option value="${cus.id}">${cus.name}</option>													
+												</c:forEach>
+											</select>	
+														
+														
 												</div>
 										
 										
@@ -178,31 +188,70 @@
 										
 							</div>
 		<hr>							
-							<div class="form-group row">
-								<div class="col-sm-6">
-									<label><input type="radio" name="paytype" value="Cash" />Cash</label>
-								</div>	
-								<div class="col-sm-6">	
-									<label><input type="radio" name="paytype" value="CreditCard" />Credit Card</label>
+<!-- 							<div class="form-group row"> -->
+<!-- 								<div class="col-sm-6"> -->
+<!-- 									<label><input type="radio" name="paytype" value="Cash" />Cash</label> -->
+<!-- 								</div>	 -->
+<!-- 								<div class="col-sm-6">	 -->
+<!-- 									<label><input type="radio" name="paytype" value="CreditCard" />Credit Card</label> -->
 
-								</div>				
-							</div>
-							<div class="form-group row">
-								<div class="col-sm-6">
+<!-- 								</div>				 -->
+<!-- 							</div> -->
+<!-- 							<div class="form-group row"> -->
+<!-- 								<div class="col-sm-6"> -->
 
-									<label><input type="radio" name="paytype" value="Cheque" />Cheque</label>
-								</div>	
-								<div class="col-sm-6">									
-									<label><input type="radio" name="paytype" value="BankTransfer" />Bank Transfer</label>
-								</div>		
-							</div>
+<!-- 									<label><input type="radio" name="paytype" value="Cheque" />Cheque</label> -->
+<!-- 								</div>	 -->
+<!-- 								<div class="col-sm-6">									 -->
+<!-- 									<label><input type="radio" name="paytype" value="BankTransfer" />Bank Transfer</label> -->
+<!-- 								</div>		 -->
+<!-- 							</div> -->
+							
+							<div class="form-group row"> 
+																<div class="col-sm-10">
+										
+												<div class="col-sm-2"></div>			
+											
+												<div class="btn-group btn-group-toggle" data-toggle="buttons">
+												  <label class="btn btn-outline-success btn-sm">
+												    <input type="radio" name="paytype" value="Cash" />Cash
+												  </label>
+												  <label class="btn btn-outline-primary btn-sm">
+												    <input type="radio"  name="paytype"  value="CreditCard"  />Credit Card
+												  </label>
+												  <label class="btn btn-outline-info btn-sm">
+												    <input type="radio"  name="paytype" value="Cheque"  /> Cheque
+												  </label>
+												  <label class="btn btn-outline-warning btn-sm">
+												    <input type="radio"  name="paytype"  value="BankTransfer"/>Bank Transfer
+												  </label>
+												 
+												</div>
+												
+										</div>
+							
+							</div> 
+							
+							
+							
+							
 							<div class="form-group row">
 								<div class="col-sm-4">
 									<label class="l-fontst" id="lname">Name</label>
 								</div>
 								<div class="col-sm-6">
-									<input class="form-control fontst" type="text" name="name"
-										onchange="" id="idname" required="required" />
+<!-- 									<input class="form-control fontst" type="text" name="name" -->
+<!-- 										onchange="" id="idname" required="required" /> -->
+										
+													<select class="form-control fontst" name="name" id="idname"   onclick="getBankDetails()">
+												
+												<option value="N/A">--SELECT--</option>
+												
+												<c:forEach items="${bankNameMasterList}" var="cus">
+													<option value="${cus.bankid}">${cus.bankName}</option>													
+												</c:forEach>
+											</select>
+							
 								</div>
 							</div>
 
@@ -215,9 +264,11 @@
 									<input class="form-control fontst" type="text"
 										name="number" onchange="" id="inumber" required="required" />
 
+
+
+
 								</div>
 							</div>
-
 
 
 							<div class="form-group row">
@@ -225,9 +276,12 @@
 									<label class="l-fontst" id="lglacc">G/L Account</label>
 								</div>
 								<div class="col-sm-6">
-									<input class="form-control fontst" type="text"
-										name="glAccno" onchange="" id="glAccno"
-										required="required" />
+										<select class="form-control fontst" name="glAccno" id="glAccno"   ">
+												
+											<option value="--">--SELECT--</option>
+																										
+												
+											</select>
 
 								</div>
 							</div>
@@ -285,7 +339,7 @@
 							<div class="form-group row">
 								
 									<div class="col-sm-12">
-									<button type="submit" class="btn  btn-block btn-danger btn-rounded tabStyle" >Payment</button>
+									<button type="submit" class="btn  btn-block btn-danger btn-rounded tabStyle" >Process Payment</button>
 <!-- 											<a href="#" class="btn btn-primary" onclick="runCancelInvoice();">Invoice Cancel</a>																 -->
 									</div>		
 							
@@ -374,7 +428,7 @@
 				  glAccno.style.display = "none";
 				  number.style.display = "none";
 				  idname.style.display = "none";
-	
+			//	  bankName.style.display = "none";
 	
 	jQuery(document).ready(function(){
 
@@ -394,14 +448,14 @@
 				  expDate.value = "1990-01-01";
 				  glAccno.value = "--";
 				  number.value = "--";
-				  idname.value = "--";
+				  idname.value = "N/A"
 
 				  bankCharges.style.display = "none";
 				  expDate.style.display = "none";
 				  glAccno.style.display = "none";
 				  number.style.display = "none";
 				  idname.style.display = "none";
-		    	
+				//  bankName.style.display = "none";
 
 		    	
 		    }else if($(this).val() == 'CreditCard'){
@@ -417,14 +471,14 @@
 				 expDate.value = "";
 				  glAccno.value = "--";
 				  number.value = "";
-				  idname.value = "--";
+				  idname.value = "N/A";
 		   
 				  bankCharges.style.display = "none";
 				  expDate.style.display = "block";
 				  glAccno.style.display = "none";
 				  number.style.display = "block";
 				  idname.style.display = "none";		  
-				  
+				//  bankName.style.display = "none";
 		    	
 		    }else if($(this).val() == 'Cheque'){
 		    	
@@ -439,18 +493,19 @@
 				  expDate.value = "";
 				  glAccno.value = "--";
 				  number.value = "";
-				  idname.value = "";
+				  idname.value = "N/A"
 				  
 				  bankCharges.style.display = "none";
 				  expDate.style.display = "block";
 				glAccno.style.display = "none";
 				number.style.display = "block";
 					idname.style.display = "block";
+					// bankName.style.display = "none";
 		    }else if($(this).val() == 'BankTransfer'){
 		    	
 		    	$('#lname').text("Bank Name");
 		    	$('#lexpData').text("");
-		    	$('#lglacc').text("Gl Account");
+		    	$('#lglacc').text("Bank Account");
 		    	$('#lbankchg').text("Bank Charges");
 		    	$('#lnumber').text("");
     	
@@ -459,13 +514,15 @@
 				  expDate.value = "1990-01-01";
 				  glAccno.value = "";
 				  number.value = "--";
-				  idname.value = "";	
+				  idname.value = "N/A"	
 		    	
 				  bankCharges.style.display = "block";
 				  expDate.style.display = "none";
 				  glAccno.style.display = "block";
 				  number.style.display = "none";
 				  idname.style.display = "block";
+				//  bankName.style.display = "block";
+				 
 				  
 		    }
 		});
@@ -553,7 +610,33 @@
 		
 		
 	}
-	
+	function getBankDetails(){
+		
+		var bankid=document.getElementById("idname").value;
+        var slctSubcat=$('#glAccno'), option="";
+        slctSubcat.empty();
+        option="<option value='--'>--SELECT--</option>"
+		$.ajax({
+	        type: 'GET',
+	        url: "getBankAccountByBank",
+	        data: {"bankid" : bankid},
+	        success: function(data){
+	        	
+;
+	            for(var i=0; i<data.length; i++){
+	                option = option + "<option value='"+data[i].glAccNo.glAccNo + "'>"+data[i].bankAccountNo + "</option>";
+	               
+	            }
+	            slctSubcat.append(option);
+	           
+	        },
+	        error:function(){
+	            alert("No return vMake data");
+	        }
+
+	    });
+		
+	}
 	
 	
 	</script>

@@ -23,6 +23,9 @@ public class GlaccountMapping {
 	@JoinColumn(name = "Doc_id", referencedColumnName = "Doc_id")
 	private DocType docid;
 	
+	@Column(name = "Type")
+	private String type;
+	
 	@Column(name = "CR")
 	private String cR;
 	
@@ -59,6 +62,14 @@ public class GlaccountMapping {
 
 	public void setdR(String dR) {
 		this.dR = dR;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

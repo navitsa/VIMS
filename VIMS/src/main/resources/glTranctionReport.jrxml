@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profitsAndLoss" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="glTranctionReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
 	<property name="ireport.zoom" value="1.0000000000000047"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -58,44 +58,35 @@
 	<parameter name="img" class="java.lang.Object"/>
 	<parameter name="fromdate" class="java.lang.String"/>
 	<parameter name="todate" class="java.lang.String"/>
+	<parameter name="title" class="java.lang.String"/>
 	<field name="primaryaccount" class="java.lang.String"/>
-	<field name="glaccountname" class="java.lang.String"/>
-	<field name="amount" class="java.lang.Double"/>
-	<variable name="sumgamt" class="java.lang.Double" resetType="Group" resetGroup="priAccount">
-		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	<field name="dr" class="java.lang.Double"/>
+	<field name="cr" class="java.lang.Double"/>
+	<field name="journalno" class="java.lang.String"/>
+	<field name="doctype" class="java.lang.String"/>
+	<field name="document" class="java.lang.String"/>
+	<field name="date" class="java.lang.String"/>
+	<variable name="sumdr" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{dr}]]></variableExpression>
 	</variable>
-	<group name="priAccount">
-		<groupExpression><![CDATA[$F{primaryaccount}]]></groupExpression>
+	<variable name="sumcr" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{cr}]]></variableExpression>
+	</variable>
+	<group name="voucher">
+		<groupExpression><![CDATA[$F{date}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="21">
 				<textField>
-					<reportElement mode="Opaque" x="12" y="0" width="801" height="20" backcolor="#FFFFFF" uuid="480d55bd-c0e9-427c-b614-09efb79d941b"/>
-					<box leftPadding="5" rightPadding="4">
-						<leftPen lineWidth="0.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="13" isBold="true"/>
+					<reportElement x="17" y="0" width="391" height="20" uuid="5caeec23-75af-46b2-aa17-40652c25f90f"/>
+					<textElement>
+						<font isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{primaryaccount}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="38">
-				<textField pattern="#,##0.00;(#,##0.00)">
-					<reportElement x="414" y="0" width="399" height="23" uuid="50ac4c4e-5560-4eba-b2a6-a57ab714433e"/>
-					<box rightPadding="4">
-						<topPen lineWidth="1.0" lineStyle="Solid"/>
-						<leftPen lineWidth="0.0"/>
-						<bottomPen lineWidth="1.0" lineStyle="Double"/>
-						<rightPen lineWidth="0.0"/>
-					</box>
-					<textElement textAlignment="Right">
-						<font size="11" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{sumgamt}]]></textFieldExpression>
-				</textField>
-			</band>
+			<band height="18"/>
 		</groupFooter>
 	</group>
 	<pageHeader>
@@ -103,9 +94,9 @@
 			<staticText>
 				<reportElement x="112" y="11" width="622" height="21" forecolor="#000000" uuid="702063fe-0ca1-4d2d-98fd-53343ba21a68"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="15" isBold="true"/>
+					<font fontName="Arial" size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Profit & Loss Statement]]></text>
+				<text><![CDATA[GL TRANCTION REPORT]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="112" y="33" width="622" height="20" uuid="b87425e7-4b5e-4567-8b87-ec1c1a6fe8fb"/>
@@ -121,10 +112,24 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
 			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="589" y="71" width="224" height="19" uuid="efbe7fb6-ff52-48e6-bc96-db9ab839cdd9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fromdate}+" To "+$P{todate}]]></textFieldExpression>
+			</textField>
 			<image>
 				<reportElement x="12" y="11" width="100" height="79" uuid="636fcc76-f4a0-44f3-ab11-9cb9423558a4"/>
 				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{img})).getImage()]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="237" y="70" width="352" height="20" uuid="49d601ef-54eb-4917-b25b-d221709427ab"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -132,52 +137,72 @@
 			<staticText>
 				<reportElement mode="Opaque" x="12" y="0" width="402" height="23" backcolor="#CCFFFF" uuid="5abef695-0b6d-405c-a74f-cd40eb7ae2d5"/>
 				<box leftPadding="5" rightPadding="0">
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Account  ]]></text>
+				<text><![CDATA[Journal No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="414" y="0" width="399" height="23" backcolor="#CCFFFF" uuid="a0bae441-93b5-4065-92e3-20bf3220e09f"/>
+				<reportElement mode="Opaque" x="414" y="0" width="205" height="23" backcolor="#CCFFFF" uuid="a0bae441-93b5-4065-92e3-20bf3220e09f"/>
 				<box rightPadding="4">
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Balance]]></text>
+				<text><![CDATA[Debit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="619" y="0" width="194" height="23" backcolor="#CCFFFF" uuid="0a2fbd3a-d2f6-491f-9295-cc74cbfc8838"/>
+				<box rightPadding="4">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Credit]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21">
-			<textField>
-				<reportElement mode="Opaque" x="12" y="1" width="402" height="20" backcolor="#FFFFFF" uuid="675e5117-da42-4dde-82ab-3924207be548"/>
-				<box leftPadding="10" rightPadding="4">
-					<leftPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{glaccountname}]]></textFieldExpression>
-			</textField>
+		<band height="20">
 			<textField pattern="#,##0.00;(#,##0.00)">
-				<reportElement mode="Opaque" x="414" y="0" width="399" height="20" backcolor="#FFFFFF" uuid="b7156e7c-c827-4790-b447-79dd675a5cc2"/>
+				<reportElement mode="Opaque" x="414" y="0" width="205" height="20" backcolor="#FFFFFF" uuid="b7156e7c-c827-4790-b447-79dd675a5cc2"/>
 				<box rightPadding="4">
-					<leftPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dr}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)">
+				<reportElement mode="Opaque" x="619" y="0" width="194" height="20" backcolor="#FFFFFF" uuid="7b17272e-1c2c-4ef7-ab86-e54a821c661e"/>
+				<box rightPadding="4">
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="38" y="0" width="376" height="20" uuid="ef5c7b7a-95d6-4651-b22d-f9440fe342c9"/>
+				<textFieldExpression><![CDATA[$F{journalno}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -188,6 +213,6 @@
 		<band/>
 	</pageFooter>
 	<summary>
-		<band height="35"/>
+		<band/>
 	</summary>
 </jasperReport>
