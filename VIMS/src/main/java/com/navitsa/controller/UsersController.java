@@ -33,6 +33,7 @@ import com.navitsa.entity.BusinessPartner;
 import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.CountryMaster;
 import com.navitsa.entity.Customer;
+import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.Levelmanage;
 import com.navitsa.entity.LevelmanagePK;
 import com.navitsa.entity.Role;
@@ -45,6 +46,7 @@ import com.navitsa.repository.AppointmentRepository;
 import com.navitsa.services.AppointmentService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.FinanceAccountingService;
+import com.navitsa.services.GlAccountService;
 import com.navitsa.services.UsersService;
 import com.navitsa.utils.DBBackup;
 import com.navitsa.utils.DateHelperWeb;
@@ -62,7 +64,9 @@ public class UsersController {
 	AppointmentService sppointmentService;
 	@Autowired
 	FinanceAccountingService financeAccountingService;
-
+	@Autowired
+	private GlAccountService glAccountService;
+	
 	@RequestMapping("/logout")
 	public String logout() {
 		// ModelAndView mav=new ModelAndView("login");
@@ -459,7 +463,11 @@ public class UsersController {
 //		 Long tRate=taxC.getTaxRate()*100;
 //		 taxC.setTaxRate(tRate);
 	}
-	 
+	 @ModelAttribute("listTaxGLAccounts")
+	 	public List<Glaccount> findAll(){
+		 List<Glaccount> list = glAccountService.findAll();
+		 return list;
+	 }
 	// load saved tax
 	@ModelAttribute("taxesList")
 	public List<TaxConfiguration> getAllTax() {

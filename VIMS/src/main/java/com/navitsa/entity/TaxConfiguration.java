@@ -52,15 +52,6 @@ public class TaxConfiguration {
 	@Column(name ="Type")
 	private String type;
 
-
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
-
 	public String getTaxCode() {
 		return taxCode;
 	}
@@ -75,6 +66,14 @@ public class TaxConfiguration {
 
 	public void setTax(String tax) {
 		this.tax = tax;
+	}
+
+	public Long getTaxRate() {
+		return taxRate;
+	}
+
+	public void setTaxRate(Long taxRate) {
+		this.taxRate = taxRate;
 	}
 
 	public String getRemarks() {
@@ -109,39 +108,12 @@ public class TaxConfiguration {
 		this.sequenceId = sequenceId;
 	}
 
-	public Long getTaxRate() {
-		return taxRate;
+	public String getCountryCode() {
+		return countryCode;
 	}
 
-	public void setTaxRate(Long taxRate) {
-		this.taxRate = taxRate;
-	}
-
-
-
-	public TaxConfiguration(String taxCode,String tax,
-		 Long taxRate, String remarks,
-		 String status,
-		 Glaccount glAccNo,
-		 String sequenceId,String countryCode,String type) {
-		this.taxCode = taxCode;
-		this.tax = tax;
-		this.taxRate = taxRate;
-		this.remarks = remarks;
-		this.status = status;
-		this.glAccNo = glAccNo;
-		this.sequenceId = sequenceId;
-		this.countryCode=countryCode;
-		this.type = type;
-	}
-
-	public TaxConfiguration(String taxCode) {
-		
-		this.taxCode = taxCode;
-	}
-	
-	public TaxConfiguration() {	
-		
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 
 	public String getType() {
@@ -151,4 +123,9 @@ public class TaxConfiguration {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+
+
+	
+	
 }

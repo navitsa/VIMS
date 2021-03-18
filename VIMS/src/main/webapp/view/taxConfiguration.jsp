@@ -127,10 +127,20 @@
 														<div class="form-group row">
 															<div class="col-lg-4">
 
-																<label for="gl_acc">GL Account</label>
-																<form:input class="form-control form-control-sm" path="glAccNo.glAccNo"
-																	id="gl_acc" readonly="true"/>
-																<form:errors path="gl_acc" class="bg-danger text-white"/>
+																<label>GL Account</label>
+																	<form:select path="glAccNo.glAccNo" class="custom-select custom-select-sm"
+																	id="glAccNo1" required="true">
+																	<form:option value="">Select GL Account</form:option>
+																		<c:forEach items="${listTaxGLAccounts}" var="gl"> 
+																			<form:option value="${gl.glAccNo}">${gl.glAccNo}-${gl.glAccountName}</form:option>
+																	</c:forEach> -
+																</form:select>
+																
+
+																	
+																	
+																	
+																
 
 															</div>
 															<div class="col-lg-3">
@@ -233,7 +243,7 @@
 																	<td><div>${tax.type}</div></td>
 																	<td><div>${tax.remarks}</div></td>
 																	<td><div>${tax.status}</div></td>
-																	<td><div>${tax.gl_acc}</div></td>
+																	<td><div>${tax.glAccNo.glAccNo} ${tax.glAccNo.glAccountName}</div></td>
 																	<td><div>${tax.sequenceId}</div></td>
 																	<td><a href="updatetaxConf?taxCode=${tax.taxCode}"><i
 																			class="fas fa-pen"></i></a></td>

@@ -31,6 +31,7 @@ import com.navitsa.Reports.ProfitsAndLossBeen;
 import com.navitsa.Reports.TrialBalanceBeen;
 import com.navitsa.entity.BusinessPartner;
 import com.navitsa.entity.CenterMaster;
+import com.navitsa.entity.DocType;
 import com.navitsa.entity.GlPostingDetails;
 import com.navitsa.entity.GlPostingHead;
 import com.navitsa.entity.Glaccount;
@@ -92,6 +93,13 @@ public class FinanceAccountingController {
 		        else  
 		        { 		        	
 		        	try {
+	    	    	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+	    	    	    Date date = new Date();  
+	    	    	    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
+	    	    	    LocalTime time = LocalTime.now();
+		        		
+		        		
+		        		
 		        		String centerid=(String) session.getAttribute("centerid");
 		        		CenterMaster cm=centerService.getcenterById(centerid);
 		        		String nextVoucherNo = cm.getPartner_ID().getOutVouFormate()+(cm.getPartner_ID().getMaxVouNo()+1);
@@ -103,6 +111,44 @@ public class FinanceAccountingController {
 		        			outgoingPaymentHead.setChequePrint("Pending");
 		        		}
 
+		        		
+	                	 List<GlPostingDetails> glPostingDetailsList=new ArrayList<>();
+	                 	
+	                 	
+	                	 List<GlaccountMapping> glMappingResult=glAccountService.getGlaccountMappingByDocId(1);
+	 	            	
+	     	            
+	     	            GlPostingHead glPostingHead=new GlPostingHead();
+	     	            glPostingHead.setDocNo(nextVoucherNo);
+	     	            
+	     	            DocType docType=new DocType();
+	     	            docType.setDocid(1);
+	     	            
+	     	            glPostingHead.setDocid(docType);
+	     	            glPostingHead.setDate(formatter.format(date));
+	     	            glPostingHead.setTime(time.format(formattertime));
+	     	           glPostingHead.setCenterID(cm);
+	     	            glPostingHead.setStatus("ACTIVE");	        		
+		        		
+	     	            String crAccount; 
+		   	            for(GlaccountMapping gmresult:glMappingResult) {
+	     	            	if(gmresult.getType().equals(outgoingPaymentHead.getPaymentMean())) {
+		   	            	crAccount=gmresult.getcR();
+	     	            	}
+	     	            		
+	     	            	}
+		        		
+	     	            
+	     	            
+	     	            
+	     	            
+	     	            
+	     	            
+	     	            
+	     	            
+	     	            
+		        		
+		        		
 		        		List<OutgoingPaymentDetails> list = new ArrayList<OutgoingPaymentDetails>();
 		        		double totalAmount = 0;
 			       		 for(int i=0; i < glAccNo.length; i++){
@@ -113,7 +159,26 @@ public class FinanceAccountingController {
 			       			paymentDetail.setPaymentVoucherNo(outgoingPaymentHead);
 			       			list.add(paymentDetail);
 			       			totalAmount = totalAmount+amount[i];
+			       			
+	     	            	GlPostingDetails glPostingDetails1=new GlPostingDetails();
+	     	            	glPostingDetails1.setJournalNo(glPostingHead);
+	     	            	
+	     	            	glPostingDetails1.setGlAccNo(new Glaccount(glAccNo[i]));
+	     	            	
+	     	            	glPostingDetails1.setType("D");
+	     	            	glPostingDetails1.setAmount(Long.parseLong((amount[i]*100)+""));
+	     	            	glPostingDetailsList.add(glPostingDetails1);
+			       			
+			       			
 			    		 }
+			       		 
+			       		 
+			   	         glPostingHead.setTotalDR(Long.parseLong((totalAmount*100)+""));
+			  	         glPostingHead.setTotalCR(Long.parseLong((totalAmount*100)+""));
+			       		 
+			  	         glAccountService.saveGlPostingHeadRepository(glPostingHead);
+		     	         glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList); 		 
+			       		 
 			       		 
 			       		outgoingPaymentHead.setTotalPayment(totalAmount);
 		        		financeAccountingService.saveOutgoingPaymentHead(outgoingPaymentHead);
