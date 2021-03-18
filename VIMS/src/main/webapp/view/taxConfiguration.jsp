@@ -133,7 +133,7 @@
 																	<form:option value="">Select GL Account</form:option>
 																		<c:forEach items="${listTaxGLAccounts}" var="gl"> 
 																			<form:option value="${gl.glAccNo}">${gl.glAccNo}-${gl.glAccountName}</form:option>
-																	</c:forEach> -
+																	</c:forEach> 
 																</form:select>
 																
 
