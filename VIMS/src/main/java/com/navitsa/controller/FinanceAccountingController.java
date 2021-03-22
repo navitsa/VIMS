@@ -531,7 +531,7 @@ public class FinanceAccountingController {
 					return models;
 				}
 				@RequestMapping(value = ("/saveJournalVoucher"), method = RequestMethod.POST)
-				public String saveJournalVoucher(@RequestParam("glaccno") String[] glaccno,@RequestParam("dramt") String[] dramt,@RequestParam("cramt") String[] cramt , HttpServletResponse response,HttpSession session) {
+				public  String saveJournalVoucher(@RequestParam("glaccno") String[] glaccno,@RequestParam("dramt") String[] dramt,@RequestParam("cramt") String[] cramt , HttpServletResponse response,HttpSession session) {
 				
 					try {
 					    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
@@ -587,14 +587,14 @@ public class FinanceAccountingController {
 							   glAccountService.saveGlPostingHeadRepository(glPostingHead);
 						     	glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
 					          
-					          
+						     	return "redirect:/journalVoucher.do";   
 					          
 					
 					}catch(Exception e) {
 						System.out.println(e);
-					
+						return "redirect:/journalVoucher";
 					}
-					return "redirect:/journalVoucher.do";
+					
 					
 				}
 				  @RequestMapping(value = "/glTranctionReport", method=RequestMethod.GET) 

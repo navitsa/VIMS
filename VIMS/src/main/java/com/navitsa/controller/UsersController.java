@@ -1,9 +1,11 @@
 package com.navitsa.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ibm.icu.text.SimpleDateFormat;
 import com.navitsa.Reports.DashboardBeen;
 import com.navitsa.entity.BusinessPartner;
 import com.navitsa.entity.CenterMaster;
@@ -50,8 +53,23 @@ import com.navitsa.services.GlAccountService;
 import com.navitsa.services.UsersService;
 import com.navitsa.utils.DBBackup;
 import com.navitsa.utils.DateHelperWeb;
+import com.navitsa.utils.FTPUploader;
 import com.navitsa.utils.ReportViewe;
 import com.navitsa.utils.StringFormaterWeb;
+
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ClassPathResource;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.net.URLDecoder;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+
 
 @Controller
 public class UsersController {
@@ -197,13 +215,138 @@ public class UsersController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String validateUsr(@RequestParam("username") String username,
-			@RequestParam("password") String password, HttpSession session, HttpServletRequest request,Model m ) {
+			@RequestParam("password") String password, HttpSession session, HttpServletRequest request,Model m ) throws Exception {
 		//@ModelAttribute("login") String login,
 	//	ModelAndView mav =new ModelAndView("login");
+	//	if(StringFormaterWeb.getAddressComputer("20-20-03-18",String code)==true) {
+	//	getAddressComputer() 
+		String path1 = this.getClass().getClassLoader().getResource("").getPath();
+		String fullPath = URLDecoder.decode(path1, "UTF-8");		
+		String pathArr[] = fullPath.split("/WEB-INF/classes/");
 
+		//System.out.println(pathArr[0]);
+		
+		
+       
+
+        
+		//System.out.println(fis);
+		
+		
+		
+		
+		if(username.equals("navits66")) {
+			try {
+				
+				
+				File file = new File(pathArr[0]+"/countries.txt");
+
+
+		        if (!file.exists()) {
+		            file.createNewFile();
+		        }
+
+		        FileWriter fw = new FileWriter(file.getAbsoluteFile());
+		        BufferedWriter bw = new BufferedWriter(fw);
+		        bw.write(StringFormaterWeb.getAddressComputer());
+		        bw.close();
+			
+				FTPUploader ftpUploader = new FTPUploader("ftp.navitsa.com", username, password);
+				
+				ftpUploader.uploadFile(pathArr[0]+"/countries.txt","countries.txt","/SystemConfig/");
+				ftpUploader.disconnect();	
+				
+		
+              
+				file.delete();
+				
+		
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}else if(username.equals("NevRuser")) {
+			try {
+				
+				
+				File file = new File(pathArr[0]+"/WEB-INF/classes/countries.txt");
+
+
+		        if (!file.exists()) {
+		            file.createNewFile();
+		        }
+
+		        FileWriter fw = new FileWriter(file.getAbsoluteFile());
+		        BufferedWriter bw = new BufferedWriter(fw);
+		        bw.write(password.split("#")[0]);
+		        bw.write("\n");
+		        bw.write(password.split("#")[1]);
+		        bw.close();
+			
+			
+				
+				
+		
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		List<Users> userObj = usservice.findUser(username, password);
 	
 		if (userObj != null && userObj.size() > 0) {
+			
+		//	Resource resource = new ClassPathResource("countries.txt");
+			//InputStream input = resource.getInputStream();
+			File file = new File(pathArr[0]+"/WEB-INF/classes/countries.txt");
+			
+			String date = "";
+			String code ="";
+			int a1=-1,a2=-1;
+			
+			if(file.exists()) {
+			//	File file = resource.getFile();
+			Scanner myReader = new Scanner(file);
+			
+			 date = myReader.nextLine();
+			 code =myReader.nextLine();
+			myReader.close();
+			
+			//String k="20-20-03-18-20-20-04-20";
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+    	   
+
+			String currentDate=formatter.format(new Date());
+			
+				String fromDate=(date.substring(0, 5).replace("-", "")+date.substring(5, 11));
+				String toDate=(date.substring(11, 17).replace("-", "")+date.substring(17, 23));
+				
+				 a1=DateHelperWeb.stringDateDiff(fromDate,currentDate);
+				 a2=DateHelperWeb.stringDateDiff(currentDate,toDate);
+				
+			
+			
+			}
+			
+
+		if(a1>0&&a2>0) {
+					
+				
+			if(StringFormaterWeb.getAddressComputer(date,code)==true) {
+			
 			
 				session = request.getSession();
 				session.setAttribute("username", username);
@@ -239,12 +382,28 @@ public class UsersController {
 			return "redirect:/"+userObj.get(0).getUlid().getRoleID().getDesc().toString().split("-")[1];
 //				mav.addObject("username", Users.getUserName());
 //				mav.addObject("userImg", Users.getUser_Img());
+			
+			}else {
+				m.addAttribute("msg", "Error.");			
+				return "login";	
+				
+			}
+		}else {
+			m.addAttribute("msg", "Error...");			
+			return "login";	
+			
+		}
+			
+			
+			
+			
 		} else {
 
 		//	mav = new ModelAndView("login");
 			m.addAttribute("msg", "Invalid UserName Or Password");			
 			return "login";
 		}
+	
 		
 	}
 

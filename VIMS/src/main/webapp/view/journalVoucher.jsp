@@ -118,7 +118,7 @@
 				
 				<div class="page-inner mt--5">	
 			<div class="container-fluid">
-<form:form action="saveJournalVoucher"  method="POST">
+<form:form action="saveJournalVoucher"  method="POST" id="journalVoucher">
 <div class="row">				
 	<div class="col-xl-3 col-lg-5" >			
 					<!-- Card -->
@@ -215,7 +215,7 @@
 														<div class="col-md-12 col-lg-12">
 									
 													<table id="tblIncomingPayment" class="table table-striped table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-															 style="height: 500px" required>
+															 style="height: 450px" required>
 									
 															<thead>
 																<tr>
@@ -235,13 +235,42 @@
 									
 									
 										</div>
+										
+										
+													<div class="form-group row">
+					<div class="col-sm-3">
+					<label class="l-fontst">Debit Total</label>
+					</div>
+						<div class="col-sm-8">
+							<p class="l-fontst" id="drTot"></p>			
+											
+						</div>
+									
+										
+							</div>
+			
+								<div class="form-group row">
+					<div class="col-sm-3">
+					<label class="l-fontst">Credit Total</label>
+					</div>
+						<div class="col-sm-8">
+										
+										<p class="l-fontst" id="crTot"></p>
+						</div>
+									
+										
+							</div>		
+										
+										
 			</div>
+			
+
 													<div class="row">	
 									
 										<div class="col-sm-4 mb-4 mb-sm-4">
 										</div>		
 										<div class="col-sm-6 mb-6 mb-sm-6">
-										<input type="submit" class="btn btn-success" value="Creat Voucher">
+										<input type="submit" class="btn btn-success" value="Create Voucher">
 										</div>
 									</div>				
 		</div>
@@ -266,17 +295,18 @@ function addEqumentToTable(){
 	var crdr =$("input[type='radio'][name='crdr']:checked").val(); 
 	// alert(crdr);
 	if(crdr=="Debit"){
-	 	var dramt = $("#amount").val();
-	 	var cramt = "0";
+	 	var dramt =  parseFloat($("#amount").val());
+	 	var cramt = parseFloat("0")
 	 	drtot=drtot+dramt;
 	}else{
-	 	var dramt = "0";
-	 	var cramt = $("#amount").val();	
+	 	var dramt = parseFloat("0")
+	 	var cramt =  parseFloat($("#amount").val());	
 	 	crtot=crtot+cramt;
 	}
     var glaccount = $("#glaccount").val();
 
-  
+    var select = document.getElementById("glaccount");
+    var option = select.options[select.selectedIndex];
     
     
 //     if(equmentTable!=""& epriceTable!=""){
@@ -290,17 +320,25 @@ function addEqumentToTable(){
 	        	   +"<input name='glaccno' readonly value='"+glaccount+"'/>"  + 
 	        	  
 	              "</td><td>"
-	        	 +"jjj"+ 
+	        	 +option.text+ 
 	              "</td><td>"
 	              +"<input name='dramt' readonly value='"+dramt+"'/>"  + 
 	              "</td><td>"
 	               +"<input name='cramt' readonly value='"+cramt+"'/>"  +   
 	               "</td><td>"+
-	               "<button type='button' onclick='productDelete(this);' class='btn'>Remove</button>"+
+// 	               "<button type='button' onclick='productDelete(this);' class='btn'>Remove</button>"+
 	              "</td></tr>";
 	              
 	          $("table tbody").append(contact);
-	          getEqument(); 
+	        //  getEqument(); 
+	       //   document.getElementById("crTot").value=crtot;
+	        //	  document.getElementById("drTot").value=drtot;
+	          
+	    	          document.getElementById('crTot').innerHTML=crtot;
+	        	  document.getElementById('drTot').innerHTML=drtot;
+
+	            
+	          
 // 	       },
 // 	       error:function(){
 // 	           alert("error");
@@ -314,6 +352,74 @@ function addEqumentToTable(){
     
     
 }
+
+function saveJournalVoucher() {
+
+	var request_method = $("#journalVoucher").attr("method"); //get form GET/POST method
+
+	// Get form
+	var form = $('#journalVoucher')[0];
+
+	// Create an FormData object
+	var data = new FormData(form);
+
+	//alert("Error "+form_data);
+	$.ajax({
+
+		url : "saveJournalVoucher",
+		type : request_method,
+		enctype : 'multipart/form-data',
+		data : data,
+		processData : false,
+		contentType : false,
+		cache : false,
+
+		success : function(data) {
+
+			if (data == "1") {
+				swal("Good job!", "You clicked the button!", {
+					icon : "success",
+					buttons : {
+						confirm : {
+							className : 'btn btn-success'
+						}
+					},
+				});
+				window.location.href ="redirect:/journalVoucher.do";
+			} else {
+				swal("Good job!", "You clicked the button!", {
+					icon : "error",
+					buttons : {
+						confirm : {
+							className : 'btn btn-danger'
+						}
+					},
+				});
+			}
+
+		},
+		error : function(e) {
+			swal("Good job!", "You clicked the button! err", {
+				icon : "error",
+				buttons : {
+					confirm : {
+						className : 'btn btn-danger'
+					}
+				},
+			});
+		}
+	});
+
+}
+
+
+
+
+
+
+
+
+
 
 
 </script>
