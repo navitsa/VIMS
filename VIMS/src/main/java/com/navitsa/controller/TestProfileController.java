@@ -1,5 +1,6 @@
 package com.navitsa.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.navitsa.entity.Ck_testProfileDetailId;
+import com.navitsa.entity.Ck_testWisePrintOrderId;
 import com.navitsa.entity.ParameterCodes;
+import com.navitsa.entity.TestLimitRule;
 import com.navitsa.entity.TestParameter;
 import com.navitsa.entity.TestParameterAngle;
 import com.navitsa.entity.TestPoint;
 import com.navitsa.entity.TestProfile;
 import com.navitsa.entity.TestProfileDetail;
 import com.navitsa.entity.TestProfileStatus;
+import com.navitsa.entity.TestWisePrintOrder;
 import com.navitsa.entity.Test_type;
 import com.navitsa.entity.VehicleCategory;
 import com.navitsa.entity.VehiclesSubCategory;
@@ -283,7 +287,7 @@ public class TestProfileController {
 		TestProfile tp = new TestProfile();
 		tp.setTestProfileID(proId);
 		TestProfileDetail tpd = new TestProfileDetail();
-		tpd.setCk_testProfileDetailId(new Ck_testProfileDetailId(tp, null,null,null));
+		tpd.setCk_testProfileDetailId(new Ck_testProfileDetailId(tp, null,null,null,null));
 		
 		m.addAttribute("limitValues", tpd);
 		return "testLimitValues";
@@ -330,13 +334,14 @@ public class TestProfileController {
 		 ParameterCodes paraCode = tpd.getCk_testProfileDetailId().getParameterCode();
 		 String vehicle_cat_id = tpd.getCk_testProfileDetailId().getVehicleCat().getCategoryID();
 		 VehiclesSubCategory vSub = tpd.getCk_testProfileDetailId().getSubCategoryID();
+		 TestLimitRule rule = tpd.getCk_testProfileDetailId().getTestLimitRule();
 
 		 
 		 if(vehicle_cat_id.contains("all")) {
 			 List <VehicleCategory> vCats = vehicleService.getVehicleCategory();
 			 
 			 for (VehicleCategory vc : vCats) {
-				 tpd.setCk_testProfileDetailId(new Ck_testProfileDetailId(testProfile, paraCode, vc,vSub));
+				 tpd.setCk_testProfileDetailId(new Ck_testProfileDetailId(testProfile, paraCode, vc,vSub,rule));
 				 testProfileService.saveTestProDetail(tpd);
 			 } 
 		 }else {
@@ -411,5 +416,48 @@ public class TestProfileController {
 		//respone.setProfile_status_list(testProfileService.getAllTestProfileStatus());
 		
 		return "redirect:/limitValues?proId=1";
+	}
+	
+	 @ModelAttribute("rules")
+	 public List<TestLimitRule> findAll(){
+		 
+		 List<TestLimitRule> ls = testProfileService.findAllRules();
+		 return ls;
+	 }
+	 @ModelAttribute("testWisePrintOrder")
+	 public List<TestWisePrintOrder> getAll(){
+		 
+		 List<TestWisePrintOrder> ls = testProfileService.getAllTestWisePrintOrder();
+		 return ls;
+	 }
+	 
+	@RequestMapping(value = "/saveTestWisePrintOrder", method = RequestMethod.POST)
+	public @ResponseBody String saveTestWisePrintOrder(
+			@RequestParam("profile_id") int[] pro_id,
+			@RequestParam("type_id") String[] type_id,
+			@RequestParam("reportPath") String[] reportPath,
+			@RequestParam("print_order") int[] printOrder) {
+		
+		System.out.println("calling....");
+		try {
+			List<TestWisePrintOrder> ls = new ArrayList<TestWisePrintOrder>();
+			for (int i = 0; i < printOrder.length; i++) {
+
+				TestProfile tp = new TestProfile();
+				tp.setTestProfileID(pro_id[i]);
+				
+				Test_type tt = new Test_type();
+				tt.setTypeId(type_id[i]);			
+				
+				TestWisePrintOrder obj = new TestWisePrintOrder(new Ck_testWisePrintOrderId(tp, tt),reportPath[i],printOrder[i]);
+				ls.add(obj);
+			}
+			
+			testProfileService.saveTestWisePrintOrder(ls);
+			return "1";
+		} catch (Exception e) {
+			return "0";
+		}
+
 	}
 }

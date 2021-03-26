@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.navitsa.entity.EmissionCodeMapping;
 import com.navitsa.entity.EmissionDieselCertificateData;
 import com.navitsa.entity.EmissionDieselCertificateReadings;
 import com.navitsa.entity.EmissionPetrolCertificateData;
@@ -14,12 +15,14 @@ import com.navitsa.entity.EmissionPetrolCertificateGas;
 import com.navitsa.entity.EmissionPetrolCertificateLembda;
 import com.navitsa.entity.EmissionPetrolCertificatePetrol;
 import com.navitsa.entity.ParameterCodes;
+import com.navitsa.entity.TestLimitRule;
 import com.navitsa.entity.TestParameter;
 import com.navitsa.entity.TestParameterAngle;
 import com.navitsa.entity.TestParameterCategory;
 import com.navitsa.entity.TestPoint;
 import com.navitsa.entity.TestProfile;
 import com.navitsa.entity.TestProfileDetail;
+import com.navitsa.repository.EmissionCodeMappingRepository;
 import com.navitsa.repository.EmissionDieselCertificateDataRepo;
 import com.navitsa.repository.EmissionDieselCertificateReadingsRepo;
 import com.navitsa.repository.EmissionPetrolCertificateDataRepo;
@@ -27,6 +30,7 @@ import com.navitsa.repository.EmissionPetrolCertificateGasRepo;
 import com.navitsa.repository.EmissionPetrolCertificateLembdaRepo;
 import com.navitsa.repository.EmissionPetrolCertificatePetrolRepo;
 import com.navitsa.repository.ParameterCodesRepository;
+import com.navitsa.repository.TestLimitRuleRepository;
 import com.navitsa.repository.TestParameterAngleRepository;
 import com.navitsa.repository.TestParameterCategoryRepository;
 import com.navitsa.repository.TestParameterRepository;
@@ -78,6 +82,12 @@ public class TestReportConfigService {
 	@Autowired
 	EmissionPetrolCertificatePetrolRepo emPetrolCPetrolRepo;
 	
+	@Autowired
+	EmissionCodeMappingRepository emissionCodeMappingRepo;
+	
+	@Autowired
+	TestLimitRuleRepository testLimitRuleRepo;
+	
 	public void saveParameters(TestParameter tp) {
 		tpRepo.save(tp);
 	}
@@ -113,9 +123,9 @@ public class TestReportConfigService {
 		tproDetailRepo.save(test_pro_detail);
 	}
 	
-	public String[][] getTestResult(int test_pro_id,String test_value_file_id,String vehicle_cat_id) {
+	public String[][] getTestResult(int test_pro_id,String test_value_file_id,String vehicle_cat_id,int rule) {
 		
-		return tproDetailRepo.getTestResult(test_pro_id,test_value_file_id,vehicle_cat_id);
+		return tproDetailRepo.getTestResult(test_pro_id,test_value_file_id,vehicle_cat_id,rule);
 	}
 	
 	public List<TestParameterCategory> getAllTestParaCat() {
@@ -284,6 +294,32 @@ public class TestReportConfigService {
 	public String[][] getMaxSpeedResult(int test_pro_id,String test_value_file_id,String vehicle_cat_id, String vehicle_sub_cat_id) {
 		
 		return tproDetailRepo.getMaxSpeedResult(test_pro_id,test_value_file_id,vehicle_cat_id,vehicle_sub_cat_id);
+	}
+
+	public List<EmissionCodeMapping> findAllCodeMapping(String testType) {
+		return (List<EmissionCodeMapping>) emissionCodeMappingRepo.findAllByTestType(testType);
+	}
+
+	public int find_edt_id(String vehicleID) {
+		return emissionCodeMappingRepo.find_edt_id(vehicleID);
+	}
+	
+	public String find_edt_data(String columnName,int id_no) {
+		return emissionCodeMappingRepo.find_edt_data(columnName,id_no);
+		
+	}
+
+	public int find_ept_id(String vehicleID) {
+		return emissionCodeMappingRepo.find_ept_id(vehicleID);
+	}
+
+	public String find_ept_petrol(String tableName, String columnName, int id_no) {
+		return emissionCodeMappingRepo.find_ept_petrol(tableName, columnName, id_no);
+		
+	}
+
+	public TestLimitRule findRuleByYear(String year) {
+		return testLimitRuleRepo.findRuleByYear(year);
 	}
 
 }

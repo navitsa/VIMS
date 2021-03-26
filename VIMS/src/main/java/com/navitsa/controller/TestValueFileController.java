@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.navitsa.entity.ConfigSystem;
+import com.navitsa.entity.EmissionCodeMapping;
 import com.navitsa.entity.EmissionDieselCertificateData;
 import com.navitsa.entity.EmissionPetrolCertificateData;
 import com.navitsa.entity.TestValueFileDetail;
@@ -197,9 +198,7 @@ public class TestValueFileController {
 				          myObj.delete();
 				         
 				          String fuelType = vehicleService.getRegistraionInfo(RegId).getVid().getFtype().getFuel();
-				          //String avlPath = vehicleService.getRegistraionInfo(RegId).getTestLaneHeadId().getAvlPath();
-				          //readingEmissionResults(vehicleID,vrobj,fuelType,avlPath);
-				          readingEmissionResults(vehicleID,RegId,fuelType);
+				          readingEmissionResults(vehicleID,fuelType,objHeader);
 			          }
 			          
 
@@ -234,83 +233,56 @@ public class TestValueFileController {
 		 return "testReportReprint";
 		 }
 	 
-	public void readingEmissionResults(String vehicleID, String RegId, String fuelType){
+	public void readingEmissionResults(String vehicleID, String fuelType,TestValueFileHeader objHeader){
+		
+		List<TestValueFileDetail> testResultList = new ArrayList<TestValueFileDetail>();
 		
 		if(fuelType.equalsIgnoreCase("Diesel"))
 		{
-/*			JDBCSingletonAVL jdbc= JDBCSingletonAVL.getInstance();
-			try {
+			List<EmissionCodeMapping> list = testReportService.findAllCodeMapping("70000-79999");
+			int id_no = testReportService.find_edt_id(vehicleID);
+			
+			for(EmissionCodeMapping ecm : list) {
+				String rs = testReportService.find_edt_data(ecm.getColumnName(),id_no);
+				testResultList.add(new TestValueFileDetail(objHeader, ecm.getCode(), rs));
 				
-				EmissionDieselResult edresult = jdbc.pullDieselData(vehicleID, vrobj, avlPath, "DieselTest.mdb");				
-				if(edresult.getEdcd() != null) {
-					edresult.getEdcd().setId_no(avlPath+"/"+edresult.getEdcd().getId_no());
-					testReportService.saveEmissionDieselCertificateData(edresult.getEdcd());
-					
-					List<EmissionDieselCertificateReadings> list = edresult.getList();
-					for(EmissionDieselCertificateReadings edcr : list) {
-						edcr.setEdc_id(edresult.getEdcd());
-						testReportService.saveEmissionDieselCertificateReadings(edcr);
-					}					
-				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
-*/			
 			
-			EmissionDieselCertificateData emd =null;
-			
-			try{
-				emd = testReportService.getEmiDieselCerData(RegId);
-				if(emd == null) {
-					testReportService.insertIntoEDCData(vehicleID,RegId);
-					int id_no = testReportService.getEDCDataID(RegId);
-					testReportService.insertIntoEDCReadings(id_no);					
-				}
-				  
-				}catch(Exception e){System.out.println("try catch /n reading diesel emmision results");}
-	
+			testValueFileServices.saveAllDetail(testResultList);
 		}
 		else if(fuelType.equalsIgnoreCase("Petrol") || fuelType.equalsIgnoreCase("LPG") || fuelType.equalsIgnoreCase("CNG")) 
 		{
-
-/*			JDBCSingletonAVL jdbc= JDBCSingletonAVL.getInstance();
+			List<EmissionCodeMapping> list = testReportService.findAllCodeMapping("80000-89999");
 			
-			try {
-				EmissionPetrolResultBean epresult = jdbc.pullPetrolData(vehicleID, vrobj, avlPath, "PetrolTest.mdb");
-				
-				if(epresult.getEmpcdata() != null) {
-					epresult.getEmpcdata().setId_no(avlPath+"/"+epresult.getEmpcdata().getId_no());
-					testReportService.saveEmissionPetrolCertificateData(epresult.getEmpcdata());
-					
-					epresult.getEmpcgas().setId_no(epresult.getEmpcdata());
-					testReportService.saveEmissionPetrolCertificateGas(epresult.getEmpcgas());
-					
-					epresult.getEmpclambda().setId_no(epresult.getEmpcdata());
-					testReportService.saveEmissionPetrolCertificateLambda(epresult.getEmpclambda());
-					
-					epresult.getEmpcpetrol().setId_no(epresult.getEmpcdata());
-					testReportService.saveEmissionPetrolCertificatePetrol(epresult.getEmpcpetrol());					
+			int id_no = testReportService.find_ept_id(vehicleID);
+			String rs="";
+			
+			for(EmissionCodeMapping ecm : list) {
+				try {
+					rs = testReportService.find_ept_petrol("ept_certificate_petrol",ecm.getColumnName(),id_no);
+				} catch (Exception e) {
+					rs = "";
 				}
+				if(rs.length()==0) {
+					try {
+						rs = testReportService.find_ept_petrol("ept_certificate_gas",ecm.getColumnName(),id_no);
+					} catch (Exception e) {
+						rs = "";
+					}
+				}
+				if(rs.length()==0) {
+					try {
+						rs = testReportService.find_ept_petrol("ept_certificate_lambda",ecm.getColumnName(),id_no);
+					} catch (Exception e) {
+						rs = "";
+					}
+				}	
+					
+				testResultList.add(new TestValueFileDetail(objHeader, ecm.getCode(), rs));
 				
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
-*/			
-			EmissionPetrolCertificateData empcdata = null;
 			
-			try {
-				empcdata = testReportService.getEmiPetrolCerData(RegId);
-				if(empcdata == null) {
-					testReportService.insertIntoEPCData(vehicleID,RegId);
-					int id_no = testReportService.getEPCDataID(RegId);
-					testReportService.insertIntoEPCGas(id_no);
-					testReportService.insertIntoEPCLambda(id_no);
-					testReportService.insertIntoEPCPetrol(id_no);					
-				}				
-			} catch (Exception e) {System.out.println("try catch /n reading petrol emmision results");}
-			
-			
+			testValueFileServices.saveAllDetail(testResultList);
 		}
 
 	}
@@ -395,7 +367,7 @@ public class TestValueFileController {
 			VehicleRegistration vr =  vehicleService.getRegistraionInfo(regID);
 			//String avlPath = vr.getTestLaneHeadId().getAvlPath();
 			//readingEmissionResults(vr.getVid().getVehicleID(),vr,vr.getVid().getFtype().getFuel(),avlPath);
-			readingEmissionResults(vr.getVid().getVehicleID(),regID,vr.getVid().getFtype().getFuel());
+			//readingEmissionResults(vr.getVid().getVehicleID(),regID,vr.getVid().getFtype().getFuel());
 			
 			vi = inspectionServices.getChecklistMasterData(regID);
 			emd = testReportService.getEmiDieselCerData(regID);

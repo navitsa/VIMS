@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="ec418a8c-8cf1-4514-bbae-1d80ca383f29">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="341"/>
+	<property name="ireport.y" value="40"/>
 	<property name="ireport.callouts" value="##Thu Sep 17 11:59:31 IST 2020"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<style name="table">
@@ -67,23 +67,33 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="checklistData" class="java.util.List" isForPrompting="false"/>
 	<parameter name="Inspector" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="centerContactNo" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="emissionDieselReadings" class="java.util.List" isForPrompting="false"/>
-	<parameter name="emissionPetrolReadings" class="java.util.List" isForPrompting="false"/>
 	<parameter name="emissionType" class="java.lang.String"/>
 	<parameter name="tokenNo" class="java.lang.String"/>
-	<parameter name="limitValueDescription" class="java.util.List" isForPrompting="false"/>
 	<parameter name="appointmentNo" class="java.lang.String"/>
+	<parameter name="sideSlipResults" class="java.util.List" isForPrompting="false"/>
+	<parameter name="shockAbsorberResults" class="java.util.List" isForPrompting="false"/>
+	<parameter name="headLightResults" class="java.util.List" isForPrompting="false"/>
+	<parameter name="noiseResults" class="java.util.List" isForPrompting="false"/>
 	<parameter name="speedoResults" class="java.util.List" isForPrompting="false"/>
 	<parameter name="speedoPassStatus" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="noiseResults" class="java.util.List" isForPrompting="false"/>
-	<parameter name="brakeResults" class="java.util.List" isForPrompting="false"/>
 	<parameter name="speedoPassStatus2" class="java.lang.String"/>
 	<parameter name="speedoGovernorLimit" class="java.lang.String"/>
-	<parameter name="reportColor" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="speedoActualMaxSpeed" class="java.lang.String"/>
+	<parameter name="brakeResults" class="java.util.List" isForPrompting="false"/>
+	<parameter name="emissionDieselReadings" class="java.util.List" isForPrompting="false"/>
+	<parameter name="emissionPetrolReadings" class="java.util.List" isForPrompting="false"/>
+	<parameter name="checklistData" class="java.util.List" isForPrompting="false"/>
+	<parameter name="limitValueDescription" class="java.util.List" isForPrompting="false"/>
+	<parameter name="reportColor" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="reportpath0" class="java.lang.String"/>
+	<parameter name="reportpath1" class="java.lang.String"/>
+	<parameter name="reportpath2" class="java.lang.String"/>
+	<parameter name="reportpath3" class="java.lang.String"/>
+	<parameter name="reportpath4" class="java.lang.String"/>
+	<parameter name="reportpath5" class="java.lang.String"/>
+	<parameter name="reportpath6" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -108,7 +118,7 @@
 		<groupExpression><![CDATA[$F{test_type_type_id}]]></groupExpression>
 		<groupHeader>
 			<band height="18">
-				<printWhenExpression><![CDATA[!$F{test_type_type_id}.equals("34000-34499") && !$F{test_type_type_id}.equals("37000-37999") && !$F{test_type_type_id}.equals("40000-49999") && !$F{test_type_type_id}.equals("50000-69999") && !$F{test_type_type_id}.equals("37000-37999-1")]]></printWhenExpression>
+				<printWhenExpression><![CDATA[!$F{test_type_type_id}.equals("30000-30999") && !$F{test_type_type_id}.equals("31000-31999") && !$F{test_type_type_id}.equals("32000-32999") && !$F{test_type_type_id}.equals("34000-34499") && !$F{test_type_type_id}.equals("37000-37999") && !$F{test_type_type_id}.equals("40000-49999") && !$F{test_type_type_id}.equals("50000-69999") && !$F{test_type_type_id}.equals("37000-37999-1") && !$F{test_type_type_id}.equals("70000-79999") && !$F{test_type_type_id}.equals("80000-89999")]]></printWhenExpression>
 				<frame>
 					<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#EAEAEA" uuid="cc382300-7ad6-4353-92cf-e99649a05fc5"/>
 					<box>
@@ -143,7 +153,7 @@
 		</groupHeader>
 		<groupFooter>
 			<band height="28">
-				<printWhenExpression><![CDATA[!$F{test_type_type_id}.equals("34000-34499") && !$F{test_type_type_id}.equals("37000-37999") && !$F{test_type_type_id}.equals("40000-49999") && !$F{test_type_type_id}.equals("50000-69999") && !$F{test_type_type_id}.equals("37000-37999-1")]]></printWhenExpression>
+				<printWhenExpression><![CDATA[!$F{test_type_type_id}.equals("30000-30999") && !$F{test_type_type_id}.equals("31000-31999") && !$F{test_type_type_id}.equals("32000-32999") && !$F{test_type_type_id}.equals("34000-34499") && !$F{test_type_type_id}.equals("37000-37999") && !$F{test_type_type_id}.equals("40000-49999") && !$F{test_type_type_id}.equals("50000-69999") && !$F{test_type_type_id}.equals("37000-37999-1") && !$F{test_type_type_id}.equals("70000-79999") && !$F{test_type_type_id}.equals("80000-89999")]]></printWhenExpression>
 				<crosstab ignoreWidth="false">
 					<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="1" y="0" width="356" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="d3d96321-1254-4463-b644-0ddb58524aa3"/>
 					<crosstabDataset isDataPreSorted="true">
@@ -554,86 +564,120 @@ $P{centerAddress}+"<br>"+
 		</band>
 	</pageFooter>
 	<lastPageFooter>
-		<band height="23">
+		<band height="98">
 			<staticText>
-				<reportElement x="0" y="0" width="42" height="11" uuid="f640dab1-1bd3-467d-8ee3-2ba4f396be8c"/>
+				<reportElement x="0" y="73" width="42" height="11" uuid="f640dab1-1bd3-467d-8ee3-2ba4f396be8c"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[Inspector :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="54" y="0" width="143" height="11" uuid="6b3a0e8d-e4c4-4c2d-9e53-3871cf97e9cb"/>
+				<reportElement x="54" y="73" width="143" height="11" uuid="6b3a0e8d-e4c4-4c2d-9e53-3871cf97e9cb"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{Inspector}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="11" width="555" height="1" uuid="dfd7270c-d5be-4806-ae92-501b678ff71c"/>
+				<reportElement x="0" y="84" width="555" height="1" uuid="dfd7270c-d5be-4806-ae92-501b678ff71c"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="409" y="12" width="134" height="11" uuid="d375ff4e-d838-4c85-91ec-6a0968d17cab"/>
+				<reportElement x="409" y="85" width="134" height="11" uuid="d375ff4e-d838-4c85-91ec-6a0968d17cab"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of "]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="396" y="0" width="159" height="11" uuid="de70714c-cfd8-48b4-9e75-74955eecee0a"/>
+				<reportElement x="396" y="73" width="159" height="11" uuid="de70714c-cfd8-48b4-9e75-74955eecee0a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[Signature : ......................]]></text>
 			</staticText>
 			<textField evaluationTime="Report">
-				<reportElement x="543" y="12" width="12" height="11" uuid="57442a6c-e917-4383-8fa2-b770c4584998"/>
+				<reportElement x="543" y="85" width="12" height="11" uuid="57442a6c-e917-4383-8fa2-b770c4584998"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<image scaleImage="RealSize" vAlign="Top" onErrorType="Blank">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="394" y="19" width="159" height="54" uuid="af167c8a-bbaa-4610-95c7-650e4cd7dd68"/>
+				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{vehicleImage})).getImage()]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="394" y="7" width="159" height="12" uuid="ec9db13b-1365-4c85-9109-2ed8ab89f5ca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Tested Vehicle Photo]]></text>
+			</staticText>
 		</band>
 	</lastPageFooter>
 	<summary>
-		<band height="128">
-			<subreport isUsingCache="true" runToBottom="false">
-				<reportElement positionType="Float" x="0" y="33" width="553" height="10" isRemoveLineWhenBlank="true" uuid="3395d491-6400-4e76-afec-6067ed262d4a"/>
+		<band height="89">
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="11" uuid="9333cc44-f7f7-4114-878b-e5a0b03d5e64"/>
+				<subreportParameter name="limitValueDescription">
+					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="reportColor">
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
 				</subreportParameter>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{emissionPetrolReadings})]]></dataSourceExpression>
-				<subreportExpression><![CDATA["test_report_emission_petrol_subreport.jasper"]]></subreportExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{sideSlipResults})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{reportpath0}]]></subreportExpression>
 			</subreport>
-			<subreport isUsingCache="true">
-				<reportElement positionType="Float" x="0" y="43" width="553" height="10" isRemoveLineWhenBlank="true" uuid="41f51e36-049b-4443-badc-40e4f223dd31"/>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="11" width="555" height="11" uuid="131d7875-94da-467e-aba8-f05ee6e030ac"/>
+				<subreportParameter name="limitValueDescription">
+					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="reportColor">
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
 				</subreportParameter>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{emissionDieselReadings})]]></dataSourceExpression>
-				<subreportExpression><![CDATA["test_report_emission_diesel_subreport.jasper"]]></subreportExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{shockAbsorberResults})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{reportpath1}]]></subreportExpression>
 			</subreport>
-			<subreport isUsingCache="true">
-				<reportElement positionType="Float" x="0" y="54" width="394" height="10" isRemoveLineWhenBlank="true" uuid="1f17776b-f7e4-494f-b589-fbbf796b13da"/>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{checklistData})]]></dataSourceExpression>
-				<subreportExpression><![CDATA["test_report_subreport1.jasper"]]></subreportExpression>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="22" width="555" height="11" uuid="5d71471e-5f45-4853-933f-e6708a1239f5"/>
+				<subreportParameter name="reportColor">
+					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="limitValueDescription">
+					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{headLightResults})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{reportpath2}]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="33" width="555" height="11" uuid="3e76c0ad-7d6e-46cc-a2c8-24303c61c4e7"/>
+				<subreportParameter name="limitValueDescription">
+					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reportColor">
+					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{noiseResults})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{reportpath3}]]></subreportExpression>
 			</subreport>
 			<subreport runToBottom="false">
-				<reportElement positionType="Float" x="0" y="23" width="553" height="10" uuid="83c7a4ad-70dd-47c7-9ab0-aca1f853f74b"/>
+				<reportElement positionType="Float" x="0" y="44" width="555" height="11" uuid="83c7a4ad-70dd-47c7-9ab0-aca1f853f74b"/>
 				<subreportParameter name="speedoGovernorLimit">
 					<subreportParameterExpression><![CDATA[$P{speedoGovernorLimit}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="passStatus">
 					<subreportParameterExpression><![CDATA[$P{speedoPassStatus}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="passStatus2">
-					<subreportParameterExpression><![CDATA[$P{speedoPassStatus2}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="reportColor">
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus2">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus2}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="actualMaxSpeed">
 					<subreportParameterExpression><![CDATA[$P{speedoActualMaxSpeed}]]></subreportParameterExpression>
@@ -641,42 +685,33 @@ $P{centerAddress}+"<br>"+
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{speedoResults})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["test_report_speedometer_subreport.jasper"]]></subreportExpression>
 			</subreport>
-			<break>
-				<reportElement x="0" y="53" width="555" height="1" uuid="0b23de41-5aa5-4323-aa0a-b05fcef9eb08"/>
-			</break>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="12" width="553" height="11" uuid="3e76c0ad-7d6e-46cc-a2c8-24303c61c4e7"/>
-				<subreportParameter name="reportColor">
-					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
-				</subreportParameter>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{noiseResults})]]></dataSourceExpression>
-				<subreportExpression><![CDATA["test_report_noiselevel_subreport.jasper"]]></subreportExpression>
-			</subreport>
-			<image scaleImage="RealSize" vAlign="Top" onErrorType="Blank">
-				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="394" y="74" width="159" height="54" uuid="af167c8a-bbaa-4610-95c7-650e4cd7dd68"/>
-				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{vehicleImage})).getImage()]]></imageExpression>
-			</image>
-			<subreport>
-				<reportElement positionType="Float" x="0" y="0" width="200" height="12" uuid="b9344f92-1ec7-4313-acf4-fc4b39e84e8c"/>
-				<subreportParameter name="reportColor">
-					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
-				</subreportParameter>
+				<reportElement positionType="Float" x="0" y="55" width="555" height="11" uuid="b9344f92-1ec7-4313-acf4-fc4b39e84e8c"/>
 				<subreportParameter name="limitValueDescription">
 					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="reportColor">
+					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
+				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{brakeResults})]]></dataSourceExpression>
-				<subreportExpression><![CDATA["test_report_brake_subreport.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{reportpath4}]]></subreportExpression>
 			</subreport>
-			<staticText>
-				<reportElement x="394" y="62" width="159" height="12" uuid="ec9db13b-1365-4c85-9109-2ed8ab89f5ca"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true" isItalic="true" isUnderline="false"/>
-				</textElement>
-				<text><![CDATA[Tested Vehicle Photo]]></text>
-			</staticText>
+			<subreport isUsingCache="true">
+				<reportElement positionType="Float" x="0" y="66" width="555" height="11" isRemoveLineWhenBlank="true" uuid="41f51e36-049b-4443-badc-40e4f223dd31"/>
+				<subreportParameter name="limitValueDescription">
+					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reportColor">
+					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{emissionDieselReadings})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{reportpath5}]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement positionType="Float" x="0" y="77" width="394" height="11" isRemoveLineWhenBlank="true" uuid="1f17776b-f7e4-494f-b589-fbbf796b13da"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{checklistData})]]></dataSourceExpression>
+				<subreportExpression><![CDATA["test_report_subreport1.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</summary>
-	<noData>
-		<band height="53"/>
-	</noData>
 </jasperReport>

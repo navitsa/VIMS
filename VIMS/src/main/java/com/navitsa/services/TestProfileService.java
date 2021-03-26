@@ -7,19 +7,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.navitsa.entity.ParameterCodes;
+import com.navitsa.entity.TestLimitRule;
 import com.navitsa.entity.TestParameter;
 import com.navitsa.entity.TestParameterAngle;
 import com.navitsa.entity.TestPoint;
 import com.navitsa.entity.TestProfile;
 import com.navitsa.entity.TestProfileDetail;
 import com.navitsa.entity.TestProfileStatus;
+import com.navitsa.entity.TestWisePrintOrder;
 import com.navitsa.repository.ParameterCodesRepository;
+import com.navitsa.repository.TestLimitRuleRepository;
 import com.navitsa.repository.TestParameterAngleRepository;
 import com.navitsa.repository.TestParameterRepository;
 import com.navitsa.repository.TestPointRepository;
 import com.navitsa.repository.TestProfileDetailRepository;
 import com.navitsa.repository.TestProfileRepository;
 import com.navitsa.repository.TestProfileStatusRepository;
+import com.navitsa.repository.TestWisePrintOrderRepository;
 
 @Service
 @Transactional
@@ -45,6 +49,12 @@ public class TestProfileService {
 	
 	@Autowired
 	TestProfileStatusRepository tproStatusRepo;
+	
+	@Autowired
+	TestLimitRuleRepository testLimitRuleRepo;
+	
+	@Autowired
+	TestWisePrintOrderRepository testWisePrintOrderRepo;
 	
 
 	public void save(TestPoint obj) {
@@ -140,5 +150,22 @@ public class TestProfileService {
 	
 	public List<TestPoint> getTestPointsByTestTypeID(String typeID) {
 		return testPointRepo.findAllByTestTypeID(typeID);
+	}
+	
+	public List<TestLimitRule> findAllRules() {
+		return (List<TestLimitRule>) testLimitRuleRepo.findAll();
+	}
+
+	public List<TestWisePrintOrder> getAllTestWisePrintOrder() {
+		return (List<TestWisePrintOrder>) testWisePrintOrderRepo.findAll();
+	}
+
+	public void saveTestWisePrintOrder(List<TestWisePrintOrder> ls) {
+		testWisePrintOrderRepo.saveAll(ls);		
+	}
+
+	public String[] getPrintingOrder(int test_pro_id) {
+		return testWisePrintOrderRepo.getPrintingOrder(test_pro_id);
+		
 	}
 }

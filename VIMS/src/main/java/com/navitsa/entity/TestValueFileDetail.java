@@ -42,6 +42,14 @@ public class TestValueFileDetail {
 		this.code = code;
 		this.result = result;
 	}
+	
+	public TestValueFileDetail(TestValueFileHeader test_value_file_header, String code,
+			String result) {
+		super();
+		this.test_value_file_header = test_value_file_header;
+		this.code = code;
+		this.result = result;
+	}
 
 	public int getTestValueDetailID() {
 		return testValueDetailID;

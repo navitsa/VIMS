@@ -34,8 +34,21 @@
 			<div class="content">
 				<div class="page-inner">
 				
-					<a href="#" class="btn btn-sm btn-success pull-right" data-toggle="modal" 
+<!-- 				<a href="#" class="btn btn-sm btn-success pull-right" data-toggle="modal" 
 						data-target="#exampleModalCenter">Mandatory Test Types</a>
+					<a href='' data-toggle='modal' data-target='#printingOrderModal'>
+						<i class='fas fa-cog'></i>
+					</a> -->
+					
+					<div class="dropdown pull-right">
+					  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    More
+					  </button>
+					  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Mandatory Test Types</a>
+					    <a class="dropdown-item" href="#" data-toggle='modal' data-target='#printingOrderModal'>Test Wise Print Order</a>
+					  </div>
+					</div>
 									
 					<div class="page-header">
 							<h4 class="page-title">Set Codes & Limit Values</h4>
@@ -76,14 +89,13 @@
 									again!
 								</div>
 							</c:if>
-
+							
+							<form:form action="saveLimitValues" method="POST" modelAttribute="limitValues">
 							<div class="row">
-								<div class="col-lg-6">
-								
-									<form:form action="saveLimitValues" method="POST" modelAttribute="limitValues">
+								<div class="col-lg">
 		
 										<div class="form-group row">
-											<div class="col-lg-6">
+											<div class="col-lg">
 												<div class="form-group form-floating-label">
 													<form:select id="testProfile" class="form-control input-border-bottom" 
 														required="required" path="ck_testProfileDetailId.testProfileHeaderID.testProfileID">
@@ -97,7 +109,7 @@
 											</div>
 										</div>
 										<div class="form-group row">
-											<div class="col-lg-6">
+											<div class="col-lg">
 												<div class="form-group form-floating-label">
 													<form:select id="testType" class="form-control input-border-bottom"
 														onchange="getTestCodes4(this.value);showHide();" required="required" path="ck_testProfileDetailId.parameterCode.ck_paraCodeId.testType.typeId">
@@ -113,7 +125,7 @@
 											</div>
 										</div>
 										<div class="form-group row">
-											<div class="col-lg-6">
+											<div class="col-lg">
 												<div class="form-group form-floating-label">
 													<form:select id="paraCode" class="form-control input-border-bottom" 
 														required="required" path="ck_testProfileDetailId.parameterCode.ck_paraCodeId.code">
@@ -128,7 +140,7 @@
 										</div>
 			
 										<div class="form-group row">
-											<div class="col-lg-6">
+											<div class="col-lg">
 												<div class="form-group form-floating-label">
 													<form:select id="vehicleCateory" class="form-control input-border-bottom" 
 														required="required" path="ck_testProfileDetailId.vehicleCat.categoryID">
@@ -141,7 +153,9 @@
 													<label for="vehicleCateory" class="placeholder">Select vehicle category</label>
 												</div>
 											</div>
-											<div class="col-lg-6">
+										</div>
+										<div class="form-group-row">
+											<div class="col-lg">
 												<div id="hidden-panel">
 													<div class="form-group form-floating-label">
 														<form:select id="vSubCat" class="form-control input-border-bottom" 
@@ -158,9 +172,25 @@
 												</div>
 											</div>
 										</div>
-										
+										<div class="form-group row">
+											<div class="col-lg">
+												<div class="form-group form-floating-label">
+													<form:select id="rule" class="form-control input-border-bottom" 
+														required="required" path="ck_testProfileDetailId.testLimitRule.ruleCode">
+														<option></option>
+														<c:forEach items="${rules}" var="rule">
+															<form:option value="${rule.ruleCode}">${rule.ruleName}</form:option>
+														</c:forEach>
+													</form:select>
+													<label for="rule" class="placeholder">Select limit rule</label>
+												</div>
+											</div>
+										</div>
 									
-									<br>
+								</div>
+								<!-- End of row 1 column 1 -->
+								
+								<div class="col-lg">
 										<div class="row">
 											<div class="col-lg">
 		
@@ -303,12 +333,17 @@
 										<button type="submit" class="btn btn-success"
 											onclick="return Validate()">Save</button>
 										<button type="reset" class="btn btn-warning">Clear</button>
-									</form:form>
-									
+										<br>
 								</div>
-								<!-- End of card column 1 -->
+								<!-- End of row 1 column 2 -->
 								
-								<div class="col-lg-6">
+							</div>
+							<!-- End of card row 1 -->
+							
+							</form:form>
+							
+							<div class="row">
+								<div class="col-lg">
 									<div class="table-responsive">
 									<table id="proDetailsTable" class="display table table-bordered table-hover" cellspacing="0" width="100%">
 										<thead>
@@ -318,6 +353,8 @@
 												<th>Code</th>
 												<th>Category</th>
 												<th>Speed Category</th>
+												<th>Limit Rule</th>
+												<th>Operator</th>
 												<th>Limit</th>
 												<th>Min</th>
 												<th>Max</th>
@@ -333,6 +370,8 @@
 													<td>${tpd.ck_testProfileDetailId.parameterCode.ck_paraCodeId.code}</td>
 													<td>${tpd.ck_testProfileDetailId.vehicleCat.vehicleCategory}</td>
 													<td>${tpd.ck_testProfileDetailId.subCategoryID.description}</td>
+													<td>${tpd.ck_testProfileDetailId.testLimitRule.ruleName}</td>
+													<td>${tpd.operator}</td>
 													<td>${tpd.limitValue}</td>
 													<td>${tpd.minValue}</td>
 													<td>${tpd.maxValue}</td>
@@ -345,11 +384,9 @@
 									</div>
 
 								</div>
-								<!-- End of card column 2 -->
-								
+								<!-- End of row 2 column 1 -->
 							</div>
-							<!-- End of card row -->
-							
+							<!-- End of card row 2 -->
 							
 						</div>
 						<!-- End of card body -->
@@ -378,7 +415,11 @@
 		        "columnDefs": [{ "orderable": false, "targets": 4 },
 		        				{ "orderable": false, "targets": 5 },
 		        				{ "orderable": false, "targets": 6 },
-		        				{ "orderable": false, "targets": 7 }]
+		        				{ "orderable": false, "targets": 7 },
+		        				{ "orderable": false, "targets": 8 },
+		        				{ "orderable": false, "targets": 9 },
+		        				{ "orderable": false, "targets": 10 },
+		        				{ "orderable": false, "targets": 11 }]
 		    } );
 		});
 
@@ -612,6 +653,111 @@ function showHide() {
     } else {
         document.getElementById('hidden-panel').style.display = 'none'
     }
+}
+</script>
+
+	<!-- Modal -->
+	<div class="modal fade" id="printingOrderModal" tabindex="-1"
+		role="dialog" aria-labelledby="printingOrderModalTitle"
+		aria-hidden="true">
+		
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="printingOrderModalLongTitle">Test Wise Printing Order</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form name="testWisePrintOrderForm" id="testWisePrintOrderForm" method="POST">
+					<div class="modal-body">
+
+						<div style="height: 300px; overflow: auto;">
+							<table class="table table-sm" id="">
+								<thead>
+									<tr>
+										<th>Profile</th>
+										<th>Test Type</th>
+										<th>Printing Order</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${testWisePrintOrder}" var="order">
+										<tr>
+											<td>
+												${order.ck_testWisePrintOrderId.testProfile.testProfileName}
+												<input type="hidden" name="profile_id" value="${order.ck_testWisePrintOrderId.testProfile.testProfileID}"> 
+											</td>
+											<td>
+												${order.ck_testWisePrintOrderId.testType.type}
+												<input type="hidden" name="type_id" value="${order.ck_testWisePrintOrderId.testType.typeId}">
+											</td>
+											<td>
+												<select class="form-control" name="print_order">
+												
+													<c:forEach var="j" begin="1" end="6">
+														<c:if test="${order.printingOrder == j}">
+															<option value="${j}" selected>${j}</option>
+
+														</c:if>
+														<c:if test="${order.printingOrder != j}">
+															<option value="${j}">${j}</option>
+
+														</c:if>
+													</c:forEach>
+													
+												</select>
+											</td>
+										</tr>
+										<input type="hidden" name="reportPath" value="${order.reportPath}">
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning"
+							data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-success" onclick="saveTestWisePrintOrder()">Save
+							Changes</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+<script type="text/javascript">
+
+function saveTestWisePrintOrder() {
+	var request_method = $("#testWisePrintOrderForm").attr("method"); //get form GET/POST method
+	
+	// Get form
+	var form = $('#testWisePrintOrderForm')[0];
+
+	// Create an FormData object
+	var data = new FormData(form);
+	
+	$.ajax({
+		url : "saveTestWisePrintOrder",
+		type : request_method,
+		data : data,
+		processData : false,
+		contentType : false,
+		cache : false,
+		success : function(data) {
+ 			if (data == "1") {
+ 				alert("Print Order is changed successfully !");
+				
+ 			}else{
+ 				alert("Please try again !");
+ 			}
+ 			
+		}
+
+	});
+	
 }
 </script>
 </body>

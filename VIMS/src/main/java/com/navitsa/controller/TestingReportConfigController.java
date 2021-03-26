@@ -1,5 +1,6 @@
 package com.navitsa.controller;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,12 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.navitsa.Reports.EmissionPetrolResultBean;
 import com.navitsa.Reports.TestResultBean;
 import com.navitsa.Reports.TestResultSpeedoBean;
-import com.navitsa.entity.EmissionDieselCertificateData;
-import com.navitsa.entity.EmissionDieselCertificateReadings;
-import com.navitsa.entity.EmissionPetrolCertificateData;
 import com.navitsa.entity.ParameterCodes;
 import com.navitsa.entity.TestParameter;
 import com.navitsa.entity.TestParameterAngle;
@@ -152,7 +149,7 @@ public class TestingReportConfigController {
 	
 	@GetMapping("/getTestReport")
 	 public ModelAndView getTestReport(@RequestParam String register_id,@RequestParam String test_value_file_id,
-			 @RequestParam int color,HttpServletResponse response)
+			 @RequestParam int color,HttpServletResponse response) throws ParseException
 	 {
 		 ModelAndView mav = new ModelAndView("comPdfReportView");
 		 
@@ -165,14 +162,14 @@ public class TestingReportConfigController {
 		 String name,address,mobileNo;
 		 if(!vr.getCusid().getId().equals("0000"))
 		 {
-			//This is a customer
+			// customer
 			 name		= vr.getCusid().getName();
 			 address	= vr.getCusid().getStateid().getState()+", "+vr.getCusid().getCity()+", "+vr.getCusid().getAddress();
 			 mobileNo	= vr.getCusid().getTpno(); 
 		 }
 		 else
 		 {
-			 //this is a owner			 
+			 // owner			 
 			 VehicleOwner vo =  vehicleService.getVehicleOwnerIDByVehicleID(vr.getVid().getVehicleID());
 			 name 		= vo.getOwnerName();
 			 address	= vo.getAdd01()+", "+ vo.getStateid().getState()+", "+vo.getCity()+", "+vo.getPostalBox();
@@ -220,8 +217,12 @@ public class TestingReportConfigController {
 		 }
 		 params.put("appointmentNo", bookingNo);
 		 
-		 //getting test results from query
-		 String[][] result = service.getTestResult(test_pro_id,test_value_file_id,vehicle_cat_id);
+		 //getting test results from the query
+		 int rule = 0;
+		 rule = service.findRuleByYear(vr.getVid().getManufactureYear()).getRuleCode();
+		 System.out.println("Rule is "+rule);
+		 
+		 String[][] result = service.getTestResult(test_pro_id,test_value_file_id,vehicle_cat_id,rule);
 		 List<TestResultBean> list = new ArrayList<>();
 		 
 		 for(int i=0; i<result.length;i++ )
@@ -230,7 +231,12 @@ public class TestingReportConfigController {
 			 
 			 obj.setTest_value_result_header_Vehicle_ID(result[i][0]);
 			 obj.setTest_value_result_detail_Code(result[i][1]);
-			 obj.setTest_value_result_detail_Result(Double.valueOf(result[i][2]));
+			 if(result[i][2].equals("--") || result[i][2].isEmpty()) {
+				 obj.setTest_value_result_detail_Result(0.0);
+			 }else {
+				 obj.setTest_value_result_detail_Result(Double.valueOf(result[i][2]));
+			 }
+			 
 			 obj.setTest_type_type_id(result[i][3]);
 			 obj.setTest_type_test_type(result[i][4]);
 			 obj.setT_test_point_name(result[i][5]);
@@ -334,13 +340,11 @@ public class TestingReportConfigController {
 			 obj.setPass_fail_status(pass_fail_status);
 			 obj.setT_limit_value_desc(limit_value_desc);
 			 list.add(obj);
-			 
-			 //System.out.println(obj.getTest_type_test_type()+" "+pass_fail_status);
 		 }
 
 /* ---------------------------------------------------------------------------------------------------------- */
 		 String[][] speedoResult = service.getSpeedoTestResult(test_pro_id,test_value_file_id,vehicle_cat_id);
-					
+			
 			String subCat = vr.getVid().getSubCategoryID().getDescription();
 			boolean haveSpeedGovernor = false;
 			double tol_add_limit = 0; // limit + tolerance
@@ -444,10 +448,12 @@ public class TestingReportConfigController {
 					}
 				}
 			}
-			
 /* ---------------------------------------------------------------------------------------------------------- */			
-			params.put("noiseResults",list);
-			params.put("brakeResults", list);
+		params.put("sideSlipResults",list);
+		params.put("shockAbsorberResults", list);
+		params.put("headLightResults", list);
+		params.put("noiseResults",list);
+		params.put("brakeResults", list);
 /* ---------------------------------------------------------------------------------------------------------- */
 			
 		try {
@@ -461,27 +467,27 @@ public class TestingReportConfigController {
 		 
 		try {
 			// Emission diesel results
-			EmissionDieselCertificateData emd = service.getEmiDieselCerData(register_id);
-			List<EmissionDieselCertificateReadings> emr = service.getEmiDieselCerReadings(emd.getId_no());
-			params.put("emissionDieselReadings", emr);
+			//EmissionDieselCertificateData emd = service.getEmiDieselCerData(register_id);
+			//List<EmissionDieselCertificateReadings> emr = service.getEmiDieselCerReadings(emd.getId_no());
+			params.put("emissionDieselReadings", list);
 		} catch (Exception e) {
 			System.out.println("Error on getting Emission diesel results " + e);
 		}
 		
 		try {
 			// Emission petrol results
-			EmissionPetrolCertificateData empcdata = service.getEmiPetrolCerData(register_id);
+			//EmissionPetrolCertificateData empcdata = service.getEmiPetrolCerData(register_id);
 			
-			List<EmissionPetrolResultBean> petrolResultlist = new ArrayList<EmissionPetrolResultBean>();
-			EmissionPetrolResultBean empresult = new EmissionPetrolResultBean();
-			empresult.setEmpcdata(empcdata);
-			empresult.setEmpcgas(service.getEmiPetrolCerGas(empcdata.getId_no()));
-			empresult.setEmpclambda(service.getEmiPetrolCerLambda(empcdata.getId_no()));
-			empresult.setEmpcpetrol(service.getEmiPetrolCerPetrol(empcdata.getId_no()));
+			//List<EmissionPetrolResultBean> petrolResultlist = new ArrayList<EmissionPetrolResultBean>();
+			//EmissionPetrolResultBean empresult = new EmissionPetrolResultBean();
+			//empresult.setEmpcdata(empcdata);
+			//empresult.setEmpcgas(service.getEmiPetrolCerGas(empcdata.getId_no()));
+			//empresult.setEmpclambda(service.getEmiPetrolCerLambda(empcdata.getId_no()));
+			//empresult.setEmpcpetrol(service.getEmiPetrolCerPetrol(empcdata.getId_no()));
 			
-			petrolResultlist.add(empresult);
+			//petrolResultlist.add(empresult);
 			
-			params.put("emissionPetrolReadings",petrolResultlist);
+			//params.put("emissionPetrolReadings",list);
 			
 		} catch (Exception e) {
 			System.out.println("Error on getting Emission petrol results "+e);
@@ -554,6 +560,12 @@ public class TestingReportConfigController {
 		 ReportViewe view =new ReportViewe();
 		 String pdf_result = null;
 		 params.put("limitValueDescription",list);
+		 
+		 String[] reportPath = testProfileService.getPrintingOrder(test_pro_id);
+		 for (int i = 0; i < reportPath.length; i++) {
+			 params.put("reportpath"+i,reportPath[i]);
+		}
+		 
 		 
 		try {
 			pdf_result = view.pdfReportViewInlineSystemOpen("test_report.jasper","test_report",list,params,response);

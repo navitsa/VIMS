@@ -83,7 +83,7 @@
 	                	<!-- <input type="button" class="btn btn-primary btn-sm" value="Download file from FTP" onclick="download()"> -->
 	                	
 							<div class="table-responsive-lg">
-								<table class="table table-sm">
+								<table class="table table-sm" id="pendingResultsTable">
 									<thead>
 									   <tr>
 									      <th style="width:50px" scope="col">#</th>
@@ -92,6 +92,7 @@
 									      <th scope="col">Date & Time</th>
 									      <th scope="col">Color</th>
 									      <th scope="col">B / W</th>
+									      <th scope="col"></th>
 									   </tr>
 									</thead>
 									<tbody>
@@ -140,10 +141,10 @@
 		    url: "readingTestValues",
 		    success: function(data){
 		    	document.getElementById("overlay").style.display = "none";
-	        	$("table tbody").empty();
+	        	$("#pendingResultsTable tbody").empty();
 				for(var i=0; i<data.length; i++){
-					var markup = "<tr><th scope='row'>"+data[i].test_value_file_id+"</th><td>"+data[i].vreg.vregID+"</td><td>"+data[i].vehicle_id+"</td><td>"+data[i].date+"</td><td><a href='#' class='btn btn-success btn-sm' onclick='checkAvailableResults(`"+data[i].vreg.vregID+"`,`"+data[i].test_value_file_id+"`,1)'><i class='fas fa-print'></i></a></td><td><a href='#' class='btn btn-default btn-sm' onclick='checkAvailableResults(`"+data[i].vreg.vregID+"`,`"+data[i].test_value_file_id+"`,0)'><i class='fas fa-print'></i></a></td></tr>";
-	           		 $("table tbody").append(markup);
+					var markup = "<tr><th scope='row'>"+data[i].test_value_file_id+"</th><td>"+data[i].vreg.vregID+"</td><td>"+data[i].vehicle_id+"</td><td>"+data[i].date+"</td><td><a href='#' class='btn btn-success btn-sm' onclick='checkAvailableResults(`"+data[i].vreg.vregID+"`,`"+data[i].test_value_file_id+"`,1)'><i class='fas fa-print'></i></a></td><td><a href='#' class='btn btn-default btn-sm' onclick='checkAvailableResults(`"+data[i].vreg.vregID+"`,`"+data[i].test_value_file_id+"`,0)'><i class='fas fa-print'></i></a></td> <td><a href='' data-toggle='modal' data-target='#printingOrderModal'><i class='fas fa-cog'></i></a></td></tr>";
+	           		 $("#pendingResultsTable tbody").append(markup);
 	           	 }
 		    },
 		    error:function(){
@@ -225,5 +226,87 @@ function confirmMsg(regID,test_value_file_id,color,map) {
 	
 }
 </script>
+
+	<!-- Modal -->
+	<div class="modal fade" id="printingOrderModal" tabindex="-1"
+		role="dialog" aria-labelledby="printingOrderModalTitle"
+		aria-hidden="true">
+		
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Results for Printing</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form name="" id="" action="" method="GET">
+					<div class="modal-body">
+
+						<div style="height: 300px; overflow: auto;">
+							<table class="table table-sm" id="">
+								<thead>
+									<tr>
+										<th>Test Type</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Side Slip Test</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Shock Absorber Test</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Headlight Test</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Noise Level Test</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Speedometer Test</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Speed Governor / Limit Test</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Brake Test (CAR)</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Brake Test (TRUCK)</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Emission ( Diesel )</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Emission ( Petrol/LPG/CNG)</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success"
+							data-dismiss="modal">Save Changes</button>
+<!-- 						<button type="submit" class="btn btn-success">Save
+							Changes</button> -->
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

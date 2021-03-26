@@ -1,179 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_emission_diesel_subreport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="7aea3084-683a-4dac-b740-699b7899281e">
-	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="pass fail color style">
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $F{edc_id.result}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $F{finalize_pass_fail_status}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
 			<style mode="Transparent" forecolor="#009966"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $F{edc_id.result}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $F{finalize_pass_fail_status}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
 			<style forecolor="#990000"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $F{edc_id.result}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $F{finalize_pass_fail_status}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
 			<style isBlankWhenNull="true" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $F{edc_id.result}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $F{finalize_pass_fail_status}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
 			<style markup="none" isBlankWhenNull="true" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 		</conditionalStyle>
 	</style>
+	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="reportColor" class="java.lang.Integer" isForPrompting="false"/>
-	<field name="k" class="java.lang.String"/>
-	<field name="hsu" class="java.lang.String"/>
-	<field name="rpm_min" class="java.lang.String"/>
-	<field name="rpm_max" class="java.lang.String"/>
-	<field name="oil_temp" class="java.lang.String"/>
-	<field name="edc_id.result" class="java.lang.String"/>
-	<field name="edc_id.hsu_pres" class="java.lang.String"/>
-	<field name="edc_id.k_pres" class="java.lang.String"/>
-	<field name="edc_id.hsu_measured" class="java.lang.String"/>
-	<field name="edc_id.k_measured" class="java.lang.String"/>
-	<field name="edc_id.rpm_min_measured" class="java.lang.String"/>
-	<field name="edc_id.rpm_max_measured" class="java.lang.String"/>
+	<field name="test_type_test_type" class="java.lang.String"/>
+	<field name="test_type_type_id" class="java.lang.String"/>
+	<field name="t_test_point_name" class="java.lang.String"/>
+	<field name="ta_para_name" class="java.lang.String"/>
+	<field name="taa_angle_name" class="java.lang.String"/>
+	<field name="test_value_result_detail_Result" class="java.lang.Double"/>
+	<field name="unit" class="java.lang.String"/>
+	<field name="finalize_pass_fail_status" class="java.lang.String"/>
+	<group name="test_type_group">
+		<groupExpression><![CDATA[$F{test_type_test_type}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<printWhenExpression><![CDATA[$F{test_type_type_id}.equals("70000-79999") || $F{test_type_type_id}.equals("80000-89999")]]></printWhenExpression>
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#EAEAEA" uuid="43e76dbf-f86b-423e-bb91-74f9f0b37f39"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textField isBlankWhenNull="true">
+						<reportElement style="pass fail color style" x="395" y="0" width="133" height="14" isRemoveLineWhenBlank="true" uuid="e8865c9d-a12b-4b25-ac08-d028d437fbd0"/>
+						<textElement textAlignment="Right" verticalAlignment="Middle">
+							<font fontName="SansSerif" size="9" pdfFontName="Helvetica"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{finalize_pass_fail_status}.equalsIgnoreCase("FAIL")?$F{finalize_pass_fail_status}+"*":$F{finalize_pass_fail_status}]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement mode="Transparent" x="15" y="0" width="153" height="14" uuid="0136f846-0d80-498c-be2e-ff3c53a58280"/>
+						<box>
+							<pen lineWidth="0.0"/>
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement verticalAlignment="Middle">
+							<font fontName="SansSerif" size="9" isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{test_type_test_type}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="51">
+				<printWhenExpression><![CDATA[$F{test_type_type_id}.equals("70000-79999") || $F{test_type_type_id}.equals("80000-89999")]]></printWhenExpression>
+				<crosstab>
+					<reportElement x="0" y="0" width="555" height="51" uuid="60955737-89cc-45b5-ac20-aed8af5e1849"/>
+					<crosstabDataset isDataPreSorted="true">
+						<dataset resetType="Group" resetGroup="test_type_group"/>
+					</crosstabDataset>
+					<rowGroup name="t_test_point_name" width="70">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{t_test_point_name}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#FFFFFF" mode="Opaque">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="12" uuid="574e3bdf-ed87-4db2-a79d-3dbf56ddb876"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{t_test_point_name}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents/>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<columnGroup name="ta_para_name" height="13" headerPosition="Stretch">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{ta_para_name}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents backcolor="#FFFFFF" mode="Opaque">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="11" uuid="4a2fcc44-6d03-44ad-b715-c7635e4b9706"/>
+									<textElement verticalAlignment="Middle">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{ta_para_name}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents/>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<columnGroup name="taa_angle_name" height="13">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{taa_angle_name}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents backcolor="#FFFFFF" mode="Opaque">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="11" uuid="8ebac2f5-d65e-45fe-a6ea-5d1200cac2db"/>
+									<textElement verticalAlignment="Middle">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{taa_angle_name}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents/>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<measure name="test_value_result_detail_ResultMeasure" class="java.lang.Double">
+						<measureExpression><![CDATA[$F{test_value_result_detail_Result}]]></measureExpression>
+					</measure>
+					<crosstabCell width="50" height="12">
+						<cellContents>
+							<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="12" uuid="8bb37df2-8c45-4d44-9d58-3b5e668c5298"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell height="25" rowTotalGroup="t_test_point_name">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="dd0beb61-87ed-4c62-9c89-932326a1bfcd"/>
+								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" columnTotalGroup="ta_para_name">
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="43e4a43f-e99b-45c3-a37a-60f027a5c08c"/>
+								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="t_test_point_name" columnTotalGroup="ta_para_name">
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="3129a8fb-a540-44ce-b131-d5ea9c33f413"/>
+								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" columnTotalGroup="taa_angle_name">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="329ab05b-6594-44ed-a30a-e219c718d78b"/>
+								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="t_test_point_name" columnTotalGroup="taa_angle_name">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="c5ccf972-2af8-451f-b902-a6a5ad764392"/>
+								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+				</crosstab>
+			</band>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="123">
-			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#EAEAEA" uuid="7be64c2d-7cdd-43e4-a8fd-4d1727574658"/>
-				<box>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<staticText>
-					<reportElement x="10" y="0" width="151" height="14" uuid="c748aa98-850c-4f34-bb62-62fafb8af1ee"/>
-					<textElement verticalAlignment="Middle">
-						<font size="9" isBold="false"/>
-					</textElement>
-					<text><![CDATA[Emission / Smoke Test]]></text>
-				</staticText>
-				<textField isBlankWhenNull="true">
-					<reportElement style="pass fail color style" x="399" y="1" width="124" height="13" isRemoveLineWhenBlank="true" uuid="b0f3771e-f39e-40da-9984-e3c05485ac18"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{edc_id.result}.equalsIgnoreCase("FAIL")?$F{edc_id.result}.toUpperCase()+"*":$F{edc_id.result}.toUpperCase()]]></textFieldExpression>
-				</textField>
-			</frame>
-			<staticText>
-				<reportElement x="61" y="22" width="111" height="12" uuid="ed4b077a-1076-48f6-be75-14984f09bbcb"/>
-				<textElement textAlignment="Center">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Free Accereration Test ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="61" y="34" width="41" height="22" uuid="9d4d7b99-83fc-48f9-b958-38cf074726e0"/>
-				<textElement textAlignment="Center">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Prescribed Standard]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="131" y="34" width="41" height="21" uuid="beb9c876-8479-4cd1-9347-ce85ffa4d625"/>
-				<textElement textAlignment="Center">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Measured Level]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="56" width="61" height="12" uuid="a54f0090-bad3-44d8-97d3-dc7f1df8709e"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[HSU ( val %)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="68" width="61" height="12" uuid="2daaf63d-42e3-4391-9722-43b3e90f9468"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Kmean (m-1)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="80" width="61" height="12" uuid="f82bf420-2ee1-4560-9896-8f4897bfef7d"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[OilTemp (0C)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="92" width="61" height="12" uuid="7265bff8-7982-4638-9e90-1f972171c44a"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Avg.RPM Min]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="104" width="61" height="12" uuid="18dfe8e5-c434-4492-8bc9-fabc87afc9ff"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Avg.RPM Max]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="131" y="67" width="41" height="13" isRemoveLineWhenBlank="true" uuid="1b3d6746-72f0-476c-8742-b237486c5948"/>
-				<box rightPadding="5"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{edc_id.k_measured}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="131" y="54" width="41" height="13" isRemoveLineWhenBlank="true" uuid="17f41a34-5774-4afa-8be3-82ba97f1cd2d"/>
-				<box rightPadding="5"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{edc_id.hsu_measured}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="131" y="79" width="41" height="13" isRemoveLineWhenBlank="true" uuid="5b080a7c-33a2-4644-9cc7-74ad258f9e7a"/>
-				<box rightPadding="5"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{oil_temp}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="131" y="91" width="41" height="13" isRemoveLineWhenBlank="true" uuid="26d68ea2-ffd5-435e-92bc-29359d12c660"/>
-				<box rightPadding="5"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{edc_id.rpm_min_measured}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="131" y="103" width="41" height="13" isRemoveLineWhenBlank="true" uuid="33fda0ea-5102-44a9-b54d-b71a1c93b7fc"/>
-				<box rightPadding="5"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{edc_id.rpm_max_measured}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="61" y="56" width="41" height="12" isRemoveLineWhenBlank="true" uuid="29854e25-a02e-4467-ac0f-e07596c377ab"/>
-				<box rightPadding="5"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{edc_id.hsu_pres}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="61" y="68" width="41" height="12" isRemoveLineWhenBlank="true" uuid="ba22a147-89f2-4ab4-8911-5347a66d2031"/>
-				<box rightPadding="5"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{edc_id.k_pres}]]></textFieldExpression>
-			</textField>
-		</band>
-	</title>
+	<pageFooter>
+		<band height="10"/>
+	</pageFooter>
 </jasperReport>

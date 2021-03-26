@@ -33,6 +33,10 @@ public class Ck_testProfileDetailId implements Serializable{
 	@ManyToOne(optional = false,fetch = FetchType.EAGER)
 	@JoinColumn(name = "vehicle_sub_cat_id",referencedColumnName = "subCategoryID")
 	private VehiclesSubCategory subCategoryID;
+	
+	@ManyToOne(optional = false,fetch = FetchType.EAGER)
+	@JoinColumn(name = "rule",referencedColumnName = "rule_code")
+	private TestLimitRule testLimitRule;
 
 	public TestProfile getTestProfileHeaderID() {
 		return testProfileHeaderID;
@@ -66,15 +70,25 @@ public class Ck_testProfileDetailId implements Serializable{
 		this.subCategoryID = subCategoryID;
 	}
 
+	public TestLimitRule getTestLimitRule() {
+		return testLimitRule;
+	}
+
+	public void setTestLimitRule(TestLimitRule testLimitRule) {
+		this.testLimitRule = testLimitRule;
+	}
+
 	public Ck_testProfileDetailId(TestProfile testProfileHeaderID, ParameterCodes parameterCode,
-			VehicleCategory vehicleCat, VehiclesSubCategory subCategoryID) {
+			VehicleCategory vehicleCat, VehiclesSubCategory subCategoryID, TestLimitRule testLimitRule) {
 		super();
 		this.testProfileHeaderID = testProfileHeaderID;
 		this.parameterCode = parameterCode;
 		this.vehicleCat = vehicleCat;
 		this.subCategoryID = subCategoryID;
+		this.testLimitRule = testLimitRule;
 	}
 
 	public Ck_testProfileDetailId() {
 	}
+	
 }
