@@ -79,7 +79,7 @@
 							<c:if test="${success ==1}">
 								<div class="alert alert-success alert-dismissible">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<strong>Success!</strong> Data Successfully Saved.
+									<strong>Success!</strong> Test Profile Successfully Updated.
 								</div>
 							</c:if>
 							<c:if test="${success ==0}">

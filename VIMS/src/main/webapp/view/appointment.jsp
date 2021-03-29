@@ -223,7 +223,7 @@
 												<label for="registeredYear" class="mr-sm-2">Registered Year</label>
 												<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2 datetimepicker-input" 
 													id="registeredYear" data-toggle="datetimepicker" 
-													data-target="#registeredYear" style="width: 80px" path="registeredYear"/>
+													data-target="#registeredYear" style="width: 110px" path="registeredYear"/>
 
 <%-- 													<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2" 
 													style="width: 80px" path="registeredYear" id="registeredYear"/> --%>
@@ -429,7 +429,7 @@
         	
              $('#registeredYear').datetimepicker({
                  viewMode: 'years',
-                 format: 'MM/YYYY'
+                 format: 'DD/MM/YYYY'
             });
             
              $('#manufactureYear').datetimepicker({

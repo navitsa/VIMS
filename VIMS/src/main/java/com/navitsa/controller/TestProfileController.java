@@ -347,7 +347,8 @@ public class TestProfileController {
 		 }else {
 			 testProfileService.saveTestProDetail(tpd);
 		 }
-			  
+		
+		 redirectAttributes.addFlashAttribute("success", 1);
 		 return "redirect:/limitValues?proId="+testProfile.getTestProfileID();
 
 	 }
