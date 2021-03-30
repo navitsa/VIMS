@@ -10,6 +10,7 @@ import com.navitsa.entity.Customer;
 import com.navitsa.entity.Levelmanage;
 import com.navitsa.entity.Role;
 import com.navitsa.entity.Roleassign;
+import com.navitsa.entity.SysLocation;
 import com.navitsa.entity.TaxConfiguration;
 import com.navitsa.entity.UserLevel;
 import com.navitsa.entity.Users;
@@ -19,6 +20,7 @@ import com.navitsa.repository.LevelmanageRepository;
 import com.navitsa.repository.OcrDetailsRepository;
 import com.navitsa.repository.RoleRepository;
 import com.navitsa.repository.RoleassignRepository;
+import com.navitsa.repository.SysLocationRepository;
 import com.navitsa.repository.TaxConfigurationRepository;
 import com.navitsa.repository.UserLevelRepository;
 import com.navitsa.repository.UsersRepository;
@@ -52,6 +54,9 @@ public class UsersService {
 
 	@Autowired
 	OcrDetailsRepository ocrDetailsRepository;
+	
+	@Autowired
+	SysLocationRepository sysLocationRepository;
 	
 	public List<Users> listAll(){
 		return (List<Users>) repo.findAll();
@@ -225,5 +230,8 @@ public class UsersService {
 		String selectedDate1=selectedDate+"%";
 		return  ocrDetailsRepository.getDashBordOCrDetails(selectedDate1);
 	}
+	public List<SysLocation> getSysLocation(){		
+		return  (List<SysLocation>) sysLocationRepository.findAll();
+	}
 	
-}
+}//sysLocationRepository

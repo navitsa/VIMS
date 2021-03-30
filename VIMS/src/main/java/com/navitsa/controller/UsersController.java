@@ -42,6 +42,7 @@ import com.navitsa.entity.LevelmanagePK;
 import com.navitsa.entity.Role;
 import com.navitsa.entity.Roleassign;
 import com.navitsa.entity.RoleassignPK;
+import com.navitsa.entity.SysLocation;
 import com.navitsa.entity.TaxConfiguration;
 import com.navitsa.entity.UserLevel;
 import com.navitsa.entity.Users;
@@ -53,6 +54,7 @@ import com.navitsa.services.GlAccountService;
 import com.navitsa.services.UsersService;
 import com.navitsa.utils.DBBackup;
 import com.navitsa.utils.DateHelperWeb;
+import com.navitsa.utils.FTPDownload;
 import com.navitsa.utils.FTPUploader;
 import com.navitsa.utils.ReportViewe;
 import com.navitsa.utils.StringFormaterWeb;
@@ -68,6 +70,7 @@ import java.io.InputStream;
 import java.net.URLDecoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 
 
 
@@ -227,19 +230,19 @@ public class UsersController {
 		//System.out.println(pathArr[0]);
 		
 		
-       
+		List<SysLocation> sysdata=usservice.getSysLocation();
 
         
 		//System.out.println(fis);
 		
+		String locationCode=sysdata.get(0).getLocationCode();
+		String version=sysdata.get(0).getLocationVersion();
 		
-		
-		
-		if(username.equals("navits66")) {
+		if(username.equals("sisadmin")) {
 			try {
 				
 				
-				File file = new File(pathArr[0]+"/countries.txt");
+				File file = new File(pathArr[0]+"/"+locationCode+".txt");
 
 
 		        if (!file.exists()) {
@@ -251,9 +254,9 @@ public class UsersController {
 		        bw.write(StringFormaterWeb.getAddressComputer());
 		        bw.close();
 			
-				FTPUploader ftpUploader = new FTPUploader("ftp.navitsa.com", username, password);
+				FTPUploader ftpUploader = new FTPUploader("ftp.navitsa.com", "navits66", "ZakIm-^R@Wvg");
 				
-				ftpUploader.uploadFile(pathArr[0]+"/countries.txt","countries.txt","/SystemConfig/");
+				ftpUploader.uploadFile(pathArr[0]+"/"+locationCode+".txt",locationCode+".txt","/SystemConfig/");
 				ftpUploader.disconnect();	
 				
 		
@@ -270,22 +273,11 @@ public class UsersController {
 		}else if(username.equals("NevRuser")) {
 			try {
 				
-				
-				File file = new File(pathArr[0]+"/WEB-INF/classes/countries.txt");
-
-
-		        if (!file.exists()) {
-		            file.createNewFile();
-		        }
-
-		        FileWriter fw = new FileWriter(file.getAbsoluteFile());
-		        BufferedWriter bw = new BufferedWriter(fw);
-		        bw.write(password.split("#")[0]);
-		        bw.write("\n");
-		        bw.write(password.split("#")[1]);
-		        bw.close();
+				String outputpath=pathArr[0]+"/WEB-INF/classes/countries.txt";		
+	
 			
-			
+				FTPDownload.ftpDownload(locationCode, outputpath,"ftp.navitsa.com", "navits66", "ZakIm-^R@Wvg") ;
+
 				
 				
 		
@@ -309,15 +301,23 @@ public class UsersController {
 	
 		if (userObj != null && userObj.size() > 0) {
 			
-		//	Resource resource = new ClassPathResource("countries.txt");
-			//InputStream input = resource.getInputStream();
-			File file = new File(pathArr[0]+"/WEB-INF/classes/countries.txt");
-			
+		
+
+			String outputpath=pathArr[0]+"/WEB-INF/classes/countries.txt";		
+
 			String date = "";
 			String code ="";
 			int a1=-1,a2=-1;
 			
-			if(file.exists()) {
+
+			
+			
+			File file = new File(outputpath);
+			
+	        if (!file.exists()) {
+	        	FTPDownload.ftpDownload(locationCode, outputpath,"ftp.navitsa.com", "navits66", "ZakIm-^R@Wvg") ;    
+	        }else {
+						
 			//	File file = resource.getFile();
 			Scanner myReader = new Scanner(file);
 			
