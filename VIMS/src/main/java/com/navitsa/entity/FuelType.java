@@ -32,4 +32,14 @@ public class FuelType {
 		this.fuel = fuel;
 	}
 
+	public FuelType() {
+		super();
+	}
+
+	public FuelType(String fuelTypeID, String fuel) {
+		super();
+		this.fuelTypeID = fuelTypeID;
+		this.fuel = fuel;
+	}
+
 }

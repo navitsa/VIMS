@@ -641,7 +641,7 @@ $P{centerAddress}+"<br>"+
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{shockAbsorberResults})]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{reportpath1}]]></subreportExpression>
+				<subreportExpression><![CDATA["test_report_shockAbsorber_subreport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="22" width="555" height="11" uuid="5d71471e-5f45-4853-933f-e6708a1239f5"/>
@@ -705,7 +705,7 @@ $P{centerAddress}+"<br>"+
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{emissionDieselReadings})]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{reportpath5}]]></subreportExpression>
+				<subreportExpression><![CDATA["test_report_emission_diesel_subreport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport isUsingCache="true">
 				<reportElement positionType="Float" x="0" y="77" width="394" height="11" isRemoveLineWhenBlank="true" uuid="1f17776b-f7e4-494f-b589-fbbf796b13da"/>

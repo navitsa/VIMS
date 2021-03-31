@@ -231,12 +231,7 @@ public class TestingReportConfigController {
 			 
 			 obj.setTest_value_result_header_Vehicle_ID(result[i][0]);
 			 obj.setTest_value_result_detail_Code(result[i][1]);
-			 if(result[i][2].equals("--") || result[i][2].isEmpty()) {
-				 obj.setTest_value_result_detail_Result(0.0);
-			 }else {
-				 obj.setTest_value_result_detail_Result(Double.valueOf(result[i][2]));
-			 }
-			 
+			 obj.setTest_value_result_detail_Result(Double.valueOf(result[i][2]));
 			 obj.setTest_type_type_id(result[i][3]);
 			 obj.setTest_type_test_type(result[i][4]);
 			 obj.setT_test_point_name(result[i][5]);
@@ -355,17 +350,20 @@ public class TestingReportConfigController {
 				try {
 					String vehicle_sub_cat_id = vr.getVid().getSubCategoryID().getSubCategoryID();
 					String[][] maxSpeedResult = service.getMaxSpeedResult(test_pro_id,test_value_file_id,vehicle_cat_id,vehicle_sub_cat_id);
-					double limit = 0;
-					double tol = 0;
-					if(maxSpeedResult[0][5] != null)
-						limit = Double.valueOf(maxSpeedResult[0][5]);
-					if(maxSpeedResult[0][6] != null)
-						tol =  Double.valueOf(maxSpeedResult[0][6]);
-					
-					tol_add_limit = limit + (limit * tol/100);
-					speed_governor_mandatory_status = maxSpeedResult[0][7];
 					max_actual_result = Double.valueOf(maxSpeedResult[0][3]);
-					haveSpeedGovernor =  true;					
+					if (max_actual_result!=0) {
+						double limit = 0;
+						double tol = 0;
+						if(maxSpeedResult[0][5] != null)
+							limit = Double.valueOf(maxSpeedResult[0][5]);
+						if(maxSpeedResult[0][6] != null)
+							tol =  Double.valueOf(maxSpeedResult[0][6]);
+						
+						tol_add_limit = limit + (limit * tol/100);
+						speed_governor_mandatory_status = maxSpeedResult[0][7];
+						//max_actual_result = Double.valueOf(maxSpeedResult[0][3]);
+						haveSpeedGovernor =  true;						
+					}					
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 				}
@@ -377,8 +375,10 @@ public class TestingReportConfigController {
 			List<TestResultSpeedoBean> speedoList = new ArrayList<>();
 			
 			for (int i = 0; i < speedoResult.length; i++) {
-				double targetTolerance1 = 0;
-				double targetTolerance2 = 0;
+				double plusTargetTolerance1 = 0;
+				double minusTargetTolerance1 = 0;
+				double plusTargetTolerance2 = 0;
+				double minusTargetTolerance2 = 0;
 				TestResultSpeedoBean speedoObj = new TestResultSpeedoBean();
 				
 				try {
@@ -388,7 +388,9 @@ public class TestingReportConfigController {
 					i = i +1;
 					speedoObj.setValue3(speedoResult[i][2]);
 					if(speedoResult[i][5]!=null)
-						targetTolerance1 = Double.parseDouble(speedoResult[i][5]);
+						plusTargetTolerance1 = Double.parseDouble(speedoResult[i][5]);
+					if(speedoResult[i][6]!=null)
+						minusTargetTolerance1 = Double.parseDouble(speedoResult[i][6]);
 					
 					i = i +1;
 					speedoObj.setValue4(speedoResult[i][0]);
@@ -397,26 +399,30 @@ public class TestingReportConfigController {
 					i = i +1;
 					speedoObj.setValue6(speedoResult[i][2]);
 					if(speedoResult[i][5]!=null)
-						targetTolerance2 = Double.parseDouble(speedoResult[i][5]);
+						plusTargetTolerance2 = Double.parseDouble(speedoResult[i][5]);
+					if(speedoResult[i][6]!=null)
+						minusTargetTolerance2 = Double.parseDouble(speedoResult[i][6]);
 					
-					mandatory_status = speedoResult[i][6];
+					mandatory_status = speedoResult[i][7];
 
 					if(mandatory_status.equals("0")) {
-						String desc = speedoObj.getValue1()+" ActualSpeed  < "+speedoObj.getValue3()+" Normal\n"+speedoObj.getValue4()+" ActualSpeed  < "+speedoObj.getValue6()+" Normal";
-						speedoObj.setLimitDes(desc);
-						
-						if (!haveSpeedGovernor) {
+						double lmaxSpeed1 = 0;
+						double lmaxSpeed2 = 0;
+						//if (!haveSpeedGovernor)
 							if(status=="PASS") {
 								
-								double lmaxSpeed1 = speedoObj.getValue3() + (speedoObj.getValue3() * targetTolerance1/100);
-								double lmaxSpeed2 = speedoObj.getValue6() + (speedoObj.getValue6() * targetTolerance2/100);
+								lmaxSpeed1 = speedoObj.getValue3() + (speedoObj.getValue3() * plusTargetTolerance1/100);
+								lmaxSpeed2 = speedoObj.getValue6() + (speedoObj.getValue6() * plusTargetTolerance2/100);
 								
 								if(speedoObj.getValue2() >  lmaxSpeed1)
 									status="FAIL";
 								if(speedoObj.getValue5() > lmaxSpeed2)
 									status="FAIL";
-							}					
-						}					
+							}
+							
+						String desc = speedoObj.getValue1()+" ActualSpeed  < "+lmaxSpeed1+" Normal\n"+speedoObj.getValue4()+" ActualSpeed  < "+lmaxSpeed2+" Normal";
+						speedoObj.setLimitDes(desc);
+					
 					}
 					
 					speedoList.add(speedoObj);		
@@ -430,9 +436,8 @@ public class TestingReportConfigController {
 			
 			if(!speedoList.isEmpty()) {
 				if(mandatory_status.equals("0")) {
-					if (!haveSpeedGovernor) {
-						params.put("speedoPassStatus",status);
-					}	
+					//if (!haveSpeedGovernor)
+						params.put("speedoPassStatus",status);	
 				}				
 			}
 			
@@ -446,6 +451,8 @@ public class TestingReportConfigController {
 						params.put("speedoGovernorLimit", "<= "+tol_add_limit+" km/h");
 						params.put("speedoActualMaxSpeed","Actual Maximum Speed   "+max_actual_result);
 					}
+				}else {
+					params.put("speedoPassStatus2", "NOT TESTED");
 				}
 			}
 /* ---------------------------------------------------------------------------------------------------------- */			

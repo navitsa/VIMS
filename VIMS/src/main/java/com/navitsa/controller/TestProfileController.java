@@ -3,18 +3,23 @@ package com.navitsa.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.navitsa.entity.Ck_testProfileDetailId;
 import com.navitsa.entity.Ck_testWisePrintOrderId;
+import com.navitsa.entity.FuelType;
 import com.navitsa.entity.ParameterCodes;
 import com.navitsa.entity.TestLimitRule;
 import com.navitsa.entity.TestParameter;
@@ -461,4 +466,58 @@ public class TestProfileController {
 		}
 
 	}
+
+	@RequestMapping("/testLimitRule")
+	public String loadLimitRuleForm(Model m) {
+		
+		m.addAttribute("testLimitRuleForm", new TestLimitRule());
+		return "testLimitRule";
+	}
+
+	@ModelAttribute("fuelTypes")
+	public List<FuelType> getAllFualTypes() {
+		List<FuelType> list = vehicleService.getFuelType();
+		return list;
+	}
+	
+	 @RequestMapping(value="/saveTestLimitRule" ,method=RequestMethod.POST)
+	 public String saveTestLimitRule(@Valid @ModelAttribute("testLimitRuleForm") TestLimitRule rule,
+			 BindingResult br,RedirectAttributes redirectAttributes) {		 
+		 if(br.hasErrors())  
+	        {  
+			 return "testLimitRule";  
+			}  
+	        else{
+	        	try {
+	        			if(rule.getRuleCode()!=0) {
+	        				testProfileService.saveTestLimitRule(rule);
+	        			}
+	        			else {
+	    		        	String ruleId = testProfileService.nextTestLimitRuleId();
+	    		        	rule.setRuleCode(Integer.valueOf(ruleId));
+	    		        	testProfileService.saveTestLimitRule(rule);
+	        			}
+		        	
+		        	redirectAttributes.addFlashAttribute("success", 1);
+			        return "redirect:/testLimitRule";
+				} catch (Exception e) {
+					System.out.println(e);
+					redirectAttributes.addFlashAttribute("success", 0);
+				}
+	        }
+		 
+		 return "testLimitRule";
+	 }
+	 
+	 @RequestMapping("/updateTestLimitRule")
+	 public ModelAndView updateTestProfile(@RequestParam int ruleCode) {
+	     ModelAndView mav = new ModelAndView("testLimitRule");
+	     try {
+		     mav.addObject("testLimitRuleForm",testProfileService.findRuleById(ruleCode));
+	     }catch (Exception e) {
+			System.out.println(e);
+		}
+	  
+	     return mav;
+	 }
 }

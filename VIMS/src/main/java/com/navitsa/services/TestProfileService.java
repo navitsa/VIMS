@@ -1,6 +1,9 @@
 package com.navitsa.services;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -167,5 +170,21 @@ public class TestProfileService {
 	public String[] getPrintingOrder(int test_pro_id) {
 		return testWisePrintOrderRepo.getPrintingOrder(test_pro_id);
 		
+	}
+
+    public String nextTestLimitRuleId() {
+    	
+    	if(testLimitRuleRepo.nextTestLimitRuleId()==null)
+    		return "1";
+    	else
+    		return testLimitRuleRepo.nextTestLimitRuleId();
+    }
+    
+	public void saveTestLimitRule(TestLimitRule rule) {
+		testLimitRuleRepo.save(rule);
+	}
+
+	public Optional<TestLimitRule> findRuleById(int ruleCode) {
+		return testLimitRuleRepo.findById(ruleCode);
 	}
 }

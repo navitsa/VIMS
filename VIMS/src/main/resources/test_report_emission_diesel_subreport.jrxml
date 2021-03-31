@@ -23,6 +23,7 @@
 	</style>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="reportColor" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="limitValueDescription" class="java.util.List" isForPrompting="false"/>
 	<field name="test_type_test_type" class="java.lang.String"/>
 	<field name="test_type_type_id" class="java.lang.String"/>
 	<field name="t_test_point_name" class="java.lang.String"/>
@@ -69,10 +70,10 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="51">
+			<band height="15">
 				<printWhenExpression><![CDATA[$F{test_type_type_id}.equals("70000-79999") || $F{test_type_type_id}.equals("80000-89999")]]></printWhenExpression>
 				<crosstab>
-					<reportElement x="0" y="0" width="555" height="51" uuid="60955737-89cc-45b5-ac20-aed8af5e1849"/>
+					<reportElement x="0" y="0" width="361" height="15" uuid="60955737-89cc-45b5-ac20-aed8af5e1849"/>
 					<crosstabDataset isDataPreSorted="true">
 						<dataset resetType="Group" resetGroup="test_type_group"/>
 					</crosstabDataset>
@@ -188,6 +189,14 @@
 						</cellContents>
 					</crosstabCell>
 				</crosstab>
+				<subreport>
+					<reportElement x="361" y="0" width="100" height="15" isRemoveLineWhenBlank="true" printWhenGroupChanges="test_type_group" uuid="858e743c-ac2c-4f2f-8d22-8b379f0b3846"/>
+					<subreportParameter name="testTypeID">
+						<subreportParameterExpression><![CDATA[$F{test_type_type_id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{limitValueDescription})]]></dataSourceExpression>
+					<subreportExpression><![CDATA["limitValueDesSubReport.jasper"]]></subreportExpression>
+				</subreport>
 			</band>
 		</groupFooter>
 	</group>

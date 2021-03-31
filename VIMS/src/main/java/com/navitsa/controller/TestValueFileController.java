@@ -277,8 +277,10 @@ public class TestValueFileController {
 						rs = "";
 					}
 				}	
-					
-				testResultList.add(new TestValueFileDetail(objHeader, ecm.getCode(), rs));
+				
+				//rs.replaceAll("\\s+", "");
+				if(!rs.equals("--"))
+					testResultList.add(new TestValueFileDetail(objHeader, ecm.getCode(), rs));
 				
 			}
 			
