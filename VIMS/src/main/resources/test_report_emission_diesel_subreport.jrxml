@@ -74,7 +74,7 @@
 				<printWhenExpression><![CDATA[$F{test_type_type_id}.equals("70000-79999") || $F{test_type_type_id}.equals("80000-89999")]]></printWhenExpression>
 				<crosstab>
 					<reportElement x="0" y="0" width="361" height="15" uuid="60955737-89cc-45b5-ac20-aed8af5e1849"/>
-					<crosstabDataset isDataPreSorted="true">
+					<crosstabDataset>
 						<dataset resetType="Group" resetGroup="test_type_group"/>
 					</crosstabDataset>
 					<rowGroup name="t_test_point_name" width="70">

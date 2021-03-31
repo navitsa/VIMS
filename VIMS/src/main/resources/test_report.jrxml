@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="ec418a8c-8cf1-4514-bbae-1d80ca383f29">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="40"/>
+	<property name="ireport.y" value="360"/>
 	<property name="ireport.callouts" value="##Thu Sep 17 11:59:31 IST 2020"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<style name="table">
@@ -564,54 +564,54 @@ $P{centerAddress}+"<br>"+
 		</band>
 	</pageFooter>
 	<lastPageFooter>
-		<band height="98">
+		<band height="128">
 			<staticText>
-				<reportElement x="0" y="73" width="42" height="11" uuid="f640dab1-1bd3-467d-8ee3-2ba4f396be8c"/>
+				<reportElement x="0" y="101" width="42" height="11" uuid="f640dab1-1bd3-467d-8ee3-2ba4f396be8c"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[Inspector :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="54" y="73" width="143" height="11" uuid="6b3a0e8d-e4c4-4c2d-9e53-3871cf97e9cb"/>
+				<reportElement x="54" y="101" width="143" height="11" uuid="6b3a0e8d-e4c4-4c2d-9e53-3871cf97e9cb"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{Inspector}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="84" width="555" height="1" uuid="dfd7270c-d5be-4806-ae92-501b678ff71c"/>
+				<reportElement x="0" y="112" width="555" height="1" uuid="dfd7270c-d5be-4806-ae92-501b678ff71c"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="409" y="85" width="134" height="11" uuid="d375ff4e-d838-4c85-91ec-6a0968d17cab"/>
+				<reportElement x="409" y="113" width="134" height="11" uuid="d375ff4e-d838-4c85-91ec-6a0968d17cab"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of "]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="396" y="73" width="159" height="11" uuid="de70714c-cfd8-48b4-9e75-74955eecee0a"/>
+				<reportElement x="396" y="101" width="159" height="11" uuid="de70714c-cfd8-48b4-9e75-74955eecee0a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[Signature : ......................]]></text>
 			</staticText>
 			<textField evaluationTime="Report">
-				<reportElement x="543" y="85" width="12" height="11" uuid="57442a6c-e917-4383-8fa2-b770c4584998"/>
+				<reportElement x="543" y="113" width="12" height="11" uuid="57442a6c-e917-4383-8fa2-b770c4584998"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="RealSize" vAlign="Top" onErrorType="Blank">
-				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="394" y="19" width="159" height="54" uuid="af167c8a-bbaa-4610-95c7-650e4cd7dd68"/>
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="394" y="12" width="159" height="89" uuid="af167c8a-bbaa-4610-95c7-650e4cd7dd68"/>
 				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{vehicleImage})).getImage()]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="394" y="7" width="159" height="12" uuid="ec9db13b-1365-4c85-9109-2ed8ab89f5ca"/>
+				<reportElement x="394" y="0" width="159" height="12" uuid="ec9db13b-1365-4c85-9109-2ed8ab89f5ca"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true" isItalic="true" isUnderline="false"/>
 				</textElement>
@@ -641,7 +641,7 @@ $P{centerAddress}+"<br>"+
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{shockAbsorberResults})]]></dataSourceExpression>
-				<subreportExpression><![CDATA["test_report_shockAbsorber_subreport.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{reportpath1}]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="22" width="555" height="11" uuid="5d71471e-5f45-4853-933f-e6708a1239f5"/>
@@ -705,7 +705,7 @@ $P{centerAddress}+"<br>"+
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{emissionDieselReadings})]]></dataSourceExpression>
-				<subreportExpression><![CDATA["test_report_emission_diesel_subreport.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{reportpath5}]]></subreportExpression>
 			</subreport>
 			<subreport isUsingCache="true">
 				<reportElement positionType="Float" x="0" y="77" width="394" height="11" isRemoveLineWhenBlank="true" uuid="1f17776b-f7e4-494f-b589-fbbf796b13da"/>
