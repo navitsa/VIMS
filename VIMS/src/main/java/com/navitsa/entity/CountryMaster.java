@@ -43,8 +43,21 @@ public class CountryMaster {
 	@Column(name = "Status")
 	private String status;
 	
+	@Column(name = "DateFormat")
+	private String dateFormat;
 	
 	
+	
+	
+	
+	public String getDateFormat() {
+		return dateFormat;
+	}
+
+	public void setDateFormat(String dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
 	public String getCountryCode() {
 		return countryCode;
 	}
