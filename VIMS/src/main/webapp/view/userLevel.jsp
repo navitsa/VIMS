@@ -202,12 +202,13 @@
 											<label class="text-gray-900">To assign a user-level role, please use the grid below</label>
 											<table>
 												<tr valign="top">
-													<td><select id="s" size="14" class="custom-select"
+													<td><select id="s" size="30" class="custom-select"
 														name="removesroleID" multiple>
 															<c:forEach items="${roleList}" var="role">
 																<option value="${role.roleID}">${role.roleName}</option>
 															</c:forEach>
 													</select></td>
+													
 													<td valign="center"><br>
 													<br> <a href="#"
 														onclick="if (!window.__cfRLUnblockHandlers) return false; listbox_moveacross('s', 'd')"
@@ -215,7 +216,8 @@
 													<br /> <a href="#"
 														onclick="if (!window.__cfRLUnblockHandlers) return false; listbox_moveacross('d', 's')"
 														data-cf-modified-46ada2dfb40708e7bf43261c-="">&lt;&lt;</a></td>
-													<td><select id="d" size="14" class="custom-select"
+														
+													<td><select id="d" size="30" class="custom-select"
 														name="sroleID" style="width: 200px;" multiple required >
 															<c:forEach items="${assignRoleList}" var="role" >
 																<option value = "${role.roleID}" selected="selected">${role.roleName}</option>
