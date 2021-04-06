@@ -68,6 +68,7 @@
 							<div class="collapse" id="fmanv">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<!-- 				<h6 class="collapse-header">Main Components:</h6> -->
+				<a class="collapse-item fontst-sb-it" href="vehicleCategory" hidden="true" id="vehicleCategory">Vehicle Category</a>
 				<a class="collapse-item fontst-sb-it" href="vehicleClasss" hidden="true" id="vehicleClasss">Vehicle Class</a> 
 				<a class="collapse-item fontst-sb-it" href="vehicleMake"  hidden="true" id="vehicleMake">Vehicle Makes </a> 
 				<a class="collapse-item fontst-sb-it" href="vehiclemodel1"  hidden="true" id="vehiclemodel1">Vehicle Models</a>

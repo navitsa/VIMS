@@ -10,14 +10,19 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "vehicle_category")
 public class VehicleCategory {
 
-	
 	@Id
 	@NotEmpty(message = "required")
-	@Column(name="categoryID")
+	@Column(name = "categoryID")
 	private String categoryID;
-	
-	@Column(name="vehicleCategory")
+
+	@Column(name = "vehicleCategory")
 	private String vehicleCategory;
+
+	@Column(name = "remarks")
+	private String remarks;
+
+	@Column(name = "status")
+	private String status;
 
 	public String getCategoryID() {
 		return categoryID;
@@ -34,7 +39,21 @@ public class VehicleCategory {
 	public void setVehicleCategory(String vehicleCategory) {
 		this.vehicleCategory = vehicleCategory;
 	}
-	
-	
-	
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 }
