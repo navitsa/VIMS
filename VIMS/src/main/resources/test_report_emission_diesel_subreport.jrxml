@@ -103,7 +103,7 @@
 						<crosstabColumnHeader>
 							<cellContents backcolor="#FFFFFF" mode="Opaque">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="11" uuid="4a2fcc44-6d03-44ad-b715-c7635e4b9706"/>
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="56" height="11" uuid="4a2fcc44-6d03-44ad-b715-c7635e4b9706"/>
 									<textElement verticalAlignment="Middle">
 										<font size="8"/>
 									</textElement>
@@ -122,7 +122,7 @@
 						<crosstabColumnHeader>
 							<cellContents backcolor="#FFFFFF" mode="Opaque">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="11" uuid="8ebac2f5-d65e-45fe-a6ea-5d1200cac2db"/>
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="56" height="11" uuid="8ebac2f5-d65e-45fe-a6ea-5d1200cac2db"/>
 									<textElement verticalAlignment="Middle">
 										<font size="8"/>
 									</textElement>
@@ -137,7 +137,7 @@
 					<measure name="test_value_result_detail_ResultMeasure" class="java.lang.Double">
 						<measureExpression><![CDATA[$F{test_value_result_detail_Result}]]></measureExpression>
 					</measure>
-					<crosstabCell width="50" height="12">
+					<crosstabCell width="56" height="12">
 						<cellContents>
 							<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
 								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="12" uuid="8bb37df2-8c45-4d44-9d58-3b5e668c5298"/>
