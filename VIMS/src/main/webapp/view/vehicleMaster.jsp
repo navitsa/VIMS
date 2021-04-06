@@ -276,7 +276,7 @@
 										<label for="manufactureYear" class="l-fontst manuSty">Manufactured Year</label>	
 									</div>	
 									<div class="col-sm-5">						             			             		
-					             		<form:input class="form-control fontst" path="manufactureYear" id="manufactureYear" pattern="{7}" title="Please Enter valid YEAR !" required="true" onchange="getNorms"/>
+					             		<form:input class="form-control fontst" path="manufactureYear" id="manufactureYear" pattern="{7}" title="Please Enter valid YEAR !" required="true" onchange="getNorms" placeholder=""/>
 					             		<form:errors path="manufactureYear" cssClass="error1"/>	
 					             		<i  class="fa fa-calendar iconali"></i>		             		
 									</div>
@@ -1199,6 +1199,26 @@ function checkEngNo(){
 	
 	        <script type="text/javascript">
             // When the document is ready
+//             $(document).ready(function () {
+                
+//                 $('#manufactureYear').datepicker({
+//                     minViewMode: 'years',
+//                     autoclose: true,
+
+//                 });  
+            
+//             });
+            
+//             $(document).ready(function () {
+//              $('#manufactureYear').datepicker({
+//                     minViewMode: 1,
+//                     autoclose: true,
+//                     format: 'yyyy' 
+//              });  
+                     
+//           }); 
+
+            
             $(document).ready(function () {
                 
                 $('#manufactureYear').datepicker({
@@ -1207,16 +1227,7 @@ function checkEngNo(){
                      format: 'yyyy'
                 });  
             
-            });
-//             $(document).ready(function () {
-                
-//                 $('#registeredYear').datepicker({
-//                     minViewMode: 'years',
-//                     autoclose: true,
-//                      format: 'yyyy'
-//                 });  
-            
-//             });        
+            });        
             
             //registeredYear
             
