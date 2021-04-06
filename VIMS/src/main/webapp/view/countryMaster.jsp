@@ -209,10 +209,6 @@
 														</div>
 													</div>
 
-
-
-
-
 													<div class="col-6"> 
 														<div class="form-group">
 															<div class="row">

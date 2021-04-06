@@ -353,7 +353,7 @@ public class UsersController {
 				session.setAttribute("user", userObj.get(0).getuser_ImgView());
 				session.setAttribute("userLevel", userObj.get(0).getUlid().getDsc());
 				session.setAttribute("userId", userObj.get(0).getUserId());
-
+				
 
 				//if(userObj.get(0).getUlid().getRoleID().getDesc().toString().split("-", 1))
 				
@@ -365,7 +365,7 @@ public class UsersController {
 				session.setAttribute("centerName", userObj.get(0).getCenter_ID().getCenter());
 				session.setAttribute("vehicleAutoConfig", userObj.get(0).getCenter_ID().getVehicleAutoConfig());
 				session.setAttribute("noflane", userObj.get(0).getCenter_ID().getLanes());
-				
+				session.setAttribute("dateFormat",userObj.get(0).getCenter_ID().getCountrycode().getDateFormat());
 				
 			}else {
 				System.out.println("qqqqqqqqqqq");
