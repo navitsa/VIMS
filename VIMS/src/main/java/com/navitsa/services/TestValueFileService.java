@@ -72,4 +72,13 @@ public class TestValueFileService {
 		return configSystemRepo.getFTPServerInfo(center_id,type);
 	}
 
+	public TestValueFileHeader findTestValueFileHeaderByRegId(String regID) {
+		return testValueFileHeaderRepo.findTestValueFileHeaderByRegId(regID);
+		
+	}
+
+	public List<TestValueFileDetail> findTestValueFileDetailByHeaderId(int test_value_file_id) {
+		return testValueDetailRepo.findTestValueFileDetailByHeaderId(test_value_file_id);
+	}
+
 }

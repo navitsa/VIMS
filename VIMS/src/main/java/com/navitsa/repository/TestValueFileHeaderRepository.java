@@ -26,6 +26,9 @@ public interface TestValueFileHeaderRepository extends CrudRepository<TestValueF
 	@Modifying
 	@Query(value = "UPDATE TestValueFileHeader a SET a.status ='completed' WHERE a.vreg.vregID =:register_id")
 	public int update_status(@Param("register_id") String register_id);
+
+	@Query(value = "SELECT tvh FROM TestValueFileHeader tvh WHERE tvh.vreg.vregID=:regID")
+	public TestValueFileHeader findTestValueFileHeaderByRegId(@Param("regID") String regID);
 	
 //	@Query(value = "SELECT * FROM ftp_server_info_esout where Center_ID=:center_id",nativeQuery = true)
 //    public List<FtpServerInfoEsout> getFTPServerInfo(@Param("center_id") String center_id);

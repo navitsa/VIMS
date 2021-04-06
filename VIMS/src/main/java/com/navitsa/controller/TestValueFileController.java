@@ -362,20 +362,24 @@ public class TestValueFileController {
 	public @ResponseBody Map<Integer, String> checkAvailableTestResults(@RequestParam("regID") String regID) {
 		
 		VisualChecklistMaster vi = null;
-		EmissionDieselCertificateData emd = null;
-		EmissionPetrolCertificateData empcdata = null;
+		TestValueFileHeader tvh = null;
+		List<TestValueFileDetail> ls = null;
 		
 		try {
 			VehicleRegistration vr =  vehicleService.getRegistraionInfo(regID);
-			//String avlPath = vr.getTestLaneHeadId().getAvlPath();
-			//readingEmissionResults(vr.getVid().getVehicleID(),vr,vr.getVid().getFtype().getFuel(),avlPath);
-			//readingEmissionResults(vr.getVid().getVehicleID(),regID,vr.getVid().getFtype().getFuel());
-			
 			vi = inspectionServices.getChecklistMasterData(regID);
-			emd = testReportService.getEmiDieselCerData(regID);
-			empcdata = testReportService.getEmiPetrolCerData(regID);
+			
+			tvh = testValueFileServices.findTestValueFileHeaderByRegId(regID);
+			ls = testValueFileServices.findTestValueFileDetailByHeaderId(tvh.getTest_value_file_id());
+			
+			if(ls.isEmpty()) {
+				readingEmissionResults(vr.getVid().getVehicleID(),vr.getVid().getFtype().getFuel(),tvh);
+			}
+			
+			ls = testValueFileServices.findTestValueFileDetailByHeaderId(tvh.getTest_value_file_id());
+
 		} catch (Exception e) {
-			System.out.println("Something went wrong when checking available test results /n checkAvailableTestResults try catch");
+			System.out.println("Something went wrong when checking available test results /n checkAvailableTestResults try catch"+e);
 		}
 	
 		Map<Integer,String> a = new TreeMap<Integer,String>();
@@ -385,14 +389,11 @@ public class TestValueFileController {
 			a.put(1, "Not Available !");
 		else
 			a.put(1, "Available");
-		if(emd == null && empcdata ==null)
+		if(ls.isEmpty())
 			a.put(2, "Not Available !");
 		else
 			a.put(2, "Available");
-//		if(empcdata == null)
-//			a.put(3, "Not Available !");
-//		else
-//			a.put(3, "Available");
+		
 		
 		return a;
 
