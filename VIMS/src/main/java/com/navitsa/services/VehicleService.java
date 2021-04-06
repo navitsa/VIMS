@@ -26,6 +26,7 @@ import com.navitsa.entity.ReceiptHead;
 import com.navitsa.entity.TaxConfiguration;
 import com.navitsa.entity.TestLane;
 import com.navitsa.entity.TestLaneDetails;
+import com.navitsa.entity.TestLimitRule;
 import com.navitsa.entity.Transaction;
 import com.navitsa.entity.Users;
 import com.navitsa.entity.VehicalWmi;
@@ -53,6 +54,7 @@ import com.navitsa.repository.ReceiptHeadRepository;
 import com.navitsa.repository.TaxConfigurationRepository;
 import com.navitsa.repository.TestLaneDetailsRepository;
 import com.navitsa.repository.TestLaneRepository;
+import com.navitsa.repository.TestLimitRuleRepository;
 import com.navitsa.repository.TransactionRepository;
 import com.navitsa.repository.UsersRepository;
 import com.navitsa.repository.VehicalWmiRepository;
@@ -150,6 +152,10 @@ public class VehicleService {
 	
 	@Autowired
 	private VehiclesSubCategoryRepository vehiclesSubCategoryRepository;
+	
+	@Autowired
+	private TestLimitRuleRepository testLimitRuleRepository;
+	
 	
 	@Autowired
 	LaneAssignRepository laneAssignRepository;
@@ -250,6 +256,10 @@ public class VehicleService {
 
 	public List<FuelType> getFuelType() {
 		return (List<FuelType>) fuelRepo.findAll();
+	}
+	
+	public List<TestLimitRule> getruleName() {
+		return (List<TestLimitRule>) testLimitRuleRepository.findAll();
 	}
 
 	public VehicleMaster saveVMaster(VehicleMaster vMaster) {
@@ -629,6 +639,12 @@ public class VehicleService {
 	public List<ConfigSystem> getPcDataCheckByCenter(String centerid){	
 		return configSystemRepo.getPcDataCheckByCenter(centerid);
 	}
+	
+	public TestLimitRule filterVehicle(String year, String fuel) {
+		return testLimitRuleRepository.filterVehicle(year, fuel);
+	}
+	
+	
 	
 }
 

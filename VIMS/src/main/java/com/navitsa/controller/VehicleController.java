@@ -91,6 +91,7 @@ import com.navitsa.entity.TestCategory;
 import com.navitsa.entity.TestLane;
 import com.navitsa.entity.TestLaneDetails;
 import com.navitsa.entity.TestLaneHead;
+import com.navitsa.entity.TestLimitRule;
 import com.navitsa.entity.Transaction;
 import com.navitsa.entity.Users;
 import com.navitsa.entity.VehicalWmi;
@@ -732,6 +733,12 @@ public class VehicleController {
 	@ModelAttribute("fuelType")
 	public List<FuelType> getAllFualDetails() {
 	List<FuelType> makedrop = vehicleService.getFuelType();
+	return makedrop;
+	}
+	
+	@ModelAttribute("emissionNorms")
+	public List<TestLimitRule> getAllRuleName() {
+	List<TestLimitRule> makedrop = vehicleService.getruleName();
 	return makedrop;
 	}
 	
@@ -4105,6 +4112,17 @@ System.out.println("ftp");
 		   
 
 		}
+		
+		@RequestMapping("emissionNorms")     
+		@ResponseBody
+		public TestLimitRule filter(@RequestParam String year,@RequestParam String fuel) {
+			
+			TestLimitRule object =  vehicleService.filterVehicle(year, fuel);
+			System.out.print(object);
+		   return object;
+		  
+		}
+		
 		
 		//editLaneAllocation
 }

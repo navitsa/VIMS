@@ -276,7 +276,7 @@
 										<label for="manufactureYear" class="l-fontst manuSty">Manufactured Year</label>	
 									</div>	
 									<div class="col-sm-5">						             			             		
-					             		<form:input class="form-control fontst" path="manufactureYear" id="manufactureYear" pattern="{7}" title="Please Enter valid YEAR !" required="true"/>
+					             		<form:input class="form-control fontst" path="manufactureYear" id="manufactureYear" pattern="{7}" title="Please Enter valid YEAR !" required="true" onchange="getNorms"/>
 					             		<form:errors path="manufactureYear" cssClass="error1"/>	
 					             		<i  class="fa fa-calendar iconali"></i>		             		
 									</div>
@@ -471,7 +471,7 @@
 										<label for="chassisNo" class="l-fontst">Fuel Type</label>	
 									</div>
 									<div class="col-sm-6">		
-					             		<form:select  path="ftype.fuelTypeID" class="custom-select fontst" required="true">
+					             		<form:select  path="ftype.fuelTypeID" class="custom-select fontst" id="fuel" required="true" onchange="getNorms()">
 											<form:option value="NONE">Select...</form:option>
 											<c:forEach items="${fuelType}" var="fuel">
 												<form:option value="${fuel.fuelTypeID}">${fuel.fuel}</form:option>
@@ -483,28 +483,23 @@
 								</div>
 
 							</div>		
-							<div class="col-sm-6">	
+					<div class="col-sm-6">	
 								<div class="row">
 								<div class="col-sm-5">
 										<label for="chassisNo" class="l-fontst" >Emission Norms</label>	
 									</div>	
 								<div class="col-sm-5">		
-					             		<form:select  path="emissionNorms"  class="custom-select  fontst" style="width">
-											<form:option value="2/3 WHEELER">2/3 WHEELER</form:option>
-											<form:option value="4W Pre Bh.II">4W Pre Bh.II</form:option>
-											<form:option value="4W Bh.II or III">4W Bh.II or III</form:option>
-											<form:option value="4W Bh.IV">4W Bh.IV</form:option>
-											<form:option value="Pre Bh. Stage IV">Pre Bh. Stage IV</form:option>
-											<form:option value="2/3W Bh.VI">2/3W Bh.VI</form:option>
-											<form:option value="4W Bh.VI">4W Bh.VI</form:option>
-											
+					             		<form:select  path="emissionNorms" class="custom-select fontst" id="emission" required="true">
+											<form:option value="NONE">Select...</form:option>
+											<c:forEach items="${emissionNorms}" var="name">
+												<form:option value="${name.ruleName}">${name.ruleName}</form:option>
+											</c:forEach>
 										</form:select>
 								</div>
-								
-								
-								</div>
-							
+								</div>							
 							</div>
+										
+						 </div>	
 										
 						 </div>	
 					
@@ -1640,7 +1635,45 @@ tbody.onclick = function (e) {
 
 
 
+
         </script>
+<script type="text/javascript">
+
+function getNorms() {
+
+	 
+ 	var year = document.getElementById("manufactureYear").value;
+	var fuel = document.getElementById("fuel").value;
+		
+	 			
+	$.ajax({
+		type : "GET",
+		url : "emissionNorms",
+		 data: {"year" : year, "fuel" : fuel},
+		success : function(data) {
+			
+           document.getElementById("emission").value = data.ruleName;             
+  
+// 	$.ajax({
+// 	        type: 'GET',
+//  	        url: "emissionNorms",
+// 	        data: {"year" : year, "fuel" : fuel},
+// 	        success: function(data){
+	        
+ 	   				
+	        	
+	        	
+	        	
+//  	        },
+//  	        error:function(){
+	        	
+//  	            alert("No return Model data for this Make ID");
+  	        }
+
+ 	    });
+}
+
+</script>
 
 </body>
 </html>

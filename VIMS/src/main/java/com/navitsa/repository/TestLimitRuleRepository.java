@@ -11,6 +11,9 @@ public interface TestLimitRuleRepository extends CrudRepository<TestLimitRule, I
 	@Query(value = "SELECT * FROM test_limit_rule WHERE effective_from < :year AND effective_to > :year",nativeQuery = true)
 	public TestLimitRule findRuleByYear(@Param("year") String year);
 	
+	@Query(value = "SELECT t FROM TestLimitRule t WHERE t.effectiveFrom < :year AND effectiveTo > :year AND t.fuelType.fuelTypeID = :fuel")
+	public TestLimitRule filterVehicle(@Param("year") String year,@Param("fuel") String fuel);
+	
 	@Query(value = "SELECT (max(a.ruleCode)+1) FROM TestLimitRule a")
     public String nextTestLimitRuleId();
 
