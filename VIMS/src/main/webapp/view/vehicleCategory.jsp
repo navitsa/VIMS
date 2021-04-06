@@ -115,7 +115,7 @@
 					<div class="container-fluid">
 
 						<div class="row">
-							<div class="col-xl-6 col-lg-5">
+							<div class="col-xl-5 col-lg-5">
 								<!-- Card -->
 								<form:form action="saveVehicleCategory" method="post"
 									modelAttribute="vehicleCategoryForm"
@@ -192,7 +192,7 @@
 								</form:form>
 							</div>
 
-							<div class="col-xl-6 col-lg-5">
+							<div class="col-xl-7 col-lg-5">
 								<div class="card shadow mb-4" style="height: 640px;">
 									<div class="card border-left-primary shadow h-100 py-2">
 										<div class="card-body">
@@ -201,7 +201,7 @@
 
 												<table id="tblIncomingPayment"
 													class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-													cellspacing="0">
+													cellspacing="0" style="height: 50vh">
 
 													<thead>
 														<tr>
