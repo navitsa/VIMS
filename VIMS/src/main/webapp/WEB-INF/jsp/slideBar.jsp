@@ -172,6 +172,7 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 <!-- 				<h6 class="collapse-header">Create Test Profile</h6> -->
 <!-- 				<a class="collapse-item fontst-sb-it" href="#"  hidden="true" id="testProfile">Test Profile</a>  -->
+				<a class="collapse-item fontst-sb-it" href="testLimitRule" hidden="true" id="testLimitRule">Test Limit Rule</a>
 				<a class="collapse-item fontst-sb-it" href="testProfile" hidden="true" id="limitValues">Test Profile</a>
 
 <!-- 				<h6 class="collapse-header">Create VI Profile</h6> -->
