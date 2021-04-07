@@ -208,47 +208,47 @@
 											<div class="card-body">
 
 												<div class="col-sm-12">
+													<div id="paymentTable">
+														<table id="tblIncomingPayment"
+															class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
+															cellspacing="0" style="height: 50vh">
 
-													<table id="tblIncomingPayment"
-														class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-													cellspacing="0" style="height: 50vh">
+															<thead>
+																<tr>
+																	<th style="width: 10%">GL Account No</th>
+																	<th style="width: 40%">Account</th>
+																	<th style="width: 10%">Debit</th>
+																	<th style="width: 10%">Credit</th>
+																	<th style="width: 10%"></th>
+																</tr>
+															</thead>
+															<tbody id="myTable">
 
-														<thead>
-															<tr>
-																<th style="width: 10%">GL Account No</th>
-																<th style="width: 40%">Account</th>
-																<th style="width: 10%">Debit</th>
-																<th style="width: 10%">Credit</th>
-																<th style="width: 10%"></th>
-															</tr>
-														</thead>
-														<tbody id="myTable">
-
-														</tbody>
-													</table>
-
-													<div class="form-group row">
-														<div class="col-sm-3">
-															<label class="l-fontst">Debit Total</label>
-														</div>
-														<div class="col-sm-8">
-															<p class="l-fontst" id="drTot"></p>
-														</div>
+															</tbody>
+														</table>
 													</div>
-													<div class="form-group row">
-														<div class="col-sm-3">
-															<label class="l-fontst">Credit Total</label>
-														</div>
-														<div class="col-sm-8">
-															<p class="l-fontst" id="crTot"></p>
-														</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-sm-3">
+														<label class="l-fontst">Debit Total</label>
+													</div>
+													<div class="col-sm-8">
+														<p class="l-fontst" id="drTot"></p>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-sm-3">
+														<label class="l-fontst">Credit Total</label>
+													</div>
+													<div class="col-sm-8">
+														<p class="l-fontst" id="crTot"></p>
 													</div>
 												</div>
 												<div class="row">
 													<div class="col-sm-4 mb-4 mb-sm-4"></div>
 													<div class="col-sm-6 mb-6 mb-sm-6">
-														<input type="submit" class="btn btn-success"
-															value="Create Voucher">
+														<input id="createVoucher" type="button"
+															class="btn btn-success" value="Create Voucher">
 													</div>
 												</div>
 
@@ -342,10 +342,12 @@
 				var dramt = parseFloat($("#amount").val());
 				var cramt = parseFloat("0")
 				drtot = drtot + dramt;
+				//drtot = drtot.toFixed(2);
 			} else {
 				var dramt = parseFloat("0")
 				var cramt = parseFloat($("#amount").val());
 				crtot = crtot + cramt;
+				//crtot = crtot.toFixed(2);
 			}
 			var glaccount = $("#glaccount").val();
 
@@ -367,9 +369,9 @@
 					+ "</td><td>"
 					+ "<input name='cramt' readonly value='"+cramt+"'/>"
 					+ "</td><td>" +
-					 // <i class="fas fa-trash"></i> "<button type='button' onclick='productDelete(this);' class='btn'>Remove</button>"+
-					"<button type='button' onclick='' class='btn'>Remove</button>"+
-					"</td></tr>";
+					// <i class="fas fa-trash"></i> "<button type='button' onclick='productDelete(this);' class='btn'>Remove</button>"+
+					"<button type='button' onclick='deleteRow(this)' class='btn'>Remove</button>"
+					+ "</td></tr>";
 
 			$("table tbody").append(contact);
 			//  getEqument(); 
@@ -391,63 +393,113 @@
 
 		}
 
+		function deleteRow(btn) {
+			var row = btn.parentNode.parentNode;
+			var debit = row.cells[2].children[0].value;
+			var credit = row.cells[3].children[0].value;
+			var debitTotal = document.getElementById("drTot").innerHTML;
+			var creditTotal = document.getElementById("crTot").innerHTML;
+			if (credit == 0) {
+				debitTotal = parseFloat(debitTotal);
+				var debitBalance = debitTotal - debit;
+				document.getElementById('drTot').innerHTML = debitBalance;
+			} else if (debit == 0) {
+				creditTotal = parseFloat(creditTotal);
+				var creditBalance = creditTotal - credit;
+				document.getElementById('crTot').innerHTML = creditBalance;
+			}
+			row.parentNode.removeChild(row);
+		}
+
+		document.getElementById("createVoucher").addEventListener("click",
+				saveJournalVoucher);
+
 		function saveJournalVoucher() {
 
-			var request_method = $("#journalVoucher").attr("method"); //get form GET/POST method
+			var debitTotal = document.getElementById("drTot").innerHTML;
+			var creditTotal = document.getElementById("crTot").innerHTML;
+			debitTotal = parseInt(debitTotal);
+			creditTotal = parseInt(creditTotal);
 
-			// Get form
-			var form = $('#journalVoucher')[0];
+			if (!(creditTotal == debitTotal)) {
 
-			// Create an FormData object
-			var data = new FormData(form);
+				swal("Credit & Debit Values must be equal!", {
+					icon : "error",
+					buttons : {
+						confirm : {
+							className : 'btn btn-danger'
+						}
+					},
+				});
+				return;
+			} else {
 
-			//alert("Error "+form_data);
-			$.ajax({
+				var request_method = $("#journalVoucher").attr("method"); //get form GET/POST method
 
-				url : "saveJournalVoucher",
-				type : request_method,
-				enctype : 'multipart/form-data',
-				data : data,
-				processData : false,
-				contentType : false,
-				cache : false,
+				// Get form
+				var form = $('#journalVoucher')[0];
 
-				success : function(data) {
+				// Create an FormData object
+				var data = new FormData(form);
 
-					if (data == "1") {
-						swal("Good job!", "You clicked the button!", {
-							icon : "success",
-							buttons : {
-								confirm : {
-									className : 'btn btn-success'
+				//alert("Error "+form_data);
+				$
+						.ajax({
+
+							url : "saveJournalVoucher",
+							type : request_method,
+							enctype : 'multipart/form-data',
+							data : data,
+							processData : false,
+							contentType : false,
+							cache : false,
+
+							success : function(data) {
+
+								if (data == "1") {
+									swal(
+											"Good job!",
+											"You clicked the button!",
+											{
+												icon : "success",
+												buttons : {
+													confirm : {
+														className : 'btn btn-success'
+													}
+												},
+											});
+									window.location.href = "redirect:/journalVoucher.do";
+								} else {
+									swal(
+											"Good job!",
+											"You clicked the button!",
+											{
+												icon : "error",
+												buttons : {
+													confirm : {
+														className : 'btn btn-danger'
+													}
+												},
+											});
 								}
-							},
-						});
-						window.location.href = "redirect:/journalVoucher.do";
-					} else {
-						swal("Good job!", "You clicked the button!", {
-							icon : "error",
-							buttons : {
-								confirm : {
-									className : 'btn btn-danger'
-								}
-							},
-						});
-					}
 
-				},
-				error : function(e) {
-					swal("Good job!", "You clicked the button! err", {
-						icon : "error",
-						buttons : {
-							confirm : {
-								className : 'btn btn-danger'
+							},
+							error : function(e) {
+								swal(
+										"Good job!",
+										"You clicked the button! err",
+										{
+											icon : "error",
+											buttons : {
+												confirm : {
+													className : 'btn btn-danger'
+												}
+											},
+										});
 							}
-						},
-					});
-				}
-			});
+						});
 
+			}
 		}
 	</script>
 
