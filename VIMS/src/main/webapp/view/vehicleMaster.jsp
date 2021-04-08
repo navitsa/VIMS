@@ -315,7 +315,7 @@ pos {
 															Year</label>
 													</div>
 													<div class="col-sm-5">
-														<form:input  class="form-control fontst"
+														<form:input class="form-control fontst"
 															path="manufactureYear" id="manufactureYear"
 															pattern="{12}" title="Please Enter valid YEAR !"
 															required="true" onchange="getNorms" />														
@@ -1283,7 +1283,7 @@ function checkEngNo(){
           
             $(document).ready(function () {
              $('#manufactureYear').datepicker({
-                    minViewMode:'years',
+                    minViewMode: 1,
                     autoclose: true,
                     format:'<%=session.getAttribute("dateFormat")%>' 
 //                 	moment(manufactureYear).format(dateFormat);
