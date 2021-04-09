@@ -13,14 +13,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.ConfigSystem;
@@ -309,18 +313,41 @@ public class AdminController {
 		}
 
 		 @RequestMapping(value = "/createGate", method=RequestMethod.GET) 
-		 public String createGate(Map<String, Object> model) {
-			 Gate gate=new Gate();
-//	    	 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");  
-//	    	 Date date = new Date(); 
-//			 List<OcrDetails> ocrDetails=adminServices.completedVehiclesPayment(formatter.format(date));
-			 model.put("allGate", adminServices.getAllGeats());
+		 public String createGatePage(Map<String, Object> map) {
+			 Gate gate = new Gate();
+			 gate.setGateID("00000".substring(adminServices.maxGateID().length()) + adminServices.maxGateID());
+			 map.put("createGateForm", gate);
+			 List<Gate> listGate = adminServices.getAllGates();
+			 map.put("gateList", listGate);
 			 return "createGate";
 		  }
 	  	
-//			public void saveGates(Gate gate) {
-//				gateRepository.save(gate);
-//			}
-//			
-//			public List<Gate> getAllGeats(){
+		 @RequestMapping(value = "/saveCreatedGate", method = RequestMethod.POST)
+			public String saveVehicleClass(@Valid @ModelAttribute("createGateForm") Gate gate, BindingResult br,
+					RedirectAttributes redirectAttributes) {
+
+				if (br.hasErrors()) {
+					return "createGate";
+				} else {
+
+					try {
+						adminServices.saveCreatedGate(gate);
+						redirectAttributes.addFlashAttribute("success", 1);
+						return "redirect:/createGate";
+					} catch (Exception e) {
+						redirectAttributes.addFlashAttribute("success", 0);
+					}
+				}
+
+				return "createGate";
+
+			}
+		 
+		 @RequestMapping("/editGate")
+			public ModelAndView editCreatedGate(@RequestParam String id) {
+				ModelAndView mav = new ModelAndView("createGate");
+				Gate gate = adminServices.getGateById(id);
+				mav.addObject("createGateForm", gate);
+				return mav;
+			}
 }
