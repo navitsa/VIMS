@@ -39,5 +39,7 @@ public interface VehicleMasterRepository extends CrudRepository<VehicleMaster, S
 			@Param("noOfWheel")String noOfWheel,@Param("emisNorms")String emisNorms,
 			@Param("modelID")String modelID,@Param("fuelID")String fuelID,
 			@Param("vehicleNo")String vehicleNo);
+
+	
 	
 }
