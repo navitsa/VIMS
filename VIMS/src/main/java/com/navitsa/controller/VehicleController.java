@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
@@ -606,7 +607,9 @@ public class VehicleController {
 
 	// Saving V Master Info	
 	 @RequestMapping(value="/saveVMasterk", method = RequestMethod.POST)
-	 public String saveVehicleMaster(@Valid @ModelAttribute("saveVMaster") VehicleMaster vmaster,@ModelAttribute("veOwner")VehicleOwner vehicleOwner,BindingResult br,Model m,@RequestParam String currentMilage,@RequestParam String ocid,HttpSession session) {		
+	 public String saveVehicleMaster(@Valid @ModelAttribute("saveVMaster") VehicleMaster vmaster, @ModelAttribute("veOwner")VehicleOwner vehicleOwner,BindingResult br,Model m,@RequestParam String currentMilage,@RequestParam String ocid,HttpSession session) {		
+
+		
 
 		 if(br.hasErrors())
 		 {
@@ -616,11 +619,23 @@ public class VehicleController {
 			 try {
 				  String centerid=session.getAttribute("centerid")+"";
 				  CenterMaster centerMaster=centerService.getcenterById(centerid);
-				 
+				  
+					String startDateString = vmaster.getRegisteredYear();
+				    SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
+				    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+				    String regDate = sdf2.format(sdf.parse(startDateString));
+				    vmaster.setRegisteredYear(regDate);	
+				    System.out.println(regDate);
+					  
+				  
+				  
 				vehicleService.saveVMaster(vmaster);				
 				vehicleOwner.setVehicleID(vmaster);
 				vehicleOwner.setCountryCode(centerMaster.getCountrycode());
 				vehicleOwner.setStatus("currentOwner");
+				
+				
+				  
 				
 				if(vehicleOwner.getOwnerID().length()<1){
 					vehicleOwner.setOwnerID("0000".substring(vehicleService.maxVOwnerID().length()) + vehicleService.maxVOwnerID());
