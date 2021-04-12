@@ -237,7 +237,7 @@ pos {
 						<div class="row">
 
 							<!-- Area Chart -->
-							<div class="col-xl-8 col-lg-6">
+							<div class="col-xl-7 col-lg-6">
 								<div class="card shadow mb-4">
 									<!-- Card Header - Dropdown -->
 									<div
@@ -310,7 +310,7 @@ pos {
 										<div class="row">
 											<div class="col-sm-4">
 												<div class="row">
-													<div class="col-sm-8">
+													<div class="col-sm-5">
 														<label for="manufactureYear" class="l-fontst manuSty">Manufactured
 															Year</label>
 													</div>
@@ -318,7 +318,7 @@ pos {
 														<form:input class="form-control fontst"
 															path="manufactureYear" id="manufactureYear"
 															pattern="{12}" title="Please Enter valid YEAR !"
-															required="true" onchange="getNorms" />														
+															required="true" onchange="getNorms" />
 														<form:errors path="manufactureYear" cssClass="error1" />
 														<i class="fa fa-calendar iconali"></i>
 													</div>
@@ -327,25 +327,26 @@ pos {
 												</div>
 
 											</div>
+
+
 											<div class="col-sm-5">
 												<div class="row">
-
-													<div class="col-sm-6">
+													<div class="col-sm-5">
 														<label for="registeredYear" class="l-fontst">Registered
 															Year</label>
 													</div>
-													<div class="col-sm-6">
-														<form:input type="date" class="form-control fontst"
+													<div class="col-sm-5">
+														<form:input class="form-control fontst"
 															path="registeredYear" id="registeredYear" pattern="{12}"
 															title="Please Enter valid YEAR !"
 															onchange="getChassisNumberDetails()" required="true" />
 														<form:errors path="registeredYear" cssClass="error1" />
 														<i class="fa fa-calendar iconali" for="registeredYear"></i>
 													</div>
-
 												</div>
-
 											</div>
+
+
 											<div class="col-sm-3">
 												<label class="l-fontst" id="manufaCur1">Manufactured
 													in</label><br> <label class="l-fontst" id="manufaCur"></label>
@@ -620,20 +621,18 @@ pos {
 										</div>
 
 									</div>
-									<br>
-									<br> <br>
-									<br> <br>
-									<br>
+									<br> <br> <br> <br> <br> <br>
 
 								</div>
 
 
 
 							</div>
-						</div>
+						
 						<form:form method="post" modelAttribute="veOwner">
 							<!-- Pie Chart -->
-							<div class="col-xl-4 col-lg-5">
+							<div class="row">
+							<div class="col-xl-11 col-lg-6">
 								<div class="card shadow mb-4">
 									<!-- Card Header - Dropdown -->
 									<div
@@ -782,8 +781,7 @@ pos {
 										<div class="row">
 											<br>
 											<div class="col-sm-11">
-												<label class="l-fontst fontcol-peo">Previous
-													Owners</label>
+												<label class="l-fontst fontcol-peo">Previous Owners</label>
 
 											</div>
 										</div>
@@ -824,9 +822,9 @@ pos {
 
 									</div>
 								</div>
-							</div>
+							</div></div>
 						</form:form>
-				</div>
+				</div></div>
 
 				</form:form>
 
@@ -1283,9 +1281,9 @@ function checkEngNo(){
           
             $(document).ready(function () {
              $('#manufactureYear').datepicker({
-                    minViewMode: 1,
+                   
                     autoclose: true,
-                    format:'<%=session.getAttribute("dateFormat")%>' 
+                    format:'<%=session.getAttribute("dateFormat")%>'.toLowerCase() 
 //                 	moment(manufactureYear).format(dateFormat);
                 	
              });  
@@ -1293,15 +1291,15 @@ function checkEngNo(){
           }); 
 
             
-//             $(document).ready(function () {
+            $(document).ready(function () {
                 
-//                 $('#manufactureYear').datepicker({
-//                     minViewMode: 'years',
-//                     autoclose: true,
-//                      format: 'yyyy'
-//                 });  
+                $('#registeredYear').datepicker({
+                    
+                    autoclose: true,
+                     format: '<%=session.getAttribute("dateFormat")%>'.toLowerCase()
+                });  
             
-//             });       
+            });       
             
             //registeredYear
             
