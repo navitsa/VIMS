@@ -118,8 +118,8 @@
 							<div class="col-xl-5 col-lg-5">
 								<!-- Card -->
 								<form:form action="saveCreatedGate" method="post"
-									modelAttribute="createGateForm"
-									enctype="multipart/form-data" id="formMake">
+									modelAttribute="createGateForm" enctype="multipart/form-data"
+									id="formMake">
 									<div class="card shadow mb-4" style="height: 640px;">
 										<div class="card border-left-primary shadow h-100 py-2">
 											<div class="card-body">
@@ -129,7 +129,7 @@
 													</div>
 													<div class="col-sm-6">
 														<form:input class="form-control fontst" type="text"
-															path="gateID" onchange="" id="gateID" readonly="true"/>
+															path="gateID" onchange="" id="gateID" readonly="true" />
 													</div>
 												</div>
 												<div class="form-group row">
@@ -146,8 +146,9 @@
 														<label class="l-fontst">Gate Path</label>
 													</div>
 													<div class="col-sm-6">
-														<form:textarea class="form-control fontst" type="text"
+														<form:input class="form-control fontst" type="file"
 															path="gatePath" onchange="" id="gatePath" />
+
 													</div>
 												</div>
 												<div class="form-group row">
@@ -155,7 +156,7 @@
 														<label class="l-fontst">Gate IP</label>
 													</div>
 													<div class="col-sm-6">
-														<form:textarea class="form-control fontst" type="text"
+														<form:input class="form-control fontst" type="text"
 															path="gateIP" onchange="" id="gateIP" />
 													</div>
 												</div>
@@ -164,7 +165,7 @@
 														<label class="l-fontst">Camera IP</label>
 													</div>
 													<div class="col-sm-6">
-														<form:textarea class="form-control fontst" type="text"
+														<form:input class="form-control fontst" type="text"
 															path="cameraIP" onchange="" id="cameraIP" />
 													</div>
 												</div>
@@ -249,6 +250,8 @@
 		</div>
 	</div>
 	<%@include file="../WEB-INF/jsp/commJs.jsp"%>
-
+	<script>
+		
+	</script>
 </body>
 </html>
