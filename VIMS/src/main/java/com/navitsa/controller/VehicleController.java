@@ -1600,7 +1600,7 @@ System.out.println("ftp");
 		  return "VehicleInvoiceRePrint";
 	  }
 	  @RequestMapping(value = "/vehicalInvORG", method=RequestMethod.GET) 
-	  public ModelAndView getVehicleInvoiceORG(@RequestParam String invNo,HttpServletResponse response) { 
+	  public ModelAndView getVehicleInvoiceORG(@RequestParam String invNo,HttpServletResponse response, HttpSession session) { 
 		  ModelAndView mav = new ModelAndView("VehicleInvoice");
 		  InvoiceHead invoiceHead=vehicleService.getInvoiceHeadByInvNo(invNo);
 		  VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(invoiceHead.getvRegisterID().getVregID());
@@ -1608,8 +1608,8 @@ System.out.println("ftp");
 		  mav.addObject("invNo" ,invNo);
 		  mav.addObject("invDate" ,vehiclereg.getDate());
 		 
-		  String invValue=vehicalInvoiceGeaerate(invNo,response);
-		  String tokValue=vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),invoiceHead.getNetTotal(),invoiceHead.getvRegisterID().getVregID(),response);
+		  String invValue=vehicalInvoiceGeaerate(invNo,response, session);
+		  String tokValue=vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),invoiceHead.getNetTotal(),invoiceHead.getvRegisterID().getVregID(),response,session);
 
 		  mav.addObject("pdfViewEq", invValue); 
 		  mav.addObject("pdftokValue", tokValue);
@@ -1617,7 +1617,7 @@ System.out.println("ftp");
 		  return mav;
 	  }	
 	
-	  public String vehicalInvoiceGeaerate(String invNo,HttpServletResponse response) {
+	  public String vehicalInvoiceGeaerate(String invNo,HttpServletResponse response, HttpSession session) {
 
 		  LocalDateTime now = LocalDateTime.now(); 
 		  	InvoiceHead invHed=vehicleService.getInvoiceHeadByInvNo(invNo);
@@ -1701,7 +1701,13 @@ System.out.println("ftp");
       	  	
         	params.put("invNo", invHed.getInvoiceNo());
         	params.put("vecno",vehiclereg.getVid().getVehicleID()  );
-        	params.put("date",invHed.getInvoiceDate() );
+        	
+
+      	  	SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
+      			    
+      	  	DateHelperWeb.getDate(vehiclereg.getDate());
+
+        	params.put("date",sdf.format(DateHelperWeb.getDate(invHed.getInvoiceDate())) );
         	params.put("vectype",vehiclereg.getVtype().getvRegType() );
         	params.put("category",vehiclereg.getTestCategory().getCategoryType());
         	params.put("slottime",invHed.getInvoiceTime() );	
@@ -1840,15 +1846,15 @@ System.out.println("ftp");
 		  
 		  
 		  @RequestMapping(value = "/vehicalRecORG", method=RequestMethod.GET) 
-		  public ModelAndView getVehicleReceiptORG(@RequestParam String recno,HttpServletResponse response) { 
+		  public ModelAndView getVehicleReceiptORG(@RequestParam String recno,HttpServletResponse response,HttpSession session) { 
 			  ModelAndView mav = new ModelAndView("VehicleRecipt");
 			  ReceiptHead reciptHed=vehicleService.getReciptHedDetailByRecNo(recno);
 			  VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(reciptHed.getvRegisterID().getVregID());
 			  mav.addObject("vecno" ,vehiclereg.getVid().getVehicleID());
 			  mav.addObject("reccno" ,recno);
 			  mav.addObject("recDate" ,vehiclereg.getDate());
-			  String reptValue=vehicalRescetGeaerate(recno, response);
-			  String tokValue=vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),reciptHed.getNetTotal(),reciptHed.getvRegisterID().getVregID(),response);
+			  String reptValue=vehicalRescetGeaerate(recno, response, session);
+			  String tokValue=vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),reciptHed.getNetTotal(),reciptHed.getvRegisterID().getVregID(),response,session);
 
 			  mav.addObject("pdfViewEq", reptValue); 
 			  mav.addObject("pdftokValue", tokValue);
@@ -1856,13 +1862,13 @@ System.out.println("ftp");
 			  return mav;
 		  }		  
 		  @RequestMapping(value="/vehiclRerecPrint" ,method=RequestMethod.POST)
-		  public ModelAndView printVehicalReceipt(@RequestParam String vecno,@RequestParam String reccno,@RequestParam String recDate,HttpServletResponse response) {
+		  public ModelAndView printVehicalReceipt(@RequestParam String vecno,@RequestParam String reccno,@RequestParam String recDate,HttpServletResponse response, HttpSession session) {
 			  	ModelAndView mav = new ModelAndView("recTokonPrint");
-			  	String reptValue=vehicalRescetGeaerate(reccno, response);
+			  	String reptValue=vehicalRescetGeaerate(reccno, response, session);
 			  	mav.addObject("pdfViewEq", reptValue); 
 			  	 ReceiptHead reciptHed=vehicleService.getReciptHedDetailByRecNo(reccno);
 				  	VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(reciptHed.getvRegisterID().getVregID());
-			  	String tokValue=vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),reciptHed.getNetTotal(),reciptHed.getvRegisterID().getVregID(),response);
+			  	String tokValue=vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),reciptHed.getNetTotal(),reciptHed.getvRegisterID().getVregID(),response, session);
 			  	mav.addObject("pdftokValue", tokValue);
 			  	System.out.println("reptValue="+reptValue);
 			 	System.out.println("pdftokValue="+tokValue);
@@ -1870,13 +1876,13 @@ System.out.println("ftp");
 		  }
 		  
 		  @RequestMapping(value="/vehiclInvoicePrint" ,method=RequestMethod.POST)
-		  public ModelAndView vehiclInvoicePrint(@RequestParam String vecno,@RequestParam String invNo,@RequestParam String invDate,HttpServletResponse response) {
+		  public ModelAndView vehiclInvoicePrint(@RequestParam String vecno,@RequestParam String invNo,@RequestParam String invDate,HttpServletResponse response, HttpSession session) {
 			  	ModelAndView mav = new ModelAndView("comPdfReportView");
-			  	String reptValue=vehicalInvoiceGeaerate(invNo, response);
+			  	String reptValue=vehicalInvoiceGeaerate(invNo, response, session);
 			  	mav.addObject("pdfViewEq", reptValue); 
 	         return mav;
 		  }
-		  public String vehicalRescetGeaerate(String reccno,HttpServletResponse response) {
+		  public String vehicalRescetGeaerate(String reccno,HttpServletResponse response,HttpSession session) {
 			  LocalDateTime now = LocalDateTime.now(); 
 			  	ReceiptHead reciptHed=vehicleService.getReciptHedDetailByRecNo(reccno);
 			  	int days=DateHelperWeb.stringDateDiff(reciptHed.getRecDate(),now.toString());
@@ -1956,7 +1962,12 @@ System.out.println("ftp");
 	          }
 	          	params.put("recno", reciptHed.getRecNo());
 	          	params.put("vecno",vehiclereg.getVid().getVehicleID()  );
-	          	params.put("date",vehiclereg.getDate() );
+	          	
+			    SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
+			    
+			    DateHelperWeb.getDate(vehiclereg.getDate());
+			 			    
+	          	params.put("date",sdf.format(DateHelperWeb.getDate(vehiclereg.getDate())));
 	          	params.put("vectype",vehiclereg.getVtype().getvRegType() );
 	          	params.put("category",vehiclereg.getTestCategory().getCategoryType());
 	          	params.put("slottime",vehiclereg.getTime() );	
@@ -1994,7 +2005,7 @@ System.out.println("ftp");
 				 return cusAll;
 			 }
 			 
-			  public String vehicalTokenGeaerate(String vecno,String recDate,Long ntotal,String vregid,HttpServletResponse response) {
+			  public String vehicalTokenGeaerate(String vecno,String recDate,Long ntotal,String vregid,HttpServletResponse response, HttpSession session) {
 				  
 //				  	ReceiptHead reciptHed=vehicleService.getReciptHedDetailByRecNo(reccno);
 //				  	reciptHed.getvRegisterID();
@@ -2011,8 +2022,10 @@ System.out.println("ftp");
 		          	Map<String,Object> params = new HashMap<>();
 		        	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
 		          	params.put("tokenno",tranction.getTrID());
-		          	params.put("LaneNo",testLaneHead.getLaneName() );		   
-		          	params.put("tokenDate", vehiclereg.getDate());
+		          	params.put("LaneNo",testLaneHead.getLaneName() );
+		          	SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+""); 
+					DateHelperWeb.getDate(vehiclereg.getDate());
+		          	params.put("tokenDate", sdf.format(DateHelperWeb.getDate(vehiclereg.getDate())));
 		         	params.put("Fee",centerMaster.getCountrycode().getCurrency()+" "+StringFormaterWeb.formatToRupees(ntotal) +"" );
 		          	params.put("NumberPlate",vecno );
 		          	params.put("VehiMake",vehiclereg.getVid().getVmodel().getVehicleClass().getVehicleClass() );
@@ -3119,9 +3132,9 @@ System.out.println("ftp");
 			  }				  
 			  
 			  @RequestMapping(value="/getRecdetailsPrivew" ,method=RequestMethod.GET)
-			  public @ResponseBody String vehiclRecitDetail(@RequestParam String reccno,HttpServletResponse response) {
+			  public @ResponseBody String vehiclRecitDetail(@RequestParam String reccno,HttpServletResponse response, HttpSession session) {
 	
-				  	String reptValue=vehicalRescetGeaerate(reccno, response);
+				  	String reptValue=vehicalRescetGeaerate(reccno, response, session);
 	 
 		         return reptValue;
 			  }  
@@ -3146,9 +3159,9 @@ System.out.println("ftp");
 			  }			  
 			  
 			  @RequestMapping(value="/getInvoicePrivew" ,method=RequestMethod.GET)
-			  public @ResponseBody String invInvoiceCancel(@RequestParam String invNo,HttpServletResponse response) {
+			  public @ResponseBody String invInvoiceCancel(@RequestParam String invNo,HttpServletResponse response, HttpSession session) {
 	
-				  	String invValue=vehicalInvoiceGeaerate(invNo, response);
+				  	String invValue=vehicalInvoiceGeaerate(invNo, response, session);
 	 
 		         return invValue;
 			  }  
