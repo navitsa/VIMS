@@ -3,7 +3,6 @@ package com.navitsa.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,16 +19,37 @@ public class AdminServices {
 	OcrDetailsRepository ocrDetailsRepo;
 	@Autowired
 	GateRepository gateRepository;
-	
-	public List<OcrDetails> completedVehiclesPayment(String todayDate){
+
+	public List<OcrDetails> completedVehiclesPayment(String todayDate) {
 		return ocrDetailsRepo.completedVehiclesPayment(todayDate);
 	}
-	
+
 	public void saveGates(Gate gate) {
 		gateRepository.save(gate);
 	}
-	
-	public List<Gate> getAllGeats(){
+
+	public List<Gate> getAllGeats() {
 		return (List<Gate>) gateRepository.findAll();
+	}
+
+	public String maxGateID() {
+		if (gateRepository.maxGateID() == null) {
+			return "1";
+		} else {
+			return gateRepository.maxGateID();
+
+		}
+	}
+
+	public List<Gate> getAllGates() {
+		return (List<Gate>) gateRepository.findAll();
+	}
+
+	public void saveCreatedGate(Gate gate) {
+		gateRepository.save(gate);
+	}
+
+	public Gate getGateById(String id) {
+		return gateRepository.findById(id).get();
 	}
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="ec418a8c-8cf1-4514-bbae-1d80ca383f29">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="71"/>
+	<property name="ireport.y" value="374"/>
 	<property name="ireport.callouts" value="##Thu Sep 17 11:59:31 IST 2020"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<style name="table">
@@ -620,47 +620,95 @@ $P{centerAddress}+"<br>"+
 		</band>
 	</lastPageFooter>
 	<summary>
-		<band height="89">
-			<subreport>
+		<band height="99">
+			<subreport runToBottom="false">
 				<reportElement positionType="Float" x="0" y="0" width="555" height="11" uuid="9333cc44-f7f7-4114-878b-e5a0b03d5e64"/>
+				<subreportParameter name="speedoGovernorLimit">
+					<subreportParameterExpression><![CDATA[$P{speedoGovernorLimit}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="reportColor">
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="limitValueDescription">
 					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus2">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="actualMaxSpeed">
+					<subreportParameterExpression><![CDATA[$P{speedoActualMaxSpeed}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{sideSlipResults})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{reportpath0}]]></subreportExpression>
 			</subreport>
-			<subreport>
+			<subreport runToBottom="false">
 				<reportElement positionType="Float" x="0" y="11" width="555" height="11" uuid="131d7875-94da-467e-aba8-f05ee6e030ac"/>
-				<subreportParameter name="limitValueDescription">
-					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				<subreportParameter name="speedoGovernorLimit">
+					<subreportParameterExpression><![CDATA[$P{speedoGovernorLimit}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus2">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus2}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="reportColor">
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="limitValueDescription">
+					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="actualMaxSpeed">
+					<subreportParameterExpression><![CDATA[$P{speedoActualMaxSpeed}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{shockAbsorberResults})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{reportpath1}]]></subreportExpression>
 			</subreport>
-			<subreport>
+			<subreport runToBottom="false">
 				<reportElement positionType="Float" x="0" y="22" width="555" height="11" uuid="5d71471e-5f45-4853-933f-e6708a1239f5"/>
-				<subreportParameter name="reportColor">
-					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
+				<subreportParameter name="speedoGovernorLimit">
+					<subreportParameterExpression><![CDATA[$P{speedoGovernorLimit}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus2">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus2}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="limitValueDescription">
 					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reportColor">
+					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="actualMaxSpeed">
+					<subreportParameterExpression><![CDATA[$P{speedoActualMaxSpeed}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{headLightResults})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{reportpath2}]]></subreportExpression>
 			</subreport>
-			<subreport>
+			<subreport runToBottom="false">
 				<reportElement positionType="Float" x="0" y="33" width="555" height="11" uuid="3e76c0ad-7d6e-46cc-a2c8-24303c61c4e7"/>
-				<subreportParameter name="limitValueDescription">
-					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				<subreportParameter name="speedoGovernorLimit">
+					<subreportParameterExpression><![CDATA[$P{speedoGovernorLimit}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus2">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus2}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="reportColor">
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="limitValueDescription">
+					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="actualMaxSpeed">
+					<subreportParameterExpression><![CDATA[$P{speedoActualMaxSpeed}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{noiseResults})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{reportpath3}]]></subreportExpression>
@@ -673,11 +721,11 @@ $P{centerAddress}+"<br>"+
 				<subreportParameter name="passStatus">
 					<subreportParameterExpression><![CDATA[$P{speedoPassStatus}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="reportColor">
-					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="passStatus2">
 					<subreportParameterExpression><![CDATA[$P{speedoPassStatus2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reportColor">
+					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="actualMaxSpeed">
 					<subreportParameterExpression><![CDATA[$P{speedoActualMaxSpeed}]]></subreportParameterExpression>
@@ -685,30 +733,76 @@ $P{centerAddress}+"<br>"+
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{speedoResults})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["test_report_speedometer_subreport.jasper"]]></subreportExpression>
 			</subreport>
-			<subreport>
+			<subreport runToBottom="false">
 				<reportElement positionType="Float" x="0" y="55" width="555" height="11" uuid="b9344f92-1ec7-4313-acf4-fc4b39e84e8c"/>
-				<subreportParameter name="limitValueDescription">
-					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				<subreportParameter name="speedoGovernorLimit">
+					<subreportParameterExpression><![CDATA[$P{speedoGovernorLimit}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus2">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus2}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="reportColor">
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="limitValueDescription">
+					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="actualMaxSpeed">
+					<subreportParameterExpression><![CDATA[$P{speedoActualMaxSpeed}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{brakeResults})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{reportpath4}]]></subreportExpression>
 			</subreport>
-			<subreport isUsingCache="true">
+			<subreport isUsingCache="true" runToBottom="false">
 				<reportElement positionType="Float" x="0" y="66" width="555" height="11" uuid="41f51e36-049b-4443-badc-40e4f223dd31"/>
-				<subreportParameter name="limitValueDescription">
-					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				<subreportParameter name="speedoGovernorLimit">
+					<subreportParameterExpression><![CDATA[$P{speedoGovernorLimit}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus2">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus2}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="reportColor">
 					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="limitValueDescription">
+					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="actualMaxSpeed">
+					<subreportParameterExpression><![CDATA[$P{speedoActualMaxSpeed}]]></subreportParameterExpression>
+				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{emissionDieselReadings})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{reportpath5}]]></subreportExpression>
 			</subreport>
-			<subreport isUsingCache="true">
-				<reportElement positionType="Float" x="0" y="77" width="394" height="11" isRemoveLineWhenBlank="true" uuid="1f17776b-f7e4-494f-b589-fbbf796b13da"/>
+			<subreport runToBottom="false">
+				<reportElement positionType="Float" x="0" y="77" width="394" height="11" uuid="ea923af0-f0b2-43ed-b6e9-c25ac92e71f2"/>
+				<subreportParameter name="speedoGovernorLimit">
+					<subreportParameterExpression><![CDATA[$P{speedoGovernorLimit}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="passStatus2">
+					<subreportParameterExpression><![CDATA[$P{speedoPassStatus2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reportColor">
+					<subreportParameterExpression><![CDATA[$P{reportColor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="limitValueDescription">
+					<subreportParameterExpression><![CDATA[$P{limitValueDescription}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="actualMaxSpeed">
+					<subreportParameterExpression><![CDATA[$P{speedoActualMaxSpeed}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["test_report_speedometer_subreport_2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true" runToBottom="false">
+				<reportElement positionType="Float" x="0" y="88" width="394" height="11" isRemoveLineWhenBlank="true" uuid="1f17776b-f7e4-494f-b589-fbbf796b13da"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{checklistData})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["test_report_subreport1.jasper"]]></subreportExpression>
 			</subreport>

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Gate {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="GateID")	
 	private String gateID;
 	

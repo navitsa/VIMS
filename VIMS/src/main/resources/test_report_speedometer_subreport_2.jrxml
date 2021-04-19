@@ -1,29 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_shockAbsorber_subreport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a0bca50d-dd4c-4bf1-9f07-e375f1a84f4a">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_shockAbsorber_subreport_2" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a0bca50d-dd4c-4bf1-9f07-e375f1a84f4a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<style name="pass fail color style">
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $F{finalize_pass_fail_status}.equals("PASS")]]></conditionExpression>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $P{passStatus}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
 			<style mode="Transparent" forecolor="#009966"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $F{finalize_pass_fail_status}.equals("FAIL")]]></conditionExpression>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $P{passStatus}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
 			<style forecolor="#990000"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $F{finalize_pass_fail_status}.equals("PASS")]]></conditionExpression>
-			<style isBlankWhenNull="true" isBold="true"/>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $P{passStatus}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
+			<style isBlankWhenNull="true" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $F{finalize_pass_fail_status}.equals("FAIL")]]></conditionExpression>
-			<style markup="none" isBlankWhenNull="true" isBold="true" isItalic="true"/>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $P{passStatus}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
+			<style markup="none" isBlankWhenNull="true" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $P{passStatus2}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
+			<style mode="Transparent" forecolor="#009966"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $P{passStatus2}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
+			<style forecolor="#990000"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $P{passStatus2}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
+			<style isBlankWhenNull="true" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $P{passStatus2}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
+			<style markup="none" isBlankWhenNull="true" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 		</conditionalStyle>
 	</style>
 	<parameter name="limitValueDescription" class="java.util.List" isForPrompting="false"/>
 	<parameter name="reportColor" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="passStatus" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="passStatus2" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="speedoGovernorLimit" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="actualMaxSpeed" class="java.lang.String" isForPrompting="false"/>
 	<field name="test_type_test_type" class="java.lang.String"/>
 	<field name="test_type_type_id" class="java.lang.String"/>
 	<field name="t_test_point_name" class="java.lang.String"/>
@@ -36,7 +56,7 @@
 		<groupExpression><![CDATA[$F{test_type_test_type}]]></groupExpression>
 		<groupHeader>
 			<band height="23">
-				<printWhenExpression><![CDATA[$F{test_type_type_id}.equals("31000-31999")]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$F{test_type_type_id}.equals("37000-37999")]]></printWhenExpression>
 				<frame>
 					<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#EAEAEA" uuid="248c8cf3-2bb0-4b57-a89f-0fffbfd0ba5d"/>
 					<box>
@@ -45,13 +65,6 @@
 						<bottomPen lineWidth="0.25"/>
 						<rightPen lineWidth="0.25"/>
 					</box>
-					<textField isBlankWhenNull="true">
-						<reportElement style="pass fail color style" x="395" y="0" width="133" height="14" isRemoveLineWhenBlank="true" uuid="d34da358-4c1d-4bc9-969e-5832ec0a9008"/>
-						<textElement textAlignment="Right" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="9" pdfFontName="Helvetica"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$F{finalize_pass_fail_status}.equalsIgnoreCase("FAIL")?$F{finalize_pass_fail_status}+"*":$F{finalize_pass_fail_status}]]></textFieldExpression>
-					</textField>
 					<textField>
 						<reportElement mode="Transparent" x="15" y="0" width="153" height="14" uuid="6464030e-cb3d-4f92-881c-4974877f10d7"/>
 						<box>
@@ -66,12 +79,19 @@
 						</textElement>
 						<textFieldExpression><![CDATA[$F{test_type_test_type}]]></textFieldExpression>
 					</textField>
+					<textField isBlankWhenNull="true">
+						<reportElement style="pass fail color style" x="445" y="0" width="84" height="14" uuid="cf024ee6-9240-4f17-b88d-a368615178e0"/>
+						<textElement textAlignment="Right" verticalAlignment="Middle">
+							<font size="9"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$P{passStatus}]]></textFieldExpression>
+					</textField>
 				</frame>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="15">
-				<printWhenExpression><![CDATA[$F{test_type_type_id}.equals("31000-31999")]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$F{test_type_type_id}.equals("37000-37999")]]></printWhenExpression>
 				<crosstab ignoreWidth="false">
 					<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="360" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="7afe58eb-2c9f-46fc-b3fb-98ec993c0ac8"/>
 					<crosstabDataset isDataPreSorted="true">
@@ -85,7 +105,7 @@
 							<cellContents backcolor="#F0F8FF" mode="Transparent">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 									<reportElement style="Crosstab Data Text" x="0" y="0" width="60" height="11" isRemoveLineWhenBlank="true" uuid="f89f4021-e262-4739-b51b-f01c612874a9"/>
-									<textElement textAlignment="Left" verticalAlignment="Middle">
+									<textElement verticalAlignment="Middle">
 										<font fontName="Arial" size="8" isBold="false"/>
 										<paragraph lineSpacing="Single"/>
 									</textElement>
@@ -104,7 +124,7 @@
 						<crosstabColumnHeader>
 							<cellContents backcolor="#FFFFFF" mode="Transparent">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement style="Crosstab Data Text" mode="Transparent" x="0" y="0" width="39" height="11" isRemoveLineWhenBlank="true" uuid="fb269706-0443-429d-a076-f59dd216d1c5"/>
+									<reportElement style="Crosstab Data Text" mode="Transparent" x="0" y="0" width="56" height="11" isRemoveLineWhenBlank="true" uuid="fb269706-0443-429d-a076-f59dd216d1c5"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Arial" size="8" isBold="false"/>
 										<paragraph lineSpacing="Single"/>
@@ -143,18 +163,18 @@
 					<measure name="unit" class="java.lang.String">
 						<measureExpression><![CDATA[$F{unit}]]></measureExpression>
 					</measure>
-					<crosstabCell width="41" height="11">
+					<crosstabCell width="56" height="11">
 						<cellContents mode="Transparent">
 							<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="26" height="11" isRemoveLineWhenBlank="true" uuid="f09c66f7-da12-4453-88e5-94290e8b6ef2"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="11" isRemoveLineWhenBlank="true" uuid="f09c66f7-da12-4453-88e5-94290e8b6ef2"/>
+								<textElement verticalAlignment="Middle">
 									<font fontName="Arial" size="8"/>
 									<paragraph lineSpacing="Single"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{test_value_result_detail_ResultMeasure}]]></textFieldExpression>
 							</textField>
 							<textField isBlankWhenNull="true">
-								<reportElement style="Crosstab Data Text" x="26" y="0" width="15" height="11" uuid="d3061a0e-69ff-4aea-ae97-a673d8532902"/>
+								<reportElement style="Crosstab Data Text" x="35" y="0" width="21" height="11" uuid="d3061a0e-69ff-4aea-ae97-a673d8532902"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Arial" size="8"/>
 								</textElement>
@@ -204,7 +224,7 @@
 					</crosstabCell>
 				</crosstab>
 				<subreport>
-					<reportElement x="360" y="0" width="100" height="15" isRemoveLineWhenBlank="true" printWhenGroupChanges="test_type_group" uuid="f3d6a162-dacd-46ff-8c64-8abe21211872"/>
+					<reportElement x="360" y="12" width="100" height="3" isRemoveLineWhenBlank="true" printWhenGroupChanges="test_type_group" uuid="f3d6a162-dacd-46ff-8c64-8abe21211872"/>
 					<subreportParameter name="testTypeID">
 						<subreportParameterExpression><![CDATA[$F{test_type_type_id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -217,7 +237,45 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<pageFooter>
-		<band height="10"/>
-	</pageFooter>
+	<summary>
+		<band height="38">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="11" width="555" height="14" backcolor="#EAEAEA" uuid="7975684b-e8f1-48f7-a5ef-bab3ad824ae2"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<staticText>
+					<reportElement x="14" y="0" width="135" height="14" uuid="38e93bb9-e2b0-40cb-9a78-dd2105f91bbc"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Speed Governor / Limit Test]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement style="pass fail color style" x="476" y="0" width="79" height="14" isRemoveLineWhenBlank="true" uuid="9ada7581-8749-4c9f-aa35-6c2caf067cdf"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{passStatus2}.equalsIgnoreCase("FAIL")?$P{passStatus2}+"*":$P{passStatus2}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="363" y="0" width="103" height="14" uuid="19c4f1bb-e850-464f-8020-7048d62f286a"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{speedoGovernorLimit}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="223" y="0" width="100" height="14" uuid="d88ca051-1be1-4244-9593-f386f733efba"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{actualMaxSpeed}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</summary>
 </jasperReport>

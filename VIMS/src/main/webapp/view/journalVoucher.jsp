@@ -265,30 +265,21 @@
 							<!-- <div class="col-xl-9 col-lg-5">
 									<div class="col-sm-12">
 										<div class="col-md-12 col-lg-12">
-
 											<table id="tblIncomingPayment"
 												class="table table-striped table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
 												style="height: 450px" required>
-
 												<thead>
 													<tr>
 														<th>GL Account No</th>
 														<th>Account</th>
 														<th>Debit</th>
 														<th>Credit</th>
-
-
 													</tr>
 												</thead>
 												<tbody id="myTable">
-
 												</tbody>
 											</table>
-
-
-
 										</div>
-
 										<div class="form-group row">
 											<div class="col-sm-3">
 												<label class="l-fontst">Debit Total</label>
@@ -335,7 +326,6 @@
 		var crtot = 0;
 		var drtot = 0;
 		function addEqumentToTable() {
-
 			var crdr = $("input[type='radio'][name='crdr']:checked").val();
 			// alert(crdr);
 			if (crdr == "Debit") {
@@ -350,21 +340,17 @@
 				//crtot = crtot.toFixed(2);
 			}
 			var glaccount = $("#glaccount").val();
-
 			var select = document.getElementById("glaccount");
 			var option = select.options[select.selectedIndex];
-
 			//     if(equmentTable!=""& epriceTable!=""){
-
 			// 	$.ajax({
 			// 	       type: 'GET',
 			// 	       url: "rentEquipmentMaster",
 			// 	       data: {"eqId" : equmentTable},
 			// 	       success: function(data){
 			var contact = "<tr><td>"
-					+ "<input name='glaccno' readonly value='"+glaccount+"'/>" +
-
-					"</td><td>" + option.text + "</td><td>"
+					+ "<input name='glaccno' readonly value='"+glaccount+"'/>"
+					+ "</td><td>" + option.text + "</td><td>"
 					+ "<input name='dramt' readonly value='"+dramt+"'/>"
 					+ "</td><td>"
 					+ "<input name='cramt' readonly value='"+cramt+"'/>"
@@ -372,57 +358,42 @@
 					// <i class="fas fa-trash"></i> "<button type='button' onclick='productDelete(this);' class='btn'>Remove</button>"+
 					"<button type='button' onclick='deleteRow(this)' class='btn'>Remove</button>"
 					+ "</td></tr>";
-
 			$("table tbody").append(contact);
 			//  getEqument(); 
 			//   document.getElementById("crTot").value=crtot;
 			//	  document.getElementById("drTot").value=drtot;
-
 			document.getElementById('crTot').innerHTML = crtot;
 			document.getElementById('drTot').innerHTML = drtot;
-
 			// 	       },
 			// 	       error:function(){
 			// 	           alert("error");
-
 			// 	       }
-
 			// 	   });   
-
 			//     }
-
 		}
-
 		function deleteRow(btn) {
 			var row = btn.parentNode.parentNode;
 			var debit = row.cells[2].children[0].value;
 			var credit = row.cells[3].children[0].value;
-			var debitTotal = document.getElementById("drTot").innerHTML;
-			var creditTotal = document.getElementById("crTot").innerHTML;
+			debit = parseFloat(debit);
+			credit = parseFloat(credit);
 			if (credit == 0) {
-				debitTotal = parseFloat(debitTotal);
-				var debitBalance = debitTotal - debit;
-				document.getElementById('drTot').innerHTML = debitBalance;
+				drtot = drtot - debit;
+				document.getElementById('drTot').innerHTML = drtot;
 			} else if (debit == 0) {
-				creditTotal = parseFloat(creditTotal);
-				var creditBalance = creditTotal - credit;
-				document.getElementById('crTot').innerHTML = creditBalance;
+				crtot = crtot - credit;
+				document.getElementById('crTot').innerHTML = crtot;
 			}
 			row.parentNode.removeChild(row);
 		}
-
 		document.getElementById("createVoucher").addEventListener("click",
 				saveJournalVoucher);
-
 		function saveJournalVoucher() {
-
 			var debitTotal = document.getElementById("drTot").innerHTML;
 			var creditTotal = document.getElementById("crTot").innerHTML;
 			debitTotal = parseInt(debitTotal);
 			creditTotal = parseInt(creditTotal);
-
 			if (!(creditTotal == debitTotal)) {
-
 				swal("Credit & Debit Values must be equal!", {
 					icon : "error",
 					buttons : {
@@ -433,19 +404,14 @@
 				});
 				return;
 			} else {
-
 				var request_method = $("#journalVoucher").attr("method"); //get form GET/POST method
-
 				// Get form
 				var form = $('#journalVoucher')[0];
-
 				// Create an FormData object
 				var data = new FormData(form);
-
 				//alert("Error "+form_data);
 				$
 						.ajax({
-
 							url : "saveJournalVoucher",
 							type : request_method,
 							enctype : 'multipart/form-data',
@@ -453,9 +419,7 @@
 							processData : false,
 							contentType : false,
 							cache : false,
-
 							success : function(data) {
-
 								if (data == "1") {
 									swal(
 											"Good job!",
@@ -482,7 +446,6 @@
 												},
 											});
 								}
-
 							},
 							error : function(e) {
 								swal(
@@ -498,7 +461,6 @@
 										});
 							}
 						});
-
 			}
 		}
 	</script>

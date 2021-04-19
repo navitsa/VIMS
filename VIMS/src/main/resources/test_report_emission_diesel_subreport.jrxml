@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_emission_diesel_subreport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="7aea3084-683a-4dac-b740-699b7899281e">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="1353"/>
 	<property name="ireport.y" value="0"/>
 	<style name="pass fail color style">
 		<conditionalStyle>
@@ -103,7 +103,7 @@
 						<crosstabColumnHeader>
 							<cellContents backcolor="#FFFFFF" mode="Opaque">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement style="Crosstab Data Text" x="0" y="0" width="56" height="11" uuid="4a2fcc44-6d03-44ad-b715-c7635e4b9706"/>
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="99" height="11" uuid="4a2fcc44-6d03-44ad-b715-c7635e4b9706"/>
 									<textElement verticalAlignment="Middle">
 										<font size="8"/>
 									</textElement>
@@ -122,7 +122,7 @@
 						<crosstabColumnHeader>
 							<cellContents backcolor="#FFFFFF" mode="Opaque">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement style="Crosstab Data Text" x="0" y="0" width="56" height="11" uuid="8ebac2f5-d65e-45fe-a6ea-5d1200cac2db"/>
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="99" height="11" uuid="8ebac2f5-d65e-45fe-a6ea-5d1200cac2db"/>
 									<textElement verticalAlignment="Middle">
 										<font size="8"/>
 									</textElement>
@@ -137,10 +137,10 @@
 					<measure name="test_value_result_detail_ResultMeasure" class="java.lang.Double">
 						<measureExpression><![CDATA[$F{test_value_result_detail_Result}]]></measureExpression>
 					</measure>
-					<crosstabCell width="56" height="12">
+					<crosstabCell width="99" height="12">
 						<cellContents>
 							<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="12" uuid="8bb37df2-8c45-4d44-9d58-3b5e668c5298"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="99" height="12" uuid="8bb37df2-8c45-4d44-9d58-3b5e668c5298"/>
 								<textElement verticalAlignment="Middle">
 									<font size="8"/>
 								</textElement>
@@ -190,7 +190,7 @@
 					</crosstabCell>
 				</crosstab>
 				<subreport>
-					<reportElement x="361" y="0" width="100" height="15" isRemoveLineWhenBlank="true" printWhenGroupChanges="test_type_group" uuid="858e743c-ac2c-4f2f-8d22-8b379f0b3846"/>
+					<reportElement x="361" y="12" width="100" height="3" isRemoveLineWhenBlank="true" printWhenGroupChanges="test_type_group" uuid="858e743c-ac2c-4f2f-8d22-8b379f0b3846"/>
 					<subreportParameter name="testTypeID">
 						<subreportParameterExpression><![CDATA[$F{test_type_type_id}]]></subreportParameterExpression>
 					</subreportParameter>
