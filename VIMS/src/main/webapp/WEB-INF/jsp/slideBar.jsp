@@ -183,6 +183,7 @@
 				<a class="collapse-item fontst-sb-it" href="itemremarks" hidden="true" id="itemremarks">VI Status Remarks</a>
 <!--  				<h6 class="collapse-header"></h6> -->
 				<a class="collapse-item fontst-sb-it" href="testCategory"  hidden="true" id="testCategory">Test Categories</a>
+				<a class="collapse-item fontst-sb-it" href="parameterCode"  hidden="true" id="parameterCode">Parameter Code</a>
 			</div>
 		</div>
 	</li>

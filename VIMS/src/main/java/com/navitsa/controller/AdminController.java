@@ -299,26 +299,26 @@ public class AdminController {
 	@RequestMapping(value = "/saveCreatedGate", method = RequestMethod.POST)
 	public String saveCreatedGate(@Valid @ModelAttribute("createGateForm") Gate gate, BindingResult br,
 			RedirectAttributes redirectAttributes) {
-		System.out.println("Step 01");
+		// System.out.println("Step 01");
 
 		if (br.hasErrors()) {
-			System.out.println("Step 02");
+			// System.out.println("Step 02");
 			return "createGate";
 		} else {
 
 			try {
-				System.out.println("Step 03");
+				// System.out.println("Step 03");
 				System.out.println(gate.getGateID());
 				System.out.println(gate.getGateName());
 				System.out.println(gate.getGatePath());
 				System.out.println(gate.getGateIP());
 				System.out.println(gate.getCameraIP());
 				adminServices.saveCreatedGate(gate);
-				System.out.println("Step 04");
+				// System.out.println("Step 04");
 				redirectAttributes.addFlashAttribute("success", 1);
 				return "redirect:/createGate";
 			} catch (Exception e) {
-				System.out.println("Step 05");
+				// System.out.println("Step 05");
 				redirectAttributes.addFlashAttribute("success", 0);
 			}
 		}
