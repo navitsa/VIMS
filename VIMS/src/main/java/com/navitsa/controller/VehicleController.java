@@ -75,6 +75,7 @@ import com.navitsa.entity.DocumentCheckDetails;
 import com.navitsa.entity.DocumentCheckHead;
 import com.navitsa.entity.EquipmentType;
 import com.navitsa.entity.FuelType;
+import com.navitsa.entity.Gate;
 import com.navitsa.entity.GlPostingDetails;
 import com.navitsa.entity.GlPostingHead;
 import com.navitsa.entity.Glaccount;
@@ -1701,12 +1702,7 @@ System.out.println("ftp");
       	  	
         	params.put("invNo", invHed.getInvoiceNo());
         	params.put("vecno",vehiclereg.getVid().getVehicleID()  );
-        	
-
-      	  	SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
-      			    
-      	  	DateHelperWeb.getDate(vehiclereg.getDate());
-
+      	  	SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");      			          	
         	params.put("date",sdf.format(DateHelperWeb.getDate(invHed.getInvoiceDate())) );
         	params.put("vectype",vehiclereg.getVtype().getvRegType() );
         	params.put("category",vehiclereg.getTestCategory().getCategoryType());
@@ -1961,12 +1957,8 @@ System.out.println("ftp");
 	        	  params.put("name",cusdetail.getName());    
 	          }
 	          	params.put("recno", reciptHed.getRecNo());
-	          	params.put("vecno",vehiclereg.getVid().getVehicleID()  );
-	          	
-			    SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
-			    
-			    DateHelperWeb.getDate(vehiclereg.getDate());
-			 			    
+	          	params.put("vecno",vehiclereg.getVid().getVehicleID()  );	          	
+			    SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");	 			    
 	          	params.put("date",sdf.format(DateHelperWeb.getDate(vehiclereg.getDate())));
 	          	params.put("vectype",vehiclereg.getVtype().getvRegType() );
 	          	params.put("category",vehiclereg.getTestCategory().getCategoryType());
@@ -2024,7 +2016,6 @@ System.out.println("ftp");
 		          	params.put("tokenno",tranction.getTrID());
 		          	params.put("LaneNo",testLaneHead.getLaneName() );
 		          	SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+""); 
-					DateHelperWeb.getDate(vehiclereg.getDate());
 		          	params.put("tokenDate", sdf.format(DateHelperWeb.getDate(vehiclereg.getDate())));
 		         	params.put("Fee",centerMaster.getCountrycode().getCurrency()+" "+StringFormaterWeb.formatToRupees(ntotal) +"" );
 		          	params.put("NumberPlate",vecno );
@@ -4151,7 +4142,14 @@ System.out.println("ftp");
 		  
 		}
 		
-		
+		@ModelAttribute("allgates")
+		public List<Gate>getAllGate(){		
+			List<Gate> gate = vehicleService.getAllGates();
+			return gate;
+			
+		}
 		//editLaneAllocation
 }
+
+
 
