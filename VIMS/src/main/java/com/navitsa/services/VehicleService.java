@@ -15,6 +15,7 @@ import com.navitsa.entity.BusinessPartner;
 import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.ConfigSystem;
 import com.navitsa.entity.FuelType;
+import com.navitsa.entity.Gate;
 import com.navitsa.entity.IncomingReceiptDetails;
 import com.navitsa.entity.IncomingReceiptHead;
 import com.navitsa.entity.InvoiceDetails;
@@ -43,6 +44,7 @@ import com.navitsa.repository.BusinessPartnerRepository;
 import com.navitsa.repository.CenterMasterRepository;
 import com.navitsa.repository.ConfigSystemRepository;
 import com.navitsa.repository.FuelTypeRepository;
+import com.navitsa.repository.GateRepository;
 import com.navitsa.repository.IncomingReceiptDetailsRepository;
 import com.navitsa.repository.IncomingReceiptHeadRepository;
 import com.navitsa.repository.InvoiceDetailsRepository;
@@ -155,6 +157,9 @@ public class VehicleService {
 	
 	@Autowired
 	private TestLimitRuleRepository testLimitRuleRepository;
+	
+	@Autowired
+	private GateRepository gaterepository;
 	
 	
 	@Autowired
@@ -643,7 +648,9 @@ public class VehicleService {
 	public TestLimitRule filterVehicle(String year, String fuel) {
 		return testLimitRuleRepository.filterVehicle(year, fuel);
 	}
-
+	public List<Gate> getAllGates() {
+		return (List<Gate>) gaterepository.findAll();
+	}
 	
 	
 }

@@ -55,10 +55,23 @@ public class OcrDetails {
 	@ManyToOne(optional = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "DocumentCheckHeadID", referencedColumnName = "DocumentCheckHeadID")
 	private DocumentCheckHead documentCheckHeadID;
+	
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "GateID", referencedColumnName = "GAteID")
+	private Gate gateID;
 
 	@Column(name = "capimg")
 	private byte[] capimg;
 	
+	
+	public Gate getGateID() {
+		return gateID;
+	}
+
+	public void setGateID(Gate gateID) {
+		this.gateID = gateID;
+	}
+
 	public String getDocStatus() {
 		return docStatus;
 	}
