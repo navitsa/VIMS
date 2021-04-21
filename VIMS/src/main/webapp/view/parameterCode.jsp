@@ -101,7 +101,7 @@
 						<div
 							class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 							<div class="col-xl-2 col-lg-2">
-								<h2 class="text-white pb-2 fw-bold">Create Gate</h2>
+								<h2 class="text-white pb-2 fw-bold">Parameter Code</h2>
 							</div>
 							<div class="col-xl-2 col-lg-2"></div>
 							<div class="ml-md-auto py-2 py-md-4"></div>
@@ -117,56 +117,98 @@
 						<div class="row">
 							<div class="col-xl-5 col-lg-5">
 								<!-- Card -->
-								<form:form action="saveCreatedGate" method="post"
-									modelAttribute="createGateForm" enctype="multipart/form-data"
-									id="formMake">
+								<form:form action="saveParameterCodes" method="post"
+									modelAttribute="parameterCodesForm"
+									enctype="multipart/form-data" id="formMake">
 									<div class="card shadow mb-4" style="height: 640px;">
 										<div class="card border-left-primary shadow h-100 py-2">
 											<div class="card-body">
 												<div class="form-group row">
 													<div class="col-sm-4">
-														<label class="l-fontst">Gate ID</label>
+														<label class="l-fontst">Code</label>
 													</div>
 													<div class="col-sm-6">
 														<form:input class="form-control fontst" type="text"
-															path="gateID" onchange="" id="gateID" readonly="true" />
+															path="ck_paraCodeId.code" onchange="" id="code" />
+													</div>
+													<!-- <div class="col-sm-4">
+														<label class="l-fontst">S ID</label>
+													</div> -->
+													<div class="col-sm-2">
+														<form:input class="form-control fontst" type="hidden"
+															path="s_id" onchange="" id="s_id" readonly="true" />
 													</div>
 												</div>
+												<!-- <div class="form-group row">
+													
+												</div> -->
 												<div class="form-group row">
 													<div class="col-sm-4">
-														<label class="l-fontst">Gate Name</label>
+														<label class="l-fontst">Description</label>
 													</div>
 													<div class="col-sm-6">
 														<form:input class="form-control fontst" type="text"
-															path="gateName" onchange="" id="gateName" />
-													</div>
-												</div>
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Gate Path</label>
-													</div>
-													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="text"
-															path="gatePath" onchange="" id="gatePath" />
+															path="description" onchange="" id="description" />
 
 													</div>
 												</div>
 												<div class="form-group row">
 													<div class="col-sm-4">
-														<label class="l-fontst">Gate IP</label>
+														<label class="l-fontst">Type</label>
 													</div>
 													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="text"
-															path="gateIP" onchange="" id="gateIP" />
+														<form:select class="form-control fontst" type="text"
+															path="ck_paraCodeId.testType.typeId" onchange=""
+															id="type_id">
+															<form:option value="">--SELECT--</form:option>
+															<c:forEach items="${testTypeList}" var="tt">
+																<form:option value="${tt.typeId}">${tt.type}</form:option>
+															</c:forEach>
+														</form:select>
 													</div>
 												</div>
 												<div class="form-group row">
 													<div class="col-sm-4">
-														<label class="l-fontst">Camera IP</label>
+														<label class="l-fontst">Test Point</label>
 													</div>
 													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="text"
-															path="cameraIP" onchange="" id="cameraIP" />
+														<form:select class="form-control fontst" type="text"
+															path="testPoint.testPointID" onchange="" id="testPoint">
+															<form:option value="">--SELECT--</form:option>
+															<c:forEach items="${testPointList}" var="tp">
+																<form:option value="${tp.testPointID}">${tp.testPointName}</form:option>
+															</c:forEach>
+														</form:select>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-sm-4">
+														<label class="l-fontst">Test Parameter</label>
+													</div>
+													<div class="col-sm-6">
+														<form:select class="form-control fontst" type="text"
+															path="testParameter.testParameterId" onchange=""
+															id="testParameter">
+															<form:option value="">--SELECT--</form:option>
+															<c:forEach items="${testParameterList}" var="tp">
+																<form:option value="${tp.testParameterId}">${tp.paraName}</form:option>
+															</c:forEach>
+														</form:select>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-sm-4">
+														<label class="l-fontst">Test Parameter Angle</label>
+													</div>
+													<div class="col-sm-6">
+														<form:select class="form-control fontst" type="text"
+															path="testParameterAngle.paraAngleID" onchange=""
+															id="testParameterAngle">
+															<form:option value="">--SELECT--</form:option>
+															<c:forEach items="${testParameterAngleList}" var="tpa">
+																<form:option value="${tpa.paraAngleID}">${tpa.angleName}</form:option>
+															</c:forEach>
+														</form:select>
 													</div>
 												</div>
 
@@ -176,7 +218,7 @@
 													<div class="col-sm-5">
 														<button type="submit"
 															class="btn  btn-block btn-success btn-rounded tabStyle">Add
-															Gate</button>
+															Parameters</button>
 													</div>
 													<div class="col-sm-3">
 														<button type="reset"
@@ -200,29 +242,31 @@
 
 											<div class="col-sm-12">
 
-												<table id="tblCreatedGates"
+												<table id="tblParameterCodes"
 													class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
 													cellspacing="0" style="height: 50vh">
 
 													<thead>
 														<tr>
-															<th style="width: 10%">ID</th>
-															<th style="width: 30%">Gate Name</th>
-															<th style="width: 40%">Gate Path</th>
-															<th style="width: 20%">Gate IP</th>
-															<th style="width: 20%">Camera IP</th>
+															<th style="width: 10%">Code</th>
+															<th style="width: 30%">Type</th>
+															<th style="width: 40%">Description</th>
+															<th style="width: 20%">Test Point</th>
+															<th style="width: 20%">Test Parameter</th>
+															<th style="width: 20%">Test Parameter Angle</th>
 															<th style="width: 10%"></th>
 														</tr>
 													</thead>
 													<tbody id="myTable">
-														<c:forEach items="${gateList}" var="g">
+														<c:forEach items="${parameterCodeList}" var="pc">
 															<tr>
-																<td><div>${g.gateID}</div></td>
-																<td><div>${g.gateName}</div></td>
-																<td><div>${g.gatePath}</div></td>
-																<td><div>${g.gateIP}</div></td>
-																<td><div>${g.cameraIP}</div></td>
-																<td><a href="editGate?id=${g.gateID}"><i
+																<td><div>${pc.ck_paraCodeId.code}</div></td>
+																<td><div>${pc.ck_paraCodeId.testType.type}</div></td>
+																<td><div>${pc.description}</div></td>
+																<td><div>${pc.testPoint.testPointName}</div></td>
+																<td><div>${pc.testParameter.paraName}</div></td>
+																<td><div>${pc.testParameterAngle.angleName}</div></td>
+																<td><a href="editParameterCodes?id=${pc.s_id}"><i
 																		class="material-icons">&#xE254;</i></a></td>
 															</tr>
 

@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -11,26 +13,27 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "parameter_code")
 public class ParameterCodes {
-	
-	@Column(name="s_id")
+
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "s_id")
 	private int s_id;
-	
+
 	@EmbeddedId
 	private Ck_paraCodeId ck_paraCodeId;
-	
-	@Column(name="description")
+
+	@Column(name = "description")
 	private String description;
 
-	@ManyToOne(optional = true,fetch = FetchType.EAGER)
-	@JoinColumn(name = "test_point_id",referencedColumnName = "test_point_id")
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "test_point_id", referencedColumnName = "test_point_id")
 	private TestPoint testPoint;
-	
-	@ManyToOne(optional = true,fetch = FetchType.EAGER)
-	@JoinColumn(name = "test_parameter_id",referencedColumnName = "test_parameter_id")
+
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "test_parameter_id", referencedColumnName = "test_parameter_id")
 	private TestParameter testParameter;
-	
-	@ManyToOne(optional = true,fetch = FetchType.EAGER)
-	@JoinColumn(name = "parameter_angle_id",referencedColumnName = "parameter_angle_id")
+
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "parameter_angle_id", referencedColumnName = "parameter_angle_id")
 	private TestParameterAngle testParameterAngle;
 
 	public int getS_id() {
@@ -93,6 +96,7 @@ public class ParameterCodes {
 	}
 
 	public ParameterCodes() {
+
 	}
 
 }

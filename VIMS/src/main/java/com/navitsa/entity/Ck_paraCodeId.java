@@ -11,11 +11,11 @@ import javax.persistence.ManyToOne;
 @Embeddable
 public class Ck_paraCodeId implements Serializable {
 
-	@Column(name="code")
+	@Column(name = "code")
 	private String code;
-	
-	@ManyToOne(optional = false,fetch = FetchType.EAGER)
-	@JoinColumn(name = "type_id",referencedColumnName = "type_id")
+
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "type_id", referencedColumnName = "type_id")
 	private Test_type testType;
 
 	public Ck_paraCodeId(String code, Test_type testType) {
@@ -42,5 +42,5 @@ public class Ck_paraCodeId implements Serializable {
 
 	public Ck_paraCodeId() {
 	}
-	
+
 }
