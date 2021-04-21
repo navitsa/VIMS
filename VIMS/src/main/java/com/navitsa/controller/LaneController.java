@@ -23,6 +23,7 @@ import com.navitsa.entity.EquipmentMake;
 import com.navitsa.entity.EquipmentMaster;
 import com.navitsa.entity.EquipmentModel;
 import com.navitsa.entity.EquipmentType;
+import com.navitsa.entity.Gate;
 import com.navitsa.entity.TestCategory;
 import com.navitsa.entity.TestLane;
 import com.navitsa.entity.TestLaneDetails;
@@ -31,6 +32,7 @@ import com.navitsa.entity.Test_type;
 import com.navitsa.entity.UserLevel;
 import com.navitsa.entity.Users;
 import com.navitsa.entity.VehicleClass;
+import com.navitsa.services.AdminServices;
 import com.navitsa.services.BusinessPartnerService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.EquipmentService;
@@ -56,6 +58,9 @@ public class LaneController {
 	VehicleService vehicleService;
 	@Autowired
 	private TestTypeService testTypeService;
+	@Autowired
+	private AdminServices adminService;
+
 	
 	@RequestMapping("/TestLaneDetails")
 	public String getCenterDetailsPage(Map <String , Object> model,@RequestParam String id) {
@@ -103,7 +108,14 @@ public class LaneController {
 	public List<TestLane> getAllLanes() {
 		List<TestLane> lane = laneServices.getAllLaneDetails();
 		return lane;
-	}	
+	}
+	
+	@ModelAttribute("alllgates")
+	public List<Gate>getAllGate(){		
+		List<Gate> gate = adminService.getAllGates();
+		return gate;
+		
+	}
 	 //add combo for testdetais jsp
 	 @ModelAttribute("testtypeList")
 		public List <Test_type> getListOfTestType(){
