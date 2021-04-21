@@ -25,6 +25,18 @@ public class TestLaneHead {
 	@Column(name = "Remarks")
 	private String remark;
 	
+	@Column(name = "Maha_PC_IP")
+	private String mahaPcIp;
+	
+	@Column(name = "Maha_FTP_Path")
+	private String mahaFtpPath;
+	
+	@Column(name = "AVL_PC_IP")
+	private String avlPcIp;
+	
+	@Column(name = "AVL_FTP_Path")
+	private String avlFtpPath;
+	
 	@ManyToOne(optional = false,fetch = FetchType.EAGER)
 	@JoinColumn(name="Center_ID" , referencedColumnName="Center_ID" )
 	private CenterMaster centerID;
@@ -36,12 +48,11 @@ public class TestLaneHead {
 	@Column(name = "LaneCap")
 	private String laneCap;
 	
-	@Column(name = "Avl_Path")
-	private String avlPath;
-	
+
 	@ManyToOne(optional = true,fetch = FetchType.EAGER)
 	@JoinColumn(name="GateID" , referencedColumnName="GateID" )
 	private Gate gateID;
+	
 	
 	public String getTestLaneHeadId() {
 		return testLaneHeadId;
@@ -101,19 +112,52 @@ public class TestLaneHead {
 		this.laneID = laneID;
 	}
 
-	public String getAvlPath() {
-		return avlPath;
+
+	public String getMahaPcIp() {
+		return mahaPcIp;
 	}
 
-	public void setAvlPath(String avlPath) {
-		this.avlPath = avlPath;
+	public void setMahaPcIp(String mahaPcIp) {
+		this.mahaPcIp = mahaPcIp;
+	}
+
+	public String getMahaFtpPath() {
+		return mahaFtpPath;
+	}
+
+	public void setMahaFtpPath(String mahaFtpPath) {
+		this.mahaFtpPath = mahaFtpPath;
+	}
+
+	public String getAvlPcIp() {
+		return avlPcIp;
+	}
+
+	public void setAvlPcIp(String avlPcIp) {
+		this.avlPcIp = avlPcIp;
+	}
+
+	public String getAvlFtpPath() {
+		return avlFtpPath;
+	}
+
+	public void setAvlFtpPath(String avlFtpPath) {
+		this.avlFtpPath = avlFtpPath;
+	}
+
+	public Gate getGateID() {
+		return gateID;
+	}
+
+	public void setGateID(Gate gateID) {
+		this.gateID = gateID;
 	}
 
 	public TestLaneHead() {	
 	}
 
 	public TestLaneHead(String testLaneHeadId, String laneName, String status, String remark, CenterMaster centerID,
-			TestLane laneID, String laneCap, String avlPath) {
+			TestLane laneID, String laneCap, String mahaPcIp, String mahaFtpPath, String avlPcIp, String avlFtpPath) {
 		super();
 		this.testLaneHeadId = testLaneHeadId;
 		this.laneName = laneName;
@@ -122,7 +166,11 @@ public class TestLaneHead {
 		this.centerID = centerID;
 		this.laneID = laneID;
 		this.laneCap = laneCap;
-		this.avlPath = avlPath;
+	
+		this.avlFtpPath = avlFtpPath;
+		this.mahaPcIp = mahaPcIp;
+		this.mahaFtpPath = mahaFtpPath;
+		this.avlPcIp = avlPcIp;
 	}
 	
 }
