@@ -128,7 +128,7 @@
 							<div class="collapse" id="cuntrySet">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<!-- 				<h6 class="collapse-header">Main Components:</h6> -->
-				<a class="collapse-item fontst-sb-it" href="countryMaster" hidden="true" id="countryMaster">Country specific settings</a>	
+				<a class="collapse-item fontst-sb-it" href="countryMaster" hidden="true" id="countryMaster">Country Specific Settings</a>	
 			</div>
 		</div>
 	</li>
@@ -138,14 +138,14 @@
 	<li class="nav-item"  hidden="true" id="CorporateInfo">
 							<a data-toggle="collapse" href="#corPoinfo">
 								<i class="fas fa-pen-square"></i>
-								<p>Corporate information</p>
+								<p>Corporate Information</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="corPoinfo">
 
 			<div class="bg-white py-2 collapse-inner rounded" >
 				
-				<a class="collapse-item fontst-sb-it" href="businessPartner" hidden="true" id="businessPartner">Business partner</a>	
+				<a class="collapse-item fontst-sb-it" href="businessPartner" hidden="true" id="businessPartner">Business Partners</a>	
 				<a class="collapse-item fontst-sb-it" href="#" hidden="true" id="CorporateCalendar">Partner Corporate Calendar</a>
 				<a class="collapse-item fontst-sb-it" href="vehicleRegTypes" hidden="true" id="vehicleRegTypes">Lane Registration Types</a>
 				<a class="collapse-item fontst-sb-it" href="laneAllocation" hidden="true" id="laneAllocation">Lane Allocation</a>
@@ -172,6 +172,7 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 <!-- 				<h6 class="collapse-header">Create Test Profile</h6> -->
 <!-- 				<a class="collapse-item fontst-sb-it" href="#"  hidden="true" id="testProfile">Test Profile</a>  -->
+				<a class="collapse-item fontst-sb-it" href="parameterCode"  hidden="true" id="parameterCode">Parameter Code</a>
 				<a class="collapse-item fontst-sb-it" href="testLimitRule" hidden="true" id="testLimitRule">Test Limit Rule</a>
 				<a class="collapse-item fontst-sb-it" href="testProfile" hidden="true" id="limitValues">Test Profile</a>
 
@@ -183,7 +184,6 @@
 				<a class="collapse-item fontst-sb-it" href="itemremarks" hidden="true" id="itemremarks">VI Status Remarks</a>
 <!--  				<h6 class="collapse-header"></h6> -->
 				<a class="collapse-item fontst-sb-it" href="testCategory"  hidden="true" id="testCategory">Test Categories</a>
-				<a class="collapse-item fontst-sb-it" href="parameterCode"  hidden="true" id="parameterCode">Parameter Code</a>
 			</div>
 		</div>
 	</li>
