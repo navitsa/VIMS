@@ -13,61 +13,55 @@
 <html lang="en">
 <head>
 <style type="text/css">
-
 .imagePreview {
-    width: 60%;
-    height: 60%;
-    background-position: center center;
-  background:url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
-  background-color:#fff;
-    background-size: cover;
-  background-repeat:no-repeat;
-    display: inline-block;
-  box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
- 
-  
-}
-.btn-primary
-{
-  display:block;
-  font-color:#FFFFFF;
-  box-shadow:0px 4px 6px 2px rgba(0,0,0,0.2);
-  margin-top:1px;
- 
-}
-.imgUp
-{
-  margin-bottom:15px;
-}
-.del
-{
-  position:absolute;
-  top:0px;
-  right:15px;
-  width:30px;
-  height:30px;
-  text-align:center;
-  line-height:30px;
-  background-color:rgba(255,255,255,0.6);
-  cursor:pointer;
-}
-.imgAdd
-{
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  background-color:#4bd7ef;
-  color:#fff;
-  box-shadow:0px 0px 2px 1px rgba(0,0,0,0.2);
-  text-align:center;
-  line-height:30px;
-  margin-top:0px;
-  cursor:pointer;
-  font-size:15px;
+	width: 60%;
+	height: 60%;
+	background-position: center center;
+	background:
+		url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
+	background-color: #fff;
+	background-size: cover;
+	background-repeat: no-repeat;
+	display: inline-block;
+	box-shadow: 0px -3px 6px 2px rgba(0, 0, 0, 0.2);
 }
 
+.btn-primary {
+	display: block;
+	font-color: #FFFFFF;
+	box-shadow: 0px 4px 6px 2px rgba(0, 0, 0, 0.2);
+	margin-top: 1px;
+}
 
+.imgUp {
+	margin-bottom: 15px;
+}
 
+.del {
+	position: absolute;
+	top: 0px;
+	right: 15px;
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	background-color: rgba(255, 255, 255, 0.6);
+	cursor: pointer;
+}
+
+.imgAdd {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-color: #4bd7ef;
+	color: #fff;
+	box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	line-height: 30px;
+	margin-top: 0px;
+	cursor: pointer;
+	font-size: 15px;
+}
 </style>
 
 <%@include file="../WEB-INF/jsp/head.jsp"%>
@@ -209,18 +203,29 @@
 														</div>
 													</div>
 
-													<div class="col-6"> 
+													<div class="col-6">
 														<div class="form-group">
 															<div class="row">
 																<div class="col-7">
-																	<img class="zoom imagePreview"
-																		src="<c:url value='/resources/img/empty-placeholder-image-icon.jpg'/>"
-																		id="preview" class="img-thumbnail"> <label
-																		class="btn btn-primary">Upload Photo<input
-																		type="file" class="uploadFile img"
-																		value="Upload Photo"
-																		style="width: 0px; height: 0px; overflow: hidden;"
-																		accept="image/*" id="user_Img" name="user_Img"></label>
+																	<c:if test="${cMaster.flagImg != null}">
+																		<img src="data:image/jpg;base64,${flagimg}"
+																			id="preview" class="img-thumbnail" width="120" height="120">
+																		<label class="btn btn-primary">Upload Photo<form:input
+																				type="file" class="uploadFile img"
+																				value="Upload Photo"
+																				style="width: 0px; height: 0px; overflow: hidden;"
+																				accept="image/*" id="flagImg" path="flagImg" /></label>	
+																	</c:if>
+																	<c:if test="${cMaster.flagImg == null}">
+																		<img class="img-thumbnail"
+																			src="<c:url value='/resources/img/empty-placeholder-image-icon.jpg'/>"
+																			id="preview" class="img-thumbnail" width="120" height="120">
+																		<label class="btn btn-primary">Upload Photo<form:input
+																				type="file" class="uploadFile img"
+																				value="Upload Photo"
+																				style="width: 0px; height: 0px; overflow: hidden;"
+																				accept="image/*" id="flagImg" path="flagImg" /></label>
+																	</c:if>
 																</div>
 															</div>
 														</div>
