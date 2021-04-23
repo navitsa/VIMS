@@ -209,17 +209,19 @@
 																<div class="col-7">
 																	<c:if test="${cMaster.flagImg != null}">
 																		<img src="data:image/jpg;base64,${flagimg}"
-																			id="preview" class="img-thumbnail" width="120" height="120">
+																			id="preview" class="img-thumbnail" width="120"
+																			height="120">
 																		<label class="btn btn-primary">Upload Photo<form:input
 																				type="file" class="uploadFile img"
 																				value="Upload Photo"
 																				style="width: 0px; height: 0px; overflow: hidden;"
-																				accept="image/*" id="flagImg" path="flagImg" /></label>	
+																				accept="image/*" id="flagImg" path="flagImg" /></label>
 																	</c:if>
 																	<c:if test="${cMaster.flagImg == null}">
 																		<img class="img-thumbnail"
 																			src="<c:url value='/resources/img/empty-placeholder-image-icon.jpg'/>"
-																			id="preview" class="img-thumbnail" width="120" height="120">
+																			id="preview" class="img-thumbnail" width="120"
+																			height="120">
 																		<label class="btn btn-primary">Upload Photo<form:input
 																				type="file" class="uploadFile img"
 																				value="Upload Photo"
@@ -232,20 +234,23 @@
 
 													</div>
 
-													<div class="custom-control custom-checkbox">
-
-
-														<div class="col-sm-60 mb-1 mb-sm-3">
-															<label>Status</label> <br>
-															<form:radiobutton path="status" value="Active"
-																checked="checked" />
-															ACTIVE
-															<form:radiobutton path="status" value="Inactive" />
-															INACTIVE
-
+													<div class="form-group row">
+														<div class="custom-control custom-checkbox">
+															<div class="col-sm-60 mb-1 mb-sm-3">
+																<label>Status</label> <br>
+																<div class="selectgroup w-75">
+																	<label class="selectgroup-item"> <form:radiobutton
+																			path="status" value="Active"
+																			class="selectgroup-input" checked="" /> <span
+																		class="selectgroup-button"><b>ACTIVE</b></span>
+																	</label> <label class="selectgroup-item"> <form:radiobutton
+																			path="status" value="Inactive"
+																			class="selectgroup-input" /> <span
+																		class="selectgroup-button"><b>INACTIVE</b></span>
+																	</label>
+																</div>
+															</div>
 														</div>
-
-
 													</div>
 
 													<br>
@@ -270,9 +275,9 @@
 																<th>Country</th>
 																<th>Currency</th>
 																<th>Currency Description</th>
-
 																<th>Status</th>
 																<th>Flag</th>
+																<th></th>
 															</tr>
 														</thead>
 														<tbody>

@@ -151,16 +151,20 @@
 												</div>
 											</div>
 
-											<div class="form-group">
-
-												<div class="selectgroup w-50">
-													<label class="selectgroup-item"> <form:radiobutton
-															path="status" value="ACTIVE" class="selectgroup-input"
-															checked="" /> <span class="selectgroup-button"><b>ACTIVE</b></span>
-													</label> <label class="selectgroup-item"> <form:radiobutton
-															path="status" value="INACTIVE" class="selectgroup-input" />
-														<span class="selectgroup-button"><b>INACTIVE</b></span>
-													</label>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="form-label">Status</label>
+												</div>
+												<div class="col-sm-6">
+													<div class="selectgroup w-75">
+														<label class="selectgroup-item"> <form:radiobutton
+																path="status" value="ACTIVE" class="selectgroup-input"
+																checked="" /> <span class="selectgroup-button"><b>ACTIVE</b></span>
+														</label> <label class="selectgroup-item"> <form:radiobutton
+																path="status" value="INACTIVE" class="selectgroup-input" />
+															<span class="selectgroup-button"><b>INACTIVE</b></span>
+														</label>
+													</div>
 												</div>
 											</div>
 
