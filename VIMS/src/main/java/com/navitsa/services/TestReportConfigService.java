@@ -295,7 +295,7 @@ public class TestReportConfigService {
 		return (List<EmissionCodeMapping>) emissionCodeMappingRepo.findAllByTestType(testType);
 	}
 
-	public int find_edt_id(String vehicleID) {
+	public String find_edt_id(String vehicleID) {
 		return emissionCodeMappingRepo.find_edt_id(vehicleID);
 	}
 
@@ -304,7 +304,7 @@ public class TestReportConfigService {
 
 	}
 
-	public int find_ept_id(String vehicleID) {
+	public String find_ept_id(String vehicleID) {
 		return emissionCodeMappingRepo.find_ept_id(vehicleID);
 	}
 

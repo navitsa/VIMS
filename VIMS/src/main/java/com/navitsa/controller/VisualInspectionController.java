@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ import com.navitsa.entity.VisualProfile;
 import com.navitsa.entity.VisualProfileItems;
 import com.navitsa.services.VehicleService;
 import com.navitsa.services.VisualInspectionServices;
+import com.navitsa.utils.DateHelperWeb;
 import com.navitsa.utils.ReportViewe;
 
 import org.springframework.ui.Model;
@@ -292,8 +294,10 @@ public class VisualInspectionController {
 	 	public List<VehicleRegistration> getPendingVehiclesForInspection(){
 		 
 		 List<VehicleRegistration> pendingVi = null;
+		 
 		 try {
 			 pendingVi= inspectionServices.getPendingVehiclesForInspection();
+			 
 		} catch (Exception e) {
 			System.out.println("Something went wrong.");
 		}finally {
@@ -304,8 +308,19 @@ public class VisualInspectionController {
 		 {
 			 return null;
 		 }
-		 else
-			 return pendingVi;
+		 else {
+			 List<VehicleRegistration> list = new ArrayList<VehicleRegistration>();
+
+			 for (VehicleRegistration vr : pendingVi) {
+				if(vr.getOcrid().getVrStatus().equalsIgnoreCase("completed")) {
+					list.add(vr);
+				}
+			}
+			 
+			 return list;
+		 }
+		 
+		 
 	 }
 	 
 	 
@@ -450,7 +465,7 @@ public class VisualInspectionController {
 		 }
 
 		 @RequestMapping("/visualInspectReport")
-		 public ModelAndView print(@RequestParam String id,String status,HttpServletResponse response)
+		 public ModelAndView print(@RequestParam String id,String status,HttpServletResponse response,HttpSession session)
 		 {
 			 //List<Object> ls = new ArrayList<Object>();
 
@@ -463,8 +478,7 @@ public class VisualInspectionController {
 			 }else {
 				  b = inspectionServices.getAllData(a.getCheklistID());
 			 }
-			 
-			 //ls.add(b);
+			 	 
 			 	
 			 Map<String,Object> params = new HashMap<>();
 			 String name,address,mobileNo;
@@ -481,7 +495,7 @@ public class VisualInspectionController {
 				 //System.out.println("this is a owner");			 
 				 VehicleOwner vo =  vehicleServices.getVehicleOwnerIDByVehicleID(a.getVehicleID());
 				 name 		= vo.getOwnerName();
-				 address	= vo.getPostalBox()+vo.getStateid().getState()+vo.getCity();
+				 address	= vo.getPostalBox()+ " "+vo.getStateid().getState()+" "+vo.getCity();
 				 mobileNo	= vo.getContactNo();
 				 
 			 }
@@ -491,6 +505,9 @@ public class VisualInspectionController {
 			 params.put("address",address);
 			 params.put("mobileNo",mobileNo);
 			 
+			 SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
+			 params.put("testDate",sdf.format(a.getDate()) );
+			 
 			 ReportViewe view =new ReportViewe();
 			 String pdf_result = null;
 			 
@@ -498,7 +515,6 @@ public class VisualInspectionController {
 				pdf_result = view.pdfReportViewInlineSystemOpen("checklistReport.jasper","checklistReport",b,params,response);
 				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

@@ -101,11 +101,11 @@
 									<div class="form-group row">
 										<div class="col-lg-4">
 											<label for="effectiveFrom">Effective From <span class="required text-danger">*</span></label>
-											<form:input class="form-control form-control-sm" path="effectiveFrom" type="date"/>
+											<form:input class="form-control form-control-sm" path="effectiveFrom" id="effectiveFrom" type="date"/>
 										</div>
 										<div class="col-lg-4">
 											<label for="effectiveTo">Effective To <span class="required text-danger">*</span></label>
-											<form:input class="form-control form-control-sm" path="effectiveTo" type="date"/>
+											<form:input class="form-control form-control-sm" path="effectiveTo" id="effectiveTo" type="date"/>
 										</div>
 									</div>
 			                		<div class="form-group row">
@@ -203,6 +203,14 @@
 		        	{ "orderable": false, "targets": 6 },
 		        	{ "orderable": false, "targets": 7 }]
 		    } );
+		    
+<%--             $('#effectiveTo').datepicker({  
+                format: '<%=session.getAttribute("dateFormat")%>'.toLowerCase()
+            });
+            $('#effectiveFrom').datepicker({  
+                format: '<%=session.getAttribute("dateFormat")%>'.toLowerCase()
+            }); --%>
+		    
 		} );
 	</script>
 </body>

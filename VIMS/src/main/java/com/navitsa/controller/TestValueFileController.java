@@ -239,52 +239,63 @@ public class TestValueFileController {
 		
 		if(fuelType.equalsIgnoreCase("Diesel"))
 		{
+			System.out.println("This is a diesel vehicle...");
 			List<EmissionCodeMapping> list = testReportService.findAllCodeMapping("70000-79999");
-			int id_no = testReportService.find_edt_id(vehicleID);
 			
-			for(EmissionCodeMapping ecm : list) {
-				String rs = testReportService.find_edt_data(ecm.getColumnName(),id_no);
-				testResultList.add(new TestValueFileDetail(objHeader, ecm.getCode(), rs));
+			if(testReportService.find_edt_id(vehicleID) !=null)
+			{
+				int id_no = Integer.valueOf(testReportService.find_edt_id(vehicleID));
+				for(EmissionCodeMapping ecm : list) {
+					String rs = testReportService.find_edt_data(ecm.getColumnName(),id_no);
+					testResultList.add(new TestValueFileDetail(objHeader, ecm.getCode(), rs));
+					
+				}
 				
+				testValueFileServices.saveAllDetail(testResultList);
 			}
 			
-			testValueFileServices.saveAllDetail(testResultList);
 		}
 		else if(fuelType.equalsIgnoreCase("Petrol") || fuelType.equalsIgnoreCase("LPG") || fuelType.equalsIgnoreCase("CNG")) 
 		{
+			System.out.println("This is a petrol vehicle...");
 			List<EmissionCodeMapping> list = testReportService.findAllCodeMapping("80000-89999");
 			
-			int id_no = testReportService.find_ept_id(vehicleID);
-			String rs="";
-			
-			for(EmissionCodeMapping ecm : list) {
-				try {
-					rs = testReportService.find_ept_petrol("ept_certificate_petrol",ecm.getColumnName(),id_no);
-				} catch (Exception e) {
-					rs = "";
-				}
-				if(rs.length()==0) {
+			if(testReportService.find_ept_id(vehicleID) !=null)
+			{
+				int id_no = Integer.valueOf(testReportService.find_ept_id(vehicleID));
+				String rs="";
+				
+				for(EmissionCodeMapping ecm : list) {
 					try {
-						rs = testReportService.find_ept_petrol("ept_certificate_gas",ecm.getColumnName(),id_no);
+						rs = testReportService.find_ept_petrol("ept_certificate_petrol",ecm.getColumnName(),id_no);
 					} catch (Exception e) {
 						rs = "";
 					}
-				}
-				if(rs.length()==0) {
-					try {
-						rs = testReportService.find_ept_petrol("ept_certificate_lambda",ecm.getColumnName(),id_no);
-					} catch (Exception e) {
-						rs = "";
+					if(rs.length()==0) {
+						try {
+							rs = testReportService.find_ept_petrol("ept_certificate_gas",ecm.getColumnName(),id_no);
+						} catch (Exception e) {
+							rs = "";
+						}
 					}
-				}	
+					if(rs.length()==0) {
+						try {
+							rs = testReportService.find_ept_petrol("ept_certificate_lambda",ecm.getColumnName(),id_no);
+						} catch (Exception e) {
+							rs = "";
+						}
+					}	
+					
+					//rs.replaceAll("\\s+", "");
+					if(!rs.equals("--"))
+						testResultList.add(new TestValueFileDetail(objHeader, ecm.getCode(), rs));
+					
+				}
 				
-				//rs.replaceAll("\\s+", "");
-				if(!rs.equals("--"))
-					testResultList.add(new TestValueFileDetail(objHeader, ecm.getCode(), rs));
-				
+				testValueFileServices.saveAllDetail(testResultList);
 			}
 			
-			testValueFileServices.saveAllDetail(testResultList);
+			
 		}
 
 	}

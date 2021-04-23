@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="checklistReport" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="523" leftMargin="36" rightMargin="36" topMargin="36" bottomMargin="36" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="86940fa7-be60-4b36-8bb7-f941352637a3">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2"/>
+	<property name="ireport.zoom" value="2.415765000000001"/>
+	<property name="ireport.x" value="502"/>
+	<property name="ireport.y" value="144"/>
 	<style name="style1">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{status.vprofileItemStatus}.equals("Ok")]]></conditionExpression>
@@ -29,6 +29,7 @@
 	<parameter name="name" class="java.lang.String"/>
 	<parameter name="address" class="java.lang.String"/>
 	<parameter name="mobileNo" class="java.lang.String"/>
+	<parameter name="testDate" class="java.lang.String" isForPrompting="false"/>
 	<field name="remarkName" class="java.lang.String"/>
 	<field name="remark.remarks" class="java.lang.String"/>
 	<field name="stage.stage" class="java.lang.String"/>
@@ -317,12 +318,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vcm.vr.vid.noWheel}]]></textFieldExpression>
 			</textField>
-			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
-				<reportElement x="278" y="100" width="107" height="12" uuid="77f858fc-fd56-4118-b6ec-d694973df720"/>
-				<textElement>
+			<textField isBlankWhenNull="true">
+				<reportElement x="278" y="100" width="107" height="12" uuid="b911ea55-dbcd-4184-9dc8-c9c84827f929"/>
+				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{vcm.date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{testDate}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

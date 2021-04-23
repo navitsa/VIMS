@@ -1,11 +1,13 @@
 package com.navitsa.controller;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,7 @@ import com.navitsa.services.TestTypeService;
 import com.navitsa.services.TestValueFileService;
 import com.navitsa.services.VehicleService;
 import com.navitsa.services.VisualInspectionServices;
+import com.navitsa.utils.DateHelperWeb;
 import com.navitsa.utils.ReportViewe;
 
 @Controller
@@ -149,7 +152,7 @@ public class TestingReportConfigController {
 	
 	@GetMapping("/getTestReport")
 	 public ModelAndView getTestReport(@RequestParam String register_id,@RequestParam String test_value_file_id,
-			 @RequestParam int color,HttpServletResponse response) throws ParseException
+			 @RequestParam int color,HttpServletResponse response,HttpSession session) throws ParseException
 	 {
 		 ModelAndView mav = new ModelAndView("comPdfReportView");
 		 
@@ -176,13 +179,17 @@ public class TestingReportConfigController {
 			 mobileNo	= vo.getContactNo();
 			 
 		 }
-		 
+
 		 //set parameters to report
 		 Map<String,Object> params = new HashMap<>();
 		 params.put("cusName", name);
 		 params.put("cusAddress",address);
 		 params.put("cusTP",mobileNo);
-		 params.put("testDate",vr.getDate());
+		 
+		 SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
+		 params.put("testDate",sdf.format(DateHelperWeb.getDate(vr.getDate())) );
+		 
+		 //params.put("testDate",vr.getDate());
 		 params.put("testTime",vr.getTime());
 		 params.put("mileage",vr.getCurrentMilage());
 		 params.put("fuel",vr.getVid().getFtype().getFuel());
