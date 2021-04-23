@@ -121,117 +121,116 @@
 									modelAttribute="vehicleCategoryForm"
 									enctype="multipart/form-data" id="formMake">
 									<div class="card shadow mb-4" style="height: 640px;">
-										<div class="card border-left-primary shadow h-100 py-2">
-											<div class="card-body">
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Category ID</label>
-													</div>
-													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="text"
-															path="categoryID" onchange="" id="categoryID" />
+
+										<div class="card-body">
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Category ID</label>
+												</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="categoryID" onchange="" id="categoryID" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Category</label>
+												</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="vehicleCategory" onchange="" id="vehicleCategory" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Remark</label>
+												</div>
+												<div class="col-sm-6">
+													<form:textarea class="form-control fontst" type="text"
+														path="remarks" onchange="" id="remarks" />
+												</div>
+											</div>
+
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="form-label">Status</label>
+												</div>
+												<div class="col-sm-6">
+													<div class="selectgroup w-75">
+														<label class="selectgroup-item"> <form:radiobutton
+																path="status" value="ACTIVE" class="selectgroup-input"
+																checked="" /> <span class="selectgroup-button"><b>ACTIVE</b></span>
+														</label> <label class="selectgroup-item"> <form:radiobutton
+																path="status" value="INACTIVE" class="selectgroup-input" />
+															<span class="selectgroup-button"><b>INACTIVE</b></span>
+														</label>
 													</div>
 												</div>
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Category</label>
-													</div>
-													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="text"
-															path="vehicleCategory" onchange="" id="vehicleCategory" />
-													</div>
+											</div>
+
+											<hr>
+											<div class="form-group row">
+
+												<div class="col-sm-5">
+													<button type="submit"
+														class="btn  btn-block btn-success btn-rounded tabStyle">Add
+														Vehicle Category</button>
 												</div>
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Remark</label>
-													</div>
-													<div class="col-sm-6">
-														<form:textarea class="form-control fontst" type="text"
-															path="remarks" onchange="" id="remarks" />
-													</div>
+												<div class="col-sm-3">
+													<button type="reset"
+														class="btn  btn-block btn-danger btn-rounded tabStyle">Reset</button>
 												</div>
-
-												<div class="form-group row">
-													<div class="col-sm-10">
-
-														<div class="col-sm-2"></div>
-
-														<div class="btn-group btn-group-toggle"
-															data-toggle="buttons">
-															<label class="btn btn-outline-success btn-sm"> <form:radiobutton
-																	path="status" value="ACTIVE" checked="checked" />ACTIVE
-															</label> <label class="btn btn-outline-danger btn-sm"> <form:radiobutton
-																	path="status" value="INACTIVE" />INACTIVE
-															</label>
-														</div>
-
-													</div>
-
-												</div>
-
-												<hr>
-												<div class="form-group row">
-
-													<div class="col-sm-5">
-														<button type="submit"
-															class="btn  btn-block btn-success btn-rounded tabStyle">Add
-															Vehicle Category</button>
-													</div>
-													<div class="col-sm-3">
-														<button type="reset"
-															class="btn  btn-block btn-danger btn-rounded tabStyle">Reset</button>
-													</div>
-
-												</div>
-												<hr>
 
 											</div>
-											<!-- End of card body -->
+											<hr>
+
 										</div>
+										<!-- End of card body -->
+
 									</div>
 								</form:form>
 							</div>
 
 							<div class="col-xl-7 col-lg-5">
 								<div class="card shadow mb-4" style="height: 640px;">
-									<div class="card border-left-primary shadow h-100 py-2">
-										<div class="card-body">
 
-											<div class="col-sm-12">
+									<div class="card-body">
 
-												<table id="tblIncomingPayment"
-													class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-													cellspacing="0" style="height: 50vh">
+										<div class="col-sm-12">
 
-													<thead>
+											<table id="tblIncomingPayment"
+												class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
+												cellspacing="0" style="height: 50vh">
+
+												<thead>
+													<tr>
+														<th style="width: 10%">ID</th>
+														<th style="width: 30%">Category</th>
+														<th style="width: 40%">Remark</th>
+														<th style="width: 20%">Status</th>
+														<th style="width: 10%"></th>
+													</tr>
+												</thead>
+												<tbody id="myTable">
+													<c:forEach items="${categoryList}" var="cl">
 														<tr>
-															<th style="width: 10%">ID</th>
-															<th style="width: 30%">Category</th>
-															<th style="width: 40%">Remark</th>
-															<th style="width: 20%">Status</th>
-															<th style="width: 10%"></th>
+															<td><div>${cl.categoryID}</div></td>
+															<td><div>${cl.vehicleCategory}</div></td>
+															<td><div>${cl.remarks}</div></td>
+															<td><div>${cl.status}</div></td>
+															<td><a href="editCategory?id=${cl.categoryID}"><i
+																	class="material-icons">&#xE254;</i></a></td>
 														</tr>
-													</thead>
-													<tbody id="myTable">
-														<c:forEach items="${categoryList}" var="cl">
-															<tr>
-																<td><div>${cl.categoryID}</div></td>
-																<td><div>${cl.vehicleCategory}</div></td>
-																<td><div>${cl.remarks}</div></td>
-																<td><div>${cl.status}</div></td>
-																<td><a href="editCategory?id=${cl.categoryID}"><i
-																		class="material-icons">&#xE254;</i></a></td>
-															</tr>
 
-														</c:forEach>
-													</tbody>
-												</table>
-
-											</div>
+													</c:forEach>
+												</tbody>
+											</table>
 
 										</div>
-										<!-- End of card body -->
+
 									</div>
+									<!-- End of card body -->
+
 								</div>
 
 

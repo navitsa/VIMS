@@ -121,164 +121,160 @@
 									modelAttribute="parameterCodesForm"
 									enctype="multipart/form-data" id="formMake">
 									<div class="card shadow mb-4" style="height: 640px;">
-										<div class="card border-left-primary shadow h-100 py-2">
-											<div class="card-body">
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Code</label>
-													</div>
-													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="text"
-															path="ck_paraCodeId.code" onchange="" id="code" />
-													</div>
-													<!-- <div class="col-sm-4">
+										<div class="card-body">
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Code</label>
+												</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="ck_paraCodeId.code" onchange="" id="code" />
+												</div>
+												<!-- <div class="col-sm-4">
 														<label class="l-fontst">S ID</label>
 													</div> -->
-													<div class="col-sm-2">
-														<form:input class="form-control fontst" type="hidden"
-															path="s_id" onchange="" id="s_id" readonly="true" />
-													</div>
+												<div class="col-sm-2">
+													<form:input class="form-control fontst" type="hidden"
+														path="s_id" onchange="" id="s_id" readonly="true" />
 												</div>
-												<!-- <div class="form-group row">
+											</div>
+											<!-- <div class="form-group row">
 													
 												</div> -->
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Description</label>
-													</div>
-													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="text"
-															path="description" onchange="" id="description" />
-
-													</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Description</label>
 												</div>
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Type</label>
-													</div>
-													<div class="col-sm-6">
-														<form:select class="form-control fontst" type="text"
-															path="ck_paraCodeId.testType.typeId" onchange=""
-															id="type_id">
-															<form:option value="">--SELECT--</form:option>
-															<c:forEach items="${testTypeList}" var="tt">
-																<form:option value="${tt.typeId}">${tt.type}</form:option>
-															</c:forEach>
-														</form:select>
-													</div>
-												</div>
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Test Point</label>
-													</div>
-													<div class="col-sm-6">
-														<form:select class="form-control fontst" type="text"
-															path="testPoint.testPointID" onchange="" id="testPoint">
-															<form:option value="">--SELECT--</form:option>
-															<c:forEach items="${testPointList}" var="tp">
-																<form:option value="${tp.testPointID}">${tp.testPointName}</form:option>
-															</c:forEach>
-														</form:select>
-													</div>
-												</div>
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Test Parameter</label>
-													</div>
-													<div class="col-sm-6">
-														<form:select class="form-control fontst" type="text"
-															path="testParameter.testParameterId" onchange=""
-															id="testParameter">
-															<form:option value="">--SELECT--</form:option>
-															<c:forEach items="${testParameterList}" var="tp">
-																<form:option value="${tp.testParameterId}">${tp.paraName}</form:option>
-															</c:forEach>
-														</form:select>
-													</div>
-												</div>
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Test Parameter Angle</label>
-													</div>
-													<div class="col-sm-6">
-														<form:select class="form-control fontst" type="text"
-															path="testParameterAngle.paraAngleID" onchange=""
-															id="testParameterAngle">
-															<form:option value="">--SELECT--</form:option>
-															<c:forEach items="${testParameterAngleList}" var="tpa">
-																<form:option value="${tpa.paraAngleID}">${tpa.angleName}</form:option>
-															</c:forEach>
-														</form:select>
-													</div>
-												</div>
-
-												<hr>
-												<div class="form-group row">
-
-													<div class="col-sm-5">
-														<button type="submit"
-															class="btn  btn-block btn-success btn-rounded tabStyle">Add
-															Parameters</button>
-													</div>
-													<div class="col-sm-3">
-														<button type="reset"
-															class="btn  btn-block btn-danger btn-rounded tabStyle">Reset</button>
-													</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="description" onchange="" id="description" />
 
 												</div>
-												<hr>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Type</label>
+												</div>
+												<div class="col-sm-6">
+													<form:select class="form-control fontst" type="text"
+														path="ck_paraCodeId.testType.typeId" onchange=""
+														id="type_id">
+														<form:option value="">--SELECT--</form:option>
+														<c:forEach items="${testTypeList}" var="tt">
+															<form:option value="${tt.typeId}">${tt.type}</form:option>
+														</c:forEach>
+													</form:select>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Test Point</label>
+												</div>
+												<div class="col-sm-6">
+													<form:select class="form-control fontst" type="text"
+														path="testPoint.testPointID" onchange="" id="testPoint">
+														<form:option value="">--SELECT--</form:option>
+														<c:forEach items="${testPointList}" var="tp">
+															<form:option value="${tp.testPointID}">${tp.testPointName}</form:option>
+														</c:forEach>
+													</form:select>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Test Parameter</label>
+												</div>
+												<div class="col-sm-6">
+													<form:select class="form-control fontst" type="text"
+														path="testParameter.testParameterId" onchange=""
+														id="testParameter">
+														<form:option value="">--SELECT--</form:option>
+														<c:forEach items="${testParameterList}" var="tp">
+															<form:option value="${tp.testParameterId}">${tp.paraName}</form:option>
+														</c:forEach>
+													</form:select>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Test Parameter Angle</label>
+												</div>
+												<div class="col-sm-6">
+													<form:select class="form-control fontst" type="text"
+														path="testParameterAngle.paraAngleID" onchange=""
+														id="testParameterAngle">
+														<form:option value="">--SELECT--</form:option>
+														<c:forEach items="${testParameterAngleList}" var="tpa">
+															<form:option value="${tpa.paraAngleID}">${tpa.angleName}</form:option>
+														</c:forEach>
+													</form:select>
+												</div>
+											</div>
+
+											<hr>
+											<div class="form-group row">
+
+												<div class="col-sm-5">
+													<button type="submit"
+														class="btn  btn-block btn-success btn-rounded tabStyle">Add
+														Parameters</button>
+												</div>
+												<div class="col-sm-3">
+													<button type="reset"
+														class="btn  btn-block btn-danger btn-rounded tabStyle">Reset</button>
+												</div>
 
 											</div>
-											<!-- End of card body -->
+											<hr>
+
 										</div>
+										<!-- End of card body -->
 									</div>
 								</form:form>
 							</div>
 
 							<div class="col-xl-7 col-lg-5">
 								<div class="card shadow mb-4" style="height: 640px;">
-									<div class="card border-left-primary shadow h-100 py-2">
-										<div class="card-body">
+									<div class="card-body">
 
-											<div class="col-sm-12">
+										<div class="col-sm-12">
 
-												<table id="tblParameterCodes"
-													class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-													cellspacing="0" style="height: 50vh">
+											<table id="tblParameterCodes"
+												class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
+												cellspacing="0" style="height: 50vh">
 
-													<thead>
+												<thead>
+													<tr>
+														<th style="width: 10%">Code</th>
+														<th style="width: 30%">Type</th>
+														<th style="width: 40%">Description</th>
+														<th style="width: 20%">Test Point</th>
+														<th style="width: 20%">Test Parameter</th>
+														<th style="width: 20%">Test Parameter Angle</th>
+														<th style="width: 10%"></th>
+													</tr>
+												</thead>
+												<tbody id="myTable">
+													<c:forEach items="${parameterCodeList}" var="pc">
 														<tr>
-															<th style="width: 10%">Code</th>
-															<th style="width: 30%">Type</th>
-															<th style="width: 40%">Description</th>
-															<th style="width: 20%">Test Point</th>
-															<th style="width: 20%">Test Parameter</th>
-															<th style="width: 20%">Test Parameter Angle</th>
-															<th style="width: 10%"></th>
+															<td><div>${pc.ck_paraCodeId.code}</div></td>
+															<td><div>${pc.ck_paraCodeId.testType.type}</div></td>
+															<td><div>${pc.description}</div></td>
+															<td><div>${pc.testPoint.testPointName}</div></td>
+															<td><div>${pc.testParameter.paraName}</div></td>
+															<td><div>${pc.testParameterAngle.angleName}</div></td>
+															<td><a href="editParameterCodes?id=${pc.s_id}"><i
+																	class="material-icons">&#xE254;</i></a></td>
 														</tr>
-													</thead>
-													<tbody id="myTable">
-														<c:forEach items="${parameterCodeList}" var="pc">
-															<tr>
-																<td><div>${pc.ck_paraCodeId.code}</div></td>
-																<td><div>${pc.ck_paraCodeId.testType.type}</div></td>
-																<td><div>${pc.description}</div></td>
-																<td><div>${pc.testPoint.testPointName}</div></td>
-																<td><div>${pc.testParameter.paraName}</div></td>
-																<td><div>${pc.testParameterAngle.angleName}</div></td>
-																<td><a href="editParameterCodes?id=${pc.s_id}"><i
-																		class="material-icons">&#xE254;</i></a></td>
-															</tr>
 
-														</c:forEach>
-													</tbody>
-												</table>
-
-											</div>
+													</c:forEach>
+												</tbody>
+											</table>
 
 										</div>
-										<!-- End of card body -->
+
 									</div>
+									<!-- End of card body -->
 								</div>
 
 

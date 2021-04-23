@@ -121,120 +121,116 @@
 									modelAttribute="createGateForm" enctype="multipart/form-data"
 									id="formMake">
 									<div class="card shadow mb-4" style="height: 640px;">
-										<div class="card border-left-primary shadow h-100 py-2">
-											<div class="card-body">
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Gate ID</label>
-													</div>
-													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="text"
-															path="gateID" onchange="" id="gateID" readonly="true" />
-													</div>
+										<div class="card-body">
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Gate ID</label>
 												</div>
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Gate Name</label>
-													</div>
-													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="text"
-															path="gateName" onchange="" id="gateName" />
-													</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="gateID" onchange="" id="gateID" readonly="true" />
 												</div>
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Gate Path</label>
-													</div>
-													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="text"
-															path="gatePath" onchange="" id="gatePath" />
-
-													</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Gate Name</label>
 												</div>
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Gate IP</label>
-													</div>
-													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="text"
-															path="gateIP" onchange="" id="gateIP" />
-													</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="gateName" onchange="" id="gateName" />
 												</div>
-												<div class="form-group row">
-													<div class="col-sm-4">
-														<label class="l-fontst">Camera IP</label>
-													</div>
-													<div class="col-sm-6">
-														<form:input class="form-control fontst" type="text"
-															path="cameraIP" onchange="" id="cameraIP" />
-													</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Gate Path</label>
 												</div>
-
-												<hr>
-												<div class="form-group row">
-
-													<div class="col-sm-5">
-														<button type="submit"
-															class="btn  btn-block btn-success btn-rounded tabStyle">Add
-															Gate</button>
-													</div>
-													<div class="col-sm-3">
-														<button type="reset"
-															class="btn  btn-block btn-danger btn-rounded tabStyle">Reset</button>
-													</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="gatePath" onchange="" id="gatePath" />
 
 												</div>
-												<hr>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Gate IP</label>
+												</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="gateIP" onchange="" id="gateIP" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Camera IP</label>
+												</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="cameraIP" onchange="" id="cameraIP" />
+												</div>
+											</div>
+
+											<hr>
+											<div class="form-group row">
+
+												<div class="col-sm-5">
+													<button type="submit"
+														class="btn  btn-block btn-success btn-rounded tabStyle">Add
+														Gate</button>
+												</div>
+												<div class="col-sm-3">
+													<button type="reset"
+														class="btn  btn-block btn-danger btn-rounded tabStyle">Reset</button>
+												</div>
 
 											</div>
-											<!-- End of card body -->
+											<hr>
+
 										</div>
+										<!-- End of card body -->
 									</div>
 								</form:form>
 							</div>
 
 							<div class="col-xl-7 col-lg-5">
 								<div class="card shadow mb-4" style="height: 640px;">
-									<div class="card border-left-primary shadow h-100 py-2">
-										<div class="card-body">
+									<div class="card-body">
 
-											<div class="col-sm-12">
+										<div class="col-sm-12">
 
-												<table id="tblCreatedGates"
-													class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-													cellspacing="0" style="height: 50vh">
+											<table id="tblCreatedGates"
+												class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
+												cellspacing="0" style="height: 50vh">
 
-													<thead>
+												<thead>
+													<tr>
+														<th style="width: 10%">ID</th>
+														<th style="width: 30%">Gate Name</th>
+														<th style="width: 40%">Gate Path</th>
+														<th style="width: 20%">Gate IP</th>
+														<th style="width: 20%">Camera IP</th>
+														<th style="width: 10%"></th>
+													</tr>
+												</thead>
+												<tbody id="myTable">
+													<c:forEach items="${gateList}" var="g">
 														<tr>
-															<th style="width: 10%">ID</th>
-															<th style="width: 30%">Gate Name</th>
-															<th style="width: 40%">Gate Path</th>
-															<th style="width: 20%">Gate IP</th>
-															<th style="width: 20%">Camera IP</th>
-															<th style="width: 10%"></th>
+															<td><div>${g.gateID}</div></td>
+															<td><div>${g.gateName}</div></td>
+															<td><div>${g.gatePath}</div></td>
+															<td><div>${g.gateIP}</div></td>
+															<td><div>${g.cameraIP}</div></td>
+															<td><a href="editGate?id=${g.gateID}"><i
+																	class="material-icons">&#xE254;</i></a></td>
 														</tr>
-													</thead>
-													<tbody id="myTable">
-														<c:forEach items="${gateList}" var="g">
-															<tr>
-																<td><div>${g.gateID}</div></td>
-																<td><div>${g.gateName}</div></td>
-																<td><div>${g.gatePath}</div></td>
-																<td><div>${g.gateIP}</div></td>
-																<td><div>${g.cameraIP}</div></td>
-																<td><a href="editGate?id=${g.gateID}"><i
-																		class="material-icons">&#xE254;</i></a></td>
-															</tr>
 
-														</c:forEach>
-													</tbody>
-												</table>
-
-											</div>
+													</c:forEach>
+												</tbody>
+											</table>
 
 										</div>
-										<!-- End of card body -->
+
 									</div>
+									<!-- End of card body -->
 								</div>
 
 
