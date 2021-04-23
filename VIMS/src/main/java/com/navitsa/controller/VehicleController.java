@@ -621,13 +621,19 @@ public class VehicleController {
 				  String centerid=session.getAttribute("centerid")+"";
 				  CenterMaster centerMaster=centerService.getcenterById(centerid);
 				  
+				  SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
+				  SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+				  
+				  String startDateString2 = vmaster.getManufactureYear();
+				  String manufDate = sdf2.format(sdf.parse(startDateString2));
+				  vmaster.setManufactureYear(manufDate);
+				  System.out.println(manufDate); 
+				  
 					String startDateString = vmaster.getRegisteredYear();
-				    SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
-				    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-				    String regDate = sdf2.format(sdf.parse(startDateString));
-				    vmaster.setRegisteredYear(regDate);	
+				    String regDate = sdf2.format(sdf.parse(startDateString));		
+				    vmaster.setRegisteredYear(regDate);
 				    System.out.println(regDate);
-					  
+				
 				  
 				  
 				vehicleService.saveVMaster(vmaster);				
@@ -2020,7 +2026,7 @@ System.out.println("ftp");
 		         	params.put("Fee",centerMaster.getCountrycode().getCurrency()+" "+StringFormaterWeb.formatToRupees(ntotal) +"" );
 		          	params.put("NumberPlate",vecno );
 		          	params.put("VehiMake",vehiclereg.getVid().getVmodel().getVehicleClass().getVehicleClass() );
-		          	params.put("VehiModel",vehiclereg.getVid().getVmodel().getVehicleModel());
+		          	params.put("VehiModel",vehiclereg.getVid().getVmodel().getVehicleModel());		         
 		          	params.put("ManuYear",vehiclereg.getVid().getManufactureYear());
 		          	params.put("ChassisNo",vehiclereg.getVid().getChassisNo());
 		          	if(!vehiclereg.getOcrid().getAppNo().equals("0")) {
@@ -2139,7 +2145,7 @@ System.out.println("ftp");
 		    }
 		    
 			@RequestMapping(value = "createOcrId", method = RequestMethod.POST)
-			public @ResponseBody String createOcrId( @RequestParam ("json") String json, @RequestParam ("vecno") String vecno, @RequestParam ("vtype") String vtype, @RequestParam ("apoid") String apoid) 
+			public @ResponseBody String createOcrId( @RequestParam ("json") String json, @RequestParam ("vecno") String vecno, @RequestParam ("vtype") String vtype, @RequestParam ("apoid") String apoid, @RequestParam ("gateId") String gateId) 
 			{
 			
 				try {
@@ -2157,7 +2163,8 @@ System.out.println("ftp");
 				ocrDetails.setOcrid(ocrDetailsID);
 				ocrDetails.setOcrDate(dtf.format(now));
 				ocrDetails.setNoimage(imagedata);
-				ocrDetails.setOcrVid(vecno);
+				ocrDetails.setOcrVid(vecno);			
+		
 				ocrDetails.setVmStatus("pending");
 				ocrDetails.setVrStatus("pending");
 				ocrDetails.setDocStatus("pending");

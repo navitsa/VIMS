@@ -57,13 +57,14 @@ public class OcrDetails {
 	private DocumentCheckHead documentCheckHeadID;
 	
 	@ManyToOne(optional = true, fetch = FetchType.EAGER)
-	@JoinColumn(name = "GateID", referencedColumnName = "GAteID")
+	@JoinColumn(name = "GateID", referencedColumnName = "GateID")
 	private Gate gateID;
 
 	@Column(name = "capimg")
 	private byte[] capimg;
 	
 	
+
 	public Gate getGateID() {
 		return gateID;
 	}
