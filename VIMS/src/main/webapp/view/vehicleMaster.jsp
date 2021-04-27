@@ -310,11 +310,11 @@ pos {
 										<div class="row">
 											<div class="col-sm-4">
 												<div class="row">
-													<div class="col-sm-5">
+													<div class="col-sm-6">
 														<label for="manufactureYear" class="l-fontst manuSty">Manufactured
 															Year</label>
 													</div>
-													<div class="col-sm-5">
+													<div class="col-sm-6">
 														<form:input class="form-control fontst"
 															path="manufactureYear" id="manufactureYear"
 															pattern="{12}" title="Please Enter valid YEAR !"

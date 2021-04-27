@@ -580,7 +580,17 @@ public class VehicleController {
 		
 		if(vehicleService.getVMasterById(vehicleID)!=null) {
 			vm = vehicleService.getVMasterById(vehicleID);
-			System.out.println("not null value v master= "+vm);
+			
+
+			  SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
+			//  SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+			  
+			  vm.setManufactureYear(sdf.format(DateHelperWeb.getDate(vm.getManufactureYear())));
+			  vm.setRegisteredYear(sdf.format(DateHelperWeb.getDate(vm.getRegisteredYear())));
+		
+			  System.out.println("not null value v master= "+vm);
+			
+			
 		}
 		
 		List<VehicleOwner> pre_owners = vehicleService.getOwnersByVehicleNo(vehicleID);
