@@ -85,10 +85,11 @@ public class FinanceAccountingController {
 			 @RequestParam(value = "amount") Double[] amount,
 			 @RequestParam(value = "remarks") String[] remarks,
 			 Model m,HttpSession session,HttpServletResponse response) {
-		 
+		 System.out.println("ffff");
 			 if(br.hasErrors())  
-		        {  
-				 //return "outgoingPayments";  
+		        {
+				 System.out.println("rrrr");
+				 return null;
 		        }  
 		        else  
 		        { 		        	
@@ -115,14 +116,14 @@ public class FinanceAccountingController {
 	                	 List<GlPostingDetails> glPostingDetailsList=new ArrayList<>();
 	                 	
 	                 	
-	                	 List<GlaccountMapping> glMappingResult=glAccountService.getGlaccountMappingByDocId(1);
+	                	 List<GlaccountMapping> glMappingResult=glAccountService.getGlaccountMappingByDocId(4);
 	 	            	
 	     	            
 	     	            GlPostingHead glPostingHead=new GlPostingHead();
 	     	            glPostingHead.setDocNo(nextVoucherNo);
 	     	            
 	     	            DocType docType=new DocType();
-	     	            docType.setDocid(1);
+	     	            docType.setDocid(4);
 	     	            
 	     	            glPostingHead.setDocid(docType);
 	     	            glPostingHead.setDate(formatter.format(date));
@@ -166,15 +167,19 @@ public class FinanceAccountingController {
 	     	            	glPostingDetails1.setGlAccNo(new Glaccount(glAccNo[i]));
 	     	            	
 	     	            	glPostingDetails1.setType("D");
-	     	            	glPostingDetails1.setAmount(Long.parseLong((amount[i]*100)+""));
+	     	            	
+	     	            	//long x=Long.parseLong((amount[i]*100));
+	     	            	long l1 = (new Double(amount[i]*100)).longValue();
+	     	            	glPostingDetails1.setAmount(l1);
 	     	            	glPostingDetailsList.add(glPostingDetails1);
 			       			
 			       			
 			    		 }
 			       		 
-			       		 
-			   	         glPostingHead.setTotalDR(Long.parseLong((totalAmount*100)+""));
-			  	         glPostingHead.setTotalCR(Long.parseLong((totalAmount*100)+""));
+			       		long l2 = (new Double(totalAmount*100)).longValue();
+			   	         glPostingHead.setTotalDR(l2);
+			   	  //    long l3 = (new Double(totalAmount*100)).longValue();
+			  	         glPostingHead.setTotalCR(l2);
 			       		 
 			  	         glAccountService.saveGlPostingHeadRepository(glPostingHead);
 		     	         glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList); 		 
@@ -189,24 +194,26 @@ public class FinanceAccountingController {
 			       		ReportViewe view =new ReportViewe();
 			       		String pdf_result = null;
 						 
-						try {
+						
 							pdf_result = view.pdfReportViewInlineSystemOpen("outgoingPayment.jasper", "outgoingPayment",list, null, response);
 							
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
+					
 						
 						mav.addObject("pdfViewEq", pdf_result); 
+						System.out.println("kklllll");
 						return mav;
 			       		
 			        	//return "redirect:/outgoingPayments";
 						
 					} catch (Exception e) {
 						//m.addAttribute("success",0);
+						e.printStackTrace();
+						System.out.println("ttqqqqq");
+						return null;
 					}
 
 		        }
-			return null;
+			
 			 
 			 //return "outgoingPayments";  
 	
