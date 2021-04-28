@@ -113,19 +113,22 @@ table.table td .add {
 						<div class="col-xl mb-4">
 			              <div class="card shadow mb-4 border-left-primary">
 			                <div class="card-body">
-			                		<form:form action="saveOutgoingPayment" method="POST" modelAttribute="outgoingPaymentForm" id="form1">
-			                		
-			                		<div class="topcorner bg-success">
-			                			<%-- <form:input type="hidden" path="paymentVoucherNo"></form:input> --%>
-			                		</div>
+									<form:form action="saveOutgoingPayment" method="POST"
+										modelAttribute="outgoingPaymentForm" id="form1">
+
+										<div class="topcorner bg-success">
+											<%-- <form:input type="hidden" path="paymentVoucherNo"></form:input> --%>
+										</div>
 
 										<div class="form-group row">
 											<div class="col-lg">
-											
+
 												<fieldset>
-												  <legend> Payment Type </legend>
-												  <label><form:radiobutton path="paymentType" value="Vendor" disabled="true"/> Vendor </label>
-												  <label><form:radiobutton path="paymentType" value="Account" checked="checked"/> Account </label>
+													<legend> Payment Type </legend>
+													<label><form:radiobutton path="paymentType"
+															value="Vendor" disabled="true" /> Vendor </label> <label><form:radiobutton
+															path="paymentType" value="Account" checked="checked" />
+														Account </label>
 												</fieldset>
 
 												<div class="row">
@@ -136,7 +139,6 @@ table.table td .add {
 														<form:input class="form-control" type="date"
 															path="dueDate" onchange="" id="payDueDate"
 															required="required" />
-
 													</div>
 												</div>
 												<br>
@@ -145,8 +147,8 @@ table.table td .add {
 														<label>To Order of</label>
 													</div>
 													<div class="col-sm">
-														<form:input class="form-control"
-															path="toOrderOf" onchange="" id="toOrderOf" />
+														<form:input class="form-control" path="toOrderOf"
+															onchange="" id="toOrderOf" />
 													</div>
 												</div>
 												<br>
@@ -155,8 +157,8 @@ table.table td .add {
 														<label>Pay To</label>
 													</div>
 													<div class="col-sm">
-														<form:input class="form-control"
-															path="payTo" onchange="" id="payTo" />
+														<form:input class="form-control" path="payTo" onchange=""
+															id="payTo" />
 													</div>
 												</div>
 												<br>
@@ -165,23 +167,25 @@ table.table td .add {
 														<label>Ref. No</label>
 													</div>
 													<div class="col-sm-6">
-														<form:input class="form-control"
-															path="refNo" onchange="" id="refNo" />
+														<form:input class="form-control" path="refNo" onchange=""
+															id="refNo" />
 													</div>
 												</div>
-												
+
 											</div>
 											<div class="col-lg">
 
 												<fieldset>
 													<legend> Payment Mean</legend>
-													<label><form:radiobutton path="paymentMean" value="Cash" /> Cash</label>
-													<label><form:radiobutton path="paymentMean" value="Cheque" /> Cheque</label> 
-													<label><form:radiobutton path="paymentMean" value="BankTransfer" disabled="true"/> Bank Transfer</label>
+													<label><form:radiobutton path="paymentMean"
+															value="Cash" /> Cash</label> <label><form:radiobutton
+															path="paymentMean" value="Cheque" /> Cheque</label> <label><form:radiobutton
+															path="paymentMean" value="BankTransfer" disabled="true" />
+														Bank Transfer</label>
 												</fieldset>
 
 
-<%-- 												<div class="row">
+												<%-- 												<div class="row">
 													<div class="col-sm-3">
 														<label class="l-fontst">Cheque No</label>
 													</div>
@@ -197,56 +201,57 @@ table.table td .add {
 										</div>
 
 										<hr>
-										
+
 										<div class="form-group row">
 											<div class="col-lg-4">
-												<label>GL Account</label>
-												<select id="glAccNo" class="form-control" required>										
-													<option value=""> --SELECT--</option>																																			
-														<c:forEach items="${listGLAccounts}" var="gl">
-															<option value="${gl.glAccNo}">${gl.glAccNo} ${gl.glAccountName}</option>
-														</c:forEach>
+												<label>GL Account</label> <select id="glAccNo"
+													class="form-control" required>
+													<option value="">--SELECT--</option>
+													<c:forEach items="${listGLAccounts}" var="gl">
+														<option value="${gl.glAccNo}">${gl.glAccNo}
+															${gl.glAccountName}</option>
+													</c:forEach>
 												</select>
 
 											</div>
 											<div class="col-lg-3">
-												<label>Amount</label>
-												<input class="form-control" type="text"
-													 id="amount" />
+												<label>Amount</label> <input class="form-control"
+													type="text" id="amount" />
 											</div>
 											<div class="col-lg">
-												<button type="button" class="btn btn-info mt-4 add-new"><i class="fa fa-plus"></i> Add </button>
+												<button type="button" class="btn btn-info mt-4 add-new">
+													<i class="fa fa-plus"></i> Add
+												</button>
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-lg-4">
 												<label>Remarks</label>
-												<textarea class="form-control" 
-													id="remarks"></textarea>
-											</div>										
+												<textarea class="form-control" id="remarks"></textarea>
+											</div>
 										</div>
-										
-									    <div class="table-responsive">
-									        <div class="table-wrapper">
-									            <table class="table table-bordered" id="table1">
-									                <thead>
-									                    <tr>
-									                        <th>GL Ac No</th>
-									                        <th>GL Ac Name</th>
-									                        <th>Remark</th>
-									                        <th>Amount</th>
-									                        <th></th>
-									                    </tr>
-									                </thead>
-									                <tbody>
-									  
-									                </tbody>
-									            </table>
-									        </div>
-									    </div>
 
-    
-<%-- 										<div class="row">
+										<div class="table-responsive">
+											<div class="table-wrapper">
+												<table class="table table-bordered" id="table1">
+													<thead>
+														<tr>
+															<th>GL Ac No</th>
+															<th>GL Ac Name</th>
+															<th>Remark</th>
+															<th>Amount</th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody>
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+
+
+										<%-- 										<div class="row">
 											<div class="col-lg-4">
 											</div>
 											<div class="col-lg-4">
@@ -260,12 +265,9 @@ table.table td .add {
 											</div>
 										</div> --%>
 
-										<button type="submit"
-											class="btn btn-success"
-											id="btnSubmit">Process Payment</button>
-										<button type="reset"
-											class="btn btn-warning"
-											id="btnClear">Clear</button>
+										<button type="submit" class="btn btn-success" id="btnSubmit">Process
+											Payment</button>
+										<button type="reset" class="btn btn-warning" id="btnClear">Clear</button>
 
 									</form:form>
 

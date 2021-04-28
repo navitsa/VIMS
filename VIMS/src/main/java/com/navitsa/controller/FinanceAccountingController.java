@@ -98,7 +98,7 @@ public class FinanceAccountingController {
 	    	    	    Date date = new Date();  
 	    	    	    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
 	    	    	    LocalTime time = LocalTime.now();
-		        		
+	    	    	    outgoingPaymentHead.setPaymentDate(formatter.format(date));
 		        		
 		        		
 		        		String centerid=(String) session.getAttribute("centerid");
@@ -248,7 +248,8 @@ public class FinanceAccountingController {
 		  }
 	  
 		  @RequestMapping(value = "/getOutgoingPaymentsVoucherNoByDate", method=RequestMethod.GET) 
-		  public @ResponseBody List<OutgoingPaymentHead> getOutgoingPaymentsVoucherNoByDate(@RequestParam String oRdate) { 			  
+		  public @ResponseBody List<OutgoingPaymentHead> getOutgoingPaymentsVoucherNoByDate(@RequestParam String oRdate) {
+			  System.out.println("OR Date : " + oRdate);
 			  List<OutgoingPaymentHead> outgoingPaymentHead = financeAccountingService.getOutgoingPaymentsVoucherNoByDate(oRdate);
 			  return outgoingPaymentHead;
 		  }
@@ -262,7 +263,8 @@ public class FinanceAccountingController {
 		  @RequestMapping(value = "/previewIOutgoingPaymentsDetailsReport",method=RequestMethod.POST)
 		  public ModelAndView previewIOutgoingPaymentsDetailsReport(String fromdate,String todate,HttpServletResponse response,HttpSession session) {
 			 // System.out.println("repStatu="+repStatu);
-			  ModelAndView mav = new ModelAndView("OutgoingPaymentsDetailsReport");
+			  ModelAndView mav = new ModelAndView("comPdfReportView");
+			  //ModelAndView mav = new ModelAndView("OutgoingPaymentsDetailsReport");
 			  
 			  String centerid=session.getAttribute("centerid")+"";
 			  CenterMaster centerMaster=centerService.getcenterById(centerid);

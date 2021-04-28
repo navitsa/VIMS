@@ -371,6 +371,7 @@
 			// 	   });   
 			//     }
 		}
+
 		function deleteRow(btn) {
 			var row = btn.parentNode.parentNode;
 			var debit = row.cells[2].children[0].value;
@@ -404,6 +405,25 @@
 				});
 				return;
 			} else {
+
+				var glaccnoArr = [];
+				var dramtArr = [];
+				var cramtArr = [];
+
+				var table = document.getElementById('tblIncomingPayment');
+				for (i = 1; i < table.rows.length; i++) {
+					var row = table.rows[i];
+					var cells = row.cells;
+					var glCell = cells[0].children[0].value;
+					var dbCell = cells[2].children[0].value;
+					var crCell = cells[3].children[0].value;
+					glaccnoArr.push(glCell);
+					dramtArr.push(dbCell);
+					cramtArr.push(crCell);
+				}
+				console.log(glaccnoArr);
+				console.log(dramtArr);
+				console.log(cramtArr);
 				var request_method = $("#journalVoucher").attr("method"); //get form GET/POST method
 				// Get form
 				var form = $('#journalVoucher')[0];
@@ -413,7 +433,7 @@
 				$
 						.ajax({
 							url : "saveJournalVoucher",
-							type : request_method,
+							type : 'POST',
 							enctype : 'multipart/form-data',
 							data : data,
 							processData : false,
@@ -435,8 +455,8 @@
 									window.location.href = "redirect:/journalVoucher.do";
 								} else {
 									swal(
-											"Good job!",
-											"You clicked the button!",
+											"Error 1",
+											"You clicked the button! err",
 											{
 												icon : "error",
 												buttons : {
@@ -449,7 +469,7 @@
 							},
 							error : function(e) {
 								swal(
-										"Good job!",
+										"Error 2",
 										"You clicked the button! err",
 										{
 											icon : "error",
