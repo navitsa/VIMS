@@ -233,23 +233,29 @@ public class FinanceAccountingController {
 			  return "reprintOutgoingPayments";
 		  }	
 		  
-		  @RequestMapping(value="/PrivewOutgoingPayments" ,method=RequestMethod.POST) 
+		  @RequestMapping(value="/previewOutgoingPayments" ,method=RequestMethod.POST) 
 		  public ModelAndView printReprintIncomingReceipt(@RequestParam String voucherNo,@RequestParam String inrecDate,HttpServletResponse response) {
 			  	ModelAndView mav = new ModelAndView("reprintOutgoingPayments");
-	  	
 			  	OutgoingPaymentHead outgoingPaymentHead=financeAccountingService.getOutgoingPaymentHeadbyVoucherNo(voucherNo);	  	
 			  	List<OutgoingPaymentDetails> outgoingPaymentDetailsList=financeAccountingService.getOutgoingPaymentDetailsByVoucherNo(voucherNo);
-			  	
-			  	
-				 //String reptValue=outgoingPaymentReceiptGenerate(outgoingPaymentHead,outgoingPaymentDetailsList,response);
-				 //mav.addObject("pdfViewEq", reptValue);
+			  	String pdf_result = null;
+				 
+			  	ReportViewe view =new ReportViewe();
+				try {
+					pdf_result = view.pdfReportViewInlineSystemOpen("outgoingPayment.jasper", "outgoingPayment",outgoingPaymentDetailsList, null, response);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// String reptValue=outgoingPaymentReceiptGenerate(outgoingPaymentHead,outgoingPaymentDetailsList,response);
+				 mav.addObject("pdfViewEq", pdf_result);
 
 	         return mav;
 		  }
 	  
 		  @RequestMapping(value = "/getOutgoingPaymentsVoucherNoByDate", method=RequestMethod.GET) 
 		  public @ResponseBody List<OutgoingPaymentHead> getOutgoingPaymentsVoucherNoByDate(@RequestParam String oRdate) {
-			  System.out.println("OR Date : " + oRdate);
+			  
 			  List<OutgoingPaymentHead> outgoingPaymentHead = financeAccountingService.getOutgoingPaymentsVoucherNoByDate(oRdate);
 			  return outgoingPaymentHead;
 		  }
@@ -262,9 +268,8 @@ public class FinanceAccountingController {
 		  
 		  @RequestMapping(value = "/previewIOutgoingPaymentsDetailsReport",method=RequestMethod.POST)
 		  public ModelAndView previewIOutgoingPaymentsDetailsReport(String fromdate,String todate,HttpServletResponse response,HttpSession session) {
-			 // System.out.println("repStatu="+repStatu);
+			
 			  ModelAndView mav = new ModelAndView("comPdfReportView");
-			  //ModelAndView mav = new ModelAndView("OutgoingPaymentsDetailsReport");
 			  
 			  String centerid=session.getAttribute("centerid")+"";
 			  CenterMaster centerMaster=centerService.getcenterById(centerid);
@@ -380,7 +385,7 @@ public class FinanceAccountingController {
   
 			@RequestMapping(value = ("/saveGlaccount"), method = RequestMethod.POST)
 			public String saveEquipmentMake(@Valid @ModelAttribute("glaccount")Glaccount glaccount, BindingResult br,RedirectAttributes redirectAttributes) {
-				//System.out.println("ccc="+glaccount.getParentsAccount());
+				
 				if(br.hasErrors()) {
 					
 					return "chartOfAccounts";
@@ -613,7 +618,7 @@ public class FinanceAccountingController {
 					
 				  @RequestMapping(value = "/glTranctionReportPreview",method=RequestMethod.POST)
 				  public ModelAndView trialBalancePreview(String fromdate,String todate,String glaccno,HttpServletResponse response,HttpSession session) {
-					 // System.out.println("repStatu="+repStatu);
+		// System.out.println("repStatu="+repStatu);
 					  ModelAndView mav = new ModelAndView("glTranctionReport");
 					  
 					  String centerid=session.getAttribute("centerid")+"";

@@ -119,7 +119,7 @@
 							<div class="col-xl-4 col-lg-5">
 								<!-- Card -->
 
-								<form:form action="previewReprintIncomingReceipt" method="POST">
+								<form:form action="previewOutgoingPayments" method="POST">
 
 									<div class="card shadow mb-4" style="height: 640px;">
 										<div class="card border-left-primary shadow h-100 py-2">
@@ -137,7 +137,7 @@
 													<div class="col-sm-8">
 														<label class="l-fontst">Outgoing Receipt No</label> <select
 															class="form-control form-control-user fontst"
-															id="inreccno" name="inreccno" required
+															id="voucherNo" name="voucherNo" required
 															onchange="getIncReceiptDetail(this.value);">
 															<option value="">--SELECT--</option>
 
@@ -209,7 +209,7 @@
 							},
 							success : function(data) {
 								if (data != "") {
-									var slctSubcat = $('#inreccno'), option = "";
+									var slctSubcat = $('#voucherNo'), option = "";
 									slctSubcat.empty();
 									selected_option = "<option value='' selected>--SELECT--</option>"
 									slctSubcat.append(selected_option);
