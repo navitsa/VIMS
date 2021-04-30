@@ -1,0 +1,94 @@
+package com.navitsa.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ap_invoice_tax")
+public class APInvoiceTax {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ap_invoice_tax_id")
+	private int apInvoiceTaxId;
+
+	@Column(name = "description")
+	String description;
+
+	@Column(name = "amount")
+	String amount;
+
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "ap_invoice_head_id", referencedColumnName = "ap_invoice_head_id")
+	private APInvoiceHead apInvoiceHeadId;
+
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "gl_code", referencedColumnName = "GlAccNo")
+	private Glaccount glAccNo;
+
+	public APInvoiceTax() {
+
+	}
+
+	public APInvoiceTax(int apInvoiceTaxId, String description, String amount, APInvoiceHead apInvoiceHeadId,
+			Glaccount glAccNo) {
+		this.apInvoiceTaxId = apInvoiceTaxId;
+		this.description = description;
+		this.amount = amount;
+		this.apInvoiceHeadId = apInvoiceHeadId;
+		this.glAccNo = glAccNo;
+	}
+
+	public int getApInvoiceTaxId() {
+		return apInvoiceTaxId;
+	}
+
+	public void setApInvoiceTaxId(int apInvoiceTaxId) {
+		this.apInvoiceTaxId = apInvoiceTaxId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getAmount() {
+		return amount;
+	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+
+	public APInvoiceHead getApInvoiceHeadId() {
+		return apInvoiceHeadId;
+	}
+
+	public void setApInvoiceHeadId(APInvoiceHead apInvoiceHeadId) {
+		this.apInvoiceHeadId = apInvoiceHeadId;
+	}
+
+	public Glaccount getGlAccNo() {
+		return glAccNo;
+	}
+
+	public void setGlAccNo(Glaccount glAccNo) {
+		this.glAccNo = glAccNo;
+	}
+
+	@Override
+	public String toString() {
+		return "APInvoiceTax [apInvoiceTaxId=" + apInvoiceTaxId + ", description=" + description + ", amount=" + amount
+				+ ", apInvoiceHeadId=" + apInvoiceHeadId + ", glAccNo=" + glAccNo + "]";
+	}
+}

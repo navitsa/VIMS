@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
+import com.navitsa.repository.APInvoiceDetailsRepository;
+import com.navitsa.repository.APInvoiceHeadRepository;
+import com.navitsa.repository.APInvoiceTaxRepository;
 import com.navitsa.repository.GlaccountRepository;
 import com.navitsa.repository.IncomingReceiptHeadRepository;
 import com.navitsa.repository.OutgoingPaymentDetailsRepository;
@@ -26,101 +29,127 @@ import com.prime.hrm.repository.PartnerBankAccountRepository;
 public class FinanceAccountingService {
 	@Autowired
 	OutgoingPaymentHeadRepository outgoingPaymentHeadRepo;
-	
+
 	@Autowired
 	OutgoingPaymentDetailsRepository outgoingPaymentDetailsRepo;
-	
+
 	@Autowired
 	IncomingReceiptHeadRepository incomingReceiptHeadRepository;
-	
+
 	@Autowired
-	ReceiptHeadRepository  receiptHeadRepository;
-	
+	ReceiptHeadRepository receiptHeadRepository;
+
 	@Autowired
-	GlaccountRepository  glaccountRepository;
-	
+	GlaccountRepository glaccountRepository;
+
 	@Autowired
-	BankMasterRepository  bankMasterRepository;
-		
+	BankMasterRepository bankMasterRepository;
+
 	@Autowired
-	BankRepository  bankRepository;
-	
+	BankRepository bankRepository;
+
 	@Autowired
-	PartnerBankAccountRepository  partnerBankAccountRepository;
-	
+	PartnerBankAccountRepository partnerBankAccountRepository;
+
+	@Autowired
+	APInvoiceHeadRepository apInvoiceHeadRepository;
+
+	@Autowired
+	APInvoiceDetailsRepository apInvoiceDetailsRepository;
+
+	@Autowired
+	APInvoiceTaxRepository apInvoiceTaxRepository;
+
 	public void saveOutgoingPaymentHead(OutgoingPaymentHead outgoingPaymentHead) {
 		outgoingPaymentHeadRepo.save(outgoingPaymentHead);
-		
-	}
-	public void saveAllOutgoingPaymentDetails(List<OutgoingPaymentDetails> outgoingPaymentDetails) {
-		outgoingPaymentDetailsRepo.saveAll(outgoingPaymentDetails);
-		
-	}
-	public OutgoingPaymentHead getOutgoingPaymentHeadbyVoucherNo(String VoucherNo) {
-		return outgoingPaymentHeadRepo.findById(VoucherNo).get();			
-	}
-	
-	public List<OutgoingPaymentDetails> getOutgoingPaymentDetailsByVoucherNo(String incRecId) {
-		return outgoingPaymentDetailsRepo.getOutgoingPaymentDetailsByVoucherNo(incRecId);			
+
 	}
 
-	public List<OutgoingPaymentHead> getOutgoingPaymentsVoucherNoByDate(String vRdate){
+	public void saveAllOutgoingPaymentDetails(List<OutgoingPaymentDetails> outgoingPaymentDetails) {
+		outgoingPaymentDetailsRepo.saveAll(outgoingPaymentDetails);
+
+	}
+
+	public OutgoingPaymentHead getOutgoingPaymentHeadbyVoucherNo(String VoucherNo) {
+		return outgoingPaymentHeadRepo.findById(VoucherNo).get();
+	}
+
+	public List<OutgoingPaymentDetails> getOutgoingPaymentDetailsByVoucherNo(String incRecId) {
+		return outgoingPaymentDetailsRepo.getOutgoingPaymentDetailsByVoucherNo(incRecId);
+	}
+
+	public List<OutgoingPaymentHead> getOutgoingPaymentsVoucherNoByDate(String vRdate) {
 		return outgoingPaymentHeadRepo.getOutgoingPaymentsVoucherNoByDate(vRdate);
 	}
-	public List<OutgoingPaymentDetails> getOutgoingPaymentHeadDetailsBetweenTwoDays(String fromdate,String todate){
-		return outgoingPaymentHeadRepo.getOutgoingPaymentHeadDetailsBetweenTwoDays(fromdate,todate);
+
+	public List<OutgoingPaymentDetails> getOutgoingPaymentHeadDetailsBetweenTwoDays(String fromdate, String todate) {
+		return outgoingPaymentHeadRepo.getOutgoingPaymentHeadDetailsBetweenTwoDays(fromdate, todate);
 	}
-	
-	public String[][] getIncomingReceiptSumPayAmt(String fromdate){
+
+	public String[][] getIncomingReceiptSumPayAmt(String fromdate) {
 		return incomingReceiptHeadRepository.getIncomingReceiptSumPayAmt(fromdate);
 	}
-	
-	public String[][] getReceiptHeadNetAndTestFeeTotal(String recDate){
+
+	public String[][] getReceiptHeadNetAndTestFeeTotal(String recDate) {
 		return receiptHeadRepository.getReceiptHeadNetAndTestFeeTotal(recDate);
 	}
-	
-	public List<Glaccount> getAllGlaccounts(){
+
+	public List<Glaccount> getAllGlaccounts() {
 		return (List<Glaccount>) glaccountRepository.findAll();
 	}
+
 	public Glaccount saveGlaccount(Glaccount glaccount) {
-		return  glaccountRepository.save(glaccount);
-		
+		return glaccountRepository.save(glaccount);
+
 	}
-	
+
 	public List<Glaccount> getglaccountByPrimary(String priAccount) {
-		return  glaccountRepository.getglaccountByPrimary(priAccount);
-		
+		return glaccountRepository.getglaccountByPrimary(priAccount);
+
 	}
+
 	public Glaccount getGlaccountbyId(String glaccno) {
-		return  glaccountRepository.getById(glaccno);
+		return glaccountRepository.getById(glaccno);
 	}
+
 	public List<OutgoingPaymentHead> getPendingChequePayments() {
 		return outgoingPaymentHeadRepo.getPendingChequePayments();
 	}
+
 	public void saveBankMaster(BankMaster bankMaster) {
-		  bankMasterRepository.save(bankMaster);
+		bankMasterRepository.save(bankMaster);
 	}
-	
-	
+
 	public void saveBankBranch(Bank bank) {
-		  bankRepository.save(bank);
+		bankRepository.save(bank);
 	}
-	
+
 	public void savePartnerBankAccount(PartnerBankAccount partnerBankAccount) {
 		partnerBankAccountRepository.save(partnerBankAccount);
 	}
-	
+
 	public List<BankMaster> getBankMasterAll() {
 		return (List<BankMaster>) bankMasterRepository.findAll();
 	}
+
 	public List<Bank> getBankBranchAll() {
 		return (List<Bank>) bankRepository.findAll();
 	}
+
 	public List<PartnerBankAccount> getPartnerBankAccountAll() {
 		return (List<PartnerBankAccount>) partnerBankAccountRepository.findAll();
 	}
-	
-	public List<PartnerBankAccount> getBankAccountByBank( String bankid){
+
+	public List<PartnerBankAccount> getBankAccountByBank(String bankid) {
 		return (List<PartnerBankAccount>) partnerBankAccountRepository.getBankAccountByBank(bankid);
+	}
+
+	public String maxAPInvoiceHeadId() {
+		if (apInvoiceHeadRepository.maxAPInvoiceHeadId() == null) {
+			return "1";
+		} else {
+			return apInvoiceHeadRepository.maxAPInvoiceHeadId();
+
+		}
 	}
 }
