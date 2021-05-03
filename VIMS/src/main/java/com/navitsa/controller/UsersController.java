@@ -115,13 +115,13 @@ public class UsersController {
 			@RequestParam("password") String password, @RequestParam("userName") String userName,RedirectAttributes redirectAttributes,
 			 				@RequestParam("center_ID.center_ID")String centerid,
 //			 				@RequestParam("expireDate")String expireDate,
-			@RequestParam("ulid.ulid") String ulid, @RequestParam("user_Img") MultipartFile user_Img, @RequestParam("newpassword")String newpassword,@RequestParam("status")String status,HttpServletResponse response )
+			@RequestParam("ulid.ulid") String ulid, @RequestParam("user_Img") MultipartFile user_Img, @RequestParam("newpassword")String newpassword,HttpServletResponse response )
 			throws IOException {
 		 	
 			UserLevel level = new UserLevel(ulid);
 			CenterMaster cm=new CenterMaster(centerid);
 			
-			Users newUser = new Users(userId, empId, password, userName,level,status, user_Img);
+			Users newUser = new Users(userId, empId, password, userName,level,"ACTIVE", user_Img);
 			newUser.setCenter_ID(cm);
 			
 			newUser.setLogin(newUser.hashCode()+"");
@@ -559,14 +559,16 @@ public class UsersController {
 	@RequestMapping(value = "/saveuserEdit", method = RequestMethod.POST)
 	public String saveUserEdit(@RequestParam("userId") String userId, @RequestParam("empId") String empId,
 		@RequestParam("password") String password, @RequestParam("userName") String userName,
-		@RequestParam("ulid.ulid") String ulid, @RequestParam("user_Img") MultipartFile user_Img,@RequestParam("status")String status,@RequestParam("cpassword") String cpassword,RedirectAttributes redirectAttributes)
+		@RequestParam("ulid.ulid") String ulid, @RequestParam("user_Img") MultipartFile user_Img,@RequestParam("cpassword") String cpassword,RedirectAttributes redirectAttributes)
 		throws IOException {
 			Users us = usservice.profileItemByID(userId);
 			String pswd = us.getPassword();
 			if(cpassword.equals(pswd)) {
 				UserLevel level = new UserLevel(ulid);
-				Users newUser = new Users(userId, empId, password, userName, level,status,user_Img);
+				Users newUser = new Users(userId, empId, password, userName, level,us.getStatus(),user_Img);
 				newUser.setCenter_ID(us.getCenter_ID());
+				
+				
 				redirectAttributes.addAttribute("userId", userId);
 				usservice.save(newUser);
 				
