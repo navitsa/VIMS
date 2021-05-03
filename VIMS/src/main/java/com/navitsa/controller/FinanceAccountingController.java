@@ -39,6 +39,7 @@ import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.GlaccountMapping;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
+import com.navitsa.entity.VehicleModel;
 import com.navitsa.services.BusinessPartnerService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.FinanceAccountingService;
@@ -729,9 +730,15 @@ public class FinanceAccountingController {
 	public String apInvoicePage(Model model) {
 		APInvoiceHead apInvoiceHead = new APInvoiceHead();
 		model.addAttribute("apInvoiceForm", apInvoiceHead);
-		System.out.println(
+		/*System.out.println(
 				"AP Invoice Head ID : " + "00000".substring(financeAccountingService.maxAPInvoiceHeadId().length())
-						+ financeAccountingService.maxAPInvoiceHeadId());
+						+ financeAccountingService.maxAPInvoiceHeadId());*/
 		return "apInvoice";
+	}
+	
+	@RequestMapping(value = "/getGLAccounts", method = RequestMethod.GET)
+	public @ResponseBody List<Glaccount> getGLAccounts() {
+		List<Glaccount> glAccounts = glAccountService.findAll();
+		return glAccounts;
 	}
 }
