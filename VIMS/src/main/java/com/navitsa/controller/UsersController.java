@@ -36,6 +36,7 @@ import com.navitsa.entity.BusinessPartner;
 import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.CountryMaster;
 import com.navitsa.entity.Customer;
+import com.navitsa.entity.Gate;
 import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.Levelmanage;
 import com.navitsa.entity.LevelmanagePK;
@@ -218,7 +219,7 @@ public class UsersController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String validateUsr(@RequestParam("username") String username,
-			@RequestParam("password") String password, HttpSession session, HttpServletRequest request,Model m ) throws Exception {
+			@RequestParam("password") String password,HttpSession session, HttpServletRequest request,Model m ) throws Exception {
 		//@ModelAttribute("login") String login,
 	//	ModelAndView mav =new ModelAndView("login");
 	//	if(StringFormaterWeb.getAddressComputer("20-20-03-18",String code)==true) {
@@ -301,7 +302,7 @@ public class UsersController {
 	
 		if (userObj != null && userObj.size() > 0) {
 			
-		
+		if(userObj.get(0).getStatus() != null && userObj.get(0).getStatus().equals("ACTIVE")) {
 
 			String outputpath=pathArr[0]+"/WEB-INF/classes/countries.txt";		
 
@@ -353,6 +354,7 @@ public class UsersController {
 				session.setAttribute("user", userObj.get(0).getuser_ImgView());
 				session.setAttribute("userLevel", userObj.get(0).getUlid().getDsc());
 				session.setAttribute("userId", userObj.get(0).getUserId());
+				session.setAttribute("status", userObj.get(0).getStatus());
 				
 
 				//if(userObj.get(0).getUlid().getRoleID().getDesc().toString().split("-", 1))
@@ -396,6 +398,12 @@ public class UsersController {
 			
 			
 			
+		}else{
+			
+			m.addAttribute("msg", "User is Inactive");			
+			return "login";
+			
+		}
 			
 		} else {
 
@@ -403,7 +411,7 @@ public class UsersController {
 			m.addAttribute("msg", "Invalid UserName Or Password");			
 			return "login";
 		}
-	
+		
 		
 	}
 
@@ -744,7 +752,13 @@ public class UsersController {
 				public List<CenterMaster> getCenterList(){
 					List <CenterMaster> clist= centerService.listAll();
 					return clist;
-				}	
+				}
+				
+				@ModelAttribute("getUser")
+				public List<Users> getUserList(){
+					List <Users> ulist= usservice.listAll();
+					return ulist;
+				}
 				
 				@RequestMapping(value = "/QRLogin", method = RequestMethod.POST)
 				public  @ResponseBody  String search(@RequestParam ("qrdata") String qrdata , HttpSession session, HttpServletRequest request,Model m) {
@@ -817,5 +831,32 @@ public class UsersController {
 		        	
 					return DBBackup.startDBBackup(centerMaster.getPartner_ID().getDbBackupPath());
 				}
+				
+				 @RequestMapping(value="/userActiveInactive")
+					public String userActiveInactive(Map<String, Object> model)
+					{
+					 Users users = new Users();
+					 List<Users> userAll=usservice.listAll( );
+					 model.put("newuser" ,users);
+					 model.put("alluser" ,userAll);
+						return "userActiveInactive";
+					}
+				 
+
+				 @RequestMapping(value = "/saveuserActive", method = RequestMethod.POST)
+					public String saveUser(@RequestParam("userId") String userId, @RequestParam("status") String status,RedirectAttributes redirectAttributes,HttpServletResponse response ) {
+							{
+ 
+								Users user = usservice.profileItemByID(userId) ;
+								user.setStatus(status);
+								usservice.save(user);
+								
+								
+							return "redirect:/userActiveInactive";
+							}
+					}
+
+				 
+				 
 }
 
