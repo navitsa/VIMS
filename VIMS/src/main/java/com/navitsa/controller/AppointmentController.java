@@ -482,5 +482,4 @@ public class AppointmentController {
 		List<TestLimitRule> ls = vehicleService.getruleName();
 		return ls;
 	}
-	
 }
