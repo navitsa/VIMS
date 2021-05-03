@@ -295,6 +295,7 @@
 				<a class="collapse-item fontst-sb-it" href="reprintOutgoingPayments" hidden="true"  id="reprintOutgoingPayments">Reprint Outgoing Payments</a>
 				<a class="collapse-item fontst-sb-it" href="OutgoingPaymentsDetailsReport"  hidden="true" id="OutgoingPaymentsDetailsReport">Outgoing Payments Report</a>
 				<a class="collapse-item fontst-sb-it" href="chequePrint"  hidden="true" id="chequePrint">Cheque Print</a>
+				<a class="collapse-item fontst-sb-it" href="APInvoice" id="apInvoice">AP Invoice</a>
 		<h6 class="text-section">Financials:</h6>	
 				<a class="collapse-item fontst-sb-it" href="revenueStatementPrivew" hidden="true" id="revenueStatementRpt">Revenue Statement</a>
 				<a class="collapse-item fontst-sb-it" href="ageAnalysisReport" hidden="true"  id="ageAnalysisReport">Age Analysis Report</a>
