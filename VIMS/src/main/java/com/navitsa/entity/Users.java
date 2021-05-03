@@ -146,13 +146,14 @@ public class Users {
 	
 
 	public Users(String userId, String empId, String password, String userName,
-			 UserLevel ulid, MultipartFile user_Img) throws IOException {
+			 UserLevel ulid,String status, MultipartFile user_Img) throws IOException {
 		super();
 		this.userId = userId;
 		this.empId = empId;
 		this.password = password;
 		this.userName = userName;
 		this.ulid = ulid;
+		this.status = status;
 		this.user_Img = user_Img.getBytes();
 	}
 
