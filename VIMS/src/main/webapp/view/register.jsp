@@ -203,7 +203,15 @@
 								</div>
 							</div>
 
-							
+								<div class="form-group">
+								<div class="row">
+									<div class="col-12">
+										
+										<form:input path="status" class="form-control form-control-sm" id="status" value="ACTIVE" hidden="true" />
+
+									</div>
+								</div>
+							</div>
 							
 							
 							
