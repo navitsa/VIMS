@@ -50,7 +50,19 @@ public class Users {
 	@Column(name ="login")
 	private String login;
 	
+	@Column(name = "Status")
+	private String status;
 	
+	
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Users() {}
 
 	public Users(String userId) {
