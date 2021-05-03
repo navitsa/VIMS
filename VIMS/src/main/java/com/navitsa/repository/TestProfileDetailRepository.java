@@ -1,5 +1,7 @@
 package com.navitsa.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -134,5 +136,8 @@ public interface TestProfileDetailRepository extends CrudRepository<TestProfileD
 			"        AND test_profile_detail.`vehicle_cat_id` =:vehicle_cat_id\r\n" + 
 			"        AND test_profile_detail.`vehicle_sub_cat_id` =:vehicle_sub_cat_id",nativeQuery = true)
 	public String[][] getMaxSpeedResult(@Param("test_pro_id") int test_pro_id,@Param("test_value_file_id") String test_value_file_id,@Param("vehicle_cat_id") String vehicle_cat_id,@Param("vehicle_sub_cat_id") String vehicle_sub_cat_id);
+
+	@Query(value="SELECT * FROM test_profile_detail WHERE profile_id=:profile_id",nativeQuery = true)
+	public List<TestProfileDetail> findByProfileId(@Param("profile_id") int profile_id);
 	
 }

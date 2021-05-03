@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_certificate" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="69fc384c-322a-4ee2-8c41-cd013427e9ae">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="centerName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="VehicleNo" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="RegNo" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="receiptNo" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="receiptDate" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="chessisNo" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="engineNo" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="manufactureYear" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="category" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="testDate" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="Inspector" class="java.lang.String" isForPrompting="false"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="89" splitType="Stretch">
+			<staticText>
+				<reportElement x="156" y="34" width="261" height="55" uuid="493a88e5-2c27-4511-8aa9-bb6746371519"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORM 38
+[See Rule 62(1)]
+CERTIFICATE OF FITNESS
+(Applicable in the case of transport vehicles only)
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="156" y="0" width="261" height="14" uuid="bf85d61a-7c1f-420a-b997-bedf2e6e1b40"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[STATE TRANSPORT DEPARTMENT]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="156" y="14" width="261" height="20" uuid="d38c826c-eea9-4eff-a27e-89fe4b199942"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{centerName}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="196" y="14" width="182" height="1" uuid="a7ea97b5-9c22-42f8-83b5-b7800ccba5a7"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="304" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="12" width="58" height="20" uuid="33091e6f-e362-4455-8133-5eb253094cea"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vehicle No :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="53" width="129" height="20" uuid="f12e6e6a-07b3-4733-9ab9-e545865f95d8"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Registration No		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="73" width="129" height="20" uuid="2230dfa8-d468-4ed5-a6df-a003f5990a83"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Application No		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="93" width="129" height="20" uuid="1bfbc5f4-07f9-4b34-99c4-417d83813e30"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Inspection Fee Receipt No	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="113" width="129" height="20" uuid="aa89dded-92f9-486a-a2f1-2944fe8c94e0"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Receipt Date		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="133" width="129" height="20" uuid="e3f28f66-0d09-4b5a-b833-a7f99ca2dccb"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Chassis No		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="153" width="129" height="20" uuid="357cf38e-0b57-460c-8279-07b8d4e3ed9c"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Engine No		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="173" width="129" height="20" uuid="118969f8-3268-47be-b80e-7db918155cb0"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Seating Capacity		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="193" width="129" height="20" uuid="42a61603-73ec-4ed0-b0e9-e937c0bc7ce9"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Type of Body		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="213" width="129" height="20" uuid="b80f8713-c3f5-44f0-89b3-6498817a8828"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Manufacturing Year	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="233" width="129" height="20" uuid="c850ef19-e318-402d-821b-f585e84b36df"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Category of Vehicle	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="253" width="129" height="20" uuid="6d4cf47d-4d85-4949-92f4-f5634dac7d01"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Inspected on		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="273" width="129" height="20" uuid="ead8eb53-7e95-4a20-afe5-b17a22b8f11e"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Printed on		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="232" width="131" height="20" uuid="81e0d2e3-8680-4420-993e-7169822a28ed"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Certificate will expire on]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="252" width="131" height="20" uuid="b6c4ee72-6052-4e38-b43a-b8e0a0b60efd"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Next Inspection Due Date]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="58" y="12" width="108" height="20" uuid="e141819b-69a7-4560-b5da-cc4efad0d32b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{VehicleNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="129" y="53" width="120" height="20" uuid="78b29d47-dc95-43b1-ac3d-ce2278bc8cc2"/>
+				<textFieldExpression><![CDATA[$P{RegNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="129" y="93" width="120" height="20" uuid="98ab6eaf-508d-4c92-b384-2ea2f4b0eaa1"/>
+				<textFieldExpression><![CDATA[$P{receiptNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="129" y="113" width="120" height="20" uuid="c4855641-6655-48cf-8978-cac20e6a4286"/>
+				<textFieldExpression><![CDATA[$P{receiptDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="129" y="133" width="120" height="20" uuid="82e4b8b5-4650-43af-987e-5ce1442e5c5b"/>
+				<textFieldExpression><![CDATA[$P{chessisNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="129" y="153" width="120" height="20" uuid="d683e5dd-4780-474c-a94c-c4df15768313"/>
+				<textFieldExpression><![CDATA[$P{engineNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="129" y="213" width="120" height="20" uuid="55f21817-0846-44ad-8aca-888ab94d3fd6"/>
+				<textFieldExpression><![CDATA[$P{manufactureYear}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="129" y="233" width="120" height="20" uuid="2e8fb97a-bca4-4d98-ba95-f360b4052cee"/>
+				<textFieldExpression><![CDATA[$P{category}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="129" y="253" width="120" height="20" uuid="8ed61bc3-14ad-49d3-8272-f571c4721531"/>
+				<textFieldExpression><![CDATA[$P{testDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="166" y="12" width="389" height="20" uuid="cfcc2b20-4b0b-4313-aaa7-a6b368e0c9df"/>
+				<text><![CDATA[(Goods Carrier) is certified as complying with the provisions of the Motor vehicles Act,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="32" width="166" height="21" uuid="02a0d93f-9708-4adc-b828-6ce61a605096"/>
+				<text><![CDATA[1988 and the rules made there under]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="28">
+			<staticText>
+				<reportElement x="0" y="0" width="58" height="14" uuid="982a7916-94ea-43bd-b066-69c624890d76"/>
+				<text><![CDATA[Inspected by]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="58" y="0" width="191" height="14" uuid="76d2ba02-788b-410e-86b8-5241b323388f"/>
+				<textFieldExpression><![CDATA[$P{Inspector}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="355" y="0" width="200" height="14" uuid="b5fb0b41-cc74-436d-ab4d-4efbd66747a1"/>
+				<text><![CDATA[Signature of Inspecting Authority]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="355" y="14" width="200" height="14" uuid="ecb49838-b66a-4d76-bcbc-7547403d7d41"/>
+				<textFieldExpression><![CDATA[$P{centerName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

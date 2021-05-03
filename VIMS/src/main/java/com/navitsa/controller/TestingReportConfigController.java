@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.navitsa.Reports.TestResultBean;
 import com.navitsa.Reports.TestResultSpeedoBean;
 import com.navitsa.entity.ParameterCodes;
+import com.navitsa.entity.ReceiptHead;
 import com.navitsa.entity.TestParameter;
 import com.navitsa.entity.TestParameterAngle;
 import com.navitsa.entity.TestParameterCategory;
@@ -149,6 +150,45 @@ public class TestingReportConfigController {
 		return "testCertificate";
 	}
 	
+	@GetMapping("/getTestCertificate")
+	 public ModelAndView getTestCertificate(@RequestParam String register_id,
+			 HttpSession session,HttpServletResponse response)
+	 {
+		ModelAndView mav = new ModelAndView("comPdfReportView");
+		
+		VehicleRegistration vr = vehicleService.getRegistraionInfo(register_id);
+		ReceiptHead rh = vehicleService.getReceiptHeadDetailsByVRid(register_id);
+		SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
+		
+		 //set parameters to report
+		 Map<String,Object> params = new HashMap<>();
+		 params.put("centerName", vr.getCentermaster().getCenter());
+		 params.put("VehicleNo",vr.getVid().getVehicleID());
+		 params.put("RegNo",register_id);
+		 params.put("receiptNo",rh.getRecNo());
+		 params.put("receiptDate",sdf.format(DateHelperWeb.getDate(rh.getRecDate())));
+		 params.put("chessisNo",vr.getVid().getChassisNo());
+		 params.put("engineNo",vr.getVid().getEngineNo());
+		 params.put("manufactureYear",sdf.format(DateHelperWeb.getDate(vr.getVid().getManufactureYear())));
+		 params.put("category",vr.getTestCategory().getCategoryType());
+		 params.put("testDate",sdf.format(DateHelperWeb.getDate(vr.getDate())) );
+		 params.put("Inspector",vr.getUser().getUserName());
+		 
+		 ReportViewe view =new ReportViewe();
+		 String pdf_result = null;
+		 
+		try {
+			pdf_result = view.pdfReportViewInlineSystemOpen("test_certificate.jasper","test_certificate",null,params,response);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("pdfViewEq", pdf_result);
+		return mav;
+		
+	 }
+	
 	
 	@GetMapping("/getTestReport")
 	 public ModelAndView getTestReport(@RequestParam String register_id,@RequestParam String test_value_file_id,
@@ -184,11 +224,9 @@ public class TestingReportConfigController {
 		 Map<String,Object> params = new HashMap<>();
 		 params.put("cusName", name);
 		 params.put("cusAddress",address);
-		 params.put("cusTP",mobileNo);
-		 
+		 params.put("cusTP",mobileNo);		 
 		 SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
-		 params.put("testDate",sdf.format(DateHelperWeb.getDate(vr.getDate())) );
-		 
+		 params.put("testDate",sdf.format(DateHelperWeb.getDate(vr.getDate())) );	 
 		 //params.put("testDate",vr.getDate());
 		 params.put("testTime",vr.getTime());
 		 params.put("mileage",vr.getCurrentMilage());
@@ -226,7 +264,9 @@ public class TestingReportConfigController {
 		 
 		 //getting test results from the query
 		 int rule = 0;
-		 rule = service.findRuleByYear(vr.getVid().getManufactureYear()).getRuleCode();
+		 if(service.findRuleByYear(vr.getVid().getManufactureYear()) !=null)
+			 rule = service.findRuleByYear(vr.getVid().getManufactureYear()).getRuleCode();
+		 
 		 System.out.println("Rule is "+rule);
 		 
 		 String[][] result = service.getTestResult(test_pro_id,test_value_file_id,vehicle_cat_id,rule);

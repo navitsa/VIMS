@@ -294,7 +294,11 @@ public class TestProfileController {
 		TestProfileDetail tpd = new TestProfileDetail();
 		tpd.setCk_testProfileDetailId(new Ck_testProfileDetailId(tp, null,null,null,null));
 		
+		List<TestProfileDetail> ls = testProfileService.listAllProfileDetailsByProfileId(proId);
+		
 		m.addAttribute("limitValues", tpd);
+		m.addAttribute("testProfileDetails", ls);
+		
 		return "testLimitValues";
 	}
 
@@ -358,12 +362,12 @@ public class TestProfileController {
 
 	 }
 	 
-	 @ModelAttribute("testProfileDetails")
-	 public List<TestProfileDetail> getAlltestProfilesDetails(){
-		 
-		 List<TestProfileDetail> ls = testProfileService.listAllProfileDetails();
-		 return ls;
-	 }
+//	 @ModelAttribute("testProfileDetails")
+//	 public List<TestProfileDetail> getAlltestProfilesDetails(){
+//		 
+//		 List<TestProfileDetail> ls = testProfileService.listAllProfileDetails();
+//		 return ls;
+//	 }
 	 
  	@RequestMapping("/testCodes")
 	public String loadTestCodesForm(Model m) {

@@ -111,6 +111,9 @@ public class TestProfileService {
 		// TODO Auto-generated method stub
 		return (List<TestProfileDetail>) tproDetailRepo.findAll();
 	}
+	public List<TestProfileDetail> listAllProfileDetailsByProfileId(int profile_id) {
+		return (List<TestProfileDetail>) tproDetailRepo.findByProfileId(profile_id);
+	}
 
 	public List<TestProfileStatus> getAllTestProfileStatus() {
 		// TODO Auto-generated method stub
