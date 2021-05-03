@@ -68,27 +68,7 @@
 						</div>
 					</div></li>
 
-				<!-- Testing Equipment Management -->
-				<li class="nav-item" hidden="true" id="TestEqum"><a
-					data-toggle="collapse" href="#eqmana"> <i
-						class="fas fa-pen-square"></i>
-						<p>Testing Equipments</p> <span class="caret"></span>
-				</a>
-					<div class="collapse" id="eqmana">
-						<div class="bg-white py-2 collapse-inner rounded">
-							<!-- 				<h6 class="collapse-header">Main Components:</h6> -->
-							<a class="collapse-item fontst-sb-it" href="equipmenttype"
-								hidden="true" id="equipmenttype">Equipment Types</a> <a
-								class="collapse-item fontst-sb-it" href="equipmentmake"
-								hidden="true" id="equipmentmake">Equipment Makes</a> <a
-								class="collapse-item fontst-sb-it" href="equipmentmodel"
-								hidden="true" id="equipmentmodel">Equipment Models</a>
-
-						</div>
-					</div></li>
-
-
-
+	
 
 				<!-- Test Configurations -->
 				<li class="nav-item" hidden="true" id="TestConfig"><a
@@ -204,9 +184,7 @@
 							<a class="collapse-item fontst-sb-it" href="centerType"
 								hidden="true" id="centerType">Centers Organization</a> <a
 								class="collapse-item fontst-sb-it" href="CMaster" hidden="true"
-								id="CMaster">Inspection Centers</a> <a
-								class="collapse-item fontst-sb-it" href="equipmentmaster"
-								hidden="true" id="equipmentmaster">Equipment Allocation</a> <a
+								id="CMaster">Inspection Centers</a>  <a
 								class="collapse-item fontst-sb-it" href="equipmentreport"
 								hidden="true" id="equipmentreport">Equipments List</a>
 
@@ -398,6 +376,17 @@
 						<a class="collapse-item fontst-sb-it" href="maintenanceDashboard"
 							id="maintenanceDashboard" hidden="true">Maintenance
 							Dashboard</a>
+						<h6 class="text-section">Equipments :</h6>	
+						<a class="collapse-item fontst-sb-it" href="equipmenttype"
+								hidden="true" id="equipmenttype">Equipment Types</a>	
+							<a class="collapse-item fontst-sb-it" href="equipmentmake"
+								hidden="true" id="equipmentmake">Equipment Makes</a>
+							<a class="collapse-item fontst-sb-it" href="equipmentmodel"
+								hidden="true" id="equipmentmodel">Equipment Models</a>
+							<a class="collapse-item fontst-sb-it" href="equipmentmaster"
+								hidden="true" id="equipmentmaster">Equipment Allocation</a>
+							
+							
 						<h6 class="text-section">Calibration :</h6>
 						<a class="collapse-item fontst-sb-it" href="calibrationSchedule"
 							id="calibrationSchedule" hidden="true">Calibration Schedule</a>
