@@ -324,6 +324,7 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 				<a class="collapse-item fontst-sb-it" href="userLevel" hidden="true" id="userLevel">User Categories</a> 
 				<a class="collapse-item fontst-sb-it" href="register" hidden="true" id="register" >User Registration </a>
+				<a class="collapse-item fontst-sb-it" href="userActiveInactive" hidden="true" id="userActiveInactive">User Active / Inactive </a>
 
 				
 					<a href="#" data-toggle="modal"data-target="#dbbakModal" hidden="true"  id="dbbak">

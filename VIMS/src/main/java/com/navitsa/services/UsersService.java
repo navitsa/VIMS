@@ -233,5 +233,8 @@ public class UsersService {
 	public List<SysLocation> getSysLocation(){		
 		return  (List<SysLocation>) sysLocationRepository.findAll();
 	}
+
+	
+	
 	
 }//sysLocationRepository
