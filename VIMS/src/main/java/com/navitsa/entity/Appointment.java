@@ -28,7 +28,7 @@ public class Appointment {
 	@Column(name="appointment_time")
 	private String appointmentTime;
 
-	@ManyToOne(optional = false,fetch = FetchType.EAGER)
+	@ManyToOne(optional = true,fetch = FetchType.EAGER)
 	@JoinColumn(name = "lane", referencedColumnName = "testLaneHead_Id")
 	private TestLaneHead lane;
 	

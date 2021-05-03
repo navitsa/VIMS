@@ -31,6 +31,7 @@ import com.navitsa.entity.FuelType;
 import com.navitsa.entity.OcrDetails;
 import com.navitsa.entity.TestCategory;
 import com.navitsa.entity.TestLaneHead;
+import com.navitsa.entity.TestLimitRule;
 import com.navitsa.entity.VehicleClass;
 import com.navitsa.entity.VehicleMake;
 import com.navitsa.entity.VehicleMaster;
@@ -244,7 +245,7 @@ public class AppointmentController {
 		}
 		
 		String[] reservedTimeList =  appointmentService.getReservedTimes(choseDate,catID);
-		String[] freeTimeList = new String[80];
+		String[] freeTimeList = new String[100];
 		
 		for (int i = 0; i < a.length; i++) {
 			
@@ -474,6 +475,12 @@ public class AppointmentController {
 		}
 		
 		//return false;
+	}
+	
+	@ModelAttribute("emissionNorms")
+	public List<TestLimitRule> getAllRuleNames() {
+		List<TestLimitRule> ls = vehicleService.getruleName();
+		return ls;
 	}
 	
 }

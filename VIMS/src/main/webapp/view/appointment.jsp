@@ -285,13 +285,9 @@
 												
 												<label class="mr-sm-2">Emission Norms</label>
 													<form:select path="emissionNorms" id="emissionNorms"  class="form-control form-control-sm">
-														<form:option value="">--SELECT--</form:option>
-														<form:option value="2/3 WHEELER">2/3 WHEELER</form:option>
-														<form:option value="4W Pre Bh.II">4W Pre Bh.II</form:option>
-														<form:option value="4W Bh.II or III">4W Bh.II or III</form:option>
-														<form:option value="4W Bh.IV">4W Bh.IV</form:option>
-														<form:option value="Pre Bh. Stage IV">Pre Bh. Stage IV</form:option>
-														<form:option value="BH. Stage IV">4W Bh.IV</form:option>
+														<c:forEach items="${emissionNorms}" var="rule">
+															<form:option value="${rule.ruleName}">${rule.ruleName}</form:option>
+														</c:forEach>
 													</form:select>
 
 											</div>
