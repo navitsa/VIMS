@@ -198,13 +198,14 @@
 
 											<div class="col-sm-12">
 												<div class="row">
-													<span><b> AP Invoice Details</b></span>
+													<div class="col-sm-10"><span><legend> AP Invoice Details</legend></span></div>
+													<div class="col-sm-2" style="display: flex; justify-content: flex-end"><span><input id="btnAddDetails" type="button" onclick="addDetailsRow()" class="btn btn-primary btn-rounded tabStyle" value="Add Details"></span></div>
 												</div>
 												<br>
 												<div class="row">
 													<table id="apInvoiceDetailsTable"
 														class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-														style="height: 30vh">
+														style="height: 28vh">
 
 														<thead>
 															<tr>
@@ -223,13 +224,14 @@
 
 											<div class="col-sm-12">
 												<div class="row">
-													<span><b> AP Invoice Tax</b></span>
+													<div class="col-sm-10"><span><legend> AP Invoice Taxes</legend></span></div>
+													<div class="col-sm-2" style="display: flex; justify-content: flex-end"><span><input id="btnAddTaxes" type="button" onclick="addTaxesRow()" class="btn btn-primary btn-rounded tabStyle" value="Add Taxes"></span></div>
 												</div>
 												<br>
 												<div class="row">
 													<table id="apInvoiceTaxTable"
 														class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-														style="height: 30vh">
+														style="height: 28vh">
 
 														<thead>
 															<tr>
@@ -268,7 +270,173 @@
 
 	<%@include file="../WEB-INF/jsp/commJs.jsp"%>
 	<script>
-		
+	var arrHead = new Array();	// array for header.
+    arrHead = ['', '', '', ''];
+	function addDetailsRow() {
+        var empTab = document.getElementById('apInvoiceDetailsTable');
+
+        var rowCnt = empTab.rows.length;   // table row count.
+        var tr = empTab.insertRow(rowCnt); // the table row.
+        tr = empTab.insertRow(rowCnt);
+
+        for (var c = 0; c < arrHead.length; c++) {
+            var td = document.createElement('td'); // table definition.
+            td = tr.insertCell(c);
+            var ele;
+            var button;
+            if (c == 0) {      
+            	// 1st column, will have select.
+                ele = document.createElement('select');
+                //ele.setAttribute('type', 'select');
+                ele.setAttribute('id', 'detailsGlAccount');
+                ele.setAttribute('name', 'detailsglAccount');
+                td.appendChild(ele);
+                
+                $.ajax({
+        			type	: 'GET',
+        			url		: "getGLAccounts",
+        			success : function(data) {
+
+        				var slctSubcat = $('#detailsGlAccount'), option = "";
+        				slctSubcat.empty();
+        				selected_option = "<option value='' selected>Select GL Account...</option>"
+        				slctSubcat.append(selected_option);
+
+        				for (var i = 0; i < data.length; i++) {
+        					option = option + "<option value='"+data[i].glAccNo + "'>"+ data[i].glAccNo + "</option>";
+        				}
+        				slctSubcat.append(option);
+        			},
+        			error : function() {
+        				//alert("No return Model data for this Make ID");
+        			}
+
+        		});
+                
+            }
+            else if (c == 1) {
+                // 2nd, 3rd and 4th column, will have textbox.
+                ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', '');
+                ele.setAttribute('id', 'detailsDescription');
+                ele.setAttribute('name', 'detailsDescription');
+                td.appendChild(ele);
+            }
+            else if (c == 2) {
+                // 2nd, 3rd and 4th column, will have textbox.
+                ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', '');
+                ele.setAttribute('id', 'detailsAmount');
+                ele.setAttribute('name', 'detailsAmount');
+                td.appendChild(ele);
+            }
+            else if (c == 3) { // the last column.
+                // add a button in every new row in the last column.
+                button = document.createElement('input');
+
+                // set input attributes.
+                button.setAttribute('type', 'button');
+                button.setAttribute('value', 'Remove');
+
+                // add button's 'onclick' event.
+                button.setAttribute('onclick', 'removeDetailsRow(this)');
+
+                td.appendChild(button);
+            }
+        }
+    }
+
+    // delete TABLE row function.
+    function removeDetailsRow(oButton) {
+        var empTab = document.getElementById('apInvoiceDetailsTable');
+        empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
+    }
+
+    
+    function addTaxesRow() {
+        var empTab = document.getElementById('apInvoiceTaxTable');
+
+        var rowCnt = empTab.rows.length;   // table row count.
+        var tr = empTab.insertRow(rowCnt); // the table row.
+        tr = empTab.insertRow(rowCnt);
+
+        for (var c = 0; c < arrHead.length; c++) {
+            var td = document.createElement('td'); // table definition.
+            td = tr.insertCell(c);
+            var ele;
+            var button;
+            if (c == 0) {      
+            	// 1st column, will have select.
+                ele = document.createElement('select');
+                //ele.setAttribute('type', 'select');
+                ele.setAttribute('id', 'taxesGlAccount');
+                ele.setAttribute('name', 'taxesGlAccount');
+                td.appendChild(ele);
+                
+                $.ajax({
+        			type	: 'GET',
+        			url		: "getGLAccounts",
+        			success : function(data) {
+
+        				var slctSubcat = $('#taxesGlAccount'), option = "";
+        				slctSubcat.empty();
+        				selected_option = "<option value='' selected>Select GL Account...</option>"
+        				slctSubcat.append(selected_option);
+
+        				for (var i = 0; i < data.length; i++) {
+        					option = option + "<option value='"+data[i].glAccNo + "'>"+ data[i].glAccNo + "</option>";
+        				}
+        				slctSubcat.append(option);
+        			},
+        			error : function() {
+        				//alert("No return Model data for this Make ID");
+        			}
+
+        		});
+                
+            }
+            else if (c == 1) {
+                // 2nd, 3rd and 4th column, will have textbox.
+                ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', '');
+                ele.setAttribute('id', 'taxesDescription');
+                ele.setAttribute('name', 'taxesDescription');
+                td.appendChild(ele);
+            }
+            else if (c == 2) {
+                // 2nd, 3rd and 4th column, will have textbox.
+                ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', '');
+                ele.setAttribute('id', 'taxesAmount');
+                ele.setAttribute('name', 'taxesAmount');
+                td.appendChild(ele);
+            }
+            else if (c == 3) { // the last column.
+                // add a button in every new row in the last column.
+                button = document.createElement('input');
+
+                // set input attributes.
+                button.setAttribute('type', 'button');
+                button.setAttribute('value', 'Remove');
+
+                // add button's 'onclick' event.
+                button.setAttribute('onclick', 'removeTaxesRow(this)');
+
+                td.appendChild(button);
+            }
+        }
+    }
+
+    // delete TABLE row function.
+    function removeTaxesRow(oButton) {
+        var empTab = document.getElementById('apInvoiceTaxTable');
+        empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
+    }
+    
 	</script>
 </body>
 </html>
