@@ -2173,8 +2173,11 @@ System.out.println("ftp");
 				ocrDetails.setOcrid(ocrDetailsID);
 				ocrDetails.setOcrDate(dtf.format(now));
 				ocrDetails.setNoimage(imagedata);
-				ocrDetails.setOcrVid(vecno);			
-		
+				ocrDetails.setOcrVid(vecno);
+				
+				Gate gateid =new Gate();
+				gateid.setGateID(gateId);
+				ocrDetails.setGateID(gateid);
 				ocrDetails.setVmStatus("pending");
 				ocrDetails.setVrStatus("pending");
 				ocrDetails.setDocStatus("pending");
@@ -4151,9 +4154,14 @@ System.out.println("ftp");
 		
 		@RequestMapping("emissionNorms")     
 		@ResponseBody
-		public TestLimitRule filter(@RequestParam String year,@RequestParam String fuel) {
+		public TestLimitRule filter(@RequestParam String year,@RequestParam String fuel,HttpSession session) throws ParseException {
 			
-			TestLimitRule object =  vehicleService.filterVehicle(year, fuel);
+			 SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
+			  SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+			  
+			//  String startDateString2 = vmaster.getManufactureYear();
+			  String manufDate = sdf2.format(sdf.parse(year));
+			TestLimitRule object =  vehicleService.filterVehicle(manufDate, fuel);
 			System.out.print(object);
 		   return object;
 		  

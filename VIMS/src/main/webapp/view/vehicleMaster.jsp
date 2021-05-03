@@ -1754,7 +1754,7 @@ function getNorms() {
   	        }
 
  	    });
-}
+		}
 
 </script>
 
