@@ -125,7 +125,7 @@
 								class="collapse-item fontst-sb-it" href="laneAllocation"
 								hidden="true" id="laneAllocation">Lane Allocation</a> <a
 								class="collapse-item fontst-sb-it" href="createGate"
-								id="createGate">Create Gate</a>
+								id="createGate" hidden="true">Create Gate</a>
 						</div>
 					</div></li>
 
@@ -301,9 +301,10 @@
 							href="OutgoingPaymentsDetailsReport" hidden="true"
 							id="OutgoingPaymentsDetailsReport">Outgoing Payments Report</a> <a
 							class="collapse-item fontst-sb-it" href="chequePrint"
-							hidden="true" id="chequePrint">Cheque Print</a> <a
+							hidden="true" id="chequePrint">Cheque Print</a> 
+							<a
 							class="collapse-item fontst-sb-it" href="APInvoice"
-							id="apInvoice">AP Invoice</a>
+							id="apInvoice" hidden="true" >AP Invoice</a>
 						<h6 class="text-section">Financials:</h6>
 						<a class="collapse-item fontst-sb-it"
 							href="revenueStatementPrivew" hidden="true"
