@@ -212,7 +212,7 @@ public class AdminController {
 
 					bwx.write("<ROW num=\"Date of Mfg\">" + "\r\n<CODE>10199</CODE>");
 					bwx.write("\r\n");
-					bwx.write("<DATA>01-Jan-" + vehicleMaster.getManufactureYear() + "</DATA>");
+					bwx.write("<DATA>" + vehicleMaster.getManufactureYear() + "</DATA>");
 					bwx.write("\r\n");
 					bwx.write("</ROW>");
 					bwx.write("\r\n");
