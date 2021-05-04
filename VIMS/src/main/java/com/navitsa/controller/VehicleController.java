@@ -1538,19 +1538,19 @@ System.out.println("ftp");
                 	invHead.setNetTotal(nettotal+calTestFee);
                 	invHead.setBalance(nettotal+calTestFee);
                 	System.out.println("wwwwwwwwwwwww");
-                	Long balance=nettotal+calTestFee+cusdetail.getCrBalance();
-                	cusdetail.setCrBalance(balance);
-                	usersService.saveCustomer(cusdetail);
+
                 	System.out.println("jjjjjjjjjjjjjjjjjj");
                 	invHead.setPayAmount(Long.parseLong("0"));
                     //save invHead date & invDetails
                 	vehicleService.saveInvoiceHead(invHead);
                 	vehicleService.saveInvoiceDetailsAll(invDetailsList);
-                	System.out.println("oooooooooooooooooooo");
+                	System.out.println("oooooooooooooooooooo="+invHead.getNetTotal());
             		ocrDetails.setPaymentStatus("completed");
             		vehicleService.saveOcrDetailsRepo(ocrDetails);
                 	
-            		
+                	Long balance=invHead.getNetTotal()+cusdetail.getCrBalance();
+                	cusdetail.setCrBalance(balance);
+                	usersService.saveCustomer(cusdetail);
             		
 	            	//GL Posting   -- Cash Receipt--------- Doc id=1
 	   	            for(GlaccountMapping gmresult:glMappingResult) {
