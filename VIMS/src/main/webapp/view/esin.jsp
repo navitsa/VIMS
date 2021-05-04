@@ -398,7 +398,7 @@
 					document.getElementById("eqissue").reset();
 				},
 				error : function(e) {
-					swal("Not Create Ticket", "You clicked the button! err", {
+					swal("Not Create ES_IN File", "You clicked the button! err", {
 						icon : "error",
 						buttons : {
 							confirm : {
