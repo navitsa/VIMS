@@ -21,7 +21,6 @@
 	font-weight: bold;
 	color: #02d41b;
 }
-
 .textred {
 	font-family: Arial, Helvetica, sans-serif;
 	border: 0px solid #b30000;
@@ -30,38 +29,32 @@
 	text-align: center;
 	color: #2c03fc;
 }
-
 .fontst {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	height: 30px;
 }
-
 .l-fontst {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	height: 5px;
 	margin-top: 0px;
 }
-
 .iconali {
 	position: absolute;
 	top: 6px;
 	right: -7px;
 }
-
 .capCam {
 	height: 100px;
 	width: 210px;
 }
-
 .cursiz {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	width: 48px;
 	color: #ff8000;
 }
-
 .amt {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -69,12 +62,10 @@
 	color: blue;
 	text-align: right;
 }
-
 .iconstyle {
 	width: 7%;
 	color: blue';
 }
-
 .icon-pre-ve {
 	width: 150%;
 }
@@ -140,8 +131,8 @@
 													<label class="l-fontst">Supplier</label>
 												</div>
 												<div class="col-sm-6">
-													<input class="form-control fontst" type="text"
-														name="supplierId" onchange="" id="supplierId" />
+													<form:input class="form-control fontst" type="text"
+														path="supplierId" onchange="" id="supplierId" required="true"/>
 												</div>
 											</div>
 											<div class="form-group row">
@@ -149,8 +140,8 @@
 													<label class="l-fontst">Supplier GL Account No</label>
 												</div>
 												<div class="col-sm-6">
-													<input class="form-control fontst" type="text"
-														name="supplierGlCode" onchange="" id="supplierGlCode" />
+													<form:input class="form-control fontst" type="text"
+														path="supplierGlCode" onchange="" id="supplierGlCode" required="true"/>
 
 												</div>
 											</div>
@@ -159,8 +150,8 @@
 													<label class="l-fontst">Date</label>
 												</div>
 												<div class="col-sm-6">
-													<input class="form-control fontst" type="date" name="date"
-														onchange="" id="apInvoiceDate" />
+													<form:input class="form-control fontst" type="date" path="date"
+														onchange="" id="apInvoiceDate" required="true"/>
 												</div>
 											</div>
 											<hr>
@@ -169,8 +160,8 @@
 													<label class="l-fontst">Net Total</label>
 												</div>
 												<div class="col-sm-6">
-													<input class="form-control fontst" type="text"
-														name="netTotal" onchange="" id="netTotal" readonly />
+													<form:input class="form-control fontst" type="text"
+														path="netTotal" onchange="" id="netTotal" readonly="true" required="true"/>
 												</div>
 											</div>
 											<hr>
@@ -198,14 +189,24 @@
 
 											<div class="col-sm-12">
 												<div class="row">
-													<div class="col-sm-10"><span><legend> AP Invoice Details</legend></span></div>
-													<div class="col-sm-2" style="display: flex; justify-content: flex-end"><span><input id="btnAddDetails" type="button" onclick="addDetailsRow()" class="btn btn-primary btn-rounded tabStyle" value="Add Details"></span></div>
+													<div class="col-sm-12"><span><b>Details</b></span></div>
+												</div>
+												<br>
+												<div class="row">
+													<div class="col-sm-3"><select id="inputDetailsGLAccount" class="form-control"><option value="">--SELECT--</option>
+													<c:forEach items="${listGLAccounts}" var="gl">
+														<option value="${gl.glAccNo}">${gl.glAccNo}
+															${gl.glAccountName}</option>
+													</c:forEach></select></div>
+													<div class="col-sm-5"><input id="inputDetailsDescription" type="text" placeholder="Description" class="form-control" /></div>
+													<div class="col-sm-2"><input id="inputDetailsAmount" type="text" placeholder="0.00" class="form-control" /></div>
+													<div class="col-sm-2" style="display: flex; justify-content: flex-end"><input id="btnAddDetails" type="button" onclick="addDetailsRow()" class="btn btn-primary btn-rounded tabStyle" value="Add"/></div>
 												</div>
 												<br>
 												<div class="row">
 													<table id="apInvoiceDetailsTable"
 														class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-														style="height: 28vh">
+														style="height: 24vh">
 
 														<thead>
 															<tr>
@@ -223,15 +224,29 @@
 											</div>
 
 											<div class="col-sm-12">
-												<div class="row">
+												<!-- <div class="row">
 													<div class="col-sm-10"><span><legend> AP Invoice Taxes</legend></span></div>
 													<div class="col-sm-2" style="display: flex; justify-content: flex-end"><span><input id="btnAddTaxes" type="button" onclick="addTaxesRow()" class="btn btn-primary btn-rounded tabStyle" value="Add Taxes"></span></div>
+												</div> -->
+												<div class="row">
+													<div class="col-sm-12"><span><b>Taxes</b></span></div>
+												</div>
+												<br>
+												<div class="row" id="inputTaxes">
+													<div class="col-sm-3"><select id="inputTaxesGLAccount" class="form-control"><option value="">--SELECT--</option>
+													<c:forEach items="${listGLAccounts}" var="gl">
+														<option value="${gl.glAccNo}">${gl.glAccNo}
+															${gl.glAccountName}</option>
+													</c:forEach></select></div>
+													<div class="col-sm-5"><input id="inputTaxesDescription" type="text" placeholder="Description" class="form-control" /></div>
+													<div class="col-sm-2"><input id="inputTaxesAmount" type="text" placeholder="0.00" class="form-control" /></div>
+													<div class="col-sm-2" style="display: flex; justify-content: flex-end"><input id="btnAddTaxes" type="button" onclick="addTaxesRow()" class="btn btn-primary btn-rounded tabStyle" value="Add"/></div>
 												</div>
 												<br>
 												<div class="row">
 													<table id="apInvoiceTaxTable"
 														class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-														style="height: 28vh">
+														style="height: 24vh">
 
 														<thead>
 															<tr>
@@ -274,51 +289,32 @@
     arrHead = ['', '', '', ''];
 	function addDetailsRow() {
         var empTab = document.getElementById('apInvoiceDetailsTable');
-
         var rowCnt = empTab.rows.length;   // table row count.
         var tr = empTab.insertRow(rowCnt); // the table row.
         tr = empTab.insertRow(rowCnt);
-
         for (var c = 0; c < arrHead.length; c++) {
             var td = document.createElement('td'); // table definition.
             td = tr.insertCell(c);
             var ele;
             var button;
+            var detailsGlAccountValue = document.getElementById ("inputDetailsGLAccount").value;
+            var detailsDescriptionValue = document.getElementById ("inputDetailsDescription").value;
+            var detailsAmountValue = document.getElementById ("inputDetailsAmount").value;
             if (c == 0) {      
             	// 1st column, will have select.
-                ele = document.createElement('select');
-                //ele.setAttribute('type', 'select');
+                ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', detailsGlAccountValue);
                 ele.setAttribute('id', 'detailsGlAccount');
-                ele.setAttribute('name', 'detailsglAccount');
+                ele.setAttribute('name', 'detailsGlAccount');
+                ele.setAttribute('readonly', true);
                 td.appendChild(ele);
-                
-                $.ajax({
-        			type	: 'GET',
-        			url		: "getGLAccounts",
-        			success : function(data) {
-
-        				var slctSubcat = $('#detailsGlAccount'), option = "";
-        				slctSubcat.empty();
-        				selected_option = "<option value='' selected>Select GL Account...</option>"
-        				slctSubcat.append(selected_option);
-
-        				for (var i = 0; i < data.length; i++) {
-        					option = option + "<option value='"+data[i].glAccNo + "'>"+ data[i].glAccNo + "</option>";
-        				}
-        				slctSubcat.append(option);
-        			},
-        			error : function() {
-        				//alert("No return Model data for this Make ID");
-        			}
-
-        		});
-                
             }
             else if (c == 1) {
                 // 2nd, 3rd and 4th column, will have textbox.
                 ele = document.createElement('input');
                 ele.setAttribute('type', 'text');
-                ele.setAttribute('value', '');
+                ele.setAttribute('value', detailsDescriptionValue);
                 ele.setAttribute('id', 'detailsDescription');
                 ele.setAttribute('name', 'detailsDescription');
                 td.appendChild(ele);
@@ -327,7 +323,7 @@
                 // 2nd, 3rd and 4th column, will have textbox.
                 ele = document.createElement('input');
                 ele.setAttribute('type', 'text');
-                ele.setAttribute('value', '');
+                ele.setAttribute('value', detailsAmountValue);
                 ele.setAttribute('id', 'detailsAmount');
                 ele.setAttribute('name', 'detailsAmount');
                 td.appendChild(ele);
@@ -335,82 +331,60 @@
             else if (c == 3) { // the last column.
                 // add a button in every new row in the last column.
                 button = document.createElement('input');
-
                 // set input attributes.
                 button.setAttribute('type', 'button');
                 button.setAttribute('value', 'Remove');
-
                 // add button's 'onclick' event.
                 button.setAttribute('onclick', 'removeDetailsRow(this)');
-
                 td.appendChild(button);
             }
         }
     }
-
+	
     // delete TABLE row function.
     function removeDetailsRow(oButton) {
         var empTab = document.getElementById('apInvoiceDetailsTable');
         empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
     }
-
     
     function addTaxesRow() {
         var empTab = document.getElementById('apInvoiceTaxTable');
-
         var rowCnt = empTab.rows.length;   // table row count.
         var tr = empTab.insertRow(rowCnt); // the table row.
         tr = empTab.insertRow(rowCnt);
-
         for (var c = 0; c < arrHead.length; c++) {
             var td = document.createElement('td'); // table definition.
             td = tr.insertCell(c);
             var ele;
             var button;
+            var taxesGlAccountValue = document.getElementById ("inputTaxesGLAccount").value;
+            var taxesDescriptionValue = document.getElementById ("inputTaxesDescription").value;
+            var taxesAmountValue = document.getElementById ("inputTaxesAmount").value;
             if (c == 0) {      
-            	// 1st column, will have select.
-                ele = document.createElement('select');
-                //ele.setAttribute('type', 'select');
+            	// 1st column, will have text.
+                ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', taxesGlAccountValue);
                 ele.setAttribute('id', 'taxesGlAccount');
                 ele.setAttribute('name', 'taxesGlAccount');
+                ele.setAttribute('readonly', true);
                 td.appendChild(ele);
-                
-                $.ajax({
-        			type	: 'GET',
-        			url		: "getGLAccounts",
-        			success : function(data) {
-
-        				var slctSubcat = $('#taxesGlAccount'), option = "";
-        				slctSubcat.empty();
-        				selected_option = "<option value='' selected>Select GL Account...</option>"
-        				slctSubcat.append(selected_option);
-
-        				for (var i = 0; i < data.length; i++) {
-        					option = option + "<option value='"+data[i].glAccNo + "'>"+ data[i].glAccNo + "</option>";
-        				}
-        				slctSubcat.append(option);
-        			},
-        			error : function() {
-        				//alert("No return Model data for this Make ID");
-        			}
-
-        		});
                 
             }
             else if (c == 1) {
-                // 2nd, 3rd and 4th column, will have textbox.
+                // 2nd will have textbox.
                 ele = document.createElement('input');
                 ele.setAttribute('type', 'text');
-                ele.setAttribute('value', '');
+                ele.setAttribute('value', taxesDescriptionValue);
                 ele.setAttribute('id', 'taxesDescription');
                 ele.setAttribute('name', 'taxesDescription');
                 td.appendChild(ele);
             }
             else if (c == 2) {
-                // 2nd, 3rd and 4th column, will have textbox.
+                // 3rd column, will have textbox.
                 ele = document.createElement('input');
                 ele.setAttribute('type', 'text');
-                ele.setAttribute('value', '');
+                ele.setAttribute('value', taxesAmountValue);
                 ele.setAttribute('id', 'taxesAmount');
                 ele.setAttribute('name', 'taxesAmount');
                 td.appendChild(ele);
@@ -418,23 +392,25 @@
             else if (c == 3) { // the last column.
                 // add a button in every new row in the last column.
                 button = document.createElement('input');
-
                 // set input attributes.
                 button.setAttribute('type', 'button');
                 button.setAttribute('value', 'Remove');
-
                 // add button's 'onclick' event.
                 button.setAttribute('onclick', 'removeTaxesRow(this)');
-
                 td.appendChild(button);
             }
         }
+        
     }
-
+    
     // delete TABLE row function.
     function removeTaxesRow(oButton) {
         var empTab = document.getElementById('apInvoiceTaxTable');
         empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
+    }
+    
+    function calculateNetTotal() {
+    	
     }
     
 	</script>

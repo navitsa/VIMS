@@ -304,7 +304,7 @@
 							hidden="true" id="chequePrint">Cheque Print</a> 
 							<a
 							class="collapse-item fontst-sb-it" href="APInvoice"
-							id="apInvoice" hidden="true" >AP Invoice</a>
+							id="APInvoice" hidden="true" >AP Invoice</a>
 						<h6 class="text-section">Financials:</h6>
 						<a class="collapse-item fontst-sb-it"
 							href="revenueStatementPrivew" hidden="true"

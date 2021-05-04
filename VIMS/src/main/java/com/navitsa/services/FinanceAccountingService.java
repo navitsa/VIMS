@@ -2,10 +2,15 @@ package com.navitsa.services;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.navitsa.entity.APInvoiceDetails;
+import com.navitsa.entity.APInvoiceHead;
+import com.navitsa.entity.APInvoiceTax;
 import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
@@ -151,5 +156,17 @@ public class FinanceAccountingService {
 			return apInvoiceHeadRepository.maxAPInvoiceHeadId();
 
 		}
+	}
+
+	public void saveAPInvoiceHead(@Valid APInvoiceHead apInvoiceHead) {
+		apInvoiceHeadRepository.save(apInvoiceHead);
+	}
+
+	public void saveAPInvoiceDetailList(List<APInvoiceDetails> apInvoiceDetailsList) {
+		apInvoiceDetailsRepository.saveAll(apInvoiceDetailsList);
+	}
+
+	public void saveAPInvoiceTaxList(List<APInvoiceTax> apInvoiceTaxList) {
+		apInvoiceTaxRepository.saveAll(apInvoiceTaxList);
 	}
 }

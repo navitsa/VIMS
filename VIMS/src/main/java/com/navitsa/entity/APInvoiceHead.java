@@ -23,14 +23,14 @@ public class APInvoiceHead {
 	String date;
 
 	@Column(name = "net_total")
-	String netTotal;
+	Long netTotal;
 
 	public APInvoiceHead() {
 
 	}
 
 	public APInvoiceHead(String apInvoiceHeadId, String supplierId, String supplierGlCode, String date,
-			String netTotal) {
+			Long netTotal) {
 		this.apInvoiceHeadId = apInvoiceHeadId;
 		this.supplierId = supplierId;
 		this.supplierGlCode = supplierGlCode;
@@ -70,11 +70,11 @@ public class APInvoiceHead {
 		this.date = date;
 	}
 
-	public String getNetTotal() {
+	public Long getNetTotal() {
 		return netTotal;
 	}
 
-	public void setNetTotal(String netTotal) {
+	public void setNetTotal(Long netTotal) {
 		this.netTotal = netTotal;
 	}
 

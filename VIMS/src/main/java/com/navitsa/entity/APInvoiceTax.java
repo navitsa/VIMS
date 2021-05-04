@@ -23,7 +23,7 @@ public class APInvoiceTax {
 	String description;
 
 	@Column(name = "amount")
-	String amount;
+	Long amount;
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ap_invoice_head_id", referencedColumnName = "ap_invoice_head_id")
@@ -37,7 +37,7 @@ public class APInvoiceTax {
 
 	}
 
-	public APInvoiceTax(int apInvoiceTaxId, String description, String amount, APInvoiceHead apInvoiceHeadId,
+	public APInvoiceTax(int apInvoiceTaxId, String description, Long amount, APInvoiceHead apInvoiceHeadId,
 			Glaccount glAccNo) {
 		this.apInvoiceTaxId = apInvoiceTaxId;
 		this.description = description;
@@ -62,11 +62,11 @@ public class APInvoiceTax {
 		this.description = description;
 	}
 
-	public String getAmount() {
+	public Long getAmount() {
 		return amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(Long amount) {
 		this.amount = amount;
 	}
 
