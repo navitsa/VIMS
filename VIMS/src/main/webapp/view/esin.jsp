@@ -381,7 +381,7 @@
 // 	 						document.getElementById("proceedLanBtn").style.display = "block";
 // 	 						document.getElementById("moreLoder").style.display = "none";
 			        	}else{
-						swal("Not Create Ticket", "You clicked the button!", {
+						swal("Not Create ES_IN File", "You clicked the button!", {
 							icon : "error",
 							buttons : {
 								confirm : {
