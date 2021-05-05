@@ -306,8 +306,8 @@
 							class="collapse-item fontst-sb-it" href="APInvoice"
 							id="APInvoice" hidden="true" >AP Invoice</a>
 							<a
-							class="collapse-item fontst-sb-it" href="APInvoiceHeadReport"
-							id="APInvoiceHeadReport" hidden="true" >AP Invoice Head Report</a>
+							class="collapse-item fontst-sb-it" href="APInvoiceSummaryReport"
+							id="APInvoiceSummaryReport" hidden="true" >AP Invoice Summary Report</a>
 						<h6 class="text-section">Financials:</h6>
 						<a class="collapse-item fontst-sb-it"
 							href="revenueStatementPrivew" hidden="true"

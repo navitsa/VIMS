@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="apInvoiceHead" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4e3b9ab0-f799-4229-9a63-b689d61e8756">
 	<property name="ireport.zoom" value="1.771561000000001"/>
 	<property name="ireport.x" value="292"/>
-	<property name="ireport.y" value="182"/>
+	<property name="ireport.y" value="0"/>
 	<field name="apInvoiceHeadId" class="java.lang.String"/>
 	<field name="supplierId" class="java.lang.String"/>
 	<field name="supplierGlCode" class="java.lang.String"/>
@@ -15,7 +15,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isBold="false"/>
 				</textElement>
-				<text><![CDATA[AP Invoice Head Report]]></text>
+				<text><![CDATA[AP Invoice Summary Report]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="51" width="555" height="1" uuid="c6a6a8a3-af70-41ce-b34a-649179d1590f"/>

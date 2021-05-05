@@ -801,9 +801,9 @@ public class FinanceAccountingController {
 		return "redirect:/APInvoice";
 	}
 
-	@RequestMapping(value = "/APInvoiceHeadReport", method = RequestMethod.GET)
+	@RequestMapping(value = "/APInvoiceSummaryReport", method = RequestMethod.GET)
 	public String apInvoiceHeadReportPage(Model model) {
-		return "apInvoiceHeadReport";
+		return "apInvoiceSummaryReport";
 	}
 
 	@RequestMapping(value = "/getAPInvoiceHeadIdsByDate", method = RequestMethod.GET)
@@ -812,9 +812,9 @@ public class FinanceAccountingController {
 		return apInvoiceHeadList;
 	}
 
-	@RequestMapping(value = "/previewAPInvoiceHeadReport", method = RequestMethod.POST)
+	@RequestMapping(value = "/previewAPInvoiceSummaryReport", method = RequestMethod.POST)
 	public ModelAndView previewAPInvoiceHeadReport(@RequestParam String invoiceID, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("apInvoiceHeadReport");
+		ModelAndView mav = new ModelAndView("apInvoiceSummaryReport");
 		List<APInvoiceHead> apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadById(invoiceID);
 		String pdf_result = null;
 		String reportName = "AP Invoice Head Report - " + invoiceID;

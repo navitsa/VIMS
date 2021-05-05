@@ -101,7 +101,7 @@
 						<div
 							class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 							<div class="col-xl-2 col-lg-2">
-								<h2 class="text-white pb-2 fw-bold">AP Invoice Head Report</h2>
+								<h2 class="text-white pb-2 fw-bold">AP Invoice Summary Report</h2>
 							</div>
 							<div class="col-xl-2 col-lg-2"></div>
 							<div class="ml-md-auto py-2 py-md-4"></div>
@@ -118,7 +118,7 @@
 							<div class="col-xl-4 col-lg-5">
 								<!-- Card -->
 
-								<form:form action="previewAPInvoiceHeadReport" method="POST">
+								<form:form action="previewAPInvoiceSummaryReport" method="POST">
 
 									<div class="card shadow mb-4" style="height: 640px;">
 										<div class="card border-left-primary shadow h-100 py-2">
