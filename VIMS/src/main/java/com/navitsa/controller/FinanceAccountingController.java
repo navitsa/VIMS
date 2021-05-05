@@ -732,175 +732,100 @@ public class FinanceAccountingController {
 	public String apInvoicePage(Model model) {
 		APInvoiceHead apInvoiceHead = new APInvoiceHead();
 		model.addAttribute("apInvoiceForm", apInvoiceHead);
-		/*System.out.println(
-				"AP Invoice Head ID : " + "00000".substring(financeAccountingService.maxAPInvoiceHeadId().length())
-						+ financeAccountingService.maxAPInvoiceHeadId());*/
+		/*
+		 * System.out.println( "AP Invoice Head ID : " +
+		 * "00000".substring(financeAccountingService.maxAPInvoiceHeadId().length()) +
+		 * financeAccountingService.maxAPInvoiceHeadId());
+		 */
 		return "apInvoice";
 	}
-	
+
 	@RequestMapping(value = "/getGLAccounts", method = RequestMethod.GET)
 	public @ResponseBody List<Glaccount> getGLAccounts() {
 		List<Glaccount> glAccounts = glAccountService.findAll();
 		return glAccounts;
 	}
-	
+
 	@RequestMapping(value = "/saveAPInvoice", method = RequestMethod.POST)
-	public /*ModelAndView*/ String saveAPInvoice(
-			@Valid @ModelAttribute("apInvoiceForm") APInvoiceHead apInvoiceHead, BindingResult br,
-			@RequestParam(value = "detailsGlAccount") String[] detailsGlAccount, @RequestParam(value = "detailsDescription") String[] detailsDescription,
-			@RequestParam(value = "detailsAmount") Long[] detailsAmount, @RequestParam(value = "taxesGlAccount") String[] taxesGlAccount, 
-			@RequestParam(value = "taxesDescription") String[] taxesDescription, @RequestParam(value = "taxesAmount") Long[] taxesAmount,
-			Model m, HttpSession session, HttpServletResponse response) {
-		
+	public String saveAPInvoice(@Valid @ModelAttribute("apInvoiceForm") APInvoiceHead apInvoiceHead, BindingResult br,
+			@RequestParam(value = "detailsGlAccount") String[] detailsGlAccount,
+			@RequestParam(value = "detailsDescription") String[] detailsDescription,
+			@RequestParam(value = "detailsAmount") Long[] detailsAmount,
+			@RequestParam(value = "taxesGlAccount") String[] taxesGlAccount,
+			@RequestParam(value = "taxesDescription") String[] taxesDescription,
+			@RequestParam(value = "taxesAmount") Long[] taxesAmount, Model m, HttpSession session,
+			HttpServletResponse response) {
+
 		Long netTotal = 0L;
 		List<APInvoiceDetails> apInvoiceDetailsList = new ArrayList<>();
 		List<APInvoiceTax> apInvoiceTaxList = new ArrayList<>();
 		apInvoiceHead.setApInvoiceHeadId("00000".substring(financeAccountingService.maxAPInvoiceHeadId().length())
 				+ financeAccountingService.maxAPInvoiceHeadId());
-		
-		for(int c = 0; c < detailsAmount.length; c++) {
-			netTotal = netTotal + (detailsAmount[c]*1000);
+
+		for (int c = 0; c < detailsAmount.length; c++) {
+			netTotal = netTotal + (detailsAmount[c] * 1000);
 		}
 
-		for(int f = 0; f < taxesAmount.length; f++) {
-			netTotal = netTotal + (taxesAmount[f]*1000);
+		for (int f = 0; f < taxesAmount.length; f++) {
+			netTotal = netTotal + (taxesAmount[f] * 1000);
 		}
-		
+
 		apInvoiceHead.setNetTotal(netTotal);
-		
-		for(int c = 0; c < detailsGlAccount.length; c++) {
+
+		for (int c = 0; c < detailsGlAccount.length; c++) {
 			APInvoiceDetails apInvoiceDetails = new APInvoiceDetails();
 			Glaccount glaccount = new Glaccount();
 			glaccount.setGlAccNo(detailsGlAccount[c]);
 			apInvoiceDetails.setApInvoiceHeadId(apInvoiceHead);
 			apInvoiceDetails.setGlAccNo(glaccount);
 			apInvoiceDetails.setDescription(detailsDescription[c]);
-			apInvoiceDetails.setAmount(detailsAmount[c]*1000);
+			apInvoiceDetails.setAmount(detailsAmount[c] * 1000);
 			apInvoiceDetailsList.add(apInvoiceDetails);
 		}
-		
-		for(int d = 0; d < taxesGlAccount.length; d++) {
+
+		for (int d = 0; d < taxesGlAccount.length; d++) {
 			APInvoiceTax apInvoiceTax = new APInvoiceTax();
 			Glaccount glaccount = new Glaccount();
 			glaccount.setGlAccNo(taxesGlAccount[d]);
 			apInvoiceTax.setApInvoiceHeadId(apInvoiceHead);
 			apInvoiceTax.setGlAccNo(glaccount);
 			apInvoiceTax.setDescription(taxesDescription[d]);
-			apInvoiceTax.setAmount(taxesAmount[d]*1000);
+			apInvoiceTax.setAmount(taxesAmount[d] * 1000);
 			apInvoiceTaxList.add(apInvoiceTax);
 		}
-		
+
 		financeAccountingService.saveAPInvoiceHead(apInvoiceHead);
 		financeAccountingService.saveAPInvoiceDetailList(apInvoiceDetailsList);
 		financeAccountingService.saveAPInvoiceTaxList(apInvoiceTaxList);
-		
-		/*System.out.println("ffff");
-		if (br.hasErrors()) {
-			System.out.println("rrrr");
-			return null;
-		} else {
-			try {
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-				Date date = new Date();
-				DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
-				LocalTime time = LocalTime.now();
-				outgoingPaymentHead.setPaymentDate(formatter.format(date));
 
-				String centerid = (String) session.getAttribute("centerid");
-				CenterMaster cm = centerService.getcenterById(centerid);
-				String nextVoucherNo = cm.getPartner_ID().getOutVouFormate() + (cm.getPartner_ID().getMaxVouNo() + 1);
+		return "redirect:/APInvoice";
+	}
 
-				outgoingPaymentHead.setPaymentVoucherNo(nextVoucherNo);
-				outgoingPaymentHead.setCenter_ID(cm);
-				outgoingPaymentHead.setStatus("Active");
-				if (outgoingPaymentHead.getPaymentMean().equalsIgnoreCase("Cheque")) {
-					outgoingPaymentHead.setChequePrint("Pending");
-				}
+	@RequestMapping(value = "/APInvoiceHeadReport", method = RequestMethod.GET)
+	public String apInvoiceHeadReportPage(Model model) {
+		return "apInvoiceHeadReport";
+	}
 
-				List<GlPostingDetails> glPostingDetailsList = new ArrayList<>();
+	@RequestMapping(value = "/getAPInvoiceHeadIdsByDate", method = RequestMethod.GET)
+	public @ResponseBody List<APInvoiceHead> getAPInvoiceHeadIdsByDate(@RequestParam String date) {
+		List<APInvoiceHead> apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadIdsByDate(date);
+		return apInvoiceHeadList;
+	}
 
-				List<GlaccountMapping> glMappingResult = glAccountService.getGlaccountMappingByDocId(4);
-
-				GlPostingHead glPostingHead = new GlPostingHead();
-				glPostingHead.setDocNo(nextVoucherNo);
-
-				DocType docType = new DocType();
-				docType.setDocid(4);
-
-				glPostingHead.setDocid(docType);
-				glPostingHead.setDate(formatter.format(date));
-				glPostingHead.setTime(time.format(formattertime));
-				glPostingHead.setCenterID(cm);
-				glPostingHead.setStatus("ACTIVE");
-
-				String crAccount;
-				for (GlaccountMapping gmresult : glMappingResult) {
-					if (gmresult.getType().equals(outgoingPaymentHead.getPaymentMean())) {
-						crAccount = gmresult.getcR();
-					}
-
-				}
-
-				List<OutgoingPaymentDetails> list = new ArrayList<OutgoingPaymentDetails>();
-				double totalAmount = 0;
-				for (int i = 0; i < glAccNo.length; i++) {
-					OutgoingPaymentDetails paymentDetail = new OutgoingPaymentDetails();
-					paymentDetail.setGlAccNo(glAccNo[i]);
-					paymentDetail.setAmount(amount[i]);
-					paymentDetail.setRemarks(remarks[i]);
-					paymentDetail.setPaymentVoucherNo(outgoingPaymentHead);
-					list.add(paymentDetail);
-					totalAmount = totalAmount + amount[i];
-
-					GlPostingDetails glPostingDetails1 = new GlPostingDetails();
-					glPostingDetails1.setJournalNo(glPostingHead);
-
-					glPostingDetails1.setGlAccNo(new Glaccount(glAccNo[i]));
-
-					glPostingDetails1.setType("D");
-
-					// long x=Long.parseLong((amount[i]*100));
-					long l1 = (new Double(amount[i] * 100)).longValue();
-					glPostingDetails1.setAmount(l1);
-					glPostingDetailsList.add(glPostingDetails1);
-
-				}
-
-				long l2 = (new Double(totalAmount * 100)).longValue();
-				glPostingHead.setTotalDR(l2);
-				// long l3 = (new Double(totalAmount*100)).longValue();
-				glPostingHead.setTotalCR(l2);
-
-				glAccountService.saveGlPostingHeadRepository(glPostingHead);
-				glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
-
-				outgoingPaymentHead.setTotalPayment(totalAmount);
-				financeAccountingService.saveOutgoingPaymentHead(outgoingPaymentHead);
-				bPartnerService.setUpdateLastPaymentVoucherNo(cm.getPartner_ID().getPartner_ID());
-				financeAccountingService.saveAllOutgoingPaymentDetails(list);
-
-				ModelAndView mav = new ModelAndView("comPdfReportView");
-				ReportViewe view = new ReportViewe();
-				String pdf_result = null;
-
-				pdf_result = view.pdfReportViewInlineSystemOpen("outgoingPayment.jasper", "outgoingPayment", list, null,
-						response);
-
-				mav.addObject("pdfViewEq", pdf_result);
-				System.out.println("kklllll");
-				return mav;
-
-				// return "redirect:/outgoingPayments";
-
-			} catch (Exception e) {
-				// m.addAttribute("success",0);
-				e.printStackTrace();
-				System.out.println("ttqqqqq");
-				return null;
-			}
-
-		}*/
-
-		return "apInvoice";
+	@RequestMapping(value = "/previewAPInvoiceHeadReport", method = RequestMethod.POST)
+	public ModelAndView previewAPInvoiceHeadReport(@RequestParam String invoiceID, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("apInvoiceHeadReport");
+		List<APInvoiceHead> apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadById(invoiceID);
+		String pdf_result = null;
+		String reportName = "AP Invoice Head Report - " + invoiceID;
+		ReportViewe view = new ReportViewe();
+		try {
+			pdf_result = view.pdfReportViewInlineSystemOpen("apInvoiceHead.jasper", reportName, apInvoiceHeadList, null,
+					response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mav.addObject("pdfViewEq", pdf_result);
+		return mav;
 	}
 }

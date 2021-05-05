@@ -169,4 +169,12 @@ public class FinanceAccountingService {
 	public void saveAPInvoiceTaxList(List<APInvoiceTax> apInvoiceTaxList) {
 		apInvoiceTaxRepository.saveAll(apInvoiceTaxList);
 	}
+
+	public List<APInvoiceHead> getAPInvoiceHeadIdsByDate(String date) {
+		return apInvoiceHeadRepository.getAPInvoiceHeadIdsByDate(date);
+	}
+
+	public List<APInvoiceHead> getAPInvoiceHeadById(String invoiceID) {
+		return apInvoiceHeadRepository.getAPInvoiceHeadById(invoiceID);
+	}
 }

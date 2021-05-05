@@ -107,7 +107,7 @@
 
 						<form:form action="saveAPInvoice" method="post"
 							modelAttribute="apInvoiceForm" enctype="multipart/form-data"
-							id="formMake">
+							id="formMake" onsubmit="return validateForm()">
 
 							<div class="row">
 
@@ -177,7 +177,6 @@
 														class="btn  btn-block btn-danger btn-rounded tabStyle">Reset</button>
 												</div>
 											</div>
-
 										</div>
 										<!-- End of card body -->
 									</div>
@@ -224,10 +223,6 @@
 											</div>
 
 											<div class="col-sm-12">
-												<!-- <div class="row">
-													<div class="col-sm-10"><span><legend> AP Invoice Taxes</legend></span></div>
-													<div class="col-sm-2" style="display: flex; justify-content: flex-end"><span><input id="btnAddTaxes" type="button" onclick="addTaxesRow()" class="btn btn-primary btn-rounded tabStyle" value="Add Taxes"></span></div>
-												</div> -->
 												<div class="row">
 													<div class="col-sm-12"><span><b>Taxes</b></span></div>
 												</div>
@@ -287,19 +282,61 @@
 	<script>
 	var arrHead = new Array();	// array for header.
     arrHead = ['', '', '', ''];
+	var netTotal = 0;
 	function addDetailsRow() {
+		var detailsGlAccountValue = document.getElementById ("inputDetailsGLAccount").value;
+        var detailsDescriptionValue = document.getElementById ("inputDetailsDescription").value;
+        var detailsAmountValue = document.getElementById ("inputDetailsAmount").value;
+        if (detailsGlAccountValue == ''){
+        	swal(
+					"Details Gl Account  is empty!",
+					"",
+					{
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+        	return false;
+        } else if (detailsDescriptionValue == '') {
+        	swal(
+					"Details description  is empty!",
+					"",
+					{
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+        	return false;
+        } else if (detailsAmountValue == '' || isNaN(detailsAmountValue)) {
+        	swal(
+					"Details amount is empty or not a number!",
+					"",
+					{
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+        	return false;
+        } else {
         var empTab = document.getElementById('apInvoiceDetailsTable');
         var rowCnt = empTab.rows.length;   // table row count.
         var tr = empTab.insertRow(rowCnt); // the table row.
-        tr = empTab.insertRow(rowCnt);
+        //tr = empTab.insertRow(rowCnt);
         for (var c = 0; c < arrHead.length; c++) {
             var td = document.createElement('td'); // table definition.
             td = tr.insertCell(c);
             var ele;
             var button;
-            var detailsGlAccountValue = document.getElementById ("inputDetailsGLAccount").value;
-            var detailsDescriptionValue = document.getElementById ("inputDetailsDescription").value;
-            var detailsAmountValue = document.getElementById ("inputDetailsAmount").value;
+           
             if (c == 0) {      
             	// 1st column, will have select.
                 ele = document.createElement('input');
@@ -317,6 +354,7 @@
                 ele.setAttribute('value', detailsDescriptionValue);
                 ele.setAttribute('id', 'detailsDescription');
                 ele.setAttribute('name', 'detailsDescription');
+                ele.setAttribute('readonly', true);
                 td.appendChild(ele);
             }
             else if (c == 2) {
@@ -326,6 +364,7 @@
                 ele.setAttribute('value', detailsAmountValue);
                 ele.setAttribute('id', 'detailsAmount');
                 ele.setAttribute('name', 'detailsAmount');
+                ele.setAttribute('readonly', true);
                 td.appendChild(ele);
             }
             else if (c == 3) { // the last column.
@@ -339,27 +378,75 @@
                 td.appendChild(button);
             }
         }
+        netTotal = netTotal + parseInt(detailsAmountValue);
+        document.getElementById("netTotal").value = netTotal;
+	} 
     }
 	
     // delete TABLE row function.
     function removeDetailsRow(oButton) {
         var empTab = document.getElementById('apInvoiceDetailsTable');
-        empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
+        var row = oButton.parentNode.parentNode;
+        empTab.deleteRow(row.rowIndex); // button -> td -> tr.
+        var element = row.cells[2];
+        netTotal = netTotal - parseInt(element.childNodes[0].value);
+        document.getElementById("netTotal").value = netTotal;
     }
     
     function addTaxesRow() {
+    	var taxesGlAccountValue = document.getElementById ("inputTaxesGLAccount").value;
+        var taxesDescriptionValue = document.getElementById ("inputTaxesDescription").value;
+        var taxesAmountValue = document.getElementById ("inputTaxesAmount").value;
+        if (taxesGlAccountValue == ''){
+        	swal(
+					"Tax Gl Account  is empty!",
+					"",
+					{
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+        	return false;
+        } else if (taxesDescriptionValue == '') {
+        	swal(
+					"Tax description  is empty!",
+					"",
+					{
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+        	return false;
+        } else if (taxesAmountValue == '' || isNaN(taxesAmountValue)) {
+        	swal(
+					"Tax amount is empty or not a number!",
+					"",
+					{
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+        	return false;
+        } else {
         var empTab = document.getElementById('apInvoiceTaxTable');
         var rowCnt = empTab.rows.length;   // table row count.
         var tr = empTab.insertRow(rowCnt); // the table row.
-        tr = empTab.insertRow(rowCnt);
+        //tr = empTab.insertRow(rowCnt);
         for (var c = 0; c < arrHead.length; c++) {
             var td = document.createElement('td'); // table definition.
             td = tr.insertCell(c);
             var ele;
-            var button;
-            var taxesGlAccountValue = document.getElementById ("inputTaxesGLAccount").value;
-            var taxesDescriptionValue = document.getElementById ("inputTaxesDescription").value;
-            var taxesAmountValue = document.getElementById ("inputTaxesAmount").value;
+            var button; 
+            
             if (c == 0) {      
             	// 1st column, will have text.
                 ele = document.createElement('input');
@@ -378,6 +465,7 @@
                 ele.setAttribute('value', taxesDescriptionValue);
                 ele.setAttribute('id', 'taxesDescription');
                 ele.setAttribute('name', 'taxesDescription');
+                ele.setAttribute('readonly', true);
                 td.appendChild(ele);
             }
             else if (c == 2) {
@@ -387,6 +475,7 @@
                 ele.setAttribute('value', taxesAmountValue);
                 ele.setAttribute('id', 'taxesAmount');
                 ele.setAttribute('name', 'taxesAmount');
+                ele.setAttribute('readonly', true);
                 td.appendChild(ele);
             }
             else if (c == 3) { // the last column.
@@ -400,17 +489,55 @@
                 td.appendChild(button);
             }
         }
-        
+        netTotal = netTotal + parseInt(taxesAmountValue);
+        document.getElementById("netTotal").value = netTotal;
+    } 
     }
     
     // delete TABLE row function.
     function removeTaxesRow(oButton) {
         var empTab = document.getElementById('apInvoiceTaxTable');
-        empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
+        var row = oButton.parentNode.parentNode;
+        empTab.deleteRow(row.rowIndex); // button -> td -> tr.
+        var element = row.cells[2];
+        netTotal = netTotal - parseInt(element.childNodes[0].value);
+        document.getElementById("netTotal").value = netTotal;
     }
     
-    function calculateNetTotal() {
-    	
+	function validateForm() {
+		var detTab = document.getElementById('apInvoiceDetailsTable');
+        var detRowCnt = detTab.rows.length;   // table row count.
+		var taxTab = document.getElementById('apInvoiceTaxTable');
+		var taxRowCnt = taxTab.rows.length;   // table row count.
+		if (detRowCnt == 1) {
+			swal(
+					"Details are empty!",
+					"",
+					{
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+        	return false;
+		} else if (taxRowCnt == 1) {
+			swal(
+					"Tax Details are empty!",
+					"",
+					{
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+        	return false;
+		} else {
+			return true;
+		}
     }
     
 	</script>
