@@ -92,7 +92,7 @@
 													</div>
 													<div class="col-sm-6">
 														<form:select class="form-control form-control-user fontst"
-															path="laneID">
+															path="laneID.laneId">
 															<form:option value="">- Select Lane Type -</form:option>
 															<c:forEach items="${alllanes}" var="lane1">
 																<form:option value="${lane1.laneId}">${lane1.lane}</form:option>
@@ -240,6 +240,13 @@
 														<th>Lane Type</th>
 														<th>Lane</th>
 														<th>Lane Capacity</th>
+														<th>Select Gate</th>
+														<th>Maha PC IP Address</th>
+														<th>Maha FTP Path</th>
+														<th>AVL PC IP Address</th>
+														<th>AVL FTP Path</th>
+														
+														
 														<th></th>
 														<th></th>
 													</tr>
@@ -250,6 +257,12 @@
 															<td><div>${allLaneHead.laneID.lane}</div></td>
 															<td><div>${allLaneHead.laneName}</div></td>
 															<td><div>${allLaneHead.laneCap}</div></td>
+															<td><div>${allLaneHead.gateID.gateID}</div></td>
+															<td><div>${allLaneHead.mahaPcIp}</div></td>
+															<td><div>${allLaneHead.mahaFtpPath}</div></td>
+															<td><div>${allLaneHead.avlPcIp}</div></td>
+															<td><div>${allLaneHead.avlFtpPath}</div></td>
+															
 
 															<td><div>
 																	<a class="btn btn-primary btn-sm"

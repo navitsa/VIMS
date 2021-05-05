@@ -652,6 +652,9 @@ public class VehicleService {
 		return (List<Gate>) gaterepository.findAll();
 	}
 	
+	public Gate getGatesDetailByID(String id) {
+		return gaterepository.findById(id).get();
+	}
 	
 }
 

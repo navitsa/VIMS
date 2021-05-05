@@ -2520,12 +2520,14 @@ System.out.println("ftp");
 		//Auto Capture License Plate Save Image in to DB
 			
 			@RequestMapping(value = "takeAutoNo", method = RequestMethod.POST)
-			public @ResponseBody List<NumberDataBeen> takeAutoNo(@RequestParam ("method") String method, HttpSession session) 
+			public @ResponseBody List<NumberDataBeen> takeAutoNo(@RequestParam ("method") String method,@RequestParam ("gateid")String gateid, HttpSession session) 
 			{
 			String centerid=session.getAttribute("centerid")+"";
 			CenterMaster centerMaster=centerService.getcenterById(centerid); 
 			
-			String autoCapPath=centerMaster.getGetAutoCaptureImgPath();
+			Gate gate = vehicleService.getGatesDetailByID(gateid);	
+			String autoCapPath=gate.getGatePath();
+		
 			String laneimgpathPath=centerMaster.getLaneCamImgPath();
 			String capimPath="\\capimg";
 			

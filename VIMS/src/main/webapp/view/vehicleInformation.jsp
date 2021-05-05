@@ -931,11 +931,12 @@ deg
 			
 		setTimeout(takeAutoNo, 3000); 
 
+		var gate=document.getElementById('gateid').value;
 			$.ajax({
 
 			    type: 'POST',
 			    url: "takeAutoNo",
-			    data: {"method":"1"},
+			    data: {"method":"1","gateid":gate},
 		        success: function(data){
 
 		        	//$("table tbody").empty();
