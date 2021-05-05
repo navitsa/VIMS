@@ -243,10 +243,10 @@
 												<label for="manufactureYear" class="mr-sm-2">Manufactured Year</label>
 												<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2 datetimepicker-input" 
 													id="manufactureYear" data-toggle="datetimepicker" 
-													data-target="#manufactureYear" style="width: 80px" path="manufactureYear"/>
+													data-target="#manufactureYear" style="width: 110px" path="manufactureYear"/>
 													
-<%-- 													<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2" 
-													style="width: 80px" path="manufactureYear" id="manufactureYear"/> --%>
+<%-- 													<form:input class="form-control form-control-sm mb-2 mr-sm-2" 
+													style="width: 110px" path="manufactureYear" id="manufactureYear"/> --%>
 												<i class="fa fa-calendar mb-2 mr-sm-4" style="color:black;"></i>
 											</div>
 										</div>
@@ -425,20 +425,20 @@
         	
              $('#registeredYear').datetimepicker({
                  viewMode: 'years',
-                 format: 'DD/MM/YYYY'
+                 format: '<%=session.getAttribute("dateFormat")%>'.toUpperCase()
             });
             
-             $('#manufactureYear').datetimepicker({
+            $('#manufactureYear').datetimepicker({
                  viewMode: 'years',
-                 format: 'YYYY'
+                 format: '<%=session.getAttribute("dateFormat")%>'.toUpperCase()
              });
+             
 
              $('#datetimepicker1').on("change.datetimepicker", function (e) {
              	getFreeTimes();
               });
             
-        });
-        
+        }); 
     </script>
     
 <script>
