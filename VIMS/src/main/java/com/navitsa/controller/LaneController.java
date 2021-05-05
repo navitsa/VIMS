@@ -276,9 +276,9 @@ public class LaneController {
 		//edit test lane
 		@RequestMapping("/editLaneHead")
 		public ModelAndView editLaneHead(@RequestParam String id) {
-			ModelAndView mav = new ModelAndView("createNewTestLanes");
-			TestLaneHead vhead = laneServices.getTestLaneHeadById(id);
-			mav.addObject("saveLaneHead", vhead);
+			ModelAndView mav = new ModelAndView("NewLane");
+			TestLaneHead allLaneHead = laneServices.getTestLaneHeadById(id);
+			mav.addObject("saveLaneHead", allLaneHead);
 			return mav;
 		}
 		

@@ -180,7 +180,10 @@
 															${customer.crBalance}
 															</td>
 															
-														
+														<td><a
+															href="editCustomer?id=${customer.id}"><i
+																class="material-icons">&#xE254;</i></a>
+														</td>
 														
 													</tr>
 												</c:if>

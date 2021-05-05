@@ -857,7 +857,13 @@ public class UsersController {
 							return "redirect:/userActiveInactive";
 							}
 					}
-
+					@RequestMapping("/editCustomer")
+					public ModelAndView updateCustomer(@RequestParam String id) {
+						ModelAndView mav = new ModelAndView("customer");
+						Customer updateCustomer = usservice.getrm(id);
+						mav.addObject("newcustomer", updateCustomer);
+						return mav;
+					}
 				 
 				 
 }
