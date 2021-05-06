@@ -177,4 +177,8 @@ public class FinanceAccountingService {
 	public List<APInvoiceHead> getAPInvoiceHeadById(String invoiceID) {
 		return apInvoiceHeadRepository.getAPInvoiceHeadById(invoiceID);
 	}
+
+	public List<APInvoiceHead> getAPInvoiceHeadByDates(String fromDate, String toDate) {
+		return apInvoiceHeadRepository.getAPInvoiceHeadByDates(fromDate, toDate);
+	}
 }

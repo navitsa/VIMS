@@ -124,7 +124,7 @@
 										<div class="card border-left-primary shadow h-100 py-2">
 											<div class="card-body">
 
-												<div class="form-group row">
+												<!-- <div class="form-group row">
 													<div class="col-sm-8">
 														<label class="l-fontst">Invoice Date</label> <input
 															class="form-control fontst" type="date"
@@ -141,6 +141,23 @@
 
 														</select>
 
+													</div>
+												</div> -->
+												
+												<div class="form-group row">
+													<div class="col-sm-8">
+														<label class="l-fontst">From Date</label> <input
+															class="form-control fontst" type="date"
+															name="fromDate" required id="fromDate"
+															onchange="" />
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-sm-8">
+														<label class="l-fontst">To Date</label> <input
+															class="form-control fontst" type="date"
+															name="toDate" required id="toDate"
+															onchange="" />
 													</div>
 												</div>
 

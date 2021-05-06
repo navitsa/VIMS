@@ -18,4 +18,7 @@ public interface APInvoiceHeadRepository extends CrudRepository<APInvoiceHead, S
 
 	@Query(value = "SELECT apih FROM APInvoiceHead apih WHERE apih.apInvoiceHeadId=:invoiceID")
 	public List<APInvoiceHead> getAPInvoiceHeadById(@Param("invoiceID") String invoiceID);
+
+	@Query(value = "SELECT apih FROM APInvoiceHead apih WHERE apih.date BETWEEN :fromDate AND :toDate")
+	public List<APInvoiceHead> getAPInvoiceHeadByDates(@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 }

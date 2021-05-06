@@ -326,7 +326,7 @@
 						},
 					});
         	return false;
-        } else {
+        }  else {
         var empTab = document.getElementById('apInvoiceDetailsTable');
         var rowCnt = empTab.rows.length;   // table row count.
         var tr = empTab.insertRow(rowCnt); // the table row.

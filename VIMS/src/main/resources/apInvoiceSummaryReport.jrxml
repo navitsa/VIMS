@@ -1,121 +1,194 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="apInvoiceHead" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4e3b9ab0-f799-4229-9a63-b689d61e8756">
-	<property name="ireport.zoom" value="1.771561000000001"/>
-	<property name="ireport.x" value="292"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="apInvoiceSummaryReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5bf82392-d494-49cf-b64d-90f1c93afb34">
+	<property name="ireport.zoom" value="1.0000000000000009"/>
+	<property name="ireport.x" value="48"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="header" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="fromDate" class="java.lang.String"/>
+	<parameter name="toDate" class="java.lang.String"/>
+	<parameter name="img" class="java.lang.Object"/>
 	<field name="apInvoiceHeadId" class="java.lang.String"/>
 	<field name="supplierId" class="java.lang.String"/>
 	<field name="supplierGlCode" class="java.lang.String"/>
 	<field name="date" class="java.lang.String"/>
 	<field name="netTotal" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
 	<pageHeader>
-		<band height="117" splitType="Stretch">
+		<band height="95" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="90" height="90" uuid="5cc07360-4dc8-4279-b6fe-818b990614e1"/>
+				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{img})).getImage()]]></imageExpression>
+			</image>
 			<staticText>
-				<reportElement x="189" y="0" width="196" height="21" forecolor="#000000" uuid="e67515e8-1537-4df6-9fbe-b31fda4939ba"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="14" isBold="false"/>
-				</textElement>
-				<text><![CDATA[AP Invoice Summary Report]]></text>
-			</staticText>
-			<line>
-				<reportElement x="0" y="51" width="555" height="1" uuid="c6a6a8a3-af70-41ce-b34a-649179d1590f"/>
-			</line>
-			<line>
-				<reportElement x="0" y="114" width="555" height="1" uuid="394ccd21-e54a-42b6-97f5-64647394cf9e"/>
-				<graphicElement>
-					<pen lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
-			<staticText>
-				<reportElement x="0" y="94" width="110" height="14" uuid="5a3d8da8-2140-4f57-9830-0d9648261cdf"/>
+				<reportElement x="102" y="-1" width="700" height="21" forecolor="#000000" uuid="abd8e885-18c8-406f-8ccf-7a102cdead4b"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="11" isStrikeThrough="false"/>
+					<font fontName="Arial" size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Date :]]></text>
+				<text><![CDATA[AP INVOICE SUMMARY]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="0" y="66" width="110" height="14" uuid="a9170c61-5666-47dd-af41-63c2070c6f66"/>
-				<textElement>
-					<font size="11"/>
+			<textField>
+				<reportElement x="102" y="20" width="700" height="20" uuid="410fc1db-b65d-4229-a522-ce09137ec9df"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Supplier ID :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="80" width="110" height="14" uuid="ef95dc01-6f51-4b71-a42a-353d55a036d6"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<text><![CDATA[Supplier GL Code :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="52" width="110" height="14" uuid="9ab53332-add5-4a43-8331-90f1aa555ac7"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<text><![CDATA[AP Invoice Head ID :	  :]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="110" y="52" width="198" height="14" isRemoveLineWhenBlank="true" uuid="59506335-028e-4ac0-ba72-9ef6a3ea1cfb"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{apInvoiceHeadId}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{header}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="110" y="66" width="198" height="14" isRemoveLineWhenBlank="true" uuid="89f897e3-6195-4e84-8836-b3fcb2fbfe29"/>
-				<textElement>
-					<font size="11"/>
+			<textField>
+				<reportElement x="102" y="40" width="700" height="19" uuid="49166981-4fa2-49bc-a906-13a265087f73"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="13" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{supplierId}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="110" y="80" width="198" height="14" isRemoveLineWhenBlank="true" uuid="42e30a38-a1a2-4392-9c8a-553160b760f1"/>
-				<textElement>
-					<font size="11"/>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="102" y="71" width="700" height="19" uuid="2bc9ffca-ed4b-4f61-9fb4-0728ac6be10f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{supplierGlCode}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="110" y="94" width="260" height="14" isRemoveLineWhenBlank="true" uuid="20086bf4-39ea-456f-afbc-01ca839ab725"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{fromDate}+" To "+$P{toDate}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="29" splitType="Stretch"/>
-	</columnHeader>
-	<detail>
-		<band height="57" splitType="Stretch"/>
-	</detail>
-	<pageFooter>
-		<band height="23" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="22" splitType="Stretch">
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="455" y="0" width="100" height="17" uuid="09fcb924-c317-46d0-bec1-8a5a1fac1f23"/>
-				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="120" height="25" backcolor="#CCFFFF" uuid="2ff9e3f6-199a-4a98-b6cf-c5f6cfd52159"/>
+				<box leftPadding="0" rightPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="120" y="0" width="120" height="25" backcolor="#CCFFFF" uuid="f4e01396-8439-4743-84af-8e4b33aba4e7"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Invoice ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="240" y="0" width="240" height="25" backcolor="#CCFFFF" uuid="03a60b8b-bf73-43cc-965e-59324006d77a"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Supplier ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="480" y="0" width="202" height="25" backcolor="#CCFFFF" uuid="977aca56-06f6-4e9f-a664-fa64641641cf"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Supplier GL Account]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="682" y="0" width="120" height="25" backcolor="#CCFFFF" uuid="a9c5386f-3724-45f2-9c0c-3f200ed721e7"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="11" isBold="true" isUnderline="true"/>
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[Net Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="0" y="10" width="120" height="20" backcolor="#FFFFFF" uuid="aa1093e4-6ff4-4f93-8b9b-817dec4a61d8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="120" y="10" width="120" height="20" backcolor="#FFFFFF" uuid="253e8d78-b66b-4356-b968-d131d9607ec8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apInvoiceHeadId}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="240" y="10" width="240" height="20" backcolor="#FFFFFF" uuid="5883a322-410b-4765-b64f-87a65dff0759"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{supplierId}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="480" y="10" width="202" height="20" backcolor="#FFFFFF" uuid="5d37e0c5-2415-4c25-9dba-81b72d40baf6"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{supplierGlCode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="682" y="10" width="120" height="20" backcolor="#FFFFFF" uuid="4425e314-209b-4030-9f8c-cca7c7fdf5ad"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+					<paragraph rightIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{netTotal}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement mode="Opaque" x="354" y="1" width="100" height="16" backcolor="#CCCCCC" uuid="503f419b-6732-47f8-9350-f3b9369fa32c"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Total (INR)]]></text>
-			</staticText>
 		</band>
-	</summary>
+	</detail>
+	<columnFooter>
+		<band height="20" splitType="Stretch"/>
+	</columnFooter>
 </jasperReport>

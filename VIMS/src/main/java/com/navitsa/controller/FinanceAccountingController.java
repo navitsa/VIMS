@@ -520,7 +520,7 @@ public class FinanceAccountingController {
 	}
 
 	@RequestMapping(value = ("/saveJournalVoucher"), method = RequestMethod.POST)
-	public String saveJournalVoucher(@RequestParam("glaccno") String[] glaccno, @RequestParam("dramt") String[] dramt,
+	public @ResponseBody String saveJournalVoucher(@RequestParam("glaccno") String[] glaccno, @RequestParam("dramt") String[] dramt,
 			@RequestParam("cramt") String[] cramt, HttpServletResponse response, HttpSession session) {
 
 		try {
@@ -574,11 +574,11 @@ public class FinanceAccountingController {
 			glAccountService.saveGlPostingHeadRepository(glPostingHead);
 			glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
 
-			return "redirect:/journalVoucher.do";
+			return "1";
 
 		} catch (Exception e) {
 			System.out.println(e);
-			return "redirect:/journalVoucher";
+			return "0";
 		}
 
 	}
@@ -750,10 +750,10 @@ public class FinanceAccountingController {
 	public String saveAPInvoice(@Valid @ModelAttribute("apInvoiceForm") APInvoiceHead apInvoiceHead, BindingResult br,
 			@RequestParam(value = "detailsGlAccount") String[] detailsGlAccount,
 			@RequestParam(value = "detailsDescription") String[] detailsDescription,
-			@RequestParam(value = "detailsAmount") Long[] detailsAmount,
+			@RequestParam(value = "detailsAmount") String[] detailsAmount,
 			@RequestParam(value = "taxesGlAccount") String[] taxesGlAccount,
 			@RequestParam(value = "taxesDescription") String[] taxesDescription,
-			@RequestParam(value = "taxesAmount") Long[] taxesAmount, Model m, HttpSession session,
+			@RequestParam(value = "taxesAmount") String[] taxesAmount, Model m, HttpSession session,
 			HttpServletResponse response) {
 
 		Long netTotal = 0L;
@@ -763,34 +763,34 @@ public class FinanceAccountingController {
 				+ financeAccountingService.maxAPInvoiceHeadId());
 
 		for (int c = 0; c < detailsAmount.length; c++) {
-			netTotal = netTotal + (detailsAmount[c] * 100);
+			netTotal = netTotal + (Double.valueOf(detailsAmount[c]).longValue() * 100);
 		}
 
-		for (int f = 0; f < taxesAmount.length; f++) {
-			netTotal = netTotal + (taxesAmount[f] * 100);
+		for (int d = 0; d < taxesAmount.length; d++) {
+			netTotal = netTotal + (Double.valueOf(taxesAmount[d]).longValue() * 100);
 		}
 
 		apInvoiceHead.setNetTotal(netTotal);
 
-		for (int c = 0; c < detailsGlAccount.length; c++) {
+		for (int e = 0; e < detailsGlAccount.length; e++) {
 			APInvoiceDetails apInvoiceDetails = new APInvoiceDetails();
 			Glaccount glaccount = new Glaccount();
-			glaccount.setGlAccNo(detailsGlAccount[c]);
+			glaccount.setGlAccNo(detailsGlAccount[e]);
 			apInvoiceDetails.setApInvoiceHeadId(apInvoiceHead);
 			apInvoiceDetails.setGlAccNo(glaccount);
-			apInvoiceDetails.setDescription(detailsDescription[c]);
-			apInvoiceDetails.setAmount(detailsAmount[c] * 100);
+			apInvoiceDetails.setDescription(detailsDescription[e]);
+			apInvoiceDetails.setAmount(Double.valueOf(detailsAmount[e]).longValue() * 100);
 			apInvoiceDetailsList.add(apInvoiceDetails);
 		}
 
-		for (int d = 0; d < taxesGlAccount.length; d++) {
+		for (int f = 0; f < taxesGlAccount.length; f++) {
 			APInvoiceTax apInvoiceTax = new APInvoiceTax();
 			Glaccount glaccount = new Glaccount();
-			glaccount.setGlAccNo(taxesGlAccount[d]);
+			glaccount.setGlAccNo(taxesGlAccount[f]);
 			apInvoiceTax.setApInvoiceHeadId(apInvoiceHead);
 			apInvoiceTax.setGlAccNo(glaccount);
-			apInvoiceTax.setDescription(taxesDescription[d]);
-			apInvoiceTax.setAmount(taxesAmount[d] * 100);
+			apInvoiceTax.setDescription(taxesDescription[f]);
+			apInvoiceTax.setAmount(Double.valueOf(taxesAmount[f]).longValue() * 100);
 			apInvoiceTaxList.add(apInvoiceTax);
 		}
 
@@ -813,16 +813,34 @@ public class FinanceAccountingController {
 	}
 
 	@RequestMapping(value = "/previewAPInvoiceSummaryReport", method = RequestMethod.POST)
-	public ModelAndView previewAPInvoiceHeadReport(@RequestParam String invoiceID, /*@RequestParam String fromDate, @RequestParam String toDate,*/ HttpServletResponse response) {
+	public ModelAndView previewAPInvoiceHeadReport(@RequestParam String fromDate, @RequestParam String toDate, 
+			HttpServletResponse response, HttpSession session) {
 		ModelAndView mav = new ModelAndView("apInvoiceSummaryReport");
-		List<APInvoiceHead> apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadById(invoiceID);
-		//List<APInvoiceHead> apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadByDates(fromDate, toDate);
+		String centerid = session.getAttribute("centerid")+"";
+		CenterMaster centerMaster = centerService.getcenterById(centerid);
+		List<APInvoiceHead> list = new ArrayList<>();
+		List<APInvoiceHead> apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadByDates(fromDate, toDate);
+		for (int i = 0; i < apInvoiceHeadList.size(); i++) {
+			APInvoiceHead apInvoiceHead = new APInvoiceHead();
+			apInvoiceHead.setApInvoiceHeadId(apInvoiceHeadList.get(i).getApInvoiceHeadId());
+			apInvoiceHead.setSupplierId(apInvoiceHeadList.get(i).getSupplierId());
+			apInvoiceHead.setSupplierGlCode(apInvoiceHeadList.get(i).getSupplierGlCode());
+			apInvoiceHead.setDate(apInvoiceHeadList.get(i).getDate());
+			apInvoiceHead.setNetTotal(apInvoiceHeadList.get(i).getNetTotal()/100);
+			list.add(apInvoiceHead);
+			
+		}
 		String pdf_result = null;
-		String reportName = "AP Invoice Head Report - " + invoiceID;
-		//String reportName = "AP Invoice Head Report - " + fromDate + " - " + toDate;
+		String reportName = "AP Invoice Head Report - " + fromDate + " - " + toDate;
 		ReportViewe view = new ReportViewe();
+		Map<String,Object> params = new HashMap<>();
+    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
+      	params.put("header",centerMaster.getPartner_ID().getReceiptHeader());
+      	params.put("address",centerMaster.getAdd03());
+      	params.put("fromDate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromDate)));
+      	params.put("toDate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
 		try {
-			pdf_result = view.pdfReportViewInlineSystemOpen("apInvoiceSummaryReport.jasper", reportName, apInvoiceHeadList, null,
+			pdf_result = view.pdfReportViewInlineSystemOpen("apInvoiceSummaryReport.jasper", reportName, list, params,
 					response);
 		} catch (Exception e) {
 			e.printStackTrace();
