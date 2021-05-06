@@ -207,7 +207,11 @@ public class TestingReportConfigController {
 		 {
 			// customer
 			 name		= vr.getCusid().getName();
-			 address	= vr.getCusid().getStateid().getState()+", "+vr.getCusid().getCity()+", "+vr.getCusid().getAddress();
+			 if(vr.getCusid().getStateid() !=null)
+				 address	= vr.getCusid().getStateid().getState()+", "+vr.getCusid().getCity()+", "+vr.getCusid().getAddress();
+			 else
+				 address	= vr.getCusid().getAddress();
+			 
 			 mobileNo	= vr.getCusid().getTpno(); 
 		 }
 		 else
@@ -264,8 +268,8 @@ public class TestingReportConfigController {
 		 
 		 //getting test results from the query
 		 int rule = 0;
-		 if(service.findRuleByYear(vr.getVid().getManufactureYear()) !=null)
-			 rule = service.findRuleByYear(vr.getVid().getManufactureYear()).getRuleCode();
+		 if(service.findRuleByYear(vr.getVid().getManufactureYear(),vr.getVid().getFtype().getFuelTypeID()) !=null)
+			 rule = service.findRuleByYear(vr.getVid().getManufactureYear(),vr.getVid().getFtype().getFuelTypeID()).getRuleCode();
 		 
 		 System.out.println("Rule is "+rule);
 		 

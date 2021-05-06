@@ -313,8 +313,8 @@ public class TestReportConfigService {
 
 	}
 
-	public TestLimitRule findRuleByYear(String year) {
-		return testLimitRuleRepo.findRuleByYear(year);
+	public TestLimitRule findRuleByYear(String year,String fuelID) {
+		return testLimitRuleRepo.findRuleByYear(year,fuelID);
 	}
 
 }
