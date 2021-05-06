@@ -106,6 +106,22 @@
 							</div>
 							<div class="col-xl-2 col-lg-2">
 								<p class="vidSty" id="vvno" >${vehNo}</p>
+								
+							
+							</div>	<div class="ml-md-2 py-2 py-md-2">
+								<h2 class="text-white pb-2 fw-bold">Gate</h2>
+								<h5 class="text-white op-7 mb-2"></h5>
+							</div><div class="col-xl-2 col-lg-2">
+								
+
+											<select class="form-control form-control-user fontst"
+												name="gateID" id="gateid" onchange="getPayVehicleNo()">
+												<c:forEach items="${allgates}" var="gate">
+													<option value="${gate.gateID}">${gate.gateName}</option>
+												</c:forEach>
+											</select>
+
+									
 							</div>
 							<div class="col-xl-2 col-lg-2">	
 							</div>
@@ -1009,9 +1025,11 @@ setTimeout(takeAutoNo, 3000);
 			
 			getPayVehicleNo();
 			function getPayVehicleNo(){
+				var gate = document.getElementById("gateid").value;
 					$.ajax({
 				        type: 'POST',
-				        url: "pendingLaneEntryData",				      
+				        url: "pendingLaneEntryData",	
+				        data: {"gate" : gate},
 				        success: function(data){
 				       
 				            var slctSubcat=$('#payVehicleNo'), option="";
@@ -1173,6 +1191,24 @@ setTimeout(takeAutoNo, 3000);
 				}
 
 			}
+			
+// 			function getVehId() {
+
+				 
+// 			 	var gate = document.getElementById("gate").value;				
+					
+				 			
+// 				$.ajax({
+// 					type : "GET",
+// 					url : "filterVehicleNO",
+// 					 data: {"gate" : gate},
+// 					success : function(data) {
+						
+// 			           document.getElementById("payVehicleNo").value = data.vehNO;             
+			  
+
+// 			 	    });
+// 					}
 			</script>
 </body>
 </html>

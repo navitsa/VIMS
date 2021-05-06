@@ -956,8 +956,9 @@ public class VehicleController {
 	
 	}
 	@RequestMapping(value="/pendingLaneEntryData" ,method=RequestMethod.POST)
-	public @ResponseBody List<OcrDetails> getPendingLaneEntryData() {
-		return vehicleService.pendingLaneEntryData();
+	public @ResponseBody List<OcrDetails> getPendingLaneEntryData(@RequestParam String gate) {
+		
+		return vehicleService.pendingLaneEntryData(gate);
 		
 	
 	}
@@ -4176,6 +4177,18 @@ System.out.println("ftp");
 			
 		}
 		//editLaneAllocation
+		
+	/*
+	 * @RequestMapping("filterVehicleNO")
+	 * 
+	 * @ResponseBody public OcrDetails OcrDetails (@RequestParam String
+	 * gate,HttpSession session) throws ParseException {
+	 * 
+	 * OcrDetails object = vehicleService.filterVehicleNO(gate);
+	 * System.out.print(object); return object;
+	 * 
+	 * }
+	 */
 }
 
 

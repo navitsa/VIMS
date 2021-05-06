@@ -656,6 +656,12 @@ public class VehicleService {
 		return gaterepository.findById(id).get();
 	}
 	
+	public List<OcrDetails> pendingLaneEntryData(String gate) {
+		return (List<OcrDetails>) ocrDetailsRepo.filterVehicleNO(gate);
+	}
+	
+	
+	
 }
 
 

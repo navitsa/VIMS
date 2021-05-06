@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.navitsa.entity.OcrDetails;
+import com.navitsa.entity.TestLimitRule;
 
 public interface OcrDetailsRepository extends CrudRepository<OcrDetails, Integer> {
 
@@ -41,4 +42,7 @@ public interface OcrDetailsRepository extends CrudRepository<OcrDetails, Integer
 	
 	@Query(value = "SELECT oc FROM OcrDetails oc where oc.vrStatus='completed' AND oc.ocrDate LIKE :todayDate || '%' and oc.status='ACTIVE'")
 	public List<OcrDetails> completedVehiclesPayment(@Param("todayDate")String todayDate);
+
+	@Query(value = "SELECT t FROM OcrDetails t WHERE t.gateID.gateID =:gate")
+	public List<OcrDetails>  filterVehicleNO(@Param("gate") String gate);
 }
