@@ -763,11 +763,11 @@ public class FinanceAccountingController {
 				+ financeAccountingService.maxAPInvoiceHeadId());
 
 		for (int c = 0; c < detailsAmount.length; c++) {
-			netTotal = netTotal + (detailsAmount[c] * 1000);
+			netTotal = netTotal + (detailsAmount[c] * 100);
 		}
 
 		for (int f = 0; f < taxesAmount.length; f++) {
-			netTotal = netTotal + (taxesAmount[f] * 1000);
+			netTotal = netTotal + (taxesAmount[f] * 100);
 		}
 
 		apInvoiceHead.setNetTotal(netTotal);
@@ -779,7 +779,7 @@ public class FinanceAccountingController {
 			apInvoiceDetails.setApInvoiceHeadId(apInvoiceHead);
 			apInvoiceDetails.setGlAccNo(glaccount);
 			apInvoiceDetails.setDescription(detailsDescription[c]);
-			apInvoiceDetails.setAmount(detailsAmount[c] * 1000);
+			apInvoiceDetails.setAmount(detailsAmount[c] * 100);
 			apInvoiceDetailsList.add(apInvoiceDetails);
 		}
 
@@ -790,7 +790,7 @@ public class FinanceAccountingController {
 			apInvoiceTax.setApInvoiceHeadId(apInvoiceHead);
 			apInvoiceTax.setGlAccNo(glaccount);
 			apInvoiceTax.setDescription(taxesDescription[d]);
-			apInvoiceTax.setAmount(taxesAmount[d] * 1000);
+			apInvoiceTax.setAmount(taxesAmount[d] * 100);
 			apInvoiceTaxList.add(apInvoiceTax);
 		}
 
@@ -813,14 +813,16 @@ public class FinanceAccountingController {
 	}
 
 	@RequestMapping(value = "/previewAPInvoiceSummaryReport", method = RequestMethod.POST)
-	public ModelAndView previewAPInvoiceHeadReport(@RequestParam String invoiceID, HttpServletResponse response) {
+	public ModelAndView previewAPInvoiceHeadReport(@RequestParam String invoiceID, /*@RequestParam String fromDate, @RequestParam String toDate,*/ HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("apInvoiceSummaryReport");
 		List<APInvoiceHead> apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadById(invoiceID);
+		//List<APInvoiceHead> apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadByDates(fromDate, toDate);
 		String pdf_result = null;
 		String reportName = "AP Invoice Head Report - " + invoiceID;
+		//String reportName = "AP Invoice Head Report - " + fromDate + " - " + toDate;
 		ReportViewe view = new ReportViewe();
 		try {
-			pdf_result = view.pdfReportViewInlineSystemOpen("apInvoiceHead.jasper", reportName, apInvoiceHeadList, null,
+			pdf_result = view.pdfReportViewInlineSystemOpen("apInvoiceSummaryReport.jasper", reportName, apInvoiceHeadList, null,
 					response);
 		} catch (Exception e) {
 			e.printStackTrace();
