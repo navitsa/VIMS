@@ -28,27 +28,42 @@
 
 	<script>
 		function getDBBackup(){
-			Swal.fire ({
-				   title: 'Wait ...',
-				   onBeforeOpen: () => {
-				     Swal.showLoading ()
-				   }
-				})
-				
+// 			Swal.fire ({
+// 				   title: 'Wait ...',
+// 				   onBeforeOpen: () => {
+// 				     Swal.showLoading ()
+// 				   }
+// 				})
+							swal(
+									
+									{
+						 				   title: 'Wait ...',
+						 				   onBeforeOpen: () => {
+						 				     Swal.showLoading ()
+						 				   }
+						 				}	
+									
+									
+									
+									
+								);
 			$.ajax({
 				type : 'GET',
 				url : "startDbBackup",
 				success : function(data) {
-				
-					Swal.close();
+					
+					//Swal.close();
 					if(data=="1"){
 
-						
-					    swal("Backup created successfully!", {
-						      icon: "success",
-						    });
-					  
+						//alert("Error ");
 					
+					  
+						swal(
+								"Backup created successfully!",
+								{
+									icon : "success",
+								
+								});
 					}else if(data=="0"){
 						swal({
 							  //title: "Are you sure?",

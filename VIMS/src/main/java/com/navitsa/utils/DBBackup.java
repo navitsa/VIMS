@@ -11,9 +11,9 @@ public  class DBBackup {
 	
 		String mysqlpath="C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\";
 		String userName="root";
-		String password="peLa071it";
+		String password="neV071it";
 		String port="3306";
-		String dbname="vetest";
+		String dbname="vims";
 		
 		
 		Process p = null;
@@ -23,12 +23,12 @@ public  class DBBackup {
     		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
     		String backupDateStr = format.format(backupDate);
         	
-        	
+    		System.out.println("run bak");
             Runtime runtime = Runtime.getRuntime();
             p = runtime.exec(mysqlpath+"mysqldump -u"+userName+" -p"+password+" -P "+port+" --add-drop-database -B "+dbname+" -r "+dbBackPath+"DB_BAK_"+backupDateStr+".sql");
 //change the dbpass and dbname with your dbpass and dbname
             int processComplete = p.waitFor();
-
+            System.out.println("ok bak");
             if (processComplete == 0) {
 
                 System.out.println("Backup created successfully!");
