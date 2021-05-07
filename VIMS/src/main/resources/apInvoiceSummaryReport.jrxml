@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="apInvoiceSummaryReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5bf82392-d494-49cf-b64d-90f1c93afb34">
 	<property name="ireport.zoom" value="1.0000000000000009"/>
-	<property name="ireport.x" value="48"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="header" class="java.lang.String"/>
 	<parameter name="address" class="java.lang.String"/>
@@ -10,14 +10,40 @@
 	<parameter name="img" class="java.lang.Object"/>
 	<field name="apInvoiceHeadId" class="java.lang.String"/>
 	<field name="supplierId" class="java.lang.String"/>
-	<field name="supplierGlCode" class="java.lang.String"/>
+	<field name="referenceNo" class="java.lang.String"/>
 	<field name="date" class="java.lang.String"/>
 	<field name="netTotal" class="java.lang.Long"/>
+	<field name="grossTotal" class="java.lang.Long"/>
+	<field name="taxTotal" class="java.lang.Long"/>
+	<field name="discountTotal" class="java.lang.Long"/>
+	<group name="Invoice Date">
+		<groupExpression><![CDATA[$F{date}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="0" y="5" width="802" height="20" backcolor="#FFFFFF" uuid="aa1093e4-6ff4-4f93-8b9b-817dec4a61d8"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="10"/>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="95" splitType="Stretch">
+		<band height="90" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="90" height="90" uuid="5cc07360-4dc8-4279-b6fe-818b990614e1"/>
 				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{img})).getImage()]]></imageExpression>
@@ -55,7 +81,7 @@
 	<columnHeader>
 		<band height="25" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="120" height="25" backcolor="#CCFFFF" uuid="2ff9e3f6-199a-4a98-b6cf-c5f6cfd52159"/>
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="25" backcolor="#CCFFFF" uuid="2ff9e3f6-199a-4a98-b6cf-c5f6cfd52159"/>
 				<box leftPadding="0" rightPadding="0">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -67,10 +93,10 @@
 					<font fontName="Arial" size="11" isBold="true"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
-				<text><![CDATA[Date]]></text>
+				<text><![CDATA[Invoice ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="120" y="0" width="120" height="25" backcolor="#CCFFFF" uuid="f4e01396-8439-4743-84af-8e4b33aba4e7"/>
+				<reportElement mode="Opaque" x="100" y="0" width="100" height="25" backcolor="#CCFFFF" uuid="f4e01396-8439-4743-84af-8e4b33aba4e7"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -79,10 +105,10 @@
 					<font fontName="Arial" size="11" isBold="true"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
-				<text><![CDATA[Invoice ID]]></text>
+				<text><![CDATA[Reference No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="240" y="0" width="240" height="25" backcolor="#CCFFFF" uuid="03a60b8b-bf73-43cc-965e-59324006d77a"/>
+				<reportElement mode="Opaque" x="200" y="0" width="202" height="25" backcolor="#CCFFFF" uuid="03a60b8b-bf73-43cc-965e-59324006d77a"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -94,19 +120,7 @@
 				<text><![CDATA[Supplier ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="480" y="0" width="202" height="25" backcolor="#CCFFFF" uuid="977aca56-06f6-4e9f-a664-fa64641641cf"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="11" isBold="true"/>
-					<paragraph leftIndent="5"/>
-				</textElement>
-				<text><![CDATA[Supplier GL Account]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="682" y="0" width="120" height="25" backcolor="#CCFFFF" uuid="a9c5386f-3724-45f2-9c0c-3f200ed721e7"/>
+				<reportElement mode="Opaque" x="702" y="0" width="100" height="25" backcolor="#CCFFFF" uuid="a9c5386f-3724-45f2-9c0c-3f200ed721e7"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -117,12 +131,48 @@
 				</textElement>
 				<text><![CDATA[Net Total]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="602" y="0" width="100" height="25" backcolor="#CCFFFF" uuid="806b40c7-7aab-4276-b57c-a1f6254bb809"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[Taxes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="502" y="0" width="100" height="25" backcolor="#CCFFFF" uuid="142407ef-3081-409b-a161-f6dc046b3332"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[Discounts]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="402" y="0" width="100" height="25" backcolor="#CCFFFF" uuid="3ccaa732-cbc7-4cb8-a558-0d076d3d9b1a"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[Gross Total]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="30" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="0" y="10" width="120" height="20" backcolor="#FFFFFF" uuid="aa1093e4-6ff4-4f93-8b9b-817dec4a61d8"/>
+				<reportElement mode="Opaque" x="102" y="10" width="100" height="20" backcolor="#FFFFFF" uuid="253e8d78-b66b-4356-b968-d131d9607ec8"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -132,23 +182,10 @@
 					<font fontName="Arial"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{referenceNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="120" y="10" width="120" height="20" backcolor="#FFFFFF" uuid="253e8d78-b66b-4356-b968-d131d9607ec8"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial"/>
-					<paragraph leftIndent="5"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{apInvoiceHeadId}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="240" y="10" width="240" height="20" backcolor="#FFFFFF" uuid="5883a322-410b-4765-b64f-87a65dff0759"/>
+				<reportElement mode="Opaque" x="200" y="10" width="202" height="20" backcolor="#FFFFFF" uuid="5883a322-410b-4765-b64f-87a65dff0759"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -160,21 +197,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{supplierId}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="480" y="10" width="202" height="20" backcolor="#FFFFFF" uuid="5d37e0c5-2415-4c25-9dba-81b72d40baf6"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial"/>
-					<paragraph leftIndent="5"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{supplierGlCode}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="682" y="10" width="120" height="20" backcolor="#FFFFFF" uuid="4425e314-209b-4030-9f8c-cca7c7fdf5ad"/>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="702" y="10" width="100" height="20" backcolor="#FFFFFF" uuid="4425e314-209b-4030-9f8c-cca7c7fdf5ad"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -186,9 +210,58 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{netTotal}]]></textFieldExpression>
 			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="0" y="10" width="100" height="20" backcolor="#FFFFFF" uuid="df288f3b-f278-4189-8098-437c246cee22"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apInvoiceHeadId}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="602" y="10" width="100" height="20" backcolor="#FFFFFF" uuid="5fc2cdfa-105f-4bbf-a353-c4e024843978"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="502" y="10" width="100" height="20" backcolor="#FFFFFF" uuid="5fc46311-d3a8-4dba-843b-6a8a04fd74fe"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{discountTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="402" y="10" width="100" height="20" backcolor="#FFFFFF" uuid="f961ca40-a659-4491-9618-69423ca713de"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grossTotal}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="20" splitType="Stretch"/>
-	</columnFooter>
 </jasperReport>

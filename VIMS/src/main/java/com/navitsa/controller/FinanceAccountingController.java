@@ -748,20 +748,18 @@ public class FinanceAccountingController {
 
 	@RequestMapping(value = "/saveAPInvoice", method = RequestMethod.POST)
 	public String saveAPInvoice(@Valid @ModelAttribute("apInvoiceForm") APInvoiceHead apInvoiceHead, BindingResult br,
-			@RequestParam(value = "detailsGlAccount") String[] detailsGlAccount,
-			@RequestParam(value = "detailsDescription") String[] detailsDescription,
-			@RequestParam(value = "detailsAmount") String[] detailsAmount,
-			@RequestParam(value = "taxesGlAccount") String[] taxesGlAccount,
-			@RequestParam(value = "taxesDescription") String[] taxesDescription,
-			@RequestParam(value = "taxesAmount") String[] taxesAmount, Model m, HttpSession session,
+			@RequestParam(value = "detailsItemCode") String[] detailsItemCode,
+			@RequestParam(value = "detailsUnitPrice") Long[] detailsUnitPrice,
+			@RequestParam(value = "detailsQuantity") int[] detailsQuantity,
+			@RequestParam(value = "detailsDiscount") Long[] detailsDiscount,
+			@RequestParam(value = "detailsTotal") Long[] detailsTotal,
+			@RequestParam(value = "taxesCode") String[] taxesCode,
+			@RequestParam(value = "taxesTotal") Long[] taxesTotal, Model m, HttpSession session,
 			HttpServletResponse response) {
 
+		/*
 		Long netTotal = 0L;
-		List<APInvoiceDetails> apInvoiceDetailsList = new ArrayList<>();
-		List<APInvoiceTax> apInvoiceTaxList = new ArrayList<>();
-		apInvoiceHead.setApInvoiceHeadId("00000".substring(financeAccountingService.maxAPInvoiceHeadId().length())
-				+ financeAccountingService.maxAPInvoiceHeadId());
-
+				
 		for (int c = 0; c < detailsAmount.length; c++) {
 			netTotal = netTotal + (Double.valueOf(detailsAmount[c]).longValue() * 100);
 		}
@@ -771,26 +769,38 @@ public class FinanceAccountingController {
 		}
 
 		apInvoiceHead.setNetTotal(netTotal);
-
-		for (int e = 0; e < detailsGlAccount.length; e++) {
+		*/
+		
+		Long grossTotal = apInvoiceHead.getGrossTotal();
+		Long discountTotal = apInvoiceHead.getDiscountTotal();
+		Long taxTotal = apInvoiceHead.getTaxTotal();
+		Long netTotal = apInvoiceHead.getNetTotal();
+		apInvoiceHead.setGrossTotal(grossTotal * 100);
+		apInvoiceHead.setDiscountTotal(discountTotal * 100);;
+		apInvoiceHead.setTaxTotal(taxTotal * 100);
+		apInvoiceHead.setNetTotal(netTotal * 100);
+		
+		List<APInvoiceDetails> apInvoiceDetailsList = new ArrayList<>();
+		List<APInvoiceTax> apInvoiceTaxList = new ArrayList<>();
+		apInvoiceHead.setApInvoiceHeadId("00000".substring(financeAccountingService.maxAPInvoiceHeadId().length())
+				+ financeAccountingService.maxAPInvoiceHeadId());
+		
+		for (int i = 0; i < detailsItemCode.length; i++) {
 			APInvoiceDetails apInvoiceDetails = new APInvoiceDetails();
-			Glaccount glaccount = new Glaccount();
-			glaccount.setGlAccNo(detailsGlAccount[e]);
 			apInvoiceDetails.setApInvoiceHeadId(apInvoiceHead);
-			apInvoiceDetails.setGlAccNo(glaccount);
-			apInvoiceDetails.setDescription(detailsDescription[e]);
-			apInvoiceDetails.setAmount(Double.valueOf(detailsAmount[e]).longValue() * 100);
+			apInvoiceDetails.setItemCode(detailsItemCode[i]);
+			apInvoiceDetails.setUnitPrice(detailsUnitPrice[i] * 100);
+			apInvoiceDetails.setQuantity(detailsQuantity[i]);
+			apInvoiceDetails.setDiscount(detailsDiscount[i] * 100);
+			apInvoiceDetails.setTotal(detailsTotal[i] * 100);
 			apInvoiceDetailsList.add(apInvoiceDetails);
 		}
 
-		for (int f = 0; f < taxesGlAccount.length; f++) {
+		for (int j = 0; j < taxesCode.length; j++) {
 			APInvoiceTax apInvoiceTax = new APInvoiceTax();
-			Glaccount glaccount = new Glaccount();
-			glaccount.setGlAccNo(taxesGlAccount[f]);
 			apInvoiceTax.setApInvoiceHeadId(apInvoiceHead);
-			apInvoiceTax.setGlAccNo(glaccount);
-			apInvoiceTax.setDescription(taxesDescription[f]);
-			apInvoiceTax.setAmount(Double.valueOf(taxesAmount[f]).longValue() * 100);
+			apInvoiceTax.setTaxCode(taxesCode[j]);
+			apInvoiceTax.setTotal(taxesTotal[j] * 100);
 			apInvoiceTaxList.add(apInvoiceTax);
 		}
 
@@ -824,9 +834,12 @@ public class FinanceAccountingController {
 			APInvoiceHead apInvoiceHead = new APInvoiceHead();
 			apInvoiceHead.setApInvoiceHeadId(apInvoiceHeadList.get(i).getApInvoiceHeadId());
 			apInvoiceHead.setSupplierId(apInvoiceHeadList.get(i).getSupplierId());
-			apInvoiceHead.setSupplierGlCode(apInvoiceHeadList.get(i).getSupplierGlCode());
+			apInvoiceHead.setReferenceNo(apInvoiceHeadList.get(i).getReferenceNo());
 			apInvoiceHead.setDate(apInvoiceHeadList.get(i).getDate());
-			apInvoiceHead.setNetTotal(apInvoiceHeadList.get(i).getNetTotal()/100);
+			apInvoiceHead.setGrossTotal(apInvoiceHeadList.get(i).getGrossTotal() / 100);
+			apInvoiceHead.setDiscountTotal(apInvoiceHeadList.get(i).getDiscountTotal() / 100);
+			apInvoiceHead.setTaxTotal(apInvoiceHeadList.get(i).getTaxTotal() / 100);
+			apInvoiceHead.setNetTotal(apInvoiceHeadList.get(i).getNetTotal() / 100);
 			list.add(apInvoiceHead);
 			
 		}

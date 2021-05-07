@@ -19,31 +19,26 @@ public class APInvoiceTax {
 	@Column(name = "ap_invoice_tax_id")
 	private int apInvoiceTaxId;
 
-	@Column(name = "description")
-	String description;
+	@Column(name = "tax_code")
+	String taxCode;
 
-	@Column(name = "amount")
-	Long amount;
+	@Column(name = "total")
+	Long total;
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ap_invoice_head_id", referencedColumnName = "ap_invoice_head_id")
 	private APInvoiceHead apInvoiceHeadId;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "gl_code", referencedColumnName = "GlAccNo")
-	private Glaccount glAccNo;
-
 	public APInvoiceTax() {
 
 	}
 
-	public APInvoiceTax(int apInvoiceTaxId, String description, Long amount, APInvoiceHead apInvoiceHeadId,
-			Glaccount glAccNo) {
+	public APInvoiceTax(int apInvoiceTaxId, String taxCode, Long total, APInvoiceHead apInvoiceHeadId) {
+		super();
 		this.apInvoiceTaxId = apInvoiceTaxId;
-		this.description = description;
-		this.amount = amount;
+		this.taxCode = taxCode;
+		this.total = total;
 		this.apInvoiceHeadId = apInvoiceHeadId;
-		this.glAccNo = glAccNo;
 	}
 
 	public int getApInvoiceTaxId() {
@@ -54,20 +49,20 @@ public class APInvoiceTax {
 		this.apInvoiceTaxId = apInvoiceTaxId;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getTaxCode() {
+		return taxCode;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setTaxCode(String taxCode) {
+		this.taxCode = taxCode;
 	}
 
-	public Long getAmount() {
-		return amount;
+	public Long getTotal() {
+		return total;
 	}
 
-	public void setAmount(Long amount) {
-		this.amount = amount;
+	public void setTotal(Long total) {
+		this.total = total;
 	}
 
 	public APInvoiceHead getApInvoiceHeadId() {
@@ -78,17 +73,9 @@ public class APInvoiceTax {
 		this.apInvoiceHeadId = apInvoiceHeadId;
 	}
 
-	public Glaccount getGlAccNo() {
-		return glAccNo;
-	}
-
-	public void setGlAccNo(Glaccount glAccNo) {
-		this.glAccNo = glAccNo;
-	}
-
 	@Override
 	public String toString() {
-		return "APInvoiceTax [apInvoiceTaxId=" + apInvoiceTaxId + ", description=" + description + ", amount=" + amount
-				+ ", apInvoiceHeadId=" + apInvoiceHeadId + ", glAccNo=" + glAccNo + "]";
+		return "APInvoiceTax [apInvoiceTaxId=" + apInvoiceTaxId + ", taxCode=" + taxCode + ", total=" + total
+				+ ", apInvoiceHeadId=" + apInvoiceHeadId + "]";
 	}
 }

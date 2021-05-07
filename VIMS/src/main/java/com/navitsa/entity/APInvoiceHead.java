@@ -16,12 +16,21 @@ public class APInvoiceHead {
 	@Column(name = "supplier_id")
 	String supplierId;
 
-	@Column(name = "supplier_gl_code")
-	String supplierGlCode;
+	@Column(name = "reference_no")
+	String referenceNo;
 
 	@Column(name = "date")
 	String date;
 
+	@Column(name = "gross_total")
+	Long grossTotal;
+	
+	@Column(name = "discount_total")
+	Long discountTotal;
+	
+	@Column(name = "tax_total")
+	Long taxTotal;
+	
 	@Column(name = "net_total")
 	Long netTotal;
 
@@ -29,12 +38,16 @@ public class APInvoiceHead {
 
 	}
 
-	public APInvoiceHead(String apInvoiceHeadId, String supplierId, String supplierGlCode, String date,
-			Long netTotal) {
+	public APInvoiceHead(String apInvoiceHeadId, String supplierId, String referenceNo, String date, Long grossTotal,
+			Long discountTotal, Long taxTotal, Long netTotal) {
+		super();
 		this.apInvoiceHeadId = apInvoiceHeadId;
 		this.supplierId = supplierId;
-		this.supplierGlCode = supplierGlCode;
+		this.referenceNo = referenceNo;
 		this.date = date;
+		this.grossTotal = grossTotal;
+		this.discountTotal = discountTotal;
+		this.taxTotal = taxTotal;
 		this.netTotal = netTotal;
 	}
 
@@ -54,12 +67,12 @@ public class APInvoiceHead {
 		this.supplierId = supplierId;
 	}
 
-	public String getSupplierGlCode() {
-		return supplierGlCode;
+	public String getReferenceNo() {
+		return referenceNo;
 	}
 
-	public void setSupplierGlCode(String supplierGlCode) {
-		this.supplierGlCode = supplierGlCode;
+	public void setReferenceNo(String referenceNo) {
+		this.referenceNo = referenceNo;
 	}
 
 	public String getDate() {
@@ -68,6 +81,30 @@ public class APInvoiceHead {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public Long getGrossTotal() {
+		return grossTotal;
+	}
+
+	public void setGrossTotal(Long grossTotal) {
+		this.grossTotal = grossTotal;
+	}
+
+	public Long getDiscountTotal() {
+		return discountTotal;
+	}
+
+	public void setDiscountTotal(Long discountTotal) {
+		this.discountTotal = discountTotal;
+	}
+
+	public Long getTaxTotal() {
+		return taxTotal;
+	}
+
+	public void setTaxTotal(Long taxTotal) {
+		this.taxTotal = taxTotal;
 	}
 
 	public Long getNetTotal() {
@@ -80,7 +117,8 @@ public class APInvoiceHead {
 
 	@Override
 	public String toString() {
-		return "APInvoiceHead [apInvoiceHeadId=" + apInvoiceHeadId + ", supplierId=" + supplierId + ", supplierGlCode="
-				+ supplierGlCode + ", date=" + date + ", netTotal=" + netTotal + "]";
+		return "APInvoiceHead [apInvoiceHeadId=" + apInvoiceHeadId + ", supplierId=" + supplierId + ", referenceNo="
+				+ referenceNo + ", date=" + date + ", grossTotal=" + grossTotal + ", discountTotal=" + discountTotal
+				+ ", taxTotal=" + taxTotal + ", netTotal=" + netTotal + "]";
 	}
 }
