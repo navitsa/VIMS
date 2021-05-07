@@ -48,12 +48,55 @@ public class TestLaneHead {
 	@Column(name = "LaneCap")
 	private String laneCap;
 	
+	@Column(name = "Maha_FTP_User_Name")
+	private String mahaFTPUs;
+	
+	@Column(name = "Maha_FTP_Password")
+	private String mahaFTPPass;
+	
+	@Column(name = "AVL_FTP_User_Name")
+	private String avlFTPUs;
+	
+	@Column(name = "AVL_FTP_Password")
+	private String avlFTPPass;
 
 	@ManyToOne(optional = true,fetch = FetchType.EAGER)
 	@JoinColumn(name="GateID" , referencedColumnName="GateID" )
 	private Gate gateID;
 	
 	
+	public String getMahaFTPUs() {
+		return mahaFTPUs;
+	}
+
+	public void setMahaFTPUs(String mahaFTPUs) {
+		this.mahaFTPUs = mahaFTPUs;
+	}
+
+	public String getMahaFTPPass() {
+		return mahaFTPPass;
+	}
+
+	public void setMahaFTPPass(String mahaFTPPass) {
+		this.mahaFTPPass = mahaFTPPass;
+	}
+
+	public String getAvlFTPUs() {
+		return avlFTPUs;
+	}
+
+	public void setAvlFTPUs(String avlFTPUs) {
+		this.avlFTPUs = avlFTPUs;
+	}
+
+	public String getAvlFTPPass() {
+		return avlFTPPass;
+	}
+
+	public void setAvlFTPPass(String avlFTPPass) {
+		this.avlFTPPass = avlFTPPass;
+	}
+
 	public String getTestLaneHeadId() {
 		return testLaneHeadId;
 	}

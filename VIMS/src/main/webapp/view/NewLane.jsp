@@ -13,6 +13,13 @@
 <html lang="en">
 <head>
 <%@include file="../WEB-INF/jsp/head.jsp"%>
+
+<style>
+
+div.groove {border-style: groove;}
+
+</style>
+
 </head>
 <body>
 	<div class="wrapper">
@@ -135,10 +142,11 @@
 														</form:select>
 													</div>
 												</div>
-
+<div class="groove">
+<p style="margin:10px; color:red">MAHA</p>
 												<div class="form-group row">
 													<div class="col-sm-4">
-														<label class="l-fontst">Maha PC IP Address</label>
+														<label class="l-fontst">IP Address</label>
 													</div>
 													<div class="col-sm-6">
 														<form:input class="form-control form-control-user fontst"
@@ -148,17 +156,40 @@
 
 												<div class="form-group row">
 													<div class="col-sm-4">
-														<label class="l-fontst">Maha FTP Path</label>
+														<label class="l-fontst">FTP Path</label>
 													</div>
 													<div class="col-sm-6">
 														<form:input class="form-control form-control-user fontst"
 															path="mahaFtpPath" placeholder="Enter FTP Path" />
 													</div>
 												</div>
-
+												
+													<div class="form-group row">
+													<div class="col-sm-4">
+														<label class="l-fontst">FTP User name</label>
+													</div>
+													<div class="col-sm-6">
+														<form:input class="form-control form-control-user fontst"
+															path="" placeholder="User name" />
+													</div>
+												</div>
+												
+													<div class="form-group row">
+													<div class="col-sm-4">
+														<label class="l-fontst">FTP Password</label>
+													</div>
+													<div class="col-sm-6">
+														<form:input type="password" class="form-control form-control-user fontst"
+															path="" placeholder="FTP Password" />
+													</div>
+												</div>
+</div>
+<br>
+<div class="groove">
+<p style="margin:10px; color:red">AVL</p>
 												<div class="form-group row">
 													<div class="col-sm-4">
-														<label class="l-fontst">AVL PC IP Address</label>
+														<label class="l-fontst">IP Address</label>
 													</div>
 													<div class="col-sm-6">
 														<form:input class="form-control form-control-user fontst"
@@ -168,14 +199,35 @@
 
 												<div class="form-group row">
 													<div class="col-sm-4">
-														<label class="l-fontst">AVL FTP Path</label>
+														<label class="l-fontst">FTP Path</label>
 													</div>
 													<div class="col-sm-6">
 														<form:input class="form-control form-control-user fontst"
 															path="avlFtpPath" placeholder="Enter FTP Path" />
 													</div>
 												</div>
-
+												
+														<div class="form-group row">
+													<div class="col-sm-4">
+														<label class="l-fontst">FTP User name</label>
+													</div>
+													<div class="col-sm-6">
+														<form:input class="form-control form-control-user fontst"
+															path="" placeholder="User name" />
+													</div>
+												</div>
+												
+													<div class="form-group row">
+													<div class="col-sm-4">
+														<label class="l-fontst">FTP Password</label>
+													</div>
+													<div class="col-sm-6">
+														<form:input type="password" class="form-control form-control-user fontst"
+															path="" placeholder="FTP Password" />
+													</div>
+												</div>
+</div>
+<br>
 
 
 												<table>
