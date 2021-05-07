@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vehiclereceipt" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
 	<property name="ireport.zoom" value="1.610510000000006"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.x" value="404"/>
+	<property name="ireport.y" value="219"/>
 	<style name="bordre" fill="Solid">
 		<pen lineWidth="0.0"/>
 		<box>
@@ -320,8 +320,8 @@
 	</columnHeader>
 	<detail>
 		<band height="24">
-			<textField pattern="#,##0.00">
-				<reportElement style="bordre" isPrintRepeatedValues="false" mode="Opaque" x="398" y="1" width="183" height="20" uuid="9375768b-faa9-4292-89bf-b797156b8e3e"/>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="bordre" mode="Opaque" x="398" y="1" width="183" height="20" isPrintWhenDetailOverflows="true" uuid="9375768b-faa9-4292-89bf-b797156b8e3e"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -348,7 +348,7 @@
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement isPrintRepeatedValues="false" mode="Opaque" x="226" y="1" width="117" height="20" uuid="26e33f88-dea2-40d5-a26d-6aa78fbc81b4"/>
+				<reportElement mode="Opaque" x="226" y="1" width="117" height="20" isPrintWhenDetailOverflows="true" uuid="26e33f88-dea2-40d5-a26d-6aa78fbc81b4"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -359,9 +359,9 @@
 					<font fontName="Arial"/>
 					<paragraph rightIndent="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{rate}<=0.0 ? "":($F{rate}+" "+$F{type})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{rate}==0.0 ? "":($F{rate}+" "+$F{type})]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField pattern="">
 				<reportElement style="bordre" isPrintRepeatedValues="false" mode="Opaque" x="343" y="1" width="55" height="20" uuid="2731792f-cc89-434a-8d76-f4e02be7b2e7"/>
 				<box>
 					<topPen lineWidth="0.0"/>
