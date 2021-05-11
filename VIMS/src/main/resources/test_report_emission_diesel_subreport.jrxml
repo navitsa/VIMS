@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_emission_diesel_subreport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="7aea3084-683a-4dac-b740-699b7899281e">
-	<property name="ireport.zoom" value="4.0"/>
-	<property name="ireport.x" value="1353"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="pass fail color style">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $F{finalize_pass_fail_status}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
-			<style mode="Transparent" forecolor="#009966"/>
+			<style mode="Transparent" forecolor="#009966" isBold="true"/>
 		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $F{finalize_pass_fail_status}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>

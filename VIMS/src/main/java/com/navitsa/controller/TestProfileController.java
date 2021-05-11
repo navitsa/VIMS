@@ -344,7 +344,6 @@ public class TestProfileController {
 		 String vehicle_cat_id = tpd.getCk_testProfileDetailId().getVehicleCat().getCategoryID();
 		 VehiclesSubCategory vSub = tpd.getCk_testProfileDetailId().getSubCategoryID();
 		 TestLimitRule rule = tpd.getCk_testProfileDetailId().getTestLimitRule();
-
 		 
 		 if(vehicle_cat_id.contains("all")) {
 			 List <VehicleCategory> vCats = vehicleService.getVehicleCategory();
@@ -378,11 +377,7 @@ public class TestProfileController {
 
 	@RequestMapping(value="/getTestPointsByTestTypeID", method=RequestMethod.GET)
 	public @ResponseBody List<TestPoint> getTestPointsByTestTypeID(@RequestParam String typeID) {
-		System.out.println("call");
 		List<TestPoint> rs = testProfileService.getTestPointsByTestTypeID(typeID);
-		for (TestPoint testPoint : rs) {
-			System.out.println(testPoint.getTestPointName());
-		}
 		return rs;
 	}
 	
