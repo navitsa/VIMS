@@ -153,8 +153,7 @@ table.table td .add {
 
 												<fieldset>
 													<legend> Payment Type </legend>
-													<label>
-														<%-- <form:radiobutton path="paymentType"
+													<label> <%-- <form:radiobutton path="paymentType"
 															value="Vendor" disabled="true" /> Vendor </label> --%> <label><form:radiobutton
 																path="paymentType" value="Account" checked="checked" />
 															Account </label>
@@ -235,7 +234,7 @@ table.table td .add {
 													type="text" id="amount" />
 											</div>
 											<div class="col-lg">
-												<button type="button" class="btn btn-info mt-4 add-new">
+												<button type="button" class="btn btn-info mt-4 add-new" onclick="addGLDetailsRow();" >
 													<i class="fa fa-plus"></i> Add
 												</button>
 											</div>
@@ -276,10 +275,10 @@ table.table td .add {
 										enctype="multipart/form-data" style="display: none;">
 
 										<div class="row">
-											<div class="col-xl-3 col-lg-5">
+											<div class="col-xl-4 col-lg-5">
 												<!-- Card -->
 
-												<div class="card shadow mb-4" style="height: 600px;">
+												<div class="card shadow mb-4" style="height: 640px;">
 
 													<div class="card-body">
 
@@ -289,26 +288,11 @@ table.table td .add {
 																	class="custom-select custom-select-mb" id="glaccount"
 																	name="glaccount">
 																	<option value="">--SELECT--</option>
-																	<c:forEach items="${glaccountList}" var="t">
-																		<option value="${t.glAccNo}">${t.glAccountName}</option>
+																	<c:forEach items="${listSuppliers}" var="t">
+																		<option value="${t.supplierId}">${t.supplierId}</option>
 																	</c:forEach>
 																</select>
 															</div>
-														</div>
-														<div class="form-group row">
-															<div class="col-sm-10">
-																<div class="col-sm-2"></div>
-																<div class="btn-group btn-group-toggle"
-																	data-toggle="buttons">
-																	<label class="btn btn-outline-success btn-sm">
-																		<input type="radio" name="crdr" value="Credit" />Credit
-																	</label> <label class="btn btn-outline-primary btn-sm">
-																		<input type="radio" name="crdr" value="Debit" />Debit
-																	</label>
-																</div>
-															</div>
-															<div class="col-sm-2"></div>
-															<div class="col-sm-3"></div>
 														</div>
 														<div class="form-group row">
 															<div class="col-sm-12">
@@ -317,14 +301,116 @@ table.table td .add {
 																	onchange="" id="amount" />
 															</div>
 														</div>
-														<br>
-														<hr>
 														<div class="form-group row">
+															<div class="col-sm-10">
 
-															<div class="col-sm-12">
-																<input type="button" class="add-row btn btn-info"
-																	value="Add Payment" onclick="addEqumentToTable();">
+																<label class="l-fontst">Payment Type</label>
+
+																<div class="btn-group btn-group-toggle"
+																	data-toggle="buttons">
+																	<label class="btn btn-outline-success btn-sm">
+																		<input type="radio" name="paytype" value="Cash"
+																		onclick="cashPayment();" />Cash
+																	</label> <label class="btn btn-outline-primary btn-sm">
+																		<input type="radio" name="paytype" value="CreditCard"
+																		onclick="cardPayment();" />Credit Card
+																	</label> <label class="btn btn-outline-info btn-sm"> <input
+																		type="radio" name="paytype" value="Cheque"
+																		onclick="chequePayment();" /> Cheque
+																	</label> <label class="btn btn-outline-warning btn-sm">
+																		<input type="radio" name="paytype"
+																		value="BankTransfer" onclick="bankPayment();" />Bank
+																		Transfer
+																	</label>
+
+																</div>
+
 															</div>
+
+														</div>
+
+														<div class="form-group row" id="divName">
+															<div class="col-sm-4">
+																<label class="l-fontst" id="lname">Name</label>
+															</div>
+															<div class="col-sm-6">
+
+																<select class="form-control fontst" name="name"
+																	id="idname" onclick="getBankDetails()">
+
+																	<option value="N/A">--SELECT--</option>
+
+																	<c:forEach items="${bankNameList}" var="cus">
+																		<option value="${cus.bankid}">${cus.bankName}</option>
+																	</c:forEach>
+																</select>
+
+															</div>
+														</div>
+
+
+														<div class="form-group row" id="divNumber">
+															<div class="col-sm-4">
+																<label class="l-fontst" id="lnumber">Number</label>
+															</div>
+															<div class="col-sm-6">
+																<input class="form-control fontst" type="text"
+																	name="number" onchange="" id="inumber"
+																	required="required" />
+
+															</div>
+														</div>
+
+
+														<div class="form-group row" id="divAccount">
+															<div class="col-sm-4">
+																<label class="l-fontst" id="lglacc">G/L Account</label>
+															</div>
+															<div class="col-sm-6">
+																<select class="form-control fontst" name="glAccno"
+																	id="glAccno"">
+
+																	<option value="--">--SELECT--</option>
+
+																</select>
+
+															</div>
+														</div>
+
+														<div class="form-group row" id="divDate">
+															<div class="col-sm-4">
+																<label class="l-fontst" id="lexpData">Exp.Date</label>
+															</div>
+															<div class="col-sm-6">
+																<input class="form-control fontst" type="date"
+																	name="expDate" onchange="" id="expDate"
+																	required="required" />
+
+															</div>
+														</div>
+
+														<div class="form-group row" id="divCharges">
+															<div class="col-sm-4">
+																<label class="l-fontst" id="lbankchg">Bank
+																	Charges</label>
+															</div>
+															<div class="col-sm-6">
+																<input class="form-control fontst" type="text"
+																	name="bankCharges" onchange="" id="bankCharges"
+																	required="required" />
+
+															</div>
+														</div>
+														
+														<div class="form-group row">
+															<br>
+															<div class="col-sm-12">
+																<button type="submit"
+																	class="btn  btn-block btn-danger btn-rounded tabStyle">Process
+																	Payment</button>
+																<!-- 											<a href="#" class="btn btn-primary" onclick="runCancelInvoice();">Invoice Cancel</a>																 -->
+															</div>
+
 														</div>
 
 													</div>
@@ -332,8 +418,8 @@ table.table td .add {
 												</div>
 											</div>
 
-											<div class="col-xl-9 col-lg-5">
-												<div class="card shadow mb-4" style="height: 600px;">
+											<div class="col-xl-8 col-lg-5">
+												<div class="card shadow mb-4" style="height: 640px;">
 													<div class="card-body">
 
 														<div class="col-sm-12">
@@ -358,30 +444,6 @@ table.table td .add {
 																</table>
 															</div>
 														</div>
-														<div class="form-group row">
-															<div class="col-sm-3">
-																<label class="l-fontst">Debit Total</label>
-															</div>
-															<div class="col-sm-8">
-																<p class="l-fontst" id="drTot"></p>
-															</div>
-														</div>
-														<div class="form-group row">
-															<div class="col-sm-3">
-																<label class="l-fontst">Credit Total</label>
-															</div>
-															<div class="col-sm-8">
-																<p class="l-fontst" id="crTot"></p>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-sm-4 mb-4 mb-sm-4"></div>
-															<div class="col-sm-6 mb-6 mb-sm-6">
-																<input id="createVoucher" type="button"
-																	class="btn btn-success" value="Create Voucher">
-															</div>
-														</div>
-
 													</div>
 													<!-- End of card body -->
 												</div>
@@ -405,7 +467,7 @@ table.table td .add {
 	</div>
 	<%@include file="../WEB-INF/jsp/commJs.jsp"%>
 
-	<script>
+	<!-- <script>
 		$(document)
 				.ready(
 						function() {
@@ -505,7 +567,7 @@ table.table td .add {
 								$(".add-new").removeAttr("disabled");
 							});
 						});
-	</script>
+	</script> -->
 	<script>
 		function caltotalAmount() {
 			var table = document.getElementById("table1"), sumVal = 0;
@@ -528,6 +590,328 @@ table.table td .add {
 			document.getElementById("vendorForm").style.display = 'none';
 			document.getElementById("accountForm").style.display = 'block'
 		}
+	</script>
+	<script type="text/javascript">
+		var bankCharges = document.getElementById("bankCharges");
+		var expDate = document.getElementById("expDate");
+		var glAccno = document.getElementById("glAccno");
+		var number = document.getElementById("inumber");
+		var idname = document.getElementById("idname");
+		var nameDiv = document.getElementById("divName");
+		var numberDiv = document.getElementById("divNumber");
+		var accountDiv = document.getElementById("divAccount");
+		var dateDiv = document.getElementById("divDate");
+		var chargesDiv = document.getElementById("divCharges");
+
+		$('#lname').text("");
+		$('#lexpData').text("");
+		$('#lglacc').text("");
+		$('#lbankchg').text("");
+		$('#lnumber').text("");
+
+		bankCharges.style.display = "none";
+		expDate.style.display = "none";
+		glAccno.style.display = "none";
+		number.style.display = "none";
+		idname.style.display = "none";
+
+		nameDiv.style.display = "none";
+		numberDiv.style.display = "none";
+		dateDiv.style.display = "none";
+		accountDiv.style.display = "none";
+		chargesDiv.style.display = "none";
+		//	  bankName.style.display = "none";
+
+		jQuery(document).ready(function() {
+
+			$('input:radio[name="paytype"]').change(function() {
+				//Cash 	Credit Card	  Cheque  Bank Transfer
+				//lbankchg expData lglacc lnumber lname  glAccno lexpData bankCharges
+				if ($(this).val() == 'Cash') {
+
+					$('#lname').text("");
+					$('#lexpData').text("");
+					$('#lglacc').text("");
+					$('#lbankchg').text("");
+					$('#lnumber').text("");
+
+					bankCharges.value = "0";
+					expDate.value = "1990-01-01";
+					glAccno.value = "--";
+					number.value = "--";
+					idname.value = "N/A"
+
+					bankCharges.style.display = "none";
+					expDate.style.display = "none";
+					glAccno.style.display = "none";
+					number.style.display = "none";
+					idname.style.display = "none";
+
+					nameDiv.style.display = "none";
+					numberDiv.style.display = "none";
+					dateDiv.style.display = "none";
+					accountDiv.style.display = "none";
+					chargesDiv.style.display = "none";
+					//  bankName.style.display = "none";
+
+				} else if ($(this).val() == 'CreditCard') {
+
+					$('#lname').text("");
+					$('#lexpData').text("Exp.Date");
+					$('#lglacc').text("");
+					$('#lbankchg').text("");
+					$('#lnumber').text("Credit Card Number");
+
+					bankCharges.value = "0";
+					expDate.value = "";
+					glAccno.value = "--";
+					number.value = "";
+					idname.value = "N/A";
+
+					bankCharges.style.display = "none";
+					expDate.style.display = "block";
+					glAccno.style.display = "none";
+					number.style.display = "block";
+					idname.style.display = "none";
+
+					nameDiv.style.display = "none";
+					numberDiv.style.display = "block";
+					dateDiv.style.display = "block";
+					accountDiv.style.display = "none";
+					chargesDiv.style.display = "none";
+					//  bankName.style.display = "none";
+
+				} else if ($(this).val() == 'Cheque') {
+
+					$('#lname').text("Name");
+					$('#lexpData').text("Due Date");
+					$('#lglacc').text("");
+					$('#lbankchg').text("");
+					$('#lnumber').text("Cheque Number");
+
+					bankCharges.value = "0";
+					expDate.value = "";
+					glAccno.value = "--";
+					number.value = "";
+					idname.value = "N/A"
+
+					bankCharges.style.display = "none";
+					expDate.style.display = "block";
+					glAccno.style.display = "none";
+					number.style.display = "block";
+					idname.style.display = "block";
+
+					nameDiv.style.display = "block";
+					numberDiv.style.display = "block";
+					dateDiv.style.display = "block";
+					accountDiv.style.display = "none";
+					chargesDiv.style.display = "none";
+					// bankName.style.display = "none";
+				} else if ($(this).val() == 'BankTransfer') {
+
+					$('#lname').text("Bank Name");
+					$('#lexpData').text("");
+					$('#lglacc').text("Bank Account");
+					$('#lbankchg').text("Bank Charges");
+					$('#lnumber').text("");
+
+					bankCharges.value = "";
+					expDate.value = "1990-01-01";
+					glAccno.value = "";
+					number.value = "--";
+					idname.value = "N/A"
+
+					bankCharges.style.display = "block";
+					expDate.style.display = "none";
+					glAccno.style.display = "block";
+					number.style.display = "none";
+					idname.style.display = "block";
+
+					nameDiv.style.display = "block";
+					numberDiv.style.display = "none";
+					dateDiv.style.display = "none";
+					accountDiv.style.display = "block";
+					chargesDiv.style.display = "block";
+					//  bankName.style.display = "block";
+
+				}
+			});
+
+		});
+
+		/*function cashPayment() {
+			document.getElementById("cardPayment").style.display = 'none';
+			document.getElementById("bankName").style.display = 'none';
+			document.getElementById("chequePayment").style.display = 'none';
+			document.getElementById("bankPayment").style.display = 'none';
+		}
+
+		function cardPayment() {
+			document.getElementById("cardPayment").style.display = 'block';
+			document.getElementById("bankName").style.display = 'none';
+			document.getElementById("chequePayment").style.display = 'none';
+			document.getElementById("bankPayment").style.display = 'none';
+		}
+
+		function chequePayment() {
+			document.getElementById("cardPayment").style.display = 'none';
+			document.getElementById("bankName").style.display = 'block';
+			document.getElementById("chequePayment").style.display = 'block';
+			document.getElementById("bankPayment").style.display = 'none';
+		}
+
+		function bankPayment() {
+			document.getElementById("cardPayment").style.display = 'none';
+			document.getElementById("bankName").style.display = 'block';
+			document.getElementById("chequePayment").style.display = 'none';
+			document.getElementById("bankPayment").style.display = 'block';
+		}*/
+
+		function getBankDetails() {
+
+			var bankid = document.getElementById("idname").value;
+			var slctSubcat = $('#glAccno'), option = "";
+			slctSubcat.empty();
+			option = "<option value='--'>--SELECT--</option>"
+			$
+					.ajax({
+						type : 'GET',
+						url : "getBankAccountByBank",
+						data : {
+							"bankid" : bankid
+						},
+						success : function(data) {
+
+							;
+							for (var i = 0; i < data.length; i++) {
+								option = option
+										+ "<option value='"+data[i].glAccNo.glAccNo + "'>"
+										+ data[i].bankAccountNo + "</option>";
+
+							}
+							slctSubcat.append(option);
+
+						},
+						error : function() {
+							alert("No return vMake data");
+						}
+
+					});
+
+		}
+	</script>
+	<script>
+	function addGLDetailsRow() {
+    	var glCodeValue = document.getElementById ("glAccNo").value;
+        var glAmountValue = document.getElementById ("amount").value;
+        var glRemarksValue = document.getElementById ("remarks").value;
+        //var glAmountValue = document.getElementById ("inputTaxesAmount").value;
+        if (glCodeValue == ''){
+        	swal(
+					"GL Code is empty!",
+					"",
+					{
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+        	return false;
+        } else if (glAmountValue == '' || isNaN(glAmountValue)) {
+        	swal(
+					"GL amount is empty or not a number!",
+					"",
+					{
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+        	return false;
+        } else if (glRemarksValue == '') {
+        	swal(
+					"GL Remarks empty!",
+					"",
+					{
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+        	return false;
+        } else {
+        var empTab = document.getElementById('table1');
+        var rowCnt = empTab.rows.length;   // table row count.
+        var tr = empTab.insertRow(rowCnt); // the table row.
+        //tr = empTab.insertRow(rowCnt);
+        for (var c = 0; c < 5; c++) {
+            var td = document.createElement('td'); // table definition.
+            td = tr.insertCell(c);
+            var ele;
+            var button; 
+            
+            if (c == 0) {
+                ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', glCodeValue);
+                ele.setAttribute('name', 'glAccNo');
+                ele.setAttribute('readonly', true);
+                td.appendChild(ele);
+                
+            }
+            else if (c == 1) {
+                ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', glCodeValue);
+                ele.setAttribute('name', 'glAccName');
+                ele.setAttribute('readonly', true);
+                td.appendChild(ele);
+            }
+            else if (c == 2) {
+                // 3rd column, will have textbox.
+                ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', glRemarksValue);
+                ele.setAttribute('name', 'remarks');
+                ele.setAttribute('readonly', true);
+                td.appendChild(ele);
+            } 
+            else if (c == 3) {
+                // 3rd column, will have textbox.
+                ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', glAmountValue);
+                ele.setAttribute('name', 'amount');
+                ele.setAttribute('readonly', true);
+                td.appendChild(ele);
+            }
+            else if (c == 4) { 
+                button = document.createElement('input');
+                button.setAttribute('type', 'button');
+                button.setAttribute('value', 'Remove');
+                button.setAttribute('onclick', 'removeGLDetailsRow(this)');
+                td.appendChild(button);
+            }
+        }  
+        $('#glAccNo').get(0).selectedIndex = 0;
+        document.getElementById ("amount").value = '';
+        document.getElementById ("remarks").value = '';
+        
+      } 
+    }
+    
+    // delete TABLE row function.
+    function removeGLDetailsRow(oButton) {
+        var empTab = document.getElementById('table1');
+        var row = oButton.parentNode.parentNode;
+        empTab.deleteRow(row.rowIndex); // button -> td -> tr.
+    }
 	</script>
 
 </body>

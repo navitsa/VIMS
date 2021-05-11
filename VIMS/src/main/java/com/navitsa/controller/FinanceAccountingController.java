@@ -861,4 +861,10 @@ public class FinanceAccountingController {
 		mav.addObject("pdfViewEq", pdf_result);
 		return mav;
 	}
+	
+	@ModelAttribute("listSuppliers")
+	public List<APInvoiceHead> getSupplierList() {
+		List<APInvoiceHead> list = financeAccountingService.getAPInvoiceHeadList();
+		return list;
+	}
 }

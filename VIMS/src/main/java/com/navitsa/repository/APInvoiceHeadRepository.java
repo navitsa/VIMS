@@ -21,4 +21,7 @@ public interface APInvoiceHeadRepository extends CrudRepository<APInvoiceHead, S
 
 	@Query(value = "SELECT apih FROM APInvoiceHead apih WHERE apih.date BETWEEN :fromDate AND :toDate")
 	public List<APInvoiceHead> getAPInvoiceHeadByDates(@Param("fromDate") String fromDate, @Param("toDate") String toDate);
+
+	@Query(value = "SELECT apih FROM APInvoiceHead apih")
+	public List<APInvoiceHead> getAPInvoiceHeadList();
 }

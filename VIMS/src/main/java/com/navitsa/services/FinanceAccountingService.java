@@ -181,4 +181,8 @@ public class FinanceAccountingService {
 	public List<APInvoiceHead> getAPInvoiceHeadByDates(String fromDate, String toDate) {
 		return apInvoiceHeadRepository.getAPInvoiceHeadByDates(fromDate, toDate);
 	}
+
+	public List<APInvoiceHead> getAPInvoiceHeadList() {
+		return apInvoiceHeadRepository.getAPInvoiceHeadList();
+	}
 }
