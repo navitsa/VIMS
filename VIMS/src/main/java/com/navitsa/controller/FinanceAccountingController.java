@@ -39,6 +39,7 @@ import com.navitsa.entity.GlPostingDetails;
 import com.navitsa.entity.GlPostingHead;
 import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.GlaccountMapping;
+import com.navitsa.entity.InvoiceHead;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
 import com.navitsa.entity.VehicleModel;
@@ -520,8 +521,9 @@ public class FinanceAccountingController {
 	}
 
 	@RequestMapping(value = ("/saveJournalVoucher"), method = RequestMethod.POST)
-	public @ResponseBody String saveJournalVoucher(@RequestParam("glaccno") String[] glaccno, @RequestParam("dramt") String[] dramt,
-			@RequestParam("cramt") String[] cramt, HttpServletResponse response, HttpSession session) {
+	public @ResponseBody String saveJournalVoucher(@RequestParam("glaccno") String[] glaccno,
+			@RequestParam("dramt") String[] dramt, @RequestParam("cramt") String[] cramt, HttpServletResponse response,
+			HttpSession session) {
 
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -758,33 +760,33 @@ public class FinanceAccountingController {
 			HttpServletResponse response) {
 
 		/*
-		Long netTotal = 0L;
-				
-		for (int c = 0; c < detailsAmount.length; c++) {
-			netTotal = netTotal + (Double.valueOf(detailsAmount[c]).longValue() * 100);
-		}
+		 * Long netTotal = 0L;
+		 * 
+		 * for (int c = 0; c < detailsAmount.length; c++) { netTotal = netTotal +
+		 * (Double.valueOf(detailsAmount[c]).longValue() * 100); }
+		 * 
+		 * for (int d = 0; d < taxesAmount.length; d++) { netTotal = netTotal +
+		 * (Double.valueOf(taxesAmount[d]).longValue() * 100); }
+		 * 
+		 * apInvoiceHead.setNetTotal(netTotal);
+		 */
 
-		for (int d = 0; d < taxesAmount.length; d++) {
-			netTotal = netTotal + (Double.valueOf(taxesAmount[d]).longValue() * 100);
-		}
-
-		apInvoiceHead.setNetTotal(netTotal);
-		*/
-		
 		Long grossTotal = apInvoiceHead.getGrossTotal();
 		Long discountTotal = apInvoiceHead.getDiscountTotal();
 		Long taxTotal = apInvoiceHead.getTaxTotal();
 		Long netTotal = apInvoiceHead.getNetTotal();
 		apInvoiceHead.setGrossTotal(grossTotal * 100);
-		apInvoiceHead.setDiscountTotal(discountTotal * 100);;
+		apInvoiceHead.setDiscountTotal(discountTotal * 100);
+		;
 		apInvoiceHead.setTaxTotal(taxTotal * 100);
 		apInvoiceHead.setNetTotal(netTotal * 100);
+		apInvoiceHead.setBalance(netTotal * 100);
 		
 		List<APInvoiceDetails> apInvoiceDetailsList = new ArrayList<>();
 		List<APInvoiceTax> apInvoiceTaxList = new ArrayList<>();
 		apInvoiceHead.setApInvoiceHeadId("00000".substring(financeAccountingService.maxAPInvoiceHeadId().length())
 				+ financeAccountingService.maxAPInvoiceHeadId());
-		
+
 		for (int i = 0; i < detailsItemCode.length; i++) {
 			APInvoiceDetails apInvoiceDetails = new APInvoiceDetails();
 			apInvoiceDetails.setApInvoiceHeadId(apInvoiceHead);
@@ -823,10 +825,10 @@ public class FinanceAccountingController {
 	}
 
 	@RequestMapping(value = "/previewAPInvoiceSummaryReport", method = RequestMethod.POST)
-	public ModelAndView previewAPInvoiceHeadReport(@RequestParam String fromDate, @RequestParam String toDate, 
+	public ModelAndView previewAPInvoiceHeadReport(@RequestParam String fromDate, @RequestParam String toDate,
 			HttpServletResponse response, HttpSession session) {
 		ModelAndView mav = new ModelAndView("apInvoiceSummaryReport");
-		String centerid = session.getAttribute("centerid")+"";
+		String centerid = session.getAttribute("centerid") + "";
 		CenterMaster centerMaster = centerService.getcenterById(centerid);
 		List<APInvoiceHead> list = new ArrayList<>();
 		List<APInvoiceHead> apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadByDates(fromDate, toDate);
@@ -841,17 +843,17 @@ public class FinanceAccountingController {
 			apInvoiceHead.setTaxTotal(apInvoiceHeadList.get(i).getTaxTotal() / 100);
 			apInvoiceHead.setNetTotal(apInvoiceHeadList.get(i).getNetTotal() / 100);
 			list.add(apInvoiceHead);
-			
+
 		}
 		String pdf_result = null;
 		String reportName = "AP Invoice Head Report - " + fromDate + " - " + toDate;
 		ReportViewe view = new ReportViewe();
-		Map<String,Object> params = new HashMap<>();
-    	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
-      	params.put("header",centerMaster.getPartner_ID().getReceiptHeader());
-      	params.put("address",centerMaster.getAdd03());
-      	params.put("fromDate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromDate)));
-      	params.put("toDate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
+		Map<String, Object> params = new HashMap<>();
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("header", centerMaster.getPartner_ID().getReceiptHeader());
+		params.put("address", centerMaster.getAdd03());
+		params.put("fromDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromDate)));
+		params.put("toDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
 		try {
 			pdf_result = view.pdfReportViewInlineSystemOpen("apInvoiceSummaryReport.jasper", reportName, list, params,
 					response);
@@ -861,10 +863,15 @@ public class FinanceAccountingController {
 		mav.addObject("pdfViewEq", pdf_result);
 		return mav;
 	}
-	
+
 	@ModelAttribute("listSuppliers")
-	public List<APInvoiceHead> getSupplierList() {
-		List<APInvoiceHead> list = financeAccountingService.getAPInvoiceHeadList();
+	public List<APInvoiceHead> getAPInvoiceHeadSupplierList() {
+		List<APInvoiceHead> list = financeAccountingService.getAPInvoiceHeadSupplierList();
 		return list;
+	}
+
+	@RequestMapping(value = "/getAPInvoicesBySupplier", method = RequestMethod.GET)
+	public @ResponseBody List<APInvoiceHead> getAPInvoicesBySupplier(@RequestParam String supplierId) {
+		return financeAccountingService.getAPInvoicesBySupplier(supplierId);
 	}
 }

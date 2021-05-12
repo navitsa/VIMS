@@ -234,7 +234,8 @@ table.table td .add {
 													type="text" id="amount" />
 											</div>
 											<div class="col-lg">
-												<button type="button" class="btn btn-info mt-4 add-new" onclick="addGLDetailsRow();" >
+												<button type="button" class="btn btn-info mt-4 add-new"
+													onclick="addGLDetailsRow();">
 													<i class="fa fa-plus"></i> Add
 												</button>
 											</div>
@@ -285,8 +286,8 @@ table.table td .add {
 														<div class="form-group row">
 															<div class="col-sm-12">
 																<label class="l-fontst">Supplier</label> <select
-																	class="custom-select custom-select-mb" id="glaccount"
-																	name="glaccount">
+																	class="custom-select custom-select-mb" id="supplierId"
+																	name="supplierId" onchange="getAPInvoicesBySupplier();">
 																	<option value="">--SELECT--</option>
 																	<c:forEach items="${listSuppliers}" var="t">
 																		<option value="${t.supplierId}">${t.supplierId}</option>
@@ -295,10 +296,17 @@ table.table td .add {
 															</div>
 														</div>
 														<div class="form-group row">
-															<div class="col-sm-12">
-																<label class="l-fontst">Amount</label> <input
-																	class="form-control fontst" type="number" name="amount"
-																	onchange="" id="amount" />
+															<div class="col-sm-6">
+																<label class="l-fontst">Total Due Amount</label> <input
+																	class="form-control fontst" type="text"
+																	name="totalDueAmount" onchange="" id="totalDueAmount"
+																	readonly="readonly" />
+															</div>
+															<div class="col-sm-6">
+																<label class="l-fontst">Payment</label> <input
+																	class="form-control fontst" type="number"
+																	name="payment" onchange="getAPInvoicesBySupplier();"
+																	id="payment" />
 															</div>
 														</div>
 														<div class="form-group row">
@@ -401,7 +409,7 @@ table.table td .add {
 
 															</div>
 														</div>
-														
+
 														<div class="form-group row">
 															<br>
 															<div class="col-sm-12">
@@ -424,9 +432,9 @@ table.table td .add {
 
 														<div class="col-sm-12">
 															<div id="paymentTable">
-																<table id="tblIncomingPayment"
+																<table id="tblAPInvoicePayment"
 																	class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-																	cellspacing="0" style="height: 50vh">
+																	style="height: 50vh">
 
 																	<thead>
 																		<tr>
@@ -435,10 +443,12 @@ table.table td .add {
 																			<th style="width: 10%">Date</th>
 																			<th style="width: 10%">Net Total</th>
 																			<th style="width: 10%">Balance</th>
+																			<th style="width: 10%">Payment</th>
+																			<th style="width: 10%">New Balance</th>
 																			<th style="width: 10%"></th>
 																		</tr>
 																	</thead>
-																	<tbody id="myTable">
+																	<tbody id="">
 
 																	</tbody>
 																</table>
@@ -739,34 +749,6 @@ table.table td .add {
 
 		});
 
-		/*function cashPayment() {
-			document.getElementById("cardPayment").style.display = 'none';
-			document.getElementById("bankName").style.display = 'none';
-			document.getElementById("chequePayment").style.display = 'none';
-			document.getElementById("bankPayment").style.display = 'none';
-		}
-
-		function cardPayment() {
-			document.getElementById("cardPayment").style.display = 'block';
-			document.getElementById("bankName").style.display = 'none';
-			document.getElementById("chequePayment").style.display = 'none';
-			document.getElementById("bankPayment").style.display = 'none';
-		}
-
-		function chequePayment() {
-			document.getElementById("cardPayment").style.display = 'none';
-			document.getElementById("bankName").style.display = 'block';
-			document.getElementById("chequePayment").style.display = 'block';
-			document.getElementById("bankPayment").style.display = 'none';
-		}
-
-		function bankPayment() {
-			document.getElementById("cardPayment").style.display = 'none';
-			document.getElementById("bankName").style.display = 'block';
-			document.getElementById("chequePayment").style.display = 'none';
-			document.getElementById("bankPayment").style.display = 'block';
-		}*/
-
 		function getBankDetails() {
 
 			var bankid = document.getElementById("idname").value;
@@ -801,117 +783,177 @@ table.table td .add {
 		}
 	</script>
 	<script>
-	function addGLDetailsRow() {
-    	var glCodeValue = document.getElementById ("glAccNo").value;
-        var glAmountValue = document.getElementById ("amount").value;
-        var glRemarksValue = document.getElementById ("remarks").value;
-        //var glAmountValue = document.getElementById ("inputTaxesAmount").value;
-        if (glCodeValue == ''){
-        	swal(
-					"GL Code is empty!",
-					"",
-					{
-						icon : "error",
-						buttons : {
-							confirm : {
-								className : 'btn btn-danger'
-							}
+		function addGLDetailsRow() {
+			var glCodeValue = document.getElementById("glAccNo").value;
+			var glAmountValue = document.getElementById("amount").value;
+			var glRemarksValue = document.getElementById("remarks").value;
+			//var glAmountValue = document.getElementById ("inputTaxesAmount").value;
+			if (glCodeValue == '') {
+				swal("GL Code is empty!", "", {
+					icon : "error",
+					buttons : {
+						confirm : {
+							className : 'btn btn-danger'
+						}
+					},
+				});
+				return false;
+			} else if (glAmountValue == '' || isNaN(glAmountValue)) {
+				swal("GL amount is empty or not a number!", "", {
+					icon : "error",
+					buttons : {
+						confirm : {
+							className : 'btn btn-danger'
+						}
+					},
+				});
+				return false;
+			} else if (glRemarksValue == '') {
+				swal("GL Remarks empty!", "", {
+					icon : "error",
+					buttons : {
+						confirm : {
+							className : 'btn btn-danger'
+						}
+					},
+				});
+				return false;
+			} else {
+				var empTab = document.getElementById('table1');
+				var rowCnt = empTab.rows.length; // table row count.
+				var tr = empTab.insertRow(rowCnt); // the table row.
+				//tr = empTab.insertRow(rowCnt);
+				for (var c = 0; c < 5; c++) {
+					var td = document.createElement('td'); // table definition.
+					td = tr.insertCell(c);
+					var ele;
+					var button;
+
+					if (c == 0) {
+						ele = document.createElement('input');
+						ele.setAttribute('type', 'text');
+						ele.setAttribute('value', glCodeValue);
+						ele.setAttribute('name', 'glAccNo');
+						ele.setAttribute('readonly', true);
+						td.appendChild(ele);
+
+					} else if (c == 1) {
+						ele = document.createElement('input');
+						ele.setAttribute('type', 'text');
+						ele.setAttribute('value', glCodeValue);
+						ele.setAttribute('name', 'glAccName');
+						ele.setAttribute('readonly', true);
+						td.appendChild(ele);
+					} else if (c == 2) {
+						// 3rd column, will have textbox.
+						ele = document.createElement('input');
+						ele.setAttribute('type', 'text');
+						ele.setAttribute('value', glRemarksValue);
+						ele.setAttribute('name', 'remarks');
+						ele.setAttribute('readonly', true);
+						td.appendChild(ele);
+					} else if (c == 3) {
+						// 3rd column, will have textbox.
+						ele = document.createElement('input');
+						ele.setAttribute('type', 'text');
+						ele.setAttribute('value', glAmountValue);
+						ele.setAttribute('name', 'amount');
+						ele.setAttribute('readonly', true);
+						td.appendChild(ele);
+					} else if (c == 4) {
+						button = document.createElement('input');
+						button.setAttribute('type', 'button');
+						button.setAttribute('value', 'Remove');
+						button.setAttribute('onclick',
+								'removeGLDetailsRow(this)');
+						td.appendChild(button);
+					}
+				}
+				$('#glAccNo').get(0).selectedIndex = 0;
+				document.getElementById("amount").value = '';
+				document.getElementById("remarks").value = '';
+
+			}
+		}
+
+		// delete TABLE row function.
+		function removeGLDetailsRow(oButton) {
+			var empTab = document.getElementById('table1');
+			var row = oButton.parentNode.parentNode;
+			empTab.deleteRow(row.rowIndex); // button -> td -> tr.
+		}
+
+		function getAPInvoicesBySupplier() {
+
+			var supplierId = document.getElementById("supplierId").value;
+			var payment = document.getElementById("payment").value;
+			var payAmount = 0;
+
+			if (payment != "") {
+				payAmount = payment;
+			}
+
+			$("#tblAPInvoicePayment tbody").empty();
+
+			$
+					.ajax({
+						type : 'GET',
+						url : "getAPInvoicesBySupplier",
+						data : {
+							"supplierId" : supplierId
 						},
-					});
-        	return false;
-        } else if (glAmountValue == '' || isNaN(glAmountValue)) {
-        	swal(
-					"GL amount is empty or not a number!",
-					"",
-					{
-						icon : "error",
-						buttons : {
-							confirm : {
-								className : 'btn btn-danger'
+						success : function(data) {
+							var totalBalance = 0;
+							$("#tblAPInvoicePayment tbody").empty();
+							for (var i = 0; i < data.length; i++) {
+								var payamount = 0;
+								var newBalance = 0;
+
+								if (payAmount <= 0) {
+									payamount = 0;
+									newBalance = 0;
+								} else {
+									payAmount = payAmount - data[i].balance
+											/ 100;
+									if (payAmount > 0) {
+										payamount = data[i].balance / 100;
+
+									} else {
+										payamount = payAmount + data[i].balance
+												/ 100;
+										newBalance = data[i].balance / 100
+												- payamount;
+									}
+								}
+								var result = "<tr><td>"
+										+ data[i].apInvoiceHeadId + "</td><td>"
+										+ data[i].referenceNo + "</td><td>"
+										+ data[i].date + "</td><td>"
+										+ data[i].netTotal / 100 + "</td><td>"
+										+ data[i].balance / 100 + "</td><td>"
+										+ payamount + "</td><td>" + newBalance
+										+ "</td></tr>";
+
+								$("#tblAPInvoicePayment tbody").append(result);
+								totalBalance = totalBalance + data[i].balance;
 							}
+							document.getElementById("totalDueAmount").value = (totalBalance / 100);
 						},
+						error : function() {
+							swal(
+									"No payable invoices for the selected suppliers",
+									"", {
+										icon : "info",
+										buttons : {
+											confirm : {
+												className : 'btn btn-danger'
+											}
+										},
+									});
+						}
+
 					});
-        	return false;
-        } else if (glRemarksValue == '') {
-        	swal(
-					"GL Remarks empty!",
-					"",
-					{
-						icon : "error",
-						buttons : {
-							confirm : {
-								className : 'btn btn-danger'
-							}
-						},
-					});
-        	return false;
-        } else {
-        var empTab = document.getElementById('table1');
-        var rowCnt = empTab.rows.length;   // table row count.
-        var tr = empTab.insertRow(rowCnt); // the table row.
-        //tr = empTab.insertRow(rowCnt);
-        for (var c = 0; c < 5; c++) {
-            var td = document.createElement('td'); // table definition.
-            td = tr.insertCell(c);
-            var ele;
-            var button; 
-            
-            if (c == 0) {
-                ele = document.createElement('input');
-                ele.setAttribute('type', 'text');
-                ele.setAttribute('value', glCodeValue);
-                ele.setAttribute('name', 'glAccNo');
-                ele.setAttribute('readonly', true);
-                td.appendChild(ele);
-                
-            }
-            else if (c == 1) {
-                ele = document.createElement('input');
-                ele.setAttribute('type', 'text');
-                ele.setAttribute('value', glCodeValue);
-                ele.setAttribute('name', 'glAccName');
-                ele.setAttribute('readonly', true);
-                td.appendChild(ele);
-            }
-            else if (c == 2) {
-                // 3rd column, will have textbox.
-                ele = document.createElement('input');
-                ele.setAttribute('type', 'text');
-                ele.setAttribute('value', glRemarksValue);
-                ele.setAttribute('name', 'remarks');
-                ele.setAttribute('readonly', true);
-                td.appendChild(ele);
-            } 
-            else if (c == 3) {
-                // 3rd column, will have textbox.
-                ele = document.createElement('input');
-                ele.setAttribute('type', 'text');
-                ele.setAttribute('value', glAmountValue);
-                ele.setAttribute('name', 'amount');
-                ele.setAttribute('readonly', true);
-                td.appendChild(ele);
-            }
-            else if (c == 4) { 
-                button = document.createElement('input');
-                button.setAttribute('type', 'button');
-                button.setAttribute('value', 'Remove');
-                button.setAttribute('onclick', 'removeGLDetailsRow(this)');
-                td.appendChild(button);
-            }
-        }  
-        $('#glAccNo').get(0).selectedIndex = 0;
-        document.getElementById ("amount").value = '';
-        document.getElementById ("remarks").value = '';
-        
-      } 
-    }
-    
-    // delete TABLE row function.
-    function removeGLDetailsRow(oButton) {
-        var empTab = document.getElementById('table1');
-        var row = oButton.parentNode.parentNode;
-        empTab.deleteRow(row.rowIndex); // button -> td -> tr.
-    }
+		}
 	</script>
 
 </body>

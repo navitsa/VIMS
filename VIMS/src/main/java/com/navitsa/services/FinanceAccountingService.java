@@ -182,7 +182,11 @@ public class FinanceAccountingService {
 		return apInvoiceHeadRepository.getAPInvoiceHeadByDates(fromDate, toDate);
 	}
 
-	public List<APInvoiceHead> getAPInvoiceHeadList() {
-		return apInvoiceHeadRepository.getAPInvoiceHeadList();
+	public List<APInvoiceHead> getAPInvoiceHeadSupplierList() {
+		return apInvoiceHeadRepository.getAPInvoiceHeadSupplierList();
+	}
+
+	public List<APInvoiceHead> getAPInvoicesBySupplier(String supplierId) {
+		return apInvoiceHeadRepository.getAPInvoicesBySupplier(supplierId);
 	}
 }

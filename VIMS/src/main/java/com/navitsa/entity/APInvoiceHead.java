@@ -34,12 +34,15 @@ public class APInvoiceHead {
 	@Column(name = "net_total")
 	Long netTotal;
 
+	@Column(name = "balance")
+	Long balance;
+	
 	public APInvoiceHead() {
 
 	}
 
 	public APInvoiceHead(String apInvoiceHeadId, String supplierId, String referenceNo, String date, Long grossTotal,
-			Long discountTotal, Long taxTotal, Long netTotal) {
+			Long discountTotal, Long taxTotal, Long netTotal, Long balance) {
 		super();
 		this.apInvoiceHeadId = apInvoiceHeadId;
 		this.supplierId = supplierId;
@@ -49,6 +52,7 @@ public class APInvoiceHead {
 		this.discountTotal = discountTotal;
 		this.taxTotal = taxTotal;
 		this.netTotal = netTotal;
+		this.balance = balance;
 	}
 
 	public String getApInvoiceHeadId() {
@@ -115,10 +119,18 @@ public class APInvoiceHead {
 		this.netTotal = netTotal;
 	}
 
+	public Long getBalance() {
+		return balance;
+	}
+
+	public void setBalance(Long balance) {
+		this.balance = balance;
+	}
+
 	@Override
 	public String toString() {
 		return "APInvoiceHead [apInvoiceHeadId=" + apInvoiceHeadId + ", supplierId=" + supplierId + ", referenceNo="
 				+ referenceNo + ", date=" + date + ", grossTotal=" + grossTotal + ", discountTotal=" + discountTotal
-				+ ", taxTotal=" + taxTotal + ", netTotal=" + netTotal + "]";
+				+ ", taxTotal=" + taxTotal + ", netTotal=" + netTotal + ", balance=" + balance + "]";
 	}
 }
