@@ -123,6 +123,23 @@
 									<div class="card shadow mb-4" style="height: 640px;">
 
 										<div class="card-body">
+
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Category Type</label>
+												</div>
+												<div class="col-sm-6">
+													<form:select class="form-control form-control-user fontst"
+														path="typeId.typeId">
+														<form:option value="">- Select Type -</form:option>
+														<c:forEach items="${alltypes}" var="types">
+															<form:option value="${types.typeId}">${types.type}</form:option>
+														</c:forEach>
+													</form:select>
+
+												</div>
+											</div>
+
 											<div class="form-group row">
 												<div class="col-sm-4">
 													<label class="l-fontst">Category ID</label>
@@ -205,6 +222,7 @@
 												<thead>
 													<tr>
 														<th style="width: 10%">ID</th>
+														<th style="width: 10%">Category Type</th>
 														<th style="width: 30%">Category</th>
 														<th style="width: 40%">Remark</th>
 														<th style="width: 20%">Status</th>
@@ -215,6 +233,7 @@
 													<c:forEach items="${categoryList}" var="cl">
 														<tr>
 															<td><div>${cl.categoryID}</div></td>
+															<td><div>${cl.typeId.typeId}</div></td>
 															<td><div>${cl.vehicleCategory}</div></td>
 															<td><div>${cl.remarks}</div></td>
 															<td><div>${cl.status}</div></td>
