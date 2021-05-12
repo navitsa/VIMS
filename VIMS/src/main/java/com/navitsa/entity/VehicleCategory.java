@@ -2,7 +2,10 @@ package com.navitsa.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -23,6 +26,20 @@ public class VehicleCategory {
 
 	@Column(name = "status")
 	private String status;
+	
+	@ManyToOne(optional = false,fetch = FetchType.EAGER)
+	@JoinColumn(name="Type_ID" , referencedColumnName="Type_ID" )
+	private VehicleCategoryType typeId;
+	
+	
+
+	public VehicleCategoryType getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(VehicleCategoryType typeId) {
+		this.typeId = typeId;
+	}
 
 	public String getCategoryID() {
 		return categoryID;
