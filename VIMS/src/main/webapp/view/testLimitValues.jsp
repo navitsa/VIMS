@@ -144,20 +144,19 @@
 										<div class="form-group row">
 											<div class="col-lg">
 												<div class="form-group form-floating-label">
-													<form:select id="testPara" class="form-control input-border-bottom" 
-													path="ck_testProfileDetailId.parameterCode.ck_paraCodeId.testParameter.testParameterId" required="required">
+													<select id="testParaSelect" class="form-control input-border-bottom" required="required" onchange="testParaSelectChange()">
 														<option></option>
 														<c:forEach items="${testParameters}" var="testPara">
 															<c:if test = "${testPara.testParameterId != '0'}">
-																<form:option value="${testPara.testParameterId}">${testPara.paraName}</form:option>
+																<option value="${testPara.testParameterId}">${testPara.paraName}</option>
 															</c:if>
 														</c:forEach>
-													</form:select>
-													<label for="testType" class="placeholder">Select test parameter</label>
+													</select>
+													<label for="testParaSelect" class="placeholder">Select test parameter</label>
 												</div>
 											</div>
 										</div>
-
+										<form:input type="hidden" id="testParaHiddenTxt" path="ck_testProfileDetailId.parameterCode.ck_paraCodeId.testParameter.testParameterId" value="0"/>
 										<div class="form-group row">
 											<div class="col-lg">
 												<div class="form-group form-floating-label">

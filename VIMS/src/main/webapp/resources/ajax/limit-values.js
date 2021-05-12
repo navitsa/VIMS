@@ -38,7 +38,7 @@ function getTestParameters(str)
 {
 
 	if (str=="") {
-		var dropDown = $('#testPara'), option="";
+		var dropDown = $('#testParaSelect'), option="";
 		dropDown.empty();
         //selected_option = "<option value='' selected>Select test parameter...</option>"
         //dropDown.append(selected_option);
@@ -51,17 +51,18 @@ function getTestParameters(str)
 	        data: {"typeID" : str},
 	        success: function(data){
 	        
-	            var dropDown=$('#testPara'), option="";
+	            var dropDown=$('#testParaSelect'), option="";
 	            dropDown.empty();
 				selected_option = "<option></option>"
 				dropDown.append(selected_option);
 	            
 	            if(data.length<=0){
-	            	document.getElementById("testPara").disabled=true;
+	            	document.getElementById("testParaSelect").disabled=true;
+	            	document.getElementById("testParaHiddenTxt").value = "0";
 	            	//document.getElementById("testAngle").disabled=true;
 	            }
 	            else{
-	            	document.getElementById("testPara").disabled=false;
+	            	document.getElementById("testParaSelect").disabled=false;
 	            	//document.getElementById("testAngle").disabled=false;
 	            }
 	
@@ -77,6 +78,11 @@ function getTestParameters(str)
 	
 	    });
 	}
+}
+
+function testParaSelectChange() {
+	var testParaID = document.getElementById("testParaSelect").value;
+	document.getElementById("testParaHiddenTxt").value = testParaID;
 }
 
 function getTestAngles(str)
