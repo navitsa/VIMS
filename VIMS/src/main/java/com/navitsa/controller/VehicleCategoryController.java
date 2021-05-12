@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.navitsa.entity.Gate;
 import com.navitsa.entity.VehicleCategory;
+import com.navitsa.entity.VehicleCategoryType;
 import com.navitsa.entity.VehicleMake;
 import com.navitsa.services.VehicleCategoryService;
 
@@ -76,4 +78,13 @@ public class VehicleCategoryController {
 		}
 		return mav;
 	}
+	
+	@ModelAttribute("alltypes")
+	public List<VehicleCategoryType>getAlltypes(){		
+		List<VehicleCategoryType> types = vehicleCategoryService.getAlltypes();
+		return types;
+		
+	}
+	
+	
 }

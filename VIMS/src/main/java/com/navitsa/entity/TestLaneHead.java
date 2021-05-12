@@ -28,14 +28,17 @@ public class TestLaneHead {
 	@Column(name = "Maha_PC_IP")
 	private String mahaPcIp;
 	
-	@Column(name = "Maha_FTP_Path")
-	private String mahaFtpPath;
+	@Column(name = "ES_IN")
+	private String mahaES_IN;
+	
+	@Column(name = "ES_OUT")
+	private String mahaES_OUT;
 	
 	@Column(name = "AVL_PC_IP")
 	private String avlPcIp;
 	
-	@Column(name = "AVL_FTP_Path")
-	private String avlFtpPath;
+	@Column(name = "XML_IN")
+	private String xmlIN;
 	
 	@ManyToOne(optional = false,fetch = FetchType.EAGER)
 	@JoinColumn(name="Center_ID" , referencedColumnName="Center_ID" )
@@ -48,23 +51,69 @@ public class TestLaneHead {
 	@Column(name = "LaneCap")
 	private String laneCap;
 	
-	@Column(name = "Maha_FTP_User_Name")
+	@Column(name = "Maha_FT_U_Name")
 	private String mahaFTPUs;
 	
-	@Column(name = "Maha_FTP_Password")
+	@Column(name = "Maha_FT_pwd")
 	private String mahaFTPPass;
 	
-	@Column(name = "AVL_FTP_User_Name")
+	@Column(name = "AVL_FT_U_Name")
 	private String avlFTPUs;
 	
-	@Column(name = "AVL_FTP_Password")
+	@Column(name = "AVL_FT_Pwd")
 	private String avlFTPPass;
+	
+	@Column(name = "Maha_F_Status")
+	private String mahaFstatus;
+	
+	@Column(name = "AVL_F_Status")
+	private String avlFstatus;
 
 	@ManyToOne(optional = true,fetch = FetchType.EAGER)
 	@JoinColumn(name="GateID" , referencedColumnName="GateID" )
 	private Gate gateID;
 	
 	
+	public String getMahaES_IN() {
+		return mahaES_IN;
+	}
+
+	public void setMahaES_IN(String mahaES_IN) {
+		this.mahaES_IN = mahaES_IN;
+	}
+
+	public String getMahaES_OUT() {
+		return mahaES_OUT;
+	}
+
+	public void setMahaES_OUT(String mahaES_OUT) {
+		this.mahaES_OUT = mahaES_OUT;
+	}
+
+	public String getXmlIN() {
+		return xmlIN;
+	}
+
+	public void setXmlIN(String xmlIN) {
+		this.xmlIN = xmlIN;
+	}
+
+	public String getMahaFstatus() {
+		return mahaFstatus;
+	}
+
+	public void setMahaFstatus(String mahaFstatus) {
+		this.mahaFstatus = mahaFstatus;
+	}
+
+	public String getAvlFstatus() {
+		return avlFstatus;
+	}
+
+	public void setAvlFstatus(String avlFstatus) {
+		this.avlFstatus = avlFstatus;
+	}
+
 	public String getMahaFTPUs() {
 		return mahaFTPUs;
 	}
@@ -164,28 +213,12 @@ public class TestLaneHead {
 		this.mahaPcIp = mahaPcIp;
 	}
 
-	public String getMahaFtpPath() {
-		return mahaFtpPath;
-	}
-
-	public void setMahaFtpPath(String mahaFtpPath) {
-		this.mahaFtpPath = mahaFtpPath;
-	}
-
 	public String getAvlPcIp() {
 		return avlPcIp;
 	}
 
 	public void setAvlPcIp(String avlPcIp) {
 		this.avlPcIp = avlPcIp;
-	}
-
-	public String getAvlFtpPath() {
-		return avlFtpPath;
-	}
-
-	public void setAvlFtpPath(String avlFtpPath) {
-		this.avlFtpPath = avlFtpPath;
 	}
 
 	public Gate getGateID() {
@@ -209,10 +242,7 @@ public class TestLaneHead {
 		this.centerID = centerID;
 		this.laneID = laneID;
 		this.laneCap = laneCap;
-	
-		this.avlFtpPath = avlFtpPath;
-		this.mahaPcIp = mahaPcIp;
-		this.mahaFtpPath = mahaFtpPath;
+		this.mahaPcIp = mahaPcIp;	
 		this.avlPcIp = avlPcIp;
 	}
 	
