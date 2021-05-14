@@ -24,7 +24,6 @@
 	top: 0;
 	right: 0;
 }
-
 .table-wrapper {
 	width: 900px;
 	margin: 30px auto;
@@ -32,66 +31,53 @@
 	padding: 20px;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
-
 table.table {
 	table-layout: fixed;
 }
-
 table.table tr th, table.table tr td {
 	border-color: #e9e9e9;
 }
-
 table.table th i {
 	font-size: 13px;
 	margin: 0 5px;
 	cursor: pointer;
 }
-
 table.table th:last-child {
 	width: 100px;
 }
-
 table.table td a {
 	cursor: pointer;
 	display: inline-block;
 	margin: 0 5px;
 	min-width: 24px;
 }
-
 table.table td a.add {
 	color: #27C46B;
 }
-
 table.table td a.edit {
 	color: #FFC107;
 }
-
 table.table td a.delete {
 	color: #E34724;
 }
-
 table.table td i {
 	font-size: 19px;
 }
-
 table.table td a.add i {
 	font-size: 24px;
 	margin-right: -1px;
 	position: relative;
 	top: 3px;
 }
-
 table.table .form-control {
 	height: 32px;
 	line-height: 32px;
 	box-shadow: none;
 	border-radius: 2px;
 }
-
 table.table .form-control.error {
 	border-color: #f50000;
 }
-
 table.table td .add {
 	display: none;
 }
@@ -227,7 +213,7 @@ table.table td .add {
 															${gl.glAccountName}</option>
 													</c:forEach>
 												</select>
-
+												
 											</div>
 											<div class="col-lg-3">
 												<label>Amount</label> <input class="form-control"
@@ -272,7 +258,7 @@ table.table td .add {
 
 									</form:form>
 
-									<form id="vendorForm" method="post"
+									<form id="vendorForm" action="saveAPInvoicePayment" method="POST"
 										enctype="multipart/form-data" style="display: none;">
 
 										<div class="row">
@@ -299,13 +285,13 @@ table.table td .add {
 															<div class="col-sm-6">
 																<label class="l-fontst">Total Due Amount</label> <input
 																	class="form-control fontst" type="text"
-																	name="totalDueAmount" onchange="" id="totalDueAmount"
+																	name="totalDue" onchange="" id="totalDueAmount"
 																	readonly="readonly" />
 															</div>
 															<div class="col-sm-6">
 																<label class="l-fontst">Payment</label> <input
 																	class="form-control fontst" type="number"
-																	name="payment" onchange="getAPInvoicesBySupplier();"
+																	name="totalPayment" onchange="getAPInvoicesBySupplier();"
 																	id="payment" />
 															</div>
 														</div>
@@ -317,16 +303,16 @@ table.table td .add {
 																<div class="btn-group btn-group-toggle"
 																	data-toggle="buttons">
 																	<label class="btn btn-outline-success btn-sm">
-																		<input type="radio" name="paytype" value="Cash"
+																		<input type="radio" name="paymentType" value="Cash"
 																		onclick="cashPayment();" />Cash
 																	</label> <label class="btn btn-outline-primary btn-sm">
-																		<input type="radio" name="paytype" value="CreditCard"
+																		<input type="radio" name="paymentType" value="CreditCard"
 																		onclick="cardPayment();" />Credit Card
 																	</label> <label class="btn btn-outline-info btn-sm"> <input
-																		type="radio" name="paytype" value="Cheque"
+																		type="radio" name="paymentType" value="Cheque"
 																		onclick="chequePayment();" /> Cheque
 																	</label> <label class="btn btn-outline-warning btn-sm">
-																		<input type="radio" name="paytype"
+																		<input type="radio" name="paymentType"
 																		value="BankTransfer" onclick="bankPayment();" />Bank
 																		Transfer
 																	</label>
@@ -344,7 +330,7 @@ table.table td .add {
 															<div class="col-sm-6">
 
 																<select class="form-control fontst" name="name"
-																	id="idname" onclick="getBankDetails()">
+																	id="idname" onchange="getBankDetails()">
 
 																	<option value="N/A">--SELECT--</option>
 
@@ -377,14 +363,10 @@ table.table td .add {
 															<div class="col-sm-6">
 																<select class="form-control fontst" name="glAccno"
 																	id="glAccno"">
-
 																	<option value="--">--SELECT--</option>
-
 																</select>
-
 															</div>
 														</div>
-
 														<div class="form-group row" id="divDate">
 															<div class="col-sm-4">
 																<label class="l-fontst" id="lexpData">Exp.Date</label>
@@ -393,10 +375,8 @@ table.table td .add {
 																<input class="form-control fontst" type="date"
 																	name="expDate" onchange="" id="expDate"
 																	required="required" />
-
 															</div>
 														</div>
-
 														<div class="form-group row" id="divCharges">
 															<div class="col-sm-4">
 																<label class="l-fontst" id="lbankchg">Bank
@@ -406,10 +386,8 @@ table.table td .add {
 																<input class="form-control fontst" type="text"
 																	name="bankCharges" onchange="" id="bankCharges"
 																	required="required" />
-
 															</div>
 														</div>
-
 														<div class="form-group row">
 															<br>
 															<div class="col-sm-12">
@@ -418,24 +396,19 @@ table.table td .add {
 																	Payment</button>
 																<!-- 											<a href="#" class="btn btn-primary" onclick="runCancelInvoice();">Invoice Cancel</a>																 -->
 															</div>
-
 														</div>
-
 													</div>
 													<!-- End of card body -->
 												</div>
 											</div>
-
 											<div class="col-xl-8 col-lg-5">
 												<div class="card shadow mb-4" style="height: 640px;">
 													<div class="card-body">
-
 														<div class="col-sm-12">
 															<div id="paymentTable">
 																<table id="tblAPInvoicePayment"
 																	class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
 																	style="height: 50vh">
-
 																	<thead>
 																		<tr>
 																			<th style="width: 10%">Invoice ID</th>
@@ -449,7 +422,6 @@ table.table td .add {
 																		</tr>
 																	</thead>
 																	<tbody id="">
-
 																	</tbody>
 																</table>
 															</div>
@@ -458,32 +430,24 @@ table.table td .add {
 													<!-- End of card body -->
 												</div>
 											</div>
-
 										</div>
-
 									</form>
-
 								</div>
 							</div>
-
 						</div>
 					</div>
-
-
 				</div>
 			</div>
 			<%@include file="../WEB-INF/jsp/footer.jsp"%>
 		</div>
 	</div>
 	<%@include file="../WEB-INF/jsp/commJs.jsp"%>
-
 	<!-- <script>
 		$(document)
 				.ready(
 						function() {
 							$('[data-toggle="tooltip"]').tooltip();
 							//var actions = $("table td:last-child").html();
-
 							var actions = "<a class='add' title='Add' data-toggle='tooltip'><i class='material-icons'>&#xE03B;</i></a>"
 									+ "<a class='edit' title='Edit' data-toggle='tooltip'><i class='material-icons'>&#xE254;</i></a>"
 									+ "<a class='delete' title='Delete' data-toggle='tooltip'><i class='material-icons'>&#xE872;</i></a>";
@@ -581,21 +545,17 @@ table.table td .add {
 	<script>
 		function caltotalAmount() {
 			var table = document.getElementById("table1"), sumVal = 0;
-
 			for (var i = 1; i < table.rows.length; i++) {
 				sumVal = sumVal + parseInt(table.rows[i].cells[3].innerHTML);
 			}
-
 			document.getElementById("sumval").innerHTML = "Sum Value = "
 					+ sumVal;
 			console.log(sumVal)
 		}
-
 		function vendorTab() {
 			document.getElementById("accountForm").style.display = 'none';
 			document.getElementById("vendorForm").style.display = 'block';
 		}
-
 		function accountTab() {
 			document.getElementById("vendorForm").style.display = 'none';
 			document.getElementById("accountForm").style.display = 'block'
@@ -612,105 +572,86 @@ table.table td .add {
 		var accountDiv = document.getElementById("divAccount");
 		var dateDiv = document.getElementById("divDate");
 		var chargesDiv = document.getElementById("divCharges");
-
 		$('#lname').text("");
 		$('#lexpData').text("");
 		$('#lglacc').text("");
 		$('#lbankchg').text("");
 		$('#lnumber').text("");
-
 		bankCharges.style.display = "none";
 		expDate.style.display = "none";
 		glAccno.style.display = "none";
 		number.style.display = "none";
 		idname.style.display = "none";
-
 		nameDiv.style.display = "none";
 		numberDiv.style.display = "none";
 		dateDiv.style.display = "none";
 		accountDiv.style.display = "none";
 		chargesDiv.style.display = "none";
 		//	  bankName.style.display = "none";
-
 		jQuery(document).ready(function() {
-
-			$('input:radio[name="paytype"]').change(function() {
+			$('input:radio[name="paymentType"]').change(function() {
 				//Cash 	Credit Card	  Cheque  Bank Transfer
 				//lbankchg expData lglacc lnumber lname  glAccno lexpData bankCharges
 				if ($(this).val() == 'Cash') {
-
 					$('#lname').text("");
 					$('#lexpData').text("");
 					$('#lglacc').text("");
 					$('#lbankchg').text("");
 					$('#lnumber').text("");
-
 					bankCharges.value = "0";
 					expDate.value = "1990-01-01";
 					glAccno.value = "--";
 					number.value = "--";
 					idname.value = "N/A"
-
 					bankCharges.style.display = "none";
 					expDate.style.display = "none";
 					glAccno.style.display = "none";
 					number.style.display = "none";
 					idname.style.display = "none";
-
 					nameDiv.style.display = "none";
 					numberDiv.style.display = "none";
 					dateDiv.style.display = "none";
 					accountDiv.style.display = "none";
 					chargesDiv.style.display = "none";
 					//  bankName.style.display = "none";
-
 				} else if ($(this).val() == 'CreditCard') {
-
 					$('#lname').text("");
 					$('#lexpData').text("Exp.Date");
 					$('#lglacc').text("");
 					$('#lbankchg').text("");
 					$('#lnumber').text("Credit Card Number");
-
 					bankCharges.value = "0";
 					expDate.value = "";
 					glAccno.value = "--";
 					number.value = "";
 					idname.value = "N/A";
-
 					bankCharges.style.display = "none";
 					expDate.style.display = "block";
 					glAccno.style.display = "none";
 					number.style.display = "block";
 					idname.style.display = "none";
-
 					nameDiv.style.display = "none";
 					numberDiv.style.display = "block";
 					dateDiv.style.display = "block";
 					accountDiv.style.display = "none";
 					chargesDiv.style.display = "none";
 					//  bankName.style.display = "none";
-
 				} else if ($(this).val() == 'Cheque') {
-
 					$('#lname').text("Name");
 					$('#lexpData').text("Due Date");
 					$('#lglacc').text("");
 					$('#lbankchg').text("");
 					$('#lnumber').text("Cheque Number");
-
 					bankCharges.value = "0";
 					expDate.value = "";
 					glAccno.value = "--";
 					number.value = "";
 					idname.value = "N/A"
-
 					bankCharges.style.display = "none";
 					expDate.style.display = "block";
 					glAccno.style.display = "none";
 					number.style.display = "block";
 					idname.style.display = "block";
-
 					nameDiv.style.display = "block";
 					numberDiv.style.display = "block";
 					dateDiv.style.display = "block";
@@ -718,39 +659,31 @@ table.table td .add {
 					chargesDiv.style.display = "none";
 					// bankName.style.display = "none";
 				} else if ($(this).val() == 'BankTransfer') {
-
 					$('#lname').text("Bank Name");
 					$('#lexpData').text("");
 					$('#lglacc').text("Bank Account");
 					$('#lbankchg').text("Bank Charges");
 					$('#lnumber').text("");
-
 					bankCharges.value = "";
 					expDate.value = "1990-01-01";
 					glAccno.value = "";
 					number.value = "--";
 					idname.value = "N/A"
-
 					bankCharges.style.display = "block";
 					expDate.style.display = "none";
 					glAccno.style.display = "block";
 					number.style.display = "none";
 					idname.style.display = "block";
-
 					nameDiv.style.display = "block";
 					numberDiv.style.display = "none";
 					dateDiv.style.display = "none";
 					accountDiv.style.display = "block";
 					chargesDiv.style.display = "block";
 					//  bankName.style.display = "block";
-
 				}
 			});
-
 		});
-
 		function getBankDetails() {
-
 			var bankid = document.getElementById("idname").value;
 			var slctSubcat = $('#glAccno'), option = "";
 			slctSubcat.empty();
@@ -763,23 +696,18 @@ table.table td .add {
 							"bankid" : bankid
 						},
 						success : function(data) {
-
 							;
 							for (var i = 0; i < data.length; i++) {
 								option = option
 										+ "<option value='"+data[i].glAccNo.glAccNo + "'>"
 										+ data[i].bankAccountNo + "</option>";
-
 							}
 							slctSubcat.append(option);
-
 						},
 						error : function() {
 							alert("No return vMake data");
 						}
-
 					});
-
 		}
 	</script>
 	<script>
@@ -828,7 +756,6 @@ table.table td .add {
 					td = tr.insertCell(c);
 					var ele;
 					var button;
-
 					if (c == 0) {
 						ele = document.createElement('input');
 						ele.setAttribute('type', 'text');
@@ -836,7 +763,6 @@ table.table td .add {
 						ele.setAttribute('name', 'glAccNo');
 						ele.setAttribute('readonly', true);
 						td.appendChild(ele);
-
 					} else if (c == 1) {
 						ele = document.createElement('input');
 						ele.setAttribute('type', 'text');
@@ -872,29 +798,22 @@ table.table td .add {
 				$('#glAccNo').get(0).selectedIndex = 0;
 				document.getElementById("amount").value = '';
 				document.getElementById("remarks").value = '';
-
 			}
 		}
-
 		// delete TABLE row function.
 		function removeGLDetailsRow(oButton) {
 			var empTab = document.getElementById('table1');
 			var row = oButton.parentNode.parentNode;
 			empTab.deleteRow(row.rowIndex); // button -> td -> tr.
 		}
-
 		function getAPInvoicesBySupplier() {
-
 			var supplierId = document.getElementById("supplierId").value;
 			var payment = document.getElementById("payment").value;
 			var payAmount = 0;
-
 			if (payment != "") {
 				payAmount = payment;
 			}
-
 			$("#tblAPInvoicePayment tbody").empty();
-
 			$
 					.ajax({
 						type : 'GET',
@@ -908,7 +827,6 @@ table.table td .add {
 							for (var i = 0; i < data.length; i++) {
 								var payamount = 0;
 								var newBalance = 0;
-
 								if (payAmount <= 0) {
 									payamount = 0;
 									newBalance = 0;
@@ -917,7 +835,6 @@ table.table td .add {
 											/ 100;
 									if (payAmount > 0) {
 										payamount = data[i].balance / 100;
-
 									} else {
 										payamount = payAmount + data[i].balance
 												/ 100;
@@ -925,19 +842,22 @@ table.table td .add {
 												- payamount;
 									}
 								}
-								var result = "<tr><td>"
-										+ data[i].apInvoiceHeadId + "</td><td>"
-										+ data[i].referenceNo + "</td><td>"
-										+ data[i].date + "</td><td>"
-										+ data[i].netTotal / 100 + "</td><td>"
-										+ data[i].balance / 100 + "</td><td>"
-										+ payamount + "</td><td>" + newBalance
-										+ "</td></tr>";
-
+								
+								var result = '<tr>'
+									+ '<td><input readonly type="text" name="apInvoiceHeadId" value="'+data[i].apInvoiceHeadId +'"></td>'
+									+ '<td><input readonly type="text" name="referenceNo" value="'+ data[i].referenceNo +'"></td>'
+									+ '<td><input readonly type="text" name="date" value="'+ data[i].date +'"></td>'
+									+ '<td><input readonly type="text" name="netTotal" value="'+ parseInt(data[i].netTotal) / 100 +'"></td>'
+									+ '<td><input readonly type="text" name="balance" value="'+ parseInt(data[i].balance) / 100 +'"></td>'
+									+ '<td><input readonly type="text" name="payamount" value="'+ parseInt(payamount) +'"></td>'
+									+ '<td><input readonly type="text" name="newBalance" value="'+ parseInt(newBalance) +'"></td>'
+									+ '<td>' 
+									+ '</tr>';
+									
 								$("#tblAPInvoicePayment tbody").append(result);
 								totalBalance = totalBalance + data[i].balance;
 							}
-							document.getElementById("totalDueAmount").value = (totalBalance / 100);
+							document.getElementById("totalDueAmount").value = (parseInt(totalBalance) / 100);
 						},
 						error : function() {
 							swal(
@@ -951,7 +871,6 @@ table.table td .add {
 										},
 									});
 						}
-
 					});
 		}
 	</script>

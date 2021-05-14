@@ -32,13 +32,17 @@ import com.navitsa.Reports.ProfitsAndLossBeen;
 import com.navitsa.Reports.TrialBalanceBeen;
 import com.navitsa.entity.APInvoiceDetails;
 import com.navitsa.entity.APInvoiceHead;
+import com.navitsa.entity.APInvoicePaymentDetails;
 import com.navitsa.entity.APInvoiceTax;
 import com.navitsa.entity.CenterMaster;
+import com.navitsa.entity.Customer;
 import com.navitsa.entity.DocType;
 import com.navitsa.entity.GlPostingDetails;
 import com.navitsa.entity.GlPostingHead;
 import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.GlaccountMapping;
+import com.navitsa.entity.IncomingReceiptDetails;
+import com.navitsa.entity.APInvoicePaymentHead;
 import com.navitsa.entity.InvoiceHead;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
@@ -734,11 +738,6 @@ public class FinanceAccountingController {
 	public String apInvoicePage(Model model) {
 		APInvoiceHead apInvoiceHead = new APInvoiceHead();
 		model.addAttribute("apInvoiceForm", apInvoiceHead);
-		/*
-		 * System.out.println( "AP Invoice Head ID : " +
-		 * "00000".substring(financeAccountingService.maxAPInvoiceHeadId().length()) +
-		 * financeAccountingService.maxAPInvoiceHeadId());
-		 */
 		return "apInvoice";
 	}
 
@@ -781,7 +780,7 @@ public class FinanceAccountingController {
 		apInvoiceHead.setTaxTotal(taxTotal * 100);
 		apInvoiceHead.setNetTotal(netTotal * 100);
 		apInvoiceHead.setBalance(netTotal * 100);
-		
+
 		List<APInvoiceDetails> apInvoiceDetailsList = new ArrayList<>();
 		List<APInvoiceTax> apInvoiceTaxList = new ArrayList<>();
 		apInvoiceHead.setApInvoiceHeadId("00000".substring(financeAccountingService.maxAPInvoiceHeadId().length())
@@ -874,4 +873,101 @@ public class FinanceAccountingController {
 	public @ResponseBody List<APInvoiceHead> getAPInvoicesBySupplier(@RequestParam String supplierId) {
 		return financeAccountingService.getAPInvoicesBySupplier(supplierId);
 	}
+
+	@RequestMapping(value = "/saveAPInvoicePayment", method = RequestMethod.POST)
+	public String saveAPInvoicePayment(@RequestParam String supplierId, @RequestParam String paymentType,
+			@RequestParam long totalDue, @RequestParam long totalPayment, @RequestParam String[] apInvoiceHeadId,
+			@RequestParam String[] referenceNo, @RequestParam long[] netTotal, @RequestParam long[] balance,
+			@RequestParam long[] payamount, @RequestParam long[] newBalance, @RequestParam String number,
+			@RequestParam String name, @RequestParam String expDate, @RequestParam long bankCharges,
+			@RequestParam(value = "glAccno", required = false) String glAccno, HttpServletResponse response, HttpSession session) {
+
+		System.out.println("Enter");
+		//List<APInvoiceHead> apInvoiceHead = financeAccountingService.getAPInvoicesBySupplier(supplierId);
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm:ss");
+		LocalTime time = LocalTime.now();
+
+		/*
+		 * Supplier supplier = new Supplier(); supplier.setId(supplierId);
+		 */
+
+		String centerId = session.getAttribute("centerid") + "";
+		/*CenterMaster centerMaster = centerService.getcenterById(centerId);*/
+
+		APInvoicePaymentHead apInvoicePaymentHead = new APInvoicePaymentHead();
+
+		apInvoicePaymentHead.setApInvoicePaymentHeadId("00000".substring(financeAccountingService.maxAPInvoicePaymentHeadId().length())
+				+ financeAccountingService.maxAPInvoicePaymentHeadId());
+		
+		apInvoicePaymentHead.setSupplierId(supplierId);
+		apInvoicePaymentHead.setPaymentDate(formatter.format(date));
+		apInvoicePaymentHead.setPaymentTime(time.format(formattertime));
+
+		apInvoicePaymentHead.setTotalDue(totalDue * 100);
+		apInvoicePaymentHead.setTotalPayment(totalPayment * 100);
+		apInvoicePaymentHead.setTotalBalance((totalDue - totalPayment) * 100);
+
+		apInvoicePaymentHead.setPaymentType(paymentType);
+		
+		if (paymentType.equals("Cash")){
+			apInvoicePaymentHead.setCardNumber(null);
+			apInvoicePaymentHead.setExpiryDate(null);
+			apInvoicePaymentHead.setBankId(null);
+			apInvoicePaymentHead.setChequeNumber(null);
+			apInvoicePaymentHead.setChequeDueDate(null);
+			apInvoicePaymentHead.setBankAccountNumber(null);
+			apInvoicePaymentHead.setBankCharges(null);
+		} else if (paymentType.equals("CreditCard")) {
+			apInvoicePaymentHead.setCardNumber(number);
+			apInvoicePaymentHead.setExpiryDate(expDate);
+			apInvoicePaymentHead.setBankId(null);
+			apInvoicePaymentHead.setChequeNumber(null);
+			apInvoicePaymentHead.setChequeDueDate(null);
+			apInvoicePaymentHead.setBankAccountNumber(null);
+			apInvoicePaymentHead.setBankCharges(null);
+		} else if (paymentType.equals("Cheque")) {
+			apInvoicePaymentHead.setCardNumber(null);
+			apInvoicePaymentHead.setExpiryDate(null);
+			apInvoicePaymentHead.setBankId(name);
+			apInvoicePaymentHead.setChequeNumber(number);
+			apInvoicePaymentHead.setChequeDueDate(expDate);
+			apInvoicePaymentHead.setBankAccountNumber(null);
+			apInvoicePaymentHead.setBankCharges(null);
+		} else if (paymentType.equals("BankTransfer")) {
+			apInvoicePaymentHead.setCardNumber(null);
+			apInvoicePaymentHead.setExpiryDate(null);
+			apInvoicePaymentHead.setBankId(name);
+			apInvoicePaymentHead.setChequeNumber(null);
+			apInvoicePaymentHead.setChequeDueDate(null);
+			apInvoicePaymentHead.setBankAccountNumber(glAccno);
+			apInvoicePaymentHead.setBankCharges(bankCharges);
+		}
+			
+		apInvoicePaymentHead.setCenterId(centerId);
+
+		List<APInvoicePaymentDetails> apInvoicePaymentDetailsList = new ArrayList<APInvoicePaymentDetails>();
+		for (int i = 0; i < referenceNo.length; i++) {
+			APInvoicePaymentDetails apInvoicePaymentDetails = new APInvoicePaymentDetails();
+			apInvoicePaymentDetails.setApInvoicePaymentHeadId(apInvoicePaymentHead);
+			apInvoicePaymentDetails.setInvoiceBalance(newBalance[i]*100);
+			apInvoicePaymentDetails.setInvoicePayment(payamount[i]*100);
+			apInvoicePaymentDetails.setInvoiceTotal(netTotal[i]*100);
+			apInvoicePaymentDetails.setReferenceNo(referenceNo[i]);
+			apInvoicePaymentDetailsList.add(apInvoicePaymentDetails);
+		}
+		
+		financeAccountingService.saveAPInvoicePaymentHead(apInvoicePaymentHead);
+		financeAccountingService.saveAPInvoicePaymentDetailList(apInvoicePaymentDetailsList);
+		for (int j = 0; j < apInvoiceHeadId.length; j++) {
+			APInvoiceHead apih = financeAccountingService.findAPInvoiceHeadById(apInvoiceHeadId[j]);
+			apih.setBalance(newBalance[j]*100);
+			financeAccountingService.saveAPInvoiceHead(apih);
+		}
+		System.out.println("Exit");
+		return "redirect:/outgoingPayments";
+	}
+
 }

@@ -10,12 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.navitsa.entity.APInvoiceDetails;
 import com.navitsa.entity.APInvoiceHead;
+import com.navitsa.entity.APInvoicePaymentDetails;
+import com.navitsa.entity.APInvoicePaymentHead;
 import com.navitsa.entity.APInvoiceTax;
 import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
 import com.navitsa.repository.APInvoiceDetailsRepository;
 import com.navitsa.repository.APInvoiceHeadRepository;
+import com.navitsa.repository.APInvoicePaymentDetailsRepository;
+import com.navitsa.repository.APInvoicePaymentHeadRepository;
 import com.navitsa.repository.APInvoiceTaxRepository;
 import com.navitsa.repository.GlaccountRepository;
 import com.navitsa.repository.IncomingReceiptHeadRepository;
@@ -64,6 +68,12 @@ public class FinanceAccountingService {
 
 	@Autowired
 	APInvoiceTaxRepository apInvoiceTaxRepository;
+	
+	@Autowired
+	APInvoicePaymentHeadRepository apInvoicePaymentHeadRepository;
+	
+	@Autowired
+	APInvoicePaymentDetailsRepository apInvoicePaymentDetailsRepository;
 
 	public void saveOutgoingPaymentHead(OutgoingPaymentHead outgoingPaymentHead) {
 		outgoingPaymentHeadRepo.save(outgoingPaymentHead);
@@ -188,5 +198,26 @@ public class FinanceAccountingService {
 
 	public List<APInvoiceHead> getAPInvoicesBySupplier(String supplierId) {
 		return apInvoiceHeadRepository.getAPInvoicesBySupplier(supplierId);
+	}
+	
+	public String maxAPInvoicePaymentHeadId() {
+		if (apInvoicePaymentHeadRepository.maxAPInvoicePaymentHeadId() == null) {
+			return "1";
+		} else {
+			return apInvoicePaymentHeadRepository.maxAPInvoicePaymentHeadId();
+
+		}
+	}
+
+	public void saveAPInvoicePaymentHead(APInvoicePaymentHead apInvoicePaymentHead) {
+		apInvoicePaymentHeadRepository.save(apInvoicePaymentHead);
+	}
+
+	public void saveAPInvoicePaymentDetailList(List<APInvoicePaymentDetails> apInvoicePaymentDetailsList) {
+		apInvoicePaymentDetailsRepository.saveAll(apInvoicePaymentDetailsList);
+	}
+
+	public APInvoiceHead findAPInvoiceHeadById(String apInvoiceHeadId) {
+		return apInvoiceHeadRepository.findById(apInvoiceHeadId).get();
 	}
 }
