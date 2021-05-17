@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.navitsa.entity.BusinessPartner;
 import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.ConfigSystem;
@@ -32,6 +29,7 @@ import com.navitsa.entity.Transaction;
 import com.navitsa.entity.Users;
 import com.navitsa.entity.VehicalWmi;
 import com.navitsa.entity.VehicleCategory;
+import com.navitsa.entity.VehicleCategoryType;
 import com.navitsa.entity.VehicleClass;
 import com.navitsa.entity.VehicleMake;
 import com.navitsa.entity.VehicleMaster;
@@ -61,6 +59,7 @@ import com.navitsa.repository.TransactionRepository;
 import com.navitsa.repository.UsersRepository;
 import com.navitsa.repository.VehicalWmiRepository;
 import com.navitsa.repository.VehicleCategoryRepository;
+import com.navitsa.repository.VehicleCategoryTypeRepository;
 import com.navitsa.repository.VehicleMasterRepository;
 import com.navitsa.repository.VehicleModelRepository;
 import com.navitsa.repository.VehicleOwnerRepository;
@@ -160,6 +159,9 @@ public class VehicleService {
 	
 	@Autowired
 	private GateRepository gaterepository;
+	
+	@Autowired
+	private VehicleCategoryTypeRepository vehicleCatTypeRepo;
 	
 	
 	@Autowired
@@ -659,9 +661,11 @@ public class VehicleService {
 	public List<OcrDetails> pendingLaneEntryData(String gate) {
 		return (List<OcrDetails>) ocrDetailsRepo.filterVehicleNO(gate);
 	}
-	
-	
-	
+	public List<VehicleCategoryType> getAllVehicleCatTypes() {
+
+		return (List<VehicleCategoryType>) vehicleCatTypeRepo.findAll();
+	}
+		
 }
 
 

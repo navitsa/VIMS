@@ -75,7 +75,6 @@
 								<form:form action="saveTestLimitRule" method="POST" modelAttribute="testLimitRuleForm" id="form1">
 								
 								<form:input class="form-control form-control-sm" path="ruleCode" type="hidden"/>
-								
 									<div class="form-group row">
 										<div class="col-lg-4">
 											<div class="form-group form-floating-label">
@@ -87,6 +86,35 @@
 													</c:forEach>
 												</form:select>
 												<label for="fuelType" class="placeholder">Select fuel type</label>
+											</div>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="col-lg-4">
+											<div class="form-group form-floating-label">
+												<form:select id="vehicleCatType" class="form-control input-border-bottom" 
+													required="required" path="vechicleCatType.typeId">
+													<option></option>
+													<c:forEach items="${vehicleCatTypes}" var="type">
+														<form:option value="${type.typeId}">${type.type}</form:option>
+													</c:forEach>
+												</form:select>
+												<label for="vehicleCatType" class="placeholder">Select vehicle category type</label>
+											</div>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="col-lg-4">
+											<div class="form-group form-floating-label">
+												<form:select id="stroke" class="form-control input-border-bottom" 
+													required="required" path="stroke">
+													<option></option>
+													<form:option value="2">2 stroke</form:option>
+													<form:option value="4">4 stroke </form:option>			
+												</form:select>
+												<label for="stroke" class="placeholder">Select stroke</label>
 											</div>
 										</div>
 									</div>
@@ -145,6 +173,8 @@
 										<tr>
 											<th>#</th>
 											<th>fuel Type</th>
+											<th>Vehicle Category Type</th>
+											<th>Stroke</th>										
 											<th>Rule Name</th>
 											<th>Effective From</th>
 											<th>Effective To</th>
@@ -160,6 +190,8 @@
 												<tr>
 													<td>${rule.ruleCode}</td>
 													<td>${rule.fuelType.fuel}</td>
+													<td>${rule.vechicleCatType.type}</td>
+													<td>${rule.stroke}</td>
 													<td>${rule.ruleName}</td>
 													<td>${rule.effectiveFrom}</td>
 													<td>${rule.effectiveTo}</td>

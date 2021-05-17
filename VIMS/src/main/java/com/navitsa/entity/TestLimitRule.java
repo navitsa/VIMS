@@ -1,7 +1,5 @@
 package com.navitsa.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,13 +34,20 @@ public class TestLimitRule {
 	@ManyToOne(optional = true,fetch = FetchType.EAGER)
 	@JoinColumn(name = "fuel_type",referencedColumnName = "Fuel_Type_ID")
 	private FuelType fuelType;
+	
+	@ManyToOne(optional = true,fetch = FetchType.EAGER)
+	@JoinColumn(name = "vehicle_category_type",referencedColumnName = "Type_ID")
+	private VehicleCategoryType vechicleCatType;
+	
+	@Column(name="stroke")
+	private String stroke;
 
 	public TestLimitRule() {
 		super();
 	}
 
 	public TestLimitRule(int ruleCode, String ruleName, String ruleDesc, String effectiveFrom, String effectiveTo,
-			FuelType fuelType, String status) {
+			String status, FuelType fuelType, VehicleCategoryType vechicleCatType, String stroke) {
 		super();
 		this.ruleCode = ruleCode;
 		this.ruleName = ruleName;
@@ -51,6 +56,8 @@ public class TestLimitRule {
 		this.effectiveTo = effectiveTo;
 		this.status = status;
 		this.fuelType = fuelType;
+		this.vechicleCatType = vechicleCatType;
+		this.stroke = stroke;
 	}
 
 	public int getRuleCode() {
@@ -107,6 +114,24 @@ public class TestLimitRule {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+
+	public VehicleCategoryType getVechicleCatType() {
+		return vechicleCatType;
+	}
+
+
+	public void setVechicleCatType(VehicleCategoryType vechicleCatType) {
+		this.vechicleCatType = vechicleCatType;
+	}
+
+	public String getStroke() {
+		return stroke;
+	}
+
+	public void setStroke(String stroke) {
+		this.stroke = stroke;
 	}
 
 }

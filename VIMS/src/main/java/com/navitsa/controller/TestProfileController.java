@@ -31,6 +31,7 @@ import com.navitsa.entity.TestProfileStatus;
 import com.navitsa.entity.TestWisePrintOrder;
 import com.navitsa.entity.Test_type;
 import com.navitsa.entity.VehicleCategory;
+import com.navitsa.entity.VehicleCategoryType;
 import com.navitsa.entity.VehiclesSubCategory;
 import com.navitsa.services.TestProfileService;
 import com.navitsa.services.TestTypeService;
@@ -476,6 +477,12 @@ public class TestProfileController {
 	@ModelAttribute("fuelTypes")
 	public List<FuelType> getAllFualTypes() {
 		List<FuelType> list = vehicleService.getFuelType();
+		return list;
+	}
+	
+	@ModelAttribute("vehicleCatTypes")
+	public List<VehicleCategoryType> getAllVehicleCatTypes() {
+		List<VehicleCategoryType> list = vehicleService.getAllVehicleCatTypes();
 		return list;
 	}
 	
