@@ -78,6 +78,13 @@
 input[type="radio"] {
 	margin: 0 10px 0 10px;
 }
+
+div.groove {
+	border-style: ridge;
+	
+	height: 200px;
+	width: 100%;
+}
 </style>
 </head>
 <body>
@@ -97,7 +104,7 @@ input[type="radio"] {
 			<div class="content">
 				<div class="page-inner">
 					<div class="page-header">
-						<h4 class="page-title">User Status</h4>
+						<h4 class="page-title">User Controller</h4>
 						<ul class="breadcrumbs">
 							<li class="nav-home"><a href="#"> <i
 									class="flaticon-home"></i>
@@ -146,43 +153,78 @@ input[type="radio"] {
 													</div>
 												</div>
 
-											
-													<div class="form-group">
-														<div class="row">
-															<div class="col-7">
-																<img class="zoom imagePreview"
-																	src="<c:url value='/resources/img/user-default.jpg'/>"
-																	id="preview" class="img-thumbnail" name = "userId.user_Img">
-													
-															</div>
-															<div class="col-1">
-																<label for="userName" id="userName">user name</label>
-															</div>
-															
-														</div>
-														</div></div></div></br>
 
-													<div class="form-group row">
-														<div class="col-sm-7">
-															<div class="col-sm-60 mb-1 mb-sm-3">
-																<label>Status</label> <br> <input type="radio"
-																	class="mr-2" id="ACTIVE" name="status" value="ACTIVE">Active</input>
-																<input type="radio" class="mr-2" id="INACTIVE"
-																	name="status" value="INACTIVE">Inactive</input>
-															</div>
+												<div class="form-group">
+													<div class="row">
+														<div class="col-7">
+															<img class="zoom imagePreview"
+																src="<c:url value='/resources/img/user-default.jpg'/>"
+																id="preview" class="img-thumbnail"
+																name="userId.user_Img">
+
+														</div>
+														<div class="col-1">
+															<label  id="userName"></label>
 														</div>
 
 													</div>
+												</div>
+											</div>
+										</div>
+										</br>
 
-													<br>
+										<div class="form-group row">
+											<div class="col-sm-10">
+												<label>User Status</label>
+												<div class="col-sm-2"></div>
 
-
-													<button type="submit" class="btn btn-success mr-2"
-														style="width: 150px;">Save</button>
-													<button type="reset" class="btn btn-warning mr-2"
-														style="width: 150px;">Clear</button>
+												<div class="btn-group btn-group-toggle"
+													data-toggle="buttons">
+													<label class="btn btn-outline-success btn-sm active">
+														<input id="status" name="status"
+														onfocus="geGlaccountByPrimaryAccount(this.value);"
+														type="radio" value="ACTIVE">Active
+													</label> <label class="btn btn-outline-primary btn-sm"> <input
+														id="status" name="status"
+														onfocus="geGlaccountByPrimaryAccount(this.value);"
+														type="radio" value="INACTIVE">Inactive
+													</label>
 
 												</div>
+
+											</div>
+
+											<div style="margin-top: 20px" class="groove">
+												
+												<div class="form-group">
+													<div class="row">
+														<div class="col-12">
+												<label  for="formButton"> I need reset user Password</label>  <input style="margin-left:20px" type="checkbox" id="formButton"  >
+
+															<input class="form-control"
+																style="display: none; margin-top: 10px" type="password"
+																id="form1" name="password">
+
+														</div>
+													</div>
+													
+												</div>
+											</div>
+
+											<div class="col-sm-2"></div>
+											<div class="col-sm-3"></div>
+
+										</div>
+
+										<br>
+
+
+										<button type="submit" class="btn btn-success mr-2"
+											style="width: 150px;">Save</button>
+										<button type="reset" class="btn btn-warning mr-2"
+											style="width: 150px;">Clear</button>
+
+									</div>
 								</form>
 							</div>
 						</div>
@@ -235,6 +277,23 @@ input[type="radio"] {
 		</div>
 	</div>
 	<%@include file="../WEB-INF/jsp/commJs.jsp"%>
+
+  <script>
+   
+    document.getElementById("ct").addEventListener("keyup", function(event){
+  
+      document.getElementById('userName').textContent = this.value;
+    });
+  </script>
+
+	<script>
+		$(document).ready(function() {
+			$("#formButton").click(function() {
+				$("#form1").toggle();
+		
+			});
+		});
+	</script>
 
 	<script defer
 		src="resources/js/form-validation/create-new-user-form.js"

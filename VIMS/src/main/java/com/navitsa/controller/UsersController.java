@@ -679,9 +679,12 @@ public class UsersController {
 //					return "testLanes";
 //				}
 				try {
+					// System.out.println(customer.getId());
+					if(customer.getId()==null||customer.getId()=="") {
 					 String cusid="0000".substring(usservice.maxCusID().length()) + usservice.maxCusID();
 					 customer.setId(cusid);
-					 
+					}
+					
 					 if(customer.getIsCredeit()==null) {
 						 System.out.println("Cash");
 						 customer.setIsCredeit("Cash");
@@ -846,24 +849,29 @@ public class UsersController {
 				 
 
 				 @RequestMapping(value = "/saveuserActive", method = RequestMethod.POST)
-					public String saveUser(@RequestParam("userId") String userId, @RequestParam("status") String status,RedirectAttributes redirectAttributes,HttpServletResponse response ) {
+					public String saveUser(@RequestParam("userId") String userId, @RequestParam("status") String status, @RequestParam("password") String password, @RequestParam("user_Img") String user_Img, RedirectAttributes redirectAttributes,HttpServletResponse response ) {
 							{
  
 								Users user = usservice.profileItemByID(userId) ;
+								user.getuser_ImgView();
 								user.setStatus(status);
+								user.setPassword(password);
 								usservice.save(user);
 								
 								
 							return "redirect:/userActiveInactive";
 							}
 					}
+				 
 					@RequestMapping("/editCustomer")
-					public ModelAndView updateCustomer(@RequestParam String id) {
+					public ModelAndView editCustomer(@RequestParam String id) {
 						ModelAndView mav = new ModelAndView("customer");
-						Customer updateCustomer = usservice.getrm(id);
-						mav.addObject("newcustomer", updateCustomer);
+						Customer updatecustomer = usservice.getrm(id);
+						mav.addObject("newcustomer", updatecustomer);
 						return mav;
 					}
+					
+					
 				 
 				 
 }

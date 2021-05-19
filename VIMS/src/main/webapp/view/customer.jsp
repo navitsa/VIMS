@@ -70,6 +70,8 @@
 								</c:if>	
 
 				                <form:form action="saveCustomer" method="post" modelAttribute="newcustomer">
+				                	<form:input class="form-control form-control-sm fontst" path="id" hidden="true"/>
+				                
 			                		<div class="form-group row">
 										<div class="col-lg">
 											<label class="l-fontst">Customer Name</label>

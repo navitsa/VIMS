@@ -233,8 +233,8 @@ public class UsersService {
 	public List<SysLocation> getSysLocation(){		
 		return  (List<SysLocation>) sysLocationRepository.findAll();
 	}
-	public Customer getrm(String name) {
-		return customerRepository.findById(name).get();
+	public Customer getrm(String id) {
+		return customerRepository.findById(id).get();
 	}
 
 	
