@@ -204,6 +204,52 @@ div.groove {
 																		placeholder="User name" />
 																</div>
 															</div>
+														<div class="groove">
+															<p style="margin: 10px; color: red">MAHA<label style="margin-left:118px" for="vehicle1"> MAHA is Active</label>  <input style="margin-left:20px" type="checkbox" id="mahaFstatus" name="mahaFstatus" value="ACTIVE" onclick="$(this).attr('value', this.checked ? 1 : 0)"></p>
+															
+
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">IP Address</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input
+																		class="form-control form-control-user fontst"
+																		path="mahaPcIp" placeholder="Enter IP" />
+																</div>
+															</div>
+
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">ES IN</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input
+																		class="form-control form-control-user fontst"
+																		path="mahaES_IN" placeholder="Enter FTP Path" />
+																</div>
+															</div>
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">ES OUT</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input
+																		class="form-control form-control-user fontst"
+																		path="mahaES_OUT" placeholder="Enter FTP Path" />
+																</div>
+															</div>
+
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">User name</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input
+																		class="form-control form-control-user fontst" path="mahaFTPUs"
+																		placeholder="User name" />
+																</div>
+															</div>
 
 															<div class="form-group row">
 																<div class="col-sm-4">
@@ -220,6 +266,110 @@ div.groove {
 													<div class="col-sm-4">
 														<div class="groove">
 															<p style="margin: 10px; color: red">AVL<label style="margin-left:150px" for="vehicle1"> AVL is Active</label>  <input style="margin-left:20px" type="checkbox" id="avlFstatus" name="avlFstatus" value="ACTIVE"></p>
+															
+
+
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">IP Address</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input
+																		class="form-control form-control-user fontst"
+																		path="avlPcIp" placeholder="Enter PC IP" />
+																</div>
+															</div>
+
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">XML In</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input
+																		class="form-control form-control-user fontst"
+																		path="xmlIN" placeholder="Enter FTP Path" />
+																</div>
+															</div>
+														<div class="groove">
+															<p style="margin: 10px; color: red">AVL<label style="margin-left:150px" for="vehicle1"> AVL is Active</label>  <input style="margin-left:20px" type="checkbox" id="avlFstatus" name="avlFstatus" value="ACTIVE" onclick="$(this).attr('value', this.checked ? 1 : 0)"></p>
+															
+
+
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">IP Address</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input
+																		class="form-control form-control-user fontst"
+																		path="avlPcIp" placeholder="Enter PC IP" />
+																</div>
+															</div>
+
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">XML In</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input
+																		class="form-control form-control-user fontst"
+																		path="xmlIN" placeholder="Enter FTP Path" />
+																</div>
+															</div>
+														<div class="groove">
+															<p style="margin: 10px; color: red">AVL<label style="margin-left:150px" for="vehicle1"> AVL is Active</label>  <input style="margin-left:20px" type="checkbox" id="avlFstatus" name="avlFstatus" value="ACTIVE" onclick="$(this).attr('value', this.checked ? 1 : 0)"></p>
+															
+
+
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">IP Address</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input
+																		class="form-control form-control-user fontst"
+																		path="avlPcIp" placeholder="Enter PC IP" />
+																</div>
+															</div>
+
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">XML In</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input
+																		class="form-control form-control-user fontst"
+																		path="xmlIN" placeholder="Enter FTP Path" />
+																</div>
+															</div>
+														<div class="groove">
+															<p style="margin: 10px; color: red">AVL<label style="margin-left:150px" for="vehicle1"> AVL is Active</label>  <input style="margin-left:20px" type="checkbox" id="avlFstatus" name="avlFstatus" value="ACTIVE" onclick="$(this).attr('value', this.checked ? 1 : 0)"></p>
+															
+
+
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">IP Address</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input
+																		class="form-control form-control-user fontst"
+																		path="avlPcIp" placeholder="Enter PC IP" />
+																</div>
+															</div>
+
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">XML In</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input
+																		class="form-control form-control-user fontst"
+																		path="xmlIN" placeholder="Enter FTP Path" />
+																</div>
+															</div>
+														<div class="groove">
+															<p style="margin: 10px; color: red">AVL<label style="margin-left:150px" for="vehicle1"> AVL is Active</label>  <input style="margin-left:20px" type="checkbox" id="avlFstatus" name="avlFstatus" value="ACTIVE" onclick="$(this).attr('value', this.checked ? 1 : 0)"></p>
 															
 
 
