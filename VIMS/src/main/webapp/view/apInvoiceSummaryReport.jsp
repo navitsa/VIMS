@@ -120,8 +120,7 @@
 
 								<form:form action="previewAPInvoiceSummaryReport" method="POST">
 
-									<div class="card shadow mb-4" style="height: 640px;">
-										<div class="card border-left-primary shadow h-100 py-2">
+									<div class="card shadow mb-4" style="height: 70vh;">
 											<div class="card-body">
 
 												<!-- <div class="form-group row">
@@ -172,7 +171,6 @@
 												</div>
 
 											</div>
-										</div>
 									</div>
 
 								</form:form>
@@ -186,7 +184,7 @@
 									<c:if test="${pdfViewEq != null }">
 										<embed type="application/pdf"
 											src="data:application/pdf;base64,${pdfViewEq}"
-											style="height: 500px; width: 100%">
+											style="height: 70vh; width: 100%">
 										</embed>
 									</c:if>
 								</div>

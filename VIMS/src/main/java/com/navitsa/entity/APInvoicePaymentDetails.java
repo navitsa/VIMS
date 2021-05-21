@@ -19,9 +19,6 @@ public class APInvoicePaymentDetails {
 	@Column(name = "ap_payment_details_id")
 	private int apInvoicePaymentDetailsId;
 
-	@Column(name = "reference_no")
-	String referenceNo;
-
 	@Column(name = "invoice_total")
 	Long invoiceTotal;
 
@@ -35,18 +32,23 @@ public class APInvoicePaymentDetails {
 	@JoinColumn(name = "ap_payment_head_id", referencedColumnName = "ap_payment_head_id")
 	private APInvoicePaymentHead apInvoicePaymentHeadId;
 
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "ap_invoice_head_id", referencedColumnName = "ap_invoice_head_id")
+	private APInvoiceHead apInvoiceHead;
+
 	public APInvoicePaymentDetails() {
 
 	}
 
-	public APInvoicePaymentDetails(int apInvoicePaymentDetailsId, String referenceNo, Long invoiceTotal,
-			Long invoicePayment, Long invoiceBalance, APInvoicePaymentHead apInvoicePaymentHeadId) {
+	public APInvoicePaymentDetails(int apInvoicePaymentDetailsId, Long invoiceTotal, Long invoicePayment,
+			Long invoiceBalance, APInvoicePaymentHead apInvoicePaymentHeadId, APInvoiceHead apInvoiceHead) {
+		super();
 		this.apInvoicePaymentDetailsId = apInvoicePaymentDetailsId;
-		this.referenceNo = referenceNo;
 		this.invoiceTotal = invoiceTotal;
 		this.invoicePayment = invoicePayment;
 		this.invoiceBalance = invoiceBalance;
 		this.apInvoicePaymentHeadId = apInvoicePaymentHeadId;
+		this.apInvoiceHead = apInvoiceHead;
 	}
 
 	public int getApInvoicePaymentDetailsId() {
@@ -55,14 +57,6 @@ public class APInvoicePaymentDetails {
 
 	public void setApInvoicePaymentDetailsId(int apInvoicePaymentDetailsId) {
 		this.apInvoicePaymentDetailsId = apInvoicePaymentDetailsId;
-	}
-
-	public String getReferenceNo() {
-		return referenceNo;
-	}
-
-	public void setReferenceNo(String referenceNo) {
-		this.referenceNo = referenceNo;
 	}
 
 	public Long getInvoiceTotal() {
@@ -97,10 +91,18 @@ public class APInvoicePaymentDetails {
 		this.apInvoicePaymentHeadId = apInvoicePaymentHeadId;
 	}
 
+	public APInvoiceHead getApInvoiceHead() {
+		return apInvoiceHead;
+	}
+
+	public void setApInvoiceHead(APInvoiceHead apInvoiceHead) {
+		this.apInvoiceHead = apInvoiceHead;
+	}
+
 	@Override
 	public String toString() {
-		return "APInvoicePaymentDetails [apInvoicePaymentDetailsId=" + apInvoicePaymentDetailsId + ", referenceNo="
-				+ referenceNo + ", invoiceTotal=" + invoiceTotal + ", invoicePayment=" + invoicePayment
-				+ ", invoiceBalance=" + invoiceBalance + ", apInvoicePaymentHeadId=" + apInvoicePaymentHeadId + "]";
+		return "APInvoicePaymentDetails [apInvoicePaymentDetailsId=" + apInvoicePaymentDetailsId + ", invoiceTotal="
+				+ invoiceTotal + ", invoicePayment=" + invoicePayment + ", invoiceBalance=" + invoiceBalance
+				+ ", apInvoicePaymentHeadId=" + apInvoicePaymentHeadId + ", apInvoiceHead=" + apInvoiceHead + "]";
 	}
 }

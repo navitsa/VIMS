@@ -44,13 +44,16 @@ import com.navitsa.entity.GlaccountMapping;
 import com.navitsa.entity.IncomingReceiptDetails;
 import com.navitsa.entity.APInvoicePaymentHead;
 import com.navitsa.entity.InvoiceHead;
+import com.navitsa.entity.ItemMaster;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
+import com.navitsa.entity.SupplierMaster;
 import com.navitsa.entity.VehicleModel;
 import com.navitsa.services.BusinessPartnerService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.FinanceAccountingService;
 import com.navitsa.services.GlAccountService;
+import com.navitsa.services.InventoryService;
 import com.navitsa.utils.DateHelperWeb;
 import com.navitsa.utils.EnglishNumberToWords;
 import com.navitsa.utils.ReportViewe;
@@ -71,6 +74,9 @@ public class FinanceAccountingController {
 	private GlAccountService glAccountService;
 	@Autowired
 	private BusinessPartnerService bPartnerService;
+	
+	@Autowired
+	private InventoryService inventoryService;
 
 	@RequestMapping("/outgoingPayments")
 	public String viewOutgoingPaymentForm(Model m, HttpSession session) {
@@ -788,8 +794,10 @@ public class FinanceAccountingController {
 
 		for (int i = 0; i < detailsItemCode.length; i++) {
 			APInvoiceDetails apInvoiceDetails = new APInvoiceDetails();
-			apInvoiceDetails.setApInvoiceHeadId(apInvoiceHead);
-			apInvoiceDetails.setItemCode(detailsItemCode[i]);
+			ItemMaster itemMaster = new ItemMaster();
+			itemMaster.setItemCode(detailsItemCode[i]);
+			apInvoiceDetails.setApInvoiceHead(apInvoiceHead);
+			apInvoiceDetails.setItemMaster(itemMaster);
 			apInvoiceDetails.setUnitPrice(detailsUnitPrice[i] * 100);
 			apInvoiceDetails.setQuantity(detailsQuantity[i]);
 			apInvoiceDetails.setDiscount(detailsDiscount[i] * 100);
@@ -799,7 +807,7 @@ public class FinanceAccountingController {
 
 		for (int j = 0; j < taxesCode.length; j++) {
 			APInvoiceTax apInvoiceTax = new APInvoiceTax();
-			apInvoiceTax.setApInvoiceHeadId(apInvoiceHead);
+			apInvoiceTax.setApInvoiceHead(apInvoiceHead);
 			apInvoiceTax.setTaxCode(taxesCode[j]);
 			apInvoiceTax.setTotal(taxesTotal[j] * 100);
 			apInvoiceTaxList.add(apInvoiceTax);
@@ -833,8 +841,9 @@ public class FinanceAccountingController {
 		List<APInvoiceHead> apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadByDates(fromDate, toDate);
 		for (int i = 0; i < apInvoiceHeadList.size(); i++) {
 			APInvoiceHead apInvoiceHead = new APInvoiceHead();
+			SupplierMaster supplierMaster = inventoryService.getSupplierMasterById(apInvoiceHeadList.get(i).getSupplierMaster().getSupplierId());
 			apInvoiceHead.setApInvoiceHeadId(apInvoiceHeadList.get(i).getApInvoiceHeadId());
-			apInvoiceHead.setSupplierId(apInvoiceHeadList.get(i).getSupplierId());
+			apInvoiceHead.setSupplierMaster(supplierMaster);
 			apInvoiceHead.setReferenceNo(apInvoiceHeadList.get(i).getReferenceNo());
 			apInvoiceHead.setDate(apInvoiceHeadList.get(i).getDate());
 			apInvoiceHead.setGrossTotal(apInvoiceHeadList.get(i).getGrossTotal() / 100);
@@ -863,9 +872,15 @@ public class FinanceAccountingController {
 		return mav;
 	}
 
-	@ModelAttribute("listSuppliers")
-	public List<APInvoiceHead> getAPInvoiceHeadSupplierList() {
-		List<APInvoiceHead> list = financeAccountingService.getAPInvoiceHeadSupplierList();
+	@ModelAttribute("supplierList")
+	public List<SupplierMaster> getSupplierList() {
+		List<SupplierMaster> list = inventoryService.getSupplierList();
+		return list;
+	}
+	
+	@ModelAttribute("itemList")
+	public List<ItemMaster> getItemList() {
+		List<ItemMaster> list = inventoryService.getItemList();
 		return list;
 	}
 
@@ -890,10 +905,8 @@ public class FinanceAccountingController {
 		DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm:ss");
 		LocalTime time = LocalTime.now();
 
-		/*
-		 * Supplier supplier = new Supplier(); supplier.setId(supplierId);
-		 */
-
+		SupplierMaster supplierMaster = inventoryService.getSupplierMasterById(supplierId);
+		
 		String centerId = session.getAttribute("centerid") + "";
 		/*CenterMaster centerMaster = centerService.getcenterById(centerId);*/
 
@@ -902,7 +915,7 @@ public class FinanceAccountingController {
 		apInvoicePaymentHead.setApInvoicePaymentHeadId("00000".substring(financeAccountingService.maxAPInvoicePaymentHeadId().length())
 				+ financeAccountingService.maxAPInvoicePaymentHeadId());
 		
-		apInvoicePaymentHead.setSupplierId(supplierId);
+		apInvoicePaymentHead.setSupplierMaster(supplierMaster);
 		apInvoicePaymentHead.setPaymentDate(formatter.format(date));
 		apInvoicePaymentHead.setPaymentTime(time.format(formattertime));
 
@@ -949,13 +962,14 @@ public class FinanceAccountingController {
 		apInvoicePaymentHead.setCenterId(centerId);
 
 		List<APInvoicePaymentDetails> apInvoicePaymentDetailsList = new ArrayList<APInvoicePaymentDetails>();
-		for (int i = 0; i < referenceNo.length; i++) {
+		for (int i = 0; i < apInvoiceHeadId.length; i++) {
 			APInvoicePaymentDetails apInvoicePaymentDetails = new APInvoicePaymentDetails();
+			APInvoiceHead apInvoiceHead = financeAccountingService.findAPInvoiceHeadById(apInvoiceHeadId[i]);
 			apInvoicePaymentDetails.setApInvoicePaymentHeadId(apInvoicePaymentHead);
 			apInvoicePaymentDetails.setInvoiceBalance(newBalance[i]*100);
 			apInvoicePaymentDetails.setInvoicePayment(payamount[i]*100);
 			apInvoicePaymentDetails.setInvoiceTotal(netTotal[i]*100);
-			apInvoicePaymentDetails.setReferenceNo(referenceNo[i]);
+			apInvoicePaymentDetails.setApInvoiceHead(apInvoiceHead);
 			apInvoicePaymentDetailsList.add(apInvoicePaymentDetails);
 		}
 		
@@ -969,5 +983,4 @@ public class FinanceAccountingController {
 		System.out.println("Exit");
 		return "redirect:/outgoingPayments";
 	}
-
 }

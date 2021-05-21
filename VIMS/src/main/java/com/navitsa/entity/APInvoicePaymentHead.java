@@ -2,7 +2,10 @@ package com.navitsa.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,9 +15,6 @@ public class APInvoicePaymentHead {
 	@Id
 	@Column(name = "ap_payment_head_id")
 	private String apInvoicePaymentHeadId;
-
-	@Column(name = "supplier_id")
-	String supplierId;
 
 	@Column(name = "payment_date")
 	String paymentDate;
@@ -58,16 +58,19 @@ public class APInvoicePaymentHead {
 	@Column(name = "center_id")
 	String centerId;
 
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "supplier_id", referencedColumnName = "supplier_id")
+	private SupplierMaster supplierMaster;
+
 	public APInvoicePaymentHead() {
 
 	}
 
-	public APInvoicePaymentHead(String apInvoicePaymentHeadId, String supplierId, String paymentDate,
-			String paymentTime, Long totalDue, Long totalPayment, Long totalBalance, String paymentType,
-			String cardNumber, String expiryDate, String bankId, String chequeNumber, String chequeDueDate,
-			String bankAccountNumber, Long bankCharges, String centerId) {
+	public APInvoicePaymentHead(String apInvoicePaymentHeadId, String paymentDate, String paymentTime, Long totalDue,
+			Long totalPayment, Long totalBalance, String paymentType, String cardNumber, String expiryDate,
+			String bankId, String chequeNumber, String chequeDueDate, String bankAccountNumber, Long bankCharges,
+			String centerId, SupplierMaster supplierMaster) {
 		this.apInvoicePaymentHeadId = apInvoicePaymentHeadId;
-		this.supplierId = supplierId;
 		this.paymentDate = paymentDate;
 		this.paymentTime = paymentTime;
 		this.totalDue = totalDue;
@@ -82,6 +85,7 @@ public class APInvoicePaymentHead {
 		this.bankAccountNumber = bankAccountNumber;
 		this.bankCharges = bankCharges;
 		this.centerId = centerId;
+		this.supplierMaster = supplierMaster;
 	}
 
 	public String getApInvoicePaymentHeadId() {
@@ -90,14 +94,6 @@ public class APInvoicePaymentHead {
 
 	public void setApInvoicePaymentHeadId(String apInvoicePaymentHeadId) {
 		this.apInvoicePaymentHeadId = apInvoicePaymentHeadId;
-	}
-
-	public String getSupplierId() {
-		return supplierId;
-	}
-
-	public void setSupplierId(String supplierId) {
-		this.supplierId = supplierId;
 	}
 
 	public String getPaymentDate() {
@@ -212,13 +208,21 @@ public class APInvoicePaymentHead {
 		this.centerId = centerId;
 	}
 
+	public SupplierMaster getSupplierMaster() {
+		return supplierMaster;
+	}
+
+	public void setSupplierMaster(SupplierMaster supplierMaster) {
+		this.supplierMaster = supplierMaster;
+	}
+
 	@Override
 	public String toString() {
-		return "APInvoicePaymentHead [apInvoicePaymentHeadId=" + apInvoicePaymentHeadId + ", supplierId=" + supplierId
-				+ ", paymentDate=" + paymentDate + ", paymentTime=" + paymentTime + ", totalDue=" + totalDue
-				+ ", totalPayment=" + totalPayment + ", totalBalance=" + totalBalance + ", paymentType=" + paymentType
-				+ ", cardNumber=" + cardNumber + ", expiryDate=" + expiryDate + ", bankId=" + bankId + ", chequeNumber="
-				+ chequeNumber + ", chequeDueDate=" + chequeDueDate + ", bankAccountNumber=" + bankAccountNumber
-				+ ", bankCharges=" + bankCharges + ", centerId=" + centerId + "]";
+		return "APInvoicePaymentHead [apInvoicePaymentHeadId=" + apInvoicePaymentHeadId + ", paymentDate=" + paymentDate
+				+ ", paymentTime=" + paymentTime + ", totalDue=" + totalDue + ", totalPayment=" + totalPayment
+				+ ", totalBalance=" + totalBalance + ", paymentType=" + paymentType + ", cardNumber=" + cardNumber
+				+ ", expiryDate=" + expiryDate + ", bankId=" + bankId + ", chequeNumber=" + chequeNumber
+				+ ", chequeDueDate=" + chequeDueDate + ", bankAccountNumber=" + bankAccountNumber + ", bankCharges="
+				+ bankCharges + ", centerId=" + centerId + ", supplierMaster=" + supplierMaster + "]";
 	}
 }

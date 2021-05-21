@@ -431,6 +431,12 @@
 							hidden="true">Repair</a> <a class="collapse-item fontst-sb-it"
 							href="equipmentRepairReport" id="equipmentRepairReport"
 							hidden="true">Repair Report</a>
+							
+						<h6 class="text-section">Inventory :</h6>
+						<a class="collapse-item fontst-sb-it" href="SupplierMaster" id="SupplierMaster"
+							hidden="true">Supplier</a> <a
+							class="collapse-item fontst-sb-it" href="ItemMaster" id="ItemMaster"
+							hidden="true">Item</a>	
 
 						<!-- 			</div> -->
 					</div></li>

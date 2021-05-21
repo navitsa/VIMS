@@ -114,7 +114,7 @@
 								<div class="col-xl-5 col-lg-5">
 									<!-- Card -->
 
-									<div class="card shadow mb-4" style="height: 640px;">
+									<div class="card shadow mb-4" style="height: 80vh;">
 										<div class="card-body">
 											<!-- <div class="form-group row">
 												<div class="col-sm-4">
@@ -131,8 +131,16 @@
 													<label class="l-fontst">Supplier</label>
 												</div>
 												<div class="col-sm-6">
-													<form:input class="form-control fontst" type="text"
-														path="supplierId" onchange="" id="supplierId" required="true"/>
+													<%-- <form:input class="form-control fontst" type="text"
+														path="supplierId" onchange="" id="supplierId" required="true"/> --%>
+													<form:select id="supplierId" path="supplierMaster.supplierId" onchange=""
+													class="form-control" required="true">
+													<option value="">--SELECT--</option>
+													<c:forEach items="${supplierList}" var="sl">
+														<option value="${sl.supplierId}">
+															${sl.supplierName}</option>
+													</c:forEach>
+												</form:select>
 												</div>
 											</div>
 											<div class="form-group row">
@@ -210,16 +218,16 @@
 								</div>
 
 								<div class="col-xl-7 col-lg-5">
-									<div class="card shadow mb-4" style="height: 640px;">
+									<div class="card shadow mb-4" style="height: 80vh;">
 										<div class="card-body">
 
 											<div class="col-sm-12">
 												<div class="row">
-													<div class="col-sm-4"><%-- <select id="inputDetailsItemCode" class="form-control"><option value="">--SELECT--</option>
-													<c:forEach items="${listGLAccounts}" var="gl">
-														<option value="${gl.glAccNo}">${gl.glAccNo}
-															${gl.glAccountName}</option>
-													</c:forEach></select> --%><span><label class="l-fontst">Item</label></span><input id="inputDetailsItemCode" type="text" placeholder="" class="form-control" /></div>
+													<div class="col-sm-4"><%-- <input id="inputDetailsItemCode" type="text" placeholder="" class="form-control" /> --%><span><label class="l-fontst">Item</label></span><select id="inputDetailsItemCode" class="form-control"><option value="">--SELECT--</option>
+													<c:forEach items="${itemList}" var="il">
+														<option value="${il.itemCode}">${il.itemCode} - 
+															${il.itemDescription}</option>
+													</c:forEach></select></div>
 													<div class="col-sm-2"><span><label class="l-fontst">Unit Price</label></span><input id="inputDetailsUnitPrice" type="text" placeholder="0.00" class="form-control" /></div>
 													<div class="col-sm-2"><span><label class="l-fontst">Quantity</label></span><input id="inputDetailsQuantity" type="number" placeholder="" class="form-control" /></div>
 													<div class="col-sm-2"><span><label class="l-fontst">Discount</label></span><input id="inputDetailsDiscount" type="text" placeholder="0.00" class="form-control" /></div>

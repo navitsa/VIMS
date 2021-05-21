@@ -27,18 +27,18 @@ public class APInvoiceTax {
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ap_invoice_head_id", referencedColumnName = "ap_invoice_head_id")
-	private APInvoiceHead apInvoiceHeadId;
+	private APInvoiceHead apInvoiceHead;
 
 	public APInvoiceTax() {
 
 	}
 
-	public APInvoiceTax(int apInvoiceTaxId, String taxCode, Long total, APInvoiceHead apInvoiceHeadId) {
+	public APInvoiceTax(int apInvoiceTaxId, String taxCode, Long total, APInvoiceHead apInvoiceHead) {
 		super();
 		this.apInvoiceTaxId = apInvoiceTaxId;
 		this.taxCode = taxCode;
 		this.total = total;
-		this.apInvoiceHeadId = apInvoiceHeadId;
+		this.apInvoiceHead = apInvoiceHead;
 	}
 
 	public int getApInvoiceTaxId() {
@@ -65,17 +65,17 @@ public class APInvoiceTax {
 		this.total = total;
 	}
 
-	public APInvoiceHead getApInvoiceHeadId() {
-		return apInvoiceHeadId;
+	public APInvoiceHead getApInvoiceHead() {
+		return apInvoiceHead;
 	}
 
-	public void setApInvoiceHeadId(APInvoiceHead apInvoiceHeadId) {
-		this.apInvoiceHeadId = apInvoiceHeadId;
+	public void setApInvoiceHead(APInvoiceHead apInvoiceHead) {
+		this.apInvoiceHead = apInvoiceHead;
 	}
 
 	@Override
 	public String toString() {
 		return "APInvoiceTax [apInvoiceTaxId=" + apInvoiceTaxId + ", taxCode=" + taxCode + ", total=" + total
-				+ ", apInvoiceHeadId=" + apInvoiceHeadId + "]";
+				+ ", apInvoiceHead=" + apInvoiceHead + "]";
 	}
 }

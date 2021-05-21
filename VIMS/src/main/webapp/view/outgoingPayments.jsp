@@ -24,6 +24,7 @@
 	top: 0;
 	right: 0;
 }
+
 .table-wrapper {
 	width: 900px;
 	margin: 30px auto;
@@ -31,53 +32,66 @@
 	padding: 20px;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
+
 table.table {
 	table-layout: fixed;
 }
+
 table.table tr th, table.table tr td {
 	border-color: #e9e9e9;
 }
+
 table.table th i {
 	font-size: 13px;
 	margin: 0 5px;
 	cursor: pointer;
 }
+
 table.table th:last-child {
 	width: 100px;
 }
+
 table.table td a {
 	cursor: pointer;
 	display: inline-block;
 	margin: 0 5px;
 	min-width: 24px;
 }
+
 table.table td a.add {
 	color: #27C46B;
 }
+
 table.table td a.edit {
 	color: #FFC107;
 }
+
 table.table td a.delete {
 	color: #E34724;
 }
+
 table.table td i {
 	font-size: 19px;
 }
+
 table.table td a.add i {
 	font-size: 24px;
 	margin-right: -1px;
 	position: relative;
 	top: 3px;
 }
+
 table.table .form-control {
 	height: 32px;
 	line-height: 32px;
 	box-shadow: none;
 	border-radius: 2px;
 }
+
 table.table .form-control.error {
 	border-color: #f50000;
 }
+
 table.table td .add {
 	display: none;
 }
@@ -213,7 +227,7 @@ table.table td .add {
 															${gl.glAccountName}</option>
 													</c:forEach>
 												</select>
-												
+
 											</div>
 											<div class="col-lg-3">
 												<label>Amount</label> <input class="form-control"
@@ -258,8 +272,9 @@ table.table td .add {
 
 									</form:form>
 
-									<form id="vendorForm" action="saveAPInvoicePayment" method="POST"
-										enctype="multipart/form-data" style="display: none;">
+									<form id="vendorForm" action="saveAPInvoicePayment"
+										method="POST" enctype="multipart/form-data"
+										style="display: none;">
 
 										<div class="row">
 											<div class="col-xl-4 col-lg-5">
@@ -275,8 +290,8 @@ table.table td .add {
 																	class="custom-select custom-select-mb" id="supplierId"
 																	name="supplierId" onchange="getAPInvoicesBySupplier();">
 																	<option value="">--SELECT--</option>
-																	<c:forEach items="${listSuppliers}" var="t">
-																		<option value="${t.supplierId}">${t.supplierId}</option>
+																	<c:forEach items="${supplierList}" var="sl">
+																		<option value="${sl.supplierId}">${sl.supplierName}</option>
 																	</c:forEach>
 																</select>
 															</div>
@@ -284,15 +299,14 @@ table.table td .add {
 														<div class="form-group row">
 															<div class="col-sm-6">
 																<label class="l-fontst">Total Due Amount</label> <input
-																	class="form-control fontst" type="text"
-																	name="totalDue" onchange="" id="totalDueAmount"
-																	readonly="readonly" />
+																	class="form-control fontst" type="text" name="totalDue"
+																	onchange="" id="totalDueAmount" readonly="readonly" />
 															</div>
 															<div class="col-sm-6">
 																<label class="l-fontst">Payment</label> <input
 																	class="form-control fontst" type="number"
-																	name="totalPayment" onchange="getAPInvoicesBySupplier();"
-																	id="payment" />
+																	name="totalPayment"
+																	onchange="getAPInvoicesBySupplier();" id="payment" />
 															</div>
 														</div>
 														<div class="form-group row">
@@ -306,8 +320,9 @@ table.table td .add {
 																		<input type="radio" name="paymentType" value="Cash"
 																		onclick="cashPayment();" />Cash
 																	</label> <label class="btn btn-outline-primary btn-sm">
-																		<input type="radio" name="paymentType" value="CreditCard"
-																		onclick="cardPayment();" />Credit Card
+																		<input type="radio" name="paymentType"
+																		value="CreditCard" onclick="cardPayment();" />Credit
+																		Card
 																	</label> <label class="btn btn-outline-info btn-sm"> <input
 																		type="radio" name="paymentType" value="Cheque"
 																		onclick="chequePayment();" /> Cheque
@@ -809,9 +824,9 @@ table.table td .add {
 		function getAPInvoicesBySupplier() {
 			var supplierId = document.getElementById("supplierId").value;
 			var payment = document.getElementById("payment").value;
-			var payAmount = 0;
+			var paidAmount = 0;
 			if (payment != "") {
-				payAmount = payment;
+				paidAmount = payment;
 			}
 			$("#tblAPInvoicePayment tbody").empty();
 			$
@@ -827,16 +842,16 @@ table.table td .add {
 							for (var i = 0; i < data.length; i++) {
 								var payamount = 0;
 								var newBalance = 0;
-								if (payAmount <= 0) {
+								if (paidAmount <= 0) {
 									payamount = 0;
-									newBalance = 0;
+									newBalance = data[i].balance/100;
 								} else {
-									payAmount = payAmount - data[i].balance
+									paidAmount = paidAmount - data[i].balance
 											/ 100;
-									if (payAmount > 0) {
+									if (paidAmount > 0) {
 										payamount = data[i].balance / 100;
 									} else {
-										payamount = payAmount + data[i].balance
+										payamount = paidAmount + data[i].balance
 												/ 100;
 										newBalance = data[i].balance / 100
 												- payamount;
@@ -861,7 +876,7 @@ table.table td .add {
 						},
 						error : function() {
 							swal(
-									"No payable invoices for the selected suppliers",
+									"No payable invoices for the selected supplier",
 									"", {
 										icon : "info",
 										buttons : {
