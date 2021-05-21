@@ -28,6 +28,6 @@ public interface APInvoiceHeadRepository extends CrudRepository<APInvoiceHead, S
 	@Query(value = "SELECT DISTINCT apih FROM APInvoiceHead apih")
 	public List<APInvoiceHead> getAPInvoiceHeadSupplierList();
 
-	@Query(value = "SELECT apih FROM APInvoiceHead apih WHERE apih.supplierId = :supplierId AND apih.balance != 0")
+	@Query(value = "SELECT apih FROM APInvoiceHead apih WHERE apih.supplierMaster.supplierId = :supplierId AND apih.balance != 0")
 	public List<APInvoiceHead> getAPInvoicesBySupplier(@Param("supplierId") String supplierId);
 }
