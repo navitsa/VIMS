@@ -308,6 +308,9 @@
 							<a
 							class="collapse-item fontst-sb-it" href="APInvoiceSummaryReport"
 							id="APInvoiceSummaryReport" hidden="true" >AP Invoice Summary Report</a>
+							<a
+							class="collapse-item fontst-sb-it" href="APInvoiceAgeAnalysisReport"
+							id="APInvoiceAgeAnalysisReport" hidden="true" >AP Invoice Age Analysis Report</a>
 						<h6 class="text-section">Financials:</h6>
 						<a class="collapse-item fontst-sb-it"
 							href="revenueStatementPrivew" hidden="true"

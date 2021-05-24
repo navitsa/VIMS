@@ -2,6 +2,7 @@ package com.navitsa.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.navitsa.Reports.APInvoiceAgeAnalysisReportBean;
 import com.navitsa.Reports.GlTranctionReportBeen;
 import com.navitsa.Reports.OutgoingPaymentDetailsReportBeen;
 import com.navitsa.Reports.ProfitsAndLossBeen;
@@ -33,22 +35,18 @@ import com.navitsa.Reports.TrialBalanceBeen;
 import com.navitsa.entity.APInvoiceDetails;
 import com.navitsa.entity.APInvoiceHead;
 import com.navitsa.entity.APInvoicePaymentDetails;
+import com.navitsa.entity.APInvoicePaymentHead;
 import com.navitsa.entity.APInvoiceTax;
 import com.navitsa.entity.CenterMaster;
-import com.navitsa.entity.Customer;
 import com.navitsa.entity.DocType;
 import com.navitsa.entity.GlPostingDetails;
 import com.navitsa.entity.GlPostingHead;
 import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.GlaccountMapping;
-import com.navitsa.entity.IncomingReceiptDetails;
-import com.navitsa.entity.APInvoicePaymentHead;
-import com.navitsa.entity.InvoiceHead;
 import com.navitsa.entity.ItemMaster;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
 import com.navitsa.entity.SupplierMaster;
-import com.navitsa.entity.VehicleModel;
 import com.navitsa.services.BusinessPartnerService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.FinanceAccountingService;
@@ -74,7 +72,7 @@ public class FinanceAccountingController {
 	private GlAccountService glAccountService;
 	@Autowired
 	private BusinessPartnerService bPartnerService;
-	
+
 	@Autowired
 	private InventoryService inventoryService;
 
@@ -821,7 +819,7 @@ public class FinanceAccountingController {
 	}
 
 	@RequestMapping(value = "/APInvoiceSummaryReport", method = RequestMethod.GET)
-	public String apInvoiceHeadReportPage(Model model) {
+	public String apInvoiceSummaryReportPage(Model model) {
 		return "apInvoiceSummaryReport";
 	}
 
@@ -841,7 +839,8 @@ public class FinanceAccountingController {
 		List<APInvoiceHead> apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadByDates(fromDate, toDate);
 		for (int i = 0; i < apInvoiceHeadList.size(); i++) {
 			APInvoiceHead apInvoiceHead = new APInvoiceHead();
-			SupplierMaster supplierMaster = inventoryService.getSupplierMasterById(apInvoiceHeadList.get(i).getSupplierMaster().getSupplierId());
+			SupplierMaster supplierMaster = inventoryService
+					.getSupplierMasterById(apInvoiceHeadList.get(i).getSupplierMaster().getSupplierId());
 			apInvoiceHead.setApInvoiceHeadId(apInvoiceHeadList.get(i).getApInvoiceHeadId());
 			apInvoiceHead.setSupplierMaster(supplierMaster);
 			apInvoiceHead.setReferenceNo(apInvoiceHeadList.get(i).getReferenceNo());
@@ -877,7 +876,7 @@ public class FinanceAccountingController {
 		List<SupplierMaster> list = inventoryService.getSupplierList();
 		return list;
 	}
-	
+
 	@ModelAttribute("itemList")
 	public List<ItemMaster> getItemList() {
 		List<ItemMaster> list = inventoryService.getItemList();
@@ -895,10 +894,11 @@ public class FinanceAccountingController {
 			@RequestParam String[] referenceNo, @RequestParam long[] netTotal, @RequestParam long[] balance,
 			@RequestParam long[] payamount, @RequestParam long[] newBalance, @RequestParam String number,
 			@RequestParam String name, @RequestParam String expDate, @RequestParam long bankCharges,
-			@RequestParam(value = "glAccno", required = false) String glAccno, HttpServletResponse response, HttpSession session) {
+			@RequestParam(value = "glAccno", required = false) String glAccno, HttpServletResponse response,
+			HttpSession session) {
 
-		System.out.println("Enter");
-		//List<APInvoiceHead> apInvoiceHead = financeAccountingService.getAPInvoicesBySupplier(supplierId);
+		// List<APInvoiceHead> apInvoiceHead =
+		// financeAccountingService.getAPInvoicesBySupplier(supplierId);
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
@@ -906,15 +906,16 @@ public class FinanceAccountingController {
 		LocalTime time = LocalTime.now();
 
 		SupplierMaster supplierMaster = inventoryService.getSupplierMasterById(supplierId);
-		
+
 		String centerId = session.getAttribute("centerid") + "";
-		/*CenterMaster centerMaster = centerService.getcenterById(centerId);*/
+		/* CenterMaster centerMaster = centerService.getcenterById(centerId); */
 
 		APInvoicePaymentHead apInvoicePaymentHead = new APInvoicePaymentHead();
 
-		apInvoicePaymentHead.setApInvoicePaymentHeadId("00000".substring(financeAccountingService.maxAPInvoicePaymentHeadId().length())
-				+ financeAccountingService.maxAPInvoicePaymentHeadId());
-		
+		apInvoicePaymentHead.setApInvoicePaymentHeadId(
+				"00000".substring(financeAccountingService.maxAPInvoicePaymentHeadId().length())
+						+ financeAccountingService.maxAPInvoicePaymentHeadId());
+
 		apInvoicePaymentHead.setSupplierMaster(supplierMaster);
 		apInvoicePaymentHead.setPaymentDate(formatter.format(date));
 		apInvoicePaymentHead.setPaymentTime(time.format(formattertime));
@@ -924,8 +925,8 @@ public class FinanceAccountingController {
 		apInvoicePaymentHead.setTotalBalance((totalDue - totalPayment) * 100);
 
 		apInvoicePaymentHead.setPaymentType(paymentType);
-		
-		if (paymentType.equals("Cash")){
+
+		if (paymentType.equals("Cash")) {
 			apInvoicePaymentHead.setCardNumber(null);
 			apInvoicePaymentHead.setExpiryDate(null);
 			apInvoicePaymentHead.setBankId(null);
@@ -958,7 +959,7 @@ public class FinanceAccountingController {
 			apInvoicePaymentHead.setBankAccountNumber(glAccno);
 			apInvoicePaymentHead.setBankCharges(bankCharges);
 		}
-			
+
 		apInvoicePaymentHead.setCenterId(centerId);
 
 		List<APInvoicePaymentDetails> apInvoicePaymentDetailsList = new ArrayList<APInvoicePaymentDetails>();
@@ -966,21 +967,102 @@ public class FinanceAccountingController {
 			APInvoicePaymentDetails apInvoicePaymentDetails = new APInvoicePaymentDetails();
 			APInvoiceHead apInvoiceHead = financeAccountingService.findAPInvoiceHeadById(apInvoiceHeadId[i]);
 			apInvoicePaymentDetails.setApInvoicePaymentHeadId(apInvoicePaymentHead);
-			apInvoicePaymentDetails.setInvoiceBalance(newBalance[i]*100);
-			apInvoicePaymentDetails.setInvoicePayment(payamount[i]*100);
-			apInvoicePaymentDetails.setInvoiceTotal(netTotal[i]*100);
+			apInvoicePaymentDetails.setInvoiceBalance(newBalance[i] * 100);
+			apInvoicePaymentDetails.setInvoicePayment(payamount[i] * 100);
+			apInvoicePaymentDetails.setInvoiceTotal(netTotal[i] * 100);
 			apInvoicePaymentDetails.setApInvoiceHead(apInvoiceHead);
 			apInvoicePaymentDetailsList.add(apInvoicePaymentDetails);
 		}
-		
+
 		financeAccountingService.saveAPInvoicePaymentHead(apInvoicePaymentHead);
 		financeAccountingService.saveAPInvoicePaymentDetailList(apInvoicePaymentDetailsList);
 		for (int j = 0; j < apInvoiceHeadId.length; j++) {
 			APInvoiceHead apih = financeAccountingService.findAPInvoiceHeadById(apInvoiceHeadId[j]);
-			apih.setBalance(newBalance[j]*100);
+			apih.setBalance(newBalance[j] * 100);
 			financeAccountingService.saveAPInvoiceHead(apih);
 		}
 		System.out.println("Exit");
 		return "redirect:/outgoingPayments";
+	}
+
+	@RequestMapping(value = "/APInvoiceAgeAnalysisReport", method = RequestMethod.GET)
+	public String apInvoiceAgeAnalysisReportPage() {
+		return "APInvoiceAgeAnalysisReport";
+	}
+
+	@RequestMapping(value = "/PreviewAPInvoiceAgeAnalysisReport", method = RequestMethod.POST)
+	public ModelAndView getAPInvoiceAgeAnalysisReport(HttpServletResponse response, HttpSession session) {
+
+		ModelAndView mav = new ModelAndView("APInvoiceAgeAnalysisReport");
+
+		String centerId = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerId);
+
+		List<APInvoiceHead> apInvoiceHeadList = financeAccountingService.getUnpaidAPInvoices();
+
+		List<APInvoiceAgeAnalysisReportBean> apiaarbList = new ArrayList<APInvoiceAgeAnalysisReportBean>();
+		
+		for (APInvoiceHead apih : apInvoiceHeadList) {
+			
+			APInvoiceAgeAnalysisReportBean apiaarb = new APInvoiceAgeAnalysisReportBean();
+			
+			apiaarb.setSupplierId(apih.getSupplierMaster().getSupplierId());
+			apiaarb.setSupplierName(apih.getSupplierMaster().getSupplierName());
+			apiaarb.setInvoiceNo(apih.getApInvoiceHeadId());
+
+			int diff = DateHelperWeb.stringDateDiff(apih.getDate(), LocalDate.now().toString());
+			if (diff < 30) {
+				
+				apiaarb.setArr1(StringFormaterWeb.formatToRupees(apih.getBalance()));
+				apiaarb.setArr2("0.00");
+				apiaarb.setArr3("0.00");
+				apiaarb.setArr4("0.00");
+				
+			} else if ((diff >= 30) && (diff < 60)) {
+				
+				apiaarb.setArr2(StringFormaterWeb.formatToRupees(apih.getBalance()));
+				apiaarb.setArr1("0.00");
+				apiaarb.setArr3("0.00");
+				apiaarb.setArr4("0.00");
+				
+			} else if ((diff >= 60) && (diff < 90)) {
+				
+				apiaarb.setArr3(StringFormaterWeb.formatToRupees(apih.getBalance()));
+				apiaarb.setArr2("0.00");
+				apiaarb.setArr1("0.00");
+				apiaarb.setArr4("0.00");
+				
+			} else if (diff >= 90) {
+				
+				apiaarb.setArr4(StringFormaterWeb.formatToRupees(apih.getBalance()));
+				apiaarb.setArr2("0.00");
+				apiaarb.setArr3("0.00");
+				apiaarb.setArr1("0.00");
+				
+			}
+			apiaarb.setTotalDue("0");
+			apiaarbList.add(apiaarb);
+		}
+
+		ReportViewe review = new ReportViewe();
+		Map<String, Object> params = new HashMap<>();
+
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("header", centerMaster.getPartner_ID().getReceiptHeader());
+		params.put("address", centerMaster.getAdd03());
+		params.put("date", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(LocalDate.now().toString())));
+
+		String reptValue = "";
+
+		try {
+			reptValue = review.pdfReportViewInlineSystemOpen("apInvoiceAgeAnalysisReport.jasper",
+					"AP Invoice Age Analysis Report", apiaarbList, params, response);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		mav.addObject("pdfViewEq", reptValue);
+		return mav;
 	}
 }

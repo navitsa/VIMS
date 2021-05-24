@@ -220,4 +220,8 @@ public class FinanceAccountingService {
 	public APInvoiceHead findAPInvoiceHeadById(String apInvoiceHeadId) {
 		return apInvoiceHeadRepository.findById(apInvoiceHeadId).get();
 	}
+	
+	public List<APInvoiceHead> getUnpaidAPInvoices() {
+		return apInvoiceHeadRepository.getUnpaidAPInvoices();
+	}
 }
