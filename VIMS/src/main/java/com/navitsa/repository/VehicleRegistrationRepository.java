@@ -55,4 +55,11 @@ public interface VehicleRegistrationRepository  extends CrudRepository<VehicleRe
 
 	@Query(value="SELECT vr FROM VehicleRegistration vr WHERE vr.ocrid.ocrid =:ocridn")
 	public VehicleRegistration getRegistrationByRegisterId(@Param("ocridn") int ocrid);
+	
+	
+	@Query(value="SELECT * FROM vehicle_registration where Vehicle_ID =:vNo  order by V_Register_ID DESC limit 1",nativeQuery=true)
+	public VehicleRegistration getLastRegistationDetails(@Param("vNo") String vNo);
+	
+	
+	
 }

@@ -1104,6 +1104,52 @@ document.getElementById("overlay").style.display = "none";
 			var vecCatID=document.getElementById("testCat").value;
 			var vrTypId=document.getElementById("vrtyp").value;
 			var centerId=document.getElementById("icenterId").value;
+			
+			var vehNo=document.getElementById("vid").value;
+			
+			var noofrepdate;
+			//alert("vrTypId="+vrTypId);
+			$.ajax({
+			    type: 'GET',
+			    url: "getVehicleRegisterType",
+			    data: {"id" : vrTypId,"vNo" :vehNo },
+			    success: function(data){
+			    	
+			    	noofrepdate=data[1];
+			    	//alert("fff="+noofrepdate);
+ 			    	if(data[0]<=data[1]){
+ 			     		swal("Oops...", "Repeat Test Validity Period is Expired ", {
+							icon : "error",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-danger'
+								}
+							},
+						});
+ 					}
+					
+			    	
+			    },
+			    error:function(){
+			       
+			  
+		    	 
+		    	 
+//			    	inpFee
+			    }
+			
+			});
+			
+			
+			
+			
+			
+			
+			
+			
+		
+			
+			
 		//	alert("call ="+vecCatID);
     		if (vecCatID=="")
     		{   

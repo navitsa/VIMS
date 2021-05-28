@@ -660,8 +660,19 @@ public class VehicleService {
 		return (List<OcrDetails>) ocrDetailsRepo.filterVehicleNO(gate);
 	}
 	
+	public VehicleRegisterType getVehicleRegisterTypeByID(String id) {
+		
+		return vRegTypeRepo.findById(id).get();
+		
+	}
 	
+	public VehicleRegistration getLastRegistationDetails(String vNo) {
+		
+		return vehicleregRepo.getLastRegistationDetails(vNo);
+		
+	}
 	
+
 }
 
 

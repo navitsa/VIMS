@@ -4176,6 +4176,25 @@ System.out.println("ftp");
 			return gate;
 			
 		}
+		
+		@RequestMapping(value = "getVehicleRegisterType", method = RequestMethod.GET)
+		public @ResponseBody int[] getVehicleRegisterTypeByID(@RequestParam String id,@RequestParam String vNo) 
+		{
+			int[] value=new int[2];
+			
+			value[0]=Integer.parseInt(vehicleService.getVehicleRegisterTypeByID(id).getvRT());						
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+		    Date date = new Date();  
+			int dif= DateHelperWeb.stringDateDiff(vehicleService.getLastRegistationDetails(vNo).getDate(),formatter.format(date));	
+			value[1]=dif;
+			
+			//System.out.println(value[0]+"---------"+value[1]);
+		   return value;
+		}
+		
+
+		
+		
 		//editLaneAllocation
 		
 	/*
