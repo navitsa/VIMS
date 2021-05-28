@@ -25,11 +25,24 @@ public class VehicleRegisterType {
 	@Column(name = "vTestFeePre")
 	private Long vTestFeePre;
 	
+	@Column(name = "Validity_for_Repeat_Test ")
+	private String vRT;
+	
 	@Column(name = "Status")
 	private String status;
 	
 	@Column(name ="sequence")
 	private String sequence;
+	
+	
+
+	public String getvRT() {
+		return vRT;
+	}
+
+	public void setvRT(String vRT) {
+		this.vRT = vRT;
+	}
 
 	public Long getvTestFeePre() {
 		return vTestFeePre;
