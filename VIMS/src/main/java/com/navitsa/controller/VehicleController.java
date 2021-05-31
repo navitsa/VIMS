@@ -1003,7 +1003,31 @@ public class VehicleController {
 	        	File texEsin = new File(checkTextFilePath);  
 	        	File xmlEsin = new File(checkXmlFilePath);  		
 	        	OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
+	        	//AVL Details
+	        	String avlStatus=vehiclereg.getTestLaneHeadId().getAvlFstatus();
+	        	String mahaStatus=vehiclereg.getTestLaneHeadId().getMahaFstatus();
+	        	InetAddress inet=null;
 	        	
+	        	String avlIp="";
+	        	String avlUserName="";
+	        	String avlPassword="";
+	        	String avlxmlin="";
+	        	
+	        	String mahaIp="";
+	        	String mahaUserName="";
+	        	String mahaPassword="";
+	        	String mahaEsEn="";
+	        	String mahaESOut="";
+	        	
+
+	        	
+	   
+	        	
+	        	
+	        	
+	        	
+	        	
+
 	        	
 	        	
 	        	if (session.getAttribute("username")==null) {
@@ -1018,35 +1042,82 @@ public class VehicleController {
         			return "5";  	 
 	        	}else {
 	        		
-	        		List<ConfigSystem> configSystem=vehicleService.getConfigSystemByCenter(vehiclereg.getCentermaster().getCenter_ID(),vehiclereg.getTestLaneHeadId().getTestLaneHeadId());	
+	        		//List<ConfigSystem> configSystem=vehicleService.getConfigSystemByCenter(vehiclereg.getCentermaster().getCenter_ID(),vehiclereg.getTestLaneHeadId().getTestLaneHeadId());	
 	        		
-	                boolean correct=false;
-	                String hostname="";
-	                String username="";
-	                String password="";
-	                String rootpath="";
-	                String xmlPath="";
-	                InetAddress inet = null;
+//	                
+//	                String hostname="";
+//	                String username="";
+//	                String password="";
+//	                String rootpath="";
+//	                String xmlPath="";
+//	                InetAddress inet = null;
 	             
-	                for(ConfigSystem conSys:configSystem) {
-	                	
-	                	 System.out.println("fff="+conSys.getIpaddress());
-	                	
-	                     inet = InetAddress.getByName(conSys.getIpaddress());
-	                     if(inet.isReachable(3000)==true) {
-	                    	 correct=true; 
-	                    	 System.out.println("fff="+true);
-	                     }else {
-	                    	 correct=false; 
-	                    	 System.out.println("fff="+false);
-	                    	// break;
-	                     }
+	                
+	                
+	                
+//	                for(ConfigSystem conSys:configSystem) {
+//	                	
+//	                	 System.out.println("fff="+conSys.getIpaddress());
+//	                	
+//	                     inet = InetAddress.getByName(conSys.getIpaddress());
+//	                     if(inet.isReachable(3000)==true) {
+//	                    	 correct=true; 
+//	                    	 System.out.println("fff="+true);
+//	                     }else {
+//	                    	 correct=false; 
+//	                    	 System.out.println("fff="+false);
+//	                    	// break;
+//	                     }
+//
+//	                }
+	        		//boolean correct=false;
+	        		boolean avlcorrect=false;
+	        		boolean mahacorrect=false;
+	        		
+		        
 
-	                }
-	                if((configSystem.size()==0)) {
-	                 	correct=true;
-	                 }
-	                if(correct) {
+		        	if(avlStatus.equals("ACTIVE")){
+		        		
+			        	 avlIp=vehiclereg.getTestLaneHeadId().getAvlPcIp();
+			        	 avlUserName=vehiclereg.getTestLaneHeadId().getAvlFTPUs();
+			        	 avlPassword=vehiclereg.getTestLaneHeadId().getAvlFTPPass();
+			        	 avlxmlin=vehiclereg.getTestLaneHeadId().getXmlIN();
+		        		
+		                  inet = InetAddress.getByName(avlIp);
+		                     if(inet.isReachable(3000)==true) {
+		                    	 avlcorrect=true;
+		                    	
+		                    	
+		                     }else {
+		                    	 avlcorrect=false; 
+		                    	 return "7"; 
+		                     }
+		        		
+		        	}
+
+		        	if(mahaStatus.equals("ACTIVE")){
+		        		
+		        		
+			        	 mahaIp=vehiclereg.getTestLaneHeadId().getMahaPcIp();
+			        	 mahaUserName=vehiclereg.getTestLaneHeadId().getMahaFTPUs();
+			        	 mahaPassword=vehiclereg.getTestLaneHeadId().getMahaFTPPass();
+			        	 mahaEsEn=vehiclereg.getTestLaneHeadId().getMahaES_IN();
+			        	 mahaESOut=vehiclereg.getTestLaneHeadId().getMahaES_OUT();
+		        		
+		                inet = InetAddress.getByName(mahaIp);
+	                    if(inet.isReachable(3000)==true) {
+	                   	 mahacorrect=true; 
+	                  
+	                    }else {
+	                   	 mahacorrect=false; 
+	                   	return "8"; 
+	                   	        		
+	                    }
+	        		
+		        	}
+	                
+	
+	               
 	                
 	                	Users user=usersService.searchUser(vehiclereg.getUser().getUserId());
 	                	
@@ -1179,44 +1250,34 @@ public class VehicleController {
                         bwx.write("</Report>");  
                         bwx.close(); 
 				        
-                        if(configSystem.size()!=0) {
-System.out.println("ftp");
-         	                   for(ConfigSystem conSys:configSystem) {
-         	                     hostname=conSys.getIpaddress();
-         	                     username=conSys.getUserName();
-         	                     password=conSys.getPassword();  
-         	                     rootpath=conSys.getRootPath();
-         	                     xmlPath=conSys.getXmlPath();
-         	                     inet = InetAddress.getByName(hostname);
-         	                 
-         	
-         	                   
-         	                    FTPUploader ftpUploader = new FTPUploader(hostname, username, password);
-         	
-         	                    //FTP server path is relative. So if FTP account HOME directory is "/home/pankaj/public_html/" and you need to upload
-         	                    // files to "/home/pankaj/public_html/wp-content/uploads/image2/", you should pass directory parameter as "/wp-content/uploads/image2/"
-         	                    ftpUploader.uploadFile(textFilePath, vehiclereg.getVid().getVehicleID()+".txt", rootpath+"/");//public_ftp
-         	                   
-         	                    //sava FTp to xml
-         	                    ftpUploader.uploadFile(xmlFilePath, vehiclereg.getVid().getVehicleID()+".xml", xmlPath+"/");//public_ftp
-         	                    
-         	                    
-         	                    ftpUploader.disconnect();
+	             
+	                	if(avlStatus.equals("ACTIVE")) {	 
+	                
+	                		 FTPUploader ftpUploader = new FTPUploader(avlIp, avlUserName, avlPassword);
+	                		
+	                		  ftpUploader.uploadFile(xmlFilePath, vehiclereg.getVid().getVehicleID()+".xml", avlxmlin+"/");//public_ftp
+	                		  ftpUploader.disconnect();
+	                	}
+	                	
+	                	if(mahaStatus.equals("ACTIVE")) {	 
+	                		
+	                		
+	                		 FTPUploader ftpUploader = new FTPUploader(mahaIp, mahaUserName, mahaPassword);
+	                		
+	                		 ftpUploader.uploadFile(textFilePath, vehiclereg.getVid().getVehicleID()+".txt", mahaEsEn+"/");//public_ftp
+	                		 ftpUploader.disconnect();
+	                	}
+	                	
+	                	
          	                    file.delete();
          	                    xmlfile.delete();
-         	                    
-         	                   }
-         	            }	
-                        
+         	            
                 		ocrDetails.setVrStatus("completed");
                 		vehicleService.saveOcrDetailsRepo(ocrDetails);
                         
                 		return "0";
 	                	
-	                }else {
-	  	        	  return "6"; 
-	  		          
-	  	          }
+	               
 	        	}
         		
         	} catch (Exception e) {

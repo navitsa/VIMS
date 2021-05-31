@@ -205,7 +205,7 @@ div.groove {
 																</div>
 															</div>
 														<div class="groove">
-															<p style="margin: 10px; color: red">MAHA<label style="margin-left:118px" for="vehicle1"> MAHA is Active</label>  <input style="margin-left:20px" type="checkbox" id="mahaFstatus" name="mahaFstatus" value="ACTIVE" onclick="$(this).attr('value', this.checked ? 1 : 0)"></p>
+															<p style="margin: 10px; color: red">MAHA<label style="margin-left:118px" for="vehicle1"> MAHA is Active</label>  <input style="margin-left:20px" type="checkbox" id="mahaFstatus" name="mahaFstatus" value="INACTIVE" onclick="$(this).attr('value', this.checked ? 'ACTIVE' : 'INACTIVE')"></p>
 															
 
 															<div class="form-group row">
@@ -265,7 +265,7 @@ div.groove {
 													</div>
 													<div class="col-sm-4">
 														<div class="groove">
-															<p style="margin: 10px; color: red">AVL<label style="margin-left:150px" for="vehicle1"> AVL is Active</label>  <input style="margin-left:20px" type="checkbox" id="avlFstatus" name="avlFstatus" value="ACTIVE"></p>
+															<p style="margin: 10px; color: red">AVL<label style="margin-left:150px" for="vehicle1"> AVL is Active</label>  <input style="margin-left:20px" type="checkbox" id="avlFstatus" name="avlFstatus" value="INACTIVE" onclick="$(this).attr('value', this.checked ? 'ACTIVE' : 'INACTIVE')"></p>
 															
 
 
