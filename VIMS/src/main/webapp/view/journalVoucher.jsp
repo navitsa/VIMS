@@ -113,8 +113,11 @@
 
 				<div class="page-inner mt--5">
 					<div class="container-fluid">
-						<form:form action="saveJournalVoucher" method="POST"
-							id="journalVoucher">
+						<%-- 						<form:form action="saveJournalVoucher" method="POST" --%>
+						<%-- 							id="journalVoucher"> --%>
+
+						<form id="jvoucher" method="post" enctype="multipart/form-data">
+
 							<div class="row">
 								<div class="col-xl-3 col-lg-5">
 									<!-- Card -->
@@ -309,16 +312,16 @@
 									
 									
 								</div> -->
+
+						</form>
+
+
 					</div>
-					</form:form>
-
-
 				</div>
-			</div>
 
+			</div>
+			<%@include file="../WEB-INF/jsp/footer.jsp"%>
 		</div>
-		<%@include file="../WEB-INF/jsp/footer.jsp"%>
-	</div>
 	</div>
 	<%@include file="../WEB-INF/jsp/commJs.jsp"%>
 
@@ -420,20 +423,22 @@
 					glaccnoArr.push(glCell);
 					dramtArr.push(dbCell);
 					cramtArr.push(crCell);
+
 				}
-				console.log(glaccnoArr);
-				console.log(dramtArr);
-				console.log(cramtArr);
-				var request_method = $("#journalVoucher").attr("method"); //get form GET/POST method
+				//	console.log(glaccnoArr);
+				//	console.log(dramtArr);
+				//	console.log(cramtArr);
+				var request_method = $("#jvoucher").attr("method"); //get form GET/POST method
 				// Get form
-				var form = $('#journalVoucher')[0];
+				var form = $('#jvoucher')[0];
 				// Create an FormData object
+
 				var data = new FormData(form);
-				//alert("Error "+form_data);
+
 				$
 						.ajax({
 							url : "saveJournalVoucher",
-							type : 'POST',
+							type : request_method,
 							enctype : 'multipart/form-data',
 							data : data,
 							processData : false,
@@ -454,31 +459,25 @@
 											});
 									window.location.href = "redirect:/journalVoucher.do";
 								} else {
-									swal(
-											"Error 1",
-											"You clicked the button! err",
-											{
-												icon : "error",
-												buttons : {
-													confirm : {
-														className : 'btn btn-danger'
-													}
-												},
-											});
+									swal("Error", {
+										icon : "error",
+										buttons : {
+											confirm : {
+												className : 'btn btn-danger'
+											}
+										},
+									});
 								}
 							},
 							error : function(e) {
-								swal(
-										"Error 2",
-										"You clicked the button! err",
-										{
-											icon : "error",
-											buttons : {
-												confirm : {
-													className : 'btn btn-danger'
-												}
-											},
-										});
+								swal("Error", {
+									icon : "error",
+									buttons : {
+										confirm : {
+											className : 'btn btn-danger'
+										}
+									},
+								});
 							}
 						});
 			}

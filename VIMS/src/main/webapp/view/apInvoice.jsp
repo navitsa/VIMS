@@ -114,7 +114,7 @@
 								<div class="col-xl-5 col-lg-5">
 									<!-- Card -->
 
-									<div class="card shadow mb-4" style="height: 640px;">
+									<div class="card shadow mb-4" style="height: 80vh;">
 										<div class="card-body">
 											<!-- <div class="form-group row">
 												<div class="col-sm-4">
@@ -131,17 +131,25 @@
 													<label class="l-fontst">Supplier</label>
 												</div>
 												<div class="col-sm-6">
-													<form:input class="form-control fontst" type="text"
-														path="supplierId" onchange="" id="supplierId" required="true"/>
+													<%-- <form:input class="form-control fontst" type="text"
+														path="supplierId" onchange="" id="supplierId" required="true"/> --%>
+													<form:select id="supplierId" path="supplierMaster.supplierId" onchange=""
+													class="form-control" required="true">
+													<option value="">--SELECT--</option>
+													<c:forEach items="${supplierList}" var="sl">
+														<option value="${sl.supplierId}">
+															${sl.supplierName}</option>
+													</c:forEach>
+												</form:select>
 												</div>
 											</div>
 											<div class="form-group row">
 												<div class="col-sm-4">
-													<label class="l-fontst">Supplier GL Account No</label>
+													<label class="l-fontst">Reference No</label>
 												</div>
 												<div class="col-sm-6">
 													<form:input class="form-control fontst" type="text"
-														path="supplierGlCode" onchange="" id="supplierGlCode" required="true"/>
+														path="referenceNo" onchange="" id="referenceNo" required="true"/>
 
 												</div>
 											</div>
@@ -155,6 +163,33 @@
 												</div>
 											</div>
 											<hr>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Gross Total</label>
+												</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="grossTotal" onchange="" id="grossTotal" readonly="true" required="true"/>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Discount</label>
+												</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="discountTotal" onchange="" id="discount" readonly="true" required="true"/>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Taxes</label>
+												</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="taxTotal" onchange="" id="taxTotal" readonly="true" required="true"/>
+												</div>
+											</div>
 											<div class="form-group row">
 												<div class="col-sm-4">
 													<label class="l-fontst">Net Total</label>
@@ -183,35 +218,34 @@
 								</div>
 
 								<div class="col-xl-7 col-lg-5">
-									<div class="card shadow mb-4" style="height: 640px;">
+									<div class="card shadow mb-4" style="height: 80vh;">
 										<div class="card-body">
 
 											<div class="col-sm-12">
 												<div class="row">
-													<div class="col-sm-12"><span><b>Details</b></span></div>
-												</div>
-												<br>
-												<div class="row">
-													<div class="col-sm-3"><select id="inputDetailsGLAccount" class="form-control"><option value="">--SELECT--</option>
-													<c:forEach items="${listGLAccounts}" var="gl">
-														<option value="${gl.glAccNo}">${gl.glAccNo}
-															${gl.glAccountName}</option>
+													<div class="col-sm-4"><span><label class="l-fontst">Item</label></span><select id="inputDetailsItemCode" class="form-control"><option value="">--SELECT--</option>
+													<c:forEach items="${itemList}" var="il">
+														<option value="${il.itemCode}">${il.itemCode} - 
+															${il.itemDescription}</option>
 													</c:forEach></select></div>
-													<div class="col-sm-5"><input id="inputDetailsDescription" type="text" placeholder="Description" class="form-control" /></div>
-													<div class="col-sm-2"><input id="inputDetailsAmount" type="text" placeholder="0.00" class="form-control" /></div>
-													<div class="col-sm-2" style="display: flex; justify-content: flex-end"><input id="btnAddDetails" type="button" onclick="addDetailsRow()" class="btn btn-primary btn-rounded tabStyle" value="Add"/></div>
+													<div class="col-sm-2"><span><label class="l-fontst">Unit Price</label></span><input id="inputDetailsUnitPrice" type="text" placeholder="0.00" class="form-control" /></div>
+													<div class="col-sm-2"><span><label class="l-fontst">Quantity</label></span><input id="inputDetailsQuantity" type="number" placeholder="" class="form-control" /></div>
+													<div class="col-sm-2"><span><label class="l-fontst">Discount</label></span><input id="inputDetailsDiscount" type="text" placeholder="0.00" class="form-control" /></div>
+													<div class="col-sm-2" style="display: flex; justify-content: flex-end; height:44px;"><input id="btnAddDetails" type="button" onclick="addDetailsRow()" class="btn btn-primary btn-rounded tabStyle" value="Add"/></div>
 												</div>
 												<br>
 												<div class="row">
 													<table id="apInvoiceDetailsTable"
 														class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-														style="height: 24vh">
+														style="height: 25vh">
 
 														<thead>
 															<tr>
-																<th style="width: 40%">GL Account No</th>
-																<th style="width: 40%">Description</th>
-																<th style="width: 20%">Amount</th>
+																<th style="width: 40%">Item</th>
+																<th style="width: 40%">Unit Price</th>
+																<th style="width: 20%">Quantity</th>
+																<th style="width: 20%">Discount</th>
+																<th style="width: 20%">Total</th>
 																<th style="width: 10%"></th>
 															</tr>
 														</thead>
@@ -223,32 +257,28 @@
 											</div>
 
 											<div class="col-sm-12">
-												<div class="row">
-													<div class="col-sm-12"><span><b>Taxes</b></span></div>
-												</div>
-												<br>
 												<div class="row" id="inputTaxes">
-													<div class="col-sm-3"><select id="inputTaxesGLAccount" class="form-control"><option value="">--SELECT--</option>
-													<c:forEach items="${listGLAccounts}" var="gl">
-														<option value="${gl.glAccNo}">${gl.glAccNo}
-															${gl.glAccountName}</option>
+													<div class="col-sm-4"><span><label class="l-fontst">Tax</label></span><select id="inputTaxCode" class="form-control"><option value="">--SELECT--</option>
+													<c:forEach items="${taxList}" var="tl">
+														<option value="${tl.taxCode}">${tl.taxCode} -
+															${tl.tax}</option>
 													</c:forEach></select></div>
-													<div class="col-sm-5"><input id="inputTaxesDescription" type="text" placeholder="Description" class="form-control" /></div>
-													<div class="col-sm-2"><input id="inputTaxesAmount" type="text" placeholder="0.00" class="form-control" /></div>
-													<div class="col-sm-2" style="display: flex; justify-content: flex-end"><input id="btnAddTaxes" type="button" onclick="addTaxesRow()" class="btn btn-primary btn-rounded tabStyle" value="Add"/></div>
+													<div class="col-sm-2"><span><label class="l-fontst">Amount</label></span><input id="inputTaxAmount" type="text" placeholder="0.00" class="form-control" /></div>
+													<div class="col-sm-4"><!-- <input id="inputTaxesAmount" type="text" placeholder="0.00" class="form-control" /> --></div>
+													<div class="col-sm-2" style="display: flex; justify-content: flex-end; height:44px;"><input id="btnAddTaxes" type="button" onclick="addTaxesRow()" class="btn btn-primary btn-rounded tabStyle" value="Add"/></div>
 												</div>
 												<br>
 												<div class="row">
 													<table id="apInvoiceTaxTable"
 														class="table table-bordered table-sm table-wrapper-scroll-y my-custom-scrollbar"
-														style="height: 24vh">
+														style="height: 25vh; width : 100%" >
 
 														<thead>
 															<tr>
-																<th style="width: 40%">GL Account No</th>
-																<th style="width: 40%">Description</th>
+																<th style="width: 40%">Tax</th>
+																<!-- <th style="width: 40%">Description</th> -->
 																<th style="width: 20%">Amount</th>
-																<th style="width: 10%"></th>
+																<th style="width: 20%"></th>
 															</tr>
 														</thead>
 														<tbody id="apInvoiceTaxTableBody">
@@ -271,7 +301,7 @@
 					</div>
 
 				</div>
-				l
+				
 			</div>
 
 		</div>
@@ -282,14 +312,20 @@
 	<script>
 	var arrHead = new Array();	// array for header.
     arrHead = ['', '', '', ''];
+	var detTableCells = document.getElementById('apInvoiceDetailsTable').rows[0].cells.length;
+	var taxTableCells = document.getElementById('apInvoiceTaxTable').rows[0].cells.length;
+	var grossTotal = 0;
+	var discountTotal = 0;
+	var taxTotal = 0;
 	var netTotal = 0;
 	function addDetailsRow() {
-		var detailsGlAccountValue = document.getElementById ("inputDetailsGLAccount").value;
-        var detailsDescriptionValue = document.getElementById ("inputDetailsDescription").value;
-        var detailsAmountValue = document.getElementById ("inputDetailsAmount").value;
-        if (detailsGlAccountValue == ''){
+		var detailsItemCodeValue = document.getElementById ("inputDetailsItemCode").value;
+        var detailsUnitPriceValue = document.getElementById ("inputDetailsUnitPrice").value;
+        var detailsQuantityValue = document.getElementById ("inputDetailsQuantity").value;
+        var detailsDiscountValue = document.getElementById ("inputDetailsDiscount").value;
+        if (detailsItemCodeValue == ''){
         	swal(
-					"Details Gl Account  is empty!",
+					"Item is empty!",
 					"",
 					{
 						icon : "error",
@@ -300,9 +336,9 @@
 						},
 					});
         	return false;
-        } else if (detailsDescriptionValue == '') {
+        } else if (detailsUnitPriceValue == '' || isNaN(detailsUnitPriceValue)) {
         	swal(
-					"Details description  is empty!",
+					"Unit Price is empty or not a number!",
 					"",
 					{
 						icon : "error",
@@ -313,9 +349,9 @@
 						},
 					});
         	return false;
-        } else if (detailsAmountValue == '' || isNaN(detailsAmountValue)) {
+        } else if (detailsQuantityValue == '' || isNaN(detailsQuantityValue)) {
         	swal(
-					"Details amount is empty or not a number!",
+					"Quantity is empty or not a number!",
 					"",
 					{
 						icon : "error",
@@ -326,80 +362,118 @@
 						},
 					});
         	return false;
-        }  else {
+        } else if (detailsDiscountValue !== '' && isNaN(detailsDiscountValue)) {
+        	swal(
+					"Discount should be a number!",
+					"",
+					{
+						icon : "error",
+						buttons : {
+							confirm : {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+        	return false;
+        } else {
+        if (detailsDiscountValue == '') {
+            detailsDiscountValue = 0;
+        }
+        var detailsTotalValue = (parseInt(detailsUnitPriceValue) * parseInt(detailsQuantityValue)) - parseInt(detailsDiscountValue);
         var empTab = document.getElementById('apInvoiceDetailsTable');
         var rowCnt = empTab.rows.length;   // table row count.
         var tr = empTab.insertRow(rowCnt); // the table row.
-        //tr = empTab.insertRow(rowCnt);
-        for (var c = 0; c < arrHead.length; c++) {
+        for (var c = 0; c < detTableCells; c++) {
             var td = document.createElement('td'); // table definition.
             td = tr.insertCell(c);
             var ele;
             var button;
            
             if (c == 0) {      
-            	// 1st column, will have select.
                 ele = document.createElement('input');
                 ele.setAttribute('type', 'text');
-                ele.setAttribute('value', detailsGlAccountValue);
-                ele.setAttribute('id', 'detailsGlAccount');
-                ele.setAttribute('name', 'detailsGlAccount');
+                ele.setAttribute('value', detailsItemCodeValue);
+                ele.setAttribute('name', 'detailsItemCode');
                 ele.setAttribute('readonly', true);
                 td.appendChild(ele);
             }
             else if (c == 1) {
-                // 2nd, 3rd and 4th column, will have textbox.
                 ele = document.createElement('input');
                 ele.setAttribute('type', 'text');
-                ele.setAttribute('value', detailsDescriptionValue);
-                ele.setAttribute('id', 'detailsDescription');
-                ele.setAttribute('name', 'detailsDescription');
+                ele.setAttribute('value', parseInt(detailsUnitPriceValue));
+                ele.setAttribute('name', 'detailsUnitPrice');
                 ele.setAttribute('readonly', true);
                 td.appendChild(ele);
             }
             else if (c == 2) {
-                // 2nd, 3rd and 4th column, will have textbox.
                 ele = document.createElement('input');
                 ele.setAttribute('type', 'text');
-                ele.setAttribute('value', detailsAmountValue);
-                ele.setAttribute('id', 'detailsAmount');
-                ele.setAttribute('name', 'detailsAmount');
+                ele.setAttribute('value', parseInt(detailsQuantityValue));
+                ele.setAttribute('name', 'detailsQuantity');
                 ele.setAttribute('readonly', true);
                 td.appendChild(ele);
             }
-            else if (c == 3) { // the last column.
-                // add a button in every new row in the last column.
+            else if (c == 3) { 
+            	ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', parseInt(detailsDiscountValue));
+                ele.setAttribute('name', 'detailsDiscount');
+                ele.setAttribute('readonly', true);
+                td.appendChild(ele);
+            }
+            else if (c == 4) { 
+            	ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', parseInt(detailsTotalValue));
+                ele.setAttribute('name', 'detailsTotal');
+                ele.setAttribute('readonly', true);
+                td.appendChild(ele);
+            }
+            else if (c == 5) { 
                 button = document.createElement('input');
-                // set input attributes.
                 button.setAttribute('type', 'button');
                 button.setAttribute('value', 'Remove');
-                // add button's 'onclick' event.
                 button.setAttribute('onclick', 'removeDetailsRow(this)');
                 td.appendChild(button);
             }
         }
-        netTotal = netTotal + parseInt(detailsAmountValue);
+        document.getElementById ("inputDetailsItemCode").value = '';
+        document.getElementById ("inputDetailsUnitPrice").value = '';
+        document.getElementById ("inputDetailsQuantity").value = '';
+        document.getElementById ("inputDetailsDiscount").value = '';
+        
+        grossTotal = grossTotal + (parseInt(detailsUnitPriceValue) * parseInt(detailsQuantityValue));
+        discountTotal = discountTotal + parseInt(detailsDiscountValue);
+        netTotal = netTotal + parseInt(detailsTotalValue);
+        document.getElementById("grossTotal").value = grossTotal;
+        document.getElementById("discount").value = discountTotal;
         document.getElementById("netTotal").value = netTotal;
-	} 
+		} 
     }
-	
-    // delete TABLE row function.
+
     function removeDetailsRow(oButton) {
         var empTab = document.getElementById('apInvoiceDetailsTable');
         var row = oButton.parentNode.parentNode;
         empTab.deleteRow(row.rowIndex); // button -> td -> tr.
-        var element = row.cells[2];
-        netTotal = netTotal - parseInt(element.childNodes[0].value);
+        var unitPrice = row.cells[1];
+        var quantity = row.cells[2];
+        var discount = row.cells[3];
+        var total = row.cells[4];
+        grossTotal = grossTotal - (unitPrice.childNodes[0].value * quantity.childNodes[0].value);
+        discountTotal = discountTotal - (discount.childNodes[0].value);
+        netTotal = netTotal - parseInt(total.childNodes[0].value);
+        document.getElementById("grossTotal").value = grossTotal;
+        document.getElementById("discount").value = discountTotal;
         document.getElementById("netTotal").value = netTotal;
     }
     
     function addTaxesRow() {
-    	var taxesGlAccountValue = document.getElementById ("inputTaxesGLAccount").value;
-        var taxesDescriptionValue = document.getElementById ("inputTaxesDescription").value;
-        var taxesAmountValue = document.getElementById ("inputTaxesAmount").value;
-        if (taxesGlAccountValue == ''){
+    	var taxesCodeValue = document.getElementById ("inputTaxCode").value;
+        var taxesAmountValue = document.getElementById ("inputTaxAmount").value;
+        //var taxesAmountValue = document.getElementById ("inputTaxesAmount").value;
+        if (taxesCodeValue == ''){
         	swal(
-					"Tax Gl Account  is empty!",
+					"Tax Code is empty!",
 					"",
 					{
 						icon : "error",
@@ -410,9 +484,9 @@
 						},
 					});
         	return false;
-        } else if (taxesDescriptionValue == '') {
+        } /*else if (taxesAmountValue == '') {
         	swal(
-					"Tax description  is empty!",
+					"Tax Amount empty!",
 					"",
 					{
 						icon : "error",
@@ -423,7 +497,7 @@
 						},
 					});
         	return false;
-        } else if (taxesAmountValue == '' || isNaN(taxesAmountValue)) {
+        }*/ else if (taxesAmountValue == '' || isNaN(taxesAmountValue)) {
         	swal(
 					"Tax amount is empty or not a number!",
 					"",
@@ -441,34 +515,30 @@
         var rowCnt = empTab.rows.length;   // table row count.
         var tr = empTab.insertRow(rowCnt); // the table row.
         //tr = empTab.insertRow(rowCnt);
-        for (var c = 0; c < arrHead.length; c++) {
+        for (var c = 0; c < taxTableCells; c++) {
             var td = document.createElement('td'); // table definition.
             td = tr.insertCell(c);
             var ele;
             var button; 
             
-            if (c == 0) {      
-            	// 1st column, will have text.
+            if (c == 0) {
                 ele = document.createElement('input');
                 ele.setAttribute('type', 'text');
-                ele.setAttribute('value', taxesGlAccountValue);
-                ele.setAttribute('id', 'taxesGlAccount');
-                ele.setAttribute('name', 'taxesGlAccount');
+                ele.setAttribute('value', taxesCodeValue);
+                ele.setAttribute('name', 'taxesCode');
                 ele.setAttribute('readonly', true);
                 td.appendChild(ele);
                 
             }
             else if (c == 1) {
-                // 2nd will have textbox.
                 ele = document.createElement('input');
                 ele.setAttribute('type', 'text');
-                ele.setAttribute('value', taxesDescriptionValue);
-                ele.setAttribute('id', 'taxesDescription');
-                ele.setAttribute('name', 'taxesDescription');
+                ele.setAttribute('value', parseInt(taxesAmountValue));
+                ele.setAttribute('name', 'taxesTotal');
                 ele.setAttribute('readonly', true);
                 td.appendChild(ele);
             }
-            else if (c == 2) {
+            /*else if (c == 2) {
                 // 3rd column, will have textbox.
                 ele = document.createElement('input');
                 ele.setAttribute('type', 'text');
@@ -477,19 +547,23 @@
                 ele.setAttribute('name', 'taxesAmount');
                 ele.setAttribute('readonly', true);
                 td.appendChild(ele);
-            }
-            else if (c == 3) { // the last column.
-                // add a button in every new row in the last column.
+            }*/
+            else if (c == 2) { 
                 button = document.createElement('input');
-                // set input attributes.
                 button.setAttribute('type', 'button');
                 button.setAttribute('value', 'Remove');
-                // add button's 'onclick' event.
                 button.setAttribute('onclick', 'removeTaxesRow(this)');
                 td.appendChild(button);
             }
         }
+        document.getElementById ("inputTaxCode").value = '';
+        document.getElementById ("inputTaxAmount").value = '';
+        //netTotal = netTotal + parseInt(taxesAmountValue);
+        //document.getElementById("netTotal").value = netTotal;
+        
+        taxTotal = taxTotal + parseInt(taxesAmountValue);
         netTotal = netTotal + parseInt(taxesAmountValue);
+        document.getElementById("taxTotal").value = taxTotal;
         document.getElementById("netTotal").value = netTotal;
     } 
     }
@@ -499,8 +573,10 @@
         var empTab = document.getElementById('apInvoiceTaxTable');
         var row = oButton.parentNode.parentNode;
         empTab.deleteRow(row.rowIndex); // button -> td -> tr.
-        var element = row.cells[2];
-        netTotal = netTotal - parseInt(element.childNodes[0].value);
+        var tax = row.cells[1];
+        taxTotal = taxTotal - parseInt(tax.childNodes[0].value);
+        netTotal = netTotal - parseInt(tax.childNodes[0].value);
+        document.getElementById("taxTotal").value = taxTotal;
         document.getElementById("netTotal").value = netTotal;
     }
     
@@ -539,7 +615,6 @@
 			return true;
 		}
     }
-    
 	</script>
 </body>
 </html>

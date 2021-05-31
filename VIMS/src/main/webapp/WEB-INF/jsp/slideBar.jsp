@@ -303,10 +303,11 @@
 							class="collapse-item fontst-sb-it" href="chequePrint"
 							hidden="true" id="chequePrint">Cheque Print</a> <a
 							class="collapse-item fontst-sb-it" href="APInvoice"
-							id="APInvoice" hidden="true">AP Invoice</a> <a
+							id="APInvoice" hidden="true" >AP Invoice</a><a
 							class="collapse-item fontst-sb-it" href="APInvoiceSummaryReport"
-							id="APInvoiceSummaryReport" hidden="true">AP Invoice Summary
-							Report</a>
+							id="APInvoiceSummaryReport" hidden="true" >AP Invoice Summary Report</a><a
+							class="collapse-item fontst-sb-it" href="APInvoiceAgeAnalysisReport"
+							id="APInvoiceAgeAnalysisReport" hidden="true" >AP Invoice Age Analysis Report</a>
 						<h6 class="text-section">Financials:</h6>
 						<a class="collapse-item fontst-sb-it"
 							href="revenueStatementPrivew" hidden="true"
@@ -438,6 +439,12 @@
 							hidden="true">Repair</a> <a class="collapse-item fontst-sb-it"
 							href="equipmentRepairReport" id="equipmentRepairReport"
 							hidden="true">Repair Report</a>
+						
+						<h6 class="text-section">Inventory :</h6>
+						<a class="collapse-item fontst-sb-it" href="SupplierMaster" id="SupplierMaster"
+							hidden="true">Supplier</a> <a
+							class="collapse-item fontst-sb-it" href="ItemMaster" id="ItemMaster"
+							hidden="true">Item</a>	
 
 						<!-- 			</div> -->
 					</div></li>

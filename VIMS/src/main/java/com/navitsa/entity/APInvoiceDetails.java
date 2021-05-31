@@ -19,31 +19,40 @@ public class APInvoiceDetails {
 	@Column(name = "ap_invoice_details_id")
 	private int apInvoiceDetailsId;
 
-	@Column(name = "description")
-	String description;
+	@Column(name = "unit_price")
+	Long unitPrice;
 
-	@Column(name = "amount")
-	Long amount;
+	@Column(name = "quantity")
+	int quantity;
+
+	@Column(name = "discount")
+	Long discount;
+
+	@Column(name = "total")
+	Long total;
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ap_invoice_head_id", referencedColumnName = "ap_invoice_head_id")
-	private APInvoiceHead apInvoiceHeadId;
+	private APInvoiceHead apInvoiceHead;
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "gl_code", referencedColumnName = "GlAccNo")
-	private Glaccount glAccNo;
+	@JoinColumn(name = "item_code", referencedColumnName = "item_code")
+	private ItemMaster itemMaster;
 
 	public APInvoiceDetails() {
 
 	}
 
-	public APInvoiceDetails(int apInvoiceDetailsId, String description, Long amount, APInvoiceHead apInvoiceHeadId,
-			Glaccount glAccNo) {
+	public APInvoiceDetails(int apInvoiceDetailsId, Long unitPrice, int quantity, Long discount, Long total,
+			APInvoiceHead apInvoiceHead, ItemMaster itemMaster) {
+		super();
 		this.apInvoiceDetailsId = apInvoiceDetailsId;
-		this.description = description;
-		this.amount = amount;
-		this.apInvoiceHeadId = apInvoiceHeadId;
-		this.glAccNo = glAccNo;
+		this.unitPrice = unitPrice;
+		this.quantity = quantity;
+		this.discount = discount;
+		this.total = total;
+		this.apInvoiceHead = apInvoiceHead;
+		this.itemMaster = itemMaster;
 	}
 
 	public int getApInvoiceDetailsId() {
@@ -54,41 +63,58 @@ public class APInvoiceDetails {
 		this.apInvoiceDetailsId = apInvoiceDetailsId;
 	}
 
-	public String getDescription() {
-		return description;
+	public Long getUnitPrice() {
+		return unitPrice;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setUnitPrice(Long unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 
-	public Long getAmount() {
-		return amount;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setAmount(Long amount) {
-		this.amount = amount;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
-	public APInvoiceHead getApInvoiceHeadId() {
-		return apInvoiceHeadId;
+	public Long getDiscount() {
+		return discount;
 	}
 
-	public void setApInvoiceHeadId(APInvoiceHead apInvoiceHeadId) {
-		this.apInvoiceHeadId = apInvoiceHeadId;
+	public void setDiscount(Long discount) {
+		this.discount = discount;
 	}
 
-	public Glaccount getGlAccNo() {
-		return glAccNo;
+	public Long getTotal() {
+		return total;
 	}
 
-	public void setGlAccNo(Glaccount glAccNo) {
-		this.glAccNo = glAccNo;
+	public void setTotal(Long total) {
+		this.total = total;
+	}
+
+	public APInvoiceHead getApInvoiceHead() {
+		return apInvoiceHead;
+	}
+
+	public void setApInvoiceHead(APInvoiceHead apInvoiceHead) {
+		this.apInvoiceHead = apInvoiceHead;
+	}
+
+	public ItemMaster getItemMaster() {
+		return itemMaster;
+	}
+
+	public void setItemMaster(ItemMaster itemMaster) {
+		this.itemMaster = itemMaster;
 	}
 
 	@Override
 	public String toString() {
-		return "APInvoiceDetails [apInvoiceDetailsId=" + apInvoiceDetailsId + ", description=" + description
-				+ ", amount=" + amount + ", apInvoiceHeadId=" + apInvoiceHeadId + ", glAccNo=" + glAccNo + "]";
+		return "APInvoiceDetails [apInvoiceDetailsId=" + apInvoiceDetailsId + ", unitPrice=" + unitPrice + ", quantity="
+				+ quantity + ", discount=" + discount + ", total=" + total + ", apInvoiceHead=" + apInvoiceHead
+				+ ", itemMaster=" + itemMaster + "]";
 	}
 }

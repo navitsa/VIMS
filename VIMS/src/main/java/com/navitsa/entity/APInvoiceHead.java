@@ -2,7 +2,10 @@ package com.navitsa.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,29 +16,47 @@ public class APInvoiceHead {
 	@Column(name = "ap_invoice_head_id")
 	private String apInvoiceHeadId;
 
-	@Column(name = "supplier_id")
-	String supplierId;
-
-	@Column(name = "supplier_gl_code")
-	String supplierGlCode;
+	@Column(name = "reference_no")
+	String referenceNo;
 
 	@Column(name = "date")
 	String date;
 
+	@Column(name = "gross_total")
+	Long grossTotal;
+
+	@Column(name = "discount_total")
+	Long discountTotal;
+
+	@Column(name = "tax_total")
+	Long taxTotal;
+
 	@Column(name = "net_total")
 	Long netTotal;
+
+	@Column(name = "balance")
+	Long balance;
+
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "supplier_id", referencedColumnName = "supplier_id")
+	private SupplierMaster supplierMaster;
 
 	public APInvoiceHead() {
 
 	}
 
-	public APInvoiceHead(String apInvoiceHeadId, String supplierId, String supplierGlCode, String date,
-			Long netTotal) {
+	public APInvoiceHead(String apInvoiceHeadId, String referenceNo, String date, Long grossTotal, Long discountTotal,
+			Long taxTotal, Long netTotal, Long balance, SupplierMaster supplierMaster) {
+		super();
 		this.apInvoiceHeadId = apInvoiceHeadId;
-		this.supplierId = supplierId;
-		this.supplierGlCode = supplierGlCode;
+		this.referenceNo = referenceNo;
 		this.date = date;
+		this.grossTotal = grossTotal;
+		this.discountTotal = discountTotal;
+		this.taxTotal = taxTotal;
 		this.netTotal = netTotal;
+		this.balance = balance;
+		this.supplierMaster = supplierMaster;
 	}
 
 	public String getApInvoiceHeadId() {
@@ -46,20 +67,12 @@ public class APInvoiceHead {
 		this.apInvoiceHeadId = apInvoiceHeadId;
 	}
 
-	public String getSupplierId() {
-		return supplierId;
+	public String getReferenceNo() {
+		return referenceNo;
 	}
 
-	public void setSupplierId(String supplierId) {
-		this.supplierId = supplierId;
-	}
-
-	public String getSupplierGlCode() {
-		return supplierGlCode;
-	}
-
-	public void setSupplierGlCode(String supplierGlCode) {
-		this.supplierGlCode = supplierGlCode;
+	public void setReferenceNo(String referenceNo) {
+		this.referenceNo = referenceNo;
 	}
 
 	public String getDate() {
@@ -70,6 +83,30 @@ public class APInvoiceHead {
 		this.date = date;
 	}
 
+	public Long getGrossTotal() {
+		return grossTotal;
+	}
+
+	public void setGrossTotal(Long grossTotal) {
+		this.grossTotal = grossTotal;
+	}
+
+	public Long getDiscountTotal() {
+		return discountTotal;
+	}
+
+	public void setDiscountTotal(Long discountTotal) {
+		this.discountTotal = discountTotal;
+	}
+
+	public Long getTaxTotal() {
+		return taxTotal;
+	}
+
+	public void setTaxTotal(Long taxTotal) {
+		this.taxTotal = taxTotal;
+	}
+
 	public Long getNetTotal() {
 		return netTotal;
 	}
@@ -78,9 +115,26 @@ public class APInvoiceHead {
 		this.netTotal = netTotal;
 	}
 
+	public Long getBalance() {
+		return balance;
+	}
+
+	public void setBalance(Long balance) {
+		this.balance = balance;
+	}
+
+	public SupplierMaster getSupplierMaster() {
+		return supplierMaster;
+	}
+
+	public void setSupplierMaster(SupplierMaster supplierMaster) {
+		this.supplierMaster = supplierMaster;
+	}
+
 	@Override
 	public String toString() {
-		return "APInvoiceHead [apInvoiceHeadId=" + apInvoiceHeadId + ", supplierId=" + supplierId + ", supplierGlCode="
-				+ supplierGlCode + ", date=" + date + ", netTotal=" + netTotal + "]";
+		return "APInvoiceHead [apInvoiceHeadId=" + apInvoiceHeadId + ", referenceNo=" + referenceNo + ", date=" + date
+				+ ", grossTotal=" + grossTotal + ", discountTotal=" + discountTotal + ", taxTotal=" + taxTotal
+				+ ", netTotal=" + netTotal + ", balance=" + balance + ", supplierMaster=" + supplierMaster + "]";
 	}
 }

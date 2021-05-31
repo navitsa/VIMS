@@ -42,10 +42,13 @@ public class AdminController {
 
 	@Autowired
 	private AdminServices adminServices;
+
 	@Autowired
 	VehicleService vehicleService;
+
 	@Autowired
 	CenterService centerService;
+
 	@Autowired
 	UsersService usersService;
 
@@ -291,8 +294,6 @@ public class AdminController {
 		Gate gate = new Gate();
 		gate.setGateID("00000".substring(adminServices.maxGateID().length()) + adminServices.maxGateID());
 		map.put("createGateForm", gate);
-		List<Gate> listGate = adminServices.getAllGates();
-		map.put("gateList", listGate);
 		return "createGate";
 	}
 
@@ -333,5 +334,11 @@ public class AdminController {
 		Gate gate = adminServices.getGateById(id);
 		mav.addObject("createGateForm", gate);
 		return mav;
+	}
+
+	@ModelAttribute("gateList")
+	public List<Gate> getGateList() {
+		List<Gate> list = adminServices.getAllGates();
+		return list;
 	}
 }
