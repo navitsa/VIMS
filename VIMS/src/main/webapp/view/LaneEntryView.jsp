@@ -724,6 +724,30 @@
 
 // 	 						document.getElementById("proceedLanBtn").style.display = "block";
 // 	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="7"){
+ 			        		swal("Oops...", "AVL Data Transfer Server not Found !", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+
+// 	 						document.getElementById("proceedLanBtn").style.display = "block";
+// 	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="8"){
+ 			        		swal("Oops...", "MAHA Data Transfer Server not Found !", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+
+// 	 						document.getElementById("proceedLanBtn").style.display = "block";
+// 	 						document.getElementById("moreLoder").style.display = "none";
 			        	}else{ 	
 			        		clearAll();
 			        		getPayVehicleNo();
