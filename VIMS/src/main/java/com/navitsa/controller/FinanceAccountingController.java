@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -792,6 +793,14 @@ public class FinanceAccountingController {
 		 * apInvoiceHead.setNetTotal(netTotal);
 		 */
 
+		DocType docType = glAccountService.getDocTypeById(5);
+
+		String docLength = StringUtils.repeat("0", docType.getDocNoLength());
+		String docNo = String.valueOf(docType.getDocNo());
+		apInvoiceHead
+				.setApInvoiceHeadId(docType.getDocFormat() + docLength.substring(docNo.length()) + (docType.getDocNo()+1));
+		apInvoiceHead.setEntryDate(formatter.format(date));
+
 		Long grossTotal = apInvoiceHead.getGrossTotal();
 		Long discountTotal = apInvoiceHead.getDiscountTotal();
 		Long taxTotal = apInvoiceHead.getTaxTotal();
@@ -808,7 +817,8 @@ public class FinanceAccountingController {
 		List<GlaccountMapping> glMappingResult = glAccountService.getGlaccountMappingByDocId(5);
 
 		GlPostingHead glPostingHead = new GlPostingHead();
-		glPostingHead.setDocid(glAccountService.getDocTypeById(5));
+		glPostingHead.setDocid(docType);
+		glPostingHead.setDocNo(apInvoiceHead.getApInvoiceHeadId());
 		glPostingHead.setDate(formatter.format(date));
 		glPostingHead.setTime(time.format(formattertime));
 		glPostingHead.setCenterID(centerMaster);
@@ -832,8 +842,6 @@ public class FinanceAccountingController {
 
 		List<APInvoiceDetails> apInvoiceDetailsList = new ArrayList<>();
 		List<APInvoiceTax> apInvoiceTaxList = new ArrayList<>();
-		apInvoiceHead.setApInvoiceHeadId("00000".substring(financeAccountingService.maxAPInvoiceHeadId().length())
-				+ financeAccountingService.maxAPInvoiceHeadId());
 
 		for (int i = 0; i < detailsItemCode.length; i++) {
 			APInvoiceDetails apInvoiceDetails = new APInvoiceDetails();
@@ -868,6 +876,8 @@ public class FinanceAccountingController {
 		financeAccountingService.saveAPInvoiceTaxList(apInvoiceTaxList);
 		glAccountService.saveGlPostingHeadRepository(glPostingHead);
 		glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+		docType.setDocNo(docType.getDocNo() + 1);
+		glAccountService.saveDocType(docType);
 
 		return "redirect:/APInvoice";
 	}
@@ -902,6 +912,7 @@ public class FinanceAccountingController {
 			apInvoiceHead.setGrossTotal(apInvoiceHeadList.get(i).getGrossTotal() / 100);
 			apInvoiceHead.setDiscountTotal(apInvoiceHeadList.get(i).getDiscountTotal() / 100);
 			apInvoiceHead.setTaxTotal(apInvoiceHeadList.get(i).getTaxTotal() / 100);
+			apInvoiceHead.setBalance(apInvoiceHeadList.get(i).getBalance() / 100);
 			apInvoiceHead.setNetTotal(apInvoiceHeadList.get(i).getNetTotal() / 100);
 			list.add(apInvoiceHead);
 
@@ -969,15 +980,17 @@ public class FinanceAccountingController {
 		LocalTime time = LocalTime.now();
 
 		SupplierMaster supplierMaster = inventoryService.getSupplierMasterById(supplierId);
+		DocType docType = glAccountService.getDocTypeById(6);
 
 		String centerId = session.getAttribute("centerid") + "";
 		CenterMaster centerMaster = centerService.getcenterById(centerId);
 
 		APInvoicePaymentHead apInvoicePaymentHead = new APInvoicePaymentHead();
 
+		String docLength = StringUtils.repeat("0", docType.getDocNoLength());
+		String docNo = String.valueOf(docType.getDocNo());
 		apInvoicePaymentHead.setApInvoicePaymentHeadId(
-				"00000".substring(financeAccountingService.maxAPInvoicePaymentHeadId().length())
-						+ financeAccountingService.maxAPInvoicePaymentHeadId());
+				docType.getDocFormat() + docLength.substring(docNo.length()) + (docType.getDocNo()+1));
 
 		apInvoicePaymentHead.setSupplierMaster(supplierMaster);
 		apInvoicePaymentHead.setPaymentDate(formatter.format(date));
@@ -991,7 +1004,8 @@ public class FinanceAccountingController {
 		List<GlaccountMapping> glMappingResult = glAccountService.getGlaccountMappingByDocId(6);
 
 		GlPostingHead glPostingHead = new GlPostingHead();
-		glPostingHead.setDocid(glAccountService.getDocTypeById(6));
+		glPostingHead.setDocid(docType);
+		glPostingHead.setDocNo(apInvoicePaymentHead.getApInvoicePaymentHeadId());
 		glPostingHead.setDate(formatter.format(date));
 		glPostingHead.setTime(time.format(formattertime));
 		glPostingHead.setCenterID(centerMaster);
@@ -1083,6 +1097,8 @@ public class FinanceAccountingController {
 		}
 		glAccountService.saveGlPostingHeadRepository(glPostingHead);
 		glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+		docType.setDocNo(docType.getDocNo() + 1);
+		glAccountService.saveDocType(docType);
 		return "redirect:/outgoingPayments";
 	}
 

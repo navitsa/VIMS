@@ -78,4 +78,8 @@ public class GlAccountService {
 	public Glaccount getGlaccountById(String id) {
 		return glaccountRepository.findById(id).get();
 	}
+
+	public void saveDocType(DocType docType) {
+		docTypeRepository.save(docType);
+	}
 }

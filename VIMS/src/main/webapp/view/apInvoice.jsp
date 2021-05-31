@@ -155,12 +155,21 @@
 											</div>
 											<div class="form-group row">
 												<div class="col-sm-4">
-													<label class="l-fontst">Date</label>
+													<label class="l-fontst">Invoice Date</label>
 												</div>
 												<div class="col-sm-6">
 													<form:input class="form-control fontst" type="date" path="date"
 														onchange="" id="apInvoiceDate" required="true"/>
 												</div>
+											</div>
+											<div class="form-group row">
+												
+											</div>
+											<div class="form-group row">
+												
+											</div>
+											<div class="form-group row">
+												
 											</div>
 											<hr>
 											<div class="form-group row">
@@ -231,7 +240,7 @@
 													<div class="col-sm-2"><span><label class="l-fontst">Unit Price</label></span><input id="inputDetailsUnitPrice" type="text" placeholder="0.00" class="form-control" /></div>
 													<div class="col-sm-2"><span><label class="l-fontst">Quantity</label></span><input id="inputDetailsQuantity" type="number" placeholder="" class="form-control" /></div>
 													<div class="col-sm-2"><span><label class="l-fontst">Discount</label></span><input id="inputDetailsDiscount" type="text" placeholder="0.00" class="form-control" /></div>
-													<div class="col-sm-2" style="display: flex; justify-content: flex-end; height:44px;"><input id="btnAddDetails" type="button" onclick="addDetailsRow()" class="btn btn-primary btn-rounded tabStyle" value="Add"/></div>
+													<div class="col-sm-2"><br><button id="btnAddDetails" type="button" onclick="addDetailsRow()" class="btn btn-primary btn-rounded tabStyle" value=""><i class="fa fa-plus-circle"></i></button></div>
 												</div>
 												<br>
 												<div class="row">
@@ -264,8 +273,8 @@
 															${tl.tax}</option>
 													</c:forEach></select></div>
 													<div class="col-sm-2"><span><label class="l-fontst">Amount</label></span><input id="inputTaxAmount" type="text" placeholder="0.00" class="form-control" /></div>
-													<div class="col-sm-4"><!-- <input id="inputTaxesAmount" type="text" placeholder="0.00" class="form-control" /> --></div>
-													<div class="col-sm-2" style="display: flex; justify-content: flex-end; height:44px;"><input id="btnAddTaxes" type="button" onclick="addTaxesRow()" class="btn btn-primary btn-rounded tabStyle" value="Add"/></div>
+													<!-- <div class="col-sm-4"><input id="inputTaxesAmount" type="text" placeholder="0.00" class="form-control" /> </div> -->
+													<div class="col-sm-2"><br><button id="btnAddTaxes" type="button" onclick="addTaxesRow()" class="btn btn-primary btn-rounded tabStyle" value=""><i class="fa fa-plus-circle"></i></button></div>
 												</div>
 												<br>
 												<div class="row">
@@ -309,7 +318,22 @@
 	</div>
 
 	<%@include file="../WEB-INF/jsp/commJs.jsp"%>
+	<script src='resources/assets/js/select2/select2.min.js' type='text/javascript'></script>
 	<script>
+	
+	$(document).ready(function(){
+	    // Initialize select2
+	    $("#supplierId").select2();
+	});
+	$(document).ready(function(){
+	    // Initialize select2
+	    $("#inputDetailsItemCode").select2();
+	});
+	$(document).ready(function(){
+	    // Initialize select2
+	    $("#inputTaxCode").select2();
+	});
+	
 	var arrHead = new Array();	// array for header.
     arrHead = ['', '', '', ''];
 	var detTableCells = document.getElementById('apInvoiceDetailsTable').rows[0].cells.length;

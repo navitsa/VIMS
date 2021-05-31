@@ -22,6 +22,9 @@ public class APInvoiceHead {
 	@Column(name = "date")
 	String date;
 
+	@Column(name = "entry_date")
+	String entryDate;
+
 	@Column(name = "gross_total")
 	Long grossTotal;
 
@@ -45,12 +48,13 @@ public class APInvoiceHead {
 
 	}
 
-	public APInvoiceHead(String apInvoiceHeadId, String referenceNo, String date, Long grossTotal, Long discountTotal,
-			Long taxTotal, Long netTotal, Long balance, SupplierMaster supplierMaster) {
+	public APInvoiceHead(String apInvoiceHeadId, String referenceNo, String date, String entryDate, Long grossTotal,
+			Long discountTotal, Long taxTotal, Long netTotal, Long balance, SupplierMaster supplierMaster) {
 		super();
 		this.apInvoiceHeadId = apInvoiceHeadId;
 		this.referenceNo = referenceNo;
 		this.date = date;
+		this.entryDate = entryDate;
 		this.grossTotal = grossTotal;
 		this.discountTotal = discountTotal;
 		this.taxTotal = taxTotal;
@@ -81,6 +85,14 @@ public class APInvoiceHead {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public String getEntryDate() {
+		return entryDate;
+	}
+
+	public void setEntryDate(String entryDate) {
+		this.entryDate = entryDate;
 	}
 
 	public Long getGrossTotal() {
@@ -134,7 +146,8 @@ public class APInvoiceHead {
 	@Override
 	public String toString() {
 		return "APInvoiceHead [apInvoiceHeadId=" + apInvoiceHeadId + ", referenceNo=" + referenceNo + ", date=" + date
-				+ ", grossTotal=" + grossTotal + ", discountTotal=" + discountTotal + ", taxTotal=" + taxTotal
-				+ ", netTotal=" + netTotal + ", balance=" + balance + ", supplierMaster=" + supplierMaster + "]";
+				+ ", entryDate=" + entryDate + ", grossTotal=" + grossTotal + ", discountTotal=" + discountTotal
+				+ ", taxTotal=" + taxTotal + ", netTotal=" + netTotal + ", balance=" + balance + ", supplierMaster="
+				+ supplierMaster + "]";
 	}
 }
