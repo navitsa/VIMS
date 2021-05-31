@@ -288,8 +288,8 @@
 										<label  class="l-fontst">Payment Type</label>
 									</div>	
 									<div class="col-sm-6">	
-											<label  class="l-fontst" id="payType">Cash</label>
-														             			             		
+								<label  class="l-fontst" id="payType">Cash</label>
+									<label  class="l-fontst" id="credbal"></label>						             			             		
 <%-- 					             		<form:select path="payType" class="custom-select fontst" id="payType" onchange="" required="Required" readonly="true"> --%>
 											
 <%-- 											<c:forEach items="${veclass}" var="VClass"> --%>
@@ -651,15 +651,21 @@
 	function customerDate(){
 		
 		var cusid=document.getElementById("customer").value;
-		
+		var crba=0;
 		$.ajax({
 		    type: 'GET',
 		    url: "getCustomerbyvehical",
 		    data: {"cusid" : cusid},
 		    success: function(data){
-		    	
-		     document.getElementById("payType").innerHTML= data.isCredeit;
-		    	
+		    	crba=data.crBalance;
+		    	var pty=data.isCredeit;
+		    	  document.getElementById("payType").innerHTML=pty ;
+		    	if(pty=="Cash"){
+		    		  document.getElementById("credbal").innerHTML="" ;
+		    	}else{
+		    		 document.getElementById("credbal").innerHTML="  Balance is "+(parseFloat(crba)/100).toFixed(2) ;	
+		    	}
+		     
 		    },
 		    error:function(){
 		       

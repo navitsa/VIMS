@@ -1549,7 +1549,7 @@ System.out.println("ftp");
             		ocrDetails.setPaymentStatus("completed");
             		vehicleService.saveOcrDetailsRepo(ocrDetails);
                 	
-                	Long balance=invHead.getNetTotal()+cusdetail.getCrBalance();
+                	Long balance=cusdetail.getCrBalance()-invHead.getNetTotal();
                 	cusdetail.setCrBalance(balance);
                 	usersService.saveCustomer(cusdetail);
             		
