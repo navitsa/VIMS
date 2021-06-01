@@ -13,22 +13,22 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "glaccount_mapping")
 public class GlaccountMapping {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")	
-	private int  id;
-	
+	@Column(name = "id")
+	private int id;
+
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "Doc_id", referencedColumnName = "Doc_id")
 	private DocType docid;
-	
+
 	@Column(name = "Type")
 	private String type;
-	
+
 	@Column(name = "CR")
 	private String cR;
-	
+
 	@Column(name = "DR")
 	private String dR;
 
@@ -71,7 +71,4 @@ public class GlaccountMapping {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
-	
 }

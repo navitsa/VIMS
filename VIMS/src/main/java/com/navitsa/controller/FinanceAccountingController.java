@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.navitsa.Reports.APInvoiceAgeAnalysisReportBean;
+import com.navitsa.Reports.DocumentTransactionDetailsReportBean;
 import com.navitsa.Reports.GlTranctionReportBeen;
 import com.navitsa.Reports.OutgoingPaymentDetailsReportBeen;
 import com.navitsa.Reports.ProfitsAndLossBeen;
@@ -49,6 +50,7 @@ import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
 import com.navitsa.entity.SupplierMaster;
 import com.navitsa.entity.TaxConfiguration;
+import com.navitsa.entity.VehicleCategory;
 import com.navitsa.services.BusinessPartnerService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.FinanceAccountingService;
@@ -797,8 +799,8 @@ public class FinanceAccountingController {
 
 		String docLength = StringUtils.repeat("0", docType.getDocNoLength());
 		String docNo = String.valueOf(docType.getDocNo());
-		apInvoiceHead
-				.setApInvoiceHeadId(docType.getDocFormat() + docLength.substring(docNo.length()) + (docType.getDocNo()+1));
+		apInvoiceHead.setApInvoiceHeadId(
+				docType.getDocFormat() + docLength.substring(docNo.length()) + (docType.getDocNo() + 1));
 		apInvoiceHead.setEntryDate(formatter.format(date));
 
 		Long grossTotal = apInvoiceHead.getGrossTotal();
@@ -990,7 +992,7 @@ public class FinanceAccountingController {
 		String docLength = StringUtils.repeat("0", docType.getDocNoLength());
 		String docNo = String.valueOf(docType.getDocNo());
 		apInvoicePaymentHead.setApInvoicePaymentHeadId(
-				docType.getDocFormat() + docLength.substring(docNo.length()) + (docType.getDocNo()+1));
+				docType.getDocFormat() + docLength.substring(docNo.length()) + (docType.getDocNo() + 1));
 
 		apInvoicePaymentHead.setSupplierMaster(supplierMaster);
 		apInvoicePaymentHead.setPaymentDate(formatter.format(date));
@@ -1180,6 +1182,129 @@ public class FinanceAccountingController {
 		}
 
 		mav.addObject("pdfViewEq", reptValue);
+		return mav;
+	}
+
+	@RequestMapping(value = "/DocumentTransactionDetailsReport", method = RequestMethod.GET)
+	public String documentTransactionDetailsReportPage() {
+		return "DocumentTransactionDetailsReport";
+	}
+
+	@ModelAttribute("documentList")
+	public List<DocType> getDocumentList() {
+		List<DocType> list = glAccountService.getDocumentList();
+		return list;
+	}
+
+	@RequestMapping(value = "/getGLPostingHeadsByDocId", method = RequestMethod.GET)
+	public @ResponseBody List<GlPostingHead> getGLPostingHeadsByDocId(@RequestParam int docId) {
+		List<GlPostingHead> glPostingHeadList = glAccountService.getGLPostingHeadsByDocId(docId);
+		return glPostingHeadList;
+	}
+
+	@RequestMapping(value = "/PreviewDocumentTransactionDetailsReport", method = RequestMethod.POST)
+	public ModelAndView getDocumentTransactionDetailsReport(HttpServletResponse response, HttpSession session,
+			@RequestParam String documentType, @RequestParam String documentId) {
+
+		ModelAndView mav = new ModelAndView("DocumentTransactionDetailsReport");
+
+		String centerId = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerId);
+
+		DocType docType = glAccountService.getDocTypeById(Integer.valueOf(documentType));
+		GlPostingHead glPostingHead = glAccountService.getGlPostingHeadByDocNo(documentId);
+		List<GlPostingDetails> glPostingDetailsList = glAccountService
+				.getGlPostingDetailsByJournalNo(glPostingHead.getJournalNo());
+
+		List<DocumentTransactionDetailsReportBean> dtdrbList = new ArrayList<DocumentTransactionDetailsReportBean>();
+
+		for (GlPostingDetails glpd : glPostingDetailsList) {
+
+			DocumentTransactionDetailsReportBean dtdrb = new DocumentTransactionDetailsReportBean();
+
+			dtdrb.setGlAccountNo(glpd.getGlAccNo().getGlAccNo());
+			dtdrb.setGlAccountName(glpd.getGlAccNo().getGlAccountName());
+		
+			String type = glpd.getType();
+			if (type.equals("C")) {
+				type = "Credit";
+				dtdrb.setCredit(glpd.getAmount() / 100);
+				dtdrb.setDebit(0L);
+			} else if (type.equals("D")) {
+				type = "Debit";
+				dtdrb.setDebit(glpd.getAmount() / 100);
+				dtdrb.setCredit(0L);
+			}
+			dtdrbList.add(dtdrb);
+		}
+
+		ReportViewe review = new ReportViewe();
+		Map<String, Object> params = new HashMap<>();
+
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("header", centerMaster.getPartner_ID().getReceiptHeader());
+		params.put("address", centerMaster.getAdd03());
+		params.put("date", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(LocalDate.now().toString())));
+		params.put("documentType", docType.getDocument());
+		params.put("documentId", documentId);
+
+		String reptValue = "";
+
+		try {
+			reptValue = review.pdfReportViewInlineSystemOpen("documentTransactionDetailsReport.jasper",
+					"Document Transaction Details Report", dtdrbList, params, response);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		mav.addObject("pdfViewEq", reptValue);
+		return mav;
+	}
+
+	@RequestMapping(value = "/GLAccountMapping", method = RequestMethod.GET)
+	public String glAccountMappingtPage(Map<String, Object> map) {
+		GlaccountMapping glAccountMapping = new GlaccountMapping();
+		map.put("glAccountMappingForm", glAccountMapping);
+		return "GLAccountMapping";
+	}
+
+	@ModelAttribute("glAccountMappingList")
+	public List<GlaccountMapping> getGLMappingList() {
+		List<GlaccountMapping> glAccountMappingList = glAccountService.getGLMappingList();
+		return glAccountMappingList;
+	}
+
+	@RequestMapping(value = "/saveGLAccountMapping", method = RequestMethod.POST)
+	public String saveGLAccountMapping(@Valid @ModelAttribute("glAccountMappingForm") GlaccountMapping glAccountMapping,
+			BindingResult br, RedirectAttributes redirectAttributes) {
+		if (br.hasErrors()) {
+			return "GLAccountMapping";
+		} else {
+			try {
+				glAccountService.saveGLAccountMapping(glAccountMapping);
+				redirectAttributes.addFlashAttribute("success", 1);
+				return "redirect:/GLAccountMapping";
+			} catch (Exception e) {
+				redirectAttributes.addFlashAttribute("success", 0);
+			}
+
+		}
+		return "GLAccountMapping";
+	}
+
+	@RequestMapping("/editGLAccountMapping")
+	public ModelAndView editGLAccountMapping(@RequestParam int id) {
+
+		ModelAndView mav = new ModelAndView("GLAccountMapping");
+		GlaccountMapping glam = null;
+
+		try {
+			glam = glAccountService.getGLAccountMappingById(id);
+			mav.addObject("glAccountMappingForm", glam);
+		} catch (Exception e) {
+			System.out.println("Error");
+		}
 		return mav;
 	}
 }

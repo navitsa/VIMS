@@ -2,6 +2,8 @@ package com.navitsa.services;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,5 +83,33 @@ public class GlAccountService {
 
 	public void saveDocType(DocType docType) {
 		docTypeRepository.save(docType);
+	}
+
+	public List<DocType> getDocumentList() {
+		return (List<DocType>) docTypeRepository.findAll();
+	}
+
+	public List<GlPostingHead> getGLPostingHeadsByDocId(int docId) {
+		return glPostingHeadRepository.getGLPostingHeadsByDocId(docId);
+	}
+
+	public GlPostingHead getGlPostingHeadByDocNo(String docNo) {
+		return glPostingHeadRepository.getGlPostingHeadByDocNo(docNo);
+	}
+
+	public List<GlPostingDetails> getGlPostingDetailsByJournalNo(int journalNo) {
+		return glPostingDetailsRepository.getGlPostingDetailsByJournalNo(journalNo);
+	}
+
+	public List<GlaccountMapping> getGLMappingList() {
+		return (List<GlaccountMapping>) glaccountMappingRepository.findAll();
+	}
+
+	public GlaccountMapping saveGLAccountMapping(@Valid GlaccountMapping glAccountMapping) {
+		return glaccountMappingRepository.save(glAccountMapping);
+	}
+
+	public GlaccountMapping getGLAccountMappingById(int id) {
+		return glaccountMappingRepository.findById(id).get();
 	}
 }

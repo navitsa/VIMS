@@ -259,6 +259,8 @@
 							hidden="true" id="taxConfiguration">Tax Settings</a> <a
 							class="collapse-item fontst-sb-it" href="chartOfAccounts"
 							id="chartOfAccounts">Chart of Accounts</a> <a
+							class="collapse-item fontst-sb-it" href="GLAccountMapping"
+							id="GLAccountMapping">GL Account Mapping</a> <a
 							class="collapse-item fontst-sb-it" href="createBank"
 							id="createBank">Bank</a> <a class="collapse-item fontst-sb-it"
 							href="createBankBranch" id="createBankBranch">Bank Branch</a> <a
@@ -319,7 +321,9 @@
 							class="collapse-item fontst-sb-it" href="profitsAndLoss"
 							id="profitsAndLoss">Profit & Loss(P&L)</a> <a
 							class="collapse-item fontst-sb-it" href="glTranctionReport"
-							id="glTranctionReport">GL Tranction Report</a>
+							id="glTranctionReport">GL Tranction Report</a><a
+							class="collapse-item fontst-sb-it" href="DocumentTransactionDetailsReport"
+							id="DocumentTransactionDetailsReport" hidden="true" >Document Transaction Details Report</a>
 					</div></li>
 
 				<li class="nav-item" hidden="true" id="Calibration"><a
