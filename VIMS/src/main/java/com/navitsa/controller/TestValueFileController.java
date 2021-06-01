@@ -26,8 +26,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.navitsa.entity.ConfigSystem;
 import com.navitsa.entity.EmissionCodeMapping;
-import com.navitsa.entity.EmissionDieselCertificateData;
-import com.navitsa.entity.EmissionPetrolCertificateData;
 import com.navitsa.entity.TestValueFileDetail;
 import com.navitsa.entity.TestValueFileHeader;
 import com.navitsa.entity.VehicleRegistration;

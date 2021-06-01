@@ -268,8 +268,11 @@ public class TestingReportConfigController {
 		 
 		 //getting test results from the query
 		 int rule = 0;
-		 if(service.findRuleByYear(vr.getVid().getManufactureYear(),vr.getVid().getFtype().getFuelTypeID()) !=null)
-			 rule = service.findRuleByYear(vr.getVid().getManufactureYear(),vr.getVid().getFtype().getFuelTypeID()).getRuleCode();
+		 try {
+			 rule  = service.getRuleCode(vr.getVid().getEmissionNorms());
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		 
 		 System.out.println("Rule is "+rule);
 		 
