@@ -131,10 +131,10 @@
 												<div class="col-sm-6">
 													<form:select class="form-control form-control-user fontst"
 														path="docid.docid">
-														<%-- <%-- <form:option value="">-SELECT-</form:option>
+														<form:option value="0">-SELECT-</form:option>
 														<c:forEach items="${documentList}" var="dl">
-															<option value="${dl.docid}">${dl.docid}</option>
-														</c:forEach> --%> --%>
+															<option value="${dl.docid}">${dl.document}</option>
+														</c:forEach>
 													</form:select>
 												</div>
 											</div>
@@ -143,8 +143,14 @@
 													<label class="l-fontst">Description</label>
 												</div>
 												<div class="col-sm-6">
-													<form:input class="form-control fontst" type="text"
-														path="type" onchange="" id="type" />
+													<form:select class="form-control form-control-user fontst"
+														path="type">
+														<form:option value="">-SELECT-</form:option>
+														<form:option value="Cash">Cash</form:option>
+														<form:option value="CreditCard">Credit Card</form:option>
+														<form:option value="Cheque">Cheque</form:option>
+														<form:option value="BankTransfer">Bank Transfer</form:option>
+													</form:select>
 												</div>
 											</div>
 											<div class="form-group row">
@@ -219,7 +225,6 @@
 
 												<thead>
 													<tr>
-														<th style="width: 10%">ID</th>
 														<th style="width: 30%">Document Type</th>
 														<th style="width: 30%">Description</th>
 														<th style="width: 20%">Credit Account</th>
@@ -230,7 +235,6 @@
 												<tbody id="myTable">
 													<c:forEach items="${glAccountMappingList}" var="gl">
 														<tr>
-															<td><div>${gl.id}</div></td>
 															<td><div>${gl.docid.document}</div></td>
 															<td><div>${gl.type}</div></td>
 															<td><div>${gl.cR}</div></td>

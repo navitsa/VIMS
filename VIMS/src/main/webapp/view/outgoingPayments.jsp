@@ -283,7 +283,6 @@ table.table td .add {
 												<div class="card shadow mb-4" style="height: 640px;">
 
 													<div class="card-body">
-
 														<div class="form-group row">
 															<div class="col-sm-12">
 																<label class="l-fontst">Supplier</label> <select
@@ -844,31 +843,39 @@ table.table td .add {
 								var newBalance = 0;
 								if (paidAmount <= 0) {
 									payamount = 0;
-									newBalance = data[i].balance/100;
+									newBalance = data[i].balance / 100;
 								} else {
 									paidAmount = paidAmount - data[i].balance
 											/ 100;
 									if (paidAmount > 0) {
 										payamount = data[i].balance / 100;
 									} else {
-										payamount = paidAmount + data[i].balance
-												/ 100;
+										payamount = paidAmount
+												+ data[i].balance / 100;
 										newBalance = data[i].balance / 100
 												- payamount;
 									}
 								}
-								
+
 								var result = '<tr>'
-									+ '<td><input readonly type="text" name="apInvoiceHeadId" value="'+data[i].apInvoiceHeadId +'"></td>'
-									+ '<td><input readonly type="text" name="referenceNo" value="'+ data[i].referenceNo +'"></td>'
-									+ '<td><input readonly type="text" name="date" value="'+ data[i].date +'"></td>'
-									+ '<td><input readonly type="text" name="netTotal" value="'+ parseInt(data[i].netTotal) / 100 +'"></td>'
-									+ '<td><input readonly type="text" name="balance" value="'+ parseInt(data[i].balance) / 100 +'"></td>'
-									+ '<td><input readonly type="text" name="payamount" value="'+ parseInt(payamount) +'"></td>'
-									+ '<td><input readonly type="text" name="newBalance" value="'+ parseInt(newBalance) +'"></td>'
-									+ '<td>' 
-									+ '</tr>';
-									
+										+ '<td><input readonly type="text" name="apInvoiceHeadId" value="'+data[i].apInvoiceHeadId +'"></td>'
+										+ '<td><input readonly type="text" name="referenceNo" value="'+ data[i].referenceNo +'"></td>'
+										+ '<td><input readonly type="text" name="date" value="'+ data[i].date +'"></td>'
+										+ '<td><input readonly type="text" name="netTotal" value="'
+										+ parseInt(data[i].netTotal)
+										/ 100
+										+ '"></td>'
+										+ '<td><input readonly type="text" name="balance" value="'
+										+ parseInt(data[i].balance)
+										/ 100
+										+ '"></td>'
+										+ '<td><input readonly type="text" name="payamount" value="'
+										+ parseInt(payamount)
+										+ '"></td>'
+										+ '<td><input readonly type="text" name="newBalance" value="'
+										+ parseInt(newBalance) + '"></td>'
+										+ '<td>' + '</tr>';
+
 								$("#tblAPInvoicePayment tbody").append(result);
 								totalBalance = totalBalance + data[i].balance;
 							}

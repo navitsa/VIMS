@@ -767,7 +767,7 @@ public class FinanceAccountingController {
 
 	@RequestMapping(value = "/saveAPInvoice", method = RequestMethod.POST)
 	public String saveAPInvoice(@Valid @ModelAttribute("apInvoiceForm") APInvoiceHead apInvoiceHead, BindingResult br,
-			@RequestParam(value = "detailsItemCode") String[] detailsItemCode,
+			RedirectAttributes redirectAttributes, @RequestParam(value = "detailsItemCode") String[] detailsItemCode,
 			@RequestParam(value = "detailsUnitPrice") Long[] detailsUnitPrice,
 			@RequestParam(value = "detailsQuantity") int[] detailsQuantity,
 			@RequestParam(value = "detailsDiscount") Long[] detailsDiscount,
@@ -776,112 +776,111 @@ public class FinanceAccountingController {
 			@RequestParam(value = "taxesTotal") Long[] taxesTotal, Model m, HttpSession session,
 			HttpServletResponse response) {
 
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm:ss");
-		LocalTime time = LocalTime.now();
+		if (br.hasErrors()) {
+			return "apInvoice";
+		} else {
+			try {
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = new Date();
+				DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm:ss");
+				LocalTime time = LocalTime.now();
 
-		String centerId = session.getAttribute("centerid") + "";
-		CenterMaster centerMaster = centerService.getcenterById(centerId);
-		/*
-		 * Long netTotal = 0L;
-		 * 
-		 * for (int c = 0; c < detailsAmount.length; c++) { netTotal = netTotal +
-		 * (Double.valueOf(detailsAmount[c]).longValue() * 100); }
-		 * 
-		 * for (int d = 0; d < taxesAmount.length; d++) { netTotal = netTotal +
-		 * (Double.valueOf(taxesAmount[d]).longValue() * 100); }
-		 * 
-		 * apInvoiceHead.setNetTotal(netTotal);
-		 */
+				String centerId = session.getAttribute("centerid") + "";
+				CenterMaster centerMaster = centerService.getcenterById(centerId);
 
-		DocType docType = glAccountService.getDocTypeById(5);
+				DocType docType = glAccountService.getDocTypeById(5);
 
-		String docLength = StringUtils.repeat("0", docType.getDocNoLength());
-		String docNo = String.valueOf(docType.getDocNo());
-		apInvoiceHead.setApInvoiceHeadId(
-				docType.getDocFormat() + docLength.substring(docNo.length()) + (docType.getDocNo() + 1));
-		apInvoiceHead.setEntryDate(formatter.format(date));
+				String docLength = StringUtils.repeat("0", docType.getDocNoLength());
+				String docNo = String.valueOf(docType.getDocNo());
+				apInvoiceHead.setApInvoiceHeadId(
+						docType.getDocFormat() + docLength.substring(docNo.length()) + (docType.getDocNo() + 1));
+				apInvoiceHead.setEntryDate(formatter.format(date));
 
-		Long grossTotal = apInvoiceHead.getGrossTotal();
-		Long discountTotal = apInvoiceHead.getDiscountTotal();
-		Long taxTotal = apInvoiceHead.getTaxTotal();
-		Long netTotal = apInvoiceHead.getNetTotal();
-		apInvoiceHead.setGrossTotal(grossTotal * 100);
-		apInvoiceHead.setDiscountTotal(discountTotal * 100);
-		apInvoiceHead.setTaxTotal(taxTotal * 100);
-		apInvoiceHead.setNetTotal(netTotal * 100);
-		apInvoiceHead.setBalance(netTotal * 100);
+				Long grossTotal = apInvoiceHead.getGrossTotal();
+				Long discountTotal = apInvoiceHead.getDiscountTotal();
+				Long taxTotal = apInvoiceHead.getTaxTotal();
+				Long netTotal = apInvoiceHead.getNetTotal();
+				apInvoiceHead.setGrossTotal(grossTotal * 100);
+				apInvoiceHead.setDiscountTotal(discountTotal * 100);
+				apInvoiceHead.setTaxTotal(taxTotal * 100);
+				apInvoiceHead.setNetTotal(netTotal * 100);
+				apInvoiceHead.setBalance(netTotal * 100);
 
-		Long netGross = apInvoiceHead.getGrossTotal() - apInvoiceHead.getDiscountTotal();
+				Long netGross = apInvoiceHead.getGrossTotal() - apInvoiceHead.getDiscountTotal();
 
-		List<GlPostingDetails> glPostingDetailsList = new ArrayList<>();
-		List<GlaccountMapping> glMappingResult = glAccountService.getGlaccountMappingByDocId(5);
+				List<GlPostingDetails> glPostingDetailsList = new ArrayList<>();
+				List<GlaccountMapping> glMappingResult = glAccountService.getGlaccountMappingByDocId(5);
 
-		GlPostingHead glPostingHead = new GlPostingHead();
-		glPostingHead.setDocid(docType);
-		glPostingHead.setDocNo(apInvoiceHead.getApInvoiceHeadId());
-		glPostingHead.setDate(formatter.format(date));
-		glPostingHead.setTime(time.format(formattertime));
-		glPostingHead.setCenterID(centerMaster);
-		glPostingHead.setTotalCR(apInvoiceHead.getNetTotal());
-		glPostingHead.setTotalDR(apInvoiceHead.getNetTotal());
-		glPostingHead.setStatus("ACTIVE");
+				GlPostingHead glPostingHead = new GlPostingHead();
+				glPostingHead.setDocid(docType);
+				glPostingHead.setDocNo(apInvoiceHead.getApInvoiceHeadId());
+				glPostingHead.setDate(formatter.format(date));
+				glPostingHead.setTime(time.format(formattertime));
+				glPostingHead.setCenterID(centerMaster);
+				glPostingHead.setTotalCR(apInvoiceHead.getNetTotal());
+				glPostingHead.setTotalDR(apInvoiceHead.getNetTotal());
+				glPostingHead.setStatus("ACTIVE");
 
-		GlPostingDetails debitGlPostingDetails = new GlPostingDetails();
-		debitGlPostingDetails.setJournalNo(glPostingHead);
-		debitGlPostingDetails.setGlAccNo(glAccountService.getGlaccountById(glMappingResult.get(0).getdR()));
-		debitGlPostingDetails.setType("D");
-		debitGlPostingDetails.setAmount(netGross);
-		glPostingDetailsList.add(debitGlPostingDetails);
+				GlPostingDetails debitGlPostingDetails = new GlPostingDetails();
+				debitGlPostingDetails.setJournalNo(glPostingHead);
+				debitGlPostingDetails.setGlAccNo(glAccountService.getGlaccountById(glMappingResult.get(0).getdR()));
+				debitGlPostingDetails.setType("D");
+				debitGlPostingDetails.setAmount(netGross);
+				glPostingDetailsList.add(debitGlPostingDetails);
 
-		GlPostingDetails creditGlPostingDetails = new GlPostingDetails();
-		creditGlPostingDetails.setJournalNo(glPostingHead);
-		creditGlPostingDetails.setGlAccNo(glAccountService.getGlaccountById(glMappingResult.get(0).getcR()));
-		creditGlPostingDetails.setType("C");
-		creditGlPostingDetails.setAmount(apInvoiceHead.getNetTotal());
-		glPostingDetailsList.add(creditGlPostingDetails);
+				GlPostingDetails creditGlPostingDetails = new GlPostingDetails();
+				creditGlPostingDetails.setJournalNo(glPostingHead);
+				creditGlPostingDetails.setGlAccNo(glAccountService.getGlaccountById(glMappingResult.get(0).getcR()));
+				creditGlPostingDetails.setType("C");
+				creditGlPostingDetails.setAmount(apInvoiceHead.getNetTotal());
+				glPostingDetailsList.add(creditGlPostingDetails);
 
-		List<APInvoiceDetails> apInvoiceDetailsList = new ArrayList<>();
-		List<APInvoiceTax> apInvoiceTaxList = new ArrayList<>();
+				List<APInvoiceDetails> apInvoiceDetailsList = new ArrayList<>();
+				List<APInvoiceTax> apInvoiceTaxList = new ArrayList<>();
 
-		for (int i = 0; i < detailsItemCode.length; i++) {
-			APInvoiceDetails apInvoiceDetails = new APInvoiceDetails();
-			ItemMaster itemMaster = new ItemMaster();
-			itemMaster.setItemCode(detailsItemCode[i]);
-			apInvoiceDetails.setApInvoiceHead(apInvoiceHead);
-			apInvoiceDetails.setItemMaster(itemMaster);
-			apInvoiceDetails.setUnitPrice(detailsUnitPrice[i] * 100);
-			apInvoiceDetails.setQuantity(detailsQuantity[i]);
-			apInvoiceDetails.setDiscount(detailsDiscount[i] * 100);
-			apInvoiceDetails.setTotal(detailsTotal[i] * 100);
-			apInvoiceDetailsList.add(apInvoiceDetails);
+				for (int i = 0; i < detailsItemCode.length; i++) {
+					APInvoiceDetails apInvoiceDetails = new APInvoiceDetails();
+					ItemMaster itemMaster = new ItemMaster();
+					itemMaster.setItemCode(detailsItemCode[i]);
+					apInvoiceDetails.setApInvoiceHead(apInvoiceHead);
+					apInvoiceDetails.setItemMaster(itemMaster);
+					apInvoiceDetails.setUnitPrice(detailsUnitPrice[i] * 100);
+					apInvoiceDetails.setQuantity(detailsQuantity[i]);
+					apInvoiceDetails.setDiscount(detailsDiscount[i] * 100);
+					apInvoiceDetails.setTotal(detailsTotal[i] * 100);
+					apInvoiceDetailsList.add(apInvoiceDetails);
+				}
+
+				for (int j = 0; j < taxesCode.length; j++) {
+					String glCode = usersService.taxByid(taxesCode[j]).getGlAccNo().getGlAccNo();
+					GlPostingDetails taxGlPostingDetails = new GlPostingDetails();
+					taxGlPostingDetails.setJournalNo(glPostingHead);
+					taxGlPostingDetails.setGlAccNo(glAccountService.getGlaccountById(glCode));
+					taxGlPostingDetails.setType("D");
+					taxGlPostingDetails.setAmount(taxesTotal[j] * 100);
+					glPostingDetailsList.add(taxGlPostingDetails);
+					APInvoiceTax apInvoiceTax = new APInvoiceTax();
+					apInvoiceTax.setApInvoiceHead(apInvoiceHead);
+					apInvoiceTax.setTaxCode(taxesCode[j]);
+					apInvoiceTax.setTotal(taxesTotal[j] * 100);
+					apInvoiceTaxList.add(apInvoiceTax);
+				}
+
+				financeAccountingService.saveAPInvoiceHead(apInvoiceHead);
+				financeAccountingService.saveAPInvoiceDetailList(apInvoiceDetailsList);
+				financeAccountingService.saveAPInvoiceTaxList(apInvoiceTaxList);
+				glAccountService.saveGlPostingHeadRepository(glPostingHead);
+				glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+				docType.setDocNo(docType.getDocNo() + 1);
+				glAccountService.saveDocType(docType);
+				redirectAttributes.addFlashAttribute("success", 1);
+				return "redirect:/APInvoice";
+			} catch (Exception e) {
+				redirectAttributes.addFlashAttribute("success", 0);
+			}
+
 		}
-
-		for (int j = 0; j < taxesCode.length; j++) {
-			String glCode = usersService.taxByid(taxesCode[j]).getGlAccNo().getGlAccNo();
-			GlPostingDetails taxGlPostingDetails = new GlPostingDetails();
-			taxGlPostingDetails.setJournalNo(glPostingHead);
-			taxGlPostingDetails.setGlAccNo(glAccountService.getGlaccountById(glCode));
-			taxGlPostingDetails.setType("D");
-			taxGlPostingDetails.setAmount(taxesTotal[j] * 100);
-			glPostingDetailsList.add(taxGlPostingDetails);
-			APInvoiceTax apInvoiceTax = new APInvoiceTax();
-			apInvoiceTax.setApInvoiceHead(apInvoiceHead);
-			apInvoiceTax.setTaxCode(taxesCode[j]);
-			apInvoiceTax.setTotal(taxesTotal[j] * 100);
-			apInvoiceTaxList.add(apInvoiceTax);
-		}
-
-		financeAccountingService.saveAPInvoiceHead(apInvoiceHead);
-		financeAccountingService.saveAPInvoiceDetailList(apInvoiceDetailsList);
-		financeAccountingService.saveAPInvoiceTaxList(apInvoiceTaxList);
-		glAccountService.saveGlPostingHeadRepository(glPostingHead);
-		glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
-		docType.setDocNo(docType.getDocNo() + 1);
-		glAccountService.saveDocType(docType);
-
-		return "redirect:/APInvoice";
+		return "apInvoice";
 	}
 
 	@RequestMapping(value = "/APInvoiceSummaryReport", method = RequestMethod.GET)
@@ -1224,7 +1223,7 @@ public class FinanceAccountingController {
 
 			dtdrb.setGlAccountNo(glpd.getGlAccNo().getGlAccNo());
 			dtdrb.setGlAccountName(glpd.getGlAccNo().getGlAccountName());
-		
+
 			String type = glpd.getType();
 			if (type.equals("C")) {
 				type = "Credit";
