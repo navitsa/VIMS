@@ -1,13 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_speedometer_subreport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="6230b4c9-97d8-4045-89e3-3b84779a4f8c">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="14"/>
 	<property name="ireport.y" value="0"/>
+	<style name="pass fail color style">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $P{passStatus}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
+			<style mode="Transparent" forecolor="#009966"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $P{passStatus}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
+			<style forecolor="#990000"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $P{passStatus}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
+			<style isBlankWhenNull="true" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $P{passStatus}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
+			<style markup="none" isBlankWhenNull="true" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $P{passStatus2}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
+			<style mode="Transparent" forecolor="#009966"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $P{passStatus2}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
+			<style forecolor="#990000"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $P{passStatus2}.equalsIgnoreCase( "PASS" )]]></conditionExpression>
+			<style isBlankWhenNull="true" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $P{passStatus2}.equalsIgnoreCase( "FAIL" )]]></conditionExpression>
+			<style markup="none" isBlankWhenNull="true" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+		</conditionalStyle>
+	</style>
+	<style name="not tested color style">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(1) && $P{passStatus2}.equalsIgnoreCase("NOT TESTED")]]></conditionExpression>
+			<style forecolor="#990000"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{reportColor}.equals(0) && $P{passStatus2}.equalsIgnoreCase("NOT TESTED")]]></conditionExpression>
+			<style isItalic="true"/>
+		</conditionalStyle>
+	</style>
 	<parameter name="passStatus" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="speedoLimitDesc" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["E:\\eclipse-workspace\\V-Inspection\\EmissionTesting\\resources\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="passStatus2" class="java.lang.String"/>
+	<parameter name="speedoGovernorLimit" class="java.lang.String"/>
+	<parameter name="reportColor" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="actualMaxSpeed" class="java.lang.String"/>
 	<field name="value1" class="java.lang.String"/>
 	<field name="value2" class="java.lang.Double"/>
 	<field name="value3" class="java.lang.Double"/>
@@ -19,30 +67,16 @@
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="27">
+		<band height="36">
 			<staticText>
-				<reportElement x="10" y="16" width="62" height="11" uuid="cb755e1d-816f-4a9f-8d23-713f3ea5b1ec"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Actual Speed]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="81" y="16" width="58" height="11" uuid="09fd5e8f-dc17-45ef-a72d-338aad448141"/>
+				<reportElement x="10" y="25" width="62" height="11" uuid="09fd5e8f-dc17-45ef-a72d-338aad448141"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[Target Speed]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="166" y="16" width="57" height="11" uuid="72315b68-99c8-4778-a242-01342e58fd98"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<text><![CDATA[Actual Speed]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="232" y="16" width="55" height="11" uuid="185cc5be-1ccb-46b7-aee8-ae09c574dafc"/>
+				<reportElement x="166" y="25" width="55" height="11" uuid="185cc5be-1ccb-46b7-aee8-ae09c574dafc"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8"/>
 				</textElement>
@@ -57,20 +91,34 @@
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<staticText>
-					<reportElement x="10" y="0" width="100" height="14" uuid="b49aabad-5d78-4a13-9d8f-6ef07da34779"/>
+					<reportElement x="14" y="0" width="135" height="14" uuid="b49aabad-5d78-4a13-9d8f-6ef07da34779"/>
 					<textElement verticalAlignment="Middle">
 						<font size="9"/>
 					</textElement>
 					<text><![CDATA[Speedometer Test]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="476" y="0" width="79" height="14" uuid="9719174a-a665-470d-93d5-b09301fb489b"/>
-					<textElement textAlignment="Center">
-						<font size="9" isBold="true"/>
+				<textField isBlankWhenNull="true">
+					<reportElement style="pass fail color style" x="476" y="0" width="79" height="14" isRemoveLineWhenBlank="true" uuid="9719174a-a665-470d-93d5-b09301fb489b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{passStatus}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{passStatus}.equalsIgnoreCase("FAIL")?$P{passStatus}+"*":$P{passStatus}]]></textFieldExpression>
 				</textField>
 			</frame>
+			<staticText>
+				<reportElement x="81" y="25" width="58" height="11" uuid="cb755e1d-816f-4a9f-8d23-713f3ea5b1ec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Actual Speed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="232" y="25" width="55" height="11" uuid="72315b68-99c8-4778-a242-01342e58fd98"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Actual Speed]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -83,7 +131,7 @@
 				<textFieldExpression><![CDATA[$F{value4}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.0" isBlankWhenNull="true">
-				<reportElement x="166" y="4" width="29" height="12" isRemoveLineWhenBlank="true" uuid="4c4d70d9-51c2-4589-a60c-e4a232a2f7af"/>
+				<reportElement x="232" y="4" width="29" height="12" isRemoveLineWhenBlank="true" uuid="4c4d70d9-51c2-4589-a60c-e4a232a2f7af"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
@@ -104,14 +152,7 @@
 				<textFieldExpression><![CDATA[$F{value1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.0" isBlankWhenNull="true">
-				<reportElement x="10" y="4" width="33" height="12" isRemoveLineWhenBlank="true" uuid="b5aca7f2-0d28-4152-bc57-1c0346cd6cbf"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{value2}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0.0" isBlankWhenNull="true">
-				<reportElement x="81" y="4" width="30" height="12" isRemoveLineWhenBlank="true" uuid="0285a506-b636-4bb5-a8a8-efb47adc9ddf"/>
+				<reportElement x="10" y="4" width="34" height="12" isRemoveLineWhenBlank="true" uuid="0285a506-b636-4bb5-a8a8-efb47adc9ddf"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
@@ -131,13 +172,6 @@
 				</textElement>
 				<text><![CDATA[km/h]]></text>
 			</staticText>
-			<textField pattern="###0.0" isBlankWhenNull="true">
-				<reportElement x="232" y="4" width="29" height="12" isRemoveLineWhenBlank="true" uuid="2e614a1a-f19a-4959-bfd6-f41d0aff2beb"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{value6}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="261" y="4" width="26" height="12" uuid="ff83cb94-0328-487e-af7a-78f767662b6a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -152,9 +186,61 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{limitDes}]]></textFieldExpression>
 			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="81" y="4" width="30" height="12" isRemoveLineWhenBlank="true" uuid="b5aca7f2-0d28-4152-bc57-1c0346cd6cbf"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="166" y="4" width="29" height="12" isRemoveLineWhenBlank="true" uuid="2e614a1a-f19a-4959-bfd6-f41d0aff2beb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value6}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="12"/>
-	</columnFooter>
+	<summary>
+		<band height="36">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="11" width="555" height="14" backcolor="#EAEAEA" uuid="01488f98-bba2-434f-a25d-f28093efc8db"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<staticText>
+					<reportElement x="14" y="0" width="135" height="14" uuid="7b539a43-24e4-4687-9221-e3fcbaf47636"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Speed Governor / Limit Test]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement style="not tested color style" x="476" y="0" width="79" height="14" isRemoveLineWhenBlank="true" uuid="3b696ada-9029-408b-a4f7-4b28d21db67e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{passStatus2}.equalsIgnoreCase("FAIL")?$P{passStatus2}+"*":$P{passStatus2}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="363" y="0" width="103" height="14" uuid="ccbddec8-2b96-4c42-b09f-ce00f2d7a93a"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{speedoGovernorLimit}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="223" y="0" width="100" height="14" uuid="15af3408-b539-47ba-b27e-514028988949"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{actualMaxSpeed}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</summary>
 </jasperReport>

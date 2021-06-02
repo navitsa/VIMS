@@ -13,13 +13,11 @@
 <html lang="en">
 <head>
 	<%@include file="../WEB-INF/jsp/head.jsp"%>
-	
-	<style>
-.error1{color:red;font-size: 12px }
-         
-.fontcolor{color: blue;}
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>       
+.fontColor{color: blue;}
 </style>
-	
 </head>
 <body>
 	<div class="wrapper">
@@ -36,130 +34,184 @@
 		<!-- End Sidebar -->
 		<div class="main-panel">
 			<div class="content">
-				<div class="page-inner">	
-					<div class="page-header">
-							<h4 class="page-title">Vehicle Lane Entry Status</h4>
-							<ul class="breadcrumbs">
-								<li class="nav-home">
-									<a href="#">
-										<i class="flaticon-home"></i>
-									</a>
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								
-								
-							</ul>
-						</div>
-				
-									<div class="container-fluid">
-
-<div class="row">				
-	<div class="col-xl-3 col-lg-5" >			
-					<!-- Card -->
-			<form:form action="chequePreview"  method="POST">		
-					<div class="card shadow mb-4" style="height:600px;">
-						<div class="card border-left-primary shadow h-100 py-2" >
-							<div class="card-header py-2">
-								<h6 class="m-0 font-weight-bold text-primary">Cheque Print</h6>
+				<div class="panel-header bg-primary-gradient">
+					<div class="page-inner py-3">
+						<div
+							class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+							<div class="col-xl col-lg">
+								<h2 class="text-white pb-2 fw-bold">Cheque Print</h2>
 							</div>
-							<div class="card-body">
-								
-
-							<div class="form-group row">
-										<div class="col-sm-12">
-										<label class="l-fontst">Cheque Account No</label>
-											<input class="form-control fontst" type="text" name="accno" 
-											onchange=""
-											id="recDate"
-											/>	
-										</div>
-									
-										
-							</div>
-							<div class="form-group row">
-										<div class="col-sm-12">
-										<label class="l-fontst">Due Date</label>
-											<input class="form-control fontst" type="text" name="duedate" 
-											onchange=""
-											id="recDate"
-											/>	
-										</div>
-									
-										
-							</div>
-							<div class="form-group row">
-										<div class="col-sm-12">
-										<label class="l-fontst">Amount</label>
-											<input class="form-control fontst" type="text" name="amount" 
-											onchange=""
-											id="recDate"
-											/>	
-										</div>
-									
-										
-							</div>
-							
-<!-- 							<div class="form-group row"> -->
-<!-- 										<div class="col-sm-12"> -->
-<!-- 													<input type="checkbox" class="form-control custom-control-input fontst fontstc" id="withCheck" name="repStatu" value="INACTIVE" onclick="customerCredit()"> -->
-<!-- 								    				<label class="custom-control-label l-fontst fontstc" for="withCheck">With Cancel</label> -->
-<!-- 										</div> -->
-									
-										
-<!-- 							</div> -->
-								
-							<br>	
-							<hr>								
-							<div class="form-group row">
-								
-									<div class="col-sm-12">
-									<button type="submit" class="btn  btn-block btn-danger btn-rounded tabStyle" >Print Preview</button>
-<!-- 											<a href="#" class="btn btn-primary" onclick="runCancelInvoice();">Invoice Cancel</a>																 -->
-									</div>		
-							
-								</div>
-					
-
-							</div>
-							<!-- End of card body -->
 						</div>
 					</div>
-		</form:form>
-		</div>
+				</div>
+				<div class="page-inner mt--5">					
+													
+					<div class="row">
+						<div class="col-xl-4 mb-4">
+			              <div class="card shadow mb-4 border-left-primary">
+			                <div class="card-body">
+			                	<form:form action="chequePreview"  method="GET">
+			                		
+			                		<div class="form-group row">
+			                			<div class="col-lg">
+											<select name="voucherNo" id="pendingPayment" class="form-control" required onchange="getPaymentDetails(this.value)">									
+												<option value="">Select Pending Payment</option>
+												<c:forEach items="${pendingChequePayments}" var="x">
+													<option value="${x.paymentVoucherNo}">${x.paymentVoucherNo}</option>
+												</c:forEach>																																		
+											</select>
+			                			</div>
+			                		</div>
+			                		<div class="form-group row">
+			                			<div class="col-lg">
+			                				<label for="chequeDate">Cheque Date</label>
+											<input class="form-control" type="date" name="chequeDate" required/>
+			                			</div>
+			                		</div>
+			                		<div class="form-group row">
+			                			<div class="col-lg">
+											<label for="chequeNo">Cheque No.</label>
+											<input class="form-control"/>
+										</div>
+									</div>
+			                		<div class="form-group row">
+			                			<div class="col-lg">
+											<select id="bank" class="form-control">									
+												<option value="">Select Bank</option>
+												<option value="">HNB</option>
+												<option value="">COMMERCIAL</option>
+												<option value="">SEYLAN</option>																																			
+											</select>
+			                			</div>
+			                		</div>
+			                		<div class="form-group row">
+			                			<div class="col-lg">
+											<select id="bankAccount" class="form-control">									
+												<option value="">Select Bank Account</option>																																			
+											</select>
+			                			</div>
+			                		</div>
+			                		<div class="form-group row">
+			                			<div class="col-lg">
+											<button type="submit" class="btn  btn-block btn-success btn-rounded" >Print Preview</button>
+			                			</div>
+			                		</div>
+			                	</form:form>
+							</div>
+			              </div>
+						</div>
+						<div class="col-xl-6 mb-4">
+			              <div class="card shadow mb-4 border-left-primary">
+			                <div class="card-body">
+		                		<div class="form-group row">
+		                			<div class="col-lg">
+		                				<label>Voucher No. :</label>
+		                				<label id="voucherNo" class="fontColor"></label>
+		                			</div>
+		                			<div class="col-lg">
+		                				<label>Ref No. :</label>
+		                				<label id="refNo" class="fontColor"></label>
+		                			</div>
+		                		</div>
+		                		<div class="form-group row">
+		                			<div class="col-lg">
+		                				<label>Payment Type :</label>
+		                				<label id="paymentType" class="fontColor"></label>
+		                			</div>
+		                			<div class="col-lg">
+		                				<label>Due Date :</label>
+		                				<label id="dueDate" class="fontColor"></label>
+		                			</div>
+		                		</div>
+		                		<div class="form-group row">
+		                			<div class="col-lg">
+		                				<label>To Order of :</label>
+		                				<label id="toOrderof" class="fontColor"></label>
+		                			</div>
+		                		</div>
+		                		<div class="form-group row">
+		                			<div class="col-lg">
+		                				<label>Pay to :</label>
+		                				<label id="payTo" class="fontColor"></label>
+		                			</div>
+		                		</div>
+		                		<div class="form-group row">
+		                			<div class="col-lg">
+		                				<label>Payment Mean :</label>
+		                				<label id="paymentMean" class="fontColor"></label>
+		                			</div>
+		                		</div>
+		                		<div class="form-group row">
+		                			<div class="col-lg">
+										<table class="table table-bordered table-sm">
+										  <thead>
+										    <tr>
+										      <th scope="col">#</th>
+										      <th scope="col">GL Account</th>
+										      <th scope="col">Remark</th>
+										      <th scope="col">Amount</th>
+										    </tr>
+										  </thead>
+										  <tbody>
+										  </tbody>
+										</table>
+		                			</div>
+		                		</div>	                		
 
-		<div class="col-xl-9 col-lg-5">			
-			<div class="col-sm-12">
+			                </div>
+			              </div>
+						</div>
+					</div>	
+
 					<c:if test="${pdfViewEq != null }">
-									<embed type="application/pdf" src="data:application/pdf;base64,${pdfViewEq}"
-										style="height:600px; width:100%">
-										</embed>
-										</c:if>
-			</div>
-								
-		</div>
-</div>
-
-
-
-				</div>	
-				
-							
+						<embed type="application/pdf" src="data:application/pdf;base64,${pdfViewEq}" 
+						style="height:600px; width:100%">
+						</embed>
+					</c:if>
 	
-				
-				
-				
-				
-				
-					</div>
-				
+				</div>			
 			</div>	
 			<%@include file="../WEB-INF/jsp/footer.jsp"%>			
 		</div>
 	</div>
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
+<script>
+function getPaymentDetails(val){
+	if (val=="") {
+		return;
+	}
+	else{
+			$.ajax({
+		    type: 'GET',
+		    url: " getOutgoingPaymentDetails",
+		    data: {"voucherNo" : val},
+		    success: function(data){
+		    	
+		    	$("table tbody").empty();
+		        for(var i=0; i<data.length; i++){
+					var markup = "<tr><td>"+data[i].outgoingPaymentDetailId+"</td><td>"+data[i].glAccNo+"</td><td>" + data[i].remarks + "</td><td>"+data[i].amount+"</td></tr>";
+	           		 $("table tbody").append(markup);
+		        }
+		        
+		        $('#voucherNo').text(data[0].paymentVoucherNo.paymentVoucherNo);
+		        $('#refNo').text(data[0].paymentVoucherNo.refNo);
+		        $('#paymentType').text(data[0].paymentVoucherNo.paymentType);
+		        $('#dueDate').text(data[0].paymentVoucherNo.dueDate);
+		        $('#toOrderof').text(data[0].paymentVoucherNo.toOrderOf);
+		        $('#payTo').text(data[0].paymentVoucherNo.payTo);
+		        $('#paymentMean').text(data[0].paymentVoucherNo.paymentMean);
 
-	
+		        
+		        
+		    },
+		    error:function(){
+		        alert("Error When Loading Payment Voucher Details !")
+		    }
+		
+		});
+	}
+}
+</script>
+
 </body>
 </html>

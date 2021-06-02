@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="apInvoiceSummaryReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5bf82392-d494-49cf-b64d-90f1c93afb34">
 	<property name="ireport.zoom" value="2.853116706110007"/>
-	<property name="ireport.x" value="609"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="header" class="java.lang.String"/>
 	<parameter name="address" class="java.lang.String"/>
@@ -337,7 +337,7 @@
 				<textFieldExpression><![CDATA[$F{grossTotal}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="0" y="10" width="170" height="20" backcolor="#FFFFFF" uuid="5272e45b-6545-46f5-950c-365d85b0523a"/>
+				<reportElement mode="Opaque" x="0" y="10" width="150" height="20" backcolor="#FFFFFF" uuid="5272e45b-6545-46f5-950c-365d85b0523a"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.0"/>

@@ -1,4 +1,9 @@
 	<!--   Core JS Files   -->
+	
+		<%@include file="logoutModel.jsp"%>
+		<%@include file="backupModel.jsp"%>
+
+	
 	<script src="resources/assets/js/core/jquery.3.2.1.min.js"></script>
 	<script src="resources/assets/js/core/popper.min.js"></script>
 	<script src="resources/assets/js/core/bootstrap.min.js"></script>
@@ -37,26 +42,22 @@
 	<script src="resources/assets/js/atlantis.min.js"></script>
 
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
-	<script src="resources/assets/js/setting-demo.js"></script>
-	<script src="resources/assets/js/demo.js"></script>
+<!-- 	<script src="resources/assets/js/setting-demo.js"></script> -->
+<!-- 	<script src="resources/assets/js/demo.js"></script> -->
 	
-	
+	<!-- File input -->
 	<script src="resources/assets/js/file-input.js"></script>
-	<!--  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script> -->
-<!-- 		<script
-		src="https://cdn.datatables.net/rowgroup/1.1.1/js/dataTables.rowGroup.min.js"></script>  -->
-	 
-	   
-	  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	
+	<!-- font awesome -->
+<!-- 	 <script src='https://kit.fontawesome.com/a076d05399.js'></script> -->
+	 <script src="resources/assets/js/downloadjs/a076d05399.js"></script>
 	  
-	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-	  
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-	   
-	  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-	  
-	  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	 
+	 <!-- bootstrap datepicker -->
+	 <script src="resources/assets/js/downloadjs/bootstrap-datepicker.js"></script>
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+
+
+ 
 	<script type="text/javascript">
 
 	
@@ -65,12 +66,16 @@
         			
         			var str='<%=session.getAttribute("userId")%>';
         			if(<%=session.getAttribute("userId")%>==null){
-		        		Swal.fire({
-		        			  icon: 'error',
-		        			  title: 'Oops...',
-		        			  text: 'Session Expired'
-		        			  //,footer: '<a href>Why do I have this issue?</a>'
-		        			});
+
+		        		swal("Oops...", "Session Expired", {
+							icon : "error",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-danger'
+								}
+							},
+						});
+		        		
         			window.location.href = "logout";
         			}else{
         				

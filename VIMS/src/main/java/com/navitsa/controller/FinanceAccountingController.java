@@ -50,7 +50,6 @@ import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
 import com.navitsa.entity.SupplierMaster;
 import com.navitsa.entity.TaxConfiguration;
-import com.navitsa.entity.VehicleCategory;
 import com.navitsa.hrm.entity.Bank;
 import com.navitsa.hrm.entity.BankMaster;
 import com.navitsa.hrm.entity.PartnerBankAccount;
@@ -910,6 +909,7 @@ public class FinanceAccountingController {
 			apInvoiceHead.setSupplierMaster(supplierMaster);
 			apInvoiceHead.setReferenceNo(apInvoiceHeadList.get(i).getReferenceNo());
 			apInvoiceHead.setDate(apInvoiceHeadList.get(i).getDate());
+			apInvoiceHead.setEntryDate(apInvoiceHeadList.get(i).getEntryDate());
 			apInvoiceHead.setGrossTotal(apInvoiceHeadList.get(i).getGrossTotal() / 100);
 			apInvoiceHead.setDiscountTotal(apInvoiceHeadList.get(i).getDiscountTotal() / 100);
 			apInvoiceHead.setTaxTotal(apInvoiceHeadList.get(i).getTaxTotal() / 100);
@@ -1084,7 +1084,7 @@ public class FinanceAccountingController {
 			apInvoicePaymentDetails.setApInvoicePaymentHeadId(apInvoicePaymentHead);
 			apInvoicePaymentDetails.setInvoiceBalance(newBalance[i] * 100);
 			apInvoicePaymentDetails.setInvoicePayment(payamount[i] * 100);
-			apInvoicePaymentDetails.setInvoiceTotal(netTotal[i] * 100);
+			apInvoicePaymentDetails.setInvoiceTotal(balance[i] * 100);
 			apInvoicePaymentDetails.setApInvoiceHead(apInvoiceHead);
 			apInvoicePaymentDetailsList.add(apInvoicePaymentDetails);
 		}

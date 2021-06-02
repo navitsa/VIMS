@@ -7,589 +7,843 @@
 <%@ page isELIgnored="false"%>
 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ page import = "java.io.*,java.util.*" %>
-<%@ page import = "javax.servlet.*,java.text.*" %>
+<%@ page import="java.io.*,java.util.*"%>
+<%@ page import="javax.servlet.*,java.text.*"%>
 
 
 <html lang="en">
 <head>
-	<%@include file="../WEB-INF/jsp/head.jsp"%>
-		<style>
-		.error1{color:red;font-size: 12px } 
-		
- 		form input[type="file"] { 
-          display: none; 
-         }
-         .numberfield{width:70px;}
-         .labelcol{color:black;}
-         .imgalign{
-           display: block;
-  			margin-top: -20px;
- 			 margin-right: auto;
- 			 width: 80%;
-         
-         }
-         .fontst{
-         font-family: Arial, Helvetica, sans-serif;
-          font-size: 14px;
-          
-         }
-         .fontcol{
-         color: blue;
-         }
-         .fontcol-peo{
-         color: #ff8000;
-         }
-         .bgred{
-         color: #b30000;
-         }
-         
-         .capCam{
-/*   			position: absolute; */
-/*   			top: 10px; */
-/*   			right: 12px; */
-  			height: 120px;
-  			width: 160px;	
-		}
-       .iconstyle{		
-  			width: 10%;
-  			color:blue';
-       }
-       .camara{
-       		width: 190px;
-			height: 160px;
-       }       
-         
-         
-         
-         .spinner {
-  margin: 100px auto 0;
-  width: 70px;
-  text-align: center;
+<%@include file="../WEB-INF/jsp/head.jsp"%>
+<style>
+.error1 {
+	color: red;
+	font-size: 12px
 }
 
-.spinner > div {
-  width: 18px;
-  height: 18px;
-  background-color: #333;
+form input[type="file"] {
+	display: none;
+}
 
-  border-radius: 100%;
-  display: inline-block;
-  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+.numberfield {
+	width: 70px;
+}
+
+.labelcol {
+	color: black;
+}
+
+.imgalign {
+	display: block;
+	margin-top: -20px;
+	margin-right: auto;
+	width: 80%;
+}
+
+.fontst {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+
+.fontcol {
+	color: blue;
+}
+
+.fontcol-peo {
+	color: #ff8000;
+}
+
+.bgred {
+	color: #b30000;
+}
+
+.capCam {
+	/*   			position: absolute; */
+	/*   			top: 10px; */
+	/*   			right: 12px; */
+	height: 120px;
+	width: 160px;
+}
+
+.iconstyle {
+	width: 10%;
+	color: blue';
+}
+
+.camara {
+	width: 190px;
+	height: 160px;
+}
+
+.spinner {
+	margin: 100px auto 0;
+	width: 70px;
+	text-align: center;
+}
+
+.spinner>div {
+	width: 18px;
+	height: 18px;
+	background-color: #333;
+	border-radius: 100%;
+	display: inline-block;
+	-webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+	animation: sk-bouncedelay 1.4s infinite ease-in-out both;
 }
 
 .spinner .bounce1 {
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
+	-webkit-animation-delay: -0.32s;
+	animation-delay: -0.32s;
 }
 
 .spinner .bounce2 {
-  -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
+	-webkit-animation-delay: -0.16s;
+	animation-delay: -0.16s;
 }
 
-@-webkit-keyframes sk-bouncedelay {
-  0%, 80%, 100% { -webkit-transform: scale(0) }
-  40% { -webkit-transform: scale(1.0) }
+@
+-webkit-keyframes sk-bouncedelay { 0%, 80%, 100% {
+	-webkit-transform: scale(0)
 }
 
-@keyframes sk-bouncedelay {
-  0%, 80%, 100% { 
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  } 40% { 
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
-  }
+40%
+{
+-webkit-transform
+
+
+
+
+:
+
+
+ 
+
+
+scale
+
+
+
+
+(1
+.0
+
+
+
+
+)
 }
-         
-    .flat-table {
-  display: block;
-  font-family: sans-serif;
-  -webkit-font-smoothing: antialiased;
-  font-size: 115%;
-  overflow: auto;
-  width: auto;
-  
-  th {
-    background-color: rgb(112, 196, 105);
-    color: white;
-    font-weight: normal;
-    padding: 20px 30px;
-    text-align: center;
-  }
-  td {
-    background-color: rgb(238, 238, 238);
-    color: rgb(111, 111, 111);
-    padding: 20px 30px;
-  }
-}     
-         
-         
-         
-         
-         
-         
-	</style>
-		
-		
-		
-		<style>
-	.lds-roller {
-	  display: none;
-	  position: relative;
-	  width: 80px;
-	  height: 80px;
-	  top: 37px;
-	  left: 20px
-	  
-	  
-	}
-	.lds-roller div {
-	  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-	  transform-origin: 40px 40px;
-	}
-	.lds-roller div:after {
-	  content: " ";
-	  display: block;
-	  position: absolute;
-	  width: 7px;
-	  height: 7px;
-	  border-radius: 50%;
-	  background: #fff;
-	  margin: -4px 0 0 -4px;
-	}
-	.lds-roller div:nth-child(1) {
-	  animation-delay: -0.036s;
-	}
-	.lds-roller div:nth-child(1):after {
-	  top: 63px;
-	  left: 63px;
-	}
-	.lds-roller div:nth-child(2) {
-	  animation-delay: -0.072s;
-	}
-	.lds-roller div:nth-child(2):after {
-	  top: 68px;
-	  left: 56px;
-	}
-	.lds-roller div:nth-child(3) {
-	  animation-delay: -0.108s;
-	}
-	.lds-roller div:nth-child(3):after {
-	  top: 71px;
-	  left: 48px;
-	}
-	.lds-roller div:nth-child(4) {
-	  animation-delay: -0.144s;
-	}
-	.lds-roller div:nth-child(4):after {
-	  top: 72px;
-	  left: 40px;
-	}
-	.lds-roller div:nth-child(5) {
-	  animation-delay: -0.18s;
-	}
-	.lds-roller div:nth-child(5):after {
-	  top: 71px;
-	  left: 32px;
-	}
-	.lds-roller div:nth-child(6) {
-	  animation-delay: -0.216s;
-	}
-	.lds-roller div:nth-child(6):after {
-	  top: 68px;
-	  left: 24px;
-	}
-	.lds-roller div:nth-child(7) {
-	  animation-delay: -0.252s;
-	}
-	.lds-roller div:nth-child(7):after {
-	  top: 63px;
-	  left: 17px;
-	}
-	.lds-roller div:nth-child(8) {
-	  animation-delay: -0.288s;
-	}
-	.lds-roller div:nth-child(8):after {
-	  top: 56px;
-	  left: 12px;
-	}
-	@keyframes lds-roller {
-	  0% {
-	    transform: rotate(0deg);
-	  }
-	  100% {
-	    transform: rotate(360deg);
-	  }
-	}
-	
-	
-	.button4 {background-color: #e7e7e7; color: black;
-	 border: none;
-	
-	} /* Gray */
-	</style>
+}
+@
+keyframes sk-bouncedelay { 0%, 80%, 100% {
+	-webkit-transform: scale(0);
+	transform: scale(0);
+}
+
+40%
+{
+-webkit-transform
+
+
+
+
+:
+
+
+ 
+
+
+scale
+
+
+
+
+(1
+.0
+
+
+
+
+);
+transform
+
+
+
+
+:
+
+
+ 
+
+
+scale
+
+
+
+
+(1
+.0
+
+
+
+
+);
+}
+}
+.flat-table {
+	display: block;
+	font-family: sans-serif;
+	-webkit-font-smoothing: antialiased;
+	font-size: 115%;
+	overflow: auto;
+	width: auto; th { background-color : rgb( 112, 196, 105);
+	color: white;
+	font-weight: normal;
+	padding: 20px 30px;
+	text-align: center;
+}
+
+td {
+	background-color: rgb(238, 238, 238);
+	color: rgb(111, 111, 111);
+	padding: 20px 30px;
+}
+
+}
+.order-1 {
+	order: 1;
+}
+
+.order-2 {
+	order: 2;
+}
+
+.order-3 {
+	order: 3;
+}
+
+.right-gap {
+	margin-right: auto;
+}
+</style>
+
+
+
+<style>
+.lds-roller {
+	display: none;
+	position: relative;
+	width: 80px;
+	height: 80px;
+	top: 37px;
+	left: 20px
+}
+
+.lds-roller div {
+	animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+	transform-origin: 40px 40px;
+}
+
+.lds-roller div:after {
+	content: " ";
+	display: block;
+	position: absolute;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #fff;
+	margin: -4px 0 0 -4px;
+}
+
+.lds-roller div:nth-child(1) {
+	animation-delay: -0.036s;
+}
+
+.lds-roller div:nth-child(1):after {
+	top: 63px;
+	left: 63px;
+}
+
+.lds-roller div:nth-child(2) {
+	animation-delay: -0.072s;
+}
+
+.lds-roller div:nth-child(2):after {
+	top: 68px;
+	left: 56px;
+}
+
+.lds-roller div:nth-child(3) {
+	animation-delay: -0.108s;
+}
+
+.lds-roller div:nth-child(3):after {
+	top: 71px;
+	left: 48px;
+}
+
+.lds-roller div:nth-child(4) {
+	animation-delay: -0.144s;
+}
+
+.lds-roller div:nth-child(4):after {
+	top: 72px;
+	left: 40px;
+}
+
+.lds-roller div:nth-child(5) {
+	animation-delay: -0.18s;
+}
+
+.lds-roller div:nth-child(5):after {
+	top: 71px;
+	left: 32px;
+}
+
+.lds-roller div:nth-child(6) {
+	animation-delay: -0.216s;
+}
+
+.lds-roller div:nth-child(6):after {
+	top: 68px;
+	left: 24px;
+}
+
+.lds-roller div:nth-child(7) {
+	animation-delay: -0.252s;
+}
+
+.lds-roller div:nth-child(7):after {
+	top: 63px;
+	left: 17px;
+}
+
+.lds-roller div:nth-child(8) {
+	animation-delay: -0.288s;
+}
+
+.lds-roller div:nth-child(8):after {
+	top: 56px;
+	left: 12px;
+}
+
+@
+keyframes lds-roller { 0% {
+	transform: rotate(0deg);
+}
+
+100%
+{
+transform
+
+
+
+
+:
+
+
+ 
+
+
+rotate
+
+
+
+
+(360
+deg
+
+
+);
+}
+}
+.button4 {
+	background-color: #e7e7e7;
+	color: black;
+	border: none;
+} /* Gray */
+</style>
 </head>
 <body>
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
-				<%@include file="../WEB-INF/jsp/logoHeader.jsp"%>
+			<%@include file="../WEB-INF/jsp/logoHeader.jsp"%>
 			<!-- End Logo Header -->
 			<!-- Navbar Header -->
-				<%@include file="../WEB-INF/jsp/navbar.jsp"%>
+			<%@include file="../WEB-INF/jsp/navbar.jsp"%>
 			<!-- End Navbar -->
 		</div>
 		<!-- Sidebar -->
-			<%@include file="../WEB-INF/jsp/slideBar.jsp"%>
+		<%@include file="../WEB-INF/jsp/slideBar.jsp"%>
 		<!-- End Sidebar -->
 		<div class="main-panel">
 			<div class="content">
-			
+
 				<div class="panel-header bg-primary-gradient">
 					<div class="page-inner py-4">
-						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-							<div>
+						<div class="row">
+							<div class="ml-md-4 py-2 py-md-4">
 								<h2 class="text-white pb-2 fw-bold">Gate Entry</h2>
 								<h5 class="text-white op-7 mb-2"></h5>
 							</div>
+							<div class="ml-md-5 py-2 py-md-4">
+								<div class="ml-md-5">
+									<div class="ml-md-5">
+										<div class="ml-md-4">
+
+											<select class="form-control form-control-user fontst"
+												name="gateID" id="gateid">
+												<c:forEach items="${allgates}" var="gate">
+													<option value="${gate.gateID}">${gate.gateName}</option>
+												</c:forEach>
+											</select>
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+
 							<div class="ml-md-auto py-2 py-md-4">
-<!-- 								<a href="vechi" class="btn btn-white btn-border btn-round mr-2">Vehicle Status</a> -->
-								<a href="appointment" class="btn btn-white btn-border btn-round mr-2">Make Appointment</a>
+								<!-- 								<a href="vechi" class="btn btn-white btn-border btn-round mr-2">Vehicle Status</a> -->
 
-							<a href="#" class="btn btn-white btn-border btn-round mr-2" data-toggle="modal" data-target="#vehicleStatusModel" onclick="getVehicleStatus()">Vehicle Status</a>
-						
-						
-						
+
+								<!-- 								<a href="laneEntryView" class="btn btn-white btn-border btn-round mr-2">Lane Entry</a> -->
+								<!-- 								<a href="appointment" class="btn btn-white btn-border btn-round mr-2">Make Appointment</a> -->
+
+								<a href="#" class="btn btn-white btn-border btn-round mr-2"
+									data-toggle="modal" data-target="#vehicleStatusModel"
+									onclick="getVehicleStatus()">Vehicle Status</a>
+
+
+
 							</div>
 						</div>
 					</div>
 				</div>
-	
-				<div class="page-inner mt--5">	
-<!-- 					<div class="page-header"> -->
-<!-- 					<i class="fa fa-camera" style='font-size:36px;color:#3245f0'></i> -->
-<!-- 							<h4 class="page-title">Gate Entry</h4> -->
-<!-- 							<ul class="breadcrumbs"> -->
-<!-- 								<li class="nav-home"> -->
-<!-- 									<a href="#"> -->
-<!-- 										<i class="flaticon-home"></i> -->
-<!-- 									</a> -->
-<!-- 								</li> -->
-<!-- 								<li class="separator"> -->
-<!-- 									<i class="flaticon-right-arrow"></i> -->
-<!-- 								</li> -->
-<!-- 								<li class="nav-item"> -->
-<!-- 									<a href="#"></a> -->
-<!-- 								</li> -->
-							
-<!-- 							</ul> -->
-<!-- 						</div> -->
-					<div class="row">	
-					<div class="col-xl-4">					
+
+				<div class="page-inner mt--5">
+					<!-- 					<div class="page-header"> -->
+					<!-- 					<i class="fa fa-camera" style='font-size:36px;color:#3245f0'></i> -->
+					<!-- 							<h4 class="page-title">Gate Entry</h4> -->
+					<!-- 							<ul class="breadcrumbs"> -->
+					<!-- 								<li class="nav-home"> -->
+					<!-- 									<a href="#"> -->
+					<!-- 										<i class="flaticon-home"></i> -->
+					<!-- 									</a> -->
+					<!-- 								</li> -->
+					<!-- 								<li class="separator"> -->
+					<!-- 									<i class="flaticon-right-arrow"></i> -->
+					<!-- 								</li> -->
+					<!-- 								<li class="nav-item"> -->
+					<!-- 									<a href="#"></a> -->
+					<!-- 								</li> -->
+
+					<!-- 							</ul> -->
+					<!-- 						</div> -->
 					<div class="row">
-
-						<div class="col-xl-12">
-							<div class="card shadow mb-4">
-								<!-- Card Header - Dropdown -->
-								<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">
-									<i class="fa fa-camera" style='font-size:28px;color:#3245f0'></i><h6 class="m-0 font-weight-bold text-primary">.</h6>
-								</div>
-								<!-- Card Body -->
-								<div class="card-body">
-									
-				
-									 <div class="row">
-											<div class="col-sm-6">
-<!-- 												<div class="row"> -->
-												
-<!-- 							         			<a href="#" class="" onClick="takeAutoNo()" id="cam-click"> -->
-<!-- 							             		<i class="fa fa-refresh  fa-spin" style="font-size:24px"></i>  -->
-<!-- 							             		</a>														 -->
-<!-- 												</div> -->
-												<br>
-												<div class="row">
-													<div class="col-sm-12">
-														<input type="hidden" value='<%=session.getAttribute("vehicleAutoConfig")%>' id="autoValue" >
-														<table id="ocrdetails" class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 112px;">                	
-					
-															<tbody id="ocrdetails4" >
-															
-															
-															</tbody>
-					
-														</table>	
-													</div>	
-												</div>
-												<br>
-												
-												<div class="row">
-													<div class="col-sm-12">
-														<a href="#" class="" onClick="takeSnapshot();" id="more">More..</a>	
-													
-														<div class="spinner-grow" role="status" id="moreLoder" style="display: none;">
-													  	<span class="sr-only" >Loading...</span>
-													 </div>
-												</div>
-																								
-												
-												
-												
-												
-												
-												
-												</div>
-												<div class="row">
-													<input type="file" class="" id="num_img"  accept="image/*" capture="user"  style="display: none;" />	
-												</div>
-												
-												
-											</div>
-											<div class="col-sm-6">
-											
-												<div class="row">
-													<div class="col-mb-12 col-sm-12">
-														<img src="resources/img/car-placeholder.jpg" class="capCam"  id="results"/>
-								             			<input type="hidden" name="ImageData" id="ImageData"  />
-								             			<input type="hidden" class="form-control fontst" id="ocrid"/>	
-													</div>
-												</div>
-												<br>
-												<div class="row">
-													<div class="col-mb-12 col-sm-12">
-														<input class="form-control fontst bgred" id="vehicleID" placeholder="Licence Plate NO..." oninput="getVMasterData(this.value)" onkeyup="this.value = this.value.toUpperCase();" />
-													</div>
-												</div>
-												<br>
-												<div class="row">
-													<div class="col-mb-12 col-sm-12">
-														<a href="#" class="btn btn-success btn-block" onClick="ocrImageNumberSava('1')" style="display: none;" id="capButtion">Continue</a>
-<!-- 														<a href="#" class="btn btn-success btn-block" onClick="goToVehicleRegFrmOrNew()">Continue</a> -->
-													
-											<div class="spinner" style="display: none;" id="lod1">
-												  <div class="bounce1"></div>
-												  <div class="bounce2"></div>
-												  <div class="bounce3"></div>
-											</div>	
-														
-
-													</div>
-													
-
-												</div>	
-											</div>
-									</div>
-									
-									
-									
-				<!-- 						<div class="row"> -->
-				<!-- 			             	<div class="col-sm-5"> -->
-							   
-							             	
-							             	
-				
-							             		
-				<!-- 			             	</div> -->
-				<!-- 			             	<div class="col-sm-2"> -->
-				<!-- 			             	</div> -->
-				<!-- 			             	<div class="col-sm-5 justify-content-end"> -->
-							             	
-							             		
-				
-				<!-- 			            	</div> -->
-				<!-- 			             </div> -->
-									
-					
-
-
-								</div>
-							</div>
-						</div>
-					</div>				
-					<div class="row">
-						<div class="col-xl-12" hidden="true" id="vdetails">
-							<div class="card shadow mb-4">
-								<!-- Card Header - Dropdown -->
-<!-- 								<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between"> -->
-<!-- <!-- 									<i class="fa fa-car" style='font-size:36px;color:#3245f0'></i> --> 
-<!-- 									<h6 class="m-0 font-weight-bold text-primary">.</h6> -->
-<!-- 								</div> -->
-									<div class="card-header py-0 d-flex justify-content-between">
-<!-- 									<img src="resources/img/icon/vowner.png" class="iconstyle"/> -->
-									<h6 class="font-weight-bold text-primary">Vehicle</h6>
-									</div>
-								<!-- Card Body -->
-								<div class="card-body">
-
-								
-									 <div class="row">
-										<div class="col-sm-4">
-											<label class="fontst">Class</label>
-										</div>
-										<div class="col-sm-6">	
-										<label class="fontst fontcol" id="veclass"></label>	             	
-				<!-- 							<input class="fontst "  value="" readonly="true" id="veclass"/>			             											             		 -->
-										</div>						
-										<div class="col-sm-2"><br>
-											<img src="" id="classImg" class="img-responsive imgalign">
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-4">
-											<label class="fontst">Make/Model</label>
-										</div>
-										<div class="col-sm-8">	
-											<label class="fontst fontcol" id="vMnM"></label>	   	             	
-														             											             		
-										</div>						
-									</div>
-								
-									<div class="row">
-										<div class="col-sm-4">
-						            	<label for="engineNo" class="fontst">Engine No</label>
-										</div>
-										<div class="col-sm-6">
-								            	<label class="fontst fontcol-peo" id="engNo"></label>  	             	
-														             											             		
-										</div>						
-										<div class="col-sm-2"><br>
-											
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-4">
-						            	<label for="engineNo" class="fontst">Chassis No</label>
-										</div>
-										<div class="col-sm-6">
-								            	<label class="fontst fontcol-peo" id="chaNor"></label>  	             	
-														             											             		
-										</div>						
-										<div class="col-sm-2"><br>
-											
-										</div>
-									</div>			
-								
-									<div class="row">
-										<div class="col-sm-4">
-						            	<i class='fas fa-gas-pump'></i>
-										</div>
-										<div class="col-sm-6">
-								            	<label class="fontst fontcol" id="fuelTyp"></label>  	             	
-														             											             		
-										</div>						
-										<div class="col-sm-2"><br>
-											
-										</div>
-									</div>	
-													
-							</div>
-								<div class="card-header py-0 d-flex justify-content-between">
-<!-- 									<img src="resources/img/icon/vowner.png" class="iconstyle"/> -->
-									<h6 class="font-weight-bold text-primary">Current Owner</h6>
-								</div>
-							<div class="card-body">	
-									<div class="row">
-										<div class="col-sm-1">
-										<i class="fas fa-user"></i>
-				 						</div>
-				 						<div class="col-sm-10">
-						            	<label class="fontst fontcol" id="ownerName"></label>
-										</div>
-									</div>		
-									<div class="row">
-										<div class="col-sm-1"><i class="fa fa-phone" aria-hidden="true"></i> </div>
-										<div class="col-sm-6">
-						            	
-						            	<label class="fontst fontcol" id="contactNo"></label>
-										</div>
-										
-										<div class="col-sm-5">
-										<a href="#" class="btn btn-info btn-sm" onClick="ocrImageNumberSava('2')">Edit Vehicle</a>
-										</div>
-										
-									</div>		
-				
-									
-								</div>
-							</div>
-						</div>
-	
-						
-					</div>
-					 </div>
-				<!-- 		===========================================================		  --> 
-				 <div class="card shadow col-xl-5">
-				 
-				 		
-				<!-- Card Header - Dropdown -->
-				<div class="card-header py-2 d-flex flex-row align-items-center">
-<!-- 					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/> -->
-					<h6 class="m-0 font-weight-bold text-primary">Pending Lane Registrations</h6><span class="badge badge-pill badge-warning" id="pendingVehic" style="font-size:15px; font-weight: 900; color:black; border-radius: 50%;"></span>
-				</div>
-				<!-- Card Body -->
-				<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 630px;">	
-					<div class="row" style="padding-left:5px;"  >
-								<div  id="ocrVehicle">
-	
-																	
-								</div>
-					</div>	
-					
-	
-				</div>
-			
-				 
-				 </div>
-				<!-- 		===========================================================		  --> 
-				 
-				 <div class="col-xl-3">
-
-					<div class="card shadow mb-4">
-
-						<div class="card-header py-2 d-flex flex-row align-items-center">
-							
-							<h6 class="m-0 mr-sm-2 font-weight-bold text-primary">Pending Appointments</h6>
-					      <%
-					         Date dNow = new Date( );
-					         SimpleDateFormat ft = new SimpleDateFormat ("E MM.dd.yyyy");
-					         out.print( ft.format(dNow));
-					      %>
-							<span class="badge badge-pill badge-warning" id="noOfAppos"
-								style="font-size: 15px; font-weight: 900; color: black; border-radius: 50%;">
-							</span>
-
-						</div>
-	
-						<!-- Card Body -->
-						<div class="card-body  table-wrapper-scroll-y my-custom-scrollbar" style="height: 630px">									
+						<div class="col-xl-4">
 							<div class="row">
-								<div class="col-lg" id="appoDiv"></div>
+
+								<div class="col-xl-12">
+									<div class="card shadow mb-4">
+										<!-- Card Header - Dropdown -->
+										<div
+											class="card-header py-1 d-flex flex-row align-items-center justify-content-between">
+											<i class="fa fa-camera"
+												style='font-size: 28px; color: #3245f0'></i>
+											<h6 class="m-0 font-weight-bold text-primary">.</h6>
+										</div>
+										<!-- Card Body -->
+										<div class="card-body">
+
+
+											<div class="row">
+												<div class="col-sm-6">
+													<!-- 												<div class="row"> -->
+
+													<!-- 							         			<a href="#" class="" onClick="takeAutoNo()" id="cam-click"> -->
+													<!-- 							             		<i class="fa fa-refresh  fa-spin" style="font-size:24px"></i>  -->
+													<!-- 							             		</a>														 -->
+													<!-- 												</div> -->
+													<br>
+													<div class="row">
+														<div class="col-sm-12">
+															<input type="hidden"
+																value='<%=session.getAttribute("vehicleAutoConfig")%>'
+																id="autoValue">
+															<table id="ocrdetails"
+																class="table-wrapper-scroll-y my-custom-scrollbar"
+																style="height: 112px;">
+
+																<tbody id="ocrdetails4">
+
+
+																</tbody>
+
+															</table>
+														</div>
+													</div>
+													<br>
+
+													<div class="row">
+														<div class="col-sm-12">
+															<a href="#" class="" onClick="takeSnapshot();" id="more">More..</a>
+															<div class="loader" id="moreLoder" style="display: none;"></div>
+															<!-- 														<div class="spinner-grow" role="status" id="moreLoder" style="display: none;"> -->
+															<!-- 													  	<span class="sr-only" >Loading...</span> -->
+															<!-- 													 </div> -->
+														</div>
+
+
+
+
+
+
+
+													</div>
+													<div class="row">
+														<input type="file" class="" id="num_img" accept="image/*"
+															capture="user" style="display: none;" />
+													</div>
+
+
+												</div>
+												<div class="col-sm-6">
+
+													<div class="row">
+														<div class="col-mb-12 col-sm-12">
+															<img src="resources/img/car-placeholder.jpg"
+																class="capCam" id="results" /> <input type="hidden"
+																name="ImageData" id="ImageData" /> <input type="hidden"
+																class="form-control fontst" id="ocrid"/>
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-mb-12 col-sm-12">
+															<input class="form-control fontst bgred" id="vehicleID"
+																placeholder="Licence Plate NO..."
+																oninput="getVMasterData(this.value)"
+																onkeyup="this.value = this.value.toUpperCase().replace(' ', '');" />
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-mb-12 col-sm-12">
+															<a href="#" class="btn btn-success btn-block"
+																onClick="ocrImageNumberSava('1')" style="display: none;"
+																id="capButtion">Continue</a>
+															<!-- 														<a href="#" class="btn btn-success btn-block" onClick="goToVehicleRegFrmOrNew()">Continue</a> -->
+
+															<div class="spinner" style="display: none;" id="lod1">
+																<div class="bounce1"></div>
+																<div class="bounce2"></div>
+																<div class="bounce3"></div>
+															</div>
+
+
+														</div>
+
+
+													</div>
+												</div>
+											</div>
+
+
+
+											<!-- 						<div class="row"> -->
+											<!-- 			             	<div class="col-sm-5"> -->
+
+
+
+
+
+											<!-- 			             	</div> -->
+											<!-- 			             	<div class="col-sm-2"> -->
+											<!-- 			             	</div> -->
+											<!-- 			             	<div class="col-sm-5 justify-content-end"> -->
+
+
+
+											<!-- 			            	</div> -->
+											<!-- 			             </div> -->
+
+
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xl-12" hidden="true" id="vdetails">
+									<div class="card shadow mb-4">
+										<!-- Card Header - Dropdown -->
+										<!-- 								<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between"> -->
+										<!-- <!-- 									<i class="fa fa-car" style='font-size:36px;color:#3245f0'></i> -->
+										<!-- 									<h6 class="m-0 font-weight-bold text-primary">.</h6> -->
+										<!-- 								</div> -->
+										<div class="card-header py-0 d-flex justify-content-between">
+											<!-- 									<img src="resources/img/icon/vowner.png" class="iconstyle"/> -->
+											<h6 class="font-weight-bold text-primary">Vehicle</h6>
+										</div>
+										<!-- Card Body -->
+										<div class="card-body">
+
+
+											<div class="row">
+												<div class="col-sm-4">
+													<label class="fontst">Class</label>
+												</div>
+												<div class="col-sm-6">
+													<label class="fontst fontcol" id="veclass"></label>
+													<!-- 							<input class="fontst "  value="" readonly="true" id="veclass"/>			             											             		 -->
+												</div>
+												<div class="col-sm-2">
+													<br> <img src="" id="classImg"
+														class="img-responsive imgalign">
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4">
+													<label class="fontst">Make/Model</label>
+												</div>
+												<div class="col-sm-8">
+													<label class="fontst fontcol" id="vMnM"></label>
+
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-sm-4">
+													<label for="engineNo" class="fontst">Engine No</label>
+												</div>
+												<div class="col-sm-6">
+													<label class="fontst fontcol-peo" id="engNo"></label>
+
+												</div>
+												<div class="col-sm-2">
+													<br>
+
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4">
+													<label for="engineNo" class="fontst">Chassis No</label>
+												</div>
+												<div class="col-sm-6">
+													<label class="fontst fontcol-peo" id="chaNor"></label>
+
+												</div>
+												<div class="col-sm-2">
+													<br>
+
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-sm-4">
+													<i class='fas fa-gas-pump'></i>
+												</div>
+												<div class="col-sm-6">
+													<label class="fontst fontcol" id="fuelTyp"></label>
+
+												</div>
+												<div class="col-sm-2">
+													<br>
+
+												</div>
+											</div>
+
+										</div>
+										<div class="card-header py-0 d-flex justify-content-between">
+											<!-- 									<img src="resources/img/icon/vowner.png" class="iconstyle"/> -->
+											<h6 class="font-weight-bold text-primary">Current Owner</h6>
+										</div>
+										<div class="card-body">
+											<div class="row">
+												<div class="col-sm-1">
+													<i class="fas fa-user"></i>
+												</div>
+												<div class="col-sm-10">
+													<label class="fontst fontcol" id="ownerName"></label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-1">
+													<i class="fa fa-phone" aria-hidden="true"></i>
+												</div>
+												<div class="col-sm-6">
+
+													<label class="fontst fontcol" id="contactNo"></label>
+												</div>
+
+												<div class="col-sm-5">
+													<!-- 										<a href="#" class="btn btn-info btn-sm" onClick="ocrImageNumberSava('2')">Edit Vehicle</a> -->
+												</div>
+
+											</div>
+
+
+										</div>
+									</div>
+								</div>
+
+
 							</div>
 						</div>
-						
+						<!-- 		===========================================================		  -->
+						<div class="card shadow col-xl-5">
+
+
+							<!-- Card Header - Dropdown -->
+							<div class="card-header py-2 d-flex flex-row align-items-center">
+								<!-- 					<img src="resources/img/icon/perviousVehicleicon.png" class="iconstyle"/> -->
+								<h6 class="m-0 font-weight-bold text-primary">Pending Lane
+									Entry</h6>
+								<span class="badge badge-pill badge-warning" id="pendingVehic"
+									style="font-size: 15px; font-weight: 900; color: black; border-radius: 50%;"></span>
+							</div>
+							<!-- Card Body -->
+							<div
+								class="card-body  table-wrapper-scroll-y my-custom-scrollbar"
+								style="height: 630px;">
+								<div class="row" style="padding-left: 5px;">
+									<div id="ocrVehicle"></div>
+								</div>
+
+
+							</div>
+
+
+						</div>
+						<!-- 		===========================================================		  -->
+
+						<div class="col-xl-3">
+							<div class="card shadow mb-4">
+								<div class="card-header py-2 d-flex flex-row align-items-center">
+
+									<h6 class="m-0 mr-sm-2 font-weight-bold text-primary">Pending
+										Appointments</h6>
+									<%
+										SimpleDateFormat df = new SimpleDateFormat("E MM.dd.yyyy");
+										out.print(df.format(new Date()));
+									%>
+									<span class="badge badge-pill badge-warning" id="noOfAppos"
+										style="font-size: 15px; font-weight: 900; color: black; border-radius: 50%;">
+									</span>
+
+								</div>
+
+								<!-- Card Body -->
+								<div
+									class="card-body  table-wrapper-scroll-y my-custom-scrollbar"
+									style="height: 630px">
+									<div id="appoDiv"></div>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<%@include file="vehicleStatusModel.jsp"%>
+	</div>
+	<%@include file="../WEB-INF/jsp/footer.jsp"%>
+	</div>
+	</div>
+
+	<div id="capturePlateModal" class="modal fade bd-example-modal"
+		role="dialog" aria-labelledby="myExtraLargeModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<!--         <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+					<div class="col-sm-5">
+						<h4 class="modal-title">Capture License Plate</h4>
+					</div>
+					<div class="col-sm-5">
+						<input class="form-control textred" name="ocrrid" id="ocrrid"
+							placeholder="Gate Entry ID ..." readonly="true" />
 					</div>
 
-				 </div>
-				 
-				 	
-				 </div>	 	 
-				    </div>
-				  </div> 
-				
+				</div>
+				<div class="modal-body">
+
+
+
+					<div class="form-group row">
+
+						<div class="col-sm-12">
+
+
+
+
+
+							<div class="row">
+
+								<div class="col-sm-6">
+
+									<div class="row">
+										<div class="col-mb-12 col-sm-12">
+											<img src="resources/img/car-placeholder.jpg" class="capCam"
+												id="results5" /> <input name="ImageData5" id="ImageData5"
+												type="hidden" />
+
+										</div>
+									</div>
+									<br>
+									<div class="row"></div>
+									<br>
+
+								</div>
+							</div>
+
+						</div>
+
+
+
 					</div>
-				<%@include file="vehicleStatusModel.jsp"%>
-			</div>	
-			<%@include file="../WEB-INF/jsp/footer.jsp"%>			
+
+					<!--        style="display: none;" -->
+				</div>
+				<div class="modal-footer">
+					<div class="col-sm-6 mb-sm-6"></div>
+					<div class="col-sm-2 mb-sm-2">
+						<button type="button" class="btn btn-success" data-dismiss="modal"
+							onclick="saveOcrImage()" id="veButt">Save</button>
+					</div>
+					<div class="col-sm-3 mb-sm-3">
+						<button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
-<%@include file="../WEB-INF/jsp/commJs.jsp"%>
 
-<!-- appointment card js files -->
+
+
+
+
+
+
+
+	<%@include file="../WEB-INF/jsp/commJs.jsp"%>
+
+	<!-- appointment card js files -->
 	<script src="resources/js/gateEntryAppointmentsCard.js"></script>
-	<script src="resources/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-<!-- End -->
+	<script
+		src="resources/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+	<!-- End -->
 
 	<script language="JavaScript">
 // 	var id;
@@ -603,10 +857,16 @@
 // 		});
 // 		//Webcam.attach( '#my_camera' );
 // 		 Webcam.attach( document.querySelector('#my_camera') );
+
+		
+			
+			
+	
+	
 		
 		
 	</script>
-	
+
 	<!-- Code to handle taking the snapshot and displaying it locally -->
 	<script language="JavaScript">
 	
@@ -619,44 +879,21 @@
 		function takeSnapshot() {
 			document.getElementById("moreLoder").style.display = "block";
 			document.getElementById("more").style.display = "none";
-				// var str = document.getElementById("ocrid").value;
-				// var y=0;
- 				// if(str!=""){
- 				//	 y=str;					 
- 				// }
- 				//document.getElementById("lice-msg").style.display = "none";
-				//document.getElementById("loader").style.display = "block";
-				//document.getElementById("cam-click").style.display = "none";
-					
-				
-			//	var jsonfile={id:y,mthod:meth};
+		
 				$.ajax({
 
 				    type: 'POST',
 				    url: "getLicensePlateip",
+				    data: {"type":"1"},
 			        success: function(data){
 			        	
-			        	//document.getElementById('ocrid').value=data[0].id;
-			        	
-// 			            var slctSubcat=$('#ocrdetails'), option="";
-// 			            slctSubcat.empty();
-// 			            selected_option = "  <tr><td></td></tr>"
-			            
-			           
-			            	
-// 			            slctSubcat.append(selected_option);
-
-			        //  if(data[0].number==""){
-			        	  
-			       // 	  document.getElementById("lice-msg").style.display = "block";
-			        	  
-			        //  }
+			        
 			              
 			        	document.getElementById('vehicleID').value = data[0].number;
       					getVMasterData(data[0].number);
 			            document.getElementById('results').src = "data:image/jpg;base64,"+data[0].noimage;			    		
 			            document.getElementById("ImageData").value="data:image/jpg;base64,"+data[0].noimage;
-
+						
 					//	document.getElementById("loader").style.display = "none";
 					//	document.getElementById("cam-click").style.display = "block";
 						
@@ -694,10 +931,12 @@
 			
 		setTimeout(takeAutoNo, 3000); 
 
+		var gate=document.getElementById('gateid').value;
 			$.ajax({
 
 			    type: 'POST',
 			    url: "takeAutoNo",
+			    data: {"method":"1","gateid":gate},
 		        success: function(data){
 
 		        	//$("table tbody").empty();
@@ -733,6 +972,9 @@
 		        		
 		        		var link="";
 	        			var statu="";
+	        			var btnRemo="";
+	        			var btnChangeImg="";
+	        			var ocid=data[i].ocrid;
 		        		g=g+1;
 // 		        		if(data[i].vmStatus=="pending"){
 // 		        			statu="<div class='row'>"+
@@ -764,6 +1006,9 @@
 									
 									
 // 								}
+
+						btnChangeImg="<button type='button' onClick='getCaptureImage("+ocid+");' class='btn btn-xs btn-info' style='border-radius: 8px;'  data-toggle='modal' data-target='#capturePlateModal'>Change Image</button>";
+
 		        		
 		        		if(data[i].vmStatus=="pending"){
 						statu=statu+"<div class='row'>"+
@@ -771,19 +1016,22 @@
 						"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Details    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
 						"</div></div>";
 			        		if(data[i].vehicletype=="New"){
-		        				link="newVehicleMaster?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid;
+		        				link="newVehicleMaster?vehicleID="+data[i].ocrVid+"&id="+ocid;
 			        		}else if(data[i].vehicletype=="Old"){
-			        			link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+data[i].ocrid+"&appNo=0";
+			        			link="vehicleMasterAuto?vehicleID="+data[i].ocrVid+"&id="+ocid+"&appNo=0";
 			        		}
 						
-		        		}else{
+		        		}else{ 
 		        			statu=statu+"<div class='row'>"+
 							"<div class='col-sm-12'>"+
 								"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Details    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
 							"</div></div>";
-		        			link="vehicleRegistrationAuto?vid="+data[i].ocrVid+"&curMi=0"+"&id="+data[i].ocrid;
+		        			if(data[i].paymentStatus=="completed"){
+		        				link="getProceedLane("+ocid+")";
+		        			}else{
+		        				link="vehicleRegistrationAuto?vid="+data[i].ocrVid+"&curMi=0"+"&id="+ocid;
+		        			}
 		        		}
-		        		
 		        		if(data[i].docStatus=="pending"){
 							statu=statu+"<div class='row'>"+
 							"<div class='col-sm-12'>"+
@@ -796,16 +1044,29 @@
 								"</div></div>";
 			        			
 			        		}
+		        		if(data[i].paymentStatus!="completed"){
+							statu=statu+"<div class='row'>"+
+							"<div class='col-sm-12'>"+
+							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Payment    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+							"</div></div>";
+							btnRemo="<button type='button' onClick='ocrDeleteEntry("+ocid+")' class='btn btn-xs btn-danger' style='border-radius: 8px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Remove&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </button>";
+		        		}else{
+			        			statu=statu+"<div class='row'>"+
+								"<div class='col-sm-12'>"+
+									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Payment    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+								"</div></div>";
+			        			btnRemo="<button type='button' onClick='getProceedLane("+ocid+")' class='btn btn-xs btn-success' style='border-radius: 8px;'>Proceed Lane</button>";
+			        		}
 		        		
 		        		if(data[i].vrStatus=="pending"){
 							statu=statu+"<div class='row'>"+
 							"<div class='col-sm-12'>"+
-							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Vehicle Regostration    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
+							"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#cf6e06'>Lane Entry    -    <i class='fas fa-exclamation' style='font-size:12px;color:#faa005'></i></div>"+
 							"</div></div>";
 			        		}else{
 			        			statu=statu+"<div class='row'>"+
 								"<div class='col-sm-12'>"+
-									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Vehicle Regostration    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
+									"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color:#066301'>Lane Entry    -    <i class='fa fa-check' style='font-size:12px;color:#0fad07'></i></div>"+
 								"</div></div>";
 			        			
 			        		}
@@ -832,11 +1093,11 @@
 // 		        	}
 // 		   	<img src="resources/img/car-placeholder.jpg" class="capCam"  id="results"/>
 		        	
-		        		
+		        if(data[i].paymentStatus=="completed"){		
 	        			 selected_option = 
 	        	"<div class='row'   > "+	        			 					
 	 					"<div class='col-sm-6' >"+
-		 					"<a href='"+link+"'>"+
+		 					"<a href='#' onclick='"+link+"'>"+
 		 						"<div class='row'>"+
 		 							"<div class='col-sm-12'>"+
 		 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].ocrVid+"</div>"+
@@ -845,7 +1106,7 @@
 	
 	 							"<div class='row'>"+
 									"<div class='col-sm-12'>"+
-										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+data[i].ocrid+"</div>"+
+										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+ocid+"</div>"+
 									"</div>"+
 								"</div>"+
 								
@@ -859,13 +1120,20 @@
 									img+
 								"</div>"+
 							"</div>"+
+							"<div class='row'>"+
+							"<div class='col-sm-12' >"+btnChangeImg+					
+							
+							
+								
+							"</div>"+
+						"</div>"+
 											
 						"</div>"+
 						"<div class='col-sm-3' style='padding-left:40px;>"+
 						"<div class='row'>"+
-							"<div class='col-sm-12' >"+					
+							"<div class='col-sm-12' >"+btnRemo+					
 							
-							"<button type='button' onClick='ocrDeleteEntry("+data[i].ocrid+")' class='btn btn-xs btn-danger' style='border-radius: 8px;'>Remove</button>"+
+							
 								
 							"</div>"+
 						"</div>"+
@@ -873,6 +1141,58 @@
 
 					
 					"</div>";
+					
+		        }else{
+		        	
+       			 selected_option = 
+     	        	"<div class='row'   > "+	        			 					
+     	 					"<div class='col-sm-6' >"+
+     		 					"<a href='"+link+"'>"+
+     		 						"<div class='row'>"+
+     		 							"<div class='col-sm-12'>"+
+     		 								"<div style='color: #ff0516; font-family: Arial, Helvetica, sans-serif; font-size: 14px'>"+data[i].ocrVid+"</div>"+
+     		 							"</div>"+
+     		 						"</div>"+
+     	
+     	 							"<div class='row'>"+
+     									"<div class='col-sm-12'>"+
+     										"<div style='color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 13px'>Gate Entry ID - "+ocid+"</div>"+
+     									"</div>"+
+     								"</div>"+
+     								
+     								statu+"<hr/>"+
+     								"</a>"+
+     						"</div>"+
+     					
+     						"<div class='col-sm-3'  style='padding-left:20px;'>"+
+     							"<div class='row'>"+
+     								"<div class='col-sm-12'>"+					
+     									img+
+     								"</div>"+
+     							"</div>"+
+     											
+     						"</div>"+
+     						"<div class='col-sm-3' style='padding-left:40px;>"+
+     						"<div class='row'>"+
+     							"<div class='col-sm-12' >"+btnRemo+					
+     							
+     							
+     								
+     							"</div>"+
+     						"</div>"+
+     					"</div>"+
+
+     					
+     					"</div>"; 	
+		        	
+		        	
+		        	
+		        	
+		        }
+					
+					
+					
+					
 	            	 slctSubcat.append(selected_option);	
 	            	 
 	         
@@ -902,7 +1222,7 @@
 	
 		swal({
 			  title: "Are you sure?",
-			  text: "Once deleted, you will not be able to recover this imaginary file!",
+			  text: "Do you want to remove this Lane Entry? Once removed vehicle will not appear at Lane Entry !",
 			  icon: "warning",
 			  buttons: true,
 			  dangerMode: true,
@@ -920,45 +1240,247 @@
 				        success: function(data){
 				        	if(data=="1"){
 				        
-				        	    swal("Poof! Your imaginary file has been deleted!", {
+				        	    swal("Lane Entry has been removed !", {
 				  			      icon: "success",
 				  			    });		
 				        	}else {
-				        		alert("Data Not Delete");
+				        		swal("Lane Entry is not remove !");
 				        		
 				        	}
 				        	takeAutoNo();
 				        	
 				        },
 				        error:function(data){
-				        	alert("Data Not Delete");
+				        	swal("Lane Entry is not remove !");
 				           
 				        }
 					 }); 
 				  
-					
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
+
 		
 			  } else {
-			    swal("Your imaginary file is safe!");
+			    swal("Lane Entry is not removed !");
 			  }
 			});
 		
 		
 	}
 	
+	function getProceedLane(ocrid)
+	{
 	
+
+		swal({
+			title: 'Are you sure?',
+			text: "Do you want to continue with inspection in Lane?",
+			type: 'warning',
+			buttons:{
+				cancel: {
+					visible: true,
+					text : 'Cancel!',
+					className: 'btn btn-danger'
+				},        			
+				confirm: {
+					text : 'Yes, Proceed Lane!',
+					className : 'btn btn-success'
+				}
+			}
+		}).then((willDelete) => {
+			if (willDelete) {
+
+
+				   
+				$.ajax({
+
+ 		 		    type: 'POST',
+		 		    url: "saveLaneEntry", 
+		 		    data: {"ocrid" : ocrid},
+ 			        success: function(data){
+ 			        	if(data=="1"){
+ 			        		swal("Oops...", "Session Expired", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+
+ 	 						//document.getElementById("proceedLanBtn").style.display = "block";
+ 	 						//document.getElementById("moreLoder").style.display = "none";
+ 			        	}else if(data=="2"){
+ 			        		swal("Oops...", "License Plate is not captured ! Please go to Lane Entry ", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+ 			        					        		
+// 	 						document.getElementById("proceedLanBtn").style.display = "block";
+// 	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="3"){
+ 			        		swal("Oops...", "ES_IN Path not Found !", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+			     
+// 	 						document.getElementById("proceedLanBtn").style.display = "block";
+// 	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="4"){
+ 			        		swal("Oops...", "XML_IN Path not Found !", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+			        	}else if(data=="5"){
+ 			        		swal("Oops...", "This vehicle already assigned to a lane !", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+
+// 	 						document.getElementById("proceedLanBtn").style.display = "block";
+// 	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="6"){
+ 			        		swal("Oops...", "Data Transfer Server not Found !", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+
+// 	 						document.getElementById("proceedLanBtn").style.display = "block";
+// 	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else if(data=="7"){
+ 			        		swal("Oops...", "Datal not Found !", {
+ 								icon : "error",
+ 								buttons: {        			
+ 									confirm: {
+ 										className : 'btn btn-danger'
+ 									}
+ 								},
+ 							});
+
+// 	 						document.getElementById("proceedLanBtn").style.display = "block";
+// 	 						document.getElementById("moreLoder").style.display = "none";
+			        	}else{ 	
+ 			        	
+							swal("Good job!", "This vehicle successfully assigned to the lane!", {
+								icon : "success",
+								buttons: {        			
+									confirm: {
+										className : 'btn btn-success'
+									}
+								},
+							});
+ 			        	}
+ 			        
+ 			        	
+ 			        },
+ 			        error:function(){
+ 			        	alert("Error");
+ 			        }
+ 				 });
+			  
+				
+				
+				
+			} else {
+// 				swal("Your imaginary file is safe!", {
+// 					buttons : {
+// 						confirm : {
+// 							className: 'btn btn-success'
+// 						}
+// 					}
+// 				});
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
+
+	
+		
+		
+		
+		
+		
+		
+		
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+// 		swal({
+// 			  title: "Are you sure?",
+// 			  text: "Do you want to remove this Lane Entry? Once removed vehicle will not appear at Lane Entry !",
+// 			  icon: "warning",
+// 			  buttons: true,
+// 			  dangerMode: true,
+// 			})
+// 			.then((willDelete) => {
+// 			  if (willDelete) {
+				  
+				  
+				  
+// 					$.ajax({
+
+// 					    type: 'POST',
+// 					    url: "changeStatusOcr", 
+// 					    data: {"ocrid":str},
+// 				        success: function(data){
+// 				        	if(data=="1"){
+				        
+// 				        	    swal("Lane Entry has been removed !", {
+// 				  			      icon: "success",
+// 				  			    });		
+// 				        	}else {
+// 				        		swal("Lane Entry is not remove !");
+				        		
+// 				        	}
+// 				        	takeAutoNo();
+				        	
+// 				        },
+// 				        error:function(data){
+// 				        	swal("Lane Entry is not remove !");
+				           
+// 				        }
+// 					 }); 
+				  
+
+		
+// 			  } else {
+// 			    swal("Lane Entry is not removed !");
+// 			  }
+// 			});
+		
+		
+	}
 		
 	function arrayBufferToBase64( buffer ) {
 		var binary = '';
@@ -970,9 +1492,9 @@
 		return window.btoa( binary );
 	}	
 	</script>
-	
-	
-	
+
+
+
 	<script type="text/javascript">
 
 
@@ -1158,18 +1680,21 @@
 			
 			var imagebase64=document.getElementById("ImageData").value;
 			var vecn=document.getElementById('vehicleID').value;
+			var gateId = document.getElementById('gateid').value;
 			
 			var autoValue=document.getElementById('autoValue').value;
 			var apoid=appointmrntNo;
 			
 			if(vecn!=""){
-			var jsonfile={json:JSON.stringify(imagebase64),vecno:vecn,vtype:status,apoid:apoid};
+			var jsonfile={json:JSON.stringify(imagebase64),vecno:vecn,vtype:status,apoid:apoid,gateId:gateId};
 			$.ajax({
 
 			    type: 'POST',
 			    url: "createOcrId", 
 			    data: jsonfile,
 		        success: function(data){
+		        	
+		        	
 		        	if(data!="0"){
 		        	document.getElementById("ocrid").value=data;
 		        		if(meth==1){
@@ -1254,15 +1779,15 @@
 	
 		
 	</script>
-	
+
 	<script>
 		function hideContinue() {
 			 id="0";
 		}
 	</script>
-	
-	
-		<script type="text/javascript">
+
+
+	<script type="text/javascript">
 		pageLoadRun();
 		function pageLoadRun() {
 			if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
@@ -1437,7 +1962,7 @@
 					        		 selected_option="<tr class='d5' style='height: 80px; border: 10px solid #f0f0e6; '>"+
 					        		 
 					        		 					        		
-					        		 "<td><div class='pull-right' style='color: #0014ed;'>"+data[i].ocrVid+"</div></br><div>"+event.toTimeString().slice(0,5)+"</div></br><div style='color: #fa6a0a;'>Gate Entry ID-"+data[i].ocrid+"</div></td>"+
+					        		 "<td><div class='pull-right' style='color: #0014ed;'>"+data[i].ocrVid+"</div></br><div>"+event.toTimeString().slice(0,5)+"</div></br><div style='color: #fa6a0a;'>Gate Entry ID-"+ocid+"</div></td>"+
 					        		 "<td style='text-align: center;'>"+apo+"</td>"+	 
 					        		 "<td style='text-align: center;'>"+
 					        		"<img src='data:image/jpg;base64,"+arrayBufferToBase64(data[i].noimage )+"' width='90' height='80' onerror='this.src='resources/img/car-placeholder.jpg';' alt='No Image'/>"+
@@ -1504,18 +2029,116 @@
 						 }); 
 
 		}
-		
-		
-		
 	
-	</script>
-<script>
-
-
-
 		
+		function getCaptureImage(ocrid){
+		
+			document.getElementById("ocrrid").value=ocrid;
 
+				$.ajax({
 
+				    type: 'POST',
+				    url: "takemanulcapNo",
+				    data: {"method":"0"},
+			        success: function(data){
+			        	
+			        	//$("table tbody").empty();
+			        	
+			        	
+// 			        	 var slctSubcat1=$('#ocrdetails4'), option="";
+// 				            slctSubcat1.empty();
+// 						for(var i=0; i<data.length; i++){
+						
+// 							selected_option =  "<tr data-folder='ghjgh'><td>"+ data[i].number+ "</td>"
+// 					            +"<td style='display:none;'>"+ data[i].noimage+"</td>"
+// 					            +"</tr>";
+// 					            slctSubcat1.append(selected_option);
+								//$("table tbody").append(markup);
+// 			           	 }
+			            document.getElementById('results5').src = "data:image/jpg;base64,"+data;			    		
+			            document.getElementById("ImageData5").value="data:image/jpg;base64,"+data;
+			            
+			     
+
+			        },
+			        error:function(){
+			       //	alert("Error");
+			        }
+				 });
+
+			}
+		
+		
+		function saveOcrImage(){
+			
+			
+			
+			var imagebase64=document.getElementById("ImageData5").value;
+			if(imagebase64!=""){
+	 		var y=document.getElementById("ocrrid").value;		 
+	 		var jsonfile={json:JSON.stringify(imagebase64),id:y};
+	 		$.ajax({
+
+	 		    type: 'POST',
+	 		    url: "saveChangeImage", 
+	 		    data: jsonfile,
+	 	        success: function(data){
+	 	        
+		      	if(data=="1"){
+		      		
+		      		
+		      		
+					swal("Good job!", "Capturing is successfully !", {
+						icon : "success",
+						buttons: {        			
+							confirm: {
+								className : 'btn btn-success'
+							}
+						},
+					});
+		      
+		      	}else{
+		      		
+	        		swal("Oops...", "Not captured ! Please capture and continue ..", {
+						icon : "error",
+						buttons: {        			
+							confirm: {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+		      		
+
+		      		
+		      	}
+	 	        	
+	 	        	
+	 	        },
+	 	        error:function(data){
+	 	        	alert(data.responseText);
+		           
+	 	        }
+	 		 });
+			}else{
+				
+	        		swal("Oops...", "Not captured ! Please capture and continue ..", {
+							icon : "error",
+							buttons: {        			
+								confirm: {
+									className : 'btn btn-danger'
+								}
+							},
+						});
+
+			}
+
+		}
+		
+		
+		
+		
+		
 	</script>
+
 </body>
 </html>

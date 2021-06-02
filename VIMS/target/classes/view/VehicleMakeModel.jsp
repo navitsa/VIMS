@@ -97,7 +97,7 @@
       <div class="col-sm-7 mb-1 mb-sm-3">
 	<button type="button" class="btn btn-success" data-dismiss="modal" onclick="saveMakeV()">Add Vehicle Make</button>
 	
-			<button type="button" class="btn btn-info" data-dismiss="modal" onclick="getMakeV()">Close</button>
+			<button type="button" class="btn btn-info" data-dismiss="modal" >Close</button>
 		</div>																
       </div>
     </div>

@@ -52,28 +52,27 @@
 			<div class="content">
 				<div class="page-inner">	
 					<div class="page-header">
-							<h4 class="page-title">Test Results</h4>
-							<ul class="breadcrumbs">
-								<li class="nav-home">
-									<a href="#">
-										<i class="flaticon-home"></i>
-									</a>
-								</li>
-								<li class="separator">
-									<i class="flaticon-right-arrow"></i>
-								</li>
-								
-								
-							</ul>
-<div class="dropdown float-right">
-	<button type="button" class="btn btn-sm" data-toggle="dropdown">
-	   <i class="fa fa-ellipsis-v" style="font-size:22px;color:blue"></i>
-	</button>
-	<div class="dropdown-menu">
-		<a class="dropdown-item" href="previousResults">Previous Reports</a>
-	</div>
-</div>
-						</div>
+						<h4 class="page-title">Test Results</h4>
+						<ul class="breadcrumbs">
+							<li class="nav-home">
+								<a href="#">
+									<i class="flaticon-home"></i>
+								</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="#">Vehicle Inspection</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="#">Issue Test Report</a>
+							</li>
+						</ul>
+					</div>
 
 
 	              <!-- Card -->
@@ -84,7 +83,7 @@
 	                	<!-- <input type="button" class="btn btn-primary btn-sm" value="Download file from FTP" onclick="download()"> -->
 	                	
 							<div class="table-responsive-lg">
-								<table class="table table-sm">
+								<table class="table table-sm" id="pendingResultsTable">
 									<thead>
 									   <tr>
 									      <th style="width:50px" scope="col">#</th>
@@ -93,6 +92,7 @@
 									      <th scope="col">Date & Time</th>
 									      <th scope="col">Color</th>
 									      <th scope="col">B / W</th>
+									      <th scope="col"></th>
 									   </tr>
 									</thead>
 									<tbody>
@@ -103,12 +103,14 @@
 									        <td>${result.vehicle_id}</td>
 									        <td>${result.date}</td>
 									        <td>
-												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=1" class="btn btn-primary" role="button">
-												<i class="fas fa-print"></i> Color</a>
+												<a href="#" class="btn btn-success btn-sm" role="button" onclick="checkAvailableResults('${result.vreg.vregID}','${result.test_value_file_id}',1)">
+													<i class="fas fa-print"></i>
+												</a>
 											</td>
 											<td>
-												<a href="getTestReport?register_id=${result.vreg.vregID}&test_value_file_id=${result.test_value_file_id}&color=0" class="btn btn-secondary" role="button">
-												<i class="fas fa-print"></i> B/W</a>
+												<a href="#" class="btn btn-default btn-sm" role="button" onclick="checkAvailableResults('${result.vreg.vregID}','${result.test_value_file_id}',0)">
+													<i class="fas fa-print"></i>
+												</a>
 											</td>
 									      </tr>
 									  </c:forEach>							                
@@ -139,10 +141,10 @@
 		    url: "readingTestValues",
 		    success: function(data){
 		    	document.getElementById("overlay").style.display = "none";
-	        	$("table tbody").empty();
+	        	$("#pendingResultsTable tbody").empty();
 				for(var i=0; i<data.length; i++){
-					var markup = "<tr><th scope='row'>"+data[i].test_value_file_id+"</th><td>"+data[i].vreg.vregID+"</td><td>"+data[i].vehicle_id+"</td><td>"+data[i].date+"</td><td><a href='getTestReport?register_id="+data[i].vreg.vregID+"&test_value_file_id="+data[i].test_value_file_id+"&color=1' class='btn btn-primary'><i class='fas fa-print'></i> Color</a></td><td><a href='getTestReport?register_id="+data[i].vreg.vregID+"&test_value_file_id="+data[i].test_value_file_id+"&color=0' class='btn btn-secondary'><i class='fas fa-print'></i> B/W</a></td></tr>";
-	           		 $("table tbody").append(markup);
+					var markup = "<tr><th scope='row'>"+data[i].test_value_file_id+"</th><td>"+data[i].vreg.vregID+"</td><td>"+data[i].vehicle_id+"</td><td>"+data[i].date+"</td><td><a href='#' class='btn btn-success btn-sm' onclick='checkAvailableResults(`"+data[i].vreg.vregID+"`,`"+data[i].test_value_file_id+"`,1)'><i class='fas fa-print'></i></a></td><td><a href='#' class='btn btn-default btn-sm' onclick='checkAvailableResults(`"+data[i].vreg.vregID+"`,`"+data[i].test_value_file_id+"`,0)'><i class='fas fa-print'></i></a></td> <td><a href='' data-toggle='modal' data-target='#printingOrderModal'><i class='fas fa-cog'></i></a></td></tr>";
+	           		 $("#pendingResultsTable tbody").append(markup);
 	           	 }
 		    },
 		    error:function(){
@@ -177,5 +179,134 @@
   <div id="text">Reading Test Results ...</div>
 </div>
 
+<script>
+function checkAvailableResults(regID,test_value_file_id,color)
+{
+	//alert(regID+" "+test_value_file_id+" "+color);
+	
+ 	$.ajax({
+	    type: 'GET',
+	    url: "checkAvailableTestResults",
+	    data: {"regID" : regID},
+	    success: function(map){
+	    	confirmMsg(regID,test_value_file_id,color,map);
+	    },
+	    error:function(){
+	        //alert("error");
+	    }
+	
+	});
+	
+}
+
+function confirmMsg(regID,test_value_file_id,color,map) {
+	
+	swal({
+		title: 'Are you sure?',
+		text: "Available Results :\n1. Visual Inspection : "+map[1]+"\n2. Emission : "+map[2],
+		type: 'warning',
+		buttons:{
+			confirm: {
+				text : 'Yes, print it!',
+				className : 'btn btn-success'
+			},
+			cancel: {
+				visible: true,
+				className: 'btn btn-danger'
+			}
+		}
+	}).then((value) => {
+		if (value) {
+			//return fetch("http://localhost:8080/VIMS/getTestReport?register_id=0002&test_value_file_id=1&color=0");
+			window.location.href = "getTestReport?register_id="+regID+"&test_value_file_id="+test_value_file_id+"&color="+color;
+		} else {
+			swal.close();
+		}
+	});
+	
+}
+</script>
+
+	<!-- Modal -->
+	<div class="modal fade" id="printingOrderModal" tabindex="-1"
+		role="dialog" aria-labelledby="printingOrderModalTitle"
+		aria-hidden="true">
+		
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Results for Printing</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form name="" id="" action="" method="GET">
+					<div class="modal-body">
+
+						<div style="height: 300px; overflow: auto;">
+							<table class="table table-sm" id="">
+								<thead>
+									<tr>
+										<th>Test Type</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Side Slip Test</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Shock Absorber Test</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Headlight Test</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Noise Level Test</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Speedometer Test</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Speed Governor / Limit Test</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Brake Test (CAR)</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Brake Test (TRUCK)</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Emission ( Diesel )</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+									<tr>
+										<td>Emission ( Petrol/LPG/CNG)</td>
+										<td><input type="checkbox" checked></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success"
+							data-dismiss="modal">Save Changes</button>
+<!-- 						<button type="submit" class="btn btn-success">Save
+							Changes</button> -->
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

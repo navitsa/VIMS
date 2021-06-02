@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report_brake_subreport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a0bca50d-dd4c-4bf1-9f07-e375f1a84f4a">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
@@ -70,10 +70,10 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="25">
+			<band height="15">
 				<printWhenExpression><![CDATA[$F{test_type_type_id}.equals("40000-49999") || $F{test_type_type_id}.equals("50000-69999")]]></printWhenExpression>
-				<crosstab ignoreWidth="true">
-					<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="356" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="7afe58eb-2c9f-46fc-b3fb-98ec993c0ac8"/>
+				<crosstab ignoreWidth="false">
+					<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="357" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="7afe58eb-2c9f-46fc-b3fb-98ec993c0ac8"/>
 					<crosstabDataset isDataPreSorted="true">
 						<dataset resetType="Group" resetGroup="test_type_group"/>
 					</crosstabDataset>
@@ -204,7 +204,7 @@
 					</crosstabCell>
 				</crosstab>
 				<subreport>
-					<reportElement x="356" y="0" width="87" height="15" isRemoveLineWhenBlank="true" printWhenGroupChanges="test_type_group" uuid="f3d6a162-dacd-46ff-8c64-8abe21211872"/>
+					<reportElement x="357" y="0" width="100" height="15" isRemoveLineWhenBlank="true" printWhenGroupChanges="test_type_group" uuid="f3d6a162-dacd-46ff-8c64-8abe21211872"/>
 					<subreportParameter name="testTypeID">
 						<subreportParameterExpression><![CDATA[$F{test_type_type_id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -217,4 +217,7 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
+	<pageFooter>
+		<band height="10"/>
+	</pageFooter>
 </jasperReport>
