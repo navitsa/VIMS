@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.navitsa.Reports.APInvoiceAgeAnalysisReportBean;
+import com.navitsa.Reports.APInvoicePaymentHistoryReportBean;
 import com.navitsa.Reports.DocumentTransactionDetailsReportBean;
 import com.navitsa.Reports.GlTranctionReportBeen;
 import com.navitsa.Reports.OutgoingPaymentDetailsReportBeen;
@@ -1304,6 +1305,125 @@ public class FinanceAccountingController {
 		} catch (Exception e) {
 			System.out.println("Error");
 		}
+		return mav;
+	}
+
+	@RequestMapping(value = "/APInvoiceBalanceReport", method = RequestMethod.GET)
+	public String apInvoiceBalanceReportPage() {
+		return "APInvoiceBalanceReport";
+	}
+
+	@RequestMapping(value = "/previewAPInvoiceBalanceReport", method = RequestMethod.POST)
+	public ModelAndView previewAPInvoiceBalanceReport(@RequestParam String fromDate, @RequestParam String toDate,
+			@RequestParam(value = "supplierId", required = false) String supplierId, HttpServletResponse response,
+			HttpSession session) {
+		ModelAndView mav = new ModelAndView("APInvoiceBalanceReport");
+		String centerid = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerid);
+		List<APInvoiceHead> list = new ArrayList<>();
+		List<APInvoiceHead> apInvoiceHeadList;
+		if (supplierId.equals("")) {
+			apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadByDatesAndBalance(fromDate, toDate);
+		} else {
+			apInvoiceHeadList = financeAccountingService.getAPInvoiceHeadByDatesAndSupplierAndBalance(fromDate, toDate,
+					supplierId);
+		}
+
+		for (int i = 0; i < apInvoiceHeadList.size(); i++) {
+			APInvoiceHead apInvoiceHead = new APInvoiceHead();
+			SupplierMaster supplierMaster = inventoryService
+					.getSupplierMasterById(apInvoiceHeadList.get(i).getSupplierMaster().getSupplierId());
+			apInvoiceHead.setApInvoiceHeadId(apInvoiceHeadList.get(i).getApInvoiceHeadId());
+			apInvoiceHead.setSupplierMaster(supplierMaster);
+			apInvoiceHead.setReferenceNo(apInvoiceHeadList.get(i).getReferenceNo());
+			apInvoiceHead.setDate(apInvoiceHeadList.get(i).getDate());
+			apInvoiceHead.setEntryDate(apInvoiceHeadList.get(i).getEntryDate());
+			apInvoiceHead.setGrossTotal(apInvoiceHeadList.get(i).getGrossTotal() / 100);
+			apInvoiceHead.setDiscountTotal(apInvoiceHeadList.get(i).getDiscountTotal() / 100);
+			apInvoiceHead.setTaxTotal(apInvoiceHeadList.get(i).getTaxTotal() / 100);
+			apInvoiceHead.setBalance(apInvoiceHeadList.get(i).getBalance() / 100);
+			apInvoiceHead.setNetTotal(apInvoiceHeadList.get(i).getNetTotal() / 100);
+			list.add(apInvoiceHead);
+		}
+
+		String pdf_result = null;
+		String reportName = "AP INVOICE BALANCE REPORT - " + fromDate + " - " + toDate;
+		ReportViewe view = new ReportViewe();
+		Map<String, Object> params = new HashMap<>();
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("header", centerMaster.getPartner_ID().getReceiptHeader());
+		params.put("address", centerMaster.getAdd03());
+		params.put("fromDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromDate)));
+		params.put("toDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
+		try {
+			pdf_result = view.pdfReportViewInlineSystemOpen("apInvoiceBalanceReport.jasper", reportName, list, params,
+					response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mav.addObject("pdfViewEq", pdf_result);
+		return mav;
+	}
+
+	@RequestMapping(value = "/APInvoicePaymentHistoryReport", method = RequestMethod.GET)
+	public String apInvoicePaymentHistoryReportPage() {
+		return "APInvoicePaymentHistoryReport";
+	}
+
+	@RequestMapping(value = "/PreviewAPInvoicePaymentHistoryReport", method = RequestMethod.POST)
+	public ModelAndView getAPInvoicePaymentHistoryReport(@RequestParam String fromDate, @RequestParam String toDate,
+			@RequestParam(value = "supplierId", required = false) String supplierId, HttpServletResponse response,
+			HttpSession session) {
+
+		ModelAndView mav = new ModelAndView("APInvoicePaymentHistoryReport");
+
+		String centerId = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerId);
+
+		List<APInvoicePaymentHead> apInvoicePaymentHeadList;
+		List<APInvoicePaymentDetails> paymentDetails;
+		if (supplierId.equals("")) {
+			paymentDetails = financeAccountingService.getAPInvoicePaymentDetailsByDates(fromDate, toDate);
+		} else {
+			paymentDetails = financeAccountingService.getAPInvoicePaymentDetailsByByDatesAndSupplier(fromDate, toDate, supplierId);
+		}
+
+		List<APInvoicePaymentHistoryReportBean> apiphrbList = new ArrayList<APInvoicePaymentHistoryReportBean>();
+
+			for (int i = 0; i < paymentDetails.size(); i++) {
+				APInvoicePaymentHistoryReportBean apiphrb = new APInvoicePaymentHistoryReportBean();
+				apiphrb.setDate(paymentDetails.get(i).getApInvoicePaymentHeadId().getPaymentDate());
+				apiphrb.setSupplierId(paymentDetails.get(i).getApInvoicePaymentHeadId().getSupplierMaster().getSupplierId());
+				apiphrb.setPaymentId(paymentDetails.get(i).getApInvoicePaymentHeadId().getApInvoicePaymentHeadId());
+				apiphrb.setSupplierName(paymentDetails.get(i).getApInvoicePaymentHeadId().getSupplierMaster().getSupplierName());
+				apiphrb.setInvoiceId(paymentDetails.get(i).getApInvoiceHead().getApInvoiceHeadId());
+				apiphrb.setPaymentType(paymentDetails.get(i).getApInvoicePaymentHeadId().getPaymentType());
+				apiphrb.setDueAmount(paymentDetails.get(i).getInvoiceTotal() / 100);
+				apiphrb.setPayment(paymentDetails.get(i).getInvoicePayment() / 100);
+				apiphrb.setBalance(paymentDetails.get(i).getInvoiceBalance() / 100);
+				apiphrbList.add(apiphrb);
+			}
+
+		ReportViewe review = new ReportViewe();
+		Map<String, Object> params = new HashMap<>();
+
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("header", centerMaster.getPartner_ID().getReceiptHeader());
+		params.put("address", centerMaster.getAdd03());
+		params.put("fromDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromDate)));
+		params.put("toDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
+
+		String reptValue = "";
+
+		try {
+			reptValue = review.pdfReportViewInlineSystemOpen("apInvoicePaymentHistoryReport.jasper",
+					"AP Invoice Payment History Report", apiphrbList, params, response);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		mav.addObject("pdfViewEq", reptValue);
 		return mav;
 	}
 }

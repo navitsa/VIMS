@@ -34,4 +34,12 @@ public interface APInvoiceHeadRepository extends CrudRepository<APInvoiceHead, S
 
 	@Query(value = "SELECT apih FROM APInvoiceHead apih WHERE apih.balance != 0 ORDER BY apih.supplierMaster.supplierId,apih.date")
 	public List<APInvoiceHead> getUnpaidAPInvoices();
+
+	@Query(value = "SELECT apih FROM APInvoiceHead apih WHERE apih.date BETWEEN :fromDate AND :toDate AND apih.balance != 0")
+	public List<APInvoiceHead> getAPInvoiceHeadByDatesAndBalance(@Param("fromDate") String fromDate,
+			@Param("toDate") String toDate);
+	
+	@Query(value = "SELECT apih FROM APInvoiceHead apih WHERE apih.date BETWEEN :fromDate AND :toDate AND apih.supplierMaster.supplierId = :supplierId AND apih.balance != 0")
+	public List<APInvoiceHead> getAPInvoiceHeadByDatesAndSupplierAndBalance(@Param("fromDate") String fromDate, @Param("toDate") String toDate, 
+			@Param("supplierId") String supplierId);
 }

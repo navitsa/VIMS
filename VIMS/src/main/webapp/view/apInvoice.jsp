@@ -143,8 +143,6 @@
 													<label class="l-fontst">Supplier</label>
 												</div>
 												<div class="col-sm-6">
-													<%-- <form:input class="form-control fontst" type="text"
-														path="supplierId" onchange="" id="supplierId" required="true"/> --%>
 													<form:select id="supplierId"
 														path="supplierMaster.supplierId" onchange=""
 														class="form-control" required="true">

@@ -225,4 +225,36 @@ public class FinanceAccountingService {
 	public List<APInvoiceHead> getUnpaidAPInvoices() {
 		return apInvoiceHeadRepository.getUnpaidAPInvoices();
 	}
+
+	public List<APInvoiceHead> getAPInvoiceHeadByDatesAndBalance(String fromDate, String toDate) {
+		return apInvoiceHeadRepository.getAPInvoiceHeadByDatesAndBalance(fromDate, toDate);
+	}
+
+	public List<APInvoiceHead> getAPInvoiceHeadByDatesAndSupplierAndBalance(String fromDate, String toDate,
+			String supplierId) {
+		return apInvoiceHeadRepository.getAPInvoiceHeadByDatesAndSupplierAndBalance(fromDate, toDate, supplierId);
+	}
+
+	public List<APInvoicePaymentHead> getAPInvoicePaymentHeadsByDates(String fromDate, String toDate) {
+		return apInvoicePaymentHeadRepository.getAPInvoicePaymentHeadsByDates(fromDate, toDate);
+	}
+
+	public List<APInvoicePaymentHead> getAPInvoicePaymentHeadsByDatesAndSupplier(String fromDate, String toDate,
+			String supplierId) {
+		return apInvoicePaymentHeadRepository.getAPInvoicePaymentHeadsByDatesAndSupplier(fromDate, toDate, supplierId);
+	}
+
+	public List<APInvoicePaymentDetails> getAPInvoicePaymentDetailsByHeadId(String apInvoicePaymentHeadId) {
+		return apInvoicePaymentDetailsRepository.getAPInvoicePaymentDetailsByHeadId(apInvoicePaymentHeadId);
+	}
+
+	public List<APInvoicePaymentDetails> getAPInvoicePaymentDetailsByDates(String fromDate, String toDate) {
+		return apInvoicePaymentDetailsRepository.getAPInvoicePaymentDetailsByDates(fromDate, toDate);
+	}
+
+	public List<APInvoicePaymentDetails> getAPInvoicePaymentDetailsByByDatesAndSupplier(String fromDate, String toDate,
+			String supplierId) {
+		return apInvoicePaymentDetailsRepository.getAPInvoicePaymentDetailsByByDatesAndSupplier(fromDate, toDate,
+				supplierId);
+	}
 }
