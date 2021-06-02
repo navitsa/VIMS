@@ -16,6 +16,12 @@ import com.navitsa.entity.APInvoiceTax;
 import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
+import com.navitsa.hrm.entity.Bank;
+import com.navitsa.hrm.entity.BankMaster;
+import com.navitsa.hrm.entity.PartnerBankAccount;
+import com.navitsa.hrm.repository.BankMasterRepository;
+import com.navitsa.hrm.repository.BankRepository;
+import com.navitsa.hrm.repository.PartnerBankAccountRepository;
 import com.navitsa.repository.APInvoiceDetailsRepository;
 import com.navitsa.repository.APInvoiceHeadRepository;
 import com.navitsa.repository.APInvoicePaymentDetailsRepository;
@@ -26,12 +32,6 @@ import com.navitsa.repository.IncomingReceiptHeadRepository;
 import com.navitsa.repository.OutgoingPaymentDetailsRepository;
 import com.navitsa.repository.OutgoingPaymentHeadRepository;
 import com.navitsa.repository.ReceiptHeadRepository;
-import com.prime.hrm.entity.Bank;
-import com.prime.hrm.entity.BankMaster;
-import com.prime.hrm.entity.PartnerBankAccount;
-import com.prime.hrm.repository.BankMasterRepository;
-import com.prime.hrm.repository.BankRepository;
-import com.prime.hrm.repository.PartnerBankAccountRepository;
 
 @Service
 @Transactional

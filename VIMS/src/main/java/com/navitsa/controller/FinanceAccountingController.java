@@ -51,6 +51,9 @@ import com.navitsa.entity.OutgoingPaymentHead;
 import com.navitsa.entity.SupplierMaster;
 import com.navitsa.entity.TaxConfiguration;
 import com.navitsa.entity.VehicleCategory;
+import com.navitsa.hrm.entity.Bank;
+import com.navitsa.hrm.entity.BankMaster;
+import com.navitsa.hrm.entity.PartnerBankAccount;
 import com.navitsa.services.BusinessPartnerService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.FinanceAccountingService;
@@ -62,9 +65,6 @@ import com.navitsa.utils.DateHelperWeb;
 import com.navitsa.utils.EnglishNumberToWords;
 import com.navitsa.utils.ReportViewe;
 import com.navitsa.utils.StringFormaterWeb;
-import com.prime.hrm.entity.Bank;
-import com.prime.hrm.entity.BankMaster;
-import com.prime.hrm.entity.PartnerBankAccount;
 
 @Controller
 public class FinanceAccountingController {
