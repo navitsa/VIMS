@@ -1380,7 +1380,6 @@ public class FinanceAccountingController {
 		String centerId = session.getAttribute("centerid") + "";
 		CenterMaster centerMaster = centerService.getcenterById(centerId);
 
-		List<APInvoicePaymentHead> apInvoicePaymentHeadList;
 		List<APInvoicePaymentDetails> paymentDetails;
 		if (supplierId.equals("")) {
 			paymentDetails = financeAccountingService.getAPInvoicePaymentDetailsByDates(fromDate, toDate);

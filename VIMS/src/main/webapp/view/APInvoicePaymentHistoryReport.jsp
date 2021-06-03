@@ -128,14 +128,14 @@
 												<div class="col-sm-8">
 													<label class="l-fontst">From Date</label> <input
 														class="form-control fontst" type="date" name="fromDate"
-														required id="fromDate" onchange="" />
+														required id="fromDate" onchange="" required="true"/>
 												</div>
 											</div>
 											<div class="form-group row">
 												<div class="col-sm-8">
 													<label class="l-fontst">To Date</label> <input
 														class="form-control fontst" type="date" name="toDate"
-														required id="toDate" onchange="" />
+														required id="toDate" onchange="" required="true"/>
 												</div>
 											</div>
 											<div class="form-group row">

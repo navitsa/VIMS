@@ -101,7 +101,8 @@
 						<div
 							class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 							<div class="col-xl-2 col-lg-2">
-								<h2 class="text-white pb-2 fw-bold">AP Invoice Summary Report</h2>
+								<h2 class="text-white pb-2 fw-bold">AP Invoice Summary
+									Report</h2>
 							</div>
 							<div class="col-xl-2 col-lg-2"></div>
 							<div class="ml-md-auto py-2 py-md-4"></div>
@@ -121,56 +122,34 @@
 								<form:form action="previewAPInvoiceSummaryReport" method="POST">
 
 									<div class="card shadow mb-4" style="height: 70vh;">
-											<div class="card-body">
+										<div class="card-body">
 
-												<!-- <div class="form-group row">
-													<div class="col-sm-8">
-														<label class="l-fontst">Invoice Date</label> <input
-															class="form-control fontst" type="date"
-															name="invoiceDate" required id="invoiceDate"
-															onchange="getInvoiceIDs(this.value);" />
-													</div>
+											<div class="form-group row">
+												<div class="col-sm-8">
+													<label class="l-fontst">From Date</label> <input
+														class="form-control fontst" type="date" name="fromDate"
+														required id="fromDate" onchange="" />
 												</div>
-												<div class="form-group row">
-													<div class="col-sm-8">
-														<label class="l-fontst">Invoice ID</label> <select
-															class="form-control form-control-user fontst"
-															id="invoiceID" name="invoiceID" required onchange="">
-															<option value="">--SELECT--</option>
-
-														</select>
-
-													</div>
-												</div> -->
-												
-												<div class="form-group row">
-													<div class="col-sm-8">
-														<label class="l-fontst">From Date</label> <input
-															class="form-control fontst" type="date"
-															name="fromDate" required id="fromDate"
-															onchange="" />
-													</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-8">
+													<label class="l-fontst">To Date</label> <input
+														class="form-control fontst" type="date" name="toDate"
+														required id="toDate" onchange="" />
 												</div>
-												<div class="form-group row">
-													<div class="col-sm-8">
-														<label class="l-fontst">To Date</label> <input
-															class="form-control fontst" type="date"
-															name="toDate" required id="toDate"
-															onchange="" />
-													</div>
-												</div>
+											</div>
 
-												<div class="form-group row">
+											<div class="form-group row">
 
-													<div class="col-sm-8">
-														<button type="submit"
-															class="btn  btn-block btn-danger btn-rounded tabStyle">Print</button>
-
-													</div>
+												<div class="col-sm-8">
+													<button type="submit"
+														class="btn  btn-block btn-danger btn-rounded tabStyle">Print</button>
 
 												</div>
 
 											</div>
+
+										</div>
 									</div>
 
 								</form:form>
@@ -250,16 +229,14 @@
 							},
 							error : function() {
 								alert("Database Error!");
-								swal(
-										"Database Error!",
-										{
-											icon : "error",
-											buttons : {
-												confirm : {
-													className : 'btn btn-danger'
-												}
-											},
-										});
+								swal("Database Error!", {
+									icon : "error",
+									buttons : {
+										confirm : {
+											className : 'btn btn-danger'
+										}
+									},
+								});
 							}
 
 						});

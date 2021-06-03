@@ -312,7 +312,7 @@ table.table td .add {
 															<div class="col-sm-10">
 
 																<label class="l-fontst">Payment Type</label>
-
+																<br>
 																<div class="btn-group btn-group-toggle"
 																	data-toggle="buttons">
 																	<label class="btn btn-outline-success btn-sm">
@@ -325,11 +325,11 @@ table.table td .add {
 																	</label> <label class="btn btn-outline-info btn-sm"> <input
 																		type="radio" name="paymentType" value="Cheque"
 																		onclick="chequePayment();" /> Cheque
-																	</label> <label class="btn btn-outline-warning btn-sm">
+																	</label> <!-- <label class="btn btn-outline-warning btn-sm">
 																		<input type="radio" name="paymentType"
-																		value="BankTransfer" onclick="bankPayment();" />Bank
+																		value="BankTransfer" onclick="bankPayment();" disabled />Bank
 																		Transfer
-																	</label>
+																	</label> -->
 
 																</div>
 

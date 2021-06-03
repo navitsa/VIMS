@@ -17,13 +17,13 @@
 	<field name="dueAmount" class="java.lang.Long"/>
 	<field name="payment" class="java.lang.Long"/>
 	<field name="balance" class="java.lang.Long"/>
-	<variable name="totalDueAmount" class="java.lang.Double" resetType="Column" calculation="Sum">
+	<variable name="totalDueAmount" class="java.lang.Double" resetType="Group" resetGroup="Supplier ID" calculation="Sum">
 		<variableExpression><![CDATA[Double.valueOf($F{dueAmount})]]></variableExpression>
 	</variable>
-	<variable name="totalPayment" class="java.lang.Double" resetType="Column" calculation="Sum">
+	<variable name="totalPayment" class="java.lang.Double" resetType="Group" resetGroup="Supplier ID" calculation="Sum">
 		<variableExpression><![CDATA[Double.valueOf($F{payment})]]></variableExpression>
 	</variable>
-	<variable name="totalBalance" class="java.lang.Double" resetType="Column" calculation="Sum">
+	<variable name="totalBalance" class="java.lang.Double" resetType="Group" resetGroup="Supplier ID" calculation="Sum">
 		<variableExpression><![CDATA[Double.valueOf($F{balance})]]></variableExpression>
 	</variable>
 	<group name="Payment Date">
