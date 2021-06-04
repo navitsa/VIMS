@@ -142,7 +142,7 @@
 											</div>
 											<div class="form-group row">
 												<div class="col-sm-4">
-													<label class="l-fontst">Gate Path</label>
+													<label class="l-fontst">Image Path</label>
 												</div>
 												<div class="col-sm-6">
 													<form:input class="form-control fontst" type="text"
@@ -205,7 +205,7 @@
 													<tr>
 														<th style="width: 10%">ID</th>
 														<th style="width: 30%">Gate Name</th>
-														<th style="width: 40%">Gate Path</th>
+														<th style="width: 40%">Image Path</th>
 														<th style="width: 20%">Gate IP</th>
 														<th style="width: 20%">Camera IP</th>
 														<th style="width: 10%"></th>

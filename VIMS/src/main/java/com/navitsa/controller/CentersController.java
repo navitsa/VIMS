@@ -324,10 +324,9 @@ public class CentersController {
 	@RequestMapping(value = "/saveTestCategory", method = RequestMethod.POST)
 	public String saveCategory(@Valid @ModelAttribute("testCategory") TestCategory tc, BindingResult br,
 			RedirectAttributes redirectAttributes) {
-
-		if (br.hasErrors())
+		if (br.hasErrors()) {
 			return "testCategory";
-		else {
+		} else {
 			Long ncategoryFee = StringFormaterWeb.rupeesToLong(String.valueOf(tc.getCategoryFee()));
 			tc.setCategoryFee(ncategoryFee);
 			// VisualProfile vp=new VisualProfile();
@@ -366,10 +365,11 @@ public class CentersController {
 		ModelAndView mav = new ModelAndView("testCategory");
 		TestCategory tc = centerService.getCategoryId(id);
 
-		String testFee = StringFormaterWeb.formatToRupees(tc.getCategoryFee());
+		// String testFee = StringFormaterWeb.formatToRupees(tc.getCategoryFee());
+		tc.setCategoryFee(tc.getCategoryFee() / 100);
 
 		mav.addObject("testCategory", tc);
-		mav.addObject("testfee", testFee);
+		// mav.addObject("testfee", testFee);
 
 		return mav;
 	}
