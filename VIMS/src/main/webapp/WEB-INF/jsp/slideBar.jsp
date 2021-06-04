@@ -458,6 +458,222 @@
 					</div></li>
 
 
+				<!-- HRM -->
+
+				<li class="nav-item" hidden="true" id="hrm">
+					<a data-toggle="collapse" href="#hrmSubMenu"> <i
+						class="fas fa-pen-square"></i>
+						<p>HRM</p> <span class="caret"></span>
+				</a>
+					<div class="collapse" id="#hrmSubMenu">
+						<div class="bg-white py-2 collapse-inner rounded">
+
+						<h6 class="text-section">Company Details :</h6>	
+											
+						<a class="collapse-item fontst-sb-it" href="companyMasterPage"
+							hidden="true" id="companyMasterPage">Company</a>
+							
+							
+								
+						<h6 class="text-section">Personal Details :</h6>
+									
+						<a class="collapse-item fontst-sb-it" href="nationalityMaster"
+							hidden="true" id="nationalityMaster">Nationality</a>
+							
+						<a class="collapse-item fontst-sb-it" href="religionMaster"
+							hidden="true" id="religionMaster">Religion</a>
+							
+						<a class="collapse-item fontst-sb-it" href="employeeIdDocument"
+							hidden="true" id="employeeIdDocument">Employee Document</a>
+							
+						<a class="collapse-item fontst-sb-it" href="dependentTypeMaster"
+							hidden="true" id="dependentTypeMaster">Dependent Type</a>
+							
+						<a class="collapse-item fontst-sb-it" href="membershipInformation"
+							hidden="true" id="membershipInformation">Membership Types</a>
+							
+						<a class="collapse-item fontst-sb-it" href="employeeType"
+							hidden="true" id="employeeType">Employee Type</a>
+							
+						<a class="collapse-item fontst-sb-it" href="employeeCategory"
+							hidden="true" id="employeeCategory">Employee Category</a>
+							
+						<a class="collapse-item fontst-sb-it" href="languageMaster"
+							hidden="true" id="languageMaster">Language</a>
+							
+						<a class="collapse-item fontst-sb-it" href="qualificationMaster"
+							hidden="true" id="qualificationMaster">Qualification Type</a>
+							
+						<a class="collapse-item fontst-sb-it" href="skillMaster"
+							hidden="true" id="skillMaster">Skill Type</a>
+							
+						<a class="collapse-item fontst-sb-it" href="extraActivityType"
+							hidden="true" id="extraActivityType">Extra Activity Type</a>
+							
+						<a class="collapse-item fontst-sb-it" href="jobPmaster"
+							hidden="true" id="jobPmaster">Job Profile</a>
+							
+						<a class="collapse-item fontst-sb-it" href="jobDetails"
+							hidden="true" id="jobDetails">Job Profile Details</a>
+							
+						<a class="collapse-item fontst-sb-it" href="designationmaster"
+							hidden="true" id="designationmaster">Designation</a>	
+							
+						<a class="collapse-item fontst-sb-it" href="salaryGrades"
+							hidden="true" id="salaryGrades">Salary Grade</a>
+							
+						<a class="collapse-item fontst-sb-it" href="salaryRange"
+							hidden="true" id="salaryRange">Salary Range</a>
+							
+						<a class="collapse-item fontst-sb-it" href="departmentMaster"
+							hidden="true" id="departmentMaster">Department</a>
+							
+						<a class="collapse-item fontst-sb-it" href="bank"
+							hidden="true" id="bank">Bank</a>
+							
+						<a class="collapse-item fontst-sb-it" href="bankInfor"
+							hidden="true" id="bankInfor">Bank Branch</a>
+
+
+
+						<h6 class="text-section">Employee Details :</h6>
+						
+						<a class="collapse-item fontst-sb-it" href="register"
+							hidden="true" id="register">Register</a>
+							
+							
+												
+						<h6 class="text-section">Pay Details :</h6>		
+								
+						<a class="collapse-item fontst-sb-it" href="payAddDeductTypes"
+							hidden="true" id="payAddDeductTypes">Set Allowance Types</a>
+							
+						<a class="collapse-item fontst-sb-it" href="setting"
+							hidden="true" id="setting">Setting</a>
+							
+						<a class="collapse-item fontst-sb-it" href="createPayPeriod"
+							hidden="true" id="createPayPeriod">Pay Periods</a>
+							
+						<a class="collapse-item fontst-sb-it" href="Paycodes"
+							hidden="true" id="Paycodes">Pay Codes</a>
+							
+						<a class="collapse-item fontst-sb-it" href="employeeSalaryMaster"
+							hidden="true" id="employeeSalaryMaster">Employee Salary</a>
+							
+						<a class="collapse-item fontst-sb-it" href="getEmployeeSalaryDetailsPage"
+							hidden="true" id="getEmployeeSalaryDetailsPage">Allocate Allowances Yearly</a>
+							
+						<a class="collapse-item fontst-sb-it" href="getEmpMonthSalaryDetailsPage"
+							hidden="true" id="getEmpMonthSalaryDetailsPage">Allocate Allowances Monthly</a>
+							
+						<a class="collapse-item fontst-sb-it" href="getProcessPayrollPage"
+							hidden="true" id="getProcessPayrollPage">Salary Process</a>
+							
+						<a class="collapse-item fontst-sb-it" href="getSalaryMonthEnd"
+							hidden="true" id="getSalaryMonthEnd">Month End</a>
+							
+						<a class="collapse-item fontst-sb-it" href="processPayRollReport"
+							hidden="true" id="processPayRollReport">PaySlip</a>
+							
+						<a class="collapse-item fontst-sb-it" href="getSalaryAnalyzer"
+							hidden="true" id="getSalaryAnalyzer">Salary Analyze</a>	
+							
+						<a class="collapse-item fontst-sb-it" href="getFTDReport"
+							hidden="true" id="getFTDReport">Fixed Transaction details</a>
+							
+
+
+						<h6 class="text-section">Time and Attendance :</h6>
+						
+						<a class="collapse-item fontst-sb-it" href="ShiftMaster"
+							hidden="true" id="ShiftMaster">Shifts</a>
+							
+						<a class="collapse-item fontst-sb-it" href="ShiftAllocation"
+							hidden="true" id="ShiftAllocation">Shift Allocation</a>
+							
+						<a class="collapse-item fontst-sb-it" href="AllocatedShifts"
+							hidden="true" id="AllocatedShifts">Allocated Shifts</a>
+							
+						<a class="collapse-item fontst-sb-it" href="EmployeeAttendance"
+							hidden="true" id="EmployeeAttendance">Manual Employee Attendance</a>
+							
+						<a class="collapse-item fontst-sb-it" href="AttendanceLog"
+							hidden="true" id="AttendanceLog">Attendance Log</a>
+							
+						<a class="collapse-item fontst-sb-it" href="EmployeeAttendanceApproval"
+							hidden="true" id="EmployeeAttendanceApproval">Attendance Approval</a>
+							
+						<a class="collapse-item fontst-sb-it" href="AttendanceReport"
+							hidden="true" id="AttendanceReport">Attendance Report</a>
+							
+						<a class="collapse-item fontst-sb-it" href="AttendanceSheet"
+							hidden="true" id="AttendanceSheet">Attendance Sheet</a>
+							
+						<a class="collapse-item fontst-sb-it" href="AttendanceRevise"
+							hidden="true" id="AttendanceRevise">Attendance Revise</a>
+							
+						<a class="collapse-item fontst-sb-it" href="AttendanceReviseApproval"
+							hidden="true" id="AttendanceReviseApproval">Revise Approval</a>
+							
+						<a class="collapse-item fontst-sb-it" href="ShiftDetailReport"
+							hidden="true" id="ShiftDetailReport">Shift Detail Report</a>
+							
+							
+							
+						<h6 class="text-section">Leave Details :</h6>
+
+						<a class="collapse-item fontst-sb-it" href="calanderOpen"
+							hidden="true" id="calanderOpen">Calendar</a>
+							
+						<a class="collapse-item fontst-sb-it" href="leaveTypes"
+							hidden="true" id="leaveTypes">Leave Types</a>
+							
+						<a class="collapse-item fontst-sb-it" href="employeeEntitlements"
+							hidden="true" id="employeeEntitlements">Employee Entitlements</a>
+							
+						<a class="collapse-item fontst-sb-it" href="applyLeaves"
+							hidden="true" id="applyLeaves">Apply for Leave</a>
+							
+						<a class="collapse-item fontst-sb-it" href="leaveApplied"
+							hidden="true" id="leaveApplied">Approval of Leave</a>							
+							
+							
+							
+						<h6 class="text-section">Reports Details :</h6>
+
+						<a class="collapse-item fontst-sb-it" href="employeeReport"
+							hidden="true" id="employeeReport">Employee Report</a>
+							
+						<a class="collapse-item fontst-sb-it" href="censusReport"
+							hidden="true" id="censusReport">Census Report</a>
+							
+						<a class="collapse-item fontst-sb-it" href="contactReport"
+							hidden="true" id="contactReport">Employee Contact Report</a>
+							
+						<a class="collapse-item fontst-sb-it" href="dependentReport"
+							hidden="true" id="dependentReport">Dependent Report</a>
+							
+						<a class="collapse-item fontst-sb-it" href="qualificationReport"
+							hidden="true" id="qualificationReport">Qualification Report</a>
+							
+						<a class="collapse-item fontst-sb-it" href="skillReport"
+							hidden="true" id="skillReport">Skill Report</a>
+							
+						<a class="collapse-item fontst-sb-it" href="employeeContactListing"
+							hidden="true" id="employeeContactListing">Employee Contact Listing</a>
+							
+						<a class="collapse-item fontst-sb-it" href="employeeListingRpt"
+							hidden="true" id="employeeListingRpt">Employee Listing Report</a>
+							
+						<a class="collapse-item fontst-sb-it" href="leaveSummaryReport"
+							hidden="true" id="leaveSummaryReport">Leave Summary Report</a>								
+								
+
+						</div>
+					</div>
+				</li>
+
+
 			</ul>
 		</div>
 	</div>
