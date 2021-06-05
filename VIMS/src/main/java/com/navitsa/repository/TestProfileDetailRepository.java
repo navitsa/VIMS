@@ -42,6 +42,7 @@ public interface TestProfileDetailRepository extends CrudRepository<TestProfileD
 			"		INNER JOIN\r\n" + 
 			"    parameter_code ON test_profile_detail.`code` = parameter_code.`code`\r\n" + 
 			"		AND test_profile_detail.`type_id` = parameter_code.`type_id`\r\n" + 
+			"		AND test_profile_detail.`test_parameter_id` = parameter_code.`test_parameter_id`\r\n" +
 			"        INNER JOIN\r\n" + 
 			"    test_type ON parameter_code.`type_id` = test_type.`type_id`\r\n" + 
 			"        LEFT OUTER JOIN\r\n" + 
@@ -80,6 +81,7 @@ public interface TestProfileDetailRepository extends CrudRepository<TestProfileD
 			"        INNER JOIN\r\n" + 
 			"    parameter_code ON test_profile_detail.`code` = parameter_code.`code`\r\n" + 
 			"        AND test_profile_detail.`type_id` = parameter_code.`type_id`\r\n" + 
+			"		AND test_profile_detail.`test_parameter_id` = parameter_code.`test_parameter_id`\r\n" +
 			"        INNER JOIN\r\n" + 
 			"    test_type ON parameter_code.`type_id` = test_type.`type_id`\r\n" + 
 			"        LEFT OUTER JOIN\r\n" + 
@@ -119,6 +121,7 @@ public interface TestProfileDetailRepository extends CrudRepository<TestProfileD
 			"        INNER JOIN\r\n" + 
 			"    parameter_code ON test_profile_detail.`code` = parameter_code.`code`\r\n" + 
 			"        AND test_profile_detail.`type_id` = parameter_code.`type_id`\r\n" + 
+			"		AND test_profile_detail.`test_parameter_id` = parameter_code.`test_parameter_id`\r\n" +
 			"        INNER JOIN\r\n" + 
 			"    test_type ON parameter_code.`type_id` = test_type.`type_id`\r\n" + 
 			"        LEFT OUTER JOIN\r\n" + 

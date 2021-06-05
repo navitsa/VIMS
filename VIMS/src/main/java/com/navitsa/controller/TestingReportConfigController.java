@@ -460,21 +460,36 @@ public class TestingReportConfigController {
 					mandatory_status = speedoResult[i][7];
 
 					if(mandatory_status.equals("0")) {
-						double lmaxSpeed1 = 0;
-						double lmaxSpeed2 = 0;
+						double plusMaxSpeed1 = 0;double minusMaxSpeed1 = 0;				
+						double plusMaxSpeed2 = 0;double minusMaxSpeed2 = 0;
+						
 						//if (!haveSpeedGovernor)
 							if(status=="PASS") {
 								
-								lmaxSpeed1 = speedoObj.getValue3() + (speedoObj.getValue3() * plusTargetTolerance1/100);
-								lmaxSpeed2 = speedoObj.getValue6() + (speedoObj.getValue6() * plusTargetTolerance2/100);
+								plusMaxSpeed1 = speedoObj.getValue3() + (speedoObj.getValue3() * plusTargetTolerance1/100);
+								if(speedoObj.getValue2() >  plusMaxSpeed1)
+									status="FAIL";
 								
-								if(speedoObj.getValue2() >  lmaxSpeed1)
+								if(minusTargetTolerance1 > 0) {
+									minusMaxSpeed1 = speedoObj.getValue3() - (speedoObj.getValue3() * minusTargetTolerance1/100);
+									if(speedoObj.getValue2() <minusMaxSpeed1)
+										status="FAIL";
+								}
+
+								plusMaxSpeed2 = speedoObj.getValue6() + (speedoObj.getValue6() * plusTargetTolerance2/100);
+								if(speedoObj.getValue5() > plusMaxSpeed2)
 									status="FAIL";
-								if(speedoObj.getValue5() > lmaxSpeed2)
-									status="FAIL";
+								
+								if(minusTargetTolerance2 > 0) {
+									minusMaxSpeed2 = speedoObj.getValue6() + (speedoObj.getValue6() * minusTargetTolerance2/100);
+									if(speedoObj.getValue5() < minusMaxSpeed2)
+										status="FAIL";
+								}
+
+								
 							}
 							
-						String desc = speedoObj.getValue1()+" ActualSpeed  < "+lmaxSpeed1+" Normal\n"+speedoObj.getValue4()+" ActualSpeed  < "+lmaxSpeed2+" Normal";
+						String desc = minusMaxSpeed1+" < "+speedoObj.getValue1()+" ActualSpeed  < "+plusMaxSpeed1+" Normal\n"+minusMaxSpeed2+" < "+speedoObj.getValue4()+" ActualSpeed  < "+plusMaxSpeed2+" Normal";
 						speedoObj.setLimitDes(desc);
 					
 					}
@@ -506,7 +521,7 @@ public class TestingReportConfigController {
 						params.put("speedoActualMaxSpeed","Actual Maximum Speed   "+max_actual_result);
 					}
 				}else {
-					params.put("speedoPassStatus2", "NOT TESTED");
+					params.put("speedoPassStatus2", "NOT TESTED *");
 				}
 			}
 /* ---------------------------------------------------------------------------------------------------------- */			
@@ -647,6 +662,10 @@ public class TestingReportConfigController {
 		 return mav;
 		 
 	 }
+	
+	public void deleteESIN(String vehicleNo) {
+		
+	}
 	
 	 /*@GetMapping("/getTestingReport")
 	 public ModelAndView getTestingReport(@RequestParam String vehicle_id,@RequestParam String test_value_file_id,HttpServletResponse response)

@@ -112,7 +112,7 @@
 											<div class="col-lg">
 												<div class="form-group form-floating-label">
 													<form:select id="testType" class="form-control input-border-bottom"
-														onchange="getTestCodes4(this.value);showHide();" required="required" path="ck_testProfileDetailId.parameterCode.ck_paraCodeId.testType.typeId">
+														onchange="getTestPoints(this.value);getTestCodes4(this.value);showHide();" required="required" path="ck_testProfileDetailId.parameterCode.ck_paraCodeId.testType.typeId">
 														<option></option>
 														<c:forEach items="${testTypes}" var="testType">
 															<c:if test = "${testType.typeId != '0'}">
@@ -124,6 +124,39 @@
 												</div>
 											</div>
 										</div>
+										
+										<div class="form-group row">
+											<div class="col-lg">
+												<div class="form-group form-floating-label">
+													<select id="testPointSelect" class="form-control input-border-bottom" required>
+														<option></option>
+														<c:forEach items="${testPoints}" var="testPoint">
+															<c:if test = "${testPoint.testPointID != '0'}">
+																<option value="${testPoint.testPointID}">${testPoint.testPointName}</option>
+															</c:if>
+														</c:forEach>
+													</select>
+													<label for="testPoint" class="placeholder">Select test point</label>
+												</div>
+											</div>
+										</div>
+										
+										<div class="form-group row">
+											<div class="col-lg">
+												<div class="form-group form-floating-label">
+													<select id="testParaSelect" class="form-control input-border-bottom" required="required" onchange="testParaSelectChange()">
+														<option></option>
+														<c:forEach items="${testParameters}" var="testPara">
+															<c:if test = "${testPara.testParameterId != '0'}">
+																<option value="${testPara.testParameterId}">${testPara.paraName}</option>
+															</c:if>
+														</c:forEach>
+													</select>
+													<label for="testParaSelect" class="placeholder">Select test parameter</label>
+												</div>
+											</div>
+										</div>
+										<form:input type="hidden" id="testParaHiddenTxt" path="ck_testProfileDetailId.parameterCode.ck_paraCodeId.testParameter.testParameterId" value="0"/>
 										<div class="form-group row">
 											<div class="col-lg">
 												<div class="form-group form-floating-label">
@@ -131,7 +164,7 @@
 														required="required" path="ck_testProfileDetailId.parameterCode.ck_paraCodeId.code">
 														<option></option>
 														<c:forEach items="${paraCodes}" var="c">
-															<form:option value="${c.ck_paraCodeId.code}">${c.ck_paraCodeId.code} - ${c.testPoint.testPointName} ${c.testParameter.paraName} ${c.testParameterAngle.angleName}</form:option>
+															<form:option value="${c.ck_paraCodeId.code}">${c.ck_paraCodeId.code} - ${c.testPoint.testPointName} ${c.ck_paraCodeId.testParameter.paraName} ${c.testParameterAngle.angleName}</form:option>
 														</c:forEach>
 													</form:select>
 													<label for="paraCode" class="placeholder">Select code</label>

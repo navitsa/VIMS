@@ -4,11 +4,9 @@
 function getTestPoints(str)
 	{
 		if (str=="") {
-    		var dropDown = $('#testPointCombo'), option="";
+    		var dropDown = $('#testPointSelect'), option="";
     		dropDown.empty();
-            selected_option = "<option value='' selected>Select test point...</option>"
-            dropDown.append(selected_option);
-    	return;
+    		return;
   		}
   		else{
 			$.ajax({
@@ -17,9 +15,9 @@ function getTestPoints(str)
 	        data: {"typeID" : str},
 	        success: function(data){
 
-				var dropDown=$('#testPointCombo'), option="";
+				var dropDown=$('#testPointSelect'), option="";
 				dropDown.empty();
-				selected_option = "<option value='' selected>Select test point...</option>"
+				selected_option = "<option></option>"
 				dropDown.append(selected_option);
 	
 	            for(var i=0; i<data.length; i++){
@@ -40,10 +38,10 @@ function getTestParameters(str)
 {
 
 	if (str=="") {
-		var dropDown = $('#testPara'), option="";
+		var dropDown = $('#testParaSelect'), option="";
 		dropDown.empty();
-        selected_option = "<option value='' selected>Select test parameter...</option>"
-        dropDown.append(selected_option);
+        //selected_option = "<option value='' selected>Select test parameter...</option>"
+        //dropDown.append(selected_option);
 	return;
 		}
 		else{
@@ -53,18 +51,19 @@ function getTestParameters(str)
 	        data: {"typeID" : str},
 	        success: function(data){
 	        
-	            var dropDown=$('#testPara'), option="";
+	            var dropDown=$('#testParaSelect'), option="";
 	            dropDown.empty();
-	            selected_option = "<option value='' selected>Select test parameter...</option>"
-	            dropDown.append(selected_option);
+				selected_option = "<option></option>"
+				dropDown.append(selected_option);
 	            
 	            if(data.length<=0){
-	            	document.getElementById("testPara").disabled=true;
-	            	document.getElementById("testAngle").disabled=true;
+	            	document.getElementById("testParaSelect").disabled=true;
+	            	document.getElementById("testParaHiddenTxt").value = "0";
+	            	//document.getElementById("testAngle").disabled=true;
 	            }
 	            else{
-	            	document.getElementById("testPara").disabled=false;
-	            	document.getElementById("testAngle").disabled=false;
+	            	document.getElementById("testParaSelect").disabled=false;
+	            	//document.getElementById("testAngle").disabled=false;
 	            }
 	
 	            for(var i=0; i<data.length; i++){
@@ -79,6 +78,11 @@ function getTestParameters(str)
 	
 	    });
 	}
+}
+
+function testParaSelectChange() {
+	var testParaID = document.getElementById("testParaSelect").value;
+	document.getElementById("testParaHiddenTxt").value = testParaID;
 }
 
 function getTestAngles(str)
@@ -235,7 +239,7 @@ function getTestCodes4(str)
 				dropDown.append(selected_option);
 
 	            for(var i=0; i<data.length; i++){
-	                option = option + "<option value='"+data[i].ck_paraCodeId.code+"'>"+data[i].ck_paraCodeId.code+" - "+data[i].testPoint.testPointName+" "+data[i].testParameter.paraName+" "+data[i].testParameterAngle.angleName+"</option>";
+	                option = option + "<option value='"+data[i].ck_paraCodeId.code+"'>"+data[i].ck_paraCodeId.code+" - "+data[i].testPoint.testPointName+" "+data[i].ck_paraCodeId.testParameter.paraName+" "+data[i].testParameterAngle.angleName+"</option>";
 	            }
 	            dropDown.append(option);
 			},

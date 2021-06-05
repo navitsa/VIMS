@@ -17,11 +17,16 @@ public class Ck_paraCodeId implements Serializable {
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "type_id", referencedColumnName = "type_id")
 	private Test_type testType;
+	
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "test_parameter_id", referencedColumnName = "test_parameter_id")
+	private TestParameter testParameter;
 
-	public Ck_paraCodeId(String code, Test_type testType) {
+	public Ck_paraCodeId(String code, Test_type testType, TestParameter testParameter) {
 		super();
 		this.code = code;
 		this.testType = testType;
+		this.testParameter = testParameter;
 	}
 
 	public String getCode() {
@@ -41,6 +46,14 @@ public class Ck_paraCodeId implements Serializable {
 	}
 
 	public Ck_paraCodeId() {
+	}
+
+	public TestParameter getTestParameter() {
+		return testParameter;
+	}
+
+	public void setTestParameter(TestParameter testParameter) {
+		this.testParameter = testParameter;
 	}
 
 }

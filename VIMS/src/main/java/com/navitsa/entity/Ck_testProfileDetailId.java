@@ -22,7 +22,10 @@ public class Ck_testProfileDetailId implements Serializable{
             referencedColumnName = "code"),
         @JoinColumn(
             name = "type_id",
-            referencedColumnName = "type_id")
+            referencedColumnName = "type_id"),
+        @JoinColumn(
+                name = "test_parameter_id",
+                referencedColumnName = "test_parameter_id")
     })
     private ParameterCodes parameterCode;
 

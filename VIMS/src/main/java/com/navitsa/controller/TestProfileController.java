@@ -31,6 +31,7 @@ import com.navitsa.entity.TestProfileStatus;
 import com.navitsa.entity.TestWisePrintOrder;
 import com.navitsa.entity.Test_type;
 import com.navitsa.entity.VehicleCategory;
+import com.navitsa.entity.VehicleCategoryType;
 import com.navitsa.entity.VehiclesSubCategory;
 import com.navitsa.services.TestProfileService;
 import com.navitsa.services.TestTypeService;
@@ -344,7 +345,6 @@ public class TestProfileController {
 		 String vehicle_cat_id = tpd.getCk_testProfileDetailId().getVehicleCat().getCategoryID();
 		 VehiclesSubCategory vSub = tpd.getCk_testProfileDetailId().getSubCategoryID();
 		 TestLimitRule rule = tpd.getCk_testProfileDetailId().getTestLimitRule();
-
 		 
 		 if(vehicle_cat_id.contains("all")) {
 			 List <VehicleCategory> vCats = vehicleService.getVehicleCategory();
@@ -378,11 +378,7 @@ public class TestProfileController {
 
 	@RequestMapping(value="/getTestPointsByTestTypeID", method=RequestMethod.GET)
 	public @ResponseBody List<TestPoint> getTestPointsByTestTypeID(@RequestParam String typeID) {
-		System.out.println("call");
 		List<TestPoint> rs = testProfileService.getTestPointsByTestTypeID(typeID);
-		for (TestPoint testPoint : rs) {
-			System.out.println(testPoint.getTestPointName());
-		}
 		return rs;
 	}
 	
@@ -481,6 +477,12 @@ public class TestProfileController {
 	@ModelAttribute("fuelTypes")
 	public List<FuelType> getAllFualTypes() {
 		List<FuelType> list = vehicleService.getFuelType();
+		return list;
+	}
+	
+	@ModelAttribute("vehicleCatTypes")
+	public List<VehicleCategoryType> getAllVehicleCatTypes() {
+		List<VehicleCategoryType> list = vehicleService.getAllVehicleCatTypes();
 		return list;
 	}
 	

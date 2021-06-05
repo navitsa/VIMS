@@ -16,7 +16,7 @@
 		<band height="11">
 			<printWhenExpression><![CDATA[$P{testTypeID}.equals($F{test_type_type_id})]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="105" height="11" isRemoveLineWhenBlank="true" uuid="0699b68b-0388-4ef6-acb8-e26baaca82a2"/>
+				<reportElement x="0" y="0" width="104" height="11" isRemoveLineWhenBlank="true" uuid="0699b68b-0388-4ef6-acb8-e26baaca82a2"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
