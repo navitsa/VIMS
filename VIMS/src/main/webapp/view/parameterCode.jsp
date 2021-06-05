@@ -186,7 +186,7 @@
 												</div>
 												<div class="col-sm-6">
 													<form:select class="form-control fontst" type="text"
-														path="testParameter.testParameterId" onchange=""
+														path="ck_paraCodeId.testParameter.testParameterId" onchange=""
 														id="testParameter">
 														<form:option value="">--SELECT--</form:option>
 														<c:forEach items="${testParameterList}" var="tp">
@@ -261,7 +261,7 @@
 															<td><div>${pc.ck_paraCodeId.testType.type}</div></td>
 															<td><div>${pc.description}</div></td>
 															<td><div>${pc.testPoint.testPointName}</div></td>
-															<td><div>${pc.testParameter.paraName}</div></td>
+															<td><div>${pc.ck_paraCodeId.testParameter.paraName}</div></td>
 															<td><div>${pc.testParameterAngle.angleName}</div></td>
 															<td><a href="editParameterCodes?id=${pc.s_id}"><i
 																	class="material-icons">&#xE254;</i></a></td>
