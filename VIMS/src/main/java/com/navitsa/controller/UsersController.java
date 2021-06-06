@@ -368,6 +368,9 @@ public class UsersController {
 				session.setAttribute("vehicleAutoConfig", userObj.get(0).getCenter_ID().getVehicleAutoConfig());
 				session.setAttribute("noflane", userObj.get(0).getCenter_ID().getLanes());
 				session.setAttribute("dateFormat",userObj.get(0).getCenter_ID().getCountrycode().getDateFormat());
+				System.out.println("Company ID "+userObj.get(0).getCenter_ID().getPartner_ID().getCompanyMaster().getComID());
+				session.setAttribute("company.comID",userObj.get(0).getCenter_ID().getPartner_ID().getCompanyMaster().getComID());
+				
 				
 			}else {
 				System.out.println("qqqqqqqqqqq");

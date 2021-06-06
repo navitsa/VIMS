@@ -16,6 +16,8 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.navitsa.hrm.entity.CompanyMaster;
+
 @Entity
 @Table(name="business_partner")
 public class BusinessPartner {
@@ -107,6 +109,10 @@ public class BusinessPartner {
 	
 	@Column(name="dbBackupPath")
 	private String dbBackupPath;
+	
+	@ManyToOne(optional = false,fetch = FetchType.EAGER)
+	@JoinColumn(name = "Company_ID", referencedColumnName = "Company_ID")
+	private CompanyMaster companyMaster;
 	
 
 	public String getPartner_ID() {
@@ -354,7 +360,14 @@ public class BusinessPartner {
 	public void setDbBackupPath(String dbBackupPath) {
 		this.dbBackupPath = dbBackupPath;
 	}
-	
+
+	public CompanyMaster getCompanyMaster() {
+		return companyMaster;
+	}
+
+	public void setCompanyMaster(CompanyMaster companyMaster) {
+		this.companyMaster = companyMaster;
+	}
 	
 	
 	

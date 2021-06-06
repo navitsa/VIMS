@@ -21,6 +21,7 @@ public class CompanyMaster {
 	
 	@Column(name="Contact_No")
 	private String conNo;
+	
 
 	public String getComID() {
 		return comID;
@@ -55,10 +56,12 @@ public class CompanyMaster {
 	}
 
 	public CompanyMaster(String comID, String comName, String address, String conNo) {
+		super();
 		this.comID = comID;
 		this.comName = comName;
 		this.address = address;
 		this.conNo = conNo;
+
 	}
 
 	public CompanyMaster() {
@@ -67,5 +70,6 @@ public class CompanyMaster {
 	public CompanyMaster(String comID) {
 		this.comID = comID;
 	}
+
 
 }
