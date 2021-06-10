@@ -1,6 +1,7 @@
 package com.navitsa.services;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.navitsa.entity.EquipmentsCalibration;
 import com.navitsa.entity.IssueTicket;
 import com.navitsa.entity.ServicesEquipment;
 import com.navitsa.entity.TicketClose;
+import com.navitsa.entity.VehicleRegistration;
 import com.navitsa.repository.EquipmentMakeRepository;
 import com.navitsa.repository.EquipmentMasterRepository;
 import com.navitsa.repository.EquipmentModelRepository;
@@ -186,11 +188,11 @@ public class EquipmentService {
 	public void saveEquipmentsService(ServicesEquipment servicesEquipment) {
 		servicesEquipmentRepository.save(servicesEquipment);
 	}
-	public List<EquipmentsCalibration> getCalibratedEquipmentsReport(String caliDate,String center) {
-		return (List<EquipmentsCalibration>) equipmentsCalibrationRepository.getCalibratedEquipmentsReport(caliDate,center);
+	public List<EquipmentsCalibration> getCalibratedEquipmentsReport(String fromCalibratedDate,String toCalibratedDate) {
+		return (List<EquipmentsCalibration>) equipmentsCalibrationRepository.getCalibratedEquipmentsReport(fromCalibratedDate,toCalibratedDate);
 	}
-	public List<ServicesEquipment> getServicedEquipmentsReport(String servicedDate,String center) {
-		return (List<ServicesEquipment>) servicesEquipmentRepository.getServicedEquipmentsReport(servicedDate,center);
+	public List<ServicesEquipment> getServicedEquipmentsReport(String fromdate,String todate) {
+		return (List<ServicesEquipment>) servicesEquipmentRepository.getServicedEquipmentsReport(fromdate,todate);
 	}
 	public List<EquipmentMaster> getEquipmentByType(String eqtype,String center){
 		return egMastRepo.getEquipmentByType(eqtype,center);
@@ -215,4 +217,46 @@ public class EquipmentService {
 		
 		return  ticketCloseRepository.privewDownTimeReport(toDate);
 	}
+
+	public List<ServicesEquipment> getEquipmentServicesAll(String date, String id) {
+		return egMastRepo.getEquipmentServicesAll(date, id);
+		
+	}
+
+	
+public List<ServicesEquipment> getDetailsByDate(String fromdate,String todate) {
+		
+		return servicesEquipmentRepository.getDetailsByDate(fromdate,todate);
+	}
+
+
+public List<EquipmentsCalibration> getCalibarationByDate(String fromCalibratedDate, String toCalibratedDate) {
+	return equipmentsCalibrationRepository.getCalibarationByDate(fromCalibratedDate,toCalibratedDate);
 }
+
+public List<EquipmentMaster> findActiveEquipmentMaster() {
+	return (List<EquipmentMaster>) egMastRepo.findActiveAll();
+}
+
+public List<TicketClose> findAllTickets() {
+	return (List<TicketClose>) ticketCloseRepository.findAllTickets();
+}
+
+public String getTotal() {
+	return  ticketCloseRepository.getTotal();
+}
+
+public List<ServicesEquipment> getServiceReport() {
+	return  servicesEquipmentRepository.getServiceReport();
+}
+
+	/*
+	 * public List<ServicesEquipment> getAll() { return
+	 * servicesEquipmentRepository.getAll(); }
+	 */
+
+
+
+}
+	
+

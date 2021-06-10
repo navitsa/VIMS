@@ -128,9 +128,17 @@
 												<div class="form-group row">
 													<div class="col-sm-12">
 														<label class="l-fontst">Calibrated Date</label>
-														<input class="form-control fontst" type="date" name="calibratedDate" 
+														<br>
+														</br>
+														<label class="l-fontst">From</label>
+														<input class="form-control fontst" type="date" name="fromCalibratedDate" 
 														 required
-														id="calibratedDate"
+														id="fromCalibratedDate"
+														/>
+														<label class="l-fontst">To</label>
+														<input class="form-control fontst" type="date" name="toCalibratedDate" 
+														 required
+														id="toCalibratedDate"
 														/>
 													</div>
 												</div>	
@@ -138,7 +146,7 @@
 												<div class="form-group row">
 								
 													<div class="col-sm-12">
-														<button type="submit" class="btn  btn-block btn-danger btn-rounded tabStyle" >Print</button>
+														<button type="submit" onclick="getCalibarationDetails()" class="btn  btn-block btn-danger btn-rounded tabStyle" >Print</button>
 					<!-- 											<a href="#" class="btn btn-primary" onclick="runCancelInvoice();">Invoice Cancel</a>																 -->
 													</div>		
 							
@@ -157,23 +165,17 @@
 		<div class="col-xl-10 col-lg-10">			
 			<div class="col-sm-12">
 			
-												<c:if test="${pdfViewEq != null }">
+								<c:if test="${pdfViewEq != null }">
+							
 									<embed type="application/pdf" src="data:application/pdf;base64,${pdfViewEq}"
 										style="height:500px; width:100%">
 										</embed>
-										</c:if>
+										
+								</c:if>
+							
 			</div>
 								
 		</div>
-
-
-
-
-
-
-
-
-
 
 						</div>
 
@@ -185,7 +187,33 @@
 		</div>
 	</div>
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+function getCalibarationDetails() {
+	
+	var from = document.getElementById("fromCalibratedDate").value;
+	var to = document.getElementById("toCalibratedDate").value;
 
+		$.ajax({
+					type : 'GET',
+					url : "getCalibarationByDate",
+					data : {"fromCalibratedDate" : from,"toCalibratedDate":to  },
+					success : function(data) {
+					if(data==""){
+						
+						alert("No Calibaration Selected Date");		
+					}
+					},
+					error : function() {
+						alert("Error in DB");
+					}
+
+				});
+	}
+
+
+
+</script>
 
 
 </body>

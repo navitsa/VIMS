@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.navitsa.entity.EquipmentMaster;
+import com.navitsa.entity.ServicesEquipment;
 
 public interface EquipmentMasterRepository extends CrudRepository<EquipmentMaster, String> {
 
@@ -39,5 +40,11 @@ public interface EquipmentMasterRepository extends CrudRepository<EquipmentMaste
 
 	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.eqModelID.eqTypeID.eqTypeID=:eqtype and em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'")
 	public List<EquipmentMaster> getEquipmentByType(@Param("eqtype")String eqtype,@Param("center")String center);
+
+	@Query(value="SELECT em FROM ServicesEquipment em")
+	public List<ServicesEquipment> getEquipmentServicesAll(@Param("date")String date,@Param("id")String id);
+
+	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.status='ACTIVE'")
+	public List<EquipmentMaster> findActiveAll();
 
 }

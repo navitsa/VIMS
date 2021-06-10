@@ -12,5 +12,13 @@ public interface TicketCloseRepository extends CrudRepository<TicketClose,Intege
 	
 	@Query(value="SELECT tc FROM TicketClose tc WHERE tc.closeDate=:toDate and tc.status='ACTIVE'")
 	public List<TicketClose> privewDownTimeReport(@Param("toDate")String toDate);
+
+	@Query(value="SELECT tc FROM TicketClose tc WHERE tc.status='ACTIVE'")
+	public List<TicketClose> findAllTickets();
+
+	@Query(value="SELECT count(*) FROM TicketClose")
+	public String getTotal();
+
+	
 }
 
