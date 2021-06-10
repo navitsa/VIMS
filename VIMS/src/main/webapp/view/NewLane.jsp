@@ -23,7 +23,7 @@ div.groove {
 </style>
 
 </head>
-<body>
+<body onload="display()">
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -157,7 +157,8 @@ div.groove {
 													</div>
 													<div class="col-sm-4">
 														<div class="groove">
-															<p style="margin: 10px; color: red">MAHA<label style="margin-left:118px" for="vehicle1"> MAHA is Active</label>  <input style="margin-left:20px" type="checkbox" id="mahaFstatus" name="mahaFstatus" value="ACTIVE"></p>
+															<p style="margin: 10px; color: red">MAHA<label style="margin-left:118px" for="vehicle1"> MAHA is Active</label>  <input style="margin-left:20px" type="checkbox" id="check" name="mahaFstatus" value="ACTIVE">
+															<input style="margin-left:20px" type="hidden" id="checkHidden"  name="mahaFstatus"  value="INACTIVE"></p>
 															
 
 															<div class="form-group row">
@@ -205,7 +206,8 @@ div.groove {
 													</div></div>
 													<div class="col-sm-4">																								
 														<div class="groove">
-															<p style="margin: 10px; color: red">AVL<label style="margin-left:150px" for="vehicle1"> AVL is Active</label>  <input style="margin-left:20px" type="checkbox" id="avlFstatus" name="avlFstatus" value="ACTIVE" onclick="$(this).attr('value', this.checked ? 1 : 0)"></p>															
+															<p style="margin: 10px; color: red">AVL<label style="margin-left:150px" for="vehicle1"> AVL is Active</label>  <input style="margin-left:20px" type="checkbox" id="check"  name="avlFstatus"  value="ACTIVE">
+															<input style="margin-left:20px" type="hidden" id="checkHidden"  name="avlFstatus"  value="INACTIVE"></p>															
 
 															<div class="form-group row">
 																<div class="col-sm-4">
@@ -410,6 +412,13 @@ div.groove {
 			});
 
 		}
+		
+		function display() {
+			if(document.getElementById("check").checked) {
+			    document.getElementById('checkHidden').disabled = true;
+			}
+			  }
+			}
 	</script>
 
 </body>
