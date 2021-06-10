@@ -2579,7 +2579,7 @@ public class VehicleController {
 				String centerid=session.getAttribute("centerid")+"";
 				CenterMaster centerMaster=centerService.getcenterById(centerid); 
 				String autoCapPath=centerMaster.getGetAutoCaptureImgPath();
-				String capimPath="\\capimg";
+				String capimPath="\\lane\\capimg";
 				
 				String path=autoCapPath+capimPath;
 				String result="";
@@ -2640,7 +2640,7 @@ public class VehicleController {
 			String autoCapPath=gate.getGatePath();
 		
 			String laneimgpathPath=centerMaster.getLaneCamImgPath();
-			String capimPath="\\capimg";
+			String capimPath="\\lane";
 			
 			String path="";
 			
