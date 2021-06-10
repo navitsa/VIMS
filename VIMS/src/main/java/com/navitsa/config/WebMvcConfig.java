@@ -61,6 +61,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		
 	}
 	
+//	@Bean
+//	public MultipartResolver multipartResolver() {
+//			
+//		   CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+//		   multipartResolver.setMaxUploadSize(10485760); 
+//		   multipartResolver.setMaxUploadSizePerFile(5242880);
+//		   return multipartResolver;
+//		
+//	}
 	   @Bean
 	   public MessageSource messageSource() {
 	      ResourceBundleMessageSource source = new ResourceBundleMessageSource();

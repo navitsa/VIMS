@@ -41,6 +41,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,6 +51,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.alibaba.fastjson.JSONObject;
 import com.googlecode.javacv.OpenCVFrameGrabber;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 import com.navitsa.Reports.AnalysisReportBeen;
@@ -1267,11 +1269,13 @@ public class VehicleController {
 	                		 ftpUploader.uploadFile(textFilePath, vehiclereg.getVid().getVehicleID()+".txt", mahaEsEn+"/");//public_ftp
 	                		 ftpUploader.disconnect();
 	                	}
-	                	
+	                	if(mahaStatus.equals("ACTIVE")||avlStatus.equals("ACTIVE")) {
 	                	
          	                    file.delete();
          	                    xmlfile.delete();
-         	            
+	                	}
+	                	
+	                	
                 		ocrDetails.setVrStatus("completed");
                 		vehicleService.saveOcrDetailsRepo(ocrDetails);
                         
@@ -2216,10 +2220,28 @@ public class VehicleController {
 		        }
 		    }
 		    
-			@RequestMapping(value = "createOcrId", method = RequestMethod.POST)
-			public @ResponseBody String createOcrId( @RequestParam ("json") String json, @RequestParam ("vecno") String vecno, @RequestParam ("vtype") String vtype, @RequestParam ("apoid") String apoid, @RequestParam ("gateId") String gateId) 
+		    
+		    
+		    
+			@RequestMapping(value = "createNewOcrId", method = RequestMethod.POST,produces = "application/json")
+			public @ResponseBody String createNewOcrId(@RequestBody String  imagebase64) 
 			{
-			
+				System.out.println("call123");
+				int ocrDetailsID=vehicleService.maxOcrDetailsID();
+				 byte[] imagedata = DatatypeConverter.parseBase64Binary(imagebase64.substring(imagebase64.indexOf(",") + 1));	
+				OcrDetails ocrDetails=new OcrDetails();
+				ocrDetails.setOcrid(ocrDetailsID);
+			ocrDetails.setNoimage(imagedata);
+		
+				vehicleService.saveOcrDetailsRepo(ocrDetails);
+				
+				return ocrDetailsID+"";
+			}
+		    
+			@RequestMapping(value = "createOcrId", method = RequestMethod.POST)
+			public @ResponseBody String createOcrId(@RequestParam String vecno,@RequestParam String vtype, @RequestParam String apoid, @RequestParam String gateId ,@RequestParam String  ocid) 
+			{
+			System.out.println("call");
 				try {
 			
 				
@@ -2227,14 +2249,15 @@ public class VehicleController {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 			LocalDateTime now = LocalDateTime.now();
 		
-			ocrDetailsID=vehicleService.maxOcrDetailsID();	
+		//	ocrDetailsID=vehicleService.maxOcrDetailsID();	
 			
 				
-			 byte[] imagedata = DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));	
-				OcrDetails ocrDetails=new OcrDetails();
-				ocrDetails.setOcrid(ocrDetailsID);
+			// byte[] imagedata = DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));	
+			//	OcrDetails ocrDetails=new OcrDetails();
+				OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(ocid));
+				//ocrDetails.setOcrid(ocid);
 				ocrDetails.setOcrDate(dtf.format(now));
-				ocrDetails.setNoimage(imagedata);
+				//ocrDetails.setNoimage(imagedata);
 				ocrDetails.setOcrVid(vecno);
 				
 				Gate gateid =new Gate();
@@ -2254,7 +2277,7 @@ public class VehicleController {
 				
 				vehicleService.saveOcrDetailsRepo(ocrDetails);	
 				
-				      return ocrDetailsID+"";
+				      return ocid;
 			    
 			   }catch(Exception e) {
 				   
@@ -2282,155 +2305,181 @@ public class VehicleController {
 			   }			      
 			}
 		    
-			@RequestMapping(value = "saveLicensePlate", method = RequestMethod.POST)
-			public @ResponseBody List<NumberDataBeen> saveWebCam( @RequestParam ("json") String json, @RequestParam ("id") String id) 
+			@RequestMapping(value = "saveLicensePlate", method = RequestMethod.POST,produces = "application/json")
+			public @ResponseBody String saveWebCam(@RequestBody String  base64) 
 			{
-				System.out.println( "ddd");
-				List<NumberDataBeen> numberDataBeenlist=new ArrayList<NumberDataBeen>();
-			//	System.out.println("ghgh="+id);
+				//System.out.println( "ddd="+base64);
+				//JSON.stringify(search)
+				//return "0";
+//				List<NumberDataBeen> numberDataBeenlist=new ArrayList<NumberDataBeen>();
+//			//	System.out.println("ghgh="+id);
 				try {
-				String path1 = this.getClass().getClassLoader().getResource("").getPath();
-				String fullPath = URLDecoder.decode(path1, "UTF-8");
+//				String path1 = this.getClass().getClassLoader().getResource("").getPath();
+//				String fullPath = URLDecoder.decode(path1, "UTF-8");
+//
+//				String pathArr[] = fullPath.split("/WEB-INF/classes/");
+//
+//				System.out.println(fullPath);
+//
+//				System.out.println(pathArr[0]);	
+//				
+//				
+//				
+//				
+//				
+//			String path= pathArr[0]+"/resources/Debug/";	
+//				
+//				
+//			int ocrDetailsID;	
+//			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+//			LocalDateTime now = LocalDateTime.now();
+//			if(id.equals("0")) {
+//			ocrDetailsID=vehicleService.maxOcrDetailsID();	
+//			
+//			}else {
+//			ocrDetailsID=Integer.parseInt(id)	;
+//			}	
+//				
+//				
+//				//public void saveOcrDetailsRepo(OcrDetails ocrDetails) 
+//			
+//				
+//			//	String[][] data =new String[15][2];
+//			   
+			    byte[] imagedata = DatatypeConverter.parseBase64Binary(base64.substring(base64.indexOf(",") + 1));
+//			    System.out.println( imagedata );
+		    BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagedata));
+//			    
+			String path1 = this.getClass().getClassLoader().getResource("").getPath();
+			String fullPath = URLDecoder.decode(path1, "UTF-8");
 
-				String pathArr[] = fullPath.split("/WEB-INF/classes/");
-
-				System.out.println(fullPath);
-
-				System.out.println(pathArr[0]);	
-				
-				
-				
-				
-				
-			String path= pathArr[0]+"/resources/Debug/";	
-				
-				
-			int ocrDetailsID;	
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-			LocalDateTime now = LocalDateTime.now();
-			if(id.equals("0")) {
-			ocrDetailsID=vehicleService.maxOcrDetailsID();	
-			
-			}else {
-			ocrDetailsID=Integer.parseInt(id)	;
-			}	
-				
-				
-				//public void saveOcrDetailsRepo(OcrDetails ocrDetails) 
-			
-				
-			//	String[][] data =new String[15][2];
-			   
-			    byte[] imagedata = DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));
-			    System.out.println( imagedata );
-			    BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagedata));
-			    
-			    String fileName="ocr/image/"+ocrDetailsID+".jpg";
-			    File file= new File(path+fileName);
-			    ImageIO.write(bufferedImage, "jpg",file);
-			    
-			    
-				OcrDetails ocrDetails=new OcrDetails();
-				ocrDetails.setOcrid(ocrDetailsID);
-				ocrDetails.setOcrDate(dtf.format(now));
-				ocrDetails.setNoimage(imagedata);
-						
-				vehicleService.saveOcrDetailsRepo(ocrDetails);
-			    
-			//	public String getPath() throws UnsupportedEncodingException {
-
-		
-				
-				
-				Runtime.getRuntime().exec(path+"sample.exe", null, new File(path)).waitFor();
-				
-					System.out.println("saveLicensePlate-sample");
-			    
-			  //    new BatRunner(path);
-				
-			
-				//String[][] data;
-			//	 Thread.sleep(15000);
-				
-				      File myObj = new File(path+"ocr/result/N_"+ocrDetailsID+".txt");
-				      Scanner myReader = new Scanner(myObj);
-				     // System.out.println("hhh="+myReader);
-				     
-				      
-				     if (myReader.hasNextLine()) {
-				    	 
-				    	String str=myReader.nextLine().replace(" ", "");
-	
-			    	 String firstVnoset=str.substring(0,str.length()-4);
-			    	 String lastForeVnoset=str.substring(str.length()-4);
-				     String numbers[] = lastForeVnoset.split("[^0-9]+");
-				      
-			    	 
-			    	 if(numbers.length!=4&&str.length()==10) {
-			    		 
-					    	String replacrString1=lastForeVnoset.replace("O", "0").replace("D", "0").replace("Q", "0").replace("C", "0");
-					    	String replacrString2=replacrString1.replace("I", "1").replace("J", "1").replace("L", "1").replace("T", "1");
-					    	String replacrString3=replacrString2.replace("B", "8").replace("S", "8");
-					    	String replacrString4=replacrString3.replace("Z", "2");
-					    	
-						    NumberDataBeen numberDataBeen2=new NumberDataBeen();
-						    numberDataBeen2.setId(ocrDetailsID);
-						    numberDataBeen2.setNumber(firstVnoset+replacrString4);
-						    numberDataBeenlist.add(numberDataBeen2);	
-			    	 }else {
-						    NumberDataBeen numberDataBeen=new NumberDataBeen();
-						    numberDataBeen.setId(ocrDetailsID);	
-						    numberDataBeen.setNumber(str);
-						    numberDataBeenlist.add(numberDataBeen); 
-			    		 
-			    	 }
-				    
-				    
-				    
-				    
-				    
-				    
-				    
-				    
-				     }else {
-				    	 System.out.println("hhh=  gg");
-						    NumberDataBeen numberDataBeen=new NumberDataBeen();
-						    numberDataBeen.setId(ocrDetailsID);	
-						    numberDataBeen.setNumber("");
-						    numberDataBeenlist.add(numberDataBeen);	 
-				    	 
-				     }
-				      
-				     
-				     
-				     
-				     
-				     
-				     
-				     
-				     
-				     
-				     // vm=data;
-				      
-				      
-				    
-				      myReader.close();
-				      myObj.delete();
-				      file.delete();
-			          //  for(int i=0; i<data.length; i++){
-			         //   	System.out.println("hh="+data[i][1]);
-			         //   }
-			   
-				      
-			    
+			String pathArr[] = fullPath.split("/WEB-INF/classes/");
+			String path= pathArr[0]+"/resources/Debug/";
+		    
+		    
+			String fileName="ocr/image/capimg.jpg";
+		    File file= new File(path+fileName);
+		    ImageIO.write(bufferedImage, "jpg",file);
+		    
+		    Runtime.getRuntime().exec(path+"sample.exe", null, new File(path)).waitFor();
+		    System.out.println("saveLicensePlate-sample");
+		    
+		    File myObj = new File(path+"ocr/result/N_capimg.txt");
+		    Scanner myReader = new Scanner(myObj);
+		 //   if (myReader.hasNextLine()) {
+		    	String number=myReader.nextLine().replace(" ", "");
+		    	System.out.println("vno="+number);
+		    	return number;
+		    	
+		  //  }else {
+		    	
+		    //	return "";
+		  //  }
+		    
+//			    
+//			    
+//				OcrDetails ocrDetails=new OcrDetails();
+//				ocrDetails.setOcrid(ocrDetailsID);
+//				ocrDetails.setOcrDate(dtf.format(now));
+//				ocrDetails.setNoimage(imagedata);
+//						
+//				vehicleService.saveOcrDetailsRepo(ocrDetails);
+//			    
+//			//	public String getPath() throws UnsupportedEncodingException {
+//
+//		
+//				
+//				
+//				Runtime.getRuntime().exec(path+"sample.exe", null, new File(path)).waitFor();
+//				
+//					System.out.println("saveLicensePlate-sample");
+//			    
+//			  //    new BatRunner(path);
+//				
+//			
+//				//String[][] data;
+//			//	 Thread.sleep(15000);
+//				
+//				      File myObj = new File(path+"ocr/result/N_"+ocrDetailsID+".txt");
+//				      Scanner myReader = new Scanner(myObj);
+//				     // System.out.println("hhh="+myReader);
+//				     
+//				      
+//				     if (myReader.hasNextLine()) {
+//				    	 
+//				    	String str=myReader.nextLine().replace(" ", "");
+//	
+//			    	 String firstVnoset=str.substring(0,str.length()-4);
+//			    	 String lastForeVnoset=str.substring(str.length()-4);
+//				     String numbers[] = lastForeVnoset.split("[^0-9]+");
+//				      
+//			    	 
+//			    	 if(numbers.length!=4&&str.length()==10) {
+//			    		 
+//					    	String replacrString1=lastForeVnoset.replace("O", "0").replace("D", "0").replace("Q", "0").replace("C", "0");
+//					    	String replacrString2=replacrString1.replace("I", "1").replace("J", "1").replace("L", "1").replace("T", "1");
+//					    	String replacrString3=replacrString2.replace("B", "8").replace("S", "8");
+//					    	String replacrString4=replacrString3.replace("Z", "2");
+//					    	
+//						    NumberDataBeen numberDataBeen2=new NumberDataBeen();
+//						    numberDataBeen2.setId(ocrDetailsID);
+//						    numberDataBeen2.setNumber(firstVnoset+replacrString4);
+//						    numberDataBeenlist.add(numberDataBeen2);	
+//			    	 }else {
+//						    NumberDataBeen numberDataBeen=new NumberDataBeen();
+//						    numberDataBeen.setId(ocrDetailsID);	
+//						    numberDataBeen.setNumber(str);
+//						    numberDataBeenlist.add(numberDataBeen); 
+//			    		 
+//			    	 }
+//				    
+//				    
+//				    
+//				    
+//				    
+//				    
+//				    
+//				    
+//				     }else {
+//				    	 System.out.println("hhh=  gg");
+//						    NumberDataBeen numberDataBeen=new NumberDataBeen();
+//						    numberDataBeen.setId(ocrDetailsID);	
+//						    numberDataBeen.setNumber("");
+//						    numberDataBeenlist.add(numberDataBeen);	 
+//				    	 
+//				     }
+//				      
+//				     
+//				     
+//				     
+//				     
+//				     
+//				     
+//				     
+//				     
+//				     
+//				     // vm=data;
+//				      
+//				      
+//				    
+//				      myReader.close();
+//				      myObj.delete();
+//				      file.delete();
+//			          //  for(int i=0; i<data.length; i++){
+//			         //   	System.out.println("hh="+data[i][1]);
+//			         //   }
+//			   
+//				      
+//			    
 			   }catch(Exception e) {
 				   
 				   System.out.println("An error occurred.");
 				      e.printStackTrace();
+				      return "";
 			   }
-			   
-			   
-			   return numberDataBeenlist;
+//			   
+//			   
+//			   return numberDataBeenlist;
 			}
 		    
 			

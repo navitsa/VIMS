@@ -505,7 +505,7 @@ deg
 													</div>
 													<div class="row">
 														<input type="file" class="" id="num_img" accept="image/*"
-															capture="user" style="display: none;" />
+															capture="user" style="display: none;"/>
 													</div>
 
 
@@ -1686,47 +1686,88 @@ deg
 			var apoid=appointmrntNo;
 			
 			if(vecn!=""){
-			var jsonfile={json:JSON.stringify(imagebase64),vecno:vecn,vtype:status,apoid:apoid,gateId:gateId};
-			$.ajax({
+				
+				
+				$.ajax({
 
-			    type: 'POST',
-			    url: "createOcrId", 
-			    data: jsonfile,
-		        success: function(data){
-		        	
-		        	
-		        	if(data!="0"){
-		        	document.getElementById("ocrid").value=data;
-		        		if(meth==1){
-		        		
-		        			
-		        			if(autoValue.split("-")[0].substring(0,1)=="1"){
-		        				
-		        				goToVehicleRegFrmOrNew();
-		        			
-		        			}else{
-		        				
-		        				 swal("Good job!", "You clicked the button!", "success")
-	
-		        				//swal("Good job!", "You clicked the button!", "success")
-		        				window.location.href ="vehicleInformation";
-		        				
-		        			}
-		        			
-		        		}else if(meth==2){
-		        			
-		        			vehicleMaster();
-		        		}
-		        	
-		        	}else{
-		        		alert("Data Not Save");
-		        	}
-		        },
-		        error:function(data){
-		        	alert(data.responseText);
-		           
-		        }
-			 });
+				    type: 'POST',			    
+				    url: "createNewOcrId", 			  
+				    contentType : "application/json",
+				    data:JSON.stringify(imagebase64),
+				    mimeType: "multipart/form-data",
+				    dataType: 'json',
+				    			    
+			        success: function(data1){
+			        	
+			        	
+			        	
+						var jsonfile={vecno:vecn,vtype:status,apoid:apoid,gateId:gateId,ocid:data1};
+						$.ajax({
+
+						    type: 'POST',
+						    url: "createOcrId", 
+						    data: jsonfile,
+					        success: function(data){
+					        	
+					        	
+					        	if(data!="0"){
+					        	document.getElementById("ocrid").value=data;
+					        		if(meth==1){
+					        		
+					        			
+					        			if(autoValue.split("-")[0].substring(0,1)=="1"){
+					        				
+					        				goToVehicleRegFrmOrNew();
+					        			
+					        			}else{
+					        				
+					        				 swal("Good job!", "You clicked the button!", "success")
+				
+					        				//swal("Good job!", "You clicked the button!", "success")
+					        				window.location.href ="vehicleInformation";
+					        				
+					        			}
+					        			
+					        		}else if(meth==2){
+					        			
+					        			vehicleMaster();
+					        		}
+					        	
+					        	}else{
+					        		alert("Data Not Save");
+					        	}
+					        },
+					        error:function(data){
+					        	alert(data.responseText);
+					           
+					        }
+						 });
+			        	
+			        	
+			        	
+			        	
+			        	
+			        	
+			        	
+			        	
+			        	
+			        	
+			        	
+			        
+			        },
+			        error:function(data){
+			        	alert(data.responseText);
+			           
+			        }
+				 });
+				
+				
+				
+				
+				
+				
+				
+
 			
 			}else{
 				alert("Capture License Plate");
@@ -1805,7 +1846,7 @@ deg
 				//    alert("error");
 				//  document.write("not mobile device");
 				
-				 // document.getElementById("num_img_g").style.display = "none";
+				 // document.getElementById("num_img").style.display = "none";
 				//  document.getElementById("cam-click").style.display = "block";
 				  document.getElementById("more").style.display = "block";
 				}
@@ -1838,51 +1879,56 @@ deg
 				
 				 
 				 
-				 var str = document.getElementById("ocrid").value;
+				// var str = document.getElementById("ocrid").value;
 				 var y=0;
-					 if(str!=""){
-						 y=str;					 
-					 }
-					document.getElementById("lice-msg").style.display = "none";
+					// if(str!=""){
+						// y=str;					 
+					// }
+				//	document.getElementById("lice-msg").style.display = "none";
 					//	document.getElementById("my_camera").style.display = "none";
-					document.getElementById("loader").style.display = "block";
+					document.getElementById("moreLoder").style.display = "block";
 					//document.getElementById("cam-click").style.display = "none";
 
-				
-				var jsonfile={json:JSON.stringify(base64),id:y};
+		
+				//var jsonfile=JSON.stringify(base64);
+				//json = JSON.parse(jsonfile);
+			//	alert("ggg");
 				$.ajax({
 
 				    type: 'POST',
 				    url: "saveLicensePlate", 
-				    data: jsonfile,
-			        success: function(data){
+				    contentType : "application/json",
+				    data: JSON.stringify(base64),
+				    mimeType: "multipart/form-data",
+				        dataType: 'json',
+				       
+			   //     success: function(data){
+			        	//alert(data);
+			        //	document.getElementById('ocrid').value=data[0].id;
 			        	
-			        	document.getElementById('ocrid').value=data[0].id;
-			        	
-			            var slctSubcat=$('#ocrdetails'), option="";
-			            slctSubcat.empty();
-			            selected_option = "  <tr><td></td></tr>"
-			            slctSubcat.append(selected_option);
+			          //  var slctSubcat=$('#ocrdetails'), option="";
+			          //  slctSubcat.empty();
+			          //  selected_option = "  <tr><td></td></tr>"
+			          //  slctSubcat.append(selected_option);
 
-			          if(data[0].number==""){
-			        	  
-			        	  document.getElementById("lice-msg").style.display = "block";
-			        	  
-			          }
+			                  complete: function (data) {
+           // console.log(data);
+           // wait = false;
 			              
-			               document.getElementById('vehicleID').value = data[0].number;
-	  					   getVMasterData(data[0].number)
-			            
+			              document.getElementById('vehicleID').value = data.responseText;
+	  					 //  getVMasterData(data)
+			            document.getElementById("moreLoder").style.display = "none";
 	 				//	document.getElementById("my_camera").style.display = "block";
-						document.getElementById("loader").style.display = "none";
+					//	document.getElementById("loader").style.display = "none";
 						
-			            slctSubcat.append(option);	  	
+			         //   slctSubcat.append(option);	  	
 			      	
-			        },
+			        }/*,
 			        error:function(data){
-			        	alert(data.responseText);
-			           
-			        }
+			        	//alert(data.responseText);
+			        	document.getElementById('vehicleID').value = data.responseText;
+			        	document.getElementById("moreLoder").style.display = "none";
+			        }*/
 				 });
 				
 		
