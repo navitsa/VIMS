@@ -330,23 +330,24 @@
 							id="DocumentTransactionDetailsReport" hidden="true" >Document Transaction Details Report</a>
 					</div></li>
 
-				<li class="nav-item" hidden="true" id="Calibration"><a
-					data-toggle="collapse" href="#Calibrationf"> <i
+				<li class="nav-item" hidden="true" id="Equipment"><a
+					data-toggle="collapse" href="#Equipmentf"> <i
 						class="fas fa-pen-square"></i>
-						<p>Calibration</p> <span class="caret"></span>
+						<p>Equipment</p> <span class="caret"></span>
 				</a>
-					<div class="collapse" id="Calibrationf">
-						<a class="collapse-item fontst-sb-it" href="calibrationSchedule"
-							id="calibrationSchedule" hidden="true">Calibration Schedule</a> <a
-							class="collapse-item fontst-sb-it" href="calibrationCalendar"
-							id="calibrationCalendar" hidden="true">Calibration Calendar</a> <a
-							class="collapse-item fontst-sb-it" href="equipmentsCalibration"
-							id="equipmentsCalibration" hidden="true">Equipment
-							Calibration</a> <a class="collapse-item fontst-sb-it"
-							href="equipmentsCalibrationRpt" id="equipmentsCalibrationRpt"
-							hidden="true">Calibration Report</a>
+					<div class="collapse" id="Equipmentf">
+						
+						<a class="collapse-item fontst-sb-it" href="equipmenttype"
+							hidden="true" id="equipmenttype">Equipment Types</a> <a
+							class="collapse-item fontst-sb-it" href="equipmentmake"
+							hidden="true" id="equipmentmake">Equipment Makes</a> <a
+							class="collapse-item fontst-sb-it" href="equipmentmodel"
+							hidden="true" id="equipmentmodel">Equipment Models</a> <a
+							class="collapse-item fontst-sb-it" href="equipmentmaster"
+							hidden="true" id="equipmentmaster">Equipment Allocation</a>
 
 					</div></li>
+
 
 
 
@@ -406,17 +407,19 @@
 							class="collapse-item fontst-sb-it" href="MaintanceCalander"
 							id="MaintanceCalander">Maintaince Calendar</a>
 
-						<h6 class="text-section">Equipments :</h6>
-						<a class="collapse-item fontst-sb-it" href="equipmenttype"
-							hidden="true" id="equipmenttype">Equipment Types</a> <a
-							class="collapse-item fontst-sb-it" href="equipmentmake"
-							hidden="true" id="equipmentmake">Equipment Makes</a> <a
-							class="collapse-item fontst-sb-it" href="equipmentmodel"
-							hidden="true" id="equipmentmodel">Equipment Models</a> <a
-							class="collapse-item fontst-sb-it" href="equipmentmaster"
-							hidden="true" id="equipmentmaster">Equipment Allocation</a>
+						
 
-
+						<h6 class="text-section">Calibration :</h6>
+							<a class="collapse-item fontst-sb-it" href="calibrationSchedule"
+							id="calibrationSchedule" hidden="true">Calibration Schedule</a> <a
+							class="collapse-item fontst-sb-it" href="calibrationCalendar"
+							id="calibrationCalendar" hidden="true">Calibration Calendar</a> <a
+							class="collapse-item fontst-sb-it" href="equipmentsCalibration"
+							id="equipmentsCalibration" hidden="true">Equipment
+							Calibration</a> <a class="collapse-item fontst-sb-it"
+							href="equipmentsCalibrationRpt" id="equipmentsCalibrationRpt"
+							hidden="true">Calibration Report</a>
+							
 				
 						<h6 class="text-section">Service :</h6>
 						<a class="collapse-item fontst-sb-it" href="serviceSchedule"
@@ -447,12 +450,6 @@
 							hidden="true">Repair</a> <a class="collapse-item fontst-sb-it"
 							href="equipmentRepairReport" id="equipmentRepairReport"
 							hidden="true">Repair Report</a>
-						
-						<h6 class="text-section">Inventory :</h6>
-						<a class="collapse-item fontst-sb-it" href="SupplierMaster" id="SupplierMaster"
-							hidden="true">Supplier</a> <a
-							class="collapse-item fontst-sb-it" href="ItemMaster" id="ItemMaster"
-							hidden="true">Item</a>	
 
 						<!-- 			</div> -->
 					</div></li>
