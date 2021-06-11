@@ -789,12 +789,12 @@ takeAutoNo();
 function takeAutoNo() {
 
 setTimeout(takeAutoNo, 3000); 
-
+var gate = document.getElementById("gateid").value;
 	$.ajax({
-
+		
 	    type: 'POST',
 	    url: "takeAutoNo",
-	    data: {"method":"2"},
+	    data: {"method":"2","gateid":gate},
         success: function(data){
 
         	//$("table tbody").empty();
