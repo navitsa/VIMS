@@ -1,6 +1,11 @@
 package com.navitsa.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -13,6 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +45,7 @@ import com.navitsa.Reports.RepairReportBeen;
 import com.navitsa.Reports.ServiceEqupmentReportBeen;
 import com.navitsa.entity.Appointment;
 import com.navitsa.entity.CenterMaster;
+import com.navitsa.entity.DocumentCheckDetails;
 import com.navitsa.entity.EquipmentMaster;
 import com.navitsa.entity.EquipmentType;
 import com.navitsa.entity.EquipmentsCalibration;
@@ -187,10 +198,22 @@ public class MaintenanceController {
 	}
 
 	@RequestMapping(value = "/getequmentCalendar", method = RequestMethod.GET)
-	public @ResponseBody List<EquipmentMaster> equmentCalibrationCalendar(@RequestParam String centerID) {
-		List<EquipmentMaster> equipmentMaster = eqervice.equmentCalendar(centerID);
+	public @ResponseBody String[][] equmentCalibrationCalendar(@RequestParam String centerID) {
+		String[][] equipmentMaster = eqervice.equmentCalendar(centerID);
+		
 		return equipmentMaster;
 	}
+
+	/*
+	 * @RequestMapping(value = "/getequmentCalendar", method = RequestMethod.GET)
+	 * public @ResponseBody List<TestLaneDetails>
+	 * equmentCalibrationCalendar(@RequestParam String centerID) {
+	 * List<TestLaneDetails> testLaneDetails =
+	 * laneServices.equmentCalendar(centerID);
+	 * 
+	 * return testLaneDetails; }
+	 */
+	
 
 	@RequestMapping(value = "/serviceCalendar", method = RequestMethod.GET)
 	public String serviceCalendar(Map<String, String> model) {
@@ -418,8 +441,8 @@ public class MaintenanceController {
 	}
 
 	@RequestMapping(value = "/loadservicereport", method = RequestMethod.GET)
-	public @ResponseBody List<ServicesEquipment> loadservicereport(@RequestParam String date, String id) {
-		List<ServicesEquipment> servicesEquipment = eqervice.getEquipmentServicesAll(date, id);
+	public @ResponseBody List<ServicesEquipment> loadservicereport(@RequestParam String fromdate, String todate) {
+		List<ServicesEquipment> servicesEquipment = eqervice.getEquipmentServicesAll(fromdate, todate);
 		return servicesEquipment;
 	}
 
@@ -481,16 +504,15 @@ public class MaintenanceController {
 		return mav;
 	}
 	
-	@RequestMapping("/getServiceReport")
-	public String getServiceReport(Map<String, Object> model) {
-		model.put("ServicesEquipment", new ServicesEquipment());
-
-		model.put("getServiceReport", eqervice.getServiceReport());
-
-		return "getServiceReport";
-	}
+ 	@RequestMapping(value="/getService", method=RequestMethod.GET)		
+		public  @ResponseBody ServicesEquipment getService(@RequestParam("eSalID") int eSalID ){
+	  		
+	  		 ServicesEquipment servicesEquipment=eqervice.getServiceEqumentById(eSalID);
+	  		
+			return servicesEquipment;
+		}
 	
-	
+
 	
 	@RequestMapping(value = "/getDetailsByDate", method = RequestMethod.GET)
 	public @ResponseBody List<ServicesEquipment> getDetailsByDate(@RequestParam String fromdate,
