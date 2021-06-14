@@ -2,6 +2,8 @@ package com.navitsa.repository;
 
 import java.util.List;
 
+import javax.persistence.TypedQuery;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -29,8 +31,22 @@ public interface EquipmentMasterRepository extends CrudRepository<EquipmentMaste
 	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.nextCalibrationDate between :nextCaliDate and concat(YEAR(:nextCaliDate),'-12','-31') and  em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'")
 	public List<EquipmentMaster> equmentCalibrationReport(@Param("nextCaliDate")String nextCaliDate,@Param("center")String center);
 
-	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'")
-	public List<EquipmentMaster> equmentCalendar(@Param("center")String center);
+	@Query(value="SELECT equipment_master.*, test_lanes_details.testLaneHead_Id\n" + 
+			"FROM equipment_master\n" + 
+			"LEFT JOIN test_lanes_details ON equipment_master.Equipment_ID = test_lanes_details.Equipment_ID\n" + 
+			"WHERE test_lanes_details.Center_ID=:center and equipment_master.Status='ACTIVE'",nativeQuery = true)
+	public String[][] equmentCalendar(@Param("center")String center);
+	
+	
+	
+	/*
+	 * @Query(
+	 * value="SELECT em as EquipmentMaster,TestLaneDetails.testLaneDetailsid FROM EquipmentMaster em left join TestLaneDetails on EquipmentMaster.equipmentID=TestLaneDetails.equipmentID WHERE em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'"
+	 * ) public List<EquipmentMaster> equmentCalendar(@Param("center")String
+	 * center);
+	 */
+	
+	
 	
 	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.nextCalibrationDate=:calibrationDate and em.eqModelID.eqTypeID.eqTypeID=:eqtype and em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'")
 	public List<EquipmentMaster> getEquipmentCalibration(@Param("eqtype")String eqtype,@Param("calibrationDate")String calibrationDate,@Param("center")String center);
@@ -41,8 +57,8 @@ public interface EquipmentMasterRepository extends CrudRepository<EquipmentMaste
 	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.eqModelID.eqTypeID.eqTypeID=:eqtype and em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'")
 	public List<EquipmentMaster> getEquipmentByType(@Param("eqtype")String eqtype,@Param("center")String center);
 
-	@Query(value="SELECT em FROM ServicesEquipment em")
-	public List<ServicesEquipment> getEquipmentServicesAll(@Param("date")String date,@Param("id")String id);
+	@Query(value="SELECT ec FROM ServicesEquipment ec WHERE ec.servicedDate between :fromdate and :todate")
+	public List<ServicesEquipment> getEquipmentServicesAll(@Param("fromdate")String fromdate,@Param("todate")String todate);
 
 	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.status='ACTIVE'")
 	public List<EquipmentMaster> findActiveAll();
