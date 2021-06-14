@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.navitsa.entity.DocumentCheckDetails;
 import com.navitsa.entity.EquipmentMake;
 import com.navitsa.entity.EquipmentMaster;
 import com.navitsa.entity.EquipmentModel;
@@ -164,7 +165,7 @@ public class EquipmentService {
 	public List<EquipmentMaster> equmentCalibrationReport(String nextCaliDate,String center) {
 		return egMastRepo.equmentCalibrationReport(nextCaliDate,center);
 	}
-	public List<EquipmentMaster> equmentCalendar(String center){
+	public String[][] equmentCalendar(String center){
 		return egMastRepo.equmentCalendar(center);
 		
 	}
@@ -218,8 +219,8 @@ public class EquipmentService {
 		return  ticketCloseRepository.privewDownTimeReport(toDate);
 	}
 
-	public List<ServicesEquipment> getEquipmentServicesAll(String date, String id) {
-		return egMastRepo.getEquipmentServicesAll(date, id);
+	public List<ServicesEquipment> getEquipmentServicesAll(String fromdate, String todate) {
+		return egMastRepo.getEquipmentServicesAll(fromdate, todate);
 		
 	}
 
@@ -246,15 +247,11 @@ public String getTotal() {
 	return  ticketCloseRepository.getTotal();
 }
 
-public List<ServicesEquipment> getServiceReport() {
-	return  servicesEquipmentRepository.getServiceReport();
+
+public ServicesEquipment getServiceEqumentById(int eSalID){
+	return servicesEquipmentRepository.findById(eSalID).get();
+	
 }
-
-	/*
-	 * public List<ServicesEquipment> getAll() { return
-	 * servicesEquipmentRepository.getAll(); }
-	 */
-
 
 
 }
