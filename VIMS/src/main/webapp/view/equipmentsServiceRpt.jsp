@@ -144,7 +144,7 @@
 												<div class="form-group row">
 
 													<div class="col-sm-12">
-														<button type="submit" onclick="getServiceDetails();" 
+														<button type="submit" onclick="getServiceDetails();"
 															class="btn  btn-block btn-danger btn-rounded tabStyle">Print</button>
 														<!-- 											<a href="#" class="btn btn-primary" onclick="runCancelInvoice();">Invoice Cancel</a>																 -->
 													</div>
@@ -154,10 +154,43 @@
 										</div>
 									</div>
 
+									<%-- <form:input type="hidden" path="servicesReport" id="servicesReport" /> --%>
 								</form:form>
 
 
 							</div>
+
+
+
+
+							<!-- The Modal -->
+							<div class="modal fade" id="myModal">
+								 <div class="modal-dialog modal-lg" style="width:1000px">
+									<div class="modal-content">
+
+										<!-- Modal Header -->
+										<div class="modal-header">
+											<h4 class="modal-title">Service Report</h4>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+
+										<!-- Modal body -->
+										<div class="modal-body" id="serviceRrpo">
+											
+										</div>
+
+										<!-- Modal footer -->
+										<div class="modal-footer">
+											<button type="button" class="btn btn-danger"
+												data-dismiss="modal">Close</button>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+
+
 
 
 
@@ -173,25 +206,24 @@
 											style="height: 500px; width: 100%">
 										</embed>
 									</c:if>
-									
+
 									<table id="tableMoSaDetails" class="table table-hover"
-										style="display: none;margin-top: 5%">
+										style="display: none; margin-top: 5%">
 										<thead>
 											<tr>
 												<td><lable style='font-size:15px'
-														class='l-fontst font-weight-bold'>
-													Type/Model No/Serial No</lable></td>
+														class='l-fontst font-weight-bold'> Type/Model
+													No/Serial No</lable></td>
 												<td><lable style='font-size:15px'
 														class='l-fontst font-weight-bold'>Service Date</lable></td>
 												<td><lable style='font-size:15px'
 														class='l-fontst font-weight-bold'>Next Service
 													Date</lable></td>
-													<td><lable style='font-size:15px'
-														class='l-fontst font-weight-bold'>Service report
-													</lable></td>
+												<td><lable style='font-size:15px'
+														class='l-fontst font-weight-bold'>Service report </lable></td>
 												<td><lable style='font-size:15px'
 														class='l-fontst font-weight-bold'>User</lable></td>
-												
+
 											</tr>
 										</thead>
 										<tbody>
@@ -281,19 +313,19 @@
 							}
 						});
 		 */
-		 
-			$(document).ready(function() {
-				$("#view").click(function() {
-					$("#tableMoSaDetails").toggle();
-			
-				});
+
+		$(document).ready(function() {
+			$("#view").click(function() {
+				$("#tableMoSaDetails").toggle();
+
 			});
+		});
 
 		function loadreport() {
 
-			var mak = document.getElementById("fromdate").value;
-			var cls = document.getElementById("todate").value;
-		
+			var from = document.getElementById("fromdate").value;
+			var to = document.getElementById("todate").value;
+
 			$("table tbody").empty();
 
 			$
@@ -301,7 +333,8 @@
 						type : 'GET',
 						url : "loadservicereport",
 						data : {
-							"date" : mak,
+							"fromdate" : from,
+							"todate" : to
 
 						},
 						success : function(model) {
@@ -310,18 +343,21 @@
 							for (var i = 0; i < model.length; i++) {
 
 								var result = "<tr><td>"
-										+ model[i].equipmentID.eqModelID.eqTypeID.eqType+"/"+model[i].equipmentID.eqModelID.eqModel+"/"+model[i].equipmentID.serialNo
+										+ model[i].equipmentID.eqModelID.eqTypeID.eqType
+										+ "/"
+										+ model[i].equipmentID.eqModelID.eqModel
+										+ "/"
+										+ model[i].equipmentID.serialNo
 										+ "</td><td>"
 										+ model[i].servicesDate
 										+ "</td><td>"
 										+ model[i].nextServicesDate
-										+ "</td><td><a href=equipmentsServiceRpt?servicesReport="
+										+ "</td><td><a data-toggle='modal' data-target='#myModal' onclick='getDocumentCheck("+model[i].eSalID+")'"
 										+ model[i].servicesReport
-										+"><i class='fas fa-file-pdf'></i></a>"
+										+ "><i class='far fa-file-pdf fa-2x' style='color:red'></i></a>"
 										+ "</td><td>"
 										+ model[i].userId.userName
 										+ "</td><td>"
-										
 
 								$("table tbody").append(result);
 							}
@@ -333,31 +369,66 @@
 					});
 
 		}
-		
-		
+
 		function getServiceDetails() {
-			
+
 			var from = document.getElementById("fromdate").value;
 			var to = document.getElementById("todate").value;
-		
-				$.ajax({
-							type : 'GET',
-							url : "getDetailsByDate",
-							data : {"fromdate" : from,"todate":to  },
-							success : function(data) {
-							if(data==""){
-								
-								alert("No Service Selected Date");		
-							}
-							},
-							error : function() {
-								alert("Error in DB");
-							}
 
-						});
+			$.ajax({
+				type : 'GET',
+				url : "getDetailsByDate",
+				data : {
+					"fromdate" : from,
+					"todate" : to
+				},
+				success : function(data) {
+					if (data == "") {
+
+						alert("No Service Selected Date");
+					}
+				},
+				error : function() {
+					alert("Error in DB");
+				}
+
+			});
+		}
+		function arrayBufferToBase64( buffer ) {
+			var binary = '';
+			var bytes = new Uint8Array( buffer );
+			var len = bytes.byteLength;
+			for (var i = 0; i < len; i++) {
+				binary += String.fromCharCode( bytes[ i ] );
 			}
-		
-	</script>
+			return window.btoa( binary );
+		}
+		function getDocumentCheck(str) {
+			
 
+			$.ajax({
+
+						type : 'GET',
+						url : "getService",
+						data : {
+							"eSalID" : str
+						},
+						success : function(data) {
+							//alert(arrayBufferToBase64(data.servicesReport));
+							$("#serviceRrpo").empty();
+							//document.getElementById("serviceRrpo").src ="data:application/pdf;base64"+ data;
+							var result ="<embed type='application/pdf' src='data:application/pdf;base64,"+ arrayBufferToBase64(data.servicesReport)+"' style='height: 500px; width: 100%'>"
+								+"</embed>";
+							$("#serviceRrpo").append(result);
+							
+						},
+						error : function() {
+							alert("Error");
+						}
+					});
+
+		}
+	</script>
+	
 </body>
 </html>
