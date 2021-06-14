@@ -165,10 +165,10 @@ public class EquipmentService {
 	public List<EquipmentMaster> equmentCalibrationReport(String nextCaliDate,String center) {
 		return egMastRepo.equmentCalibrationReport(nextCaliDate,center);
 	}
-	public List<EquipmentMaster> equmentCalendar(String center){
+	public String[][] equmentCalendar(String centerID){
 		
 	
-		return egMastRepo.equmentCalendar(center);
+		return egMastRepo.equmentCalendar(centerID);
 		
 	}
 	public void saveEquipmentsCalibration(EquipmentsCalibration equipmentsCalibration) {
