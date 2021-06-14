@@ -195,13 +195,13 @@
                     events.push({
                     	color: '#32cffa',   // a non-ajax option
                     	textColor: '#ffffff', // a non-ajax option
-                    	 title:'('+data[i].eqModelID.eqTypeID.eqType+')-'
-                         +'model No: '+data[i].eqModelID.eqModel+'-Seriel No: '+data[i].serialNo+'-Lane: '+data[i].laneName+')',
-                        start: data[i].lastCalibrationDate // will be parsed
+                    	 title:'('+data[i][15]+')-'
+                         +'model No: '+data[i][1]+'-Seriel No: '+data[i][2]+'-Lane: '+data[i][14]+')',
+                        start: data[i][4] // will be parsed
                         
                     });   		
                		
-           		var date1 = new Date(data[i].nextCalibrationDate);	
+           		var date1 = new Date(data[i][6]);	
      
           
 
@@ -213,18 +213,18 @@
                     events.push({
                     	color: '#ed0505',   // a non-ajax option
                     	textColor: '#ffffff', // a non-ajax option
-                    	 title:'('+data[i].eqModelID.eqTypeID.eqType+')-'
-                    	 +'model No: '+data[i].eqModelID.eqModel+'-Seriel No: '+data[i].serialNo+'-lane: '+data[i].laneName+')',
-                        start: data[i].nextCalibrationDate // will be parsed
+                    	 title:'('+data[i][15]+')-'
+                         +'model No: '+data[i][1]+'-Seriel No: '+data[i][2]+'-Lane: '+data[i][14]+')',
+                         start: data[i][6] // will be parsed
                     });
               
                	}else{
                     events.push({
                     	color: '#66edb0',   // a non-ajax option
                     	textColor: '#0004fa', // a non-ajax option
-                    	 title:'('+data[i].eqModelID.eqTypeID.eqType+')-'
-                    	 +'model No: '+data[i].eqModelID.eqModel+'-Seriel No: '+data[i].serialNo+'-lane: '+data[i].laneName+')',
-                        start: data[i].nextCalibrationDate // will be parsed
+                    	 title:'('+data[i][15]+')-'
+                         +'model No: '+data[i][1]+'-Seriel No: '+data[i][2]+'-Lane: '+data[i][14]+')',
+                         start: data[i][6] // will be parsed
                     });
                     
                     
@@ -263,12 +263,12 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     var calendarE2 = document.getElementById('calendar2');
-    var centerid='<%=session.getAttribute("centerid")%>';
+  
     var centerid='<%=session.getAttribute("centerid")%>';
     $.ajax({
         type: 'GET',
         url: "getequmentCalendar",
-        data: {"centerID" : centerid,"centerID" : centerid},
+        data: {"centerID" : centerid},
         success: function(data){  
     
 	
@@ -292,11 +292,11 @@
                     	color: '#32cffa',   // a non-ajax option
                     	textColor: '#ffffff', // a non-ajax option
                      
-                    	 title:'('+data[i].eqModelID.eqTypeID.eqType+')-'
-                    	 +'model No: '+data[i].eqModelID.eqModel+'-Seriel No: '+data[i].serialNo+'-lane: '+data[i].laneName+')',
-                        start: data[i].lastServiceDate // will be parsed
+                    	 title:'('+data[i][15]+')-'
+                         +'model No: '+data[i][1]+'-Seriel No: '+data[i][2]+'-Lane: '+data[i][14]+')',
+                        start: data[i][5] // will be parsed
                     }); 
-           		var date1 = new Date(data[i].nextServiceDate);	
+           		var date1 = new Date(data[i][7]);	
      
 			      //  var nx=(date1 - date2);
                		
@@ -304,18 +304,18 @@
                     events.push({
                     	color: '#ed0505',   // a non-ajax option
                     	textColor: '#ffffff', // a non-ajax option
-                    	 title:'('+data[i].eqModelID.eqTypeID.eqType+')-'
-                    	 +'model No: '+data[i].eqModelID.eqModel+'-Seriel No: '+data[i].serialNo+'-lane: '+data[i].laneName+')',
-                        start: data[i].nextServiceDate // will be parsed
+                    	 title:'('+data[i][15]+')-'
+                         +'model No: '+data[i][1]+'-Seriel No: '+data[i][2]+'-Lane: '+data[i][14]+')',
+                         start: data[i][7] // will be parsed
                     });
               
                	}else{
                     events.push({
                     	color: '#66edb0',   // a non-ajax option
                     	textColor: '#0004fa', // a non-ajax option
-                    	 title:'('+data[i].eqModelID.eqTypeID.eqType+')-'
-                    	 +'model No: '+data[i].eqModelID.eqModel+'-Seriel No: '+data[i].serialNo+'-lane: '+data[i].laneName+')',
-                        start: data[i].nextServiceDate // will be parsed
+                    	 title:'('+data[i][15]+')-'
+                         +'model No: '+data[i][1]+'-Seriel No: '+data[i][2]+'-Lane: '+data[i][14]+')',
+                        start: data[i][7] // will be parsed
                     });
                		
                		
