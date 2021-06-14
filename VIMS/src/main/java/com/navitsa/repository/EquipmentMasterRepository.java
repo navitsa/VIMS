@@ -31,14 +31,18 @@ public interface EquipmentMasterRepository extends CrudRepository<EquipmentMaste
 	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.nextCalibrationDate between :nextCaliDate and concat(YEAR(:nextCaliDate),'-12','-31') and  em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'")
 	public List<EquipmentMaster> equmentCalibrationReport(@Param("nextCaliDate")String nextCaliDate,@Param("center")String center);
 
-	@Query(value="SELECT equipment_master.*, test_lanes_details.testLaneHead_Id\n" + 
-			"FROM equipment_master\n" + 
-			"LEFT JOIN test_lanes_details ON equipment_master.Equipment_ID = test_lanes_details.Equipment_ID\n" + 
-			"WHERE test_lanes_details.Center_ID=:center and equipment_master.Status='ACTIVE'",nativeQuery = true)
-	public String[][] equmentCalendar(@Param("center")String center);
-	
-	
-	
+	/*
+	 * @Query(
+	 * value="SELECT equipment_master.*, test_lanes_details.testLaneHead_Id\n" +
+	 * "FROM equipment_master\n" +
+	 * "LEFT JOIN test_lanes_details ON equipment_master.Equipment_ID = test_lanes_details.Equipment_ID\n"
+	 * +
+	 * "WHERE test_lanes_details.Center_ID=:center and equipment_master.Status='ACTIVE'"
+	 * ,nativeQuery = true) public String[][] equmentCalendar(@Param("center")String
+	 * center);
+	 */
+	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'")
+	public List<EquipmentMaster> equmentCalendar(@Param("center")String center);
 	/*
 	 * @Query(
 	 * value="SELECT em as EquipmentMaster,TestLaneDetails.testLaneDetailsid FROM EquipmentMaster em left join TestLaneDetails on EquipmentMaster.equipmentID=TestLaneDetails.equipmentID WHERE em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'"
