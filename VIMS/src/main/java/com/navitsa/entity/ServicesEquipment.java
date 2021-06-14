@@ -1,6 +1,7 @@
 package com.navitsa.entity;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -113,6 +114,10 @@ public class ServicesEquipment {
 
 	public byte[] getServicesReport() {
 		return servicesReport;
+	}
+	
+	public String getServicesReportView() {
+		return Base64.getEncoder().encodeToString(this.servicesReport);
 	}
 
 	public void setServicesReport(MultipartFile servicesReport) throws IOException {
