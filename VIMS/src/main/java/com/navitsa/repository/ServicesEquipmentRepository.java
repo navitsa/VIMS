@@ -18,10 +18,9 @@ public interface ServicesEquipmentRepository  extends CrudRepository<ServicesEqu
 	@Query(value="SELECT ec FROM ServicesEquipment ec WHERE ec.servicedDate between :fromdate and :todate")
 	public List<ServicesEquipment> getDetailsByDate(@Param("fromdate")String fromdate,@Param("todate") String todate);
 
-	
-	
+
 	@Query(value="SELECT servicesReport FROM ServicesEquipment")
-	public List<ServicesEquipment> getServiceReport();
+	public List<ServicesEquipment> getService(int servicesReport);
 
 	/*
 	 * @Query(value="SELECT * FROM ServicesEquipment") public
