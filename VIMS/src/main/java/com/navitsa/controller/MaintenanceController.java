@@ -198,10 +198,10 @@ public class MaintenanceController {
 	}
 
 	@RequestMapping(value = "/getequmentCalendar", method = RequestMethod.GET)
-	public @ResponseBody List<EquipmentMaster> equmentCalibrationCalendar(@RequestParam String centerID) {
-		List<EquipmentMaster> equipmentMaster = eqervice.equmentCalendar(centerID);
-		
-		return equipmentMaster;
+	public @ResponseBody String[][] equmentCalibrationCalendar(@RequestParam String centerID) {
+		String[][] data = eqervice.equmentCalendar(centerID);
+					
+		return data;
 	}
 
 	/*
