@@ -81,4 +81,8 @@ public class TestValueFileService {
 		return testValueDetailRepo.findTestValueFileDetailByHeaderId(test_value_file_id);
 	}
 
+	public List<TestValueFileHeader> findTestReportByVehicleNo(String vehicleNo) {
+		return testValueFileHeaderRepo.findTestReportByVehicleNo(vehicleNo);
+	}
+
 }

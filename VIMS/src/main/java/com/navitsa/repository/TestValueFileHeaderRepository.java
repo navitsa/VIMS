@@ -29,6 +29,9 @@ public interface TestValueFileHeaderRepository extends CrudRepository<TestValueF
 
 	@Query(value = "SELECT tvh FROM TestValueFileHeader tvh WHERE tvh.vreg.vregID=:regID")
 	public TestValueFileHeader findTestValueFileHeaderByRegId(@Param("regID") String regID);
+
+	@Query(value = "SELECT tvh FROM TestValueFileHeader tvh WHERE tvh.vehicle_id=:vehicleNo AND tvh.status='completed'")
+	public List<TestValueFileHeader> findTestReportByVehicleNo(@Param("vehicleNo") String vehicleNo);
 	
 //	@Query(value = "SELECT * FROM ftp_server_info_esout where Center_ID=:center_id",nativeQuery = true)
 //    public List<FtpServerInfoEsout> getFTPServerInfo(@Param("center_id") String center_id);

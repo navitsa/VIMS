@@ -407,5 +407,24 @@ public class TestValueFileController {
 		return a;
 
 	}
+	
+	@RequestMapping(value = "/findTestReportByVehicleNo", method = RequestMethod.GET)
+	public @ResponseBody List<TestValueFileHeader> findTestReportByVehicleNo(
+			@RequestParam("vehicleNo") String vehicleNo) {
+		
+		List<TestValueFileHeader> ls = null;
+		
+		try {
+			 ls = testValueFileServices.findTestReportByVehicleNo(vehicleNo);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		for(TestValueFileHeader a:ls) {
+			System.out.println(a.getVehicle_id());
+		}
+		 
+		 return ls;
+	}
 
 }

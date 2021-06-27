@@ -59,7 +59,30 @@
 						<h6 class="m-0 font-weight-bold text-primary">Previous Reports</h6>
 	                </div> -->
 	                <div class="card-body">
-	                	<div class="table-responsive">               	
+	                
+<div class="input-group mb-3">
+  <input type="text" id="vehicleNo" class="form-control" placeholder="Vehicle No" aria-label="Vehicle No" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+    <button class="btn btn-outline-primary" type="button" onclick="findReport()">Search</button>
+  </div>
+</div>
+<table class="table table-sm table-hover">
+	<thead>
+	   <tr>
+	      <th>#</th>
+	      <th>Registration No</th>
+	      <th>Vehicle No</th>
+	      <th>Date & Time</th>
+	      <th>Color</th>
+	      <th>B / W</th>							      
+	   </tr>
+	</thead>
+	<tbody>
+	                       
+	</tbody>
+</table>	                
+	                
+<%-- 	                	<div class="table-responsive">               	
 								<table class="display table table-bordered table-hover" id="example" cellspacing="0" style="width:100%">
 									<thead>
 									   <tr>
@@ -94,7 +117,7 @@
 									                       
 									</tbody>
 								</table>
-						</div>
+						</div> --%>
 
 		            </div> <!-- End of card body -->
 	              </div>
@@ -106,6 +129,39 @@
 		</div>
 	</div>
 <%@include file="../WEB-INF/jsp/commJs.jsp"%>
+
+<script>
+function findReport()
+{
+	var vehicleNo = document.getElementById("vehicleNo").value;
+	
+	if (vehicleNo=="") {
+		$("table tbody").empty();
+		return;		
+	}else{
+		$.ajax({
+	        type: 'GET',
+	        url: "findTestReportByVehicleNo",
+	        data: {"vehicleNo" : vehicleNo},
+	        success: function(data){
+
+	        	$("table tbody").empty();
+				for(var i=0; i<data.length; i++){
+					var markup = "<tr><th scope='row'>"+data[i].test_value_file_id+"</th><td>"+data[i].vreg.vregID+"</td><td>"+data[i].vehicle_id+"</td><td>"+data[i].date+"</td><td><a href='getTestReport?register_id="+data[i].vreg.vregID+"&test_value_file_id="+data[i].test_value_file_id+"&color=1' class='btn btn-success btn-sm'><i class='fas fa-print'></i></a></td><td><a href='getTestReport?register_id="+data[i].vreg.vregID+"&test_value_file_id="+data[i].test_value_file_id+"&color=0' class='btn btn-default btn-sm'><i class='fas fa-print'></i></a></td> </tr>";
+	           		 $("table tbody").append(markup);
+	           	 }
+	        	
+	        },
+	        error:function(){
+	            alert("No Data...!");
+	        }
+        
+		});
+	}
+}
+
+
+</script>
 	
 	<script>
 	$(document).ready(function() {
