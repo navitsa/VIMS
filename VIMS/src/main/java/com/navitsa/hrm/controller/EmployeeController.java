@@ -67,12 +67,12 @@ public class EmployeeController {
 
 
 	// get register page
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	@RequestMapping(value = "/registerEmp", method = RequestMethod.GET)
 	public String createrNewUser(Map<String, Object> model) {
 		model.put("saveRegister", new Employee());
 		Employee emp = new Employee();
 		model.put("maxEmpID", emp);
-		return "hrm/register";
+		return "hrm/registerEmp";
 	}
 
 	@RequestMapping(value = "/saveEmployee", method = RequestMethod.POST)
@@ -89,7 +89,7 @@ public class EmployeeController {
 			session.setAttribute("lastName", e.getLastname());
 			session.setAttribute("addLine01", e.getAddress());
 			session.setAttribute("addLine02", e.getCity());
-			return "redirect:/hrm/register";
+			return "redirect:/hrm/registerEmp";
 		}
 	}
 

@@ -101,13 +101,13 @@ public class UsersController {
 		return mav;
 	}
 
-	@RequestMapping("/register")
+	@RequestMapping("/registerVtest")
 	public String createrNewUser(Map<String, Object> model) {
 		Users user = new Users();
 		user.setUserId("0000".substring(usservice.maxUsersID().length()) + usservice.maxUsersID());
 		model.put("users", new Users());
 		model.put("maxUsersID", user);
-		return "register";
+		return "registerVtest";
 	}
 
 	@RequestMapping(value = "/saveuser", method = RequestMethod.POST)
@@ -201,11 +201,11 @@ public class UsersController {
 					
 					
 					redirectAttributes.addFlashAttribute("success", 1);
-					return "redirect:/register";
+					return "redirect:/registerVtest";
 			}
 			else {
 
-				    return "redirect:/register";
+				    return "redirect:/registerVtest";
 			}
 	}
 
