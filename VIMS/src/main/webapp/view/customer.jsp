@@ -230,8 +230,8 @@
 
 		function validateForm() {
 			var checkBox = document.getElementById("customCheck");
-			var crLimitid = document.getElementById("crLimitid");
-			var crBalanceid = document.getElementById("crBalanceid");
+			var crLimitid = document.getElementById("crLimitid").value;
+			var crBalanceid = document.getElementById("crBalanceid").value;
 			var crLimitidL = document.getElementById("crLimitidL");
 			var crBalanceidL = document.getElementById("crBalanceidL");
 
