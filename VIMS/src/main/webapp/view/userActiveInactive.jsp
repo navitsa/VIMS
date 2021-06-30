@@ -178,12 +178,12 @@ div.groove {
 												<label>User Status</label>
 												<div class="col-sm-2"></div>
 
-												<div class="btn-group btn-group-toggle"
+												<div class="btn-group btn-group-toggle form-control"
 													data-toggle="buttons">
 													<label class="btn btn-outline-success btn-sm active">
-														<input id="status" name="status"
+														<input id="status" name="status" 
 														onfocus="geGlaccountByPrimaryAccount(this.value);"
-														type="radio" value="ACTIVE">Active
+														type="radio" value="ACTIVE" checked>Active
 													</label> <label class="btn btn-outline-primary btn-sm"> <input
 														id="status" name="status"
 														onfocus="geGlaccountByPrimaryAccount(this.value);"
