@@ -203,6 +203,16 @@ div.groove {
 																		placeholder="User name" />
 																</div>
 															</div>
+															<div class="form-group row">
+																<div class="col-sm-4">
+																	<label class="l-fontst">Password</label>
+																</div>
+																<div class="col-sm-6">
+																	<form:input type="password"
+																		class="form-control form-control-user fontst" path="mahaFTPPass"
+																		placeholder="FTP Password" />
+																</div>
+															</div>
 													</div></div>
 													<div class="col-sm-4">																								
 														<div class="groove">
