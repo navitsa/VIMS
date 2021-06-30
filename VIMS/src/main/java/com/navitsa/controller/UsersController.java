@@ -852,11 +852,10 @@ public class UsersController {
 				 
 
 				 @RequestMapping(value = "/saveuserActive", method = RequestMethod.POST)
-					public String saveUser(@RequestParam("userId") String userId, @RequestParam("status") String status, @RequestParam("password") String password, @RequestParam("user_Img") String user_Img, RedirectAttributes redirectAttributes,HttpServletResponse response ) {
+					public String saveUser(@RequestParam("userId") String userId, @RequestParam("status") String status, @RequestParam("password") String password, RedirectAttributes redirectAttributes,HttpServletResponse response ) {
 							{
  
-								Users user = usservice.profileItemByID(userId) ;
-								user.getuser_ImgView();
+								Users user = usservice.profileItemByID(userId) ;					
 								user.setStatus(status);
 								user.setPassword(password);
 								usservice.save(user);
