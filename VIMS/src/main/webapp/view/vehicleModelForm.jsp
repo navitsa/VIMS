@@ -225,7 +225,7 @@
 
 	<script type="text/javascript">
 
-	document.getElementById("sub").style.display = "none";
+	//document.getElementById("sub").style.display = "none";
 	
 	
 	
@@ -271,7 +271,7 @@
 		}
 	}
 	function checkModel(sta){
-		document.getElementById("sub").style.display = "none";
+		//document.getElementById("sub").style.display = "none";
 		var mak = document.getElementById("vehicleMakeID").value;
 		var cls = document.getElementById("vehicleClassID").value;
 	if(sta!=""){
@@ -284,7 +284,7 @@
 				if(model=="0"){
 					
 					document.getElementById("vehicleModel").value = "";
-					document.getElementById("sub").style.display = "none";
+				//	document.getElementById("sub").style.display = "none";
 					//alert("Model is found");	
 					
 					Swal.fire({
@@ -296,7 +296,7 @@
 					
 					
 				}else{
-					 document.getElementById("sub").style.display = "block";
+					// document.getElementById("sub").style.display = "block";
 				}
 				
 				
@@ -306,9 +306,20 @@
 
 		});
 	}else{
-		document.getElementById("sub").style.display = "none";
+		//document.getElementById("sub").style.display = "none";
 	}
 	}
+	
+	function arrayBufferToBase64( buffer ) {
+		var binary = '';
+		var bytes = new Uint8Array( buffer );
+		var len = bytes.byteLength;
+		for (var i = 0; i < len; i++) {
+			binary += String.fromCharCode( bytes[ i ] );
+		}
+		return window.btoa( binary );
+	}
+	
 	
 	function getModelData() {
 		
@@ -336,7 +347,7 @@
 									+"</td><td>"
 									+model[i].vehicleModel
 									+"</td><td>"	
-									+"<img src='data:image/jpg;base64,"+model[i].modelLogoView+"' width='90' height='80'/>"					
+									+"<img src='data:image/jpg;base64,"+arrayBufferToBase64(model[i].modelLogo )+"' width='90' height='80'/>"					
 // 									+"</td><td>"
 // 									+model[i].vehicleMakeID.vehicleMake
 // 									+"</td><td>"

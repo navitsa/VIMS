@@ -261,8 +261,7 @@
 					return false;
 				}
 			}
-			document.getElementById("crLimitid").value = 0;
-			document.getElementById("crBalanceid").value = 0;
+		
 		}
 	</script>
 
