@@ -190,7 +190,7 @@
 								<div class="col-lg">
 									<div class="form-inline">
 										<form:select class="form-control form-control-sm mb-2 mr-sm-2" 
-											id="fuelType" path="ftype.fuelTypeID" required="true">
+											id="fuelType" path="ftype.fuelTypeID" required="true" onchange="getEmissionNorm()">
 											<option value="">Fuel Type...</option>
 											<c:forEach items="${fuelType}" var="fuel">
 												<form:option value="${fuel.fuelTypeID}">${fuel.fuel}</form:option>
@@ -243,7 +243,7 @@
 												<label for="manufactureYear" class="mr-sm-2">Manufactured Year</label>
 												<form:input type="text" class="form-control form-control-sm mb-2 mr-sm-2 datetimepicker-input" 
 													id="manufactureYear" data-toggle="datetimepicker" 
-													data-target="#manufactureYear" style="width: 110px" path="manufactureYear"/>
+													data-target="#manufactureYear" style="width: 110px" path="manufactureYear" onchange="getEmissionNorm()"/>
 													
 <%-- 													<form:input class="form-control form-control-sm mb-2 mr-sm-2" 
 													style="width: 110px" path="manufactureYear" id="manufactureYear"/> --%>
@@ -338,13 +338,13 @@
 									</form:select>							
 								</div>
 							  <div class="col-lg">
-							    <form:input class="form-control form-control-sm" placeholder="First Name" 
+							    <form:input class="form-control form-control-sm" placeholder="Name" 
 							    	path="firstName" id="firstName" required="true"/>
 							  </div>
-							  <div class="col-lg">
+<%-- 							  <div class="col-lg">
 							    <form:input class="form-control form-control-sm" placeholder="Last Name" 
 							    	path="lastName" id="lastName"/>
-							  </div>
+							  </div> --%>
 							</div>
 							<div class="form-group row">
 								<div class="col-lg-3">
@@ -431,6 +431,7 @@
             $('#manufactureYear').datetimepicker({
                  viewMode: 'years',
                  format: '<%=session.getAttribute("dateFormat")%>'.toUpperCase()
+
              });
              
 
@@ -771,6 +772,33 @@ function goAsNewOne() {
 		
 		});
 	}
+</script>
+
+<script>
+function getEmissionNorm()
+{
+ 	var year = document.getElementById("manufactureYear").value;
+	var fuel = document.getElementById("fuelType").value;
+	
+	if (year=="" || fuel=="")
+	{ return;}
+	else
+	{
+			$.ajax({
+		    type: 'GET',
+		    url : "emissionNorms",
+		    data: {"year" : year, "fuel" : fuel},
+		    success: function(data){
+		        	
+		    	document.getElementById("emissionNorms").value = data.ruleName;
+		    },
+		    error:function(){
+		        alert("There was an error selecting Emission Norms ! Please select manually and proceed !");
+		    }
+		
+		});
+	}
+}
 </script>
 
 </body>
