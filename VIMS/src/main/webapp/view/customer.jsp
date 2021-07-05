@@ -14,7 +14,7 @@
 <head>
 <%@include file="../WEB-INF/jsp/head.jsp"%>
 </head>
-<body>
+<body onload="readOnly()">
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -47,7 +47,8 @@
 
 						<div class="col-xl-6 col-md-6 mb-4">
 
-							<div class="card shadow mb-4 border-left-primary" style="height: 70vh;">
+							<div class="card shadow mb-4 border-left-primary"
+								style="height: 70vh;">
 								<div class="card-body">
 
 									<c:if test="${success ==1}">
@@ -118,6 +119,11 @@
 															Balance</label>
 														<form:input class="form-control form-control-sm fonts"
 															style="" id="crBalanceid" path="crBalance" value="" />
+															
+															<form:input class="form-control form-control-sm fonts"
+															style="" id="crBalanceid" path="crBalance" value="" />
+															
+															
 
 													</div>
 												</div>
@@ -159,7 +165,7 @@
 												<th>Credit Balance</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody >
 											<c:forEach items="${allcus}" var="customer">
 												<c:if test="${customer.id !='0000'}">
 													<tr>
@@ -177,8 +183,8 @@
 														<td>${customer.crLimit}</td>
 														<td>${customer.crBalance}</td>
 
-														<td><a href="editCustomer?id=${customer.id}"><i
-																class="material-icons">&#xE254;</i></a></td>
+														<td><a href="editCustomer?id=${customer.id}"  
+															><i class="material-icons" onclick="readOnly()">&#xE254;</i></a></td>
 
 													</tr>
 												</c:if>
@@ -198,6 +204,7 @@
 		</div>
 	</div>
 	<%@include file="../WEB-INF/jsp/commJs.jsp"%>
+	
 
 	<script>
 		// 	$(document).ready(function() {
@@ -207,6 +214,17 @@
 		// 	        "columnDefs": [{ "orderable": false, "targets": 4 }]
 		// 	    } );
 		// 	} );
+	 readOnly();
+			function readOnly() {
+		var a = document.getElementById("crBalanceid").value;
+		if(${edit}=="1"){
+			
+			document.getElementById("crBalanceid").readOnly = true;
+			
+		}
+			
+		}
+		
 
 		function customerCredit() {
 			var checkBox = document.getElementById("customCheck");
@@ -261,7 +279,7 @@
 					return false;
 				}
 			}
-		
+
 		}
 	</script>
 

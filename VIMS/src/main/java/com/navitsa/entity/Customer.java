@@ -124,8 +124,8 @@ public class Customer {
 		return crBalance;
 	}
 
-	public void setCrBalance(Long crBalance) {
-		this.crBalance = crBalance;
+	public void setCrBalance(Long string) {
+		this.crBalance = string;
 	}
 
 	public String getTitle() {
