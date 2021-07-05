@@ -73,12 +73,15 @@ public class AppointmentController {
 
 	@RequestMapping(value = "/saveAppointment", method = RequestMethod.POST)
 	public String saveAppointment(@Valid @ModelAttribute("appointmentForm") AppointmentForm form, BindingResult br,
-			Model m,RedirectAttributes redirectAttributes,HttpSession session) {
+			Model m,RedirectAttributes redirectAttributes,HttpSession session) throws ParseException {
 
 		if (br.hasErrors()) {
 			return "appointment";
 			
 		} else {
+			SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+			
 			String nextApId = appointmentService.nextAppointmentId();
 			form.setAppointmentID("0000".substring(nextApId.length())+nextApId);
 			
@@ -92,8 +95,8 @@ public class AppointmentController {
 				
 				vm.setVehicleID(form.getVehicleID());
 				vm.setVmodel(form.getVmodel());
-				vm.setManufactureYear(form.getManufactureYear());
-				vm.setRegisteredYear(form.getRegisteredYear());
+				vm.setManufactureYear(sdf2.format(sdf.parse(form.getManufactureYear())));
+				vm.setRegisteredYear(sdf2.format(sdf.parse(form.getRegisteredYear())));
 				vm.setChassisNo(form.getChassisNo());
 				vm.setEngineNo(form.getEngineNo());
 				vm.setEngineCapacity(form.getEngineCapacity());
@@ -121,7 +124,7 @@ public class AppointmentController {
 					
 					vowner.setOwnerID("0000".substring(vehicleService.maxVOwnerID().length()) + vehicleService.maxVOwnerID());
 					vowner.setTitle(form.getCusTitle());
-					vowner.setOwnerName(form.getFirstName()+" "+ form.getLastName());
+					vowner.setOwnerName(form.getFirstName());
 					vowner.setContactNo(form.getMobileNo());
 					vowner.setAdd01(form.getAddress());
 					vowner.setCity(form.getCity());
@@ -144,7 +147,7 @@ public class AppointmentController {
 				}else {		
 					customer.setId("0000".substring(userService.maxCusID().length())+userService.maxCusID());
 					customer.setTitle(form.getCusTitle());
-					customer.setName(form.getFirstName()+" "+ form.getLastName());
+					customer.setName(form.getFirstName());
 					customer.setTpno(form.getMobileNo());
 					customer.setEmail(form.getEmail());
 					customer.setCity(form.getCity());
@@ -184,7 +187,7 @@ public class AppointmentController {
 			
 			AppointmentOnline ao = new AppointmentOnline();
 			ao.setAppointmentID(id);		
-			ao.setCusName(form.getFirstName()+" "+ form.getLastName());
+			ao.setCusName(form.getFirstName());
 			ao.setCusMobileNo(form.getMobileNo());
 			ao.setCusEmail(form.getEmail());
 			ao.setVehicleNo(form.getVehicleID());

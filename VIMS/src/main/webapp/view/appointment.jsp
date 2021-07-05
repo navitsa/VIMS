@@ -431,6 +431,7 @@
             $('#manufactureYear').datetimepicker({
                  viewMode: 'years',
                  format: '<%=session.getAttribute("dateFormat")%>'.toUpperCase()
+
              });
              
 
@@ -776,25 +777,23 @@ function goAsNewOne() {
 <script>
 function getEmissionNorm()
 {
-	var fuel = document.getElementById("fuelType").value;
  	var year = document.getElementById("manufactureYear").value;
-	
+	var fuel = document.getElementById("fuelType").value;
 	
 	if (year=="" || fuel=="")
 	{ return;}
 	else
 	{
-		//alert(year+" "+fuel);
 			$.ajax({
 		    type: 'GET',
 		    url : "emissionNorms",
 		    data: {"year" : year, "fuel" : fuel},
 		    success: function(data){
 		        	
-		    	document.getElementById("emissionNorms").value = data.ruleName;   
+		    	document.getElementById("emissionNorms").value = data.ruleName;
 		    },
 		    error:function(){
-		        //alert("No Return Make Logo");
+		        alert("There was an error selecting Emission Norms ! Please select manually and proceed !");
 		    }
 		
 		});

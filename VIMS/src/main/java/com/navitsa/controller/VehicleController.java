@@ -18,13 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.logging.Level;
-
 import javax.imageio.ImageIO;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -32,11 +26,8 @@ import javax.validation.Valid;
 import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,12 +37,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.alibaba.fastjson.JSONObject;
 import com.googlecode.javacv.OpenCVFrameGrabber;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 import com.navitsa.Reports.AnalysisReportBeen;
@@ -75,7 +64,6 @@ import com.navitsa.entity.DocType;
 import com.navitsa.entity.Document;
 import com.navitsa.entity.DocumentCheckDetails;
 import com.navitsa.entity.DocumentCheckHead;
-import com.navitsa.entity.EquipmentType;
 import com.navitsa.entity.FuelType;
 import com.navitsa.entity.Gate;
 import com.navitsa.entity.GlPostingDetails;
@@ -108,7 +96,6 @@ import com.navitsa.entity.VehicleOwner;
 import com.navitsa.entity.VehicleRegisterType;
 import com.navitsa.entity.VehicleRegistration;
 import com.navitsa.entity.VehiclesSubCategory;
-import com.navitsa.hrm.entity.Bank;
 import com.navitsa.hrm.entity.BankMaster;
 import com.navitsa.hrm.entity.PartnerBankAccount;
 import com.navitsa.services.AppointmentService;
@@ -4269,14 +4256,13 @@ public class VehicleController {
 		@ResponseBody
 		public TestLimitRule filter(@RequestParam String year,@RequestParam String fuel,HttpSession session) throws ParseException {
 			
-			 SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
-			  SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-			  
-			//  String startDateString2 = vmaster.getManufactureYear();
-			  String manufDate = sdf2.format(sdf.parse(year));
+			SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+			
+			String manufDate = sdf2.format(sdf.parse(year));
 			TestLimitRule object =  vehicleService.filterVehicle(manufDate, fuel);
-			System.out.print(object);
-		   return object;
+			
+			return object;
 		  
 		}
 		
