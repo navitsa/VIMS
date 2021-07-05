@@ -233,7 +233,7 @@
 													<c:forEach items="${categoryList}" var="cl">
 														<tr>
 															<td><div>${cl.categoryID}</div></td>
-															<td><div>${cl.typeId.typeId}</div></td>
+															<td><div>${cl.typeId.type}</div></td>
 															<td><div>${cl.vehicleCategory}</div></td>
 															<td><div>${cl.remarks}</div></td>
 															<td><div>${cl.status}</div></td>
