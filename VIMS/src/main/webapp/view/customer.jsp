@@ -120,10 +120,7 @@
 														<form:input class="form-control form-control-sm fonts"
 															style="" id="crBalanceid" path="crBalance" value="" />
 															
-															<form:input class="form-control form-control-sm fonts"
-															style="" id="crBalanceid" path="crBalance" value="" />
-															
-															
+														
 
 													</div>
 												</div>
@@ -180,8 +177,8 @@
 																</c:if> <c:if test="${customer.isCredeit ==null}">
 																Cash
 																</c:if></td>
-														<td>${customer.crLimit}</td>
-														<td>${customer.crBalance}</td>
+														<td>${customer.crLimit/100}</td>
+														<td>${customer.crBalance/100}</td>
 
 														<td><a href="editCustomer?id=${customer.id}"  
 															><i class="material-icons" onclick="readOnly()">&#xE254;</i></a></td>

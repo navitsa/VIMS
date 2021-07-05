@@ -890,7 +890,7 @@ public class UsersController {
 						
 						updatecustomer.setCrLimit(crlimit);
 						updatecustomer.setCrBalance(crBalance);
-						usservice.saveCustomer(updatecustomer);
+						
 						mav.addObject("edit", "1");
 						
 							
