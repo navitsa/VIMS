@@ -6,22 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
-
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,15 +23,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.navitsa.Reports.DashboardBeen;
 import com.navitsa.entity.BusinessPartner;
 import com.navitsa.entity.CenterMaster;
 import com.navitsa.entity.CountryMaster;
 import com.navitsa.entity.Customer;
-import com.navitsa.entity.Gate;
 import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.Levelmanage;
 import com.navitsa.entity.LevelmanagePK;
@@ -52,7 +39,6 @@ import com.navitsa.entity.SysLocation;
 import com.navitsa.entity.TaxConfiguration;
 import com.navitsa.entity.UserLevel;
 import com.navitsa.entity.Users;
-import com.navitsa.repository.AppointmentRepository;
 import com.navitsa.services.AppointmentService;
 import com.navitsa.services.CenterService;
 import com.navitsa.services.FinanceAccountingService;
@@ -64,24 +50,11 @@ import com.navitsa.utils.FTPDownload;
 import com.navitsa.utils.FTPUploader;
 import com.navitsa.utils.ReportViewe;
 import com.navitsa.utils.StringFormaterWeb;
-
-import net.bytebuddy.asm.Advice.OffsetMapping.Target.ForArray.ReadOnly;
-
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ClassPathResource;
-
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.io.InputStream;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.SQLException;
+
 
 
 
