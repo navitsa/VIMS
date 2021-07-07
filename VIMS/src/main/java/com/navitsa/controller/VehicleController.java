@@ -2189,7 +2189,7 @@ public class VehicleController {
 							
 							
 						}
-						listlogs[0][0]=(b)+""	;	
+						listlogs[0][0]=(b)+"-01-01"	;	
 						if(vwi!=null) {
 						listlogs[0][1]=vwi.getVehicleMakeID().getVehicleMakeID();
 						listlogs[0][2]=vwi.getCountry();
