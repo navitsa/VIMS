@@ -14,7 +14,7 @@
 <head>
 <%@include file="../WEB-INF/jsp/head.jsp"%>
 </head>
-<body onload="readOnly()">
+<body onload="crBalanceAdd()">
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -114,13 +114,20 @@
 															class="l1-fontst crmr" style="" id="crLimitidL">Credit
 															Limit</label>
 														<form:input class="form-control form-control-sm fonts"
-															style="" id="crLimitid" path="crLimit" value="" />
+															style="" id="crLimitid" path="crLimit" value="" onchange="myction()"
+															/>
 														<label class="l1-fontst" style="" id="crBalanceidL">Credit
 															Balance</label>
 														<form:input class="form-control form-control-sm fonts"
 															style="" id="crBalanceid" path="crBalance" value="" />
-															
-												
+
+														<input class="form-control form-control-sm fonts" style=""
+															id="oldcrLimits" name="oldcrLimitid" value="0" hidden="true" />
+
+														<input class="form-control form-control-sm fonts" style=""
+															id="oldcrBalance" name="oldcrBalance" value="0" hidden="true"
+															 />
+
 
 													</div>
 												</div>
@@ -162,7 +169,7 @@
 												<th>Credit Balance</th>
 											</tr>
 										</thead>
-										<tbody >
+										<tbody>
 											<c:forEach items="${allcus}" var="customer">
 												<c:if test="${customer.id !='0000'}">
 													<tr>
@@ -180,8 +187,8 @@
 														<td>${customer.crLimit/100}</td>
 														<td>${customer.crBalance/100}</td>
 
-														<td><a href="editCustomer?id=${customer.id}"  
-															><i class="material-icons" onclick="readOnly()">&#xE254;</i></a></td>
+														<td><a href="editCustomer?id=${customer.id}"><i
+																class="material-icons" onclick="readOnly()">&#xE254;</i></a></td>
 
 													</tr>
 												</c:if>
@@ -201,7 +208,7 @@
 		</div>
 	</div>
 	<%@include file="../WEB-INF/jsp/commJs.jsp"%>
-	
+
 
 	<script>
 		// 	$(document).ready(function() {
@@ -211,10 +218,33 @@
 		// 	        "columnDefs": [{ "orderable": false, "targets": 4 }]
 		// 	    } );
 		// 	} );
+			
+function myction() {
+	var x = document.getElementById("oldcrLimits").value;
+	var y = document.getElementById("oldcrBalance").value;
+	var a = document.getElementById("crLimitid").value;
+	
+	if(x<a){
+
+document.getElementById("crBalanceid").value =(parseFloat(y)+parseFloat(a)-parseFloat(x))
+
+	}else{
+		
+		alert("Credite limit less than old limit");
+		
+	}
+}
+		
+		
 	 readOnly();
 			function readOnly() {
 		var a = document.getElementById("crBalanceid").value;
 		if(${edit}=="1"){
+			
+			var crLimitid = document.getElementById("crLimitid").value;
+			var crBalanceid =  document.getElementById("crBalanceid").value;
+			document.getElementById("oldcrLimits").value = crLimitid;
+			document.getElementById("oldcrBalance").value = crBalanceid;
 			
 			document.getElementById("crBalanceid").readOnly = true;
 			
