@@ -1046,12 +1046,8 @@ public class MaintenanceController {
 		
 		List<TicketClose> ticketCloseAll = eqervice.findAllTickets();
 		int closeTickets=0;
-		
-	
-
-			
 		for(TicketClose ticketClose : ticketCloseAll) {
-									
+			
 			int datedifftick = DateHelperWeb.stringDateDiff(ticketClose.getCloseDate(), surrDate);
 
 			if (datedifftick < 0) {
@@ -1059,12 +1055,25 @@ public class MaintenanceController {
 			}
 	
 		}
+		List<IssueTicket> issueTicketList = eqervice.findAllIssueTickets();
+		int issueTickets =0;
+
+			
+		for(IssueTicket issueTicket : issueTicketList) {
+									
+			int datedifftick = DateHelperWeb.stringDateDiff(issueTicket.getIssueDate(), surrDate);
+
+			if (datedifftick != 0) {
+				issueTickets = issueTickets + 1;
+			}
+	
+		}
 		maintenanceDashboardBeen.setTotcal(overduecali);
 		maintenanceDashboardBeen.setCali60(due60cali);
 		maintenanceDashboardBeen.setCali30(due30cali);
 		maintenanceDashboardBeen.setSerover(overdueser);
-		maintenanceDashboardBeen.setTotTicket("65");
-		maintenanceDashboardBeen.setOpenTicket("45");
+		maintenanceDashboardBeen.setTotTicket(issueTickets);
+		maintenanceDashboardBeen.setOpenTicket(issueTickets-closeTickets);
 		maintenanceDashboardBeen.setCloseticket(closeTickets);
 		maintenanceDashboardBeen.setSer30(due30ser);
 		maintenanceDashboardBeen.setSer60(due60ser);

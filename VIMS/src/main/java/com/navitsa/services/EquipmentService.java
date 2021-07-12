@@ -246,6 +246,10 @@ public List<TicketClose> findAllTickets() {
 	return (List<TicketClose>) ticketCloseRepository.findAllTickets();
 }
 
+public List<IssueTicket> findAllIssueTickets() {
+	return (List<IssueTicket>) issueTicketRepository.findAllTickets();
+}
+
 public String getTotal() {
 	return  ticketCloseRepository.getTotal();
 }

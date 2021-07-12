@@ -14,8 +14,8 @@ public class MaintenanceDashboardBeen {
 	private String calib;
 	private String totSer;
 	private String ser;
-	private String totTicket;
-	private String openTicket;
+	private int totTicket;
+	private int openTicket;
 	private int closeticket;
 	private String lane;
 	private int serover;
@@ -89,17 +89,17 @@ public class MaintenanceDashboardBeen {
 	public void setSer(String ser) {
 		this.ser = ser;
 	}
-	public String getTotTicket() {
+	public int getTotTicket() {
 		return totTicket;
 	}
-	public void setTotTicket(String string) {
-		this.totTicket = string;
+	public void setTotTicket(int issueTickets) {
+		this.totTicket = issueTickets;
 	}
-	public String getOpenTicket() {
+	public int getOpenTicket() {
 		return openTicket;
 	}
-	public void setOpenTicket(String openTicket) {
-		this.openTicket = openTicket;
+	public void setOpenTicket(int i) {
+		this.openTicket = i;
 	}
 	public int getCloseticket() {
 		return closeticket;
