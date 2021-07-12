@@ -15,6 +15,7 @@ import com.navitsa.entity.EquipmentType;
 import com.navitsa.entity.EquipmentsCalibration;
 import com.navitsa.entity.IssueTicket;
 import com.navitsa.entity.ServicesEquipment;
+import com.navitsa.entity.TestLaneHead;
 import com.navitsa.entity.TicketClose;
 import com.navitsa.entity.VehicleRegistration;
 import com.navitsa.repository.EquipmentMakeRepository;
@@ -234,7 +235,7 @@ public List<ServicesEquipment> getDetailsByDate(String fromdate,String todate) {
 
 
 public List<EquipmentsCalibration> getCalibarationByDate(String fromCalibratedDate, String toCalibratedDate) {
-	return equipmentsCalibrationRepository.getCalibarationByDate(fromCalibratedDate,toCalibratedDate);
+	return egMastRepo.getCalibarationByDate(fromCalibratedDate,toCalibratedDate);
 }
 
 public List<EquipmentMaster> findActiveEquipmentMaster() {
@@ -254,6 +255,15 @@ public ServicesEquipment getServiceEqumentById(int eSalID){
 	return servicesEquipmentRepository.findById(eSalID).get();
 	
 }
+
+public EquipmentsCalibration getCalibrationById(int eCalID) {
+	return equipmentsCalibrationRepository.findById(eCalID).get();
+}
+
+	/*
+	 * public List<TestLaneHead> getLaneEqipment(String tldid, String centerid) {
+	 * return egMastRepo.getLaneEqipment(tldid,centerid); }
+	 */
 
 
 }

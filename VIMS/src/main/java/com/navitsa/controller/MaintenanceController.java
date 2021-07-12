@@ -445,6 +445,12 @@ public class MaintenanceController {
 		List<ServicesEquipment> servicesEquipment = eqervice.getEquipmentServicesAll(fromdate, todate);
 		return servicesEquipment;
 	}
+	
+	@RequestMapping(value = "/loadcalibrationeport", method = RequestMethod.GET)
+	public @ResponseBody List<EquipmentsCalibration> loadcalibrationeport(@RequestParam String fromCalibratedDate, String toCalibratedDate) {
+		List<EquipmentsCalibration> equipmentsCalibration = eqervice.getCalibarationByDate(fromCalibratedDate, toCalibratedDate);
+		return equipmentsCalibration;
+	}
 
 	@RequestMapping(value = "/privewEquipmentsServiceReport", method = RequestMethod.POST)
 	public ModelAndView privewEquipmentsServiceReport(@RequestParam String fromdate, @RequestParam String todate,
@@ -511,6 +517,14 @@ public class MaintenanceController {
 	  		
 			return servicesEquipment;
 		}
+ 	
+	@RequestMapping(value="/getCalibration", method=RequestMethod.GET)		
+	public  @ResponseBody EquipmentsCalibration getCalibration(@RequestParam("eCalID") int eCalID ){
+  		
+		EquipmentsCalibration equipmentsCalibration=eqervice.getCalibrationById(eCalID);
+  		
+		return equipmentsCalibration;
+	}
 	
 
 	
@@ -540,7 +554,18 @@ public class MaintenanceController {
 		String centerid = session.getAttribute("centerid") + "";
 		List<EquipmentMaster> equipmentMaster = eqervice.getEquipmentByType(eqtype, centerid);
 		return equipmentMaster;
+
 	}
+	
+	/*
+	 * @RequestMapping(value = "/getLaneEqipment", method = RequestMethod.POST)
+	 * public @ResponseBody List<TestLaneHead> getLaneEqipment(@RequestParam String
+	 * tldid, HttpSession session) { String centerid =
+	 * session.getAttribute("centerid") + ""; List<TestLaneHead> testLaneHead =
+	 * eqervice.getLaneEqipment(tldid, centerid); return testLaneHead;
+	 * 
+	 * }
+	 */	
 
 	@RequestMapping(value = "/saveEquipmentsIssue", method = RequestMethod.POST)
 	public @ResponseBody String saveEquipmentsIssue(@ModelAttribute("equipmentsIssue") IssueTicket issueTicket,
@@ -967,7 +992,7 @@ public class MaintenanceController {
 	}
 
 	@RequestMapping(value = "/getMaintenanceDashboard", method = RequestMethod.GET)
-	public @ResponseBody MaintenanceDashboardBeen getMaintenanceDashboard(@RequestParam String date) {
+	public @ResponseBody MaintenanceDashboardBeen getMaintenanceDashboard(@RequestParam String date, String ticketStatus) {
 		MaintenanceDashboardBeen maintenanceDashboardBeen = new MaintenanceDashboardBeen();
 		List<EquipmentMaster> equipmentMasterAll = eqervice.findActiveEquipmentMaster();
 		
@@ -992,7 +1017,7 @@ public class MaintenanceController {
 
 				due30cali = due30cali + 1;
 
-			} else if (datediff < 60) {
+			} else {
 
 				due60cali = due60cali + 1;
 
@@ -1002,14 +1027,17 @@ public class MaintenanceController {
 
 			if (datediffser < 0) {
 				overdueser = overdueser + 1;
-			} else if (datediffser < 30) {
-
-				due30ser = due30ser + 1;
-
-			} else if (datediffser < 60) {
-
+			} else if (datediffser > 60) {
+				
 				due60ser = due60ser + 1;
-
+				
+			
+				
+			} 
+			else if (datediffser > 30) {
+								
+					due30ser = due30ser + 1;
+			
 			}
 			
 			
@@ -1019,7 +1047,9 @@ public class MaintenanceController {
 		List<TicketClose> ticketCloseAll = eqervice.findAllTickets();
 		int closeTickets=0;
 		
+	
 
+			
 		for(TicketClose ticketClose : ticketCloseAll) {
 									
 			int datedifftick = DateHelperWeb.stringDateDiff(ticketClose.getCloseDate(), surrDate);
@@ -1033,7 +1063,7 @@ public class MaintenanceController {
 		maintenanceDashboardBeen.setCali60(due60cali);
 		maintenanceDashboardBeen.setCali30(due30cali);
 		maintenanceDashboardBeen.setSerover(overdueser);
-		maintenanceDashboardBeen.setTotTicket(total);
+		maintenanceDashboardBeen.setTotTicket("65");
 		maintenanceDashboardBeen.setOpenTicket("45");
 		maintenanceDashboardBeen.setCloseticket(closeTickets);
 		maintenanceDashboardBeen.setSer30(due30ser);

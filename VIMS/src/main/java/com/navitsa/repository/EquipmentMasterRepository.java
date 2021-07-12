@@ -9,7 +9,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.navitsa.entity.EquipmentMaster;
+import com.navitsa.entity.EquipmentsCalibration;
 import com.navitsa.entity.ServicesEquipment;
+import com.navitsa.entity.TestLaneHead;
 
 public interface EquipmentMasterRepository extends CrudRepository<EquipmentMaster, String> {
 
@@ -78,7 +80,18 @@ public interface EquipmentMasterRepository extends CrudRepository<EquipmentMaste
 	@Query(value="SELECT ec FROM ServicesEquipment ec WHERE ec.servicedDate between :fromdate and :todate")
 	public List<ServicesEquipment> getEquipmentServicesAll(@Param("fromdate")String fromdate,@Param("todate")String todate);
 
+	@Query(value="SELECT ec FROM EquipmentsCalibration ec WHERE ec.calibratedDate between :fromCalibratedDate and :toCalibratedDate")
+	public List<EquipmentsCalibration> getCalibarationByDate(@Param("fromCalibratedDate")String fromCalibratedDate,@Param("toCalibratedDate")String toCalibratedDate);
+	
 	@Query(value="SELECT em FROM EquipmentMaster em WHERE em.status='ACTIVE'")
 	public List<EquipmentMaster> findActiveAll();
+
+	
+	/*
+	 * @Query(
+	 * value="SELECT em FROM TestLaneHead em WHERE em.testLaneHeadId.laneName.laneName=:tldid and em.invLoID.centerID.center_ID=:center and em.status='ACTIVE'"
+	 * ) public List<TestLaneHead> getLaneEqipment(@Param("tldid")String
+	 * tldid,@Param("centerid")String centerid);
+	 */
 
 }

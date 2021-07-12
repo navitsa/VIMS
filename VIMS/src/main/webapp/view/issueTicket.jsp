@@ -81,7 +81,7 @@
 </style>
 
 </head>
-<body onload="checkStatusofDropdowns();">
+<body onload="startTime();checkStatusofDropdowns();">
 
 	<div class="wrapper">
 		<div class="main-header">
@@ -127,24 +127,41 @@
 												<div class="form-group row">
 													<div class="col-sm-3">
 
-														<label>Time</label> <input style="border:none; font-size:20px; color:green;  font-weight: bold"name="equipmentIssueTime"
-															type="text" id="currentTime" readonly> <input type="text"
-															name="laneIssueTime" id="currentTime2" hidden="true">
-														<br> <br>
+														<label>Time</label> <input
+															style="border: none; font-size: 20px; color: green; font-weight: bold"
+															name="equipmentIssueTime" type="text" id="currentTime"
+															readonly> <input type="text" name="laneIssueTime"
+															id="currentTime2" hidden="true"> <br> <br>
 														<script>
-															var today = new Date();
-															var time = today
-																	.getHours()
-																	+ ":"
-																	+ today
-																			.getMinutes()
-																	+ ":"
-																	+ today
-																			.getSeconds();
-															document
-																	.getElementById("currentTime").value = time;
-															document
-																	.getElementById("currentTime2").value = time;
+															function startTime() {
+																const today = new Date();
+																let h = today
+																		.getHours();
+																let m = today
+																		.getMinutes();
+																let s = today
+																		.getSeconds();
+																m = checkTime(m);
+																s = checkTime(s);
+																document
+																		.getElementById('currentTime').value = h
+																		+ ":"
+																		+ m
+																		+ ":"
+																		+ s;
+																setTimeout(
+																		startTime,
+																		1000);
+															}
+
+															function checkTime(
+																	i) {
+																if (i < 10) {
+																	i = "0" + i
+																}
+																;
+																return i;
+															}
 														</script>
 
 													</div>
@@ -176,7 +193,7 @@
 														<label>Lane</label>
 														<form:select class="form-control fontst"
 															path="testLaneHeadId.testLaneHeadId"
-															onchange="getapoiment(this.value);getLaneStatus();"
+															onchange="getapoiment(this.value);getLaneStatus();getAllEquipmenteTypeByLane() "
 															id="tldid">
 															<form:option value="000">--SELECT--</form:option>
 															<c:forEach items="${lanesissue}" var="lan">
@@ -370,6 +387,42 @@
 				}
 			});
 		}
+		
+		
+		function getAllEquipmenteTypeByLane() {
+			var tldid = document.getElementById("tldid").value;
+			//alert(calibrationDate);
+			$.ajax({
+
+				type : 'POST',
+				url : "getLaneEqipment",
+				data : {
+					"tldid" : tldid
+				},
+				success : function(data) {
+					var slctSubcat = $('#tldid'), option = "";
+					slctSubcat.empty();
+					option = "<option value='000'>--SELECT--</option>"
+					for (var i = 0; i < data.length; i++) {
+						option = option
+								+ "<option value='"+data[i].equipmentID.eqModelID.eqTypeID+ "'>"
+								+ data[i].eqType + "</option>";
+
+					}
+					slctSubcat.append(option);
+
+				},
+				error : function(data) {
+					//	alert(data.responseText);
+
+				}
+			});
+		}	
+		
+		
+		
+		
+		
 
 		function getapoiment(etr) {
 

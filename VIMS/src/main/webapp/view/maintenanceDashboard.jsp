@@ -232,8 +232,7 @@
 
 									<div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
 
-										<div class="border border-success-gradient text-center"
-											style="width: 110px; height: 100px;">
+										<div class="px-2 pb-2 pb-md-0 text-center">
 
 											<div class="rounded-circle circles-text" id="totTicket"
 												style="font-size: 40px;">0</div>
@@ -491,7 +490,6 @@
 								id : 'serover',
 								radius : 35,
 								value : data.serover,
-								maxValue : data.serover,
 								width : 7,
 								text : (data.serover),
 								colors : [ '#f1f1f1', '#F25961' ],
@@ -502,14 +500,13 @@
 								styleText : true
 							})
 
-							document.getElementById("totSer").innerHTML = data.totSer;
+							document.getElementById("totcal").innerHTML = data.totcal;
 							Circles.create({
-								id : 'ser',
+								id : 'totcal',
 								radius : 35,
-								value : data.ser,
-								maxValue : data.totSer,
+								value : data.totcal,
 								width : 7,
-								text : (data.ser),
+								text : (data.totcal),
 								colors : [ '#f1f1f1', '#40daf5' ],
 								duration : 400,
 								wrpClass : 'circles-wrp',
@@ -578,7 +575,6 @@
 								id : 'ser30',
 								radius : 35,
 								value : data.ser30,
-								maxValue : data.ser30,
 								width : 7,
 								text : (data.ser30),
 								colors : [ '#f1f1f1', '#FF9E27' ],
@@ -589,15 +585,15 @@
 								styleText : true
 							})
 
+							
 							document.getElementById("ser60").innerHTML = data.ser60;
 							Circles.create({
 								id : 'ser60',
 								radius : 35,
 								value : data.ser60,
-								maxValue : data.ser60,
 								width : 7,
 								text : (data.ser60),
-								colors : [ '#f1f1f1', '#40daf5' ],
+								colors : [ '#f1f1f1', '#FF9E27' ],
 								duration : 400,
 								wrpClass : 'circles-wrp',
 								textClass : 'circles-text',
@@ -605,14 +601,29 @@
 								styleText : true
 							})
 
+
 							document.getElementById("cali60").innerHTML = data.cali60;
 							Circles.create({
 								id : 'cali60',
 								radius : 35,
 								value : data.cali60,
-								maxValue : data.cali60,
 								width : 7,
 								text : (data.cali60),
+								colors : [ '#f1f1f1', '#FF9E27' ],
+								duration : 400,
+								wrpClass : 'circles-wrp',
+								textClass : 'circles-text',
+								styleWrapper : true,
+								styleText : true
+							})
+							
+							document.getElementById("cali30").innerHTML = data.cali30;
+							Circles.create({
+								id : 'cali30',
+								radius : 35,
+								value : data.cali30,
+								width : 7,
+								text : (data.cali30),
 								colors : [ '#f1f1f1', '#FF9E27' ],
 								duration : 400,
 								wrpClass : 'circles-wrp',

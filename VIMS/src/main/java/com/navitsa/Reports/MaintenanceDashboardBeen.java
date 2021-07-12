@@ -92,8 +92,8 @@ public class MaintenanceDashboardBeen {
 	public String getTotTicket() {
 		return totTicket;
 	}
-	public void setTotTicket(String totTicket) {
-		this.totTicket = totTicket;
+	public void setTotTicket(String string) {
+		this.totTicket = string;
 	}
 	public String getOpenTicket() {
 		return openTicket;

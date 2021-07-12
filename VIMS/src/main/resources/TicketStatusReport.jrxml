@@ -6,11 +6,11 @@
 	<style name="style1">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{issuestatus}.equals("Close")&&$P{sta}.equals("All")]]></conditionExpression>
-			<style forecolor="#FF0033"/>
+			<style forecolor="#009900"/>
 		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{issuestatus}.equals("Open")&&$P{sta}.equals("All")]]></conditionExpression>
-			<style forecolor="#00CC00"/>
+			<style forecolor="#FF0000"/>
 		</conditionalStyle>
 	</style>
 	<parameter name="img" class="java.lang.Object"/>
