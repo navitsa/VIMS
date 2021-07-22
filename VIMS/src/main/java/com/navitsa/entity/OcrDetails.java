@@ -63,7 +63,8 @@ public class OcrDetails {
 	@Column(name = "capimg")
 	private byte[] capimg;
 	
-	
+	@Column(name = "image_present")
+	private boolean imagePresent;
 
 	public Gate getGateID() {
 		return gateID;
@@ -190,6 +191,12 @@ public class OcrDetails {
 	public void setCapimg(byte[] capimg) {
 		this.capimg = capimg;
 	}
-		
-	
+
+	public boolean isImagePresent() {
+		return imagePresent;
+	}
+
+	public void setImagePresent(boolean imagePresent) {
+		this.imagePresent = imagePresent;
+	}
 }

@@ -126,49 +126,48 @@ import java.io.FilenameFilter;
 
 import org.apache.log4j.Logger;
 
-
-@Transactional(rollbackFor=Exception.class)
+@Transactional(rollbackFor = Exception.class)
 @Controller
 public class VehicleController {
 
 	private Logger logger = Logger.getLogger(VehicleController.class);
-	
+
 	@Autowired
 	VehicleService vehicleService;
-	
+
 	@Autowired
 	RegionalService regionalService;
-	
+
 	@Autowired
 	TransactionServive transactionservice;
-	
+
 	@Autowired
 	CenterService centerService;
-	
+
 	@Autowired
 	LaneServices laneServices;
-	
+
 	@Autowired
 	BusinessPartnerService businessPartnerService;
-	
+
 	@Autowired
-	UsersService usersService;	
-	
+	UsersService usersService;
+
 	@Autowired
 	AppointmentService appointmentService;
-	
+
 	@Autowired
 	DocumentScrvice documentScrvice;
-	
+
 	@Autowired
 	private TestValueFileService testValueFileServices;
-	
+
 	@Autowired
 	GlAccountService glAccountService;
-	
+
 	@Autowired
 	private FinanceAccountingService financeAccountingService;
-	
+
 	@ModelAttribute("statusMap")
 	public Map<String, String> getCountryList() {
 		Map<String, String> countryList = new HashMap<String, String>();
@@ -179,63 +178,60 @@ public class VehicleController {
 	}
 
 	@RequestMapping(value = "/savevmodel", method = RequestMethod.POST)
-	public String saveModel(@Valid @ModelAttribute("vehicleModelForm") VehicleModel vehicleModel, 
-							BindingResult br,RedirectAttributes redirectAttributes)throws IOException{
+	public String saveModel(@Valid @ModelAttribute("vehicleModelForm") VehicleModel vehicleModel, BindingResult br,
+			RedirectAttributes redirectAttributes) throws IOException {
 
-			if(br.hasErrors()) {
-				return "vehicleModelForm";
-			} else {
-				try {
-					vehicleService.saveVModel(vehicleModel);
-					redirectAttributes.addFlashAttribute("success", 1);
-					return "redirect:/vehiclemodel1";
-	        	}catch (Exception e) {
-					// TODO: handle exception
-	        		redirectAttributes.addFlashAttribute("success", 0);
-				}
-				
-				return "vehicleModelForm";
+		if (br.hasErrors()) {
+			return "vehicleModelForm";
+		} else {
+			try {
+				vehicleService.saveVModel(vehicleModel);
+				redirectAttributes.addFlashAttribute("success", 1);
+				return "redirect:/vehiclemodel1";
+			} catch (Exception e) {
+				// TODO: handle exception
+				redirectAttributes.addFlashAttribute("success", 0);
 			}
-	}
-	
-	@RequestMapping(value = "/savevmodelFormModel", method = RequestMethod.POST)
-	public @ResponseBody String saveVModelFormModel(@RequestParam String vehicleMakeID,@RequestParam String vehicleClassID,@RequestParam String vehicleModel,@RequestParam MultipartFile modelLogo){
 
-		VehicleModel vModel=new VehicleModel();
-		try {
-		vModel.setVehicleModelID("0000".substring(vehicleService.maxModelID().length()) + vehicleService.maxModelID());
-		VehicleMake vm=new VehicleMake();
-		vm.setVehicleMakeID(vehicleMakeID);		
-		
-		vModel.setVehicleMakeID(vm);
-		
-		VehicleClass vc=new VehicleClass();
-		vc.setVehicleClassID(vehicleClassID);
-		
-		vModel.setVehicleClass(vc);
-		vModel.setVehicleModel(vehicleModel);
-		vModel.setModelLogo(modelLogo);
-		vModel.setStatus("ACTIVE");
-		
-			vehicleService.saveVModel(vModel);
-		//	redirectAttributes.addFlashAttribute("success", 1);
-			return "1";
-    	}catch (Exception e) {
-			// TODO: handle exception
-    		return "0";
-    		//redirectAttributes.addFlashAttribute("success", 0);
+			return "vehicleModelForm";
 		}
-		 
-		 
-		 
+	}
+
+	@RequestMapping(value = "/savevmodelFormModel", method = RequestMethod.POST)
+	public @ResponseBody String saveVModelFormModel(@RequestParam String vehicleMakeID,
+			@RequestParam String vehicleClassID, @RequestParam String vehicleModel,
+			@RequestParam MultipartFile modelLogo) {
+
+		VehicleModel vModel = new VehicleModel();
+		try {
+			vModel.setVehicleModelID(
+					"0000".substring(vehicleService.maxModelID().length()) + vehicleService.maxModelID());
+			VehicleMake vm = new VehicleMake();
+			vm.setVehicleMakeID(vehicleMakeID);
+
+			vModel.setVehicleMakeID(vm);
+
+			VehicleClass vc = new VehicleClass();
+			vc.setVehicleClassID(vehicleClassID);
+
+			vModel.setVehicleClass(vc);
+			vModel.setVehicleModel(vehicleModel);
+			vModel.setModelLogo(modelLogo);
+			vModel.setStatus("ACTIVE");
+
+			vehicleService.saveVModel(vModel);
+			// redirectAttributes.addFlashAttribute("success", 1);
+			return "1";
+		} catch (Exception e) {
+			// TODO: handle exception
+			return "0";
+			// redirectAttributes.addFlashAttribute("success", 0);
+		}
+
 		// return "";
 
 	}
-	
-	
-	
-	
-	
+
 	@ModelAttribute("statusMap")
 	public Map<String, String> getMakeList() {
 		Map<String, String> makeList = new HashMap<String, String>();
@@ -243,96 +239,92 @@ public class VehicleController {
 		makeList.put("INACTIVE", "INACTIVE");
 		return makeList;
 	}
-	
+
 	@RequestMapping(value = "/vehiclemodel1", method = RequestMethod.GET)
 	public String list(Map<String, Object> map) {
-		
+
 		VehicleModel vmodel = new VehicleModel();
 		vmodel.setVehicleModelID("0000".substring(vehicleService.maxModelID().length()) + vehicleService.maxModelID());
 		map.put("vehicleModelForm", vmodel);
-		
-		//List <VehicleModel> vModelList = vehicleService.getVModel();
-		//map.put("vModelList", vModelList);
-			
+
+		// List <VehicleModel> vModelList = vehicleService.getVModel();
+		// map.put("vModelList", vModelList);
+
 		return "vehicleModelForm";
 	}
-	
+
 	@ModelAttribute("vmake")
-	public List<VehicleMake> getVmak(){
-		List <VehicleMake> vlist = vehicleService.getActiveMakes();
+	public List<VehicleMake> getVmak() {
+		List<VehicleMake> vlist = vehicleService.getActiveMakes();
 		return vlist;
 	}
-	
+
 	@ModelAttribute("vModelList")
 	public List<VehicleModel> getAllModel() {
 		List<VehicleModel> models = vehicleService.getVModel();
 		return models;
 	}
-	
-	@RequestMapping(value="/updateVinfo") 
-	public ModelAndView editTestVInfo(@RequestParam String vehicleModelID) {	
-		
-			
-			ModelAndView mav = new ModelAndView("vehicleModelForm");
-			VehicleModel vehicleModelForm = null;;
-			
-			try {
-				vehicleModelForm = vehicleService.getVmodelDetailsByID(vehicleModelID);
-				
-				 mav.addObject("vehicleModelForm", vehicleModelForm);
-				
-				
-			}catch(Exception e) {
-				System.out.println(e);
-			}
-			try {
-				String vMakeLogo = vehicleModelForm.getVehicleMakeID().getMakeLogoView();
-				String vModelLogo = vehicleModelForm.getModelLogoView();
-				
-				mav.addObject("vMakeLogo", vMakeLogo);
-				mav.addObject("vMLogo", vModelLogo);
-			}catch(Exception e) {
-				System.out.println(e);
-			}
-			return mav;
+
+	@RequestMapping(value = "/updateVinfo")
+	public ModelAndView editTestVInfo(@RequestParam String vehicleModelID) {
+
+		ModelAndView mav = new ModelAndView("vehicleModelForm");
+		VehicleModel vehicleModelForm = null;
+		;
+
+		try {
+			vehicleModelForm = vehicleService.getVmodelDetailsByID(vehicleModelID);
+
+			mav.addObject("vehicleModelForm", vehicleModelForm);
+
+		} catch (Exception e) {
+			System.out.println(e);
 		}
+		try {
+			String vMakeLogo = vehicleModelForm.getVehicleMakeID().getMakeLogoView();
+			String vModelLogo = vehicleModelForm.getModelLogoView();
 
-	
+			mav.addObject("vMakeLogo", vMakeLogo);
+			mav.addObject("vMLogo", vModelLogo);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return mav;
+	}
 
-	
-	
 	// save lane reg type data
 	@RequestMapping(value = "/saveVRegTypes", method = RequestMethod.POST)
 	public String saveVregType(@Valid @ModelAttribute("vehicleRegisterType") VehicleRegisterType vehicleRegisterType,
-			BindingResult br,RedirectAttributes redirectAttributes) {
-		
+			BindingResult br, RedirectAttributes redirectAttributes) {
+
 		if (br.hasErrors()) {
 			return "vehicleRegTypes";
 		} else {
 
 			try {
-				
+
 				vehicleService.saveVRegType(vehicleRegisterType);
 				redirectAttributes.addFlashAttribute("success", 1);
 				return "redirect:/vehicleRegTypes.do";
-				
+
 			} catch (Exception e) {
 				redirectAttributes.addFlashAttribute("success", 1);
 			}
 
 		}
-		
+
 		return "vehicleRegTypes";
 	}
 
 	// load form of lane reg type
-	@RequestMapping( value = "/vehicleRegTypes", method = RequestMethod.GET)
+	@RequestMapping(value = "/vehicleRegTypes", method = RequestMethod.GET)
 	public String listVRegType(Map<String, Object> map) {
-		
-		VehicleRegisterType vehicleRegisterType=new VehicleRegisterType();
-		Long defaultValue=Long.parseLong("100");	
+
+		VehicleRegisterType vehicleRegisterType = new VehicleRegisterType();
+		Long defaultValue = Long.parseLong("100");
 		vehicleRegisterType.setvTestFeePre(defaultValue);
-		vehicleRegisterType.setvRegTypeID("0000".substring(vehicleService.maxTypeID().length()) + vehicleService.maxTypeID());
+		vehicleRegisterType
+				.setvRegTypeID("0000".substring(vehicleService.maxTypeID().length()) + vehicleService.maxTypeID());
 		map.put("vehicleRegisterType", vehicleRegisterType);
 
 		return "vehicleRegTypes";
@@ -344,7 +336,7 @@ public class VehicleController {
 		this.vehicleService.deleteVRegType(id);
 		return "redirect:/vehicleRegTypes.do";
 	}
-	
+
 	@ModelAttribute("types")
 	public List<VehicleRegisterType> getAllTypes() {
 		List<VehicleRegisterType> types = vehicleService.getAllVType();
@@ -385,13 +377,14 @@ public class VehicleController {
 	public String VehicleClasslist(Map<String, Object> map) {
 
 		VehicleClass vClass = new VehicleClass();
-		vClass.setVehicleClassID("0000".substring(vehicleService.maxVClassID().length()) + vehicleService.maxVClassID());
+		vClass.setVehicleClassID(
+				"0000".substring(vehicleService.maxVClassID().length()) + vehicleService.maxVClassID());
 		map.put("saveVClass", vClass);
 		List<VehicleClass> listVehicleClass = vehicleService.getVClass();
 		map.put("listVehicleClass", listVehicleClass);
 		return "vehicleClass";
 	}
-	
+
 	@RequestMapping("/editClass")
 	public ModelAndView editVehicleClass(@RequestParam String id) {
 		ModelAndView mav = new ModelAndView("vehicleClass");
@@ -399,92 +392,91 @@ public class VehicleController {
 		mav.addObject("saveVClass", ps);
 		return mav;
 	}
-	
-	@ModelAttribute("listVehicleClass") 
+
+	@ModelAttribute("listVehicleClass")
 	public List<VehicleClass> getAllvclass() {
 		List<VehicleClass> vClass = vehicleService.getVClass();
 		return vClass;
 	}
 
-	//getting vehicle make details for table 
-	 @ModelAttribute("makeList")
-	 	public List<VehicleMake> getMakes(){
-		 
-		 List<VehicleMake> a = vehicleService.getMakelistAll();
-		 return a;
-	 }
-	 
-	 // load vehicle make UI with auto increment ID
+	// getting vehicle make details for table
+	@ModelAttribute("makeList")
+	public List<VehicleMake> getMakes() {
+
+		List<VehicleMake> a = vehicleService.getMakelistAll();
+		return a;
+	}
+
+	// load vehicle make UI with auto increment ID
 	@RequestMapping(value = "/vehicleMake", method = RequestMethod.GET)
 	public String VehicleMakeist(Map<String, Object> map) {
 		try {
-			
+
 			VehicleMake vm = new VehicleMake();
 			String vmid = vehicleService.maxVMakeID();
-			vm.setVehicleMakeID("0000".substring(vmid.length())+vmid);
-			map.put("VMakeForm",vm);
-			
+			vm.setVehicleMakeID("0000".substring(vmid.length()) + vmid);
+			map.put("VMakeForm", vm);
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 		return "vehicleMake";
 	}
-	
+
 	// Save vehicle make data
 	@RequestMapping(value = "/saveVMake", method = RequestMethod.POST)
-	public String saveVehicleMake(@Valid @ModelAttribute("VMakeForm") VehicleMake vm,BindingResult br,
-			RedirectAttributes redirectAttributes){
+	public String saveVehicleMake(@Valid @ModelAttribute("VMakeForm") VehicleMake vm, BindingResult br,
+			RedirectAttributes redirectAttributes) {
 
-		 if(br.hasErrors()) 
-		 {
-			 return "vehicleMake";
-		 }else {
-			 
-			 try {
+		if (br.hasErrors()) {
+			return "vehicleMake";
+		} else {
+
+			try {
 
 				vehicleService.saveVMake(vm);
 				redirectAttributes.addFlashAttribute("success", 1);
 				return "redirect:/vehicleMake.do";
-				
+
 			} catch (Exception e) {
 				redirectAttributes.addFlashAttribute("success", 0);
 			}
-			 
-		 }
-		 
-		 return "vehicleMake";
+
+		}
+
+		return "vehicleMake";
 
 	}
+
 	// Save vehicle make data
 	@RequestMapping(value = "/saveVMakeModelForm", method = RequestMethod.POST)
-	public  @ResponseBody  String saveVMakeModelForm(@RequestParam String vehicleMake,@RequestParam MultipartFile makeLogo,@RequestParam String remark){
+	public @ResponseBody String saveVMakeModelForm(@RequestParam String vehicleMake,
+			@RequestParam MultipartFile makeLogo, @RequestParam String remark) {
 
 		String vmid = vehicleService.maxVMakeID();
-	
-		 try {
-		VehicleMake vMake=new VehicleMake();
-		vMake.setVehicleMake(vehicleMake);
-		vMake.setVehicleMakeID("0000".substring(vmid.length())+vmid);
-		vMake.setMakeLogo(makeLogo);
-		
-		vMake.setRemark(remark);
-		vMake.setStatus("Active");
-			
 
-				vehicleService.saveVMake(vMake);
-			
-				return "1";
-				
-			} catch (Exception e) {
-				return "0";
-			}
-			 
-		 
-		 
+		try {
+			VehicleMake vMake = new VehicleMake();
+			vMake.setVehicleMake(vehicleMake);
+			vMake.setVehicleMakeID("0000".substring(vmid.length()) + vmid);
+			vMake.setMakeLogo(makeLogo);
+
+			vMake.setRemark(remark);
+			vMake.setStatus("Active");
+
+			vehicleService.saveVMake(vMake);
+
+			return "1";
+
+		} catch (Exception e) {
+			return "0";
+		}
+
 		// return "";
 
 	}
+
 	// getting vehicle make data for edit purpose
 	@RequestMapping("/editMake")
 	public ModelAndView editVehicleMake(@RequestParam String id) {
@@ -514,24 +506,23 @@ public class VehicleController {
 
 		return mav;
 	}
-	
-	//getting all records for vehicle master table ** this method not use 
+
+	// getting all records for vehicle master table ** this method not use
 	@ModelAttribute("masterList")
-	public List<VehicleMaster> getVMList(){
-		List <VehicleMaster> VMlist = vehicleService.getVehicleMasterAllDetail();
+	public List<VehicleMaster> getVMList() {
+		List<VehicleMaster> VMlist = vehicleService.getVehicleMasterAllDetail();
 		return VMlist;
 	}
-	
+
 	@RequestMapping("/vehicleMaster")
 	public ModelAndView logVehicleMaster(HttpSession session) {
 		ModelAndView mav = new ModelAndView("vehicleMaster");
-		
- 
+
 		mav.addObject("saveVMaster", new VehicleMaster());
-		mav.addObject("veOwner", new VehicleOwner());	
-		//OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
-		//ocrDetails.setOcrVid(vehicleID);		
-		//vehicleService.saveOcrDetailsRepo(ocrDetails);
+		mav.addObject("veOwner", new VehicleOwner());
+		// OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
+		// ocrDetails.setOcrVid(vehicleID);
+		// vehicleService.saveOcrDetailsRepo(ocrDetails);
 //		if(!appNo.equals("0")) {
 //			Appointment appointment=new Appointment();
 //			appointment=appointmentService.getAppointmentDetailsById(appNo);
@@ -539,206 +530,198 @@ public class VehicleController {
 //			appointmentService.save(appointment);
 //		}
 		return mav;
-		}
-	
-	
+	}
+
 	@RequestMapping("/vehicleMasterAuto")
-	public ModelAndView logVehicleMaster(@RequestParam String vehicleID,@RequestParam String id,HttpSession session) {
+	public ModelAndView logVehicleMaster(@RequestParam String vehicleID, @RequestParam String id, HttpSession session) {
 		ModelAndView mav = new ModelAndView("vehicleMaster");
-		
-		OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
-		//ocrDetails.setOcrVid(vehicleID);		
-		//vehicleService.saveOcrDetailsRepo(ocrDetails);
-		String appNo=ocrDetails.getAppNo();
-		
-		if(!appNo.equals("0")) {
-			Appointment appointment=new Appointment();
-			appointment=appointmentService.getAppointmentDetailsById(appNo);
+
+		OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
+		// ocrDetails.setOcrVid(vehicleID);
+		// vehicleService.saveOcrDetailsRepo(ocrDetails);
+		String appNo = ocrDetails.getAppNo();
+
+		if (!appNo.equals("0")) {
+			Appointment appointment = new Appointment();
+			appointment = appointmentService.getAppointmentDetailsById(appNo);
 			appointment.setStatus("completed");
 			appointmentService.save(appointment);
 		}
-		
 
-		
-		
-		mav.addObject("imgVe",ocrDetails.getNoimageView());
-		mav.addObject("ocid",id);
-		mav.addObject("milage",ocrDetails.getCurrentMilage());
-		VehicleMaster vm=new VehicleMaster();
-		
-		
-		if(vehicleService.getVMasterById(vehicleID)!=null) {
+		mav.addObject("imgVe", ocrDetails.getNoimageView());
+		mav.addObject("ocid", id);
+		mav.addObject("milage", ocrDetails.getCurrentMilage());
+		VehicleMaster vm = new VehicleMaster();
+
+		if (vehicleService.getVMasterById(vehicleID) != null) {
 			vm = vehicleService.getVMasterById(vehicleID);
-			
 
-			  SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
-			//  SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-			  
-			  vm.setManufactureYear(sdf.format(DateHelperWeb.getDate(vm.getManufactureYear())));
-			  vm.setRegisteredYear(sdf.format(DateHelperWeb.getDate(vm.getRegisteredYear())));
-		
-			  System.out.println("not null value v master= "+vm);
-			
-			
+			SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat") + "");
+			// SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+
+			vm.setManufactureYear(sdf.format(DateHelperWeb.getDate(vm.getManufactureYear())));
+			vm.setRegisteredYear(sdf.format(DateHelperWeb.getDate(vm.getRegisteredYear())));
+
+			System.out.println("not null value v master= " + vm);
+
 		}
-		
+
 		List<VehicleOwner> pre_owners = vehicleService.getOwnersByVehicleNo(vehicleID);
 
 		mav.addObject("pre_owners", pre_owners);
-		
-		mav.addObject("saveVMaster", vm);
-		VehicleOwner vo=vehicleService.getVehicleOwnerIDByVehicleID(vehicleID);
-		List<CountryState> counState = centerService.getallStateFromCountry(session.getAttribute("countryCode")+"");
-		mav.addObject("counState", counState);
-		if(vo==null) {
-			mav.addObject("veOwner", new VehicleOwner());	
-		}else {
-		mav.addObject("veOwner", vo);
-		}
-		//session.setAttribute("vMvid", vehicleID);
-		
 
-		mav.addObject("vidn",vehicleID);
-		mav.addObject("vid",vehicleID);
-		
-		mav.addObject("check","0");
+		mav.addObject("saveVMaster", vm);
+		VehicleOwner vo = vehicleService.getVehicleOwnerIDByVehicleID(vehicleID);
+		List<CountryState> counState = centerService.getallStateFromCountry(session.getAttribute("countryCode") + "");
+		mav.addObject("counState", counState);
+		if (vo == null) {
+			mav.addObject("veOwner", new VehicleOwner());
+		} else {
+			mav.addObject("veOwner", vo);
+		}
+		// session.setAttribute("vMvid", vehicleID);
+
+		mav.addObject("vidn", vehicleID);
+		mav.addObject("vid", vehicleID);
+
+		mav.addObject("check", "0");
 		return mav;
 	}
 
-	// Saving V Master Info	
-	 @RequestMapping(value="/saveVMasterk", method = RequestMethod.POST)
-	 public String saveVehicleMaster(@Valid @ModelAttribute("saveVMaster") VehicleMaster vmaster, @ModelAttribute("veOwner")VehicleOwner vehicleOwner,BindingResult br,Model m,@RequestParam String currentMilage,@RequestParam String ocid,HttpSession session) {		
+	// Saving V Master Info
+	@RequestMapping(value = "/saveVMasterk", method = RequestMethod.POST)
+	public String saveVehicleMaster(@Valid @ModelAttribute("saveVMaster") VehicleMaster vmaster,
+			@ModelAttribute("veOwner") VehicleOwner vehicleOwner, BindingResult br, Model m,
+			@RequestParam String currentMilage, @RequestParam String ocid, HttpSession session) {
 
-		
+		if (br.hasErrors()) {
+			return "vehicleMaster";
+		} else {
+			try {
+				String centerid = session.getAttribute("centerid") + "";
+				CenterMaster centerMaster = centerService.getcenterById(centerid);
 
-		 if(br.hasErrors())
-		 {
-			 return "vehicleMaster";
-		 }
-		 else {
-			 try {
-				  String centerid=session.getAttribute("centerid")+"";
-				  CenterMaster centerMaster=centerService.getcenterById(centerid);
-				  
-				  SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
-				  SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-				  
-				  String startDateString2 = vmaster.getManufactureYear();
-				  String manufDate = sdf2.format(sdf.parse(startDateString2));
-				  vmaster.setManufactureYear(manufDate);
-				  System.out.println(manufDate); 
-				  
-					String startDateString = vmaster.getRegisteredYear();
-				    String regDate = sdf2.format(sdf.parse(startDateString));		
-				    vmaster.setRegisteredYear(regDate);
-				    System.out.println(regDate);
-				
-				  
-				  
-				vehicleService.saveVMaster(vmaster);				
+				SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat") + "");
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+
+				String startDateString2 = vmaster.getManufactureYear();
+				String manufDate = sdf2.format(sdf.parse(startDateString2));
+				vmaster.setManufactureYear(manufDate);
+				System.out.println(manufDate);
+
+				String startDateString = vmaster.getRegisteredYear();
+				String regDate = sdf2.format(sdf.parse(startDateString));
+				vmaster.setRegisteredYear(regDate);
+				System.out.println(regDate);
+
+				vehicleService.saveVMaster(vmaster);
 				vehicleOwner.setVehicleID(vmaster);
 				vehicleOwner.setCountryCode(centerMaster.getCountrycode());
 				vehicleOwner.setStatus("currentOwner");
-				
-				
-				  
-				
-				if(vehicleOwner.getOwnerID().length()<1){
-					vehicleOwner.setOwnerID("0000".substring(vehicleService.maxVOwnerID().length()) + vehicleService.maxVOwnerID());
+
+				if (vehicleOwner.getOwnerID().length() < 1) {
+					vehicleOwner.setOwnerID(
+							"0000".substring(vehicleService.maxVOwnerID().length()) + vehicleService.maxVOwnerID());
 					vehicleService.saveVOwner(vehicleOwner);
-					vehicleService.updateOwnerStatus(vehicleOwner.getOwnerID(), vehicleOwner.getVehicleID().getVehicleID());
-				
-				}else {
-					vehicleService.saveVOwner(vehicleOwner);	
-					
+					vehicleService.updateOwnerStatus(vehicleOwner.getOwnerID(),
+							vehicleOwner.getVehicleID().getVehicleID());
+
+				} else {
+					vehicleService.saveVOwner(vehicleOwner);
+
 				}
-				
-				OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(ocid));
+
+				OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(ocid));
 				ocrDetails.setVmStatus("completed");
 				ocrDetails.setCurrentMilage(Long.parseLong(currentMilage));
 				vehicleService.saveOcrDetailsRepo(ocrDetails);
-				
-				return "redirect:/vehicleRegistrationAuto?vid="+vmaster.getVehicleID()+"&id="+ocid; 
-		
-	 
-				//return "redirect:/checkDocumentAuto?vecNo="+vmaster.getVehicleID()+"&curMi="+currentMilage+"&id="+ocid; 
-				
-				
-			 
-			 
-				
-			 
-			 } catch (Exception e) {
+
+				return "redirect:/vehicleRegistrationAuto?vid=" + vmaster.getVehicleID() + "&id=" + ocid;
+
+				// return
+				// "redirect:/checkDocumentAuto?vecNo="+vmaster.getVehicleID()+"&curMi="+currentMilage+"&id="+ocid;
+
+			} catch (Exception e) {
 				// TODO: handle exception
 				System.out.println("vehicle master saving error");
-				m.addAttribute("error","A vehicle already saved by using this Engine No or Chassis No");
-				
-			}
-		 }
-		 return "vehicleMaster";
-	 }
+				m.addAttribute("error", "A vehicle already saved by using this Engine No or Chassis No");
 
-	//Edit V Master detail
-	@RequestMapping(value="/newVehicleMaster",method = RequestMethod.GET)
-	public ModelAndView newVehicleMaster(@RequestParam String vehicleID,@RequestParam String id,HttpSession session) {
-		    
-		OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
-		
-		//ocrDetails.setOcrid(Long.parseLong(id));
-		
-		ocrDetails.setOcrVid(vehicleID);
-				
-		vehicleService.saveOcrDetailsRepo(ocrDetails);
-	    
-		session.setAttribute("vMvid", vehicleID);
-		
+			}
+		}
+		return "vehicleMaster";
+	}
+
+	// Edit V Master detail
+	@RequestMapping(value = "/newVehicleMaster", method = RequestMethod.GET)
+	public ModelAndView newVehicleMaster(@RequestParam String vehicleID, @RequestParam String id, HttpSession session)
+			throws IOException {
 		ModelAndView mav = new ModelAndView("vehicleMaster");
-		VehicleMaster vm=new VehicleMaster();
-		VehicleOwner vo=new VehicleOwner();
+		OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
+
+		// ocrDetails.setOcrid(Long.parseLong(id));
+
+		String fileName = String.valueOf(id);
+
+		File file = new File("C:\\OCRExternal\\" + fileName + ".jpg");
+		System.out.println("file=" + file);
+		if (ocrDetails.isImagePresent() == true) {
+
+			BufferedImage bImage = ImageIO.read(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ImageIO.write(bImage, "jpg", bos);
+			byte[] data = bos.toByteArray();
+			mav.addObject("imgVe", Base64.getEncoder().encodeToString(data));
+		}
+
+		ocrDetails.setOcrVid(vehicleID);
+
+		vehicleService.saveOcrDetailsRepo(ocrDetails);
+
+		session.setAttribute("vMvid", vehicleID);
+
+		VehicleMaster vm = new VehicleMaster();
+		VehicleOwner vo = new VehicleOwner();
 		vm.setVehicleID(vehicleID);
 		vo.setVehicleID(vm);
-		List<CountryState> counState = centerService.getallStateFromCountry(session.getAttribute("countryCode")+"");
+		List<CountryState> counState = centerService.getallStateFromCountry(session.getAttribute("countryCode") + "");
 		mav.addObject("counState", counState);
 		mav.addObject("saveVMaster", vm);
 		mav.addObject("veOwner", vo);
-		mav.addObject("imgVe",ocrDetails.getNoimageView());
-		mav.addObject("ocid",id);
-		mav.addObject("vidn",vehicleID);
-		mav.addObject("vid",vehicleID);
-		mav.addObject("check","1");
+
+		mav.addObject("ocid", id);
+		mav.addObject("vidn", vehicleID);
+		mav.addObject("vid", vehicleID);
+		mav.addObject("check", "1");
 		return mav;
-		
+
 	}
-	
+
 	// save owner
 	@RequestMapping(value = "/saveVOwner", method = RequestMethod.POST)
-	public String saveVehicleOwner(@Valid @ModelAttribute("veOwner")VehicleOwner vehicleOwner,BindingResult br,Model model) {
-		if(br.hasErrors()) {
+	public String saveVehicleOwner(@Valid @ModelAttribute("veOwner") VehicleOwner vehicleOwner, BindingResult br,
+			Model model) {
+		if (br.hasErrors()) {
 			return "vehicleOwner";
-		} 
-		else 
-		{
-			if(vehicleOwner.getOwnerID().isEmpty())
-			{
-				vehicleOwner.setOwnerID("0000".substring(vehicleService.maxVOwnerID().length()) + vehicleService.maxVOwnerID());
+		} else {
+			if (vehicleOwner.getOwnerID().isEmpty()) {
+				vehicleOwner.setOwnerID(
+						"0000".substring(vehicleService.maxVOwnerID().length()) + vehicleService.maxVOwnerID());
 			}
-			
+
 			vehicleService.saveVOwner(vehicleOwner);
-			
+
 			vehicleService.updateOwnerStatus(vehicleOwner.getOwnerID(), vehicleOwner.getVehicleID().getVehicleID());
-			
-			return "redirect:/vehicleRegistration?vid="+vehicleOwner.getVehicleID().getVehicleID();
+
+			return "redirect:/vehicleRegistration?vid=" + vehicleOwner.getVehicleID().getVehicleID();
 		}
 	}
-	 
-	
+
 	@ModelAttribute("couCode")
 	public List<CountryMaster> countryList() {
 		List<CountryMaster> c = regionalService.getAll();
 		return c;
 	}
-	
-	
+
 	@ModelAttribute("veMake")
 	public List<VehicleMake> getAllMakeDetails() {
 		List<VehicleMake> makedrop = vehicleService.getActiveMakes();
@@ -753,137 +736,153 @@ public class VehicleController {
 
 	@ModelAttribute("fuelType")
 	public List<FuelType> getAllFualDetails() {
-	List<FuelType> makedrop = vehicleService.getFuelType();
-	return makedrop;
+		List<FuelType> makedrop = vehicleService.getFuelType();
+		return makedrop;
 	}
-	
+
 	@ModelAttribute("emissionNorms")
 	public List<TestLimitRule> getAllRuleName() {
-	List<TestLimitRule> makedrop = vehicleService.getruleName();
-	return makedrop;
+		List<TestLimitRule> makedrop = vehicleService.getruleName();
+		return makedrop;
 	}
-	
+
 	@ModelAttribute("veclass")
 	public List<VehicleClass> getAllClassDetails() {
 		List<VehicleClass> makedrop = vehicleService.getVClass();
 		return makedrop;
 	}
+
 	@RequestMapping("/vehicleRegistration")
-	public String getREG(Model m,HttpSession session) {
-		//OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
-		//ocrDetails.setOcrid(Long.parseLong(id));
-		VehicleRegistration vecir=new VehicleRegistration();
-	//	vecir.setOcrid(ocrDetails);
-	//	VehicleMaster vm=vehicleService.getVMasterById(vid);
-		//vm.setVehicleID(vid);
-		//vecir.setVid(vm);
-		
-		//vecir.setCurrentMilage(Long.parseLong(curMi));
-		m.addAttribute("VehicleRegistration",vecir);
-	//	m.addAttribute("imgVimg",ocrDetails.getNoimageView());
-		
-		
-	//	m.addAttribute("pre_vehicle",vehicleService.getPerviousRegistrationVehicle(vid));
-	//	m.addAttribute("vclassid",vm.getVmodel().getVehicleClass().getVehicleClassID());
-		
-		
-		List<TestLaneHead> allCenterLane=laneServices.getTestLaneHeadDetailByCenter(session.getAttribute("centerid")+"");
-		m.addAttribute("allLane",allCenterLane);
-	 
-	 
+	public String getREG(Model m, HttpSession session) {
+		// OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
+		// ocrDetails.setOcrid(Long.parseLong(id));
+		VehicleRegistration vecir = new VehicleRegistration();
+		// vecir.setOcrid(ocrDetails);
+		// VehicleMaster vm=vehicleService.getVMasterById(vid);
+		// vm.setVehicleID(vid);
+		// vecir.setVid(vm);
+
+		// vecir.setCurrentMilage(Long.parseLong(curMi));
+		m.addAttribute("VehicleRegistration", vecir);
+		// m.addAttribute("imgVimg",ocrDetails.getNoimageView());
+
+		// m.addAttribute("pre_vehicle",vehicleService.getPerviousRegistrationVehicle(vid));
+		// m.addAttribute("vclassid",vm.getVmodel().getVehicleClass().getVehicleClassID());
+
+		List<TestLaneHead> allCenterLane = laneServices
+				.getTestLaneHeadDetailByCenter(session.getAttribute("centerid") + "");
+		m.addAttribute("allLane", allCenterLane);
+
 		return "VehicleRegistration";
 	}
-	//////////////REGISTRATION///////
+
+	////////////// REGISTRATION///////
 	@RequestMapping("/vehicleRegistrationAuto")
-	public String getREG(Model m,@RequestParam String vid,@RequestParam String id,HttpSession session) {
-		OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
-		VehicleRegistration vecir=new VehicleRegistration();
-		if(!ocrDetails.getAppNo().equals("0")) {
-			System.out.println("dfdf="+ocrDetails.getAppNo());
-		Appointment appointment=appointmentService.getAppointmentDetailsById(ocrDetails.getAppNo());
-		vecir.setTestCategory(appointment.getCategoryId());
-		
-		m.addAttribute("apoTime",appointment.getAppointmentTime());
+	public String getREG(Model m, @RequestParam String vid, @RequestParam String id, HttpSession session)
+			throws IOException {
+		OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
+		VehicleRegistration vecir = new VehicleRegistration();
+
+		String fileName = String.valueOf(id);
+
+		File file = new File("C:\\OCRExternal\\" + fileName + ".jpg");
+		System.out.println("file=" + file);
+		if (ocrDetails.isImagePresent() == true) {
+
+			BufferedImage bImage = ImageIO.read(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ImageIO.write(bImage, "jpg", bos);
+			byte[] data = bos.toByteArray();
+			m.addAttribute("imgVimg", Base64.getEncoder().encodeToString(data));
 		}
-		m.addAttribute("apono",ocrDetails.getAppNo());
-		//ocrDetails.setOcrid(Long.parseLong(id));
+
+		if (!ocrDetails.getAppNo().equals("0")) {
+			System.out.println("dfdf=" + ocrDetails.getAppNo());
+			Appointment appointment = appointmentService.getAppointmentDetailsById(ocrDetails.getAppNo());
+			vecir.setTestCategory(appointment.getCategoryId());
+
+			m.addAttribute("apoTime", appointment.getAppointmentTime());
+		}
+		m.addAttribute("apono", ocrDetails.getAppNo());
+		// ocrDetails.setOcrid(Long.parseLong(id));
 
 		ocrDetails.setVmStatus("completed");
 		vehicleService.saveOcrDetailsRepo(ocrDetails);
-		
+
 		vecir.setOcrid(ocrDetails);
-		VehicleMaster vm=vehicleService.getVMasterById(vid);
-		//vm.setVehicleID(vid);
-		vecir.setVid(vm);	
+		VehicleMaster vm = vehicleService.getVMasterById(vid);
+		// vm.setVehicleID(vid);
+		vecir.setVid(vm);
 		vecir.setCurrentMilage(ocrDetails.getCurrentMilage());
-		
-		m.addAttribute("vid",vid);
-		m.addAttribute("VehicleRegistration",vecir);
-		m.addAttribute("imgVimg",ocrDetails.getNoimageView());
-		m.addAttribute("pre_vehicle",vehicleService.getPerviousRegistrationVehicle(vid));
-		m.addAttribute("vclassid",vm.getVmodel().getVehicleClass().getVehicleClassID());
-		
-		
-	
+
+		m.addAttribute("vid", vid);
+		m.addAttribute("VehicleRegistration", vecir);
+		// m.addAttribute("imgVimg", ocrDetails.getNoimageView());
+		m.addAttribute("pre_vehicle", vehicleService.getPerviousRegistrationVehicle(vid));
+		m.addAttribute("vclassid", vm.getVmodel().getVehicleClass().getVehicleClassID());
+
 		session.setAttribute("vRocr", id);
 
-		m.addAttribute("ocid",id);
-		m.addAttribute("vvid",vid);
-		
-		List<TestLaneHead> allCenterLane=laneServices.getTestLaneHeadDetailByCenter(session.getAttribute("centerid")+"");
-		m.addAttribute("allLane",allCenterLane);
-	 
-	 
+		m.addAttribute("ocid", id);
+		m.addAttribute("vvid", vid);
+
+		List<TestLaneHead> allCenterLane = laneServices
+				.getTestLaneHeadDetailByCenter(session.getAttribute("centerid") + "");
+		m.addAttribute("allLane", allCenterLane);
+
 		return "VehicleRegistration";
 	}
 
 	@ModelAttribute("transactionList")
-	public List<Transaction> getTransaction(){
-		List <Transaction> vreg =vehicleService.listTransaction();
+	public List<Transaction> getTransaction() {
+		List<Transaction> vreg = vehicleService.listTransaction();
 		return vreg;
 	}
-	
+
 	@ModelAttribute("vehicleList")
-	public List<VehicleMaster> getVehicleMasterList(){
-		List <VehicleMaster> vlist= vehicleService.getVehicleMasterAllDetail();
+	public List<VehicleMaster> getVehicleMasterList() {
+		List<VehicleMaster> vlist = vehicleService.getVehicleMasterAllDetail();
 		return vlist;
 	}
-	
+
 	@ModelAttribute("regTypeList")
-	public List<VehicleRegisterType> getVregType(){
-		List <VehicleRegisterType> list= vehicleService.getAllVType();
+	public List<VehicleRegisterType> getVregType() {
+		List<VehicleRegisterType> list = vehicleService.getAllVType();
 		return list;
 	}
-	
+
 	@ModelAttribute("regUsers")
-	public List<Users> getUser(){
-		List <Users> ulist=  vehicleService.userList();
+	public List<Users> getUser() {
+		List<Users> ulist = vehicleService.userList();
 		return ulist;
 	}
+
 	@ModelAttribute("centerList")
-	public List<CenterMaster> getCenterList(){
-		List <CenterMaster> clist= vehicleService.centerMasterList();
+	public List<CenterMaster> getCenterList() {
+		List<CenterMaster> clist = vehicleService.centerMasterList();
 		return clist;
 	}
+
 	@ModelAttribute("BusinessPartnerList")
-	public List <BusinessPartner> getPartnerList(){
-		List <BusinessPartner> blist =  vehicleService.businessPartnerList();
+	public List<BusinessPartner> getPartnerList() {
+		List<BusinessPartner> blist = vehicleService.businessPartnerList();
 		return blist;
 	}
+
 	@ModelAttribute("testlane")
-	public List <TestLane> getTestDetails(){
-		List <TestLane> tlane = vehicleService.testlaneDetails();
+	public List<TestLane> getTestDetails() {
+		List<TestLane> tlane = vehicleService.testlaneDetails();
 		return tlane;
 	}
-	
-	
-	//get data for combo in vmodel interface
-	@RequestMapping(value="/getImageForCombo", method=RequestMethod.GET)
+
+	// get data for combo in vmodel interface
+	@RequestMapping(value = "/getImageForCombo", method = RequestMethod.GET)
 	public @ResponseBody String search(@RequestParam String vmake) {
 		VehicleMake listlogs = vehicleService.searchlogomake(vmake);
 		return listlogs.getMakeLogoView();
 	}
-	//editTestlaneDetailsComboTable
+
+	// editTestlaneDetailsComboTable
 	@RequestMapping("/updateTDInfo")
 	public ModelAndView editTestDetailsInfo(@RequestParam String testLaneDetails) {
 		ModelAndView mav = new ModelAndView("TestLaneDetails");
@@ -891,148 +890,136 @@ public class VehicleController {
 		mav.addObject("TestLaneDetails", tt);
 		return mav;
 	}
-	
-	//get lanes according to centers in vreg. jsp
-	@RequestMapping(value="/getLanesifOneLane", method=RequestMethod.GET)
-	public @ResponseBody String[][] searchlane(@RequestParam String center) {
-		String[][] listlogs =laneServices.getLaneForLaneDetails(center);
-	
-			return listlogs;
-	}
-	
-	@RequestMapping(value="/getLanesifmorLane", method=RequestMethod.GET)
-	public @ResponseBody String[][] getLanesifmorLane(@RequestParam String center,@RequestParam String veClassId) {
-		String[][] listlogs =laneServices.getLanesifmorLane(center,veClassId);
-	
-			return listlogs;
-	}
-	
-	@RequestMapping(value="/getLanesifmorLaneCat", method=RequestMethod.GET)
-	public @ResponseBody String[][] getLanesifmorLaneCat(@RequestParam String center,@RequestParam String veClassId,@RequestParam String testCat) {
-		String[][] listlogs =laneServices.getLanesifmorLaneCat(center,veClassId,testCat);
-	
-			return listlogs;
-	}
-	
 
-	//load testlane combo table to vehicle registration jsp
-	@RequestMapping(value="/getLaneDtails", method=RequestMethod.GET)
-	public   @ResponseBody List<TestLaneDetails> comboTable(@RequestParam String testLaneDetailsid ) {
+	// get lanes according to centers in vreg. jsp
+	@RequestMapping(value = "/getLanesifOneLane", method = RequestMethod.GET)
+	public @ResponseBody String[][] searchlane(@RequestParam String center) {
+		String[][] listlogs = laneServices.getLaneForLaneDetails(center);
+
+		return listlogs;
+	}
+
+	@RequestMapping(value = "/getLanesifmorLane", method = RequestMethod.GET)
+	public @ResponseBody String[][] getLanesifmorLane(@RequestParam String center, @RequestParam String veClassId) {
+		String[][] listlogs = laneServices.getLanesifmorLane(center, veClassId);
+
+		return listlogs;
+	}
+
+	@RequestMapping(value = "/getLanesifmorLaneCat", method = RequestMethod.GET)
+	public @ResponseBody String[][] getLanesifmorLaneCat(@RequestParam String center, @RequestParam String veClassId,
+			@RequestParam String testCat) {
+		String[][] listlogs = laneServices.getLanesifmorLaneCat(center, veClassId, testCat);
+
+		return listlogs;
+	}
+
+	// load testlane combo table to vehicle registration jsp
+	@RequestMapping(value = "/getLaneDtails", method = RequestMethod.GET)
+	public @ResponseBody List<TestLaneDetails> comboTable(@RequestParam String testLaneDetailsid) {
 		List<TestLaneDetails> test1 = vehicleService.searchLaneDEtails(testLaneDetailsid);
 		return test1;
 	}
+
 	@RequestMapping("/laneEntryView")
-	public String getLaneEntryView(Model m,HttpSession session) {
-	
-		VehicleRegistration vecir=new VehicleRegistration();
+	public String getLaneEntryView(Model m, HttpSession session) {
 
-	//	String vid=ocrDetails.getOcrVid();
-		m.addAttribute("VehicleRegistration",vecir);
+		VehicleRegistration vecir = new VehicleRegistration();
 
-		
+		// String vid=ocrDetails.getOcrVid();
+		m.addAttribute("VehicleRegistration", vecir);
+
 		return "LaneEntryView";
 	}
-	@RequestMapping(value="/getPerviousVehicleRegistation" ,method=RequestMethod.POST)
+
+	@RequestMapping(value = "/getPerviousVehicleRegistation", method = RequestMethod.POST)
 	public @ResponseBody List<VehicleRegistration> getVehicleRegistation(@RequestParam String veno) {
 		return vehicleService.getPerviousRegistrationVehicle(veno);
-		
-	
+
 	}
-	@RequestMapping(value="/getVehicleRegistation" ,method=RequestMethod.POST)
+
+	@RequestMapping(value = "/getVehicleRegistation", method = RequestMethod.POST)
 	public @ResponseBody VehicleRegistration getVehicleRegistation(@RequestParam int ocrid) {
 		return vehicleService.getRegistrationVehicleByOcrid(ocrid);
-		
-	
+
 	}
-	@RequestMapping(value="/pendingLaneEntryData" ,method=RequestMethod.POST)
+
+	@RequestMapping(value = "/pendingLaneEntryData", method = RequestMethod.POST)
 	public @ResponseBody List<OcrDetails> getPendingLaneEntryData(@RequestParam String gate) {
-		
-		return vehicleService.pendingLaneEntryData(gate);
-		
-	
+		List<OcrDetails> list = vehicleService.pendingLaneEntryData(gate);
+		System.out.println("Size" + list.size());
+		return list;
+
 	}
+
 	@RequestMapping("/LaneEntry")
-	public String getLaneEntry(Model m,@RequestParam String id,HttpSession session) {
-		OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
-		VehicleRegistration vecir=vehicleService.getRegistrationVehicleByOcrid(ocrDetails.getOcrid());
+	public String getLaneEntry(Model m, @RequestParam String id, HttpSession session) {
+		OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
+		VehicleRegistration vecir = vehicleService.getRegistrationVehicleByOcrid(ocrDetails.getOcrid());
 
-		String vid=ocrDetails.getOcrVid();
-		m.addAttribute("VehicleRegistration",vecir);
-		if(vecir.getCusid().getId()=="0000") {
-			m.addAttribute("custom","Owner");
-		}else {
-			m.addAttribute("custom",vecir.getCusid().getName());	
+		String vid = ocrDetails.getOcrVid();
+		m.addAttribute("VehicleRegistration", vecir);
+		if (vecir.getCusid().getId() == "0000") {
+			m.addAttribute("custom", "Owner");
+		} else {
+			m.addAttribute("custom", vecir.getCusid().getName());
 		}
-		m.addAttribute("imgVimg",ocrDetails.getNoimageView());
-	 	m.addAttribute("pre_vehicle",vehicleService.getPerviousRegistrationVehicle(vid));
+		m.addAttribute("imgVimg", ocrDetails.getNoimageView());
+		m.addAttribute("pre_vehicle", vehicleService.getPerviousRegistrationVehicle(vid));
 
-		
-		m.addAttribute("vehNo",vid);
-		m.addAttribute("ocid",id);
-	
-
-	 
+		m.addAttribute("vehNo", vid);
+		m.addAttribute("ocid", id);
 
 		return "LaneEntry";
 	}
-		
-	@RequestMapping(value="/saveLaneEntry" ,method=RequestMethod.POST)
-	public @ResponseBody String saveVehicleRegistration(@RequestParam String ocrid,HttpSession session) {
-	
-        	try {
-        		
-        		VehicleRegistration vehiclereg=vehicleService.getRegistrationByRegisterId(ocrid);
-        		
-        		CenterMaster centerMaster=centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
-        	
-        		VehicleMaster vehicleMaster = vehicleService.getVMasterById(vehiclereg.getVid().getVehicleID());
-        		
-        		String checkTextFilePath=centerMaster.getEsInPath();
-	            String checkXmlFilePath=centerMaster.getEsInXmlPath();
-	        	File texEsin = new File(checkTextFilePath);  
-	        	File xmlEsin = new File(checkXmlFilePath);  		
-	        	OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
-	        	//AVL Details
-	        	String avlStatus=vehiclereg.getTestLaneHeadId().getAvlFstatus();
-	        	String mahaStatus=vehiclereg.getTestLaneHeadId().getMahaFstatus();
-	        	InetAddress inet=null;
-	        	
-	        	String avlIp="";
-	        	String avlUserName="";
-	        	String avlPassword="";
-	        	String avlxmlin="";
-	        	
-	        	String mahaIp="";
-	        	String mahaUserName="";
-	        	String mahaPassword="";
-	        	String mahaEsEn="";
-	        	String mahaESOut="";
-	        	
 
-	        	
-	   
-	        	
-	        	
-	        	
-	        	
-	        	
+	@RequestMapping(value = "/saveLaneEntry", method = RequestMethod.POST)
+	public @ResponseBody String saveVehicleRegistration(@RequestParam String ocrid, HttpSession session) {
 
-	        	
-	        	
-	        	if (session.getAttribute("username")==null) {
-	        		return "1";	
-	        	}else if (ocrDetails.getNoimage().length==0) {
-        			return "2";  	 
-	        	}else if (!texEsin.isDirectory()) {
-        			return "3";  	 
-	        	}else if (!xmlEsin.isDirectory()) {
-        			return "4";  	 
-	        	}else if (ocrDetails.getVrStatus().equals("completed")) {
-        			return "5";  	 
-	        	}else {
-	        		
-	        		//List<ConfigSystem> configSystem=vehicleService.getConfigSystemByCenter(vehiclereg.getCentermaster().getCenter_ID(),vehiclereg.getTestLaneHeadId().getTestLaneHeadId());	
-	        		
+		try {
+
+			VehicleRegistration vehiclereg = vehicleService.getRegistrationByRegisterId(ocrid);
+
+			CenterMaster centerMaster = centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
+
+			VehicleMaster vehicleMaster = vehicleService.getVMasterById(vehiclereg.getVid().getVehicleID());
+
+			String checkTextFilePath = centerMaster.getEsInPath();
+			String checkXmlFilePath = centerMaster.getEsInXmlPath();
+			File texEsin = new File(checkTextFilePath);
+			File xmlEsin = new File(checkXmlFilePath);
+			OcrDetails ocrDetails = vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
+			// AVL Details
+			String avlStatus = vehiclereg.getTestLaneHeadId().getAvlFstatus();
+			String mahaStatus = vehiclereg.getTestLaneHeadId().getMahaFstatus();
+			InetAddress inet = null;
+
+			String avlIp = "";
+			String avlUserName = "";
+			String avlPassword = "";
+			String avlxmlin = "";
+
+			String mahaIp = "";
+			String mahaUserName = "";
+			String mahaPassword = "";
+			String mahaEsEn = "";
+			String mahaESOut = "";
+
+			if (session.getAttribute("username") == null) {
+				return "1";
+			} else if (ocrDetails.getNoimage().length == 0) {
+				return "2";
+			} else if (!texEsin.isDirectory()) {
+				return "3";
+			} else if (!xmlEsin.isDirectory()) {
+				return "4";
+			} else if (ocrDetails.getVrStatus().equals("completed")) {
+				return "5";
+			} else {
+
+				// List<ConfigSystem>
+				// configSystem=vehicleService.getConfigSystemByCenter(vehiclereg.getCentermaster().getCenter_ID(),vehiclereg.getTestLaneHeadId().getTestLaneHeadId());
+
 //	                
 //	                String hostname="";
 //	                String username="";
@@ -1040,10 +1027,7 @@ public class VehicleController {
 //	                String rootpath="";
 //	                String xmlPath="";
 //	                InetAddress inet = null;
-	             
-	                
-	                
-	                
+
 //	                for(ConfigSystem conSys:configSystem) {
 //	                	
 //	                	 System.out.println("fff="+conSys.getIpaddress());
@@ -1059,1248 +1043,1156 @@ public class VehicleController {
 //	                     }
 //
 //	                }
-	        		//boolean correct=false;
-	        		boolean avlcorrect=false;
-	        		boolean mahacorrect=false;
-	        		
-		        
+				// boolean correct=false;
+				boolean avlcorrect = false;
+				boolean mahacorrect = false;
 
-		        	if(avlStatus.equals("ACTIVE")){
-		        		
-			        	 avlIp=vehiclereg.getTestLaneHeadId().getAvlPcIp();
-			        	 avlUserName=vehiclereg.getTestLaneHeadId().getAvlFTPUs();
-			        	 avlPassword=vehiclereg.getTestLaneHeadId().getAvlFTPPass();
-			        	 avlxmlin=vehiclereg.getTestLaneHeadId().getXmlIN();
-		        		
-		                  inet = InetAddress.getByName(avlIp);
-		                     if(inet.isReachable(3000)==true) {
-		                    	 avlcorrect=true;
-		                    	
-		                    	
-		                     }else {
-		                    	 avlcorrect=false; 
-		                    	 return "7"; 
-		                     }
-		        		
-		        	}
+				if (avlStatus.equals("ACTIVE")) {
 
-		        	if(mahaStatus.equals("ACTIVE")){
-		        		
-		        		
-			        	 mahaIp=vehiclereg.getTestLaneHeadId().getMahaPcIp();
-			        	 mahaUserName=vehiclereg.getTestLaneHeadId().getMahaFTPUs();
-			        	 mahaPassword=vehiclereg.getTestLaneHeadId().getMahaFTPPass();
-			        	 mahaEsEn=vehiclereg.getTestLaneHeadId().getMahaES_IN();
-			        	 mahaESOut=vehiclereg.getTestLaneHeadId().getMahaES_OUT();
-		        		
-		                inet = InetAddress.getByName(mahaIp);
-	                    if(inet.isReachable(3000)==true) {
-	                   	 mahacorrect=true; 
-	                  
-	                    }else {
-	                   	 mahacorrect=false; 
-	                   	return "8"; 
-	                   	        		
-	                    }
-	        		
-		        	}
-	                
-	
-	               
-	                
-	                	Users user=usersService.searchUser(vehiclereg.getUser().getUserId());
-	                	
-	                	
-						String path1 = this.getClass().getClassLoader().getResource("").getPath();
-						String fullPath = URLDecoder.decode(path1, "UTF-8");		
-						String pathArr[] = fullPath.split("/WEB-INF/classes/");
-						String textFilePath=centerMaster.getEsInPath()+"\\"+vehiclereg.getVid().getVehicleID()+".txt";
-	                	
-						File file = new File(textFilePath);	                	
-				        if (!file.exists()) {
-				           file.createNewFile();
-				         }
-	                	
-	                    FileWriter fw = new FileWriter(file.getAbsoluteFile());
-	                    BufferedWriter bw = new BufferedWriter(fw);
-	                    bw.write("[HEADER]");
-		                bw.write("\r\n"); 
-		                bw.write("10100="+vehiclereg.getVid().getVehicleID());
-		                bw.write("\r\n"); 
-		                bw.write("15012="+user.getUserName());
-		                bw.write("\r\n"); 
-		                bw.write("10190="+vehicleMaster.getNoWheel());	                
-		                bw.write("\r\n"); 
-		                bw.write("10191="+vehicleMaster.getVmodel().getVehicleClass().getCategoryID().getCategoryID());                
-		                
-		                
-		                
-		                bw.write("\r\n");
-		                bw.write("\r\n");
-		                bw.write("[ENDOFFILE]");
-		               
-		                
-	                    bw.close();
-				        
-				        
-	                    //  String xpath= pathArr[0]+"/Upload/XML_ES_IN/";	
-	                   	String xmlFilePath=centerMaster.getEsInXmlPath()+"\\"+vehiclereg.getVid().getVehicleID()+".xml";
-	                   	
-	                   	File xmlfile = new File(xmlFilePath);
-	                   	if (!xmlfile.exists()) {
-	    	        	   xmlfile.createNewFile();
-	    	            }
-				        
-	                   	FileWriter fwX = new FileWriter(xmlfile.getAbsoluteFile());
-                        BufferedWriter bwx = new BufferedWriter(fwX);
-                        bwx.write("<?xml version=\"1.0\"?>"
-                        		+ "\r\n");
-                        
-                        bwx.write("<Report>"); 
-                        bwx.write("\r\n"); 
-                        bwx.write("<ROW num=\"Vehicle Registration No\">"
-                        		+ "\r\n<CODE>10100</CODE>");
-                        bwx.write("\r\n"); 
-                        bwx.write("<DATA>"+vehiclereg.getVid().getVehicleID()+"</DATA>");
-                        bwx.write("\r\n"); 
-                        bwx.write("</ROW>");
-                        bwx.write("\r\n"); 
-                        
-                        bwx.write("<ROW num=\"User\">"
-                        		+ "\r\n<CODE>15012</CODE>");
-                        bwx.write("\r\n"); 
-                        bwx.write("<DATA>"+user.getUserName()+"</DATA>");
-                        bwx.write("\r\n"); 
-                        bwx.write("</ROW>");                       
-                        bwx.write("\r\n"); 
-                        
-                        bwx.write("<ROW num=\"Make\">"
-                        		+ "\r\n<CODE>15015</CODE>");
-                        bwx.write("\r\n"); 
-                        bwx.write("<DATA>"+vehicleMaster.getVmodel().getVehicleMakeID().getVehicleMake()+"</DATA>");
-                        bwx.write("\r\n"); 
-                        bwx.write("</ROW>");                       
-                        bwx.write("\r\n"); 
-                        
-                        bwx.write("<ROW num=\"Model\">"
-                        		+ "\r\n<CODE>15016</CODE>");
-                        bwx.write("\r\n"); 
-                        bwx.write("<DATA>"+vehicleMaster.getVmodel().getVehicleModel()+"</DATA>");
-                        bwx.write("\r\n"); 
-                        bwx.write("</ROW>");  
-                        bwx.write("\r\n"); 
-                        
-                        bwx.write("<ROW num=\"Fuel Type\">"
-                        		+ "\r\n<CODE>15017</CODE>");
-                        bwx.write("\r\n"); 
-                        bwx.write("<DATA>"+vehicleMaster.getFtype().getFuel()+"</DATA>");
-                        bwx.write("\r\n"); 
-                        bwx.write("</ROW>");  
-                        bwx.write("\r\n"); 
-                        
-                        bwx.write("<ROW num='Engine Stroke'>"
-                        		+ "<CODE>15018</CODE>");
-                        bwx.write("<DATA>4 Stroke</DATA>");
-                        bwx.write("</ROW>");  
-                        bwx.write("\r\n"); 
-       
-                        bwx.write("<ROW num=\"Category\">"
-                        		+ "\r\n<CODE>10191</CODE>");
-                        bwx.write("\r\n"); 
-                        bwx.write("<DATA>"+vehicleMaster.getVmodel().getVehicleClass().getVehicleClass()+"</DATA>");
-                        bwx.write("\r\n"); 
-                        bwx.write("</ROW>"); 
-                        bwx.write("\r\n"); 
-                        
-                        bwx.write("<ROW num=\"Date of Mfg\">"
-                        		+ "\r\n<CODE>10199</CODE>");
-                        bwx.write("\r\n"); 
-                        bwx.write("<DATA>"+vehicleMaster.getManufactureYear()+"</DATA>");
-                        bwx.write("\r\n"); 
-                        bwx.write("</ROW>"); 
-                        bwx.write("\r\n");  
-                        
-                        
-                        bwx.write("<ROW num=\"Emission Norms\">"
-                        		+ "\r\n<CODE>10190</CODE>");
-                        bwx.write("\r\n"); 
-                        bwx.write("<DATA>"+vehicleMaster.getEmissionNorms()+"</DATA>");
-                        bwx.write("\r\n"); 
-                        bwx.write("</ROW>");
-                        bwx.write("\r\n"); 
-        
-                        bwx.write("<ROW num=\"Wheel\">"
-                        		+ "\r\n<CODE>10192</CODE>");
-                        bwx.write("\r\n"); 
-                        bwx.write("<DATA>"+vehicleMaster.getNoWheel()+"</DATA>");
-                        bwx.write("\r\n"); 
-                        bwx.write("</ROW>");
-                        bwx.write("\r\n"); 
-                        bwx.write("</Report>");  
-                        bwx.close(); 
-				        
-	             
-	                	if(avlStatus.equals("ACTIVE")) {	 
-	                
-	                		 FTPUploader ftpUploader = new FTPUploader(avlIp, avlUserName, avlPassword);
-	                		
-	                		  ftpUploader.uploadFile(xmlFilePath, vehiclereg.getVid().getVehicleID()+".xml", avlxmlin+"/");//public_ftp
-	                		  ftpUploader.disconnect();
-	                	}
-	                	
-	                	if(mahaStatus.equals("ACTIVE")) {	 
-	                		
-	                		
-	                		 FTPUploader ftpUploader = new FTPUploader(mahaIp, mahaUserName, mahaPassword);
-	                		
-	                		 ftpUploader.uploadFile(textFilePath, vehiclereg.getVid().getVehicleID()+".txt", mahaEsEn+"/");//public_ftp
-	                		 ftpUploader.disconnect();
-	                	}
-	                	if(mahaStatus.equals("ACTIVE")||avlStatus.equals("ACTIVE")) {
-	                	
-         	                    file.delete();
-         	                    xmlfile.delete();
-	                	}
-	                	
-	                	
-                		ocrDetails.setVrStatus("completed");
-                		vehicleService.saveOcrDetailsRepo(ocrDetails);
-                        
-                		return "0";
-	                	
-	               
-	        	}
-        		
-        	} catch (Exception e) {
-        		e.printStackTrace();
-        		return "7";
-        	}
-        
-				
-	 }
-	
-	
-	
-	//save vehicle registration data
-	@RequestMapping(value="/vehicleRegAction" ,method=RequestMethod.POST)
-	public @ResponseBody String saveVehicleRegistration(@Valid @ModelAttribute("VehicleRegistration") VehicleRegistration vehiclereg,  BindingResult br,HttpServletRequest request,RedirectAttributes redirectAttributes,HttpSession session) {
-		if(br.hasErrors())  
-        {  
-		 	return "0";  
-        }  
-        else  
-        {	
-        	try {
-        		CenterMaster centerMaster=centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID()); 
-        		OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
-        		List<VehicleRegistration> isVehicale=vehicleService.getTestStatusVehicleRegistation(vehiclereg.getVid().getVehicleID());
-        		
-           
-        		if (session.getAttribute("username")==null) {
-        			return "1";	
-        		}else if (!ocrDetails.getDocStatus().equals("completed")) {
-	        		return "2";  	 
-	        	}else if (isVehicale.size()!=0) {
-	        		return "3";  	 
-	        	}else {
-    	    	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-    	    	    Date date = new Date();  
-    	    	    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
-    	    	    LocalTime time = LocalTime.now();
-    	    	    
-    	    	    //get Token  no
-    	    	    String tansactionId = "0000".substring(transactionservice.maxtrID().length())+transactionservice.maxtrID();
-    	    	    
-    	    	    String vRegID = "0000".substring(vehicleService.maxVRegID().length())+vehicleService.maxVRegID();
-    	    	    
-    	    		Transaction tr = new Transaction();
-    	    		tr.setTrID(tansactionId);
-    	    		tr.setStatus("ACTIVE");
-    	    		tr.setRemarks("New Vehicle Registration ("+vRegID+")");
-    	    		transactionservice.saveTransaction(tr);
-    	    		
-    	    		vehiclereg.setTime(time.format(formattertime));
-    	    		vehiclereg.setDate(formatter.format(date));
-    	    		vehiclereg.setViTestStatus("pending");
-    	    		vehiclereg.setTestStatus("pending");	
-    	    		vehiclereg.setTrid(tr);	    		
-    	    		vehiclereg.setVregID(vRegID);
-    	    		vehiclereg.setPayType("Cash");
-    	    		vehiclereg.setStatus("ACTIVE");
-    	    		vehicleService.saveVehicleRegister(vehiclereg);
-	
-                	TestCategory testCategory=centerService.getCategoryId(vehiclereg.getTestCategory().getCategoryId());	            	
-                	String countrcode=centerMaster.getPartner_ID().getCountry_Code().getCountryCode();
-                	List<TaxConfiguration> getTaxFromCountrylist=vehicleService.getTaxFromCountry(countrcode);
-                	VehicleRegisterType vrtyp=vehicleService.getRegType(vehiclereg.getVtype().getvRegTypeID());
-                	
-                	VehicleMaster vehicleMaster = vehicleService.getVMasterById(vehiclereg.getVid().getVehicleID());
-                	//create Next Receipt No
-                	int maxrecno=centerMaster.getPartner_ID().getMaxRecNo();
-                	String recFormate=centerMaster.getPartner_ID().getRecformate();
-                	String nextRecno=recFormate+(maxrecno+1);
-                	long testFee=testCategory.getCategoryFee();
-                	long testFeePresent=vrtyp.getvTestFeePre();
-                	long nettotal=0;
-                	
-                	long calTestFee=testFee*testFeePresent/100;	
-                	//update  Last Receipt No
-                	businessPartnerService.setUpdateLastRecNo(centerMaster.getPartner_ID().getPartner_ID());
-                	
-                	ReceiptHead receiptHead=new ReceiptHead(nextRecno, vehiclereg, vehiclereg.getDate(),vehiclereg.getTime(),calTestFee,"New Vehicle Register",ocrDetails.getAppNo(),"ACTIVE");
-                	
-                
-                	
-                	//gl posting
-                	 List<GlPostingDetails> glPostingDetailsList=new ArrayList<>();
-                	
-                	
-                	 List<GlaccountMapping> glMappingResult=glAccountService.getGlaccountMappingByDocId(1);
- 	            	
-     	            
-     	            GlPostingHead glPostingHead=new GlPostingHead();
-     	            glPostingHead.setDocNo(nextRecno);
-     	            
-     	            DocType docType=new DocType();
-     	            docType.setDocid(1);
-     	            
-     	            glPostingHead.setDocid(docType);
-     	            glPostingHead.setDate(formatter.format(date));
-     	            glPostingHead.setTime(time.format(formattertime));
-     	           glPostingHead.setCenterID(centerMaster);
-     	            glPostingHead.setStatus("ACTIVE");
-     	            
-     	           
-      
-     	           
-     	            
-  
-     	       	List<ReceiptDetails> eceiptDetailsArrayList = new ArrayList<ReceiptDetails>();
-                	
-                	Long totTax=Long.parseLong("0");
-                	
-	            	for(TaxConfiguration taxdetail:getTaxFromCountrylist) {
-	            		Long taxamt=Long.parseLong("0");
-	            		if(taxdetail.getType().equals("Rate")) {
-	            		 taxamt=calTestFee*taxdetail.getTaxRate()/10000;
-	            		}else {
-	            		 taxamt=taxdetail.getTaxRate();	
-	            			
-	            		} 		
-	            		ReceiptDetails receiptDetails= new ReceiptDetails(receiptHead, taxdetail, taxdetail.getTaxRate(),taxamt);
-	            		nettotal=nettotal+taxamt;
-	            		eceiptDetailsArrayList.add(receiptDetails);
-	            		
-	            		totTax=totTax+taxamt;
-	            		
-		            	GlPostingDetails glPostingDetails3=new GlPostingDetails();
-		            	glPostingDetails3.setJournalNo(glPostingHead);
-		            	
-		            	glPostingDetails3.setGlAccNo(taxdetail.getGlAccNo());
-		            	
-		            	glPostingDetails3.setType("C");
-		            	glPostingDetails3.setAmount(receiptDetails.getTaxAmount());
-		            	glPostingDetailsList.add(glPostingDetails3);
-	            		
-	            		
-	            		
-	            	}
-	            	receiptHead.setNetTotal(nettotal+calTestFee);
-	            	//save ReceiptHead date & ReceiptDetails
-	            	vehicleService.saveReciptHead(receiptHead);
-	            	vehicleService.saveReciptDetailsAll(eceiptDetailsArrayList);
-	            	
-	            	//GL Posting   -- Cash Receipt--------- Doc id=1
-	   	            for(GlaccountMapping gmresult:glMappingResult) {
-     	            	GlPostingDetails glPostingDetails1=new GlPostingDetails();
-     	            	glPostingDetails1.setJournalNo(glPostingHead);
-     	            	
-     	            	glPostingDetails1.setGlAccNo(new Glaccount(gmresult.getdR()));
-     	            	
-     	            	glPostingDetails1.setType("D");
-     	            	glPostingDetails1.setAmount(receiptHead.getNetTotal());
-     	            	glPostingDetailsList.add(glPostingDetails1);
-     	            	
-     	            	
-     	            	GlPostingDetails glPostingDetails2=new GlPostingDetails();
-     	            	glPostingDetails2.setJournalNo(glPostingHead);
-     	            	glPostingDetails2.setGlAccNo(new Glaccount(gmresult.getcR()));
-     	            	glPostingDetails2.setType("C");
-     	            	glPostingDetails2.setAmount(receiptHead.getTestFee());
-     	            	glPostingDetailsList.add(glPostingDetails2);
-     	            	
-     	            	
-     	            		
-     	            	}
-	   	         glPostingHead.setTotalDR(receiptHead.getNetTotal());
-  	            glPostingHead.setTotalCR(receiptHead.getNetTotal());
-	   	         GlPostingHead result = glAccountService.saveGlPostingHeadRepository(glPostingHead);
-     	            glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+					avlIp = vehiclereg.getTestLaneHeadId().getAvlPcIp();
+					avlUserName = vehiclereg.getTestLaneHeadId().getAvlFTPUs();
+					avlPassword = vehiclereg.getTestLaneHeadId().getAvlFTPPass();
+					avlxmlin = vehiclereg.getTestLaneHeadId().getXmlIN();
 
-	            	
-	           
-                	
-                	
-            		ocrDetails.setPaymentStatus("completed");
-            		vehicleService.saveOcrDetailsRepo(ocrDetails);
-                	
-            		return "vehicalRecORG?recno="+nextRecno+"";
-        		}
-        		
-        	} catch (Exception e) {
-        		System.out.println(e.getMessage());
-        		return "0";
-        	}
-        }
-				
-	 }
-	
+					inet = InetAddress.getByName(avlIp);
+					if (inet.isReachable(3000) == true) {
+						avlcorrect = true;
 
-	@RequestMapping(value="/vehicleInvoiceRegAction" ,method=RequestMethod.POST)
-	public @ResponseBody String saveVehicleInvoiceRegistration(@Valid @ModelAttribute("VehicleRegistration") VehicleRegistration vehiclereg,  BindingResult br,HttpServletRequest request,HttpSession session) {
-		if(br.hasErrors())  
-        {  
-		 	return "0";  
-        }  
-        else  
-        {	
-        	try {
-        		CenterMaster centerMaster=centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID()); 
-        		OcrDetails ocrDetails=vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
-        		List<VehicleRegistration> isVehicale=vehicleService.getTestStatusVehicleRegistation(vehiclereg.getVid().getVehicleID());
-        		
-           
-        		if (session.getAttribute("username")==null) {
-        			return "1";	
-        		}else if (!ocrDetails.getDocStatus().equals("completed")) {
-	        		return "2";  	 
-	        	}else if (isVehicale.size()!=0) {
-	        		return "3";  	 
-	        	}else {
-    	    	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-    	    	    Date date = new Date();  
-    	    	    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
-    	    	    LocalTime time = LocalTime.now();
-    	    	    
-    	    	    //get Token  no
-    	    	    String tansactionId = "0000".substring(transactionservice.maxtrID().length())+transactionservice.maxtrID();
-    	    	    
-    	    	    String vRegID = "0000".substring(vehicleService.maxVRegID().length())+vehicleService.maxVRegID();
-    	    	    
-    	    		Transaction tr = new Transaction();
-    	    		tr.setTrID(tansactionId);
-    	    		tr.setStatus("ACTIVE");
-    	    		tr.setRemarks("New Vehicle Registration Invoice ("+vRegID+")");
-    	    		transactionservice.saveTransaction(tr);
-    	    		
-    	    		vehiclereg.setTime(time.format(formattertime));
-    	    		vehiclereg.setDate(formatter.format(date));
-    	    		vehiclereg.setViTestStatus("pending");
-    	    		vehiclereg.setTestStatus("pending");	
-    	    		vehiclereg.setTrid(tr);	    		
-    	    		vehiclereg.setVregID(vRegID);
-    	    		vehiclereg.setPayType("Credit");
-    	    		vehiclereg.setStatus("ACTIVE");
-    	    		vehicleService.saveVehicleRegister(vehiclereg);
-	
-                	TestCategory testCategory=centerService.getCategoryId(vehiclereg.getTestCategory().getCategoryId());	            	
-                	String countrcode=centerMaster.getPartner_ID().getCountry_Code().getCountryCode();
-                	List<TaxConfiguration> getTaxFromCountrylist=vehicleService.getTaxFromCountry(countrcode);
-                	VehicleRegisterType vrtyp=vehicleService.getRegType(vehiclereg.getVtype().getvRegTypeID());
-                	
-                	VehicleMaster vehicleMaster = vehicleService.getVMasterById(vehiclereg.getVid().getVehicleID());
-                	System.out.println("qqqqqqqqqqqqq");
-                	//create Next Receipt No
-                	int maxinvno=centerMaster.getPartner_ID().getMaxInvNo();
-                	String invFormate=centerMaster.getPartner_ID().getInvformate();
-                	String nextinvno=invFormate+(maxinvno+1);
-                	
-                	long testFee=testCategory.getCategoryFee();
-                	long testFeePresent=vrtyp.getvTestFeePre();
-                	long nettotal=0;
-                	
-                	long calTestFee=testFee*testFeePresent/100;	
-                	//update  Last Receipt No
-                	businessPartnerService.setUpdateLastInvNo(centerMaster.getPartner_ID().getPartner_ID());
-                	System.out.println("ttttttttttttt");
-                	Customer  cusdetail=usersService.viewCustomersDetailByID(vehiclereg.getCusid().getId());
-        			InvoiceHead invHead=new InvoiceHead(nextinvno, vehiclereg, vehiclereg.getDate(),vehiclereg.getTime(),calTestFee,"New Vehicle Register","ACTIVE","N/A","Open");
-        			
-        			
-        			
-                	//gl posting
-               	 List<GlPostingDetails> glPostingDetailsList=new ArrayList<>();
-               	
-               	
-               	 List<GlaccountMapping> glMappingResult=glAccountService.getGlaccountMappingByDocId(2);
-        			
-  	            GlPostingHead glPostingHead=new GlPostingHead();
-  	            glPostingHead.setDocNo(nextinvno);
-  	            
-  	            DocType docType=new DocType();
-  	            docType.setDocid(2);
-  	            
-  	            glPostingHead.setDocid(docType);
-  	            glPostingHead.setDate(formatter.format(date));
-  	            glPostingHead.setTime(time.format(formattertime));
-  	            glPostingHead.setCenterID(centerMaster);
-  	            glPostingHead.setStatus("ACTIVE");	
-        			
-        			
-        			
-        			
-        			
-        			
-        			
-                
-        			List<InvoiceDetails> invDetailsList = new ArrayList<InvoiceDetails>();
-                	
-                	for(TaxConfiguration taxdetail:getTaxFromCountrylist) {
-                		Long taxamt=Long.parseLong("0");
-                		if(taxdetail.getType().equals("Rate")) {
-                		 taxamt=calTestFee*taxdetail.getTaxRate()/10000;
-                		}else {
-                		 taxamt=taxdetail.getTaxRate();	
-                			
-                		}
-                		
-                		InvoiceDetails invDetails= new InvoiceDetails(invHead, taxdetail, taxdetail.getTaxRate(),taxamt);
-                		nettotal=nettotal+taxamt;
-                		invDetailsList.add(invDetails);
-                		
-		            	GlPostingDetails glPostingDetails3=new GlPostingDetails();
-		            	glPostingDetails3.setJournalNo(glPostingHead);
-		            	
-		            	glPostingDetails3.setGlAccNo(taxdetail.getGlAccNo());
-		            	
-		            	glPostingDetails3.setType("C");
-		            	glPostingDetails3.setAmount(invDetails.getTaxAmount());
-		            	glPostingDetailsList.add(glPostingDetails3);
-                		
-                		
-                		
-                		
-                		
-                		
-                		
-                		
-                		
-                		
-                		
-                	}	          
-                	invHead.setNetTotal(nettotal+calTestFee);
-                	invHead.setBalance(nettotal+calTestFee);
-                	System.out.println("wwwwwwwwwwwww");
+					} else {
+						avlcorrect = false;
+						return "7";
+					}
 
-                	System.out.println("jjjjjjjjjjjjjjjjjj");
-                	invHead.setPayAmount(Long.parseLong("0"));
-                    //save invHead date & invDetails
-                	vehicleService.saveInvoiceHead(invHead);
-                	vehicleService.saveInvoiceDetailsAll(invDetailsList);
-                	System.out.println("oooooooooooooooooooo="+invHead.getNetTotal());
-            		ocrDetails.setPaymentStatus("completed");
-            		vehicleService.saveOcrDetailsRepo(ocrDetails);
-                	
-                	Long balance=cusdetail.getCrBalance()-invHead.getNetTotal();
-                	cusdetail.setCrBalance(balance);
-                	usersService.saveCustomer(cusdetail);
-            		
-	            	//GL Posting   -- Cash Receipt--------- Doc id=1
-	   	            for(GlaccountMapping gmresult:glMappingResult) {
-     	            	GlPostingDetails glPostingDetails1=new GlPostingDetails();
-     	            	glPostingDetails1.setJournalNo(glPostingHead);
-     	            	
-     	            	glPostingDetails1.setGlAccNo(new Glaccount(gmresult.getdR()));
-     	            	
-     	            	glPostingDetails1.setType("D");
-     	            	glPostingDetails1.setAmount(invHead.getNetTotal());
-     	            	glPostingDetailsList.add(glPostingDetails1);
-     	            	
-     	            	
-     	            	GlPostingDetails glPostingDetails2=new GlPostingDetails();
-     	            	glPostingDetails2.setJournalNo(glPostingHead);
-     	            	glPostingDetails2.setGlAccNo(new Glaccount(gmresult.getcR()));
-     	            	glPostingDetails2.setType("C");
-     	            	glPostingDetails2.setAmount(invHead.getTestFee());
-     	            	glPostingDetailsList.add(glPostingDetails2);
-     	            	
-     	            	
-     	            		
-     	            	}
-	   	         glPostingHead.setTotalDR(invHead.getNetTotal());
-	   	         glPostingHead.setTotalCR(invHead.getNetTotal());
-	   	         glAccountService.saveGlPostingHeadRepository(glPostingHead);
-     	         glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+				}
 
-	            	
-            		
-            		
-            		
-            		
-            		
-            		
-            		
-            		
-            		
-            		
-            		
-            		
-            		
-            		return "vehicalInvORG?invNo="+nextinvno+"";
-        		}
-        		
-        	} catch (Exception e) {
-        		return "0";
-        	}
-        }
-	
-        
-     
-		
-		
-		
-		
-		
-		
-				
-	 }
-	  @RequestMapping(value = "/vehicalInvCOPY", method=RequestMethod.GET) 
-	  public String getVehicalInvCOPY(Map<String, String> model) { 
+				if (mahaStatus.equals("ACTIVE")) {
 
-		  return "VehicleInvoiceRePrint";
-	  }
-	  @RequestMapping(value = "/vehicalInvORG", method=RequestMethod.GET) 
-	  public ModelAndView getVehicleInvoiceORG(@RequestParam String invNo,HttpServletResponse response, HttpSession session) { 
-		  ModelAndView mav = new ModelAndView("VehicleInvoice");
-		  InvoiceHead invoiceHead=vehicleService.getInvoiceHeadByInvNo(invNo);
-		  VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(invoiceHead.getvRegisterID().getVregID());
-		  mav.addObject("vecno" ,vehiclereg.getVid().getVehicleID());
-		  mav.addObject("invNo" ,invNo);
-		  mav.addObject("invDate" ,vehiclereg.getDate());
-		 
-		  String invValue=vehicalInvoiceGeaerate(invNo,response, session);
-		  String tokValue=vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),invoiceHead.getNetTotal(),invoiceHead.getvRegisterID().getVregID(),response,session);
+					mahaIp = vehiclereg.getTestLaneHeadId().getMahaPcIp();
+					mahaUserName = vehiclereg.getTestLaneHeadId().getMahaFTPUs();
+					mahaPassword = vehiclereg.getTestLaneHeadId().getMahaFTPPass();
+					mahaEsEn = vehiclereg.getTestLaneHeadId().getMahaES_IN();
+					mahaESOut = vehiclereg.getTestLaneHeadId().getMahaES_OUT();
 
-		  mav.addObject("pdfViewEq", invValue); 
-		  mav.addObject("pdftokValue", tokValue);
+					inet = InetAddress.getByName(mahaIp);
+					if (inet.isReachable(3000) == true) {
+						mahacorrect = true;
 
-		  return mav;
-	  }	
-	
-	  public String vehicalInvoiceGeaerate(String invNo,HttpServletResponse response, HttpSession session) {
+					} else {
+						mahacorrect = false;
+						return "8";
 
-		  LocalDateTime now = LocalDateTime.now(); 
-		  	InvoiceHead invHed=vehicleService.getInvoiceHeadByInvNo(invNo);
-		//System.out.println("fffffffffffffffff"+invHed.getStatus());
-		  	int days=DateHelperWeb.stringDateDiff(invHed.getInvoiceDate(),now.toString());
-		  	if(!invHed.getStatus().toString().equals("ACTIVE")) {
-		  		
-		  		
-					  
-					  return "INACTIVE";  
-					  
-				 
-		  		
-		  		
-		  	}else if(days!=0) {
-		  		
-		  		return "BACKDATE";
-		  		
-		  	}else {
-		  	//	invHed.getvRegisterID();
-		  	VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(invHed.getvRegisterID().getVregID());
-		  	Customer  cusdetail=usersService.viewCustomersDetailByID(vehiclereg.getCusid().getId());
-		  
-		  	CenterMaster centerMaster=centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
-		  	VehicleOwner vehicleOwner=vehicleService.getVehicleOwnerIDByVehicleID(vehiclereg.getVid().getVehicleID());
-		  	
-		  	List<InvoiceDetails> invDetails=vehicleService.getInvoiceDetails(invNo);
-		  	
-		  	List<VehicleInvoiceBeen> vehicleInvoiceBeenList = new ArrayList<VehicleInvoiceBeen>();
-		  	
-		  	
+					}
 
-		  	
-		  	VehicleInvoiceBeen vehicleInvoiceBeen1=new VehicleInvoiceBeen();
-		  	vehicleInvoiceBeen1.setRate(0);
-		  	vehicleInvoiceBeen1.setAmount(Double.parseDouble((invHed.getTestFee())+"")/100);
-		  	vehicleInvoiceBeen1.setDescription("Test Fee");
-		  	vehicleInvoiceBeen1.setStyle(false);
-		  	vehicleInvoiceBeen1.setType("");
-		  	vehicleInvoiceBeen1.setCurrency(centerMaster.getCountrycode().getCurrency());
-		  	vehicleInvoiceBeenList.add(vehicleInvoiceBeen1);
-		  	
-		  	
-		  	
-		  	for(InvoiceDetails vrData:invDetails) {
-		  		VehicleInvoiceBeen vehicleInvoiceBeen2=new VehicleInvoiceBeen();
-		  		vehicleInvoiceBeen2.setRate(Double.parseDouble((vrData.getTaxRate())+"")/100);
-		  		vehicleInvoiceBeen2.setAmount(Double.parseDouble((vrData.getTaxAmount())+"")/100);
-		  		vehicleInvoiceBeen2.setDescription(vrData.getTaxCode().getTax());
-		  		if(vrData.getTaxCode().getType().equals("Rate")) {
-		  			vehicleInvoiceBeen2.setType("%");
-		  		}else {
-		  			vehicleInvoiceBeen2.setType("");	
-		  		}
-		  		
-		  		vehicleInvoiceBeen2.setCurrency(centerMaster.getCountrycode().getCurrency());
-		  		vehicleInvoiceBeen2.setStyle(false);
-		  		vehicleInvoiceBeenList.add(vehicleInvoiceBeen2);
-		  	}
-		  	VehicleInvoiceBeen vehicleInvoiceBeen3=new VehicleInvoiceBeen();
-		  	vehicleInvoiceBeen3.setRate(Double.parseDouble((0)+""));
-		  	vehicleInvoiceBeen3.setAmount(Double.parseDouble((invHed.getNetTotal())+"")/100);
-		  	vehicleInvoiceBeen3.setDescription("Net Total");
-		  	vehicleInvoiceBeen3.setStyle(true);
-		  	vehicleInvoiceBeen3.setCurrency(centerMaster.getCountrycode().getCurrency());
-		  	vehicleInvoiceBeen3.setType("");
-		  	vehicleInvoiceBeenList.add(vehicleInvoiceBeen3);
-		  			  
-    //recipt Print
-		  
-        	ReportViewe review=new ReportViewe();
-        	Map<String,Object> params = new HashMap<>();
-        	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
-        	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
-        	params.put("address",centerMaster.getAdd03() );
-     
-      	  	params.put("name",cusdetail.getName());    
-      	  	params.put("cusaddress",cusdetail.getAddress());
-      	  	params.put("taxcode",cusdetail.getTaxcode());
-      	  	params.put("mobileno",cusdetail.getTpno());
-      	  	
-        	params.put("invNo", invHed.getInvoiceNo());
-        	params.put("vecno",vehiclereg.getVid().getVehicleID()  );
-      	  	SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");      			          	
-        	params.put("date",sdf.format(DateHelperWeb.getDate(invHed.getInvoiceDate())) );
-        	params.put("vectype",vehiclereg.getVtype().getvRegType() );
-        	params.put("category",vehiclereg.getTestCategory().getCategoryType());
-        	params.put("slottime",invHed.getInvoiceTime() );	
-        	params.put("apono",invHed.getAppoID());
-        	params.put("footer",centerMaster.getPartner_ID().getReceiptFooter());
-        	params.put("classmod",vehiclereg.getVid().getVmodel().getVehicleMakeID().getVehicleMake()+"/"+vehiclereg.getVid().getVmodel().getVehicleModel());
-        	params.put("numinword",StringFormaterWeb.capitalizeWord(EnglishNumberToWords.convert(Long.parseLong((invHed.getNetTotal())+"")/100)));
-        	params.put("tokno",vehiclereg.getTrid().getTrID());
-        	params.put("paytyp",vehiclereg.getPayType());
-        	
-        	
-        	
-        	
-        	String reptValue="";
-        	
-       try {
-        		reptValue=review.pdfReportViewInlineSystemOpen("VehicleInvoice.jasper","Vehicle Invoice",vehicleInvoiceBeenList,params,response);
-        		
-        
-        	}catch(Exception e) {	          		
-        		e.printStackTrace();          		
-        	}
-		  return reptValue;
-		  }
-		  
-	  }
-	  
-	  
-	
-	
-				 
-	@RequestMapping(value="/vehicleReport")
-	public String loadVehicleMasterReport()
-	{
+				}
+
+				Users user = usersService.searchUser(vehiclereg.getUser().getUserId());
+
+				String path1 = this.getClass().getClassLoader().getResource("").getPath();
+				String fullPath = URLDecoder.decode(path1, "UTF-8");
+				String pathArr[] = fullPath.split("/WEB-INF/classes/");
+				String textFilePath = centerMaster.getEsInPath() + "\\" + vehiclereg.getVid().getVehicleID() + ".txt";
+
+				File file = new File(textFilePath);
+				if (!file.exists()) {
+					file.createNewFile();
+				}
+
+				FileWriter fw = new FileWriter(file.getAbsoluteFile());
+				BufferedWriter bw = new BufferedWriter(fw);
+				bw.write("[HEADER]");
+				bw.write("\r\n");
+				bw.write("10100=" + vehiclereg.getVid().getVehicleID());
+				bw.write("\r\n");
+				bw.write("15012=" + user.getUserName());
+				bw.write("\r\n");
+				bw.write("10190=" + vehicleMaster.getNoWheel());
+				bw.write("\r\n");
+				bw.write("10191=" + vehicleMaster.getVmodel().getVehicleClass().getCategoryID().getCategoryID());
+
+				bw.write("\r\n");
+				bw.write("\r\n");
+				bw.write("[ENDOFFILE]");
+
+				bw.close();
+
+				// String xpath= pathArr[0]+"/Upload/XML_ES_IN/";
+				String xmlFilePath = centerMaster.getEsInXmlPath() + "\\" + vehiclereg.getVid().getVehicleID() + ".xml";
+
+				File xmlfile = new File(xmlFilePath);
+				if (!xmlfile.exists()) {
+					xmlfile.createNewFile();
+				}
+
+				FileWriter fwX = new FileWriter(xmlfile.getAbsoluteFile());
+				BufferedWriter bwx = new BufferedWriter(fwX);
+				bwx.write("<?xml version=\"1.0\"?>" + "\r\n");
+
+				bwx.write("<Report>");
+				bwx.write("\r\n");
+				bwx.write("<ROW num=\"Vehicle Registration No\">" + "\r\n<CODE>10100</CODE>");
+				bwx.write("\r\n");
+				bwx.write("<DATA>" + vehiclereg.getVid().getVehicleID() + "</DATA>");
+				bwx.write("\r\n");
+				bwx.write("</ROW>");
+				bwx.write("\r\n");
+
+				bwx.write("<ROW num=\"User\">" + "\r\n<CODE>15012</CODE>");
+				bwx.write("\r\n");
+				bwx.write("<DATA>" + user.getUserName() + "</DATA>");
+				bwx.write("\r\n");
+				bwx.write("</ROW>");
+				bwx.write("\r\n");
+
+				bwx.write("<ROW num=\"Make\">" + "\r\n<CODE>15015</CODE>");
+				bwx.write("\r\n");
+				bwx.write("<DATA>" + vehicleMaster.getVmodel().getVehicleMakeID().getVehicleMake() + "</DATA>");
+				bwx.write("\r\n");
+				bwx.write("</ROW>");
+				bwx.write("\r\n");
+
+				bwx.write("<ROW num=\"Model\">" + "\r\n<CODE>15016</CODE>");
+				bwx.write("\r\n");
+				bwx.write("<DATA>" + vehicleMaster.getVmodel().getVehicleModel() + "</DATA>");
+				bwx.write("\r\n");
+				bwx.write("</ROW>");
+				bwx.write("\r\n");
+
+				bwx.write("<ROW num=\"Fuel Type\">" + "\r\n<CODE>15017</CODE>");
+				bwx.write("\r\n");
+				bwx.write("<DATA>" + vehicleMaster.getFtype().getFuel() + "</DATA>");
+				bwx.write("\r\n");
+				bwx.write("</ROW>");
+				bwx.write("\r\n");
+
+				bwx.write("<ROW num='Engine Stroke'>" + "<CODE>15018</CODE>");
+				bwx.write("<DATA>4 Stroke</DATA>");
+				bwx.write("</ROW>");
+				bwx.write("\r\n");
+
+				bwx.write("<ROW num=\"Category\">" + "\r\n<CODE>10191</CODE>");
+				bwx.write("\r\n");
+				bwx.write("<DATA>" + vehicleMaster.getVmodel().getVehicleClass().getVehicleClass() + "</DATA>");
+				bwx.write("\r\n");
+				bwx.write("</ROW>");
+				bwx.write("\r\n");
+
+				bwx.write("<ROW num=\"Date of Mfg\">" + "\r\n<CODE>10199</CODE>");
+				bwx.write("\r\n");
+				bwx.write("<DATA>" + vehicleMaster.getManufactureYear() + "</DATA>");
+				bwx.write("\r\n");
+				bwx.write("</ROW>");
+				bwx.write("\r\n");
+
+				bwx.write("<ROW num=\"Emission Norms\">" + "\r\n<CODE>10190</CODE>");
+				bwx.write("\r\n");
+				bwx.write("<DATA>" + vehicleMaster.getEmissionNorms() + "</DATA>");
+				bwx.write("\r\n");
+				bwx.write("</ROW>");
+				bwx.write("\r\n");
+
+				bwx.write("<ROW num=\"Wheel\">" + "\r\n<CODE>10192</CODE>");
+				bwx.write("\r\n");
+				bwx.write("<DATA>" + vehicleMaster.getNoWheel() + "</DATA>");
+				bwx.write("\r\n");
+				bwx.write("</ROW>");
+				bwx.write("\r\n");
+				bwx.write("</Report>");
+				bwx.close();
+
+				if (avlStatus.equals("ACTIVE")) {
+
+					FTPUploader ftpUploader = new FTPUploader(avlIp, avlUserName, avlPassword);
+
+					ftpUploader.uploadFile(xmlFilePath, vehiclereg.getVid().getVehicleID() + ".xml", avlxmlin + "/");// public_ftp
+					ftpUploader.disconnect();
+				}
+
+				if (mahaStatus.equals("ACTIVE")) {
+
+					FTPUploader ftpUploader = new FTPUploader(mahaIp, mahaUserName, mahaPassword);
+
+					ftpUploader.uploadFile(textFilePath, vehiclereg.getVid().getVehicleID() + ".txt", mahaEsEn + "/");// public_ftp
+					ftpUploader.disconnect();
+				}
+				if (mahaStatus.equals("ACTIVE") || avlStatus.equals("ACTIVE")) {
+
+					file.delete();
+					xmlfile.delete();
+				}
+
+				ocrDetails.setVrStatus("completed");
+				vehicleService.saveOcrDetailsRepo(ocrDetails);
+
+				return "0";
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "7";
+		}
+
+	}
+
+	// save vehicle registration data
+	@RequestMapping(value = "/vehicleRegAction", method = RequestMethod.POST)
+	public @ResponseBody String saveVehicleRegistration(
+			@Valid @ModelAttribute("VehicleRegistration") VehicleRegistration vehiclereg, BindingResult br,
+			HttpServletRequest request, RedirectAttributes redirectAttributes, HttpSession session) {
+		if (br.hasErrors()) {
+			return "0";
+		} else {
+			try {
+				CenterMaster centerMaster = centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
+				OcrDetails ocrDetails = vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
+				List<VehicleRegistration> isVehicale = vehicleService
+						.getTestStatusVehicleRegistation(vehiclereg.getVid().getVehicleID());
+
+				if (session.getAttribute("username") == null) {
+					return "1";
+				} else if (!ocrDetails.getDocStatus().equals("completed")) {
+					return "2";
+				} else if (isVehicale.size() != 0) {
+					return "3";
+				} else {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					Date date = new Date();
+					DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
+					LocalTime time = LocalTime.now();
+
+					// get Token no
+					String tansactionId = "0000".substring(transactionservice.maxtrID().length())
+							+ transactionservice.maxtrID();
+
+					String vRegID = "0000".substring(vehicleService.maxVRegID().length()) + vehicleService.maxVRegID();
+
+					Transaction tr = new Transaction();
+					tr.setTrID(tansactionId);
+					tr.setStatus("ACTIVE");
+					tr.setRemarks("New Vehicle Registration (" + vRegID + ")");
+					transactionservice.saveTransaction(tr);
+
+					vehiclereg.setTime(time.format(formattertime));
+					vehiclereg.setDate(formatter.format(date));
+					vehiclereg.setViTestStatus("pending");
+					vehiclereg.setTestStatus("pending");
+					vehiclereg.setTrid(tr);
+					vehiclereg.setVregID(vRegID);
+					vehiclereg.setPayType("Cash");
+					vehiclereg.setStatus("ACTIVE");
+					vehicleService.saveVehicleRegister(vehiclereg);
+
+					TestCategory testCategory = centerService
+							.getCategoryId(vehiclereg.getTestCategory().getCategoryId());
+					String countrcode = centerMaster.getPartner_ID().getCountry_Code().getCountryCode();
+					List<TaxConfiguration> getTaxFromCountrylist = vehicleService.getTaxFromCountry(countrcode);
+					VehicleRegisterType vrtyp = vehicleService.getRegType(vehiclereg.getVtype().getvRegTypeID());
+
+					VehicleMaster vehicleMaster = vehicleService.getVMasterById(vehiclereg.getVid().getVehicleID());
+					// create Next Receipt No
+					int maxrecno = centerMaster.getPartner_ID().getMaxRecNo();
+					String recFormate = centerMaster.getPartner_ID().getRecformate();
+					String nextRecno = recFormate + (maxrecno + 1);
+					long testFee = testCategory.getCategoryFee();
+					long testFeePresent = vrtyp.getvTestFeePre();
+					long nettotal = 0;
+
+					long calTestFee = testFee * testFeePresent / 100;
+					// update Last Receipt No
+					businessPartnerService.setUpdateLastRecNo(centerMaster.getPartner_ID().getPartner_ID());
+
+					ReceiptHead receiptHead = new ReceiptHead(nextRecno, vehiclereg, vehiclereg.getDate(),
+							vehiclereg.getTime(), calTestFee, "New Vehicle Register", ocrDetails.getAppNo(), "ACTIVE");
+
+					// gl posting
+					List<GlPostingDetails> glPostingDetailsList = new ArrayList<>();
+
+					List<GlaccountMapping> glMappingResult = glAccountService.getGlaccountMappingByDocId(1);
+
+					GlPostingHead glPostingHead = new GlPostingHead();
+					glPostingHead.setDocNo(nextRecno);
+
+					DocType docType = new DocType();
+					docType.setDocid(1);
+
+					glPostingHead.setDocid(docType);
+					glPostingHead.setDate(formatter.format(date));
+					glPostingHead.setTime(time.format(formattertime));
+					glPostingHead.setCenterID(centerMaster);
+					glPostingHead.setStatus("ACTIVE");
+
+					List<ReceiptDetails> eceiptDetailsArrayList = new ArrayList<ReceiptDetails>();
+
+					Long totTax = Long.parseLong("0");
+
+					for (TaxConfiguration taxdetail : getTaxFromCountrylist) {
+						Long taxamt = Long.parseLong("0");
+						if (taxdetail.getType().equals("Rate")) {
+							taxamt = calTestFee * taxdetail.getTaxRate() / 10000;
+						} else {
+							taxamt = taxdetail.getTaxRate();
+
+						}
+						ReceiptDetails receiptDetails = new ReceiptDetails(receiptHead, taxdetail,
+								taxdetail.getTaxRate(), taxamt);
+						nettotal = nettotal + taxamt;
+						eceiptDetailsArrayList.add(receiptDetails);
+
+						totTax = totTax + taxamt;
+
+						GlPostingDetails glPostingDetails3 = new GlPostingDetails();
+						glPostingDetails3.setJournalNo(glPostingHead);
+
+						glPostingDetails3.setGlAccNo(taxdetail.getGlAccNo());
+
+						glPostingDetails3.setType("C");
+						glPostingDetails3.setAmount(receiptDetails.getTaxAmount());
+						glPostingDetailsList.add(glPostingDetails3);
+
+					}
+					receiptHead.setNetTotal(nettotal + calTestFee);
+					// save ReceiptHead date & ReceiptDetails
+					vehicleService.saveReciptHead(receiptHead);
+					vehicleService.saveReciptDetailsAll(eceiptDetailsArrayList);
+
+					// GL Posting -- Cash Receipt--------- Doc id=1
+					for (GlaccountMapping gmresult : glMappingResult) {
+						GlPostingDetails glPostingDetails1 = new GlPostingDetails();
+						glPostingDetails1.setJournalNo(glPostingHead);
+
+						glPostingDetails1.setGlAccNo(new Glaccount(gmresult.getdR()));
+
+						glPostingDetails1.setType("D");
+						glPostingDetails1.setAmount(receiptHead.getNetTotal());
+						glPostingDetailsList.add(glPostingDetails1);
+
+						GlPostingDetails glPostingDetails2 = new GlPostingDetails();
+						glPostingDetails2.setJournalNo(glPostingHead);
+						glPostingDetails2.setGlAccNo(new Glaccount(gmresult.getcR()));
+						glPostingDetails2.setType("C");
+						glPostingDetails2.setAmount(receiptHead.getTestFee());
+						glPostingDetailsList.add(glPostingDetails2);
+
+					}
+					glPostingHead.setTotalDR(receiptHead.getNetTotal());
+					glPostingHead.setTotalCR(receiptHead.getNetTotal());
+					GlPostingHead result = glAccountService.saveGlPostingHeadRepository(glPostingHead);
+					glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+
+					ocrDetails.setPaymentStatus("completed");
+					vehicleService.saveOcrDetailsRepo(ocrDetails);
+
+					return "vehicalRecORG?recno=" + nextRecno + "";
+				}
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				return "0";
+			}
+		}
+
+	}
+
+	@RequestMapping(value = "/vehicleInvoiceRegAction", method = RequestMethod.POST)
+	public @ResponseBody String saveVehicleInvoiceRegistration(
+			@Valid @ModelAttribute("VehicleRegistration") VehicleRegistration vehiclereg, BindingResult br,
+			HttpServletRequest request, HttpSession session) {
+		if (br.hasErrors()) {
+			return "0";
+		} else {
+			try {
+				CenterMaster centerMaster = centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
+				OcrDetails ocrDetails = vehicleService.getOcrDetailsById(vehiclereg.getOcrid().getOcrid());
+				List<VehicleRegistration> isVehicale = vehicleService
+						.getTestStatusVehicleRegistation(vehiclereg.getVid().getVehicleID());
+
+				if (session.getAttribute("username") == null) {
+					return "1";
+				} else if (!ocrDetails.getDocStatus().equals("completed")) {
+					return "2";
+				} else if (isVehicale.size() != 0) {
+					return "3";
+				} else {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					Date date = new Date();
+					DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
+					LocalTime time = LocalTime.now();
+
+					// get Token no
+					String tansactionId = "0000".substring(transactionservice.maxtrID().length())
+							+ transactionservice.maxtrID();
+
+					String vRegID = "0000".substring(vehicleService.maxVRegID().length()) + vehicleService.maxVRegID();
+
+					Transaction tr = new Transaction();
+					tr.setTrID(tansactionId);
+					tr.setStatus("ACTIVE");
+					tr.setRemarks("New Vehicle Registration Invoice (" + vRegID + ")");
+					transactionservice.saveTransaction(tr);
+
+					vehiclereg.setTime(time.format(formattertime));
+					vehiclereg.setDate(formatter.format(date));
+					vehiclereg.setViTestStatus("pending");
+					vehiclereg.setTestStatus("pending");
+					vehiclereg.setTrid(tr);
+					vehiclereg.setVregID(vRegID);
+					vehiclereg.setPayType("Credit");
+					vehiclereg.setStatus("ACTIVE");
+					vehicleService.saveVehicleRegister(vehiclereg);
+
+					TestCategory testCategory = centerService
+							.getCategoryId(vehiclereg.getTestCategory().getCategoryId());
+					String countrcode = centerMaster.getPartner_ID().getCountry_Code().getCountryCode();
+					List<TaxConfiguration> getTaxFromCountrylist = vehicleService.getTaxFromCountry(countrcode);
+					VehicleRegisterType vrtyp = vehicleService.getRegType(vehiclereg.getVtype().getvRegTypeID());
+
+					VehicleMaster vehicleMaster = vehicleService.getVMasterById(vehiclereg.getVid().getVehicleID());
+					System.out.println("qqqqqqqqqqqqq");
+					// create Next Receipt No
+					int maxinvno = centerMaster.getPartner_ID().getMaxInvNo();
+					String invFormate = centerMaster.getPartner_ID().getInvformate();
+					String nextinvno = invFormate + (maxinvno + 1);
+
+					long testFee = testCategory.getCategoryFee();
+					long testFeePresent = vrtyp.getvTestFeePre();
+					long nettotal = 0;
+
+					long calTestFee = testFee * testFeePresent / 100;
+					// update Last Receipt No
+					businessPartnerService.setUpdateLastInvNo(centerMaster.getPartner_ID().getPartner_ID());
+					System.out.println("ttttttttttttt");
+					Customer cusdetail = usersService.viewCustomersDetailByID(vehiclereg.getCusid().getId());
+					InvoiceHead invHead = new InvoiceHead(nextinvno, vehiclereg, vehiclereg.getDate(),
+							vehiclereg.getTime(), calTestFee, "New Vehicle Register", "ACTIVE", "N/A", "Open");
+
+					// gl posting
+					List<GlPostingDetails> glPostingDetailsList = new ArrayList<>();
+
+					List<GlaccountMapping> glMappingResult = glAccountService.getGlaccountMappingByDocId(2);
+
+					GlPostingHead glPostingHead = new GlPostingHead();
+					glPostingHead.setDocNo(nextinvno);
+
+					DocType docType = new DocType();
+					docType.setDocid(2);
+
+					glPostingHead.setDocid(docType);
+					glPostingHead.setDate(formatter.format(date));
+					glPostingHead.setTime(time.format(formattertime));
+					glPostingHead.setCenterID(centerMaster);
+					glPostingHead.setStatus("ACTIVE");
+
+					List<InvoiceDetails> invDetailsList = new ArrayList<InvoiceDetails>();
+
+					for (TaxConfiguration taxdetail : getTaxFromCountrylist) {
+						Long taxamt = Long.parseLong("0");
+						if (taxdetail.getType().equals("Rate")) {
+							taxamt = calTestFee * taxdetail.getTaxRate() / 10000;
+						} else {
+							taxamt = taxdetail.getTaxRate();
+
+						}
+
+						InvoiceDetails invDetails = new InvoiceDetails(invHead, taxdetail, taxdetail.getTaxRate(),
+								taxamt);
+						nettotal = nettotal + taxamt;
+						invDetailsList.add(invDetails);
+
+						GlPostingDetails glPostingDetails3 = new GlPostingDetails();
+						glPostingDetails3.setJournalNo(glPostingHead);
+
+						glPostingDetails3.setGlAccNo(taxdetail.getGlAccNo());
+
+						glPostingDetails3.setType("C");
+						glPostingDetails3.setAmount(invDetails.getTaxAmount());
+						glPostingDetailsList.add(glPostingDetails3);
+
+					}
+					invHead.setNetTotal(nettotal + calTestFee);
+					invHead.setBalance(nettotal + calTestFee);
+					System.out.println("wwwwwwwwwwwww");
+
+					System.out.println("jjjjjjjjjjjjjjjjjj");
+					invHead.setPayAmount(Long.parseLong("0"));
+					// save invHead date & invDetails
+					vehicleService.saveInvoiceHead(invHead);
+					vehicleService.saveInvoiceDetailsAll(invDetailsList);
+					System.out.println("oooooooooooooooooooo=" + invHead.getNetTotal());
+					ocrDetails.setPaymentStatus("completed");
+					vehicleService.saveOcrDetailsRepo(ocrDetails);
+
+					Long balance = cusdetail.getCrBalance() - invHead.getNetTotal();
+					cusdetail.setCrBalance(balance);
+					usersService.saveCustomer(cusdetail);
+
+					// GL Posting -- Cash Receipt--------- Doc id=1
+					for (GlaccountMapping gmresult : glMappingResult) {
+						GlPostingDetails glPostingDetails1 = new GlPostingDetails();
+						glPostingDetails1.setJournalNo(glPostingHead);
+
+						glPostingDetails1.setGlAccNo(new Glaccount(gmresult.getdR()));
+
+						glPostingDetails1.setType("D");
+						glPostingDetails1.setAmount(invHead.getNetTotal());
+						glPostingDetailsList.add(glPostingDetails1);
+
+						GlPostingDetails glPostingDetails2 = new GlPostingDetails();
+						glPostingDetails2.setJournalNo(glPostingHead);
+						glPostingDetails2.setGlAccNo(new Glaccount(gmresult.getcR()));
+						glPostingDetails2.setType("C");
+						glPostingDetails2.setAmount(invHead.getTestFee());
+						glPostingDetailsList.add(glPostingDetails2);
+
+					}
+					glPostingHead.setTotalDR(invHead.getNetTotal());
+					glPostingHead.setTotalCR(invHead.getNetTotal());
+					glAccountService.saveGlPostingHeadRepository(glPostingHead);
+					glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+
+					return "vehicalInvORG?invNo=" + nextinvno + "";
+				}
+
+			} catch (Exception e) {
+				return "0";
+			}
+		}
+
+	}
+
+	@RequestMapping(value = "/vehicalInvCOPY", method = RequestMethod.GET)
+	public String getVehicalInvCOPY(Map<String, String> model) {
+
+		return "VehicleInvoiceRePrint";
+	}
+
+	@RequestMapping(value = "/vehicalInvORG", method = RequestMethod.GET)
+	public ModelAndView getVehicleInvoiceORG(@RequestParam String invNo, HttpServletResponse response,
+			HttpSession session) {
+		ModelAndView mav = new ModelAndView("VehicleInvoice");
+		InvoiceHead invoiceHead = vehicleService.getInvoiceHeadByInvNo(invNo);
+		VehicleRegistration vehiclereg = vehicleService.VehicleRegInfoByID(invoiceHead.getvRegisterID().getVregID());
+		mav.addObject("vecno", vehiclereg.getVid().getVehicleID());
+		mav.addObject("invNo", invNo);
+		mav.addObject("invDate", vehiclereg.getDate());
+
+		String invValue = vehicalInvoiceGeaerate(invNo, response, session);
+		String tokValue = vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),
+				invoiceHead.getNetTotal(), invoiceHead.getvRegisterID().getVregID(), response, session);
+
+		mav.addObject("pdfViewEq", invValue);
+		mav.addObject("pdftokValue", tokValue);
+
+		return mav;
+	}
+
+	public String vehicalInvoiceGeaerate(String invNo, HttpServletResponse response, HttpSession session) {
+
+		LocalDateTime now = LocalDateTime.now();
+		InvoiceHead invHed = vehicleService.getInvoiceHeadByInvNo(invNo);
+		// System.out.println("fffffffffffffffff"+invHed.getStatus());
+		int days = DateHelperWeb.stringDateDiff(invHed.getInvoiceDate(), now.toString());
+		if (!invHed.getStatus().toString().equals("ACTIVE")) {
+
+			return "INACTIVE";
+
+		} else if (days != 0) {
+
+			return "BACKDATE";
+
+		} else {
+			// invHed.getvRegisterID();
+			VehicleRegistration vehiclereg = vehicleService.VehicleRegInfoByID(invHed.getvRegisterID().getVregID());
+			Customer cusdetail = usersService.viewCustomersDetailByID(vehiclereg.getCusid().getId());
+
+			CenterMaster centerMaster = centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
+			VehicleOwner vehicleOwner = vehicleService.getVehicleOwnerIDByVehicleID(vehiclereg.getVid().getVehicleID());
+
+			List<InvoiceDetails> invDetails = vehicleService.getInvoiceDetails(invNo);
+
+			List<VehicleInvoiceBeen> vehicleInvoiceBeenList = new ArrayList<VehicleInvoiceBeen>();
+
+			VehicleInvoiceBeen vehicleInvoiceBeen1 = new VehicleInvoiceBeen();
+			vehicleInvoiceBeen1.setRate(0);
+			vehicleInvoiceBeen1.setAmount(Double.parseDouble((invHed.getTestFee()) + "") / 100);
+			vehicleInvoiceBeen1.setDescription("Test Fee");
+			vehicleInvoiceBeen1.setStyle(false);
+			vehicleInvoiceBeen1.setType("");
+			vehicleInvoiceBeen1.setCurrency(centerMaster.getCountrycode().getCurrency());
+			vehicleInvoiceBeenList.add(vehicleInvoiceBeen1);
+
+			for (InvoiceDetails vrData : invDetails) {
+				VehicleInvoiceBeen vehicleInvoiceBeen2 = new VehicleInvoiceBeen();
+				vehicleInvoiceBeen2.setRate(Double.parseDouble((vrData.getTaxRate()) + "") / 100);
+				vehicleInvoiceBeen2.setAmount(Double.parseDouble((vrData.getTaxAmount()) + "") / 100);
+				vehicleInvoiceBeen2.setDescription(vrData.getTaxCode().getTax());
+				if (vrData.getTaxCode().getType().equals("Rate")) {
+					vehicleInvoiceBeen2.setType("%");
+				} else {
+					vehicleInvoiceBeen2.setType("");
+				}
+
+				vehicleInvoiceBeen2.setCurrency(centerMaster.getCountrycode().getCurrency());
+				vehicleInvoiceBeen2.setStyle(false);
+				vehicleInvoiceBeenList.add(vehicleInvoiceBeen2);
+			}
+			VehicleInvoiceBeen vehicleInvoiceBeen3 = new VehicleInvoiceBeen();
+			vehicleInvoiceBeen3.setRate(Double.parseDouble((0) + ""));
+			vehicleInvoiceBeen3.setAmount(Double.parseDouble((invHed.getNetTotal()) + "") / 100);
+			vehicleInvoiceBeen3.setDescription("Net Total");
+			vehicleInvoiceBeen3.setStyle(true);
+			vehicleInvoiceBeen3.setCurrency(centerMaster.getCountrycode().getCurrency());
+			vehicleInvoiceBeen3.setType("");
+			vehicleInvoiceBeenList.add(vehicleInvoiceBeen3);
+
+			// recipt Print
+
+			ReportViewe review = new ReportViewe();
+			Map<String, Object> params = new HashMap<>();
+			params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+			params.put("hedder", centerMaster.getPartner_ID().getReceiptHeader());
+			params.put("address", centerMaster.getAdd03());
+
+			params.put("name", cusdetail.getName());
+			params.put("cusaddress", cusdetail.getAddress());
+			params.put("taxcode", cusdetail.getTaxcode());
+			params.put("mobileno", cusdetail.getTpno());
+
+			params.put("invNo", invHed.getInvoiceNo());
+			params.put("vecno", vehiclereg.getVid().getVehicleID());
+			SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat") + "");
+			params.put("date", sdf.format(DateHelperWeb.getDate(invHed.getInvoiceDate())));
+			params.put("vectype", vehiclereg.getVtype().getvRegType());
+			params.put("category", vehiclereg.getTestCategory().getCategoryType());
+			params.put("slottime", invHed.getInvoiceTime());
+			params.put("apono", invHed.getAppoID());
+			params.put("footer", centerMaster.getPartner_ID().getReceiptFooter());
+			params.put("classmod", vehiclereg.getVid().getVmodel().getVehicleMakeID().getVehicleMake() + "/"
+					+ vehiclereg.getVid().getVmodel().getVehicleModel());
+			params.put("numinword", StringFormaterWeb
+					.capitalizeWord(EnglishNumberToWords.convert(Long.parseLong((invHed.getNetTotal()) + "") / 100)));
+			params.put("tokno", vehiclereg.getTrid().getTrID());
+			params.put("paytyp", vehiclereg.getPayType());
+
+			String reptValue = "";
+
+			try {
+				reptValue = review.pdfReportViewInlineSystemOpen("VehicleInvoice.jasper", "Vehicle Invoice",
+						vehicleInvoiceBeenList, params, response);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return reptValue;
+		}
+
+	}
+
+	@RequestMapping(value = "/vehicleReport")
+	public String loadVehicleMasterReport() {
 		return "vehicleMasterReport";
 	}
-	
+
 	// get model according to make id in vehicleMaster.jsp
-	 @RequestMapping(value="/getModelForCombo", method=RequestMethod.GET)
-		public   @ResponseBody List<VehicleModel> search1(@RequestParam String makeID,@RequestParam String classID) {
-			List<VehicleModel> vmodel = vehicleService.getModelByID(makeID,classID);
-			return vmodel;
-		}
-	 
-	//load Test category to vehicle registration jsp
+	@RequestMapping(value = "/getModelForCombo", method = RequestMethod.GET)
+	public @ResponseBody List<VehicleModel> search1(@RequestParam String makeID, @RequestParam String classID) {
+		List<VehicleModel> vmodel = vehicleService.getModelByID(makeID, classID);
+		return vmodel;
+	}
+
+	// load Test category to vehicle registration jsp
 	@ModelAttribute("regCatTypeList")
-	public List <TestCategory> getTestCategory(){
-		List <TestCategory> listTestCategory = centerService.getAll();
+	public List<TestCategory> getTestCategory() {
+		List<TestCategory> listTestCategory = centerService.getAll();
 		return listTestCategory;
 	}
-	
-	//return all vreg types on jsp
+
+	// return all vreg types on jsp
 	@ModelAttribute("vehicleRegisterTypelist")
-	
-	public List <VehicleRegisterType> getlistofvtyps(){
+
+	public List<VehicleRegisterType> getlistofvtyps() {
 		List<VehicleRegisterType> vehicleRegisterTypelist = vehicleService.getAllVType();
 		return vehicleRegisterTypelist;
 	}
-	
-	 @RequestMapping(value="/getModelImage", method=RequestMethod.GET)
-		public   @ResponseBody String getModelImage(@RequestParam String vehicleModelID) {
-		 VehicleModel m = vehicleService.getVmodelDetailsByID(vehicleModelID);
-			return m.getModelLogoView();
-		}
-	 
-	 //load vehicle class to vehicle model jsp
-	 @ModelAttribute("vclass")
-	 public List<VehicleClass> loadVClass(){
-		 List<VehicleClass> vclist = vehicleService.getVClass();
-		 return vclist;
-	 }
-	 
-	 //skip button in vehicle master
-	 @RequestMapping(value="/skipmaster")
-	 public String skipmaster(@RequestParam("vehicleID") String vehicleID) {
-		 return "redirect:/getOwnersByVehicleNo?vehicleNo="+vehicleID;
-	 }
-	
-	 //skip button in vehicle owner
-	 @RequestMapping(value="/skipowner")
-	 public String skipOwner(@RequestParam("vehicleID") String vehicleID,@RequestParam("id") String id) {
-		  return "redirect:/vehicleRegistration?vid="+vehicleID+"&curMi=0&id="+id;
-	 }
 
+	@RequestMapping(value = "/getModelImage", method = RequestMethod.GET)
+	public @ResponseBody String getModelImage(@RequestParam String vehicleModelID) {
+		VehicleModel m = vehicleService.getVmodelDetailsByID(vehicleModelID);
+		return m.getModelLogoView();
+	}
 
-		@RequestMapping(value = "/getOwnersByVehicleNo",method = RequestMethod.GET)
-		public String getOwnersByVehicleNo(@RequestParam String vehicleNo,Model m)
-		{
-			List<VehicleOwner> pre_owners = vehicleService.getOwnersByVehicleNo(vehicleNo);
-			
-			
-			if(null != pre_owners && pre_owners.size() > 0) {
-				
-				for (VehicleOwner detail : pre_owners) {
-					
-					if("currentOwner".equals(detail.getStatus()))
-					{
-						m.addAttribute("current_owner",detail);
-					}	
+	// load vehicle class to vehicle model jsp
+	@ModelAttribute("vclass")
+	public List<VehicleClass> loadVClass() {
+		List<VehicleClass> vclist = vehicleService.getVClass();
+		return vclist;
+	}
+
+	// skip button in vehicle master
+	@RequestMapping(value = "/skipmaster")
+	public String skipmaster(@RequestParam("vehicleID") String vehicleID) {
+		return "redirect:/getOwnersByVehicleNo?vehicleNo=" + vehicleID;
+	}
+
+	// skip button in vehicle owner
+	@RequestMapping(value = "/skipowner")
+	public String skipOwner(@RequestParam("vehicleID") String vehicleID, @RequestParam("id") String id) {
+		return "redirect:/vehicleRegistration?vid=" + vehicleID + "&curMi=0&id=" + id;
+	}
+
+	@RequestMapping(value = "/getOwnersByVehicleNo", method = RequestMethod.GET)
+	public String getOwnersByVehicleNo(@RequestParam String vehicleNo, Model m) {
+		List<VehicleOwner> pre_owners = vehicleService.getOwnersByVehicleNo(vehicleNo);
+
+		if (null != pre_owners && pre_owners.size() > 0) {
+
+			for (VehicleOwner detail : pre_owners) {
+
+				if ("currentOwner".equals(detail.getStatus())) {
+					m.addAttribute("current_owner", detail);
 				}
 			}
-			
-			m.addAttribute("pre_owners", pre_owners);
-			m.addAttribute("veOwner",new VehicleOwner());
-			//m.addAttribute("updated",true);
-			
-			return "vehicleOwner";
-			
-		}
-		
-		@RequestMapping(value="/newOwner",method=RequestMethod.GET)
-		public String loadNewOwnerForm(@RequestParam String vehicleNo,Model m)
-		{
-			//System.out.println("Vehicle No is"+vehicleNo);
-			VehicleMaster vm = new VehicleMaster(vehicleNo);
-			
-			VehicleOwner obj = new VehicleOwner();
-			obj.setVehicleID(vm);
-			m.addAttribute("veOwner", obj);
-			m.addAttribute("success",true);
-			return "vehicleOwner";
-			
 		}
 
-		  @RequestMapping(value = "/updateVOwner", method=RequestMethod.GET) 
-		  public @ResponseBody VehicleOwner updateVehicleOwner(@RequestParam String id) { 			  
-			  VehicleOwner vo = vehicleService.getVOwnerById(id);
-			  return vo;
-		  }
-		  
-		  @RequestMapping(value = "/vehicalRecCOPY", method=RequestMethod.GET) 
-		  public String getVehicleReceiptCOPY(Map<String, String> model) { 
+		m.addAttribute("pre_owners", pre_owners);
+		m.addAttribute("veOwner", new VehicleOwner());
+		// m.addAttribute("updated",true);
 
-			  return "VehicleReRecipt";
-		  }	
-		  
-		  
-		  @RequestMapping(value = "/vehicalRecORG", method=RequestMethod.GET) 
-		  public ModelAndView getVehicleReceiptORG(@RequestParam String recno,HttpServletResponse response,HttpSession session) { 
-			  ModelAndView mav = new ModelAndView("VehicleRecipt");
-			  ReceiptHead reciptHed=vehicleService.getReciptHedDetailByRecNo(recno);
-			  VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(reciptHed.getvRegisterID().getVregID());
-			  mav.addObject("vecno" ,vehiclereg.getVid().getVehicleID());
-			  mav.addObject("reccno" ,recno);
-			  mav.addObject("recDate" ,vehiclereg.getDate());
-			  String reptValue=vehicalRescetGeaerate(recno, response, session);
-			  String tokValue=vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),reciptHed.getNetTotal(),reciptHed.getvRegisterID().getVregID(),response,session);
+		return "vehicleOwner";
 
-			  mav.addObject("pdfViewEq", reptValue); 
-			  mav.addObject("pdftokValue", tokValue);
-  
-			  return mav;
-		  }		  
-		  @RequestMapping(value="/vehiclRerecPrint" ,method=RequestMethod.POST)
-		  public ModelAndView printVehicalReceipt(@RequestParam String vecno,@RequestParam String reccno,@RequestParam String recDate,HttpServletResponse response, HttpSession session) {
-			  	ModelAndView mav = new ModelAndView("recTokonPrint");
-			  	String reptValue=vehicalRescetGeaerate(reccno, response, session);
-			  	mav.addObject("pdfViewEq", reptValue); 
-			  	 ReceiptHead reciptHed=vehicleService.getReciptHedDetailByRecNo(reccno);
-				  	VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(reciptHed.getvRegisterID().getVregID());
-			  	String tokValue=vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),reciptHed.getNetTotal(),reciptHed.getvRegisterID().getVregID(),response, session);
-			  	mav.addObject("pdftokValue", tokValue);
-			  	System.out.println("reptValue="+reptValue);
-			 	System.out.println("pdftokValue="+tokValue);
-	         return mav;
-		  }
-		  
-		  @RequestMapping(value="/vehiclInvoicePrint" ,method=RequestMethod.POST)
-		  public ModelAndView vehiclInvoicePrint(@RequestParam String vecno,@RequestParam String invNo,@RequestParam String invDate,HttpServletResponse response, HttpSession session) {
-			  	ModelAndView mav = new ModelAndView("comPdfReportView");
-			  	String reptValue=vehicalInvoiceGeaerate(invNo, response, session);
-			  	mav.addObject("pdfViewEq", reptValue); 
-	         return mav;
-		  }
-		  public String vehicalRescetGeaerate(String reccno,HttpServletResponse response,HttpSession session) {
-			  LocalDateTime now = LocalDateTime.now(); 
-			  	ReceiptHead reciptHed=vehicleService.getReciptHedDetailByRecNo(reccno);
-			  	int days=DateHelperWeb.stringDateDiff(reciptHed.getRecDate(),now.toString());
-			  System.out.println(reciptHed);
-			  	
-			  	if(!reciptHed.getStatus().toString().equals("ACTIVE")) {
-			  		
-			  		return "INACTIVE";
-			  		
-			  	}
-			  	else if(days!=0) {
-			  		
-			  		return "BACKDATE";
-			  		
-			  	}
-			  	else{
-			  	reciptHed.getvRegisterID();
-			  	VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(reciptHed.getvRegisterID().getVregID());
-			  	Customer  cusdetail=usersService.viewCustomersDetailByID(vehiclereg.getCusid().getId());
-			  
-			  	CenterMaster centerMaster=centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
-			  	VehicleOwner vehicleOwner=vehicleService.getVehicleOwnerIDByVehicleID(vehiclereg.getVid().getVehicleID());
-			  	
-			  	List<ReceiptDetails> vehicleRegistration=vehicleService.getReceiptDetails(reccno);
-			  	
-			  	List<VehicleReceiptBeen> vehicleReceiptBeenList = new ArrayList<VehicleReceiptBeen>();
-			  	
-			  	
+	}
 
-			  	
-		  		VehicleReceiptBeen vehicleReceiptBeen1=new VehicleReceiptBeen();
-		  		vehicleReceiptBeen1.setRate(0);
-		  		vehicleReceiptBeen1.setAmount(Double.parseDouble((reciptHed.getTestFee())+"")/100);
-		  		vehicleReceiptBeen1.setDescription("Test Fee");//vehiclereg.getTestCategory().getCategoryType());
-		  		vehicleReceiptBeen1.setStyle(false);
-		  		vehicleReceiptBeen1.setType("");
-		  		vehicleReceiptBeen1.setCurrency(centerMaster.getCountrycode().getCurrency());
-		  		vehicleReceiptBeenList.add(vehicleReceiptBeen1);
-			  	
-			  	
-			  	
-			  	for(ReceiptDetails vrData:vehicleRegistration) {
-			  		VehicleReceiptBeen vehicleReceiptBeen2=new VehicleReceiptBeen();
-			  		vehicleReceiptBeen2.setRate(Double.parseDouble((vrData.getTaxRate())+"")/100);
-			  		vehicleReceiptBeen2.setAmount(Double.parseDouble((vrData.getTaxAmount())+"")/100);
-			  		vehicleReceiptBeen2.setDescription(vrData.getTaxCode().getTax());
-			  		if(vrData.getTaxCode().getType().equals("Rate")) {
-			  		vehicleReceiptBeen2.setType("%");
-			  		}else {
-			  		vehicleReceiptBeen2.setType("");	
-			  		}
-			  		
-			  		vehicleReceiptBeen2.setCurrency(centerMaster.getCountrycode().getCurrency());
-			  		vehicleReceiptBeen2.setStyle(false);
-			  		vehicleReceiptBeenList.add(vehicleReceiptBeen2);
-			  	}
-		  		VehicleReceiptBeen vehicleReceiptBeen3=new VehicleReceiptBeen();
-		  		vehicleReceiptBeen3.setRate(Double.parseDouble((0)+""));
-		  		vehicleReceiptBeen3.setAmount(Double.parseDouble((reciptHed.getNetTotal())+"")/100);
-		  		vehicleReceiptBeen3.setDescription("Net Total");
-		  		vehicleReceiptBeen3.setStyle(true);
-		  		vehicleReceiptBeen3.setCurrency(centerMaster.getCountrycode().getCurrency());
-		  		vehicleReceiptBeen3.setType("");
-		  		vehicleReceiptBeenList.add(vehicleReceiptBeen3);
-			  			  
-          //recipt Print
-			  System.out.println("cusid="+cusdetail.getId());  
-	          	ReportViewe review=new ReportViewe();
-	          	Map<String,Object> params = new HashMap<>();
-	        	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
-	          	params.put("hedder",centerMaster.getCenter());
-	          	params.put("address",centerMaster.getAdd03() );
-	          if(cusdetail.getId().equals("0000")) {
-	          	params.put("name",vehicleOwner.getOwnerName());
-	          }else{
-	        	  params.put("name",cusdetail.getName());    
-	          }
-	          	params.put("recno", reciptHed.getRecNo());
-	          	params.put("vecno",vehiclereg.getVid().getVehicleID()  );	          	
-			    SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");	 			    
-	          	params.put("date",sdf.format(DateHelperWeb.getDate(vehiclereg.getDate())));
-	          	params.put("vectype",vehiclereg.getVtype().getvRegType() );
-	          	params.put("category",vehiclereg.getTestCategory().getCategoryType());
-	          	params.put("slottime",vehiclereg.getTime() );	
-	          	
-	          	if(!reciptHed.getAppoID().equals("0")) {
-	          		params.put("apono",reciptHed.getAppoID());
-	          	}else {
-	          		params.put("apono","N/A");	
-	          	}
-	          	
-	          	
-	          	params.put("footer",centerMaster.getPartner_ID().getReceiptFooter());
-	          	params.put("classmod",vehiclereg.getVid().getVmodel().getVehicleMakeID().getVehicleMake()+"/"+vehiclereg.getVid().getVmodel().getVehicleModel());
-	          	params.put("numinword",StringFormaterWeb.capitalizeWord(EnglishNumberToWords.convert(Long.parseLong((reciptHed.getNetTotal())+"")/100)));
-	          	params.put("tokno",vehiclereg.getTrid().getTrID());
-	          	params.put("paytyp",vehiclereg.getPayType());
-	          	params.put("currdesc",centerMaster.getCountrycode().getCurrencyDescription());
-	          	
-	          	String reptValue="";
-	         try {	        	
-	          		reptValue=review.pdfReportViewInlineSystemOpen("VehicleReceipt.jasper","Vehicle Receipt",vehicleReceiptBeenList,params,response);	        	          
-	          	}catch(Exception e) {	          		
-	          		e.printStackTrace();          		
-	          	}
-			  return reptValue;
-			  
-			  
-			  	}
-			  
-		  }
+	@RequestMapping(value = "/newOwner", method = RequestMethod.GET)
+	public String loadNewOwnerForm(@RequestParam String vehicleNo, Model m) {
+		// System.out.println("Vehicle No is"+vehicleNo);
+		VehicleMaster vm = new VehicleMaster(vehicleNo);
 
-			 @ModelAttribute("cusallCombo")
-			 public  List<Customer> listCustomer(){
-				 List<Customer> cusAll=usersService.viewAllCustomers();
-				 return cusAll;
-			 }
-			 
-			  public String vehicalTokenGeaerate(String vecno,String recDate,Long ntotal,String vregid,HttpServletResponse response, HttpSession session) {
-				  
+		VehicleOwner obj = new VehicleOwner();
+		obj.setVehicleID(vm);
+		m.addAttribute("veOwner", obj);
+		m.addAttribute("success", true);
+		return "vehicleOwner";
+
+	}
+
+	@RequestMapping(value = "/updateVOwner", method = RequestMethod.GET)
+	public @ResponseBody VehicleOwner updateVehicleOwner(@RequestParam String id) {
+		VehicleOwner vo = vehicleService.getVOwnerById(id);
+		return vo;
+	}
+
+	@RequestMapping(value = "/vehicalRecCOPY", method = RequestMethod.GET)
+	public String getVehicleReceiptCOPY(Map<String, String> model) {
+
+		return "VehicleReRecipt";
+	}
+
+	@RequestMapping(value = "/vehicalRecORG", method = RequestMethod.GET)
+	public ModelAndView getVehicleReceiptORG(@RequestParam String recno, HttpServletResponse response,
+			HttpSession session) {
+		ModelAndView mav = new ModelAndView("VehicleRecipt");
+		ReceiptHead reciptHed = vehicleService.getReciptHedDetailByRecNo(recno);
+		VehicleRegistration vehiclereg = vehicleService.VehicleRegInfoByID(reciptHed.getvRegisterID().getVregID());
+		mav.addObject("vecno", vehiclereg.getVid().getVehicleID());
+		mav.addObject("reccno", recno);
+		mav.addObject("recDate", vehiclereg.getDate());
+		String reptValue = vehicalRescetGeaerate(recno, response, session);
+		String tokValue = vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),
+				reciptHed.getNetTotal(), reciptHed.getvRegisterID().getVregID(), response, session);
+
+		mav.addObject("pdfViewEq", reptValue);
+		mav.addObject("pdftokValue", tokValue);
+
+		return mav;
+	}
+
+	@RequestMapping(value = "/vehiclRerecPrint", method = RequestMethod.POST)
+	public ModelAndView printVehicalReceipt(@RequestParam String vecno, @RequestParam String reccno,
+			@RequestParam String recDate, HttpServletResponse response, HttpSession session) {
+		ModelAndView mav = new ModelAndView("recTokonPrint");
+		String reptValue = vehicalRescetGeaerate(reccno, response, session);
+		mav.addObject("pdfViewEq", reptValue);
+		ReceiptHead reciptHed = vehicleService.getReciptHedDetailByRecNo(reccno);
+		VehicleRegistration vehiclereg = vehicleService.VehicleRegInfoByID(reciptHed.getvRegisterID().getVregID());
+		String tokValue = vehicalTokenGeaerate(vehiclereg.getVid().getVehicleID(), vehiclereg.getDate(),
+				reciptHed.getNetTotal(), reciptHed.getvRegisterID().getVregID(), response, session);
+		mav.addObject("pdftokValue", tokValue);
+		System.out.println("reptValue=" + reptValue);
+		System.out.println("pdftokValue=" + tokValue);
+		return mav;
+	}
+
+	@RequestMapping(value = "/vehiclInvoicePrint", method = RequestMethod.POST)
+	public ModelAndView vehiclInvoicePrint(@RequestParam String vecno, @RequestParam String invNo,
+			@RequestParam String invDate, HttpServletResponse response, HttpSession session) {
+		ModelAndView mav = new ModelAndView("comPdfReportView");
+		String reptValue = vehicalInvoiceGeaerate(invNo, response, session);
+		mav.addObject("pdfViewEq", reptValue);
+		return mav;
+	}
+
+	public String vehicalRescetGeaerate(String reccno, HttpServletResponse response, HttpSession session) {
+		LocalDateTime now = LocalDateTime.now();
+		ReceiptHead reciptHed = vehicleService.getReciptHedDetailByRecNo(reccno);
+		int days = DateHelperWeb.stringDateDiff(reciptHed.getRecDate(), now.toString());
+		System.out.println(reciptHed);
+
+		if (!reciptHed.getStatus().toString().equals("ACTIVE")) {
+
+			return "INACTIVE";
+
+		} else if (days != 0) {
+
+			return "BACKDATE";
+
+		} else {
+			reciptHed.getvRegisterID();
+			VehicleRegistration vehiclereg = vehicleService.VehicleRegInfoByID(reciptHed.getvRegisterID().getVregID());
+			Customer cusdetail = usersService.viewCustomersDetailByID(vehiclereg.getCusid().getId());
+
+			CenterMaster centerMaster = centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
+			VehicleOwner vehicleOwner = vehicleService.getVehicleOwnerIDByVehicleID(vehiclereg.getVid().getVehicleID());
+
+			List<ReceiptDetails> vehicleRegistration = vehicleService.getReceiptDetails(reccno);
+
+			List<VehicleReceiptBeen> vehicleReceiptBeenList = new ArrayList<VehicleReceiptBeen>();
+
+			VehicleReceiptBeen vehicleReceiptBeen1 = new VehicleReceiptBeen();
+			vehicleReceiptBeen1.setRate(0);
+			vehicleReceiptBeen1.setAmount(Double.parseDouble((reciptHed.getTestFee()) + "") / 100);
+			vehicleReceiptBeen1.setDescription("Test Fee");// vehiclereg.getTestCategory().getCategoryType());
+			vehicleReceiptBeen1.setStyle(false);
+			vehicleReceiptBeen1.setType("");
+			vehicleReceiptBeen1.setCurrency(centerMaster.getCountrycode().getCurrency());
+			vehicleReceiptBeenList.add(vehicleReceiptBeen1);
+
+			for (ReceiptDetails vrData : vehicleRegistration) {
+				VehicleReceiptBeen vehicleReceiptBeen2 = new VehicleReceiptBeen();
+				vehicleReceiptBeen2.setRate(Double.parseDouble((vrData.getTaxRate()) + "") / 100);
+				vehicleReceiptBeen2.setAmount(Double.parseDouble((vrData.getTaxAmount()) + "") / 100);
+				vehicleReceiptBeen2.setDescription(vrData.getTaxCode().getTax());
+				if (vrData.getTaxCode().getType().equals("Rate")) {
+					vehicleReceiptBeen2.setType("%");
+				} else {
+					vehicleReceiptBeen2.setType("");
+				}
+
+				vehicleReceiptBeen2.setCurrency(centerMaster.getCountrycode().getCurrency());
+				vehicleReceiptBeen2.setStyle(false);
+				vehicleReceiptBeenList.add(vehicleReceiptBeen2);
+			}
+			VehicleReceiptBeen vehicleReceiptBeen3 = new VehicleReceiptBeen();
+			vehicleReceiptBeen3.setRate(Double.parseDouble((0) + ""));
+			vehicleReceiptBeen3.setAmount(Double.parseDouble((reciptHed.getNetTotal()) + "") / 100);
+			vehicleReceiptBeen3.setDescription("Net Total");
+			vehicleReceiptBeen3.setStyle(true);
+			vehicleReceiptBeen3.setCurrency(centerMaster.getCountrycode().getCurrency());
+			vehicleReceiptBeen3.setType("");
+			vehicleReceiptBeenList.add(vehicleReceiptBeen3);
+
+			// recipt Print
+			System.out.println("cusid=" + cusdetail.getId());
+			ReportViewe review = new ReportViewe();
+			Map<String, Object> params = new HashMap<>();
+			params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+			params.put("hedder", centerMaster.getCenter());
+			params.put("address", centerMaster.getAdd03());
+			if (cusdetail.getId().equals("0000")) {
+				params.put("name", vehicleOwner.getOwnerName());
+			} else {
+				params.put("name", cusdetail.getName());
+			}
+			params.put("recno", reciptHed.getRecNo());
+			params.put("vecno", vehiclereg.getVid().getVehicleID());
+			SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat") + "");
+			params.put("date", sdf.format(DateHelperWeb.getDate(vehiclereg.getDate())));
+			params.put("vectype", vehiclereg.getVtype().getvRegType());
+			params.put("category", vehiclereg.getTestCategory().getCategoryType());
+			params.put("slottime", vehiclereg.getTime());
+
+			if (!reciptHed.getAppoID().equals("0")) {
+				params.put("apono", reciptHed.getAppoID());
+			} else {
+				params.put("apono", "N/A");
+			}
+
+			params.put("footer", centerMaster.getPartner_ID().getReceiptFooter());
+			params.put("classmod", vehiclereg.getVid().getVmodel().getVehicleMakeID().getVehicleMake() + "/"
+					+ vehiclereg.getVid().getVmodel().getVehicleModel());
+			params.put("numinword", StringFormaterWeb.capitalizeWord(
+					EnglishNumberToWords.convert(Long.parseLong((reciptHed.getNetTotal()) + "") / 100)));
+			params.put("tokno", vehiclereg.getTrid().getTrID());
+			params.put("paytyp", vehiclereg.getPayType());
+			params.put("currdesc", centerMaster.getCountrycode().getCurrencyDescription());
+
+			String reptValue = "";
+			try {
+				reptValue = review.pdfReportViewInlineSystemOpen("VehicleReceipt.jasper", "Vehicle Receipt",
+						vehicleReceiptBeenList, params, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return reptValue;
+
+		}
+
+	}
+
+	@ModelAttribute("cusallCombo")
+	public List<Customer> listCustomer() {
+		List<Customer> cusAll = usersService.viewAllCustomers();
+		return cusAll;
+	}
+
+	public String vehicalTokenGeaerate(String vecno, String recDate, Long ntotal, String vregid,
+			HttpServletResponse response, HttpSession session) {
+
 //				  	ReceiptHead reciptHed=vehicleService.getReciptHedDetailByRecNo(reccno);
 //				  	reciptHed.getvRegisterID();
-				  	VehicleRegistration vehiclereg=vehicleService.VehicleRegInfoByID(vregid);  	
-				  	Transaction tranction=transactionservice.getTrancionByID(vehiclereg.getTrid().getTrID());
-	
-				  	TestLaneHead testLaneHead=laneServices.getTestLaneHeadById(vehiclereg.getTestLaneHeadId().getTestLaneHeadId());				  	
-				  	CenterMaster centerMaster=centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
+		VehicleRegistration vehiclereg = vehicleService.VehicleRegInfoByID(vregid);
+		Transaction tranction = transactionservice.getTrancionByID(vehiclereg.getTrid().getTrID());
 
-			  			  
-	          //token Print
-				  		  
-		          	ReportViewe review=new ReportViewe();
-		          	Map<String,Object> params = new HashMap<>();
-		        	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
-		          	params.put("tokenno",tranction.getTrID());
-		          	params.put("LaneNo",testLaneHead.getLaneName() );
-		          	SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+""); 
-		          	params.put("tokenDate", sdf.format(DateHelperWeb.getDate(vehiclereg.getDate())));
-		         	params.put("Fee",centerMaster.getCountrycode().getCurrency()+" "+StringFormaterWeb.formatToRupees(ntotal) +"" );
-		          	params.put("NumberPlate",vecno );
-		          	params.put("VehiMake",vehiclereg.getVid().getVmodel().getVehicleClass().getVehicleClass() );
-		          	params.put("VehiModel",vehiclereg.getVid().getVmodel().getVehicleModel());		         
-		          	params.put("ManuYear",vehiclereg.getVid().getManufactureYear());
-		          	params.put("ChassisNo",vehiclereg.getVid().getChassisNo());
-		          	if(!vehiclereg.getOcrid().getAppNo().equals("0")) {
-		          	params.put("appoNo",vehiclereg.getOcrid().getAppNo());
-		          	}else {
-		          		params.put("appoNo","N/A");	
-		          	}
-		          	String tokValue="";
-		          	
-		         try {
-		        	 tokValue=review.pdfReportViewInlineSystemOpen("Token.jasper","Token",null,params,response);
-		          		
-		          
-		          	}catch(Exception e) {	          		
-		          		e.printStackTrace();          		
-		          	}
-				  return tokValue;
-				  
-			  }	
-			  @RequestMapping(value = "/getVehicalDetailsByDate", method=RequestMethod.GET) 
-			  public @ResponseBody List<VehicleRegistration> getVehicalDetailsByDate(@RequestParam String vRdate,@RequestParam String payTyp) { 			  
-				  List<VehicleRegistration> vo = vehicleService.getVechicalDetailByDate(vRdate,payTyp);
-				  return vo;
-			  }
-			  @RequestMapping(value = "/getReceiptHeadByVehicalRegID", method=RequestMethod.GET) 
-			  public @ResponseBody List<ReceiptHead> getReceiptHeadByVehicalRegID(@RequestParam String vRdate,@RequestParam String vecid,@RequestParam String payTyp) {
-				  List<ReceiptHead> rh=vehicleService.getReceiptHeadByVehicalRegID( vRdate, vecid,payTyp);
-				  return rh;
-			  }	  
-			  
-			  @RequestMapping(value = "/getInvoiceHeadByVehicalRegID", method=RequestMethod.GET) 
-			  public @ResponseBody List<InvoiceHead> getInvoiceHeadByVehicalRegID(@RequestParam String vRdate,@RequestParam String vecid,@RequestParam String payTyp) {
-				  List<InvoiceHead> ih=vehicleService.getInvoiceHeadByVehicalRegID( vRdate, vecid,payTyp);
-				  return ih;
-			  }
-			  
-			@ModelAttribute("vehicleCategoryCombo")
-			public List<VehicleCategory> getVehicleCategory(){
-					List <VehicleCategory> vcatall = vehicleService.getVehicleCategory();
-					return vcatall;
-			} 
-			@RequestMapping(value = "/getVClassByIdData", method=RequestMethod.GET) 
-			public @ResponseBody VehicleClass getVClassByIdData(@RequestParam String classid) {
-				  VehicleClass vc=vehicleService.getVClassById(classid);
-				  return vc;
-			}	
-			  
-			@RequestMapping(value="/getVClassImage", method=RequestMethod.GET)
-			public   @ResponseBody String getClasslImage(@RequestParam String classid) {
-				 VehicleClass vc=vehicleService.getVClassById(classid);
-				return vc.getVehicleclassLogoView();
-			}
-			@RequestMapping(value="/getFindVmaster", method=RequestMethod.GET)
-			public  @ResponseBody VehicleMaster getVehicleMaster(@RequestParam String vehicleID) {
-				 VehicleMaster vm =null;
-				 vm= vehicleService.getVMasterById(vehicleID);
-				return vm;
- 
-			}
-			@RequestMapping(value="/getVehicleOwnerIDByVehicleID", method=RequestMethod.GET)
-			public  @ResponseBody VehicleOwner getVehicleOwnerIDByVehicleID(@RequestParam String vehicleID) {
-				VehicleOwner vo=vehicleService.getVehicleOwnerIDByVehicleID(vehicleID);
-				return vo;
- 
-			}
-			@RequestMapping("/vehicleInformation")
-			public String logout() {
-				// ModelAndView mav=new ModelAndView("login");
-				return "vehicleInformation";
-			}
-			
-			@RequestMapping(value="/getChassisNumberDetails", method=RequestMethod.GET)
-			public @ResponseBody String[][] getChassisNumberDetails(@RequestParam String vinid,@RequestParam String regyea) {
-				String[][] listlogs=new String[1][3];
-				if(vinid.length()==17) {
-					VehicalWmi vwi=vehicleService.getVwmiid(vinid.substring(0, 3));
-					
-					
-					
-						String[] vYear= {"A","B","C","D","E","F","G","H","J","K","L","M","N","P","R","S","T","V","W","X","Y","1","2","3","4","5","6","7","8","9"};
-						//vinid.substring(beginIndex, endIndex)
-						int b=0;
-						int y=1980;
-						for(int i=0;i<vYear.length;i++) {
-							
-							String x=vinid.substring(9, 10)+"";
-							String z=vYear[i]+"";
-							if(x.equals(z)) {
-								b=y+i;
-								if((b+30)<=Integer.parseInt(regyea.substring(0, 4))){
-								    y=y+30;
-								    i=0;
-								}else{
-								    break;
-								}
-						    }
-							
-							
-						}
-						listlogs[0][0]=(b)+"-01-01"	;	
-						if(vwi!=null) {
-						listlogs[0][1]=vwi.getVehicleMakeID().getVehicleMakeID();
-						listlogs[0][2]=vwi.getCountry();
-						}
+		TestLaneHead testLaneHead = laneServices
+				.getTestLaneHeadById(vehiclereg.getTestLaneHeadId().getTestLaneHeadId());
+		CenterMaster centerMaster = centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
+
+		// token Print
+
+		ReportViewe review = new ReportViewe();
+		Map<String, Object> params = new HashMap<>();
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("tokenno", tranction.getTrID());
+		params.put("LaneNo", testLaneHead.getLaneName());
+		SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat") + "");
+		params.put("tokenDate", sdf.format(DateHelperWeb.getDate(vehiclereg.getDate())));
+		params.put("Fee",
+				centerMaster.getCountrycode().getCurrency() + " " + StringFormaterWeb.formatToRupees(ntotal) + "");
+		params.put("NumberPlate", vecno);
+		params.put("VehiMake", vehiclereg.getVid().getVmodel().getVehicleClass().getVehicleClass());
+		params.put("VehiModel", vehiclereg.getVid().getVmodel().getVehicleModel());
+		params.put("ManuYear", vehiclereg.getVid().getManufactureYear());
+		params.put("ChassisNo", vehiclereg.getVid().getChassisNo());
+		if (!vehiclereg.getOcrid().getAppNo().equals("0")) {
+			params.put("appoNo", vehiclereg.getOcrid().getAppNo());
+		} else {
+			params.put("appoNo", "N/A");
+		}
+		String tokValue = "";
+
+		try {
+			tokValue = review.pdfReportViewInlineSystemOpen("Token.jasper", "Token", null, params, response);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tokValue;
+
+	}
+
+	@RequestMapping(value = "/getVehicalDetailsByDate", method = RequestMethod.GET)
+	public @ResponseBody List<VehicleRegistration> getVehicalDetailsByDate(@RequestParam String vRdate,
+			@RequestParam String payTyp) {
+		List<VehicleRegistration> vo = vehicleService.getVechicalDetailByDate(vRdate, payTyp);
+		return vo;
+	}
+
+	@RequestMapping(value = "/getReceiptHeadByVehicalRegID", method = RequestMethod.GET)
+	public @ResponseBody List<ReceiptHead> getReceiptHeadByVehicalRegID(@RequestParam String vRdate,
+			@RequestParam String vecid, @RequestParam String payTyp) {
+		List<ReceiptHead> rh = vehicleService.getReceiptHeadByVehicalRegID(vRdate, vecid, payTyp);
+		return rh;
+	}
+
+	@RequestMapping(value = "/getInvoiceHeadByVehicalRegID", method = RequestMethod.GET)
+	public @ResponseBody List<InvoiceHead> getInvoiceHeadByVehicalRegID(@RequestParam String vRdate,
+			@RequestParam String vecid, @RequestParam String payTyp) {
+		List<InvoiceHead> ih = vehicleService.getInvoiceHeadByVehicalRegID(vRdate, vecid, payTyp);
+		return ih;
+	}
+
+	@ModelAttribute("vehicleCategoryCombo")
+	public List<VehicleCategory> getVehicleCategory() {
+		List<VehicleCategory> vcatall = vehicleService.getVehicleCategory();
+		return vcatall;
+	}
+
+	@RequestMapping(value = "/getVClassByIdData", method = RequestMethod.GET)
+	public @ResponseBody VehicleClass getVClassByIdData(@RequestParam String classid) {
+		VehicleClass vc = vehicleService.getVClassById(classid);
+		return vc;
+	}
+
+	@RequestMapping(value = "/getVClassImage", method = RequestMethod.GET)
+	public @ResponseBody String getClasslImage(@RequestParam String classid) {
+		VehicleClass vc = vehicleService.getVClassById(classid);
+		return vc.getVehicleclassLogoView();
+	}
+
+	@RequestMapping(value = "/getFindVmaster", method = RequestMethod.GET)
+	public @ResponseBody VehicleMaster getVehicleMaster(@RequestParam String vehicleID) {
+		VehicleMaster vm = null;
+		vm = vehicleService.getVMasterById(vehicleID);
+		return vm;
+
+	}
+
+	@RequestMapping(value = "/getVehicleOwnerIDByVehicleID", method = RequestMethod.GET)
+	public @ResponseBody VehicleOwner getVehicleOwnerIDByVehicleID(@RequestParam String vehicleID) {
+		VehicleOwner vo = vehicleService.getVehicleOwnerIDByVehicleID(vehicleID);
+		return vo;
+
+	}
+
+	@RequestMapping("/vehicleInformation")
+	public String logout() {
+		// ModelAndView mav=new ModelAndView("login");
+		return "vehicleInformation";
+	}
+
+	@RequestMapping(value = "/getChassisNumberDetails", method = RequestMethod.GET)
+	public @ResponseBody String[][] getChassisNumberDetails(@RequestParam String vinid, @RequestParam String regyea) {
+		String[][] listlogs = new String[1][3];
+		if (vinid.length() == 17) {
+			VehicalWmi vwi = vehicleService.getVwmiid(vinid.substring(0, 3));
+
+			String[] vYear = { "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "R", "S", "T", "V",
+					"W", "X", "Y", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+			// vinid.substring(beginIndex, endIndex)
+			int b = 0;
+			int y = 1980;
+			for (int i = 0; i < vYear.length; i++) {
+
+				String x = vinid.substring(9, 10) + "";
+				String z = vYear[i] + "";
+				if (x.equals(z)) {
+					b = y + i;
+					if ((b + 30) <= Integer.parseInt(regyea.substring(0, 4))) {
+						y = y + 30;
+						i = 0;
+					} else {
+						break;
 					}
-				
-			
-					return listlogs;
-			}
-			
-		    private static byte[] toByteArrayAutoClosable(BufferedImage image, String type) throws IOException {
-		        try (ByteArrayOutputStream out = new ByteArrayOutputStream()){
-		            ImageIO.write(image, type, out);
-		            return out.toByteArray();
-		        }
-		    }
-		    
-		    
-		    
-		    
-			@RequestMapping(value = "createNewOcrId", method = RequestMethod.POST,produces = "application/json")
-			public @ResponseBody String createNewOcrId(@RequestBody String  imagebase64) 
-			{
-				System.out.println("call123");
-				int ocrDetailsID=vehicleService.maxOcrDetailsID();
-				 byte[] imagedata = DatatypeConverter.parseBase64Binary(imagebase64.substring(imagebase64.indexOf(",") + 1));	
-				OcrDetails ocrDetails=new OcrDetails();
-				ocrDetails.setOcrid(ocrDetailsID);
-			ocrDetails.setNoimage(imagedata);
-		
-				vehicleService.saveOcrDetailsRepo(ocrDetails);
-				
-				return ocrDetailsID+"";
-			}
-		    
-			@RequestMapping(value = "createOcrId", method = RequestMethod.POST)
-			public @ResponseBody String createOcrId(@RequestParam String vecno,@RequestParam String vtype, @RequestParam String apoid, @RequestParam String gateId ,@RequestParam String  ocid) 
-			{
-			System.out.println("call");
-				try {
-			
-				
-			int ocrDetailsID;	
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-			LocalDateTime now = LocalDateTime.now();
-		
-		//	ocrDetailsID=vehicleService.maxOcrDetailsID();	
-			
-				
-			// byte[] imagedata = DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));	
-			//	OcrDetails ocrDetails=new OcrDetails();
-				OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(ocid));
-				//ocrDetails.setOcrid(ocid);
-				ocrDetails.setOcrDate(dtf.format(now));
-				//ocrDetails.setNoimage(imagedata);
-				ocrDetails.setOcrVid(vecno);
-				
-				Gate gateid =new Gate();
-				gateid.setGateID(gateId);
-				ocrDetails.setGateID(gateid);
-				ocrDetails.setVmStatus("pending");
-				ocrDetails.setVrStatus("pending");
-				ocrDetails.setDocStatus("pending");
-				ocrDetails.setStatus("ACTIVE");
-				ocrDetails.setAppNo(apoid);
-				
-				if(vtype.equals("1")||vtype.equals("3")) {
-					ocrDetails.setVehicletype("Old");
-				}else {
-					ocrDetails.setVehicletype("New");
 				}
-				
-				vehicleService.saveOcrDetailsRepo(ocrDetails);	
-				
-				      return ocid;
-			    
-			   }catch(Exception e) {
-				   
-				  
-				      e.printStackTrace();
-					  return "0";
-			   }
-			   
-			   
-			   
+
 			}
-		    
-			@RequestMapping(value = "changeStatusOcr", method = RequestMethod.POST)
-			public @ResponseBody String changeStatusOcr(@RequestParam ("ocrid") String ocrid) 
-			{
-				try {		
-					OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(ocrid));					
-					ocrDetails.setStatus("INACTIVE");
-								
-					vehicleService.saveOcrDetailsRepo(ocrDetails);				
-					return "1";			    
-			   }catch(Exception e) {				   				  
-				   e.printStackTrace();
-				   return "0";
-			   }			      
+			listlogs[0][0] = (b) + "-01-01";
+			if (vwi != null) {
+				listlogs[0][1] = vwi.getVehicleMakeID().getVehicleMakeID();
+				listlogs[0][2] = vwi.getCountry();
 			}
-		    
-			@RequestMapping(value = "saveLicensePlate", method = RequestMethod.POST,produces = "application/json")
-			public @ResponseBody String saveWebCam(@RequestBody String  base64) 
-			{
-				//System.out.println( "ddd="+base64);
-				//JSON.stringify(search)
-				//return "0";
+		}
+
+		return listlogs;
+	}
+
+	private static byte[] toByteArrayAutoClosable(BufferedImage image, String type) throws IOException {
+		try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+			ImageIO.write(image, type, out);
+			return out.toByteArray();
+		}
+	}
+
+	@RequestMapping(value = "createNewOcrId", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody String createNewOcrId(@RequestBody String imagebase64)
+			throws IllegalStateException, IOException {
+		String uploadDir = "C:\\OCRExternal\\";
+		System.out.println("call123");
+
+		boolean imagePresent;
+
+		byte[] imagedata = DatatypeConverter.parseBase64Binary(imagebase64.substring(imagebase64.indexOf(",") + 1));
+		int ocrDetailsID = vehicleService.maxOcrDetailsID();
+		// ocrDetails.setNoimage(null);
+		System.out.println("imagedata present=" + imagedata.length);
+		String fileName = String.valueOf(ocrDetailsID);
+
+		if (imagedata != null && imagedata.length > 0) {
+			ByteArrayInputStream bis = new ByteArrayInputStream(imagedata);
+			BufferedImage bImage2 = ImageIO.read(bis);
+			ImageIO.write(bImage2, "jpg", new File("C:\\OCRExternal\\" + fileName + ".jpg"));
+			imagePresent = true;
+		} else {
+			imagePresent = false;
+			System.out.println("Image did not saved");
+		}
+
+		OcrDetails ocrDetails = new OcrDetails();
+		ocrDetails.setOcrid(ocrDetailsID);
+		ocrDetails.setImagePresent(imagePresent);
+		vehicleService.saveOcrDetailsRepo(ocrDetails);
+
+		return ocrDetailsID + "";
+	}
+
+	@RequestMapping(value = "createOcrId", method = RequestMethod.POST)
+	public @ResponseBody String createOcrId(@RequestParam String vecno, @RequestParam String vtype,
+			@RequestParam String apoid, @RequestParam String gateId, @RequestParam String ocid) {
+		System.out.println("call");
+		try {
+
+			int ocrDetailsID;
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
+
+			// ocrDetailsID=vehicleService.maxOcrDetailsID();
+
+			// byte[] imagedata =
+			// DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));
+			// OcrDetails ocrDetails=new OcrDetails();
+			OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(ocid));
+			// ocrDetails.setOcrid(ocid);
+			ocrDetails.setOcrDate(dtf.format(now));
+			// ocrDetails.setNoimage(imagedata);
+			ocrDetails.setOcrVid(vecno);
+
+			Gate gateid = new Gate();
+			gateid.setGateID(gateId);
+			ocrDetails.setGateID(gateid);
+			ocrDetails.setVmStatus("pending");
+			ocrDetails.setVrStatus("pending");
+			ocrDetails.setDocStatus("pending");
+			ocrDetails.setStatus("ACTIVE");
+			ocrDetails.setAppNo(apoid);
+
+			if (vtype.equals("1") || vtype.equals("3")) {
+				ocrDetails.setVehicletype("Old");
+			} else {
+				ocrDetails.setVehicletype("New");
+			}
+
+			vehicleService.saveOcrDetailsRepo(ocrDetails);
+
+			return ocid;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return "0";
+		}
+
+	}
+
+	@RequestMapping(value = "changeStatusOcr", method = RequestMethod.POST)
+	public @ResponseBody String changeStatusOcr(@RequestParam("ocrid") String ocrid) {
+		try {
+			OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(ocrid));
+			ocrDetails.setStatus("INACTIVE");
+
+			vehicleService.saveOcrDetailsRepo(ocrDetails);
+			return "1";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "0";
+		}
+	}
+
+	@RequestMapping(value = "saveLicensePlate", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody String saveWebCam(@RequestBody String base64) {
+		// System.out.println( "ddd="+base64);
+		// JSON.stringify(search)
+		// return "0";
 //				List<NumberDataBeen> numberDataBeenlist=new ArrayList<NumberDataBeen>();
 //			//	System.out.println("ghgh="+id);
-				try {
+		try {
 //				String path1 = this.getClass().getClassLoader().getResource("").getPath();
 //				String fullPath = URLDecoder.decode(path1, "UTF-8");
 //
@@ -2333,36 +2225,35 @@ public class VehicleController {
 //				
 //			//	String[][] data =new String[15][2];
 //			   
-			    byte[] imagedata = DatatypeConverter.parseBase64Binary(base64.substring(base64.indexOf(",") + 1));
+			byte[] imagedata = DatatypeConverter.parseBase64Binary(base64.substring(base64.indexOf(",") + 1));
 //			    System.out.println( imagedata );
-		    BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagedata));
+			BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagedata));
 //			    
 			String path1 = this.getClass().getClassLoader().getResource("").getPath();
 			String fullPath = URLDecoder.decode(path1, "UTF-8");
 
 			String pathArr[] = fullPath.split("/WEB-INF/classes/");
-			String path= pathArr[0]+"/resources/Debug/";
-		    
-		    
-			String fileName="ocr/image/capimg.jpg";
-		    File file= new File(path+fileName);
-		    ImageIO.write(bufferedImage, "jpg",file);
-		    
-		    Runtime.getRuntime().exec(path+"sample.exe", null, new File(path)).waitFor();
-		    System.out.println("saveLicensePlate-sample");
-		    
-		    File myObj = new File(path+"ocr/result/N_capimg.txt");
-		    Scanner myReader = new Scanner(myObj);
-		 //   if (myReader.hasNextLine()) {
-		    	String number=myReader.nextLine().replace(" ", "");
-		    	System.out.println("vno="+number);
-		    	return number;
-		    	
-		  //  }else {
-		    	
-		    //	return "";
-		  //  }
-		    
+			String path = pathArr[0] + "/resources/Debug/";
+
+			String fileName = "ocr/image/capimg.jpg";
+			File file = new File(path + fileName);
+			ImageIO.write(bufferedImage, "jpg", file);
+
+			Runtime.getRuntime().exec(path + "sample.exe", null, new File(path)).waitFor();
+			System.out.println("saveLicensePlate-sample");
+
+			File myObj = new File(path + "ocr/result/N_capimg.txt");
+			Scanner myReader = new Scanner(myObj);
+			// if (myReader.hasNextLine()) {
+			String number = myReader.nextLine().replace(" ", "");
+			System.out.println("vno=" + number);
+			return number;
+
+			// }else {
+
+			// return "";
+			// }
+
 //			    
 //			    
 //				OcrDetails ocrDetails=new OcrDetails();
@@ -2458,299 +2349,286 @@ public class VehicleController {
 //			   
 //				      
 //			    
-			   }catch(Exception e) {
-				   
-				   System.out.println("An error occurred.");
-				      e.printStackTrace();
-				      return "";
-			   }
+		} catch (Exception e) {
+
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+			return "";
+		}
 //			   
 //			   
 //			   return numberDataBeenlist;
+	}
+
+	@RequestMapping(value = "takeAutoCapMore", method = RequestMethod.POST)
+	public @ResponseBody String takeAutoCapMore(@RequestParam("json") String json,
+			@RequestParam("vecno") String vecno) {
+
+		try {
+
+			byte[] imagedata = DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));
+			ByteArrayInputStream bais = new ByteArrayInputStream(imagedata);
+
+			String path1 = this.getClass().getClassLoader().getResource("").getPath();
+			String fullPath = URLDecoder.decode(path1, "UTF-8");
+
+			String pathArr[] = fullPath.split("/WEB-INF/classes/");
+
+			String path = "";
+			String exename = "";
+
+			String fileName = "";
+			String textFileName = "";
+
+			path = pathArr[0] + "/resources/Debug2/";
+			exename = "SimpleLPR_UI.exe";
+			fileName = "image/more.jpg";
+			textFileName = "Number.txt";
+
+			System.out.println("method 2 call");
+
+			File file = new File(path + fileName);
+			ImageIO.write(ImageIO.read(bais), "jpg", file);
+			logger.info("Image is Saved");
+
+			Runtime.getRuntime().exec(path + exename, null, new File(path)).waitFor();
+
+			logger.info(exename + " Exe File Run Ok");
+
+			String numberis = "";
+
+			File myObj = new File(path + textFileName);
+			Scanner myReader = new Scanner(myObj);
+			if (myReader.hasNextLine()) {
+
+				numberis = myReader.nextLine().replace(" ", "") + "";
+				logger.info("Get text file Data  ok");
+
+			} else {
+
+				numberis = "";
+				logger.info("No Text File Created or Empty Text File");
 			}
-		    
-			
-			@RequestMapping(value = "takeAutoCapMore", method = RequestMethod.POST)
-			public @ResponseBody String takeAutoCapMore( @RequestParam ("json") String json, @RequestParam ("vecno") String vecno) 
-			{
-			
-			try {
+			// logger.info("Get Text file ok");
 
-			 byte[] imagedata = DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));	
-			 ByteArrayInputStream bais = new ByteArrayInputStream(imagedata);
-		
-				String path1 = this.getClass().getClassLoader().getResource("").getPath();
-				String fullPath = URLDecoder.decode(path1, "UTF-8");
+			myReader.close();
+			myObj.delete();
+			file.delete();
+			logger.info("Image text File Deleted");
 
-				String pathArr[] = fullPath.split("/WEB-INF/classes/");
+			return numberis;
 
-				String path="";
-				String exename="";
-				
-				String fileName="";
-				String textFileName="";
+		} catch (Exception e) {
 
+			logger.info("Error-" + e.getLocalizedMessage());
+			e.printStackTrace();
+			return "";
+		}
 
-				path= pathArr[0]+"/resources/Debug2/";	
-				exename="SimpleLPR_UI.exe";
-				fileName="image/more.jpg";
-				textFileName="Number.txt";
-				
-				System.out.println("method 2 call");
+	}
 
+	static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
 
-			    	File file = new File(path+fileName);
-			    	ImageIO.write(ImageIO.read(bais),"jpg",file);
-			    	logger.info("Image is Saved");
+		@Override
+		public boolean accept(final File dir, final String name) {
 
-			    	Runtime.getRuntime().exec(path+exename, null, new File(path)).waitFor();
+			if (name.endsWith("." + "jpg")) {
+				return (true);
 
-			    	logger.info(exename+" Exe File Run Ok");
-  
-			    	String numberis="";
-			    	
-				      File myObj = new File(path+textFileName);
-				      Scanner myReader = new Scanner(myObj);
-				      if (myReader.hasNextLine()) {
-				    	 
-				    	  numberis= myReader.nextLine().replace(" ", "")+"";
-				    	  logger.info("Get text file Data  ok");
-				    
-				     }else {
-				    	 
-				    	 numberis=""; 
-				    	 logger.info("No Text File Created or Empty Text File");
-				     }
-				     //logger.info("Get Text file ok");
-
-				      myReader.close();
-				      myObj.delete();
-				      file.delete();
-				      logger.info("Image text File Deleted");
-			 
-			 
-				return numberis;
-			    
-			   }catch(Exception e) {
-				   
-				   logger.info("Error-"+e.getLocalizedMessage());
-				      e.printStackTrace();
-					  return "";
-			   }
-			   
-			   
-			   
+			} else {
+				return (false);
 			}
-			
-			
-			
-			
-			
-			
-		    static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
+		}
+	};
 
-		        @Override
-		        public boolean accept(final File dir, final String name) {
-		            
-		                if (name.endsWith("." + "jpg")) {
-		                    return (true);
-		                
-		                }else {
-		            return (false);
-		            }
-		        }
-		    };
-		    @RequestMapping(value = "takemanulcapNo", method = RequestMethod.POST)
-			public @ResponseBody String takemanulcapNo(@RequestParam ("method") String method, HttpSession session) 
-			{
-				String centerid=session.getAttribute("centerid")+"";
-				CenterMaster centerMaster=centerService.getcenterById(centerid); 
-				String autoCapPath=centerMaster.getGetAutoCaptureImgPath();
-				String capimPath="\\lane\\capimg";
-				
-				String path=autoCapPath+capimPath;
-				String result="";
-				
-				File dir = new File(path);
+	@RequestMapping(value = "takemanulcapNo", method = RequestMethod.POST)
+	public @ResponseBody String takemanulcapNo(@RequestParam("method") String method, HttpSession session) {
+		String centerid = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerid);
+		String autoCapPath = centerMaster.getGetAutoCaptureImgPath();
+		String capimPath = "\\lane\\capimg";
 
-				
-				
-					
-			        if (dir.isDirectory()) { // make sure it's a directory
-			        	
-			        	int daysBack=1;
-			        	
-			            for (final File f : dir.listFiles(IMAGE_FILTER)) {
-			                BufferedImage img = null;
+		String path = autoCapPath + capimPath;
+		String result = "";
 
-			                try {
-			                	long purgeTime = System.currentTimeMillis() - (daysBack  * 1 * 15 * 60 * 1000);
-			                	
-						        if(f.lastModified() < purgeTime) {
-						            if(!f.delete()) {
-						            	logger.info("Unable to delete file: " + f);
-						               // System.err.println("Unable to delete file: " + f);
-						            }
-						         }
-			                	
-			                	
-			                    img = ImageIO.read(f); 
-			                    byte[] imgbyte=toByteArrayAutoClosable(img, "jpg");							
-							  
-			                    result=Base64.getEncoder().encodeToString(imgbyte);
+		File dir = new File(path);
 
+		if (dir.isDirectory()) { // make sure it's a directory
 
-			                } catch (final IOException e) {
-			                    // handle errors here
-			                
-			                }
-			            }
-			        }
-				
-				
-				return result;
-				
-				
-				
-				
-				
+			int daysBack = 1;
+
+			for (final File f : dir.listFiles(IMAGE_FILTER)) {
+				BufferedImage img = null;
+
+				try {
+					long purgeTime = System.currentTimeMillis() - (daysBack * 1 * 15 * 60 * 1000);
+
+					if (f.lastModified() < purgeTime) {
+						if (!f.delete()) {
+							logger.info("Unable to delete file: " + f);
+							// System.err.println("Unable to delete file: " + f);
+						}
+					}
+
+					img = ImageIO.read(f);
+					byte[] imgbyte = toByteArrayAutoClosable(img, "jpg");
+
+					result = Base64.getEncoder().encodeToString(imgbyte);
+
+				} catch (final IOException e) {
+					// handle errors here
+
+				}
 			}
-		//Auto Capture License Plate Save Image in to DB
-			
-			@RequestMapping(value = "takeAutoNo", method = RequestMethod.POST)
-			public @ResponseBody List<NumberDataBeen> takeAutoNo(@RequestParam ("method") String method,@RequestParam ("gateid")String gateid, HttpSession session) 
-			{
-			String centerid=session.getAttribute("centerid")+"";
-			CenterMaster centerMaster=centerService.getcenterById(centerid); 
-			
-			Gate gate = vehicleService.getGatesDetailByID(gateid);	
-			String autoCapPath=gate.getGatePath();
-		
-			String laneimgpathPath=centerMaster.getLaneCamImgPath();
-			String capimPath="\\lane";
-			
-			String path="";
-			
-			if(method.equals("0")) {
-				path=autoCapPath+capimPath;
-			}else if(method.equals("1")) {
-				path=autoCapPath;
-			}else {
-				path=autoCapPath+laneimgpathPath;
-			}
-			
-				
-			File dir = new File(path);
+		}
 
-				
-			List<NumberDataBeen> numberDataBeenlist=new ArrayList<NumberDataBeen>();
-				
-				
-				
-		        if (dir.isDirectory()) { // make sure it's a directory
-		        	
-		        	int daysBack=1;
-		        	
-		            for (final File f : dir.listFiles(IMAGE_FILTER)) {
-		                BufferedImage img = null;
+		return result;
 
-		                try {
-		                	long purgeTime = System.currentTimeMillis() - (daysBack  * 1 * 15 * 60 * 1000);
-		                	
-					        if(f.lastModified() < purgeTime) {
-					            if(!f.delete()) {
-					            	logger.info("Unable to delete file: " + f);
-					               // System.err.println("Unable to delete file: " + f);
-					            }
-					         }
-		                	
-		                	
-		                    img = ImageIO.read(f); 
-		                    byte[] imgbyte=toByteArrayAutoClosable(img, "jpg");
-						    NumberDataBeen numberDataBeen=new NumberDataBeen();
-						    numberDataBeen.setId(1);	
-						    numberDataBeen.setNumber(f.getName().replace(".jpg",""));
-						   numberDataBeen.setNoimage(Base64.getEncoder().encodeToString(imgbyte));
-						    numberDataBeen.setBytimage(imgbyte);
-						    numberDataBeenlist.add(numberDataBeen);
-                    
+	}
+	// Auto Capture License Plate Save Image in to DB
+
+	@RequestMapping(value = "takeAutoNo", method = RequestMethod.POST)
+	public @ResponseBody List<NumberDataBeen> takeAutoNo(@RequestParam("method") String method,
+			@RequestParam("gateid") String gateid, HttpSession session) {
+		String centerid = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerid);
+
+		Gate gate = vehicleService.getGatesDetailByID(gateid);
+		String autoCapPath = gate.getGatePath();
+
+		String laneimgpathPath = centerMaster.getLaneCamImgPath();
+		String capimPath = "\\lane";
+
+		String path = "";
+
+		if (method.equals("0")) {
+			path = autoCapPath + capimPath;
+		} else if (method.equals("1")) {
+			path = autoCapPath;
+		} else {
+			path = autoCapPath + laneimgpathPath;
+		}
+
+		File dir = new File(path);
+
+		List<NumberDataBeen> numberDataBeenlist = new ArrayList<NumberDataBeen>();
+
+		if (dir.isDirectory()) { // make sure it's a directory
+
+			int daysBack = 1;
+
+			for (final File f : dir.listFiles(IMAGE_FILTER)) {
+				BufferedImage img = null;
+
+				try {
+					long purgeTime = System.currentTimeMillis() - (daysBack * 1 * 15 * 60 * 1000);
+
+					if (f.lastModified() < purgeTime) {
+						if (!f.delete()) {
+							logger.info("Unable to delete file: " + f);
+							// System.err.println("Unable to delete file: " + f);
+						}
+					}
+
+					img = ImageIO.read(f);
+					byte[] imgbyte = toByteArrayAutoClosable(img, "jpg");
+					NumberDataBeen numberDataBeen = new NumberDataBeen();
+					numberDataBeen.setId(1);
+					numberDataBeen.setNumber(f.getName().replace(".jpg", ""));
+					numberDataBeen.setNoimage(Base64.getEncoder().encodeToString(imgbyte));
+					numberDataBeen.setBytimage(imgbyte);
+					numberDataBeenlist.add(numberDataBeen);
+
 //		                    // you probably want something more involved here
 //		                    // to display in your UI
 //		                    System.out.println("image: " + f.getName());
 //		                    System.out.println(" width : " + img.getWidth());
 //		                    System.out.println(" height: " + img.getHeight());
 //		                    System.out.println(" size  : " + f.length());
-						
-		                } catch (final IOException e) {
-		                    // handle errors here
-		                }
-		            }
-		        }
-				
-			   
-			   return numberDataBeenlist;
-			}			
-			
-			@RequestMapping(value = "getOcrVehicle", method = RequestMethod.POST)
-			public @ResponseBody List<OcrDetails> takeOcrNo(HttpSession session) 
-			{	List<OcrDetails> ocrStatusDetails=null;			
-				ocrStatusDetails=vehicleService.pendingOcrDetails();	
-				return ocrStatusDetails;
-			}
-			
-			
-			@RequestMapping(value = "takeOcrNo", method = RequestMethod.POST)
-			public @ResponseBody List<OcrDetails> takeOcrNo(@RequestParam ("method") String method, HttpSession session) 
-			{	List<OcrDetails> ocrStatusDetails=null;
-				//ocrStatusDetails=vehicleService.pendingOcrStatusDetails(vmStatus,vrStatus,docStatus) mrthod;
-				if(method.equals("vmStatus")) {
-				ocrStatusDetails=vehicleService.pendingOcrStatusDetails("pending","pending","pending");
-				}else if(method.equals("docStatus")) {
-				ocrStatusDetails=vehicleService.pendingOcrStatusDetails("completed","pending","pending");	
-				}else if(method.equals("vrStatus")) {
-				ocrStatusDetails=vehicleService.pendingOcrStatusDetails("completed","pending","completed");
+
+				} catch (final IOException e) {
+					// handle errors here
 				}
-				
-				return ocrStatusDetails;
 			}
-			
-			
-			@RequestMapping(value = "getLicensePlateip", method = RequestMethod.POST)
-			public @ResponseBody List<NumberDataBeen> getLicensePlateip(@RequestParam ("type") String type,HttpSession session) 
-			{
-				
-				String centerid=session.getAttribute("centerid")+"";
-				List<NumberDataBeen> numberDataBeenlist=new ArrayList<NumberDataBeen>();
-			//	System.out.println("ghgh="+id);
-				try {
-				String path1 = this.getClass().getClassLoader().getResource("").getPath();
-				String fullPath = URLDecoder.decode(path1, "UTF-8");
+		}
 
-				String pathArr[] = fullPath.split("/WEB-INF/classes/");
+		return numberDataBeenlist;
+	}
 
-				System.out.println(fullPath);
+	@RequestMapping(value = "getOcrVehicle", method = RequestMethod.POST)
+	public @ResponseBody List<OcrDetails> takeOcrNo(HttpSession session) {
+		List<OcrDetails> ocrStatusDetails = null;
+		ocrStatusDetails = vehicleService.pendingOcrDetails();
+		return ocrStatusDetails;
+	}
 
-				System.out.println(pathArr[0]);	
-				
-				
-			//	int ocrDetailsID;	
-				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-				LocalDateTime now = LocalDateTime.now();
-			//	if(id.equals("0")) {
-			//	ocrDetailsID=vehicleService.maxOcrDetailsID();	
-				
-			//	}else {
-			//	ocrDetailsID=Integer.parseInt(id)	;
-			//	}
-					
-			
-				
-				String path="";
-				String exename="";
-				
-				String fileName="";
-				String textFileName="";
-				
+	@RequestMapping(value = "getOCRImage", method = RequestMethod.GET)
+	public @ResponseBody String getOCRImage(@RequestParam("ocrId") int ocrId) throws IOException {
+		OcrDetails ocrd = new OcrDetails();
+		// System.out.println("Image Called");
+		String fileName = String.valueOf(ocrId);
+		BufferedImage bImage = ImageIO.read(new File("C:\\OCRExternal\\" + fileName + ".jpg"));
+
+//		      ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//		      ImageIO.write(bImage, "jpg", bos );
+//		      byte [] data = bos.toByteArray();
+
+		byte[] imgbyte = toByteArrayAutoClosable(bImage, "jpg");
+		// System.out.println("Image Byte[]" + imgbyte);
+		// ocrd.setNoimage(imgbyte);
+		// String image = ocrd.getNoimageView();
+		return Base64.getEncoder().encodeToString(imgbyte);
+	}
+
+	@RequestMapping(value = "takeOcrNo", method = RequestMethod.POST)
+	public @ResponseBody List<OcrDetails> takeOcrNo(@RequestParam("method") String method, HttpSession session) {
+		List<OcrDetails> ocrStatusDetails = null;
+		// ocrStatusDetails=vehicleService.pendingOcrStatusDetails(vmStatus,vrStatus,docStatus)
+		// mrthod;
+		if (method.equals("vmStatus")) {
+			ocrStatusDetails = vehicleService.pendingOcrStatusDetails("pending", "pending", "pending");
+		} else if (method.equals("docStatus")) {
+			ocrStatusDetails = vehicleService.pendingOcrStatusDetails("completed", "pending", "pending");
+		} else if (method.equals("vrStatus")) {
+			ocrStatusDetails = vehicleService.pendingOcrStatusDetails("completed", "pending", "completed");
+		}
+
+		return ocrStatusDetails;
+	}
+
+	@RequestMapping(value = "getLicensePlateip", method = RequestMethod.POST)
+	public @ResponseBody List<NumberDataBeen> getLicensePlateip(@RequestParam("type") String type,
+			HttpSession session) {
+
+		String centerid = session.getAttribute("centerid") + "";
+		List<NumberDataBeen> numberDataBeenlist = new ArrayList<NumberDataBeen>();
+		// System.out.println("ghgh="+id);
+		try {
+			String path1 = this.getClass().getClassLoader().getResource("").getPath();
+			String fullPath = URLDecoder.decode(path1, "UTF-8");
+
+			String pathArr[] = fullPath.split("/WEB-INF/classes/");
+
+			System.out.println(fullPath);
+
+			System.out.println(pathArr[0]);
+
+			// int ocrDetailsID;
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
+			// if(id.equals("0")) {
+			// ocrDetailsID=vehicleService.maxOcrDetailsID();
+
+			// }else {
+			// ocrDetailsID=Integer.parseInt(id) ;
+			// }
+
+			String path = "";
+			String exename = "";
+
+			String fileName = "";
+			String textFileName = "";
+
 //				if(mthod.equals("1")){
 //				//sample.exe  method 1
 //			     path=pathArr[0]+"/resources/Debug/";	
@@ -2760,123 +2638,112 @@ public class VehicleController {
 //				 
 //				 System.out.println("method 1 call");
 //				}else{
-					
-				path= pathArr[0]+"/resources/Debug2/";	
-				exename="SimpleLPR_UI.exe";
-				fileName="image/moNumber.jpg";
-				textFileName="Number.txt";
-				
-				System.out.println("method 2 call");
+
+			path = pathArr[0] + "/resources/Debug2/";
+			exename = "SimpleLPR_UI.exe";
+			fileName = "image/moNumber.jpg";
+			textFileName = "Number.txt";
+
+			System.out.println("method 2 call");
 //				}
-				
-	
-				
-				
-			BufferedImage bufferedImage; 
-			
-			List<ConfigSystem> configDetails=null;
-					
-					if(type.equals("0")) {
-						configDetails=testValueFileServices.getFTPServerInfo(centerid, "IPCL");
-					}else {
-						configDetails=testValueFileServices.getFTPServerInfo(centerid, "IPC");
-					}
-					
-					
-			String ipAddress="";
-			String userName="";
-			String password="";
-			String port="";
-			String url="";
-			
-			for(ConfigSystem cs:configDetails) {
-			 ipAddress=cs.getIpaddress();
-			 userName=cs.getUserName();
-			 password=cs.getPassword();
-			 port=cs.getPort();
-			 url=cs.getRootPath();
-			 System.out.println("get Camera"+"rtsp://"+userName+":"+password+"@"+ipAddress+":"+port+"/"+url);
+
+			BufferedImage bufferedImage;
+
+			List<ConfigSystem> configDetails = null;
+
+			if (type.equals("0")) {
+				configDetails = testValueFileServices.getFTPServerInfo(centerid, "IPCL");
+			} else {
+				configDetails = testValueFileServices.getFTPServerInfo(centerid, "IPC");
 			}
-			  logger.info("Get IpCamera Data"); 
-			
-			
-			  OpenCVFrameGrabber frameGrabber = new OpenCVFrameGrabber("rtsp://"+userName+":"+password+"@"+ipAddress+":"+port+"/"+url);
-			  	
-			  		// "rtsp://nev:Nev123_456@192.168.1.8:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif");
-			       
-			  IplImage iPimg;
-			   
-			    if(true) {
-			 
-			    	frameGrabber.start();
-			    	logger.info("Ip Camera Start");
-			    	iPimg = frameGrabber.grab();
-			    	
-			    	bufferedImage= new BufferedImage(iPimg.width(),iPimg.height(), BufferedImage.TYPE_3BYTE_BGR);
-			    	iPimg.copyTo(bufferedImage);
-			    	
-			    	File file = new File(path+fileName);
-			    	ImageIO.write(bufferedImage,"jpg",file);
-			    	logger.info("Image is Saved");
-			    //	canvasFrame.showImage(iPimg);
-			    	frameGrabber.stop();
-			    	Runtime.getRuntime().exec(path+exename, null, new File(path)).waitFor();
-			    	
-			    	file.delete();
-			    	
-			    	logger.info("Ip Camera Stop");
-			    }
-			    
-			    
-			   
+
+			String ipAddress = "";
+			String userName = "";
+			String password = "";
+			String port = "";
+			String url = "";
+
+			for (ConfigSystem cs : configDetails) {
+				ipAddress = cs.getIpaddress();
+				userName = cs.getUserName();
+				password = cs.getPassword();
+				port = cs.getPort();
+				url = cs.getRootPath();
+				System.out.println("get Camera" + "rtsp://" + userName + ":" + password + "@" + ipAddress + ":" + port
+						+ "/" + url);
+			}
+			logger.info("Get IpCamera Data");
+
+			OpenCVFrameGrabber frameGrabber = new OpenCVFrameGrabber(
+					"rtsp://" + userName + ":" + password + "@" + ipAddress + ":" + port + "/" + url);
+
+			// "rtsp://nev:Nev123_456@192.168.1.8:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif");
+
+			IplImage iPimg;
+
+			if (true) {
+
+				frameGrabber.start();
+				logger.info("Ip Camera Start");
+				iPimg = frameGrabber.grab();
+
+				bufferedImage = new BufferedImage(iPimg.width(), iPimg.height(), BufferedImage.TYPE_3BYTE_BGR);
+				iPimg.copyTo(bufferedImage);
+
+				File file = new File(path + fileName);
+				ImageIO.write(bufferedImage, "jpg", file);
+				logger.info("Image is Saved");
+				// canvasFrame.showImage(iPimg);
+				frameGrabber.stop();
+				Runtime.getRuntime().exec(path + exename, null, new File(path)).waitFor();
+
+				file.delete();
+
+				logger.info("Ip Camera Stop");
+			}
+
 //			    File file= new File(path+fileName);
 //			    ImageIO.write(bufferedImage, "jpg",file);
-			    
-			    byte[] byteArray = toByteArrayAutoClosable(bufferedImage, "jpg");
-			//	OcrDetails ocrDetails=new OcrDetails();
-			//	ocrDetails.setOcrid(ocrDetailsID);
-				//ocrDetails.setOcrDate(dtf.format(now));
-				//ocrDetails.setNoimage(byteArray);
-						
-				//vehicleService.saveOcrDetailsRepo(ocrDetails);
-			//	logger.info("Ocr Table Date Save");
-			//	public String getPath() throws UnsupportedEncodingException {
 
-		
-				
-				
-				
-				
-				logger.info(exename+" Exe File Run Ok");
-			//	 Thread.sleep(15000);
-			
-				
-				      File myObj = new File(path+textFileName);
-				      Scanner myReader = new Scanner(myObj);
-				     // System.out.println("hhh="+myReader);
-				      
-				     if (myReader.hasNextLine()) {
-				    	 System.out.println("hhh=  bb");
-				    NumberDataBeen numberDataBeen=new NumberDataBeen();
-			//	    numberDataBeen.setId(ocrDetailsID);	
-				    numberDataBeen.setNumber(myReader.nextLine().replace(" ", ""));
-				    numberDataBeen.setNoimage(Base64.getEncoder().encodeToString(byteArray));
-				    numberDataBeen.setBytimage(byteArray);
-				    numberDataBeenlist.add(numberDataBeen);
-				    
-				     }else {
-				    	 System.out.println("hhh=  gg");
-						    NumberDataBeen numberDataBeen=new NumberDataBeen();
-					//	    numberDataBeen.setId(ocrDetailsID);	
-						    numberDataBeen.setNumber("");
-						    numberDataBeen.setNoimage(Base64.getEncoder().encodeToString(byteArray));
-						    numberDataBeen.setBytimage(byteArray);
-						    numberDataBeenlist.add(numberDataBeen);	 
-				    	 
-				     }
-				     logger.info("Get Text file ok");
-				     // vm=data;
-				      
+			byte[] byteArray = toByteArrayAutoClosable(bufferedImage, "jpg");
+			// OcrDetails ocrDetails=new OcrDetails();
+			// ocrDetails.setOcrid(ocrDetailsID);
+			// ocrDetails.setOcrDate(dtf.format(now));
+			// ocrDetails.setNoimage(byteArray);
+
+			// vehicleService.saveOcrDetailsRepo(ocrDetails);
+			// logger.info("Ocr Table Date Save");
+			// public String getPath() throws UnsupportedEncodingException {
+
+			logger.info(exename + " Exe File Run Ok");
+			// Thread.sleep(15000);
+
+			File myObj = new File(path + textFileName);
+			Scanner myReader = new Scanner(myObj);
+			// System.out.println("hhh="+myReader);
+
+			if (myReader.hasNextLine()) {
+				System.out.println("hhh=  bb");
+				NumberDataBeen numberDataBeen = new NumberDataBeen();
+				// numberDataBeen.setId(ocrDetailsID);
+				numberDataBeen.setNumber(myReader.nextLine().replace(" ", ""));
+				numberDataBeen.setNoimage(Base64.getEncoder().encodeToString(byteArray));
+				numberDataBeen.setBytimage(byteArray);
+				numberDataBeenlist.add(numberDataBeen);
+
+			} else {
+				System.out.println("hhh=  gg");
+				NumberDataBeen numberDataBeen = new NumberDataBeen();
+				// numberDataBeen.setId(ocrDetailsID);
+				numberDataBeen.setNumber("");
+				numberDataBeen.setNoimage(Base64.getEncoder().encodeToString(byteArray));
+				numberDataBeen.setBytimage(byteArray);
+				numberDataBeenlist.add(numberDataBeen);
+
+			}
+			logger.info("Get Text file ok");
+			// vm=data;
+
 //					    	    while (myReader.hasNextLine()) {
 //							    	String str=myReader.nextLine().replace(" ", "");
 //							    	 if(str.length()>10) {
@@ -2910,542 +2777,524 @@ public class VehicleController {
 //								    numberDataBeenlist.add(numberDataBeen2);	
 //							    	 }
 //								    
-					    	 //*************************************
-				    
-				      myReader.close();
-				      myObj.delete();
-				      logger.info("Image text File Deleted");
-				      //file.delete();
-			          //  for(int i=0; i<data.length; i++){
-			         //   	System.out.println("hh="+data[i][1]);
-			         //   }
-			   
-				      
-			    
-			   }catch(Exception e) {
-				   logger.error("This is an error = "+e.getMessage());
-				   System.out.println("An error occurred.");
-				      
-			   }
-			   
-			   
-			   return numberDataBeenlist;
-			}
-		
-			
-			
-			@ModelAttribute("usercombo")
-			public List<Users> viewAllUser() {
-				List<Users> usercombo = usersService.listAll();
-				return usercombo;
+			// *************************************
+
+			myReader.close();
+			myObj.delete();
+			logger.info("Image text File Deleted");
+			// file.delete();
+			// for(int i=0; i<data.length; i++){
+			// System.out.println("hh="+data[i][1]);
+			// }
+
+		} catch (Exception e) {
+			logger.error("This is an error = " + e.getMessage());
+			System.out.println("An error occurred.");
+
+		}
+
+		return numberDataBeenlist;
+	}
+
+	@ModelAttribute("usercombo")
+	public List<Users> viewAllUser() {
+		List<Users> usercombo = usersService.listAll();
+		return usercombo;
+
+	}
+
+	@RequestMapping(value = "/tesFeeDetails", method = RequestMethod.GET)
+	public @ResponseBody String[] tesFeeDetails(@RequestParam String vecCatID, @RequestParam String vrTypId,
+			@RequestParam String centerId) {
+
+		String[] x = new String[4];
+
+		TestCategory testCategory = centerService.getCategoryId(vecCatID);
+		VehicleRegisterType vrtyp = vehicleService.getRegType(vrTypId);
+
+		CenterMaster centerMaster = centerService.getcenterById(centerId);
+		String countrcode = centerMaster.getPartner_ID().getCountry_Code().getCountryCode();
+		String currency = centerMaster.getPartner_ID().getCountry_Code().getCurrency();
+		long testFee = testCategory.getCategoryFee();
+		long testFeePresent = vrtyp.getvTestFeePre();
+		long calTestFee = testFee * testFeePresent / 100;
+
+		List<TaxConfiguration> getTaxFromCountrylist = vehicleService.getTaxFromCountry(countrcode);
+
+		Long taxamt = Long.parseLong("0");
+		for (TaxConfiguration taxdetail : getTaxFromCountrylist) {
+
+			if (taxdetail.getType().equals("Rate")) {
+				taxamt = taxamt + (calTestFee * taxdetail.getTaxRate() / 10000);
+			} else {
+				taxamt = taxamt + taxdetail.getTaxRate();
 
 			}
-	       
-			
-			
-			@RequestMapping(value="/tesFeeDetails", method=RequestMethod.GET)
-			public @ResponseBody String[] tesFeeDetails(@RequestParam String  vecCatID,@RequestParam String  vrTypId,@RequestParam String  centerId) {
-				
-				String[]  x=new String[4];
-				
-				
-				TestCategory testCategory=centerService.getCategoryId(vecCatID);
-				VehicleRegisterType vrtyp=vehicleService.getRegType(vrTypId);
-				
-				CenterMaster centerMaster=centerService.getcenterById(centerId);
-				String countrcode=centerMaster.getPartner_ID().getCountry_Code().getCountryCode();
-				String currency=centerMaster.getPartner_ID().getCountry_Code().getCurrency();
-				long testFee=testCategory.getCategoryFee();
-				long testFeePresent=vrtyp.getvTestFeePre();
-            	long calTestFee=testFee*testFeePresent/100;
-				
-				List<TaxConfiguration> getTaxFromCountrylist=vehicleService.getTaxFromCountry(countrcode);
-				
-				Long taxamt=Long.parseLong("0");
-            	for(TaxConfiguration taxdetail:getTaxFromCountrylist) {
-	            		
-	            		if(taxdetail.getType().equals("Rate")) {
-	            		 taxamt=taxamt+(calTestFee*taxdetail.getTaxRate()/10000);
-	            		}else {
-	            		 taxamt=taxamt+taxdetail.getTaxRate();	
-	            			
-	            		}
-	
-            	}
-		
-            	x[0]=(calTestFee/100)+"";
-            	x[1]=(taxamt/100)+"";
-            	x[2]=((calTestFee+taxamt)/100)+"";	
-            	x[3]=currency;
-            	
-            	
-            	
-            	
-            	return x;
-			}
-			@RequestMapping(value="/tesTime", method=RequestMethod.GET)
-			public @ResponseBody String[] tesTime(@RequestParam String  vecCatID) {
-				
-				String[]  x=new String[4];
-				
-				
-				TestCategory testCategory=centerService.getCategoryId(vecCatID);
-				//DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-				//Calendar cal = Calendar.getInstance();
-				
-				 String aprtime =testCategory.getTestAproTime();
-				 SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-				 Calendar cal = Calendar.getInstance();
-				 String curTime = df.format(cal.getTime());
-				 
-				 Date d=new Date();
-				try {
-					d = df.parse(aprtime);
-					
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
 
-				 cal.setTime(d);
-				 cal.add(Calendar.MINUTE, Integer.parseInt(aprtime));
-				 String newTime = df.format(cal.getTime());
-				
-				
-            	x[0]=aprtime+"";
-            	x[1]="0";
-            	x[2]=curTime;
-            	x[3]=newTime;
-            	
+		}
 
-				return x;
-			}
-			
-			
-			@RequestMapping(value="/checkVinNo", method=RequestMethod.GET)
-			public @ResponseBody List<VehicleMaster> checkVinNo(@RequestParam String  vinno,@RequestParam String veNo) {				
-				List<VehicleMaster> vm=vehicleService.checkVinNo(vinno,veNo);
-				return vm;
-			}
-			
-			@RequestMapping(value="/checkEngNo", method=RequestMethod.GET)
-			public @ResponseBody List<VehicleMaster> checkEngNo(@RequestParam String  engno,@RequestParam String veNo) {				
-				List<VehicleMaster> vm=vehicleService.checkEngNo(engno,veNo);
-				return vm;
-			}	
-			
-			
-			@RequestMapping(value="/getvehicleModelSelect", method=RequestMethod.GET)
-			public  @ResponseBody  List<VehicleModel> getVehicleModel(@RequestParam String make,@RequestParam String clas) {
-				System.out.println("ghgggggggggggggg");
-				List<VehicleModel> vmodel = vehicleService.getModelByID(make,clas);
-				return vmodel;
-			}
-			@RequestMapping(value="/getCheckModelValue", method=RequestMethod.GET)
-			public  @ResponseBody  String getCheckModel(@RequestParam String make,@RequestParam String clas,@RequestParam String modelname) {
-			
-				List<VehicleModel> vmodel = vehicleService.getModelCheck(make,clas,modelname);
-				if(vmodel.size()>0) {
-					return "0";
-				}else {
-					return "1";
-				}
-				
-			}
-			@RequestMapping(value="/getTestStatusVehicleRegistation", method=RequestMethod.GET)
-			public  @ResponseBody  List<VehicleRegistration> getTestStatusVehicleRegistation(@RequestParam String vehicleID) {
-				System.out.println("ghgggggggggggggg");
-				List<VehicleRegistration> vmodel = vehicleService.getTestStatusVehicleRegistation(vehicleID);
-				return vmodel;
-			}	
-			
-			
-			
-			@RequestMapping(value="/getComboState", method=RequestMethod.GET)
-			public   @ResponseBody List<CountryState> getComboState(@RequestParam String countryCode ) {
-				List<CountryState> counState = centerService.getallStateFromCountry(countryCode);
-				return counState;
-			}
-			
-			
+		x[0] = (calTestFee / 100) + "";
+		x[1] = (taxamt / 100) + "";
+		x[2] = ((calTestFee + taxamt) / 100) + "";
+		x[3] = currency;
+
+		return x;
+	}
+
+	@RequestMapping(value = "/tesTime", method = RequestMethod.GET)
+	public @ResponseBody String[] tesTime(@RequestParam String vecCatID) {
+
+		String[] x = new String[4];
+
+		TestCategory testCategory = centerService.getCategoryId(vecCatID);
+		// DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+		// Calendar cal = Calendar.getInstance();
+
+		String aprtime = testCategory.getTestAproTime();
+		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+		Calendar cal = Calendar.getInstance();
+		String curTime = df.format(cal.getTime());
+
+		Date d = new Date();
+		try {
+			d = df.parse(aprtime);
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		cal.setTime(d);
+		cal.add(Calendar.MINUTE, Integer.parseInt(aprtime));
+		String newTime = df.format(cal.getTime());
+
+		x[0] = aprtime + "";
+		x[1] = "0";
+		x[2] = curTime;
+		x[3] = newTime;
+
+		return x;
+	}
+
+	@RequestMapping(value = "/checkVinNo", method = RequestMethod.GET)
+	public @ResponseBody List<VehicleMaster> checkVinNo(@RequestParam String vinno, @RequestParam String veNo) {
+		List<VehicleMaster> vm = vehicleService.checkVinNo(vinno, veNo);
+		return vm;
+	}
+
+	@RequestMapping(value = "/checkEngNo", method = RequestMethod.GET)
+	public @ResponseBody List<VehicleMaster> checkEngNo(@RequestParam String engno, @RequestParam String veNo) {
+		List<VehicleMaster> vm = vehicleService.checkEngNo(engno, veNo);
+		return vm;
+	}
+
+	@RequestMapping(value = "/getvehicleModelSelect", method = RequestMethod.GET)
+	public @ResponseBody List<VehicleModel> getVehicleModel(@RequestParam String make, @RequestParam String clas) {
+		System.out.println("ghgggggggggggggg");
+		List<VehicleModel> vmodel = vehicleService.getModelByID(make, clas);
+		return vmodel;
+	}
+
+	@RequestMapping(value = "/getCheckModelValue", method = RequestMethod.GET)
+	public @ResponseBody String getCheckModel(@RequestParam String make, @RequestParam String clas,
+			@RequestParam String modelname) {
+
+		List<VehicleModel> vmodel = vehicleService.getModelCheck(make, clas, modelname);
+		if (vmodel.size() > 0) {
+			return "0";
+		} else {
+			return "1";
+		}
+
+	}
+
+	@RequestMapping(value = "/getTestStatusVehicleRegistation", method = RequestMethod.GET)
+	public @ResponseBody List<VehicleRegistration> getTestStatusVehicleRegistation(@RequestParam String vehicleID) {
+		System.out.println("ghgggggggggggggg");
+		List<VehicleRegistration> vmodel = vehicleService.getTestStatusVehicleRegistation(vehicleID);
+		return vmodel;
+	}
+
+	@RequestMapping(value = "/getComboState", method = RequestMethod.GET)
+	public @ResponseBody List<CountryState> getComboState(@RequestParam String countryCode) {
+		List<CountryState> counState = centerService.getallStateFromCountry(countryCode);
+		return counState;
+	}
+
 //			@RequestMapping(value="/getTestStatusVehicleRegistation", method=RequestMethod.GET)
 //			public  @ResponseBody  List<TestLaneHead> getTestLaneHeadDetailByCenterCombo(@RequestParam String centerid) {
 //				List<TestLaneHead> vmodel = laneServices.getTestLaneHeadDetailByCenter(centerid);
 //				return vmodel;
 //			}
 //			
-	
-			@RequestMapping(value="/getTestLaneHeadvc", method=RequestMethod.GET)
-			public @ResponseBody String[][] getTestLaneHeadDetailByCVclass(@RequestParam String  catid,@RequestParam String  vclassid,@RequestParam String  cenid) {
-				
-				String[][] laneList=laneServices.getTestLaneHeadDetailByCenterCategoryVclass(catid,vclassid,cenid); 
-		
-				return laneList;
-			}	
-			
-			  @RequestMapping(value = "/VehicleReportPreview", method=RequestMethod.GET) 
-			  public String VehicleDetailsReportPrevew(Map<String, String> model) { 
 
-				  return "VehicleDetailsReport";
-			  }	
-	
-			
-			  @RequestMapping(value = "/VehicleDetailsReport",method=RequestMethod.POST)
-			  public ModelAndView VehicleDetailsReport(String recDate,HttpServletResponse response,HttpSession session) {
-				  
-				  ModelAndView mav = new ModelAndView("VehicleDetailsReport");
-				  
-				  String centerid=session.getAttribute("centerid")+"";
-				  CenterMaster centerMaster=centerService.getcenterById(centerid);
-				  
-				   List<VehicleRegistration> vehicleregdetail=vehicleService.getVehicleRegDetailByDate(recDate,centerid);
-				  	
-				  	List<VehicleReportByDateBeen> vehicleReportByDateBeenList = new ArrayList<VehicleReportByDateBeen>();
-				  	for(VehicleRegistration vrData:vehicleregdetail) {
-				  		VehicleReportByDateBeen vehicleReportByDateBeen=new VehicleReportByDateBeen();
-				  		vehicleReportByDateBeen.setTestcat(vrData.getTestCategory().getCategoryType());
-				  		vehicleReportByDateBeen.setLregid(vrData.getTestLaneHeadId().getLaneName());
-				  		vehicleReportByDateBeen.setVclass(vrData.getVid().getVmodel().getVehicleClass().getVehicleClass());
-				  		vehicleReportByDateBeen.setVno(vrData.getVid().getVehicleID());
-				  		vehicleReportByDateBeen.setRegtime(vrData.getTime());
-				  		vehicleReportByDateBeen.setRegtype(vrData.getVtype().getvRegType());
-				  		vehicleReportByDateBeen.setInspecter(vrData.getUser().getUserName());
-				  		
-				  	
-				  		ReceiptHead rechead=vehicleService.getReceiptHeadDetailsByVRid(vrData.getVregID());
-				  		
-				  		
-				  		vehicleReportByDateBeen.setRecno(rechead.getRecNo());
-				  		vehicleReportByDateBeen.setTestfee((rechead.getTestFee()/100)+"");
-				  		vehicleReportByDateBeen.setNetfee((rechead.getNetTotal()/100)+"");
-				  		vehicleReportByDateBeen.setCertno("");
-				  		vehicleReportByDateBeen.setVistatus("");
-				  		vehicleReportByDateBeen.setTeststatus("");
-				  		vehicleReportByDateBeenList.add(vehicleReportByDateBeen);
-				  	}
-					//session.setAttribute("centerid", userObj.get(0).getCenter_ID().getCenter_ID());
-					//session.setAttribute("centerName", userObj.get(0).getCenter_ID().getCenter());
-				  	
-				 // 	session.getAttribute("centerName");
-	          
-		          	ReportViewe review=new ReportViewe();
-		          	Map<String,Object> params = new HashMap<>();
-		          	
-		          	
-		          	
-		        	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
-		          	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
-		          	params.put("address",centerMaster.getAdd03() );
-		          	params.put("date",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(recDate)));
-		          	
-		       
-		          	String reptValue="";
-		          	
-		         try {
-		          		reptValue=review.pdfReportViewInlineSystemOpen("vehicledetailsreport.jasper","Vehicle Details Report",vehicleReportByDateBeenList,params,response);
-		          		
-		          
-		          	}catch(Exception e) {	          		
-		          		e.printStackTrace();          		
-		          	}
-				  
-				  mav.addObject("pdfViewEq", reptValue); 
-				  return mav;
-			  }
-			
-			
-			  @RequestMapping(value = "/revenueStatementPrivew", method=RequestMethod.GET) 
-			  public String RevenueStatementPrevew(Map<String, String> model) { 
+	@RequestMapping(value = "/getTestLaneHeadvc", method = RequestMethod.GET)
+	public @ResponseBody String[][] getTestLaneHeadDetailByCVclass(@RequestParam String catid,
+			@RequestParam String vclassid, @RequestParam String cenid) {
 
-				  return "revenueStatement";
-			  }
-			
-			
-			
-			  @RequestMapping(value = "/revenueStatement",method=RequestMethod.POST)
-			  public ModelAndView RevenueStatementReport(String recDate,HttpServletResponse response,HttpSession session) {
-				  
-				  ModelAndView mav = new ModelAndView("VehicleDetailsReport");
-				  
-				  String centerid=session.getAttribute("centerid")+"";
-				  CenterMaster centerMaster=centerService.getcenterById(centerid);
-				  
-				   List<ReceiptHead> receiptHeads=vehicleService.getReceiptHeadByDate(recDate);
-				  	
-				  	List<RevenueStatementBeen> vehicleReportByDateBeenList = new ArrayList<RevenueStatementBeen>();
-				  	for(ReceiptHead rechead:receiptHeads) {
-				  		RevenueStatementBeen vehicleReportByDateBeen=new RevenueStatementBeen();
-				  		vehicleReportByDateBeen.setTestcat(rechead.getvRegisterID().getTestCategory().getCategoryType());
-				  		vehicleReportByDateBeen.setLregid(rechead.getvRegisterID().getTestLaneHeadId().getLaneName());
-				  		vehicleReportByDateBeen.setVclass(rechead.getvRegisterID().getVid().getVmodel().getVehicleClass().getVehicleClass());
-				  		vehicleReportByDateBeen.setVno(rechead.getvRegisterID().getVid().getVehicleID());
-				  		vehicleReportByDateBeen.setRegtime(rechead.getvRegisterID().getTime());
-				  		vehicleReportByDateBeen.setRegtype(rechead.getvRegisterID().getVtype().getvRegType());
-				  		vehicleReportByDateBeen.setInspecter(rechead.getvRegisterID().getUser().getUserName());
-				  	
-				  	//	ReceiptHead rechead=vehicleService.getReceiptHeadDetailsByVRid(vrData.getVregID());
-				  		
-				  		
-				  		vehicleReportByDateBeen.setRecno(rechead.getRecNo());
-				  		vehicleReportByDateBeen.setTestfee((rechead.getTestFee()/100)+"");
-				  		vehicleReportByDateBeen.setNetfee((rechead.getNetTotal()/100)+"");
-				  		vehicleReportByDateBeen.setCertno("");
-				  		vehicleReportByDateBeen.setVistatus("");
-				  		vehicleReportByDateBeen.setTeststatus("");
-			  	 
-					  	VehicleOwner vehicleOwner=vehicleService.getVehicleOwnerIDByVehicleID(rechead.getvRegisterID().getVid().getVehicleID());
-				  		//System.out.println("ffffff="+vrData.getCusid().getId());
-				  		if(rechead.getvRegisterID().getCusid().getId().equals("0000")) {
-				  			System.out.println("owner=");
-				  		vehicleReportByDateBeen.setCusname(vehicleOwner.getOwnerName());
-				  		}else {
-				  			System.out.println("customer=");
-				  			vehicleReportByDateBeen.setCusname(rechead.getvRegisterID() .getCusid().getName());
-				  			
-				  		}
-				  		vehicleReportByDateBeen.setTax(((rechead.getNetTotal()/100)-(rechead.getTestFee()/100))+"");
-				  		vehicleReportByDateBeenList.add(vehicleReportByDateBeen);
-				  	}
-					//session.setAttribute("centerid", userObj.get(0).getCenter_ID().getCenter_ID());
-					//session.setAttribute("centerName", userObj.get(0).getCenter_ID().getCenter());
-				  	
-				 // 	session.getAttribute("centerName");
-	          
-		          	ReportViewe review=new ReportViewe();
-		          	Map<String,Object> params = new HashMap<>();
-		          	
-		          	
-		          	
-		        	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
-		          	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
-		          	params.put("address",centerMaster.getAdd03() );
-		          	params.put("date",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(recDate)));
-		          	
-		       
-		          	String reptValue="";
-		          	
-		         try {
-		          		reptValue=review.pdfReportViewInlineSystemOpen("revenuestatement.jasper","Revenue Statement",vehicleReportByDateBeenList,params,response);
-		          		
-		          
-		          	}catch(Exception e) {	          		
-		          		e.printStackTrace();          		
-		          	}
-				  
-				  mav.addObject("pdfViewEq", reptValue); 
-				  return mav;
-			  }	
-			  
-			  @RequestMapping(value = "/vehicalRecCancel", method=RequestMethod.GET) 
-			  public String getvehicalRecCancel(Map<String, String> model) { 
+		String[][] laneList = laneServices.getTestLaneHeadDetailByCenterCategoryVclass(catid, vclassid, cenid);
 
-				  return "VehicleReciptCancel";
-			  }				  
-			  
-			  @RequestMapping(value="/getRecdetailsPrivew" ,method=RequestMethod.GET)
-			  public @ResponseBody String vehiclRecitDetail(@RequestParam String reccno,HttpServletResponse response, HttpSession session) {
-	
-				  	String reptValue=vehicalRescetGeaerate(reccno, response, session);
-	 
-		         return reptValue;
-			  }  
-			  
-			  @RequestMapping(value="/runCancelReceipt" ,method=RequestMethod.GET)
-			  public @ResponseBody String runCancelReceipt(@RequestParam String reccno) {
-				  
-				  try {
-				  vehicleService.setCancelReceipt(reccno);
-				  return "1";
-				  }catch(Exception e) {
-					  
-				 return "0"; 
-				  }
-		  		       
-			  } 		  
-			  
-			  @RequestMapping(value = "/vehicalInvCancel", method=RequestMethod.GET) 
-			  public String getVehicalInvCancel(Map<String, String> model) { 
+		return laneList;
+	}
 
-				  return "VehicleInvoiceCancel";
-			  }			  
-			  
-			  @RequestMapping(value="/getInvoicePrivew" ,method=RequestMethod.GET)
-			  public @ResponseBody String invInvoiceCancel(@RequestParam String invNo,HttpServletResponse response, HttpSession session) {
-	
-				  	String invValue=vehicalInvoiceGeaerate(invNo, response, session);
-	 
-		         return invValue;
-			  }  
-			  
-			  @RequestMapping(value="/runCancelInvoice" ,method=RequestMethod.GET)
-			  public @ResponseBody String runCancelInvoice(@RequestParam String invNo) {
-				  
-				  try {
-				  vehicleService.setCancelInvoice(invNo);
-				  return "1";
-				  }catch(Exception e) {
-					  
-				 return "0"; 
-				  }
-		  		       
-			  }   
- 
-			  @RequestMapping(value = "/getCustomerbyvehical", method=RequestMethod.GET) 
-			  public @ResponseBody Customer getCustomerDetails(@RequestParam String cusid) {
-				  
-				  return usersService.viewCustomersDetailByID(cusid);
-				  
-			  }	
-			  
-			  @RequestMapping(value = "/invoiceSummaryReport", method=RequestMethod.GET) 
-			  public String viewInvoiceSummaryReport(Map<String, String> model) { 
+	@RequestMapping(value = "/VehicleReportPreview", method = RequestMethod.GET)
+	public String VehicleDetailsReportPrevew(Map<String, String> model) {
 
-				  return "invoiceSummaryRpt";
-			  }
-			  
-			  @RequestMapping(value = "/privewInvoiceSummaryReport",method=RequestMethod.POST)
-			  public ModelAndView getInvoiceSummaryReport(String fromdate,String todate,String repStatu,HttpServletResponse response,HttpSession session) {
-				 // System.out.println("repStatu="+repStatu);
-				  ModelAndView mav = new ModelAndView("invoiceSummaryRpt");
-				  
-				  String centerid=session.getAttribute("centerid")+"";
-				  CenterMaster centerMaster=centerService.getcenterById(centerid);
-				  
-				  List<InvoiceHead> invoiceheadDetails=vehicleService.getInvoiceHeadDetailBytwoDate(fromdate,todate);
-				  	
-				  	List<InvoiceSummaryReportBeen> invoiceSummaryReportBeenList = new ArrayList<InvoiceSummaryReportBeen>();
-				  	for(InvoiceHead ihData:invoiceheadDetails) {
-				  		
-				  		if(repStatu==null&&ihData.getStatus().equals("INACTIVE")) {
-				  			continue;
-				  		}
-				  		
-				  		
-					  	if(ihData.getvRegisterID().getCentermaster().getCenter_ID().equals(centerMaster.getCenter_ID())) {
-					  		InvoiceSummaryReportBeen invoiceSummaryReportBeen=new InvoiceSummaryReportBeen();
-					  		invoiceSummaryReportBeen.setInvtime(ihData.getInvoiceTime());
-					  		invoiceSummaryReportBeen.setInvdate(DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(ihData.getInvoiceDate())));
-					  		
-					  		if(ihData.getvRegisterID().getCusid().getId().equals("0000")) {
-					  			VehicleOwner vehicleOwner=vehicleService.getVehicleOwnerIDByVehicleID(ihData.getvRegisterID().getVid().getVehicleID());
-					  			invoiceSummaryReportBeen.setCusname(vehicleOwner.getOwnerName());
-					  		}else {				  			
-					  			invoiceSummaryReportBeen.setCusname(ihData.getvRegisterID().getCusid().getName());	
-					  		}
-		
-					  		invoiceSummaryReportBeen.setInvno(ihData.getInvoiceNo());
-					  		invoiceSummaryReportBeen.setTestfee((ihData.getTestFee()/100)+"");
-					  		invoiceSummaryReportBeen.setTax(((ihData.getNetTotal()/100)-(ihData.getTestFee()/100))+"");
-					  		invoiceSummaryReportBeen.setNetfee((ihData.getNetTotal())+"");
-					  		if(ihData.getStatus().equals("INACTIVE")) {
-					  		invoiceSummaryReportBeen.setInvstatus("CANCEL INVOICE");
-					  		}else {
-					  			invoiceSummaryReportBeen.setInvstatus(ihData.getStatus()+" INVOICE");		
-					  		}
-					  		invoiceSummaryReportBeenList.add(invoiceSummaryReportBeen);
-					  	}
-				  	}
+		return "VehicleDetailsReport";
+	}
 
-	          
-		          	ReportViewe review=new ReportViewe();
-		          	Map<String,Object> params = new HashMap<>();
-		          	
-		          	
-		          	
-		        	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
-		          	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
-		          	params.put("address",centerMaster.getAdd03() );
-		          	params.put("fromdate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromdate)));
-		          	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(todate)));
-		       
-		          	String reptValue="";
-		          	
-		         try {
-		          		reptValue=review.pdfReportViewInlineSystemOpen("invoiceSummaryReport.jasper","Invoice Summary",invoiceSummaryReportBeenList,params,response);
-		          		
-		          
-		          	}catch(Exception e) {	          		
-		          		e.printStackTrace();          		
-		          	}
-				  
-				  mav.addObject("pdfViewEq", reptValue); 
-				  return mav;
-			  } 
-			  
-			  @RequestMapping(value = "/incomingPayment", method=RequestMethod.GET) 
-			  public String incomingPayment(Map<String, String> model) { 
+	@RequestMapping(value = "/VehicleDetailsReport", method = RequestMethod.POST)
+	public ModelAndView VehicleDetailsReport(String recDate, HttpServletResponse response, HttpSession session) {
 
-				  return "incomingPayment";
-			  } 
-			  
-			  @RequestMapping(value = "/getIncomingPaymentDetails", method=RequestMethod.GET) 
-			  public @ResponseBody List<InvoiceHead> getIncomingPaymentDetails(@RequestParam String cusid) {
-				  
-				  return vehicleService.getIncomingPaymentDetails(cusid);
-				  
-			  }	
+		ModelAndView mav = new ModelAndView("VehicleDetailsReport");
+
+		String centerid = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerid);
+
+		List<VehicleRegistration> vehicleregdetail = vehicleService.getVehicleRegDetailByDate(recDate, centerid);
+
+		List<VehicleReportByDateBeen> vehicleReportByDateBeenList = new ArrayList<VehicleReportByDateBeen>();
+		for (VehicleRegistration vrData : vehicleregdetail) {
+			VehicleReportByDateBeen vehicleReportByDateBeen = new VehicleReportByDateBeen();
+			vehicleReportByDateBeen.setTestcat(vrData.getTestCategory().getCategoryType());
+			vehicleReportByDateBeen.setLregid(vrData.getTestLaneHeadId().getLaneName());
+			vehicleReportByDateBeen.setVclass(vrData.getVid().getVmodel().getVehicleClass().getVehicleClass());
+			vehicleReportByDateBeen.setVno(vrData.getVid().getVehicleID());
+			vehicleReportByDateBeen.setRegtime(vrData.getTime());
+			vehicleReportByDateBeen.setRegtype(vrData.getVtype().getvRegType());
+			vehicleReportByDateBeen.setInspecter(vrData.getUser().getUserName());
+
+			ReceiptHead rechead = vehicleService.getReceiptHeadDetailsByVRid(vrData.getVregID());
+
+			vehicleReportByDateBeen.setRecno(rechead.getRecNo());
+			vehicleReportByDateBeen.setTestfee((rechead.getTestFee() / 100) + "");
+			vehicleReportByDateBeen.setNetfee((rechead.getNetTotal() / 100) + "");
+			vehicleReportByDateBeen.setCertno("");
+			vehicleReportByDateBeen.setVistatus("");
+			vehicleReportByDateBeen.setTeststatus("");
+			vehicleReportByDateBeenList.add(vehicleReportByDateBeen);
+		}
+		// session.setAttribute("centerid",
+		// userObj.get(0).getCenter_ID().getCenter_ID());
+		// session.setAttribute("centerName",
+		// userObj.get(0).getCenter_ID().getCenter());
+
+		// session.getAttribute("centerName");
+
+		ReportViewe review = new ReportViewe();
+		Map<String, Object> params = new HashMap<>();
+
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("hedder", centerMaster.getPartner_ID().getReceiptHeader());
+		params.put("address", centerMaster.getAdd03());
+		params.put("date", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(recDate)));
+
+		String reptValue = "";
+
+		try {
+			reptValue = review.pdfReportViewInlineSystemOpen("vehicledetailsreport.jasper", "Vehicle Details Report",
+					vehicleReportByDateBeenList, params, response);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		mav.addObject("pdfViewEq", reptValue);
+		return mav;
+	}
+
+	@RequestMapping(value = "/revenueStatementPrivew", method = RequestMethod.GET)
+	public String RevenueStatementPrevew(Map<String, String> model) {
+
+		return "revenueStatement";
+	}
+
+	@RequestMapping(value = "/revenueStatement", method = RequestMethod.POST)
+	public ModelAndView RevenueStatementReport(String recDate, HttpServletResponse response, HttpSession session) {
+
+		ModelAndView mav = new ModelAndView("VehicleDetailsReport");
+
+		String centerid = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerid);
+
+		List<ReceiptHead> receiptHeads = vehicleService.getReceiptHeadByDate(recDate);
+
+		List<RevenueStatementBeen> vehicleReportByDateBeenList = new ArrayList<RevenueStatementBeen>();
+		for (ReceiptHead rechead : receiptHeads) {
+			RevenueStatementBeen vehicleReportByDateBeen = new RevenueStatementBeen();
+			vehicleReportByDateBeen.setTestcat(rechead.getvRegisterID().getTestCategory().getCategoryType());
+			vehicleReportByDateBeen.setLregid(rechead.getvRegisterID().getTestLaneHeadId().getLaneName());
+			vehicleReportByDateBeen
+					.setVclass(rechead.getvRegisterID().getVid().getVmodel().getVehicleClass().getVehicleClass());
+			vehicleReportByDateBeen.setVno(rechead.getvRegisterID().getVid().getVehicleID());
+			vehicleReportByDateBeen.setRegtime(rechead.getvRegisterID().getTime());
+			vehicleReportByDateBeen.setRegtype(rechead.getvRegisterID().getVtype().getvRegType());
+			vehicleReportByDateBeen.setInspecter(rechead.getvRegisterID().getUser().getUserName());
+
+			// ReceiptHead
+			// rechead=vehicleService.getReceiptHeadDetailsByVRid(vrData.getVregID());
+
+			vehicleReportByDateBeen.setRecno(rechead.getRecNo());
+			vehicleReportByDateBeen.setTestfee((rechead.getTestFee() / 100) + "");
+			vehicleReportByDateBeen.setNetfee((rechead.getNetTotal() / 100) + "");
+			vehicleReportByDateBeen.setCertno("");
+			vehicleReportByDateBeen.setVistatus("");
+			vehicleReportByDateBeen.setTeststatus("");
+
+			VehicleOwner vehicleOwner = vehicleService
+					.getVehicleOwnerIDByVehicleID(rechead.getvRegisterID().getVid().getVehicleID());
+			// System.out.println("ffffff="+vrData.getCusid().getId());
+			if (rechead.getvRegisterID().getCusid().getId().equals("0000")) {
+				System.out.println("owner=");
+				vehicleReportByDateBeen.setCusname(vehicleOwner.getOwnerName());
+			} else {
+				System.out.println("customer=");
+				vehicleReportByDateBeen.setCusname(rechead.getvRegisterID().getCusid().getName());
+
+			}
+			vehicleReportByDateBeen.setTax(((rechead.getNetTotal() / 100) - (rechead.getTestFee() / 100)) + "");
+			vehicleReportByDateBeenList.add(vehicleReportByDateBeen);
+		}
+		// session.setAttribute("centerid",
+		// userObj.get(0).getCenter_ID().getCenter_ID());
+		// session.setAttribute("centerName",
+		// userObj.get(0).getCenter_ID().getCenter());
+
+		// session.getAttribute("centerName");
+
+		ReportViewe review = new ReportViewe();
+		Map<String, Object> params = new HashMap<>();
+
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("hedder", centerMaster.getPartner_ID().getReceiptHeader());
+		params.put("address", centerMaster.getAdd03());
+		params.put("date", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(recDate)));
+
+		String reptValue = "";
+
+		try {
+			reptValue = review.pdfReportViewInlineSystemOpen("revenuestatement.jasper", "Revenue Statement",
+					vehicleReportByDateBeenList, params, response);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		mav.addObject("pdfViewEq", reptValue);
+		return mav;
+	}
+
+	@RequestMapping(value = "/vehicalRecCancel", method = RequestMethod.GET)
+	public String getvehicalRecCancel(Map<String, String> model) {
+
+		return "VehicleReciptCancel";
+	}
+
+	@RequestMapping(value = "/getRecdetailsPrivew", method = RequestMethod.GET)
+	public @ResponseBody String vehiclRecitDetail(@RequestParam String reccno, HttpServletResponse response,
+			HttpSession session) {
+
+		String reptValue = vehicalRescetGeaerate(reccno, response, session);
+
+		return reptValue;
+	}
+
+	@RequestMapping(value = "/runCancelReceipt", method = RequestMethod.GET)
+	public @ResponseBody String runCancelReceipt(@RequestParam String reccno) {
+
+		try {
+			vehicleService.setCancelReceipt(reccno);
+			return "1";
+		} catch (Exception e) {
+
+			return "0";
+		}
+
+	}
+
+	@RequestMapping(value = "/vehicalInvCancel", method = RequestMethod.GET)
+	public String getVehicalInvCancel(Map<String, String> model) {
+
+		return "VehicleInvoiceCancel";
+	}
+
+	@RequestMapping(value = "/getInvoicePrivew", method = RequestMethod.GET)
+	public @ResponseBody String invInvoiceCancel(@RequestParam String invNo, HttpServletResponse response,
+			HttpSession session) {
+
+		String invValue = vehicalInvoiceGeaerate(invNo, response, session);
+
+		return invValue;
+	}
+
+	@RequestMapping(value = "/runCancelInvoice", method = RequestMethod.GET)
+	public @ResponseBody String runCancelInvoice(@RequestParam String invNo) {
+
+		try {
+			vehicleService.setCancelInvoice(invNo);
+			return "1";
+		} catch (Exception e) {
+
+			return "0";
+		}
+
+	}
+
+	@RequestMapping(value = "/getCustomerbyvehical", method = RequestMethod.GET)
+	public @ResponseBody Customer getCustomerDetails(@RequestParam String cusid) {
+
+		return usersService.viewCustomersDetailByID(cusid);
+
+	}
+
+	@RequestMapping(value = "/invoiceSummaryReport", method = RequestMethod.GET)
+	public String viewInvoiceSummaryReport(Map<String, String> model) {
+
+		return "invoiceSummaryRpt";
+	}
+
+	@RequestMapping(value = "/privewInvoiceSummaryReport", method = RequestMethod.POST)
+	public ModelAndView getInvoiceSummaryReport(String fromdate, String todate, String repStatu,
+			HttpServletResponse response, HttpSession session) {
+		// System.out.println("repStatu="+repStatu);
+		ModelAndView mav = new ModelAndView("invoiceSummaryRpt");
+
+		String centerid = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerid);
+
+		List<InvoiceHead> invoiceheadDetails = vehicleService.getInvoiceHeadDetailBytwoDate(fromdate, todate);
+
+		List<InvoiceSummaryReportBeen> invoiceSummaryReportBeenList = new ArrayList<InvoiceSummaryReportBeen>();
+		for (InvoiceHead ihData : invoiceheadDetails) {
+
+			if (repStatu == null && ihData.getStatus().equals("INACTIVE")) {
+				continue;
+			}
+
+			if (ihData.getvRegisterID().getCentermaster().getCenter_ID().equals(centerMaster.getCenter_ID())) {
+				InvoiceSummaryReportBeen invoiceSummaryReportBeen = new InvoiceSummaryReportBeen();
+				invoiceSummaryReportBeen.setInvtime(ihData.getInvoiceTime());
+				invoiceSummaryReportBeen
+						.setInvdate(DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(ihData.getInvoiceDate())));
+
+				if (ihData.getvRegisterID().getCusid().getId().equals("0000")) {
+					VehicleOwner vehicleOwner = vehicleService
+							.getVehicleOwnerIDByVehicleID(ihData.getvRegisterID().getVid().getVehicleID());
+					invoiceSummaryReportBeen.setCusname(vehicleOwner.getOwnerName());
+				} else {
+					invoiceSummaryReportBeen.setCusname(ihData.getvRegisterID().getCusid().getName());
+				}
+
+				invoiceSummaryReportBeen.setInvno(ihData.getInvoiceNo());
+				invoiceSummaryReportBeen.setTestfee((ihData.getTestFee() / 100) + "");
+				invoiceSummaryReportBeen.setTax(((ihData.getNetTotal() / 100) - (ihData.getTestFee() / 100)) + "");
+				invoiceSummaryReportBeen.setNetfee((ihData.getNetTotal()) + "");
+				if (ihData.getStatus().equals("INACTIVE")) {
+					invoiceSummaryReportBeen.setInvstatus("CANCEL INVOICE");
+				} else {
+					invoiceSummaryReportBeen.setInvstatus(ihData.getStatus() + " INVOICE");
+				}
+				invoiceSummaryReportBeenList.add(invoiceSummaryReportBeen);
+			}
+		}
+
+		ReportViewe review = new ReportViewe();
+		Map<String, Object> params = new HashMap<>();
+
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("hedder", centerMaster.getPartner_ID().getReceiptHeader());
+		params.put("address", centerMaster.getAdd03());
+		params.put("fromdate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromdate)));
+		params.put("todate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(todate)));
+
+		String reptValue = "";
+
+		try {
+			reptValue = review.pdfReportViewInlineSystemOpen("invoiceSummaryReport.jasper", "Invoice Summary",
+					invoiceSummaryReportBeenList, params, response);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		mav.addObject("pdfViewEq", reptValue);
+		return mav;
+	}
+
+	@RequestMapping(value = "/incomingPayment", method = RequestMethod.GET)
+	public String incomingPayment(Map<String, String> model) {
+
+		return "incomingPayment";
+	}
+
+	@RequestMapping(value = "/getIncomingPaymentDetails", method = RequestMethod.GET)
+	public @ResponseBody List<InvoiceHead> getIncomingPaymentDetails(@RequestParam String cusid) {
+
+		return vehicleService.getIncomingPaymentDetails(cusid);
+
+	}
 
 	@RequestMapping(value = "/payIncomingPayment", method = RequestMethod.POST)
-	public ModelAndView payIncomingPayment(@RequestParam long payAmt, @RequestParam long totDueAmt ,@RequestParam String paytype, @RequestParam String name, @RequestParam String number, @RequestParam String glAccno, @RequestParam String expDate, @RequestParam long bankCharges, @RequestParam String customer, HttpServletResponse response,HttpSession session) {
+	public ModelAndView payIncomingPayment(@RequestParam long payAmt, @RequestParam long totDueAmt,
+			@RequestParam String paytype, @RequestParam String name, @RequestParam String number,
+			@RequestParam String glAccno, @RequestParam String expDate, @RequestParam long bankCharges,
+			@RequestParam String customer, HttpServletResponse response, HttpSession session) {
 		ModelAndView mav = new ModelAndView("incomingPayment");
-		
+
 		List<InvoiceHead> invoiceHead = vehicleService.getIncomingPaymentDetails(customer);
 
-	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-	    Date date = new Date();  
-	    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm:ss");
-	    LocalTime time = LocalTime.now();
-	    
-	    Customer custo=new Customer();
-	    custo.setId(customer);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm:ss");
+		LocalTime time = LocalTime.now();
 
-		  
-		  String centerid=session.getAttribute("centerid")+"";
-		  CenterMaster centerMaster=centerService.getcenterById(centerid);
-	    
-       	int maxinRecno=centerMaster.getPartner_ID().getMaxInRecNo();
-    	String inRecFormate=centerMaster.getPartner_ID().getInRecformate();
-    	String nextinRecNo=inRecFormate+(maxinRecno+1);
-  
-		IncomingReceiptHead incomingReceiptHead=new IncomingReceiptHead();
-		
+		Customer custo = new Customer();
+		custo.setId(customer);
+
+		String centerid = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerid);
+
+		int maxinRecno = centerMaster.getPartner_ID().getMaxInRecNo();
+		String inRecFormate = centerMaster.getPartner_ID().getInRecformate();
+		String nextinRecNo = inRecFormate + (maxinRecno + 1);
+
+		IncomingReceiptHead incomingReceiptHead = new IncomingReceiptHead();
+
 		incomingReceiptHead.setInRecNo(nextinRecNo);
 		incomingReceiptHead.setCenter_ID(centerMaster);
 		incomingReceiptHead.setCusid(custo);
-		
+
 		incomingReceiptHead.setInRecDate(formatter.format(date));
 		incomingReceiptHead.setInRecTime(time.format(formattertime));
-		
-		incomingReceiptHead.setTotDueAmt(totDueAmt*100);
-		incomingReceiptHead.setPayAmt(payAmt*100);
-		
-		incomingReceiptHead.setBalance((totDueAmt-payAmt)*100);
+
+		incomingReceiptHead.setTotDueAmt(totDueAmt * 100);
+		incomingReceiptHead.setPayAmt(payAmt * 100);
+
+		incomingReceiptHead.setBalance((totDueAmt - payAmt) * 100);
 		incomingReceiptHead.setPayType(paytype);
 		incomingReceiptHead.setPayName(name);
 		incomingReceiptHead.setPayNumber(number);
 		incomingReceiptHead.setPayGlacc(glAccno);
 		incomingReceiptHead.setDate(expDate);
-		incomingReceiptHead.setBankCharg(bankCharges*100);
+		incomingReceiptHead.setBankCharg(bankCharges * 100);
 		incomingReceiptHead.setStatus("ACTIVE");
-		
-		
+
 		List<InvoiceHead> invoiceHeadList = new ArrayList<InvoiceHead>();
-		 
+
 		List<IncomingReceiptDetails> incomingReceiptDetailsList = new ArrayList<IncomingReceiptDetails>();
-		
+
 		for (InvoiceHead ihDate : invoiceHead) {
 
-			IncomingReceiptDetails incomingReceiptDetails=new IncomingReceiptDetails();
+			IncomingReceiptDetails incomingReceiptDetails = new IncomingReceiptDetails();
 			incomingReceiptDetails.setInvBalance(ihDate.getBalance());
-			
-			
-			long oldPayAmt=ihDate.getPayAmount();
+
+			long oldPayAmt = ihDate.getPayAmount();
 			long cpayAmt = 0;
-			long calBal = ihDate.getBalance()/100;
+			long calBal = ihDate.getBalance() / 100;
 
 			if (payAmt <= 0) {
 				cpayAmt = 0;
-				//calBal = 0;
+				// calBal = 0;
 			} else {
 				payAmt = payAmt - (ihDate.getBalance() / 100);
 				if (payAmt > 0) {
@@ -3455,186 +3304,168 @@ public class VehicleController {
 					cpayAmt = payAmt + (ihDate.getBalance() / 100);
 					calBal = (ihDate.getBalance() / 100) - cpayAmt;
 				}
-		}
-
-			ihDate.setBalance(calBal*100);
-			ihDate.setPayAmount((oldPayAmt+(cpayAmt*100)));
-			if(calBal==0) {
-			ihDate.setPayStatus("Close");
 			}
-			
+
+			ihDate.setBalance(calBal * 100);
+			ihDate.setPayAmount((oldPayAmt + (cpayAmt * 100)));
+			if (calBal == 0) {
+				ihDate.setPayStatus("Close");
+			}
+
 			incomingReceiptDetails.setInRecNo(incomingReceiptHead);
 			incomingReceiptDetails.setVehicle_ID(ihDate.getvRegisterID().getVid());
 			incomingReceiptDetails.setInvoiceNo(ihDate);
 			incomingReceiptDetails.setInvTotal(ihDate.getNetTotal());
-			
-			incomingReceiptDetails.setPayAmount((cpayAmt*100));
-			incomingReceiptDetails.setCurBalance(calBal*100);
-		
-			
-			if(cpayAmt>0) {
-			incomingReceiptDetailsList.add(incomingReceiptDetails);
+
+			incomingReceiptDetails.setPayAmount((cpayAmt * 100));
+			incomingReceiptDetails.setCurBalance(calBal * 100);
+
+			if (cpayAmt > 0) {
+				incomingReceiptDetailsList.add(incomingReceiptDetails);
 			}
-			
-			
-		 // 	ReceiptHead receiptHead=new ReceiptHead(nextRecno, null, vehiclereg.getDate(),vehiclereg.getTime(),calTestFee,"New Vehicle Register","N/A","ACTIVE")
-        //.setNetTotal(nettotal+calTestFee);
-			
+
+			// ReceiptHead receiptHead=new ReceiptHead(nextRecno, null,
+			// vehiclereg.getDate(),vehiclereg.getTime(),calTestFee,"New Vehicle
+			// Register","N/A","ACTIVE")
+			// .setNetTotal(nettotal+calTestFee);
+
 			invoiceHeadList.add(ihDate);
-			
-	
+
 		}
-		
+
 		vehicleService.saveAllInvoiceHead(invoiceHeadList);
-		
+
 		businessPartnerService.setUpdateLastinRecNo(centerMaster.getPartner_ID().getPartner_ID());
-		
-		
+
 		vehicleService.saveIncomingReceiptHead(incomingReceiptHead);
 		vehicleService.saveAllIncomingReceiptDetails(incomingReceiptDetailsList);
-		
-		if(paytype.equals("Cash")||paytype.equals("CreditCard")||paytype.equals("Cheque")) {
-		
-		//GL Posting   -- Cash Receipt--------- Doc id=1
-		 List<GlPostingDetails> glPostingDetailsList=new ArrayList<>();
-		List<GlaccountMapping> glMappingResult=glAccountService.getGlaccountMappingByDocId(3);
-		
-		GlPostingHead glPostingHead=new GlPostingHead();
-          glPostingHead.setDocNo(incomingReceiptHead.getInRecNo());
-          
-          DocType docType=new DocType();
-          docType.setDocid(3);
-          
-          glPostingHead.setDocid(docType);
-          glPostingHead.setDate(formatter.format(date));
-          glPostingHead.setTime(time.format(formattertime));
-          glPostingHead.setCenterID(centerMaster);
-          glPostingHead.setStatus("ACTIVE");
-		
-		
-          
-      	
-	            for(GlaccountMapping gmresult:glMappingResult) {
-	          if(gmresult.getType().equals(paytype)) {  	
-           	GlPostingDetails glPostingDetails1=new GlPostingDetails();
-           	glPostingDetails1.setJournalNo(glPostingHead);
-           	
-           	glPostingDetails1.setGlAccNo(new Glaccount(gmresult.getdR()));
-           	
-           	glPostingDetails1.setType("D");
-           	glPostingDetails1.setAmount(incomingReceiptHead.getPayAmt());
-           	glPostingDetailsList.add(glPostingDetails1);
-           	
-           	
-           	GlPostingDetails glPostingDetails2=new GlPostingDetails();
-           	glPostingDetails2.setJournalNo(glPostingHead);
-           	glPostingDetails2.setGlAccNo(new Glaccount(gmresult.getcR()));
-           	glPostingDetails2.setType("C");
-           	glPostingDetails2.setAmount(incomingReceiptHead.getPayAmt());
-           	glPostingDetailsList.add(glPostingDetails2);
-	          }
-           	
-           		
-           	}
-          
-	   	   glPostingHead.setTotalDR(incomingReceiptHead.getPayAmt());
-	  	   glPostingHead.setTotalCR(incomingReceiptHead.getPayAmt());
-		   glAccountService.saveGlPostingHeadRepository(glPostingHead);
-	     	glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
-          
-		}else if(paytype.equals("BankTransfer")) {
-			
-			//GL Posting   -- Cash Receipt--------- Doc id=1
-			 List<GlPostingDetails> glPostingDetailsList=new ArrayList<>();
-			List<GlaccountMapping> glMappingResult=glAccountService.getGlaccountMappingByDocId(3);
-			
-			GlPostingHead glPostingHead=new GlPostingHead();
-	          glPostingHead.setDocNo(incomingReceiptHead.getInRecNo());
-	          
-	          DocType docType=new DocType();
-	          docType.setDocid(3);
-	          
-	          glPostingHead.setDocid(docType);
-	          glPostingHead.setDate(formatter.format(date));
-	          glPostingHead.setTime(time.format(formattertime));
-	          glPostingHead.setCenterID(centerMaster);
-	          glPostingHead.setStatus("ACTIVE");
-			
-			
-	          
-	      	
-		            for(GlaccountMapping gmresult:glMappingResult) {
-		            	  if(gmresult.getType().equals("BankTransfer")) {     	
-	           	GlPostingDetails glPostingDetails1=new GlPostingDetails();
-	           	glPostingDetails1.setJournalNo(glPostingHead);
-	           	
-	           	glPostingDetails1.setGlAccNo(new Glaccount(glAccno));
-	           	
-	           	glPostingDetails1.setType("D");
-	           	glPostingDetails1.setAmount(incomingReceiptHead.getPayAmt());
-	           	glPostingDetailsList.add(glPostingDetails1);
-	           	
-	           	
-	           	GlPostingDetails glPostingDetails2=new GlPostingDetails();
-	           	glPostingDetails2.setJournalNo(glPostingHead);
-	           	glPostingDetails2.setGlAccNo(new Glaccount(gmresult.getcR()));
-	           	glPostingDetails2.setType("C");
-	           	glPostingDetails2.setAmount(incomingReceiptHead.getPayAmt());
-	           	glPostingDetailsList.add(glPostingDetails2);
-	           	
-		            	  }
-	           	
-	           		
-	           	}
-	          
-		   	   glPostingHead.setTotalDR(incomingReceiptHead.getPayAmt());
-		  	   glPostingHead.setTotalCR(incomingReceiptHead.getPayAmt());
-			   glAccountService.saveGlPostingHeadRepository(glPostingHead);
-		     	glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
-	          
+
+		if (paytype.equals("Cash") || paytype.equals("CreditCard") || paytype.equals("Cheque")) {
+
+			// GL Posting -- Cash Receipt--------- Doc id=1
+			List<GlPostingDetails> glPostingDetailsList = new ArrayList<>();
+			List<GlaccountMapping> glMappingResult = glAccountService.getGlaccountMappingByDocId(3);
+
+			GlPostingHead glPostingHead = new GlPostingHead();
+			glPostingHead.setDocNo(incomingReceiptHead.getInRecNo());
+
+			DocType docType = new DocType();
+			docType.setDocid(3);
+
+			glPostingHead.setDocid(docType);
+			glPostingHead.setDate(formatter.format(date));
+			glPostingHead.setTime(time.format(formattertime));
+			glPostingHead.setCenterID(centerMaster);
+			glPostingHead.setStatus("ACTIVE");
+
+			for (GlaccountMapping gmresult : glMappingResult) {
+				if (gmresult.getType().equals(paytype)) {
+					GlPostingDetails glPostingDetails1 = new GlPostingDetails();
+					glPostingDetails1.setJournalNo(glPostingHead);
+
+					glPostingDetails1.setGlAccNo(new Glaccount(gmresult.getdR()));
+
+					glPostingDetails1.setType("D");
+					glPostingDetails1.setAmount(incomingReceiptHead.getPayAmt());
+					glPostingDetailsList.add(glPostingDetails1);
+
+					GlPostingDetails glPostingDetails2 = new GlPostingDetails();
+					glPostingDetails2.setJournalNo(glPostingHead);
+					glPostingDetails2.setGlAccNo(new Glaccount(gmresult.getcR()));
+					glPostingDetails2.setType("C");
+					glPostingDetails2.setAmount(incomingReceiptHead.getPayAmt());
+					glPostingDetailsList.add(glPostingDetails2);
+				}
+
 			}
-		
-		
-		
-		
-		
-	 String reptValue=incomingReceiptGeaerate(incomingReceiptHead,incomingReceiptDetailsList,response);
-	 mav.addObject("pdfViewEq", reptValue); 
-	 
-	 return mav;
-	}	
-	
+
+			glPostingHead.setTotalDR(incomingReceiptHead.getPayAmt());
+			glPostingHead.setTotalCR(incomingReceiptHead.getPayAmt());
+			glAccountService.saveGlPostingHeadRepository(glPostingHead);
+			glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+
+		} else if (paytype.equals("BankTransfer")) {
+
+			// GL Posting -- Cash Receipt--------- Doc id=1
+			List<GlPostingDetails> glPostingDetailsList = new ArrayList<>();
+			List<GlaccountMapping> glMappingResult = glAccountService.getGlaccountMappingByDocId(3);
+
+			GlPostingHead glPostingHead = new GlPostingHead();
+			glPostingHead.setDocNo(incomingReceiptHead.getInRecNo());
+
+			DocType docType = new DocType();
+			docType.setDocid(3);
+
+			glPostingHead.setDocid(docType);
+			glPostingHead.setDate(formatter.format(date));
+			glPostingHead.setTime(time.format(formattertime));
+			glPostingHead.setCenterID(centerMaster);
+			glPostingHead.setStatus("ACTIVE");
+
+			for (GlaccountMapping gmresult : glMappingResult) {
+				if (gmresult.getType().equals("BankTransfer")) {
+					GlPostingDetails glPostingDetails1 = new GlPostingDetails();
+					glPostingDetails1.setJournalNo(glPostingHead);
+
+					glPostingDetails1.setGlAccNo(new Glaccount(glAccno));
+
+					glPostingDetails1.setType("D");
+					glPostingDetails1.setAmount(incomingReceiptHead.getPayAmt());
+					glPostingDetailsList.add(glPostingDetails1);
+
+					GlPostingDetails glPostingDetails2 = new GlPostingDetails();
+					glPostingDetails2.setJournalNo(glPostingHead);
+					glPostingDetails2.setGlAccNo(new Glaccount(gmresult.getcR()));
+					glPostingDetails2.setType("C");
+					glPostingDetails2.setAmount(incomingReceiptHead.getPayAmt());
+					glPostingDetailsList.add(glPostingDetails2);
+
+				}
+
+			}
+
+			glPostingHead.setTotalDR(incomingReceiptHead.getPayAmt());
+			glPostingHead.setTotalCR(incomingReceiptHead.getPayAmt());
+			glAccountService.saveGlPostingHeadRepository(glPostingHead);
+			glAccountService.saveAllGlPostingDetailsRepository(glPostingDetailsList);
+
+		}
+
+		String reptValue = incomingReceiptGeaerate(incomingReceiptHead, incomingReceiptDetailsList, response);
+		mav.addObject("pdfViewEq", reptValue);
+
+		return mav;
+	}
+
 	@ModelAttribute("getBankAccount")
 	public List<PartnerBankAccount> getbankBranchListDetails() {
-		List<PartnerBankAccount> allBank=financeAccountingService.getPartnerBankAccountAll();
+		List<PartnerBankAccount> allBank = financeAccountingService.getPartnerBankAccountAll();
 		return allBank;
 	}
-	
-	
-	
-	
+
 	public String incomingReceiptGeaerate(IncomingReceiptHead incomingReceiptHead,
-	   List<IncomingReceiptDetails> incomingReceiptDetailsList, HttpServletResponse response) {
+			List<IncomingReceiptDetails> incomingReceiptDetailsList, HttpServletResponse response) {
 
 		if (incomingReceiptHead.getStatus().toString().equals("ACTIVE")) {
-			long totalPay=0;
+			long totalPay = 0;
 
-			List<IncomingReceiptBeen> incomingReceiptBeenList=new ArrayList<IncomingReceiptBeen>(); 
-			for(IncomingReceiptDetails incomingReceiptDetails:incomingReceiptDetailsList) {
-			IncomingReceiptBeen incomingReceiptBeen=new IncomingReceiptBeen();
-			incomingReceiptBeen.setInvno(incomingReceiptDetails.getInvoiceNo().getInvoiceNo());
-			incomingReceiptBeen.setVecno(incomingReceiptDetails.getVehicle_ID().getVehicleID());
-			incomingReceiptBeen.setInctotal(StringFormaterWeb.formatToRupees(incomingReceiptDetails.getInvTotal()));
-			incomingReceiptBeen.setPayamount(StringFormaterWeb.formatToRupees(incomingReceiptDetails.getPayAmount()));
-			incomingReceiptBeen.setBalance(StringFormaterWeb.formatToRupees(incomingReceiptDetails.getCurBalance()));
-			incomingReceiptBeen.setStyle(false);
-			incomingReceiptBeenList.add(incomingReceiptBeen);
-			
-			totalPay=totalPay+incomingReceiptDetails.getPayAmount();
+			List<IncomingReceiptBeen> incomingReceiptBeenList = new ArrayList<IncomingReceiptBeen>();
+			for (IncomingReceiptDetails incomingReceiptDetails : incomingReceiptDetailsList) {
+				IncomingReceiptBeen incomingReceiptBeen = new IncomingReceiptBeen();
+				incomingReceiptBeen.setInvno(incomingReceiptDetails.getInvoiceNo().getInvoiceNo());
+				incomingReceiptBeen.setVecno(incomingReceiptDetails.getVehicle_ID().getVehicleID());
+				incomingReceiptBeen.setInctotal(StringFormaterWeb.formatToRupees(incomingReceiptDetails.getInvTotal()));
+				incomingReceiptBeen
+						.setPayamount(StringFormaterWeb.formatToRupees(incomingReceiptDetails.getPayAmount()));
+				incomingReceiptBeen
+						.setBalance(StringFormaterWeb.formatToRupees(incomingReceiptDetails.getCurBalance()));
+				incomingReceiptBeen.setStyle(false);
+				incomingReceiptBeenList.add(incomingReceiptBeen);
+
+				totalPay = totalPay + incomingReceiptDetails.getPayAmount();
 			}
-			
-			
-			IncomingReceiptBeen incomingReceiptBeen2=new IncomingReceiptBeen();
+
+			IncomingReceiptBeen incomingReceiptBeen2 = new IncomingReceiptBeen();
 			incomingReceiptBeen2.setInvno("TOTAL");
 			incomingReceiptBeen2.setVecno("");
 			incomingReceiptBeen2.setInctotal("");
@@ -3642,10 +3473,7 @@ public class VehicleController {
 			incomingReceiptBeen2.setBalance("");
 			incomingReceiptBeen2.setStyle(true);
 			incomingReceiptBeenList.add(incomingReceiptBeen2);
-			
-			
-			
-			
+
 //			CenterMaster centerMaster = centerService.getcenterById(vehiclereg.getCentermaster().getCenter_ID());
 
 			ReportViewe review = new ReportViewe();
@@ -3654,19 +3482,18 @@ public class VehicleController {
 			params.put("hedder", incomingReceiptHead.getCenter_ID().getPartner_ID().getReceiptHeader());
 			params.put("address", incomingReceiptHead.getCenter_ID().getAdd03());
 			params.put("footer", incomingReceiptHead.getCenter_ID().getPartner_ID().getReceiptFooter());
-		
-           Customer customer=usersService.viewCustomersDetailByID(incomingReceiptHead.getCusid().getId());
+
+			Customer customer = usersService.viewCustomersDetailByID(incomingReceiptHead.getCusid().getId());
 			params.put("name", customer.getName());
 			params.put("mobileno", customer.getTpno());
 			params.put("cusaddress", customer.getAddress());
 			params.put("taxcode", customer.getTaxcode());
-			
+
 			params.put("inrecno", incomingReceiptHead.getInRecNo());
 			params.put("inrectime", incomingReceiptHead.getInRecTime());
 			params.put("inreDate", incomingReceiptHead.getInRecDate());
 			params.put("paytype", incomingReceiptHead.getPayType());
-			
-			
+
 			String reptValue = "";
 
 			try {
@@ -3684,615 +3511,598 @@ public class VehicleController {
 		}
 
 	}
-	
-	  @RequestMapping(value = "/reprintIncomingReceipt", method=RequestMethod.GET) 
-	  public String getreprintIncomingReceipt(Map<String, String> model) { 
-		  
-		  return "ReprintIncomingReceipt";
-	  }	
-	  
-	  @RequestMapping(value="/PrivewReprintIncomingReceipt" ,method=RequestMethod.POST) 
-	  public ModelAndView printReprintIncomingReceipt(@RequestParam String inreccno,@RequestParam String inrecDate,HttpServletResponse response) {
-		  	ModelAndView mav = new ModelAndView("ReprintIncomingReceipt");
-  	
-		  	IncomingReceiptHead incomingReceiptHead=vehicleService.getIncomingReceiptHeadbyInvoiceNo(inreccno);	  	
-		  	List<IncomingReceiptDetails> incomingReceiptDetailsList=vehicleService.getIncomingReceiptDetailsbyInvoiceNo(inreccno);
-		  	String reptValue=incomingReceiptGeaerate(incomingReceiptHead,incomingReceiptDetailsList, response);
-		  	mav.addObject("pdfViewEq", reptValue); 
-         return mav;
-	  }
-	  @RequestMapping(value = "/getIncomingReceiptNoByDate", method=RequestMethod.GET) 
-	  public @ResponseBody List<IncomingReceiptHead> getIncomingReceiptNoByDate(@RequestParam String vRdate) { 			  
-		  List<IncomingReceiptHead> incomingReceiptHead = vehicleService.getIncomingReceiptNoByDate(vRdate);
-		  return incomingReceiptHead;
-	  }
-	  @RequestMapping(value = "/incomingReceiptSummary", method=RequestMethod.GET) 
-	  public String getIncomingReceiptSummaryRpt(Map<String, String> model) { 
-		 // incomingReceiptSummaryRpt
-		  return "incomingReceiptSummaryRpt";
-	  }
-	  
-	  @RequestMapping(value = "/PreviewIncomingReceiptSummary",method=RequestMethod.POST)
-	  public ModelAndView getInvoiceSummaryReport(String fromdate,String todate,HttpServletResponse response,HttpSession session) {
-		 // System.out.println("repStatu="+repStatu);
-		  ModelAndView mav = new ModelAndView("incomingReceiptSummaryRpt");
-		  
-		  String centerid=session.getAttribute("centerid")+"";
-		  CenterMaster centerMaster=centerService.getcenterById(centerid);
-		  
-		  List<IncomingReceiptHead> incomingReceiptHeadlist=vehicleService.getIncomingReceiptHeadBytwoDate(fromdate,todate);
-		  
-		  List<IncomingReceiptSummaryBeen> incomingReceiptSummaryBeenList = new ArrayList<IncomingReceiptSummaryBeen>();
-		  
-		  	for(IncomingReceiptHead ihData:incomingReceiptHeadlist) {
-	
-			  	if(ihData.getCenter_ID().getCenter_ID().equals(centerMaster.getCenter_ID())) {
-			  		IncomingReceiptSummaryBeen incomingReceiptSummaryBeen=new IncomingReceiptSummaryBeen();
-			  		
-			  		incomingReceiptSummaryBeen.setIncrecno(ihData.getInRecNo());
-			  		incomingReceiptSummaryBeen.setCusname(ihData.getCusid().getName());
-			  		incomingReceiptSummaryBeen.setInrecdate(ihData.getInRecDate());
-			  		incomingReceiptSummaryBeen.setInrectime(ihData.getInRecTime());
-			  		incomingReceiptSummaryBeen.setTotdue(StringFormaterWeb.formatToRupees(ihData.getTotDueAmt()));
-			  		incomingReceiptSummaryBeen.setPayamt(StringFormaterWeb.formatToRupees(ihData.getPayAmt()));
-			  		incomingReceiptSummaryBeen.setBalance(StringFormaterWeb.formatToRupees(ihData.getBalance()));
-			  		incomingReceiptSummaryBeen.setPaytype(ihData.getPayType());
-			  		incomingReceiptSummaryBeen.setSatus(ihData.getStatus());
-			  		incomingReceiptSummaryBeen.setCurrency(centerMaster.getPartner_ID().getCountry_Code().getCurrency());
-			  		
-			  
-			  		incomingReceiptSummaryBeenList.add(incomingReceiptSummaryBeen);
-			  	}
-		  	}
-	
-          	ReportViewe review=new ReportViewe();
-          	Map<String,Object> params = new HashMap<>();
 
-        	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
-          	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
-          	params.put("address",centerMaster.getAdd03() );
-          	params.put("fromdate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromdate)));
-          	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(todate)));
-       
-          	String reptValue="";
-          	
-         try {
-          		reptValue=review.pdfReportViewInlineSystemOpen("incomingReceiptSummaryReport.jasper","Incoming ReceiptS ummary",incomingReceiptSummaryBeenList,params,response);
-          		
-          
-          	}catch(Exception e) {	          		
-          		e.printStackTrace();          		
-          	}
-		  
-		  mav.addObject("pdfViewEq", reptValue); 
-		  return mav;
-	  } 
-	  
-	  @RequestMapping(value = "/ageAnalysisReport", method=RequestMethod.GET) 
-	  public String getAgeAnalysisReport(Map<String, String> model) { 
-		 // incomingReceiptSummaryRpt ageAnalysisReport
-		  return "ageAnalysisRpt";
-	  }
-	  
-	  
-	  @RequestMapping(value = "/PreviewAnalysisReport",method=RequestMethod.POST)
-	  public ModelAndView getInvoiceSummaryReport(HttpServletResponse response,HttpSession session) {
-		 // System.out.println("repStatu="+repStatu);
-		  ModelAndView mav = new ModelAndView("ageAnalysisRpt");
-		  
-		  String centerid=session.getAttribute("centerid")+"";
-		  CenterMaster centerMaster=centerService.getcenterById(centerid);
-		  
-		  List<InvoiceHead> invoiceHeadlist=vehicleService.getAllActiveInvoiceHead();
-		  
-		  
-		  List<AnalysisReportBeen> analysisReportBeenList = new ArrayList<AnalysisReportBeen>();
-		  for(InvoiceHead ihData:invoiceHeadlist) {
-			  AnalysisReportBeen analysisReportBeen=new AnalysisReportBeen();
-			  analysisReportBeen.setCusname(ihData.getvRegisterID().getCusid().getName());
-			  analysisReportBeen.setInvoiceno(ihData.getInvoiceNo());
-			  
-			  
-			  int diff = DateHelperWeb.stringDateDiff(ihData.getInvoiceDate(),LocalDate.now().toString());
-			  if(diff<30) {
+	@RequestMapping(value = "/reprintIncomingReceipt", method = RequestMethod.GET)
+	public String getreprintIncomingReceipt(Map<String, String> model) {
 
-			  analysisReportBeen.setArr1(StringFormaterWeb.formatToRupees(ihData.getBalance()));
-			  
-			  analysisReportBeen.setArr2("0.00");
-			  analysisReportBeen.setArr3("0.00");
-			  analysisReportBeen.setArr4("0.00");
-			  
-			  }else if((diff>=30)&&(diff<60)) {
-			  analysisReportBeen.setArr2(StringFormaterWeb.formatToRupees(ihData.getBalance()));
-			  
-			  analysisReportBeen.setArr1("0.00");
-			  analysisReportBeen.setArr3("0.00");
-			  analysisReportBeen.setArr4("0.00");
-			  }else if((diff>=60)&&(diff<90)) {
-			  analysisReportBeen.setArr3(StringFormaterWeb.formatToRupees(ihData.getBalance()));
-			  
-			  analysisReportBeen.setArr2("0.00");
-			  analysisReportBeen.setArr1("0.00");
-			  analysisReportBeen.setArr4("0.00");
-			  }else if(diff>=90) {
-			  analysisReportBeen.setArr4(StringFormaterWeb.formatToRupees(ihData.getBalance()));
-			  
-			  analysisReportBeen.setArr2("0.00");
-			  analysisReportBeen.setArr3("0.00");
-			  analysisReportBeen.setArr1("0.00");
-			  }
-			  
-			  
-			  analysisReportBeen.setTotdue("0");
-			  
-		  
-			  
-			  analysisReportBeenList.add(analysisReportBeen);
-		  }
-		  
-		 
-	
-	
-          	ReportViewe review=new ReportViewe();
-          	Map<String,Object> params = new HashMap<>();
+		return "ReprintIncomingReceipt";
+	}
 
-        	params.put("img",centerMaster.getPartner_ID().getPartner_Logo());
-          	params.put("hedder",centerMaster.getPartner_ID().getReceiptHeader());
-          	params.put("address",centerMaster.getAdd03() );
-          	params.put("todate",DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(LocalDate.now().toString())));
-       
-          	String reptValue="";
-          	
-         try {
-          		reptValue=review.pdfReportViewInlineSystemOpen("ageAnalysisReport.jasper","Age Analysis Report",analysisReportBeenList,params,response);
-          		
-          
-          	}catch(Exception e) {	          		
-          		e.printStackTrace();          		
-          	}
-		  
-		  mav.addObject("pdfViewEq", reptValue); 
-		  return mav;
-	  } 
-	  
-	  	@RequestMapping(value="getComboVmak", method=RequestMethod.GET)		
-		public  @ResponseBody List<VehicleMake> getComboOrdermake(){
-			List <VehicleMake> vlist = vehicleService.getActiveMakes();
-			return vlist;
+	@RequestMapping(value = "/PrivewReprintIncomingReceipt", method = RequestMethod.POST)
+	public ModelAndView printReprintIncomingReceipt(@RequestParam String inreccno, @RequestParam String inrecDate,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("ReprintIncomingReceipt");
+
+		IncomingReceiptHead incomingReceiptHead = vehicleService.getIncomingReceiptHeadbyInvoiceNo(inreccno);
+		List<IncomingReceiptDetails> incomingReceiptDetailsList = vehicleService
+				.getIncomingReceiptDetailsbyInvoiceNo(inreccno);
+		String reptValue = incomingReceiptGeaerate(incomingReceiptHead, incomingReceiptDetailsList, response);
+		mav.addObject("pdfViewEq", reptValue);
+		return mav;
+	}
+
+	@RequestMapping(value = "/getIncomingReceiptNoByDate", method = RequestMethod.GET)
+	public @ResponseBody List<IncomingReceiptHead> getIncomingReceiptNoByDate(@RequestParam String vRdate) {
+		List<IncomingReceiptHead> incomingReceiptHead = vehicleService.getIncomingReceiptNoByDate(vRdate);
+		return incomingReceiptHead;
+	}
+
+	@RequestMapping(value = "/incomingReceiptSummary", method = RequestMethod.GET)
+	public String getIncomingReceiptSummaryRpt(Map<String, String> model) {
+		// incomingReceiptSummaryRpt
+		return "incomingReceiptSummaryRpt";
+	}
+
+	@RequestMapping(value = "/PreviewIncomingReceiptSummary", method = RequestMethod.POST)
+	public ModelAndView getInvoiceSummaryReport(String fromdate, String todate, HttpServletResponse response,
+			HttpSession session) {
+		// System.out.println("repStatu="+repStatu);
+		ModelAndView mav = new ModelAndView("incomingReceiptSummaryRpt");
+
+		String centerid = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerid);
+
+		List<IncomingReceiptHead> incomingReceiptHeadlist = vehicleService.getIncomingReceiptHeadBytwoDate(fromdate,
+				todate);
+
+		List<IncomingReceiptSummaryBeen> incomingReceiptSummaryBeenList = new ArrayList<IncomingReceiptSummaryBeen>();
+
+		for (IncomingReceiptHead ihData : incomingReceiptHeadlist) {
+
+			if (ihData.getCenter_ID().getCenter_ID().equals(centerMaster.getCenter_ID())) {
+				IncomingReceiptSummaryBeen incomingReceiptSummaryBeen = new IncomingReceiptSummaryBeen();
+
+				incomingReceiptSummaryBeen.setIncrecno(ihData.getInRecNo());
+				incomingReceiptSummaryBeen.setCusname(ihData.getCusid().getName());
+				incomingReceiptSummaryBeen.setInrecdate(ihData.getInRecDate());
+				incomingReceiptSummaryBeen.setInrectime(ihData.getInRecTime());
+				incomingReceiptSummaryBeen.setTotdue(StringFormaterWeb.formatToRupees(ihData.getTotDueAmt()));
+				incomingReceiptSummaryBeen.setPayamt(StringFormaterWeb.formatToRupees(ihData.getPayAmt()));
+				incomingReceiptSummaryBeen.setBalance(StringFormaterWeb.formatToRupees(ihData.getBalance()));
+				incomingReceiptSummaryBeen.setPaytype(ihData.getPayType());
+				incomingReceiptSummaryBeen.setSatus(ihData.getStatus());
+				incomingReceiptSummaryBeen.setCurrency(centerMaster.getPartner_ID().getCountry_Code().getCurrency());
+
+				incomingReceiptSummaryBeenList.add(incomingReceiptSummaryBeen);
+			}
 		}
-	  	@RequestMapping(value="getComboVmakV", method=RequestMethod.GET)		
-		public  @ResponseBody List<VehicleMake> getComboVmak(){
-			List <VehicleMake> vlist = vehicleService.getMakelistAll();
-			return vlist;
+
+		ReportViewe review = new ReportViewe();
+		Map<String, Object> params = new HashMap<>();
+
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("hedder", centerMaster.getPartner_ID().getReceiptHeader());
+		params.put("address", centerMaster.getAdd03());
+		params.put("fromdate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromdate)));
+		params.put("todate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(todate)));
+
+		String reptValue = "";
+
+		try {
+			reptValue = review.pdfReportViewInlineSystemOpen("incomingReceiptSummaryReport.jasper",
+					"Incoming ReceiptS ummary", incomingReceiptSummaryBeenList, params, response);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-	  	@RequestMapping(value="getAllPendingAppointment", method=RequestMethod.GET)		
-		public  @ResponseBody List<Appointment> getAllPendingAppointment(){
-	  		List<Appointment> AppointmentList=appointmentService.getAllPendingAppointment();
-			return AppointmentList;
+
+		mav.addObject("pdfViewEq", reptValue);
+		return mav;
+	}
+
+	@RequestMapping(value = "/ageAnalysisReport", method = RequestMethod.GET)
+	public String getAgeAnalysisReport(Map<String, String> model) {
+		// incomingReceiptSummaryRpt ageAnalysisReport
+		return "ageAnalysisRpt";
+	}
+
+	@RequestMapping(value = "/PreviewAnalysisReport", method = RequestMethod.POST)
+	public ModelAndView getInvoiceSummaryReport(HttpServletResponse response, HttpSession session) {
+		// System.out.println("repStatu="+repStatu);
+		ModelAndView mav = new ModelAndView("ageAnalysisRpt");
+
+		String centerid = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerid);
+
+		List<InvoiceHead> invoiceHeadlist = vehicleService.getAllActiveInvoiceHead();
+
+		List<AnalysisReportBeen> analysisReportBeenList = new ArrayList<AnalysisReportBeen>();
+		for (InvoiceHead ihData : invoiceHeadlist) {
+			AnalysisReportBeen analysisReportBeen = new AnalysisReportBeen();
+			analysisReportBeen.setCusname(ihData.getvRegisterID().getCusid().getName());
+			analysisReportBeen.setInvoiceno(ihData.getInvoiceNo());
+
+			int diff = DateHelperWeb.stringDateDiff(ihData.getInvoiceDate(), LocalDate.now().toString());
+			if (diff < 30) {
+
+				analysisReportBeen.setArr1(StringFormaterWeb.formatToRupees(ihData.getBalance()));
+
+				analysisReportBeen.setArr2("0.00");
+				analysisReportBeen.setArr3("0.00");
+				analysisReportBeen.setArr4("0.00");
+
+			} else if ((diff >= 30) && (diff < 60)) {
+				analysisReportBeen.setArr2(StringFormaterWeb.formatToRupees(ihData.getBalance()));
+
+				analysisReportBeen.setArr1("0.00");
+				analysisReportBeen.setArr3("0.00");
+				analysisReportBeen.setArr4("0.00");
+			} else if ((diff >= 60) && (diff < 90)) {
+				analysisReportBeen.setArr3(StringFormaterWeb.formatToRupees(ihData.getBalance()));
+
+				analysisReportBeen.setArr2("0.00");
+				analysisReportBeen.setArr1("0.00");
+				analysisReportBeen.setArr4("0.00");
+			} else if (diff >= 90) {
+				analysisReportBeen.setArr4(StringFormaterWeb.formatToRupees(ihData.getBalance()));
+
+				analysisReportBeen.setArr2("0.00");
+				analysisReportBeen.setArr3("0.00");
+				analysisReportBeen.setArr1("0.00");
+			}
+
+			analysisReportBeen.setTotdue("0");
+
+			analysisReportBeenList.add(analysisReportBeen);
 		}
-	  	//"redirect:/checkDocument?vid="+vmaster.getVehicleID()+"&curMi="+currentMilage+"&id="+ocid;
-		@RequestMapping("/checkDocument")
-		public String checkDocument(Map<String, Object> model) {
-			//,@RequestParam String vid,@RequestParam String curMi,@RequestParam String id
-		Document document=new Document();
-		
+
+		ReportViewe review = new ReportViewe();
+		Map<String, Object> params = new HashMap<>();
+
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("hedder", centerMaster.getPartner_ID().getReceiptHeader());
+		params.put("address", centerMaster.getAdd03());
+		params.put("todate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(LocalDate.now().toString())));
+
+		String reptValue = "";
+
+		try {
+			reptValue = review.pdfReportViewInlineSystemOpen("ageAnalysisReport.jasper", "Age Analysis Report",
+					analysisReportBeenList, params, response);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		mav.addObject("pdfViewEq", reptValue);
+		return mav;
+	}
+
+	@RequestMapping(value = "getComboVmak", method = RequestMethod.GET)
+	public @ResponseBody List<VehicleMake> getComboOrdermake() {
+		List<VehicleMake> vlist = vehicleService.getActiveMakes();
+		return vlist;
+	}
+
+	@RequestMapping(value = "getComboVmakV", method = RequestMethod.GET)
+	public @ResponseBody List<VehicleMake> getComboVmak() {
+		List<VehicleMake> vlist = vehicleService.getMakelistAll();
+		return vlist;
+	}
+
+	@RequestMapping(value = "getAllPendingAppointment", method = RequestMethod.GET)
+	public @ResponseBody List<Appointment> getAllPendingAppointment() {
+		List<Appointment> AppointmentList = appointmentService.getAllPendingAppointment();
+		return AppointmentList;
+	}
+
+	// "redirect:/checkDocument?vid="+vmaster.getVehicleID()+"&curMi="+currentMilage+"&id="+ocid;
+	@RequestMapping("/checkDocument")
+	public String checkDocument(Map<String, Object> model) {
+		// ,@RequestParam String vid,@RequestParam String curMi,@RequestParam String id
+		Document document = new Document();
+
 //		model.put("documentmodel", document);
 //		model.put("vid", vid);
 //		model.put("curMi", curMi);
 //		model.put("documentmodel", id);
-		List<Document> documentlist = documentScrvice.getAllActiveDocument();			
+		List<Document> documentlist = documentScrvice.getAllActiveDocument();
 		model.put("documentlist", documentlist);
-			return "checkDocument";
-		}
-		@ModelAttribute("documentlist")
-		public List<Document> getdocumentlist() {
-			
-			
-			List<Document> documentlist = documentScrvice.getAllActiveDocument();			
-			
+		return "checkDocument";
+	}
 
-			return documentlist;
-		}
-		
-		@RequestMapping("/checkDocumentAuto")
-		public String checkDocumentAuto(@RequestParam("vecNo") String vecNo,@RequestParam("curMi") String curMi,@RequestParam("id") String id,Map<String, Object> model) {	
-	
-			model.put("vecNo", vecNo);
-			model.put("curMi", curMi);
-			model.put("id", id);
-			OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
-			model.put("imgVe",ocrDetails.getNoimageView());
-		List<Document> documentlist = documentScrvice.getAllActiveDocument();			
+	@ModelAttribute("documentlist")
+	public List<Document> getdocumentlist() {
+
+		List<Document> documentlist = documentScrvice.getAllActiveDocument();
+
+		return documentlist;
+	}
+
+	@RequestMapping("/checkDocumentAuto")
+	public String checkDocumentAuto(@RequestParam("vecNo") String vecNo, @RequestParam("curMi") String curMi,
+			@RequestParam("id") String id, Map<String, Object> model) {
+
+		model.put("vecNo", vecNo);
+		model.put("curMi", curMi);
+		model.put("id", id);
+		OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
+		model.put("imgVe", ocrDetails.getNoimageView());
+		List<Document> documentlist = documentScrvice.getAllActiveDocument();
 		model.put("documentlist", documentlist);
-		
-		
-			return "checkDocument";
-		}
-		
-		
-		
-		
-		
-		 
-		
-		@RequestMapping(value = "/savaCheckDocument", method = RequestMethod.POST)
-		public @ResponseBody String savaCheckDocument(@RequestParam("docheadid") String docheadid,@RequestParam("vehNO") String vecNo,@RequestParam("mocrid") String id,@RequestParam("doc") String[] docid,@RequestParam("rem") String[] rem,@RequestParam("docStatus") String[] docStatus)/*,@RequestParam("docStatus") String[] docStatus)*/ {
 
-			try {
-		    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
-		    Date date = new Date(); 
-		    String maxid="";
-		    System.out.println(" hh= "+docheadid.isEmpty());
-		   if(docheadid.isEmpty()) {
-			   System.out.println("new");
-			 maxid=documentScrvice.maxDocumentCheckHeadID();
-				DocumentCheckHead documentCheckHead=new DocumentCheckHead();
+		return "checkDocument";
+	}
+
+	@RequestMapping(value = "/savaCheckDocument", method = RequestMethod.POST)
+	public @ResponseBody String savaCheckDocument(@RequestParam("docheadid") String docheadid,
+			@RequestParam("vehNO") String vecNo, @RequestParam("mocrid") String id, @RequestParam("doc") String[] docid,
+			@RequestParam("rem") String[] rem,
+			@RequestParam("docStatus") String[] docStatus)/* ,@RequestParam("docStatus") String[] docStatus) */ {
+
+		try {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			String maxid = "";
+			System.out.println(" hh= " + docheadid.isEmpty());
+			if (docheadid.isEmpty()) {
+				System.out.println("new");
+				maxid = documentScrvice.maxDocumentCheckHeadID();
+				DocumentCheckHead documentCheckHead = new DocumentCheckHead();
 				documentCheckHead.setDocumentcheckheadid(maxid);
 				documentCheckHead.setDate(formatter.format(date));
-			 
+
 				documentCheckHead.setVehicleID(vecNo);
-				OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));			
-				
+				OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
+
 				documentCheckHead.setStatus("ACTIVE");
-				
+
 				documentScrvice.saveDocumentCheckHead(documentCheckHead);
-				
-				List<DocumentCheckDetails>  docCheckDetailsList=new ArrayList<DocumentCheckDetails>();
-			       for(int i=0; i < docid.length; i++){
-			    	   DocumentCheckDetails documentCheckDetails=new DocumentCheckDetails();
-			    	   
-			    	   documentCheckDetails.setDocumentCheckHeadID(documentCheckHead);
-			    	  
-			    	   Document document=new Document();
-			    	   document.setDocumentid(Integer.parseInt(docid[i]));
-			    	   documentCheckDetails.setDocumentid(document); 
-			    	   documentCheckDetails.setRemarks(rem[i]); 
-			    	   documentCheckDetails.setCheckStatus(docStatus[i]);
-			    	   
-			    	   docCheckDetailsList.add(documentCheckDetails);
-			       }
-				
+
+				List<DocumentCheckDetails> docCheckDetailsList = new ArrayList<DocumentCheckDetails>();
+				for (int i = 0; i < docid.length; i++) {
+					DocumentCheckDetails documentCheckDetails = new DocumentCheckDetails();
+
+					documentCheckDetails.setDocumentCheckHeadID(documentCheckHead);
+
+					Document document = new Document();
+					document.setDocumentid(Integer.parseInt(docid[i]));
+					documentCheckDetails.setDocumentid(document);
+					documentCheckDetails.setRemarks(rem[i]);
+					documentCheckDetails.setCheckStatus(docStatus[i]);
+
+					docCheckDetailsList.add(documentCheckDetails);
+				}
+
 				documentScrvice.saveAllDocumentCheckDetails(docCheckDetailsList);
-				
+
 				ocrDetails.setDocStatus("completed");
 				ocrDetails.setDocumentCheckHeadID(documentCheckHead);
-	    		vehicleService.saveOcrDetailsRepo(ocrDetails);
-		   }else {
-			   System.out.println("Edit"+docheadid);
+				vehicleService.saveOcrDetailsRepo(ocrDetails);
+			} else {
+				System.out.println("Edit" + docheadid);
 
-		    
-		    
-		       for(int i=0; i < docid.length; i++){
-	
-		    	   
-		    	   DocumentCheckDetails documentCheckDetails=documentScrvice.getCheckDocumentDetailsByid(Integer.parseInt(docid[i]));
-		    	   
-		    	 
-		    	  
+				for (int i = 0; i < docid.length; i++) {
+
+					DocumentCheckDetails documentCheckDetails = documentScrvice
+							.getCheckDocumentDetailsByid(Integer.parseInt(docid[i]));
+
 //		    	   Document document=new Document();
 //		    	   document.setDocumentid(Integer.parseInt(docid[i]));
-		    	   
-		    	   documentCheckDetails.setRemarks(rem[i]); 
-		    	   documentCheckDetails.setCheckStatus(docStatus[i]);
-		    	   
-		    	   documentScrvice.saveDocumentCheckDetails(documentCheckDetails);
-		    	   OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));
+
+					documentCheckDetails.setRemarks(rem[i]);
+					documentCheckDetails.setCheckStatus(docStatus[i]);
+
+					documentScrvice.saveDocumentCheckDetails(documentCheckDetails);
+					OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
 					ocrDetails.setDocStatus("completed");
-					
-		    		vehicleService.saveOcrDetailsRepo(ocrDetails);
-		       }
-		    
-		    
-		   }
 
-		
-			
+					vehicleService.saveOcrDetailsRepo(ocrDetails);
+				}
 
+			}
 
-          // OcrDetails ocrDetails=vehicleService.getOcrDetailsById();
+			// OcrDetails ocrDetails=vehicleService.getOcrDetailsById();
 //			
 
-			
-			
-			//return "checkDocument";
-			return "1"; 
-			}catch (Exception e) {
-				e.printStackTrace();
-				return "0"; 
-			}
-			
+			// return "checkDocument";
+			return "1";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "0";
 		}
-		
-		
-		
-	  	@RequestMapping(value="checkDocTable", method=RequestMethod.GET)		
-		public  @ResponseBody List<DocumentCheckDetails> getcheckDocTable(@RequestParam("ocrid") int ocrid){
-	  		
-	  		 List<DocumentCheckDetails> documentCheckDetails=documentScrvice.getCheckDocumentDetails(ocrid);
-	  		
-			return documentCheckDetails;
-		}
-		
-		
-		@RequestMapping("/document")
-		public String viewDocumente(Map<String, Object> model) {
-			Document document = new Document();
-	
-			model.put("document", document);
-			List<Document> listdocument = documentScrvice.listAllDocument();
-			model.put("allDucument", listdocument);
+
+	}
+
+	@RequestMapping(value = "checkDocTable", method = RequestMethod.GET)
+	public @ResponseBody List<DocumentCheckDetails> getcheckDocTable(@RequestParam("ocrid") int ocrid) {
+
+		List<DocumentCheckDetails> documentCheckDetails = documentScrvice.getCheckDocumentDetails(ocrid);
+
+		return documentCheckDetails;
+	}
+
+	@RequestMapping("/document")
+	public String viewDocumente(Map<String, Object> model) {
+		Document document = new Document();
+
+		model.put("document", document);
+		List<Document> listdocument = documentScrvice.listAllDocument();
+		model.put("allDucument", listdocument);
+		return "document";
+	}
+
+	@RequestMapping(value = "/saveDocument", method = RequestMethod.POST)
+	public String saveUser(@Valid @ModelAttribute("document") Document document, BindingResult br,
+			RedirectAttributes redirectAttributes) {
+
+		if (br.hasErrors()) {
+			redirectAttributes.addFlashAttribute("success", 0);
 			return "document";
+
+		} else {
+			if (document.getDocumentid() != 0) {
+				document.setDocumentid(document.getDocumentid());
+			}
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+
+			document.setStatus("ACTIVE");
+			document.setAddDate(formatter.format(date));
+			documentScrvice.saveDocument(document);
+			redirectAttributes.addFlashAttribute("success", 1);
+			return "redirect:/document.do";
+
 		}
-		
-		@RequestMapping(value = "/saveDocument", method = RequestMethod.POST)
-		public String saveUser(@Valid @ModelAttribute("document")  Document document , BindingResult br,RedirectAttributes redirectAttributes) {
-			
-			if(br.hasErrors()) {
-				redirectAttributes.addFlashAttribute("success", 0);
-				return "document";
-				
+
+	}
+
+	@RequestMapping("/editDocument")
+	public ModelAndView editDocument(@RequestParam String id) {
+		ModelAndView mav = new ModelAndView("document");
+		Document document = documentScrvice.listDocumentById(Integer.parseInt(id));
+		mav.addObject("document", document);
+		return mav;
+	}
+
+	@ModelAttribute("vehiclesSubCategorylist")
+	public List<VehiclesSubCategory> vehiclesSubCategorylist() {
+		List<VehiclesSubCategory> vCatList = vehicleService.vehiclesSubCategorylist();
+		return vCatList;
+	}
+
+	@RequestMapping(value = "getOCRVehiclesByDates", method = RequestMethod.GET)
+	public @ResponseBody List<OcrDetails> getOCRVehiclesByDates(@RequestParam Date todayDate) {
+
+		List<OcrDetails> vlist = vehicleService.getOCRVehiclesByDates(DateHelperWeb.getFormatStringDate2(todayDate));
+		return vlist;
+	}
+
+	@RequestMapping(value = "saveNewOcrPlate", method = RequestMethod.POST)
+	public @ResponseBody String saveWNewOcrImage(@RequestParam("json") String json, @RequestParam("id") String id) {
+
+		try {
+			String uploadDir = "C:\\OCRExternal\\";
+			boolean imagePresent;
+			byte[] imagedata = DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));
+
+			OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
+			;
+
+			String fileName = String.valueOf(id);
+
+			if (imagedata != null && imagedata.length > 0) {
+				ByteArrayInputStream bis = new ByteArrayInputStream(imagedata);
+				BufferedImage bImage2 = ImageIO.read(bis);
+				ImageIO.write(bImage2, "jpg", new File("C:\\OCRExternal\\" + fileName + ".jpg"));
+				imagePresent = true;
 			} else {
-				if(document.getDocumentid()!=0) {
-					document.setDocumentid(document.getDocumentid());
-				}
-			    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-			    Date date = new Date();  
-			    
-				document.setStatus("ACTIVE");
-				document.setAddDate(formatter.format(date));
-				documentScrvice.saveDocument(document);
-				redirectAttributes.addFlashAttribute("success", 1);
-				return "redirect:/document.do";
-		    	  
+				imagePresent = false;
+				System.out.println("Image did not saved");
 			}
-		  		
-		}
-		
-		@RequestMapping("/editDocument")
-		public ModelAndView editDocument(@RequestParam String id) {
-			ModelAndView mav = new ModelAndView("document");
-			Document document = documentScrvice.listDocumentById(Integer.parseInt(id));
-			mav.addObject("document", document);
-			return mav;
-		}
-	
-		@ModelAttribute("vehiclesSubCategorylist")
-		public List<VehiclesSubCategory> vehiclesSubCategorylist() {
-			List<VehiclesSubCategory> vCatList = vehicleService.vehiclesSubCategorylist();
-			return vCatList;
-		}
-	  	@RequestMapping(value="getOCRVehiclesByDates", method=RequestMethod.GET)		
-		public  @ResponseBody List<OcrDetails> getOCRVehiclesByDates(@RequestParam Date todayDate){
-	  		
-	  		
-	  		List<OcrDetails> vlist = vehicleService.getOCRVehiclesByDates(DateHelperWeb.getFormatStringDate2(todayDate));
-			return vlist;
-		}
-	
-	  	
-		@RequestMapping(value = "saveNewOcrPlate", method = RequestMethod.POST)
-		public @ResponseBody String saveWNewOcrImage( @RequestParam ("json") String json, @RequestParam ("id") String id) 
-		{
 
-			try {
-		
-	
-		    byte[] imagedata = DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));
-		    
-		   
-			OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));;
-			
-			//ocrDetails.setOcrDate(dtf.format(now));
-			ocrDetails.setNoimage(imagedata);
-					
+			// ocrDetails.setOcrDate(dtf.format(now));
+			// ocrDetails.setNoimage(imagedata);
+			ocrDetails.setImagePresent(imagePresent);
 			vehicleService.saveOcrDetailsRepo(ocrDetails);
-		    
+
 			return "1";
-		    
-		   }catch(Exception e) {
-			   
-			   System.out.println("An error occurred.");
-			      e.printStackTrace();
-			      return "0";
-		   }
-		   
-		   
-		   
+
+		} catch (Exception e) {
+
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+			return "0";
 		}
-	  	
-		@RequestMapping(value = "saveChangeImage", method = RequestMethod.POST)
-		public @ResponseBody String saveChangeImage( @RequestParam ("json") String json, @RequestParam ("id") String id) 
-		{
 
-			try {
-		
-	
-		    byte[] imagedata = DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));
-		    
-		   
-			OcrDetails ocrDetails=vehicleService.getOcrDetailsById(Integer.parseInt(id));;
-			
-			//ocrDetails.setOcrDate(dtf.format(now));
-			ocrDetails.setCapimg(ocrDetails.getNoimage());
-			ocrDetails.setNoimage(imagedata);
-					
-			vehicleService.saveOcrDetailsRepo(ocrDetails);
-		    
-			return "1";
-		    
-		   }catch(Exception e) {
-			   
-			   System.out.println("An error occurred.");
-			      e.printStackTrace();
-			      return "0";
-		   }
-		   
-		   
-		   
-		}
-		
-		
-		@RequestMapping(value = "getLaneInspector", method = RequestMethod.GET)
-		public @ResponseBody List<LaneAssign> getLaneInspector( @RequestParam String laneid) 
-		{
+	}
 
-	    	 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-	    	Date date = new Date();  
-	    	DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
-	    	LocalTime time = LocalTime.now();
-			 
-			return vehicleService.getLaneInspector(laneid,formatter.format(date),time.format(formattertime));
-		   
+	@RequestMapping(value = "saveChangeImage", method = RequestMethod.POST)
+	public @ResponseBody String saveChangeImage(@RequestParam("json") String json, @RequestParam("id") String id) {
 
-		}
-		@RequestMapping("/laneAllocation")
-		public ModelAndView laneAllocation(HttpSession session) {
-			ModelAndView mav = new ModelAndView("laneAllocation");
-			
-			mav.addObject("laneAllocation", new LaneAssign());
-			List<LaneAssign> allLaneAssign=vehicleService.getAllLaneAssign();
-			
-			mav.addObject("allLaneAllocation", allLaneAssign);
-			List<Users> users = usersService.listAll();
-			mav.addObject("users", users);
-			List<TestLaneHead> allCenterLane=laneServices.getTestLaneHeadDetailByCenter(session.getAttribute("centerid")+"");
-			mav.addObject("lanes", allCenterLane);
-			
-			return mav;
-		}
-		
-		
-		
-		@RequestMapping(value = "/savelaneAllocation", method = RequestMethod.POST)
-		public String savelaneAllocation(@Valid @ModelAttribute("laneAllocation") LaneAssign laneAssign){
+		try {
+			String uploadDir = "C:\\OCRExternal\\";
+			boolean imagePresent;
+			byte[] imagedata = DatatypeConverter.parseBase64Binary(json.substring(json.indexOf(",") + 1));
 
-			
-					try {
-						if(laneAssign.getId()==0) {
-							LaneAssign la=new LaneAssign();
-							laneAssign.setId(la.getId());
-						}
-						
-						
-						vehicleService.savelaneAllocation(laneAssign);
-					//	redirectAttributes.addFlashAttribute("success", 1);
-						return "redirect:/laneAllocation";
-		        	}catch (Exception e) {
-						// TODO: handle exception
-		        	//	redirectAttributes.addFlashAttribute("success", 0);
-					}
-					
-					return "laneAllocation";
-				
-		}	
-		
-		@RequestMapping("/editLaneAllocation")
-		public ModelAndView editLaneAllocation(@RequestParam int id,HttpSession session) {
-			ModelAndView mav = new ModelAndView("laneAllocation");
-			
-			LaneAssign laneAssign=vehicleService.getLaneAssignByid(id);
-					
-			mav.addObject("laneAllocation", laneAssign);
-			List<LaneAssign> allLaneAssign=vehicleService.getAllLaneAssign();
-			
-			mav.addObject("allLaneAllocation", allLaneAssign);
-			List<Users> users = usersService.listAll();
-			mav.addObject("users", users);
-			List<TestLaneHead> allCenterLane=laneServices.getTestLaneHeadDetailByCenter(session.getAttribute("centerid")+"");
-			mav.addObject("lanes", allCenterLane);
-			
-			return mav;
-		}
-		
-		@RequestMapping(value = "getPcDetails", method = RequestMethod.POST)
-		public @ResponseBody List<NetworkIpBeen> getPcDetails( @RequestParam String centerid) throws UnknownHostException, IOException 
-		{
+			OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
+			;
 
-			
-			List<ConfigSystem> configSystem=vehicleService.getPcDataCheckByCenter(centerid);	
-    		
+			String fileName = String.valueOf(id);
 
-			  List<NetworkIpBeen> networkIpBeenList = new ArrayList<NetworkIpBeen>();
-			for(ConfigSystem result:configSystem) {
-				
-				NetworkIpBeen networkIpBeen=new NetworkIpBeen();
-				networkIpBeen.setIpaddress(result.getIpaddress());
-				networkIpBeen.setHostname(InetAddress.getByName(result.getIpaddress()).getHostName());
-				if(InetAddress.getByName(result.getIpaddress()).isReachable(3000)) {
-					networkIpBeen.setStatus("true");	
-				}else {
-					networkIpBeen.setStatus("false");
-				}
-				
-				
-				
-				networkIpBeenList.add(networkIpBeen);
+			if (imagedata != null && imagedata.length > 0) {
+				ByteArrayInputStream bis = new ByteArrayInputStream(imagedata);
+				BufferedImage bImage2 = ImageIO.read(bis);
+				ImageIO.write(bImage2, "jpg", new File("C:\\OCRExternal\\" + fileName + ".jpg"));
+				imagePresent = true;
+			} else {
+				imagePresent = false;
+				System.out.println("Image did not saved");
 			}
-			
-			
-		
-			
-			return networkIpBeenList;
-		   
+			// ocrDetails.setOcrDate(dtf.format(now));
+			// ocrDetails.setCapimg(ocrDetails.getNoimage());
+			ocrDetails.setImagePresent(imagePresent);
+			ocrDetails.setNoimage(imagedata);
 
-		}
-		
-		@ModelAttribute("bankNameMasterList")
-		public List<BankMaster> getBankMasterDetails() {
-			List<BankMaster> allBank=financeAccountingService.getBankMasterAll();
-			return allBank;
-		}
-		
-		@RequestMapping(value = "getBankAccountByBank", method = RequestMethod.GET)
-		public @ResponseBody List<PartnerBankAccount> getBankAccountByBank( @RequestParam String bankid) 
-		{
- 
-			return financeAccountingService.getBankAccountByBank(bankid);
-		   
+			vehicleService.saveOcrDetailsRepo(ocrDetails);
 
-		}
-		
-		@RequestMapping("emissionNorms")     
-		@ResponseBody
-		public TestLimitRule filter(@RequestParam String year,@RequestParam String fuel,HttpSession session) throws ParseException {
-			
-			SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat")+"");
-			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-			
-			String manufDate = sdf2.format(sdf.parse(year));
-			TestLimitRule object =  vehicleService.filterVehicle(manufDate, fuel);
-			
-			return object;
-		  
-		}
-		
-		@ModelAttribute("allgates")
-		public List<Gate>getAllGate(){		
-			List<Gate> gate = vehicleService.getAllGates();
-			return gate;
-			
-		}
-		
-		@RequestMapping(value = "getVehicleRegisterType", method = RequestMethod.GET)
-		public @ResponseBody int[] getVehicleRegisterTypeByID(@RequestParam String id,@RequestParam String vNo) 
-		{
-			int[] value=new int[2];
-			
-			value[0]=Integer.parseInt(vehicleService.getVehicleRegisterTypeByID(id).getvRT());						
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-		    Date date = new Date();  
-			int dif= DateHelperWeb.stringDateDiff(vehicleService.getLastRegistationDetails(vNo).getDate(),formatter.format(date));	
-			value[1]=dif;
-			
-			//System.out.println(value[0]+"---------"+value[1]);
-		   return value;
-		}
-		
+			return "1";
 
-		
-		
-		//editLaneAllocation
-		
+		} catch (Exception e) {
+
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+			return "0";
+		}
+
+	}
+
+	@RequestMapping(value = "getLaneInspector", method = RequestMethod.GET)
+	public @ResponseBody List<LaneAssign> getLaneInspector(@RequestParam String laneid) {
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
+		LocalTime time = LocalTime.now();
+
+		return vehicleService.getLaneInspector(laneid, formatter.format(date), time.format(formattertime));
+
+	}
+
+	@RequestMapping("/laneAllocation")
+	public ModelAndView laneAllocation(HttpSession session) {
+		ModelAndView mav = new ModelAndView("laneAllocation");
+
+		mav.addObject("laneAllocation", new LaneAssign());
+		List<LaneAssign> allLaneAssign = vehicleService.getAllLaneAssign();
+
+		mav.addObject("allLaneAllocation", allLaneAssign);
+		List<Users> users = usersService.listAll();
+		mav.addObject("users", users);
+		List<TestLaneHead> allCenterLane = laneServices
+				.getTestLaneHeadDetailByCenter(session.getAttribute("centerid") + "");
+		mav.addObject("lanes", allCenterLane);
+
+		return mav;
+	}
+
+	@RequestMapping(value = "/savelaneAllocation", method = RequestMethod.POST)
+	public String savelaneAllocation(@Valid @ModelAttribute("laneAllocation") LaneAssign laneAssign) {
+
+		try {
+			if (laneAssign.getId() == 0) {
+				LaneAssign la = new LaneAssign();
+				laneAssign.setId(la.getId());
+			}
+
+			vehicleService.savelaneAllocation(laneAssign);
+			// redirectAttributes.addFlashAttribute("success", 1);
+			return "redirect:/laneAllocation";
+		} catch (Exception e) {
+			// TODO: handle exception
+			// redirectAttributes.addFlashAttribute("success", 0);
+		}
+
+		return "laneAllocation";
+
+	}
+
+	@RequestMapping("/editLaneAllocation")
+	public ModelAndView editLaneAllocation(@RequestParam int id, HttpSession session) {
+		ModelAndView mav = new ModelAndView("laneAllocation");
+
+		LaneAssign laneAssign = vehicleService.getLaneAssignByid(id);
+
+		mav.addObject("laneAllocation", laneAssign);
+		List<LaneAssign> allLaneAssign = vehicleService.getAllLaneAssign();
+
+		mav.addObject("allLaneAllocation", allLaneAssign);
+		List<Users> users = usersService.listAll();
+		mav.addObject("users", users);
+		List<TestLaneHead> allCenterLane = laneServices
+				.getTestLaneHeadDetailByCenter(session.getAttribute("centerid") + "");
+		mav.addObject("lanes", allCenterLane);
+
+		return mav;
+	}
+
+	@RequestMapping(value = "getPcDetails", method = RequestMethod.POST)
+	public @ResponseBody List<NetworkIpBeen> getPcDetails(@RequestParam String centerid)
+			throws UnknownHostException, IOException {
+
+		List<ConfigSystem> configSystem = vehicleService.getPcDataCheckByCenter(centerid);
+
+		List<NetworkIpBeen> networkIpBeenList = new ArrayList<NetworkIpBeen>();
+		for (ConfigSystem result : configSystem) {
+
+			NetworkIpBeen networkIpBeen = new NetworkIpBeen();
+			networkIpBeen.setIpaddress(result.getIpaddress());
+			networkIpBeen.setHostname(InetAddress.getByName(result.getIpaddress()).getHostName());
+			if (InetAddress.getByName(result.getIpaddress()).isReachable(3000)) {
+				networkIpBeen.setStatus("true");
+			} else {
+				networkIpBeen.setStatus("false");
+			}
+
+			networkIpBeenList.add(networkIpBeen);
+		}
+
+		return networkIpBeenList;
+
+	}
+
+	@ModelAttribute("bankNameMasterList")
+	public List<BankMaster> getBankMasterDetails() {
+		List<BankMaster> allBank = financeAccountingService.getBankMasterAll();
+		return allBank;
+	}
+
+	@RequestMapping(value = "getBankAccountByBank", method = RequestMethod.GET)
+	public @ResponseBody List<PartnerBankAccount> getBankAccountByBank(@RequestParam String bankid) {
+
+		return financeAccountingService.getBankAccountByBank(bankid);
+
+	}
+
+	@RequestMapping("emissionNorms")
+	@ResponseBody
+	public TestLimitRule filter(@RequestParam String year, @RequestParam String fuel, HttpSession session)
+			throws ParseException {
+
+		SimpleDateFormat sdf = new SimpleDateFormat(session.getAttribute("dateFormat") + "");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+
+		String manufDate = sdf2.format(sdf.parse(year));
+		TestLimitRule object = vehicleService.filterVehicle(manufDate, fuel);
+
+		return object;
+
+	}
+
+	@ModelAttribute("allgates")
+	public List<Gate> getAllGate() {
+		List<Gate> gate = vehicleService.getAllGates();
+		return gate;
+
+	}
+
+	@RequestMapping(value = "getVehicleRegisterType", method = RequestMethod.GET)
+	public @ResponseBody int[] getVehicleRegisterTypeByID(@RequestParam String id, @RequestParam String vNo) {
+		int[] value = new int[2];
+
+		value[0] = Integer.parseInt(vehicleService.getVehicleRegisterTypeByID(id).getvRT());
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		int dif = DateHelperWeb.stringDateDiff(vehicleService.getLastRegistationDetails(vNo).getDate(),
+				formatter.format(date));
+		value[1] = dif;
+
+		// System.out.println(value[0]+"---------"+value[1]);
+		return value;
+	}
+
+	// editLaneAllocation
+
 	/*
 	 * @RequestMapping("filterVehicleNO")
 	 * 
@@ -4305,6 +4115,3 @@ public class VehicleController {
 	 * }
 	 */
 }
-
-
-

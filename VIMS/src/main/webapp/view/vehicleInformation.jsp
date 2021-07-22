@@ -112,10 +112,22 @@ form input[type="file"] {
 
 
 
+
+
+
+
+
+
 :
 
 
+
+
+
  
+
+
+
 
 
 scale
@@ -123,8 +135,20 @@ scale
 
 
 
+
+
+
+
+
+
 (1
 .0
+
+
+
+
+
+
 
 
 
@@ -145,10 +169,22 @@ keyframes sk-bouncedelay { 0%, 80%, 100% {
 
 
 
+
+
+
+
+
+
 :
 
 
+
+
+
  
+
+
+
 
 
 scale
@@ -156,8 +192,20 @@ scale
 
 
 
+
+
+
+
+
+
 (1
 .0
+
+
+
+
+
+
 
 
 
@@ -168,10 +216,22 @@ transform
 
 
 
+
+
+
+
+
+
 :
 
 
+
+
+
  
+
+
+
 
 
 scale
@@ -179,8 +239,20 @@ scale
 
 
 
+
+
+
+
+
+
 (1
 .0
+
+
+
+
+
+
 
 
 
@@ -337,10 +409,22 @@ transform
 
 
 
+
+
+
+
+
+
 :
 
 
+
+
+
  
+
+
+
 
 
 rotate
@@ -348,8 +432,20 @@ rotate
 
 
 
+
+
+
+
+
+
 (360
 deg
+
+
+
+
+
+
 
 
 );
@@ -505,7 +601,7 @@ deg
 													</div>
 													<div class="row">
 														<input type="file" class="" id="num_img" accept="image/*"
-															capture="user" style="display: none;"/>
+															capture="user" style="display: none;" />
 													</div>
 
 
@@ -517,7 +613,7 @@ deg
 															<img src="resources/img/car-placeholder.jpg"
 																class="capCam" id="results" /> <input type="hidden"
 																name="ImageData" id="ImageData" /> <input type="hidden"
-																class="form-control fontst" id="ocrid"/>
+																class="form-control fontst" id="ocrid" />
 														</div>
 													</div>
 													<br>
@@ -913,6 +1009,7 @@ deg
 				
 	
 		}
+	
 		takeAutoNo();
 		
 		function takeAutoNo() {
@@ -968,8 +1065,38 @@ deg
 		            slctSubcat.empty();
 		    
 		        	for(var i=0; i<data.length; i++){
+		        		//alert(data[i].ocrid);
+		        		var noImage = "";//getOCRImage(data[i].ocrid);
+		        	//	function getOCRImage(ocrId) {
+		        			
+		        			$.ajax({
+		        				type : 'GET',
+		        				url : "getOCRImage",
+		        				data : {
+		        					"ocrId" : data[i].ocrid
+		        				},
+		        				success : function(data) {
+		        					
+		        					if(data != null) {
+		        						
+		        						noImage=data;
+		        						
+		        					} else {
+		        						alert("No Image");
+		        					}
+		        				},
+		        				error : function() {
+		        					console.log("Image not found")
+		        				}
+
+		        			});
+		        	//	}
 		        		
+		        			//Slow down
+		        			//alert(noImage);
+		        			
 		        		
+  		
 		        		var link="";
 	        			var statu="";
 	        			var btnRemo="";
@@ -1087,7 +1214,9 @@ deg
 // 		        	if(data[i].noimage!=null){
 		        	//	onerror="this.src='resources/img/car-placeholder.jpg'"
 		       
-		        		img="<img src='data:image/jpg;base64,"+arrayBufferToBase64(data[i].noimage )+"' width='90' height='80' onerror='this.src='resources/img/car-placeholder.jpg';' alt='No Image'/>";	
+		        		img="<img src='data:image/jpg;base64,"+noImage+"' width='90' height='80' onerror='this.src='resources/img/car-placeholder.jpg';' alt='No Image'/>";	
+		        		//img = noImage;
+		        		
 // 		        	}else{
 // 		        		img="<img src='resources/img/car-placeholder.jpg' width='90' height='80' alt='No image' />";	
 // 		        	}
@@ -2179,10 +2308,22 @@ deg
 			}
 
 		}
-		
-		
-		
-		
+
+		function resolveAfter2Seconds(x) {
+			  return new Promise(resolve => {
+			    setTimeout(() => {
+			      resolve(x);
+			    }, 2000);
+			  });
+			}
+
+			async function f1() {
+			  var x = await resolveAfter2Seconds(10);
+			  console.log(x); // 10
+			}
+
+			
+	
 		
 	</script>
 
