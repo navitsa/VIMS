@@ -967,7 +967,7 @@ public class VehicleController {
 	}
 
 	@RequestMapping("/LaneEntry")
-	public String getLaneEntry(Model m, @RequestParam String id, HttpSession session) {
+	public String getLaneEntry(Model m, @RequestParam String id, HttpSession session) throws IOException {
 		OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
 		VehicleRegistration vecir = vehicleService.getRegistrationVehicleByOcrid(ocrDetails.getOcrid());
 
@@ -978,7 +978,19 @@ public class VehicleController {
 		} else {
 			m.addAttribute("custom", vecir.getCusid().getName());
 		}
-		m.addAttribute("imgVimg", ocrDetails.getNoimageView());
+		String fileName = String.valueOf(id);
+
+		File file = new File("C:\\OCRExternal\\" + fileName + ".jpg");
+		System.out.println("file=" + file);
+		if (ocrDetails.isImagePresent() == true) {
+
+			BufferedImage bImage = ImageIO.read(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ImageIO.write(bImage, "jpg", bos);
+			byte[] data = bos.toByteArray();
+			m.addAttribute("imgVimg", Base64.getEncoder().encodeToString(data));
+		}
+		//m.addAttribute("imgVimg", ocrDetails.getNoimageView());
 		m.addAttribute("pre_vehicle", vehicleService.getPerviousRegistrationVehicle(vid));
 
 		m.addAttribute("vehNo", vid);
@@ -3735,13 +3747,25 @@ public class VehicleController {
 
 	@RequestMapping("/checkDocumentAuto")
 	public String checkDocumentAuto(@RequestParam("vecNo") String vecNo, @RequestParam("curMi") String curMi,
-			@RequestParam("id") String id, Map<String, Object> model) {
+			@RequestParam("id") String id, Map<String, Object> model) throws IOException {
 
 		model.put("vecNo", vecNo);
 		model.put("curMi", curMi);
 		model.put("id", id);
 		OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
-		model.put("imgVe", ocrDetails.getNoimageView());
+		String fileName = String.valueOf(id);
+
+		File file = new File("C:\\OCRExternal\\" + fileName + ".jpg");
+		System.out.println("file=" + file);
+		if (ocrDetails.isImagePresent() == true) {
+
+			BufferedImage bImage = ImageIO.read(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ImageIO.write(bImage, "jpg", bos);
+			byte[] data = bos.toByteArray();
+			model.put("imgVe", Base64.getEncoder().encodeToString(data));
+		}
+		//model.put("imgVe", ocrDetails.getNoimageView());
 		List<Document> documentlist = documentScrvice.getAllActiveDocument();
 		model.put("documentlist", documentlist);
 
