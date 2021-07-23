@@ -533,12 +533,26 @@ public class VehicleController {
 	}
 
 	@RequestMapping("/vehicleMasterAuto")
-	public ModelAndView logVehicleMaster(@RequestParam String vehicleID, @RequestParam String id, HttpSession session) {
+	public ModelAndView logVehicleMaster(@RequestParam String vehicleID, @RequestParam String id, HttpSession session) throws IOException {
 		ModelAndView mav = new ModelAndView("vehicleMaster");
 
 		OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
 		// ocrDetails.setOcrVid(vehicleID);
 		// vehicleService.saveOcrDetailsRepo(ocrDetails);
+		
+		String fileName = String.valueOf(id);
+
+		File file = new File("C:\\OCRExternal\\" + fileName + ".jpg");
+		System.out.println("file=" + file);
+		if (ocrDetails.isImagePresent() == true) {
+
+			BufferedImage bImage = ImageIO.read(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ImageIO.write(bImage, "jpg", bos);
+			byte[] data = bos.toByteArray();
+			mav.addObject("imgVe", Base64.getEncoder().encodeToString(data));
+		}
+		
 		String appNo = ocrDetails.getAppNo();
 
 		if (!appNo.equals("0")) {
@@ -548,7 +562,7 @@ public class VehicleController {
 			appointmentService.save(appointment);
 		}
 
-		mav.addObject("imgVe", ocrDetails.getNoimageView());
+		
 		mav.addObject("ocid", id);
 		mav.addObject("milage", ocrDetails.getCurrentMilage());
 		VehicleMaster vm = new VehicleMaster();
