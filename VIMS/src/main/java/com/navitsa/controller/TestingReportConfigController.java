@@ -247,9 +247,11 @@ public class TestingReportConfigController {
 		 params.put("centerContactNo", vr.getCentermaster().getTele());
 		 params.put("centerOpenTime", vr.getCentermaster().getOpenTime());	
 		 params.put("centerCloseTime", vr.getCentermaster().getCloseTime());
-		 if(vr.getOcrid().getNoimage() != null)
-			 if(vr.getOcrid().getNoimage().length>0)
-				 params.put("vehicleImage",vr.getOcrid().getNoimage());
+		 //if(vr.getOcrid().getNoimage() != null)
+			 //if(vr.getOcrid().getNoimage().length>0)
+		 if(vr.getOcrid().isImagePresent()==true)
+			 params.put("vehicleImage","C:\\OCRExternal\\"+vr.getOcrid().getOcrid()+".jpg");
+		 
 		 
 		 params.put("noOfAxles",vr.getVid().getNoWheel());
 		 params.put("LicensePlateNo",vr.getVid().getVehicleID());

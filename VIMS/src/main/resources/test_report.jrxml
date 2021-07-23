@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="ec418a8c-8cf1-4514-bbae-1d80ca383f29">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="116"/>
 	<property name="ireport.callouts" value="##Thu Sep 17 11:59:31 IST 2020"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<style name="table">
@@ -608,7 +608,7 @@ $P{centerAddress}+"<br>"+
 			</textField>
 			<image scaleImage="RealSize" vAlign="Top" onErrorType="Blank">
 				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="394" y="12" width="160" height="95" uuid="af167c8a-bbaa-4610-95c7-650e4cd7dd68"/>
-				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{vehicleImage})).getImage()]]></imageExpression>
+				<imageExpression><![CDATA[$P{vehicleImage}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="394" y="0" width="159" height="12" uuid="ec9db13b-1365-4c85-9109-2ed8ab89f5ca"/>

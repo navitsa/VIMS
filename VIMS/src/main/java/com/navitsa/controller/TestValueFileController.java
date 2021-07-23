@@ -70,14 +70,8 @@ public class TestValueFileController {
 		String centerid=(String) session.getAttribute("centerid");
 		String ESOUT_path = centerService.getcenterById(centerid).getEsOutPath();
 		
-		try {
-			downloadFromFTP(centerid,ESOUT_path,session);
-		} catch (SQLException e1) {
-			//e1.printStackTrace();
-			System.out.println("FTP Connection problem "+e1);
-		}
+		//downloadFromFTP(centerid,ESOUT_path,session);
 
-		
 	      //Creating a File object for directory
 	      File directoryPath = new File(ESOUT_path);
 	      FilenameFilter textFilefilter = new FilenameFilter(){
@@ -132,16 +126,18 @@ public class TestValueFileController {
 			          }
 			          
 			          String RegId = null;
+			          TestValueFileHeader tvfh = null; 
 			          try {
 			        	  // get registration id 
 			        	  //select * from vehicle_registration where vehicle_id=? && status="pending" order by vehicle_reg_id
 			        	  RegId = vehicleService.getRegistrationID(vehicleID);
+			        	  tvfh = testValueFileServices.findTestValueFileHeaderByRegId(RegId);			        	  
 
 			          } catch (Exception e) {
 						System.out.println(e.getMessage());
 			          }
 
-			          if(RegId !=null) {
+			          if(RegId !=null && tvfh ==null) {
 			        	  VehicleRegistration vrobj = new VehicleRegistration();
 				          vrobj.setVregID(RegId);
 				          
@@ -214,12 +210,12 @@ public class TestValueFileController {
 	}
 	
 
-	 @ModelAttribute("testValueFileHeader")
+/*	 @ModelAttribute("testValueFileHeader")
 	 	public List<TestValueFileHeader> getTestValueFileHeader(){
 		 List<TestValueFileHeader> result = testValueFileServices.listPendingHeaderInfo();
 		 return result;
 	 }
-	 
+*/	 
 	 @ModelAttribute("previousReports")
 	 	public List<TestValueFileHeader> getPreviousReports(){
 		 List<TestValueFileHeader> result = testValueFileServices.listCompletedHeaderInfo();

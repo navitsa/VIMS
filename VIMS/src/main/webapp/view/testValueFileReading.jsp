@@ -17,17 +17,17 @@
 <style>
 #loading-effect{
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 15%;
+  left: 80%;
   transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
 }
 #text{
   position: absolute;
-  top: 60%;
-  left: 50%;
+  top: 15%;
+  left: 88%;
   font-size: 15px;
-  color: black;
+  color: green;
   transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
 }
@@ -143,7 +143,7 @@
 		    	document.getElementById("overlay").style.display = "none";
 	        	$("#pendingResultsTable tbody").empty();
 				for(var i=0; i<data.length; i++){
-					var markup = "<tr><th scope='row'>"+data[i].test_value_file_id+"</th><td>"+data[i].vreg.vregID+"</td><td>"+data[i].vehicle_id+"</td><td>"+data[i].date+"</td><td><a href='#' class='btn btn-success btn-sm' onclick='checkAvailableResults(`"+data[i].vreg.vregID+"`,`"+data[i].test_value_file_id+"`,1)'><i class='fas fa-print'></i></a></td><td><a href='#' class='btn btn-default btn-sm' onclick='checkAvailableResults(`"+data[i].vreg.vregID+"`,`"+data[i].test_value_file_id+"`,0)'><i class='fas fa-print'></i></a></td> <td><a href='' data-toggle='modal' data-target='#printingOrderModal'><i class='fas fa-cog'></i></a></td></tr>";
+					var markup = "<tr><th scope='row'>"+data[i].test_value_file_id+"</th><td>"+data[i].vreg.vregID+"</td><td>"+data[i].vehicle_id+"</td><td>"+data[i].date+"</td><td><a href='#' class='btn btn-success btn-sm' onclick='checkAvailableResults(`"+data[i].vreg.vregID+"`,`"+data[i].test_value_file_id+"`,1)'><i class='fas fa-print'></i></a></td><td><a href='#' class='btn btn-default btn-sm' onclick='checkAvailableResults(`"+data[i].vreg.vregID+"`,`"+data[i].test_value_file_id+"`,0)'><i class='fas fa-print'></i></a></td> <td></td></tr>";
 	           		 $("#pendingResultsTable tbody").append(markup);
 	           	 }
 		    },
@@ -175,7 +175,7 @@
 </c:if>
 
 <div id="overlay">
-  <div id="loading-effect"><img alt="" src="resources/img/96x96.gif"></div>
+<!--   <div id="loading-effect"><img alt="" src="resources/img/96x96.gif"></div> -->
   <div id="text">Reading Test Results ...</div>
 </div>
 
