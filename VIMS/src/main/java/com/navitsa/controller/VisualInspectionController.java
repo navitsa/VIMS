@@ -290,7 +290,7 @@ public class VisualInspectionController {
 		 return remark;
 	 }
 	 
-	 @ModelAttribute("pendingViVehicles")
+	 //@ModelAttribute("pendingViVehicles")
 	 	public List<VehicleRegistration> getPendingVehiclesForInspection(){
 		 
 		 List<VehicleRegistration> pendingVi = null;
@@ -301,7 +301,7 @@ public class VisualInspectionController {
 		} catch (Exception e) {
 			System.out.println("Something went wrong.");
 		}finally {
-			System.out.println("The 'try catch' is finished.");
+			System.out.println("finished.");
 		}
 		 
 		 if(pendingVi.isEmpty())
@@ -331,6 +331,7 @@ public class VisualInspectionController {
 			String chID = inspectionServices.maxCheckListMasterID();
 			vcm.setCheklistID("0000".substring(chID.length())+chID);
 			m.addAttribute("checklistMaster", vcm);
+			m.addAttribute("pendingViVehicles", getPendingVehiclesForInspection());
 			return "visualInspectionChecklist";
 		}
 		
@@ -409,6 +410,7 @@ public class VisualInspectionController {
 			     
 			     mav.addObject("checklistMaster", vm);
 				 mav.addObject("regVehicleInfo", vr);
+				 mav.addObject("pendingViVehicles", getPendingVehiclesForInspection());
 				 
 				 
 				 return mav;

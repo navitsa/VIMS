@@ -24,7 +24,7 @@ function getRemarks(str,str2)
             
         },
         error:function(){
-            alert("error");
+            alert("get remark error");
         }
 
     });
