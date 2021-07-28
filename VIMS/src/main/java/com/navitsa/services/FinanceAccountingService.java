@@ -13,6 +13,7 @@ import com.navitsa.entity.APInvoiceHead;
 import com.navitsa.entity.APInvoicePaymentDetails;
 import com.navitsa.entity.APInvoicePaymentHead;
 import com.navitsa.entity.APInvoiceTax;
+import com.navitsa.entity.DocType;
 import com.navitsa.entity.Glaccount;
 import com.navitsa.entity.OutgoingPaymentDetails;
 import com.navitsa.entity.OutgoingPaymentHead;
@@ -27,6 +28,7 @@ import com.navitsa.repository.APInvoiceHeadRepository;
 import com.navitsa.repository.APInvoicePaymentDetailsRepository;
 import com.navitsa.repository.APInvoicePaymentHeadRepository;
 import com.navitsa.repository.APInvoiceTaxRepository;
+import com.navitsa.repository.DocTypeRepository;
 import com.navitsa.repository.GlaccountRepository;
 import com.navitsa.repository.IncomingReceiptHeadRepository;
 import com.navitsa.repository.OutgoingPaymentDetailsRepository;
@@ -75,6 +77,10 @@ public class FinanceAccountingService {
 
 	@Autowired
 	APInvoicePaymentDetailsRepository apInvoicePaymentDetailsRepository;
+	
+	@Autowired
+	DocTypeRepository docTypeRepositoryRepository;
+	
 
 	public void saveOutgoingPaymentHead(OutgoingPaymentHead outgoingPaymentHead) {
 		outgoingPaymentHeadRepo.save(outgoingPaymentHead);
@@ -256,5 +262,13 @@ public class FinanceAccountingService {
 			String supplierId) {
 		return apInvoicePaymentDetailsRepository.getAPInvoicePaymentDetailsByByDatesAndSupplier(fromDate, toDate,
 				supplierId);
+	}
+
+	public APInvoicePaymentHead findAPInvoicePaymentHeadById(String apInvoicePaymentHeadId) {
+		return apInvoicePaymentHeadRepository.findById(apInvoicePaymentHeadId).get();
+	}
+	
+	public DocType findDocTypeHeadById(int docTypeId) {
+		return docTypeRepositoryRepository.findById(docTypeId).get();
 	}
 }

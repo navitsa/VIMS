@@ -66,6 +66,7 @@
 	<field name="doctype" class="java.lang.String"/>
 	<field name="document" class="java.lang.String"/>
 	<field name="date" class="java.lang.String"/>
+	<field name="remark" class="java.lang.String"/>
 	<variable name="sumdr" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{dr}]]></variableExpression>
 	</variable>
@@ -76,10 +77,11 @@
 		<groupExpression><![CDATA[$F{date}]]></groupExpression>
 		<groupHeader>
 			<band height="21">
-				<textField>
-					<reportElement x="17" y="0" width="391" height="20" uuid="5caeec23-75af-46b2-aa17-40652c25f90f"/>
-					<textElement>
+				<textField isBlankWhenNull="true">
+					<reportElement x="17" y="0" width="796" height="20" uuid="5caeec23-75af-46b2-aa17-40652c25f90f"/>
+					<textElement verticalAlignment="Middle">
 						<font isBold="true"/>
+						<paragraph leftIndent="5"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
 				</textField>
@@ -98,7 +100,7 @@
 				</textElement>
 				<text><![CDATA[GL TRANCTION REPORT]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="112" y="33" width="622" height="20" uuid="b87425e7-4b5e-4567-8b87-ec1c1a6fe8fb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="13" isBold="true"/>
@@ -112,7 +114,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="589" y="71" width="224" height="19" uuid="efbe7fb6-ff52-48e6-bc96-db9ab839cdd9"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="12" isBold="true"/>
@@ -123,7 +125,7 @@
 				<reportElement x="12" y="11" width="100" height="79" uuid="636fcc76-f4a0-44f3-ab11-9cb9423558a4"/>
 				<imageExpression><![CDATA[(new javax.swing.ImageIcon((byte[])$P{img})).getImage()]]></imageExpression>
 			</image>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="237" y="70" width="352" height="20" uuid="49d601ef-54eb-4917-b25b-d221709427ab"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="13" isBold="true"/>
@@ -135,7 +137,7 @@
 	<columnHeader>
 		<band height="23">
 			<staticText>
-				<reportElement mode="Opaque" x="12" y="0" width="402" height="23" backcolor="#CCFFFF" uuid="5abef695-0b6d-405c-a74f-cd40eb7ae2d5"/>
+				<reportElement mode="Opaque" x="488" y="0" width="125" height="23" backcolor="#CCFFFF" uuid="5abef695-0b6d-405c-a74f-cd40eb7ae2d5"/>
 				<box leftPadding="5" rightPadding="0">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -143,11 +145,12 @@
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Journal No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="414" y="0" width="205" height="23" backcolor="#CCFFFF" uuid="a0bae441-93b5-4065-92e3-20bf3220e09f"/>
+				<reportElement mode="Opaque" x="613" y="0" width="100" height="23" backcolor="#CCFFFF" uuid="a0bae441-93b5-4065-92e3-20bf3220e09f"/>
 				<box rightPadding="4">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -156,11 +159,12 @@
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph rightIndent="5"/>
 				</textElement>
 				<text><![CDATA[Debit]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="619" y="0" width="194" height="23" backcolor="#CCFFFF" uuid="0a2fbd3a-d2f6-491f-9295-cc74cbfc8838"/>
+				<reportElement mode="Opaque" x="713" y="0" width="100" height="23" backcolor="#CCFFFF" uuid="0a2fbd3a-d2f6-491f-9295-cc74cbfc8838"/>
 				<box rightPadding="4">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -169,40 +173,104 @@
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="true"/>
-					<paragraph leftIndent="10"/>
+					<paragraph rightIndent="5"/>
 				</textElement>
 				<text><![CDATA[Credit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="363" y="0" width="125" height="23" backcolor="#CCFFFF" uuid="1f32d588-65cc-43ab-b175-3c9ca5ce36f0"/>
+				<box leftPadding="5" rightPadding="0">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Document No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="17" y="0" width="221" height="23" backcolor="#CCFFFF" uuid="31c8fb27-5766-45ab-9537-f8c614e5c08c"/>
+				<box leftPadding="5" rightPadding="0">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Vendor / Customer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="238" y="0" width="125" height="23" backcolor="#CCFFFF" uuid="0ed25952-b04a-48ad-b164-518323fa777a"/>
+				<box leftPadding="5" rightPadding="0">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Document Type]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20">
-			<textField pattern="#,##0.00;(#,##0.00)">
-				<reportElement mode="Opaque" x="414" y="0" width="205" height="20" backcolor="#FFFFFF" uuid="b7156e7c-c827-4790-b447-79dd675a5cc2"/>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="613" y="0" width="100" height="20" backcolor="#FFFFFF" uuid="b7156e7c-c827-4790-b447-79dd675a5cc2"/>
 				<box rightPadding="4">
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial"/>
+					<paragraph rightIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dr}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00;(#,##0.00)">
-				<reportElement mode="Opaque" x="619" y="0" width="194" height="20" backcolor="#FFFFFF" uuid="7b17272e-1c2c-4ef7-ab86-e54a821c661e"/>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="713" y="0" width="100" height="20" backcolor="#FFFFFF" uuid="7b17272e-1c2c-4ef7-ab86-e54a821c661e"/>
 				<box rightPadding="4">
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial"/>
-					<paragraph leftIndent="10"/>
+					<paragraph leftIndent="10" rightIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cr}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="38" y="0" width="376" height="20" uuid="ef5c7b7a-95d6-4651-b22d-f9440fe342c9"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="488" y="0" width="125" height="20" uuid="ef5c7b7a-95d6-4651-b22d-f9440fe342c9"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{journalno}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="363" y="0" width="125" height="20" uuid="23c425e8-3c6a-4c1e-8543-eb655c148efc"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="17" y="0" width="221" height="20" uuid="e48928c2-da1a-4f01-8735-44064c319a88"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="237" y="0" width="125" height="20" uuid="fb908544-9a04-4107-b6ff-1b33eced2a80"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doctype}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

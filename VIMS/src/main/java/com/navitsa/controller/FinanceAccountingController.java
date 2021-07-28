@@ -630,15 +630,30 @@ public class FinanceAccountingController {
 		for (int i = 0; i < glpostData.length; i++) {
 			// System.out.println(glpostData[i][0].toString());
 			GlTranctionReportBeen glTranctionReportBeen = new GlTranctionReportBeen();
-
+			String docNo = glpostData[i][1].toString();
+			System.out.println("Doc No : " + docNo);
+			int docId = Integer.valueOf(glpostData[i][2].toString());
+			System.out.println("Doc Id : " + docId);
 			glTranctionReportBeen.setJournalno(glpostData[i][0].toString());
-			glTranctionReportBeen.setDoctype(glpostData[i][1].toString());
-			glTranctionReportBeen.setDocument(glpostData[i][2].toString());
+			glTranctionReportBeen.setDoctype(financeAccountingService.findDocTypeHeadById(docId).getDocument());
+			glTranctionReportBeen.setDocument(docNo);
 			glTranctionReportBeen.setPrimaryaccount(glpostData[i][4].toString());
 			glTranctionReportBeen.setDr(Double.parseDouble(glpostData[i][5].toString()) / 100);
 			glTranctionReportBeen.setCr(Double.parseDouble(glpostData[i][6].toString()) / 100);
 			glTranctionReportBeen.setDate(glpostData[i][7].toString());
 			title = glaccno + "-" + glpostData[i][3].toString();
+			if (docId == 4) {
+				OutgoingPaymentHead oph = financeAccountingService.getOutgoingPaymentHeadbyVoucherNo(docNo);
+				glTranctionReportBeen.setRemark(oph.getPayTo());
+			} else if (docId == 5) {
+				APInvoiceHead aih = financeAccountingService.findAPInvoiceHeadById(docNo);
+				glTranctionReportBeen.setRemark(aih.getSupplierMaster().getSupplierName());
+			} else if (docId == 6) {
+				APInvoicePaymentHead apih = financeAccountingService.findAPInvoicePaymentHeadById(docNo);
+				glTranctionReportBeen.setRemark(apih.getSupplierMaster().getSupplierName());
+			} else {
+				glTranctionReportBeen.setRemark("");
+			}
 			glTranctionReportBeenList.add(glTranctionReportBeen);
 		}
 
@@ -1384,24 +1399,27 @@ public class FinanceAccountingController {
 		if (supplierId.equals("")) {
 			paymentDetails = financeAccountingService.getAPInvoicePaymentDetailsByDates(fromDate, toDate);
 		} else {
-			paymentDetails = financeAccountingService.getAPInvoicePaymentDetailsByByDatesAndSupplier(fromDate, toDate, supplierId);
+			paymentDetails = financeAccountingService.getAPInvoicePaymentDetailsByByDatesAndSupplier(fromDate, toDate,
+					supplierId);
 		}
 
 		List<APInvoicePaymentHistoryReportBean> apiphrbList = new ArrayList<APInvoicePaymentHistoryReportBean>();
 
-			for (int i = 0; i < paymentDetails.size(); i++) {
-				APInvoicePaymentHistoryReportBean apiphrb = new APInvoicePaymentHistoryReportBean();
-				apiphrb.setDate(paymentDetails.get(i).getApInvoicePaymentHeadId().getPaymentDate());
-				apiphrb.setSupplierId(paymentDetails.get(i).getApInvoicePaymentHeadId().getSupplierMaster().getSupplierId());
-				apiphrb.setPaymentId(paymentDetails.get(i).getApInvoicePaymentHeadId().getApInvoicePaymentHeadId());
-				apiphrb.setSupplierName(paymentDetails.get(i).getApInvoicePaymentHeadId().getSupplierMaster().getSupplierName());
-				apiphrb.setInvoiceId(paymentDetails.get(i).getApInvoiceHead().getApInvoiceHeadId());
-				apiphrb.setPaymentType(paymentDetails.get(i).getApInvoicePaymentHeadId().getPaymentType());
-				apiphrb.setDueAmount(paymentDetails.get(i).getInvoiceTotal() / 100);
-				apiphrb.setPayment(paymentDetails.get(i).getInvoicePayment() / 100);
-				apiphrb.setBalance(paymentDetails.get(i).getInvoiceBalance() / 100);
-				apiphrbList.add(apiphrb);
-			}
+		for (int i = 0; i < paymentDetails.size(); i++) {
+			APInvoicePaymentHistoryReportBean apiphrb = new APInvoicePaymentHistoryReportBean();
+			apiphrb.setDate(paymentDetails.get(i).getApInvoicePaymentHeadId().getPaymentDate());
+			apiphrb.setSupplierId(
+					paymentDetails.get(i).getApInvoicePaymentHeadId().getSupplierMaster().getSupplierId());
+			apiphrb.setPaymentId(paymentDetails.get(i).getApInvoicePaymentHeadId().getApInvoicePaymentHeadId());
+			apiphrb.setSupplierName(
+					paymentDetails.get(i).getApInvoicePaymentHeadId().getSupplierMaster().getSupplierName());
+			apiphrb.setInvoiceId(paymentDetails.get(i).getApInvoiceHead().getApInvoiceHeadId());
+			apiphrb.setPaymentType(paymentDetails.get(i).getApInvoicePaymentHeadId().getPaymentType());
+			apiphrb.setDueAmount(paymentDetails.get(i).getInvoiceTotal() / 100);
+			apiphrb.setPayment(paymentDetails.get(i).getInvoicePayment() / 100);
+			apiphrb.setBalance(paymentDetails.get(i).getInvoiceBalance() / 100);
+			apiphrbList.add(apiphrb);
+		}
 
 		ReportViewe review = new ReportViewe();
 		Map<String, Object> params = new HashMap<>();
