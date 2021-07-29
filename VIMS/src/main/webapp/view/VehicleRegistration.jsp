@@ -289,7 +289,10 @@
 									</div>	
 									<div class="col-sm-6">	
 								<label  class="l-fontst" id="payType">Cash</label>
-									<label  class="l-fontst" id="credbal"></label>						             			             		
+									<label  class="l-fontst" id="credbal"></label>	
+									<input class="form-control fontst " value='0' type="hidden" id="credbalhid"/>
+						             
+													             			             		
 <%-- 					             		<form:select path="payType" class="custom-select fontst" id="payType" onchange="" required="Required" readonly="true"> --%>
 											
 <%-- 											<c:forEach items="${veclass}" var="VClass"> --%>
@@ -662,8 +665,12 @@
 		    	  document.getElementById("payType").innerHTML=pty ;
 		    	if(pty=="Cash"){
 		    		  document.getElementById("credbal").innerHTML="" ;
+		    		  document.getElementById("credbalhid").value="0.00";
 		    	}else{
-		    		 document.getElementById("credbal").innerHTML="  Balance is "+(parseFloat(crba)/100).toFixed(2) ;	
+		    		 document.getElementById("credbal").innerHTML="  Balance is "+(parseFloat(crba)/100).toFixed(2) ;
+		    		 document.getElementById("credbalhid").value=(parseFloat(crba)/100).toFixed(2)
+		    		 
+		    		 
 		    	}
 		     
 		    },
@@ -711,10 +718,14 @@
 			  switch (value) {
 			 
 			    case "invoice":
-			    	
+			    	//netInsFree
+			    	//document.getElementById("credbalhid").value
+				var crbah=document.getElementById("credbalhid").value;
+				var netinf=document.getElementById("netInsFree").innerHTML;	
+				//alert("Error"+parseFloat(netinf)+"-"+parseFloat(crbah));
 				
-
-			    	
+				if( parseFloat(netinf)<=parseFloat(crbah)){
+					
 				    var request_method = $("#formVehicleRegistration").attr("method"); //get form GET/POST method
 					var form_data = $("#formVehicleRegistration").serialize();
 					$.ajax({
@@ -751,7 +762,7 @@
 		        			window.location.href = "logout";
 				        	}else if(data=="2"){
 // 				        		Swal.close();
-document.getElementById("overlay").style.display = "none";
+									document.getElementById("overlay").style.display = "none";
 				        		swal("Oops...", "Documents are not verified ! Please confirm document verification and continue", {
 									icon : "error",
 									buttons: {        			
@@ -803,8 +814,24 @@ document.getElementById("overlay").style.display = "none";
 				        	document.getElementById("overlay").style.display = "none";
 				        }
 					 }); 
-			      break;
-			 
+			    
+			      
+			  }else{
+				  
+					swal("Oops...", "Credit Balance must be Greater Than  or equal Net Inspection Fee", {
+						icon : "error",
+						buttons: {        			
+							confirm: {
+								className : 'btn btn-danger'
+							}
+						},
+					});
+					
+					document.getElementById("proceedLanBtn").style.display = "block";
+					document.getElementById("moreLoder").style.display = "none";
+					document.getElementById("overlay").style.display = "none";
+			  }
+				  break;
 			    case "receipt":
 			    	
 			
