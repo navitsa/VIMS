@@ -28,19 +28,18 @@
 
 	<script>
 		function getDBBackup(){
-			Swal.fire ({
-				   title: 'Wait ...',
-				   onBeforeOpen: () => {
-				     Swal.showLoading ()
-				   }
-				})
+// 			Swal.fire ({
+// 				   title: 'Wait ...',
+// 				   onBeforeOpen: () => {
+// 				     Swal.showLoading ()
+// 				   }
+// 				})
 				
 			$.ajax({
 				type : 'GET',
 				url : "startDbBackup",
 				success : function(data) {
-				
-					Swal.close();
+					
 					if(data=="1"){
 
 						
@@ -70,7 +69,7 @@
 					
 				},
 				error : function() {
-					Swal.close();
+				//	Swal.close();
 					swal({
 						  //title: "Are you sure?",
 						  text: "Could not create the backup",
