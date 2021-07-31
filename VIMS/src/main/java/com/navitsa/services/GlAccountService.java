@@ -112,4 +112,12 @@ public class GlAccountService {
 	public GlaccountMapping getGLAccountMappingById(int id) {
 		return glaccountMappingRepository.findById(id).get();
 	}
+
+	public List<GlPostingDetails> getGlPostingDetailsByDates(String fromDate, String toDate) {
+		return glPostingDetailsRepository.getGlPostingDetailsByDates(fromDate, toDate);
+	}
+
+	public String[][] getVendorGLTransactionReportDetails(String fromDate, String toDate, String supplierId) {
+		return glPostingDetailsRepository.getVendorGLTransactionReportDetails(fromDate, toDate, supplierId);
+	}
 }

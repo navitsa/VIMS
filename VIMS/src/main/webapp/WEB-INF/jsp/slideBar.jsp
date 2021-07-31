@@ -332,7 +332,9 @@
 							class="collapse-item fontst-sb-it"
 							href="DocumentTransactionDetailsReport"
 							id="DocumentTransactionDetailsReport" hidden="true">Document
-							Transaction Details Report</a>
+							Transaction Details Report</a><a class="collapse-item fontst-sb-it"
+							href="VendorGLTransactionReport" id="VendorGLTransactionReport"
+							hidden="true">Vendor GL Transaction Report</a>
 					</div></li>
 
 				<li class="nav-item" hidden="true" id="Equipment"><a

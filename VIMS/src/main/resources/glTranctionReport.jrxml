@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="glTranctionReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3737c8f8-35e7-4ea0-bf9f-c557f6bbbdf3">
-	<property name="ireport.zoom" value="1.0000000000000047"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.6105100000000079"/>
+	<property name="ireport.x" value="347"/>
 	<property name="ireport.y" value="0"/>
 	<style name="bordre" fill="Solid">
 		<pen lineWidth="0.0"/>
@@ -178,7 +178,7 @@
 				<text><![CDATA[Credit]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="363" y="0" width="125" height="23" backcolor="#CCFFFF" uuid="1f32d588-65cc-43ab-b175-3c9ca5ce36f0"/>
+				<reportElement mode="Opaque" x="142" y="0" width="125" height="23" backcolor="#CCFFFF" uuid="1f32d588-65cc-43ab-b175-3c9ca5ce36f0"/>
 				<box leftPadding="5" rightPadding="0">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -191,7 +191,7 @@
 				<text><![CDATA[Document No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="17" y="0" width="221" height="23" backcolor="#CCFFFF" uuid="31c8fb27-5766-45ab-9537-f8c614e5c08c"/>
+				<reportElement mode="Opaque" x="267" y="0" width="221" height="23" backcolor="#CCFFFF" uuid="31c8fb27-5766-45ab-9537-f8c614e5c08c"/>
 				<box leftPadding="5" rightPadding="0">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -204,7 +204,7 @@
 				<text><![CDATA[Vendor / Customer]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="238" y="0" width="125" height="23" backcolor="#CCFFFF" uuid="0ed25952-b04a-48ad-b164-518323fa777a"/>
+				<reportElement mode="Opaque" x="17" y="0" width="125" height="23" backcolor="#CCFFFF" uuid="0ed25952-b04a-48ad-b164-518323fa777a"/>
 				<box leftPadding="5" rightPadding="0">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -222,9 +222,12 @@
 		<band height="20">
 			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
 				<reportElement mode="Opaque" x="613" y="0" width="100" height="20" backcolor="#FFFFFF" uuid="b7156e7c-c827-4790-b447-79dd675a5cc2"/>
-				<box rightPadding="4">
-					<leftPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineStyle="Dashed"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial"/>
@@ -234,9 +237,12 @@
 			</textField>
 			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
 				<reportElement mode="Opaque" x="713" y="0" width="100" height="20" backcolor="#FFFFFF" uuid="7b17272e-1c2c-4ef7-ab86-e54a821c661e"/>
-				<box rightPadding="4">
-					<leftPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineStyle="Dashed"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial"/>
@@ -246,27 +252,55 @@
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="488" y="0" width="125" height="20" uuid="ef5c7b7a-95d6-4651-b22d-f9440fe342c9"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
 				<textElement verticalAlignment="Middle">
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{journalno}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="363" y="0" width="125" height="20" uuid="23c425e8-3c6a-4c1e-8543-eb655c148efc"/>
+				<reportElement x="142" y="0" width="125" height="20" uuid="23c425e8-3c6a-4c1e-8543-eb655c148efc"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
 				<textElement verticalAlignment="Middle">
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="17" y="0" width="221" height="20" uuid="e48928c2-da1a-4f01-8735-44064c319a88"/>
+				<reportElement x="267" y="0" width="221" height="20" uuid="e48928c2-da1a-4f01-8735-44064c319a88"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
 				<textElement verticalAlignment="Middle">
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="237" y="0" width="125" height="20" uuid="fb908544-9a04-4107-b6ff-1b33eced2a80"/>
+				<reportElement x="16" y="0" width="125" height="20" uuid="fb908544-9a04-4107-b6ff-1b33eced2a80"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
 				<textElement verticalAlignment="Middle">
 					<paragraph leftIndent="5"/>
 				</textElement>

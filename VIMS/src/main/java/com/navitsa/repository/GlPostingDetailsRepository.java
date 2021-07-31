@@ -27,4 +27,12 @@ public interface GlPostingDetailsRepository extends CrudRepository<GlPostingDeta
 	@Query(value = "SELECT glpd FROM GlPostingDetails glpd WHERE glpd.journalNo.journalNo=:journalNo")
 	public List<GlPostingDetails> getGlPostingDetailsByJournalNo(@Param("journalNo") int journalNo);
 
+	@Query(value = "SELECT glpd FROM GlPostingDetails glpd WHERE glpd.journalNo.date BETWEEN :fromDate AND :toDate")
+	public List<GlPostingDetails> getGlPostingDetailsByDates(@Param("fromDate") String fromDate,
+			@Param("toDate") String toDate);
+
+	@Query(value = "SELECT gpd.type as type, if(aph.supplier_id is null=1, apih.supplier_id,aph.supplier_id) as supplier_id, gph.date, gph.doc_No as invoice_no, dt.Document, gph.Journal_No as gl_no, gla.GlAccNo as gl_account_no, gla.GlAccountName as gl_account, if(gpd.type='C',gpd.Amount,0) as credit,if(gpd.type='D',gpd.Amount,0) as debit FROM vims.gl_posting_details gpd left join glaccount gla on gpd.GlAccNo = gla.GlAccNo ,gl_posting_head gph left join ap_invoice_head aph on gph.doc_No = aph.ap_invoice_head_id left join ap_invoice_payment_head apih on gph.doc_No = apih.ap_payment_head_id left join doc_type dt on gph.Doc_id = dt.Doc_id \r\n" + 
+			"where gpd.Journal_No = gph.Journal_No and gph.Doc_id in ('5','6') and if(aph.supplier_id is null=1, apih.supplier_id,aph.supplier_id) = :supplierId and gph.date between :fromDate and :toDate", nativeQuery = true)
+	public String[][] getVendorGLTransactionReportDetails(@Param("fromDate") String fromDate,
+			@Param("toDate") String toDate, @Param("supplierId") String supplierId);
 }

@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.navitsa.Reports.APInvoiceAgeAnalysisReportBean;
 import com.navitsa.Reports.APInvoicePaymentHistoryReportBean;
 import com.navitsa.Reports.DocumentTransactionDetailsReportBean;
+import com.navitsa.Reports.GLTransactionReportBean;
 import com.navitsa.Reports.GlTranctionReportBeen;
 import com.navitsa.Reports.OutgoingPaymentDetailsReportBeen;
 import com.navitsa.Reports.ProfitsAndLossBeen;
@@ -631,9 +632,7 @@ public class FinanceAccountingController {
 			// System.out.println(glpostData[i][0].toString());
 			GlTranctionReportBeen glTranctionReportBeen = new GlTranctionReportBeen();
 			String docNo = glpostData[i][1].toString();
-			System.out.println("Doc No : " + docNo);
 			int docId = Integer.valueOf(glpostData[i][2].toString());
-			System.out.println("Doc Id : " + docId);
 			glTranctionReportBeen.setJournalno(glpostData[i][0].toString());
 			glTranctionReportBeen.setDoctype(financeAccountingService.findDocTypeHeadById(docId).getDocument());
 			glTranctionReportBeen.setDocument(docNo);
@@ -670,8 +669,8 @@ public class FinanceAccountingController {
 		String reptValue = "";
 
 		try {
-			reptValue = review.pdfReportViewInlineSystemOpen("glTranctionReport.jasper", "GL Tranction Report",
-					glTranctionReportBeenList, params, response);
+			reptValue = review.pdfReportViewInlineSystemOpen("glTranctionReport.jasper",
+					"C:\\OCRExternal\\GL Tranction Report.pdf", glTranctionReportBeenList, params, response);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1442,5 +1441,78 @@ public class FinanceAccountingController {
 
 		mav.addObject("pdfViewEq", reptValue);
 		return mav;
+	}
+
+	/*
+	@RequestMapping(value = "/CustomerGLTransactionReport", method = RequestMethod.GET)
+	public String customerGLTransactionReportPage() {
+		return "CustomerGLTransactionReport";
+	}
+
+	@RequestMapping(value = "/PreviewCustomerGLTransactionReport", method = RequestMethod.POST)
+	public ModelAndView getCustomerGLTransactionReport(@RequestParam String fromDate, @RequestParam String toDate,
+			@RequestParam String customerId, HttpServletResponse response, HttpSession session) {
+		return null;
+
+	}
+	*/
+	
+	@RequestMapping(value = "/VendorGLTransactionReport", method = RequestMethod.GET)
+	public String vendorGLTransactionReportPage() {
+		return "VendorGLTransactionReport";
+	}
+
+	@RequestMapping(value = "/PreviewVendorGLTransactionReport", method = RequestMethod.POST)
+	public ModelAndView getVendorGLTransactionReport(@RequestParam String fromDate, @RequestParam String toDate,
+			@RequestParam String supplierId, @RequestParam(value = "creditOnly", required = false) int creditOnly,
+			HttpServletResponse response, HttpSession session) {
+		String[][] result = glAccountService.getVendorGLTransactionReportDetails(fromDate, toDate, supplierId);
+		SupplierMaster supplier = inventoryService.getSupplierMasterById(supplierId);
+		List<GLTransactionReportBean> list = new ArrayList<GLTransactionReportBean>();
+		String reportName = "";
+		if (creditOnly == 1) {
+			reportName = "vendorCreditGLTransactionReport.jasper";
+		} else {
+			reportName = "vendorGLTransactionReport.jasper";
+		}
+		for (int i = 0; i < result.length; i++) {
+			GLTransactionReportBean bean = new GLTransactionReportBean();
+			String type = result[i][0];
+			if (creditOnly == 1 && type.equals("D")) {
+				continue;
+			}
+			bean.setVendorORCustomer(supplier.getSupplierName());
+			bean.setDate(result[i][2].toString());
+			bean.setInvoiceNo(result[i][3].toString());
+			bean.setDocument(result[i][4].toString());
+			bean.setGlNo(result[i][5].toString());
+			bean.setGlAccountNo(result[i][6].toString());
+			bean.setGlAccount(result[i][7].toString());
+			bean.setCredit(Double.parseDouble(result[i][8].toString()) / 100);
+			bean.setDebit(Double.parseDouble(result[i][9].toString()) / 100);
+			list.add(bean);
+		}
+
+		ModelAndView mav = new ModelAndView("VendorGLTransactionReport");
+		String centerId = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerId);
+
+		String pdf_result = null;
+		ReportViewe view = new ReportViewe();
+		Map<String, Object> params = new HashMap<>();
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("header", centerMaster.getPartner_ID().getReceiptHeader());
+		params.put("address", centerMaster.getAdd03());
+		params.put("fromDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromDate)));
+		params.put("toDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
+		try {
+			pdf_result = view.pdfReportViewInlineSystemOpen(reportName, "C:\\OCRExternal\\GL Tranction Report.pdf",
+					list, params, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mav.addObject("pdfViewEq", pdf_result);
+		return mav;
+
 	}
 }

@@ -141,6 +141,33 @@
 														path="supplierName" onchange="" id="supplierName" />
 												</div>
 											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Supplier Address</label>
+												</div>
+												<div class="col-sm-6">
+													<form:textarea class="form-control fontst" type="text"
+														path="supplierAddress" onchange="" id="supplierAddress" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Contact No</label>
+												</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="contactNo" onchange="" id="contactNo" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-sm-4">
+													<label class="l-fontst">Email</label>
+												</div>
+												<div class="col-sm-6">
+													<form:input class="form-control fontst" type="text"
+														path="email" onchange="" id="email" />
+												</div>
+											</div>
 											<hr>
 											<div class="form-group row">
 
@@ -177,6 +204,9 @@
 													<tr>
 														<th style="width: 10%">Supplier ID</th>
 														<th style="width: 40%">Supplier Name</th>
+														<th style="width: 40%">Supplier Address</th>
+														<th style="width: 40%">Contact No</th>
+														<th style="width: 40%">Email</th>
 														<th style="width: 10%"></th>
 													</tr>
 												</thead>
@@ -185,6 +215,9 @@
 														<tr>
 															<td><div>${sl.supplierId}</div></td>
 															<td><div>${sl.supplierName}</div></td>
+															<td><div>${sl.supplierAddress}</div></td>
+															<td><div>${sl.contactNo}</div></td>
+															<td><div>${sl.email}</div></td>
 															<td><a
 																href="UpdateSupplierMaster?id=${sl.supplierId}"><i
 																	class="material-icons">&#xE254;</i></a></td>

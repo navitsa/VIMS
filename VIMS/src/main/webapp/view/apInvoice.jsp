@@ -247,8 +247,7 @@
 															id="inputDetailsItemCode" class="form-control"><option
 																value="">--SELECT--</option>
 															<c:forEach items="${itemList}" var="il">
-																<option value="${il.itemCode}">${il.itemCode}-
-																	${il.itemDescription}</option>
+																<option value="${il.itemCode}">${il.itemDescription}</option>
 															</c:forEach></select>
 													</div>
 													<div class="col-sm-2">
@@ -283,6 +282,7 @@
 
 														<thead>
 															<tr>
+																<th style="display: none"></th>
 																<th style="width: 40%">Item</th>
 																<th style="width: 40%">Unit Price</th>
 																<th style="width: 20%">Quantity</th>
@@ -305,8 +305,7 @@
 															id="inputTaxCode" class="form-control"><option
 																value="">--SELECT--</option>
 															<c:forEach items="${taxList}" var="tl">
-																<option value="${tl.taxCode}">${tl.taxCode}-
-																	${tl.tax}</option>
+																<option value="${tl.taxCode}">${tl.tax}</option>
 															</c:forEach></select>
 													</div>
 													<div class="col-sm-2">
@@ -332,8 +331,8 @@
 
 														<thead>
 															<tr>
-																<th style="width: 40%">Tax</th>
-																<!-- <th style="width: 40%">Description</th> -->
+																<th style="display: none"></th>
+																<th style="width: 40%">Description</th>
 																<th style="width: 20%">Amount</th>
 																<th style="width: 20%"></th>
 															</tr>
@@ -391,6 +390,7 @@
 		var taxTotal = 0;
 		var netTotal = 0;
 		function addDetailsRow() {
+			var itemText;
 			var detailsItemCodeValue = document
 					.getElementById("inputDetailsItemCode").value;
 			var detailsUnitPriceValue = document
@@ -443,11 +443,23 @@
 				});
 				return false;
 			} else {
+				
+				var itemList = document.getElementById("inputDetailsItemCode");
+				for (var i = 0; i < itemList.length; i++) {
+		            var option = itemList.options[i];
+		            if (option.value == detailsItemCodeValue) {
+		            	itemText = option.text;
+		            }
+		        }
+				
 				if (detailsDiscountValue == '') {
 					detailsDiscountValue = 0;
 				}
+				
 				var detailsTotalValue = (parseInt(detailsUnitPriceValue) * parseInt(detailsQuantityValue))
 						- parseInt(detailsDiscountValue);
+				
+				/*
 				var empTab = document.getElementById('apInvoiceDetailsTable');
 				var rowCnt = empTab.rows.length; // table row count.
 				var tr = empTab.insertRow(rowCnt); // the table row.
@@ -505,6 +517,35 @@
 						td.appendChild(button);
 					}
 				}
+				*/
+				
+				var row = '<tr>'
+					+ '<td style="display: none"><input type="hidden" name="detailsItemCode" value="'
+					+ detailsItemCodeValue
+					+ '"></td>'
+					+ '<td><input type="text" name="itemText" readonly value="'
+					+ itemText
+					+ '"></td>'
+					+ '<td><input type="text" name="detailsUnitPrice" readonly value="'
+					+ parseInt(detailsUnitPriceValue)
+					+ '"></td>'
+					+ '<td><input type="text" name="detailsQuantity" readonly value="'
+					+ parseInt(detailsQuantityValue)
+					+ '"></td>'
+					+ '<td><input type="text" name="detailsDiscount" readonly value="'
+					+ parseInt(detailsDiscountValue)
+					+ '"></td>'
+					+ '<td><input type="text" name="detailsTotal" readonly value="'
+					+ parseInt(detailsTotalValue)
+					+ '"></td>'
+					+ '<td><button class="btn btn-danger" onclick="removeDetailsRow(this)" value="'
+					+ '"><i class="fa fa-trash"></button></td>' + '</tr>';
+				
+			$("#apInvoiceDetailsTable tbody").append(row);
+				
+			$('#inputDetailsItemCode').get(0).selectedIndex = 0;
+				
+				
 				document.getElementById("inputDetailsItemCode").value = '';
 				document.getElementById("inputDetailsUnitPrice").value = '';
 				document.getElementById("inputDetailsQuantity").value = '';
@@ -524,10 +565,10 @@
 			var empTab = document.getElementById('apInvoiceDetailsTable');
 			var row = oButton.parentNode.parentNode;
 			empTab.deleteRow(row.rowIndex); // button -> td -> tr.
-			var unitPrice = row.cells[1];
-			var quantity = row.cells[2];
-			var discount = row.cells[3];
-			var total = row.cells[4];
+			var unitPrice = row.cells[2];
+			var quantity = row.cells[3];
+			var discount = row.cells[4];
+			var total = row.cells[5];
 			grossTotal = grossTotal
 					- (unitPrice.childNodes[0].value * quantity.childNodes[0].value);
 			discountTotal = discountTotal - (discount.childNodes[0].value);
@@ -538,6 +579,7 @@
 		}
 
 		function addTaxesRow() {
+			var taxText;
 			var taxesCodeValue = document.getElementById("inputTaxCode").value;
 			var taxesAmountValue = document.getElementById("inputTaxAmount").value;
 			//var taxesAmountValue = document.getElementById ("inputTaxesAmount").value;
@@ -562,7 +604,16 @@
 				});
 				return false;
 			} else {
-				var empTab = document.getElementById('apInvoiceTaxTable');
+				
+				var taxList = document.getElementById("inputTaxCode");
+				for (var i = 0; i < taxList.length; i++) {
+		            var option = taxList.options[i];
+		            if (option.value == taxesCodeValue) {
+		            	taxText = option.text;
+		            }
+		        }
+				
+				/*var empTab = document.getElementById('apInvoiceTaxTable');
 				var rowCnt = empTab.rows.length; // table row count.
 				var tr = empTab.insertRow(rowCnt); // the table row.
 				for (var c = 0; c < taxTableCells; c++) {
@@ -579,7 +630,7 @@
 						ele.setAttribute('readonly', true);
 						td.appendChild(ele);
 
-					} else if (c == 1) {
+					} else if (c == 2) {
 						ele = document.createElement('input');
 						ele.setAttribute('type', 'text');
 						ele.setAttribute('value', parseInt(taxesAmountValue));
@@ -587,25 +638,42 @@
 						ele.setAttribute('readonly', true);
 						td.appendChild(ele);
 					}
-					/*else if (c == 2) {
+					else if (c == 1) {
 					    // 3rd column, will have textbox.
 					    ele = document.createElement('input');
 					    ele.setAttribute('type', 'text');
-					    ele.setAttribute('value', taxesAmountValue);
-					    ele.setAttribute('id', 'taxesAmount');
-					    ele.setAttribute('name', 'taxesAmount');
-					    ele.setAttribute('readonly', true);
-					    td.appendChild(ele);
-					}*/
-					else if (c == 2) {
+					    ele.setAttribute('value', taxText);
+						ele.setAttribute('name', 'taxText');
+						ele.setAttribute('readonly', true);
+						td.appendChild(ele);
+					}
+					else if (c == 3) {
 						button = document.createElement('input');
 						button.setAttribute('type', 'button');
 						button.setAttribute('value', 'Remove');
 						button.setAttribute('onclick', 'removeTaxesRow(this)');
 						td.appendChild(button);
 					}
-				}
-				document.getElementById("inputTaxCode").value = '';
+				}*/
+				
+				
+				var row = '<tr>'
+					+ '<td style="display: none"><input type="hidden" name="taxesCode" value="'
+					+ taxesCodeValue
+					+ '"></td>'
+					+ '<td><input type="text" name="taxText" readonly value="'
+					+ taxText
+					+ '"></td>'
+					+ '<td><input type="text" name="taxesTotal" readonly value="'
+					+ parseInt(taxesAmountValue)
+					+ '"></td>'
+					+ '<td><button class="btn btn-danger" onclick="removeTaxesRow(this)" value="'
+					+ '"><i class="fa fa-trash"></button></td>' + '</tr>';
+				
+			$("#apInvoiceTaxTable tbody").append(row);
+				
+			$('#inputTaxCode').get(0).selectedIndex = 0;
+			
 				document.getElementById("inputTaxAmount").value = '';
 				//netTotal = netTotal + parseInt(taxesAmountValue);
 				//document.getElementById("netTotal").value = netTotal;
@@ -622,7 +690,7 @@
 			var empTab = document.getElementById('apInvoiceTaxTable');
 			var row = oButton.parentNode.parentNode;
 			empTab.deleteRow(row.rowIndex); // button -> td -> tr.
-			var tax = row.cells[1];
+			var tax = row.cells[2];
 			taxTotal = taxTotal - parseInt(tax.childNodes[0].value);
 			netTotal = netTotal - parseInt(tax.childNodes[0].value);
 			document.getElementById("taxTotal").value = taxTotal;
