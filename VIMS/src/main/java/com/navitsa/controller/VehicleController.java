@@ -679,7 +679,7 @@ public class VehicleController {
 		File file = new File("C:\\OCRExternal\\" + fileName + ".jpg");
 		System.out.println("file=" + file);
 		if (ocrDetails.isImagePresent() == true) {
-
+			
 			BufferedImage bImage = ImageIO.read(file);
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(bImage, "jpg", bos);
@@ -3980,7 +3980,7 @@ public class VehicleController {
 			// ocrDetails.setOcrDate(dtf.format(now));
 			// ocrDetails.setCapimg(ocrDetails.getNoimage());
 			ocrDetails.setImagePresent(imagePresent);
-			ocrDetails.setNoimage(imagedata);
+			//ocrDetails.setNoimage(imagedata);
 
 			vehicleService.saveOcrDetailsRepo(ocrDetails);
 
