@@ -42,6 +42,7 @@ import com.navitsa.entity.APInvoicePaymentDetails;
 import com.navitsa.entity.APInvoicePaymentHead;
 import com.navitsa.entity.APInvoiceTax;
 import com.navitsa.entity.CenterMaster;
+import com.navitsa.entity.Customer;
 import com.navitsa.entity.DocType;
 import com.navitsa.entity.GlPostingDetails;
 import com.navitsa.entity.GlPostingHead;
@@ -670,7 +671,7 @@ public class FinanceAccountingController {
 
 		try {
 			reptValue = review.pdfReportViewInlineSystemOpen("glTranctionReport.jasper",
-					"C:\\OCRExternal\\GL Tranction Report.pdf", glTranctionReportBeenList, params, response);
+					"GL Tranction Report", glTranctionReportBeenList, params, response);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1443,12 +1444,19 @@ public class FinanceAccountingController {
 		return mav;
 	}
 
-	/*
+	
 	@RequestMapping(value = "/CustomerGLTransactionReport", method = RequestMethod.GET)
 	public String customerGLTransactionReportPage() {
 		return "CustomerGLTransactionReport";
 	}
-
+	
+	@ModelAttribute("customerList")
+	public List<Customer> customerList() {
+		List<Customer> customerList = usersService.viewAllCustomers();
+		return customerList;
+	}
+	
+	/*
 	@RequestMapping(value = "/PreviewCustomerGLTransactionReport", method = RequestMethod.POST)
 	public ModelAndView getCustomerGLTransactionReport(@RequestParam String fromDate, @RequestParam String toDate,
 			@RequestParam String customerId, HttpServletResponse response, HttpSession session) {
@@ -1506,7 +1514,7 @@ public class FinanceAccountingController {
 		params.put("fromDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromDate)));
 		params.put("toDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
 		try {
-			pdf_result = view.pdfReportViewInlineSystemOpen(reportName, "C:\\OCRExternal\\GL Tranction Report.pdf",
+			pdf_result = view.pdfReportViewInlineSystemOpen(reportName, "Vendor GL Tranction Report",
 					list, params, response);
 		} catch (Exception e) {
 			e.printStackTrace();
