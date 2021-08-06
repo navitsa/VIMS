@@ -13,7 +13,7 @@ public interface TestLaneHeadRepository extends CrudRepository<TestLaneHead, Str
 	@Query(value = "SELECT (max(s.testLaneHeadId)+1) FROM TestLaneHead s ")
     public String maxlaneHeadid();
 	
-	@Query(value = "SELECT s FROM TestLaneHead s where s.centerID.center_ID=:cid ")
+	@Query(value = "SELECT s FROM TestLaneHead s where s.centerID.center_ID=:cid and status='ACTIVE'")
     public List<TestLaneHead> getTestLaneHeadDetailByCenter(@Param("cid")String cid);
 	
 	

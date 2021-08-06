@@ -210,7 +210,7 @@ public class VehicleService {
 
 	// getAll vTypes
 	public List<VehicleRegisterType> getAllVType() {
-		return (List<VehicleRegisterType>) vRegTypeRepo.findAll();
+		return  vRegTypeRepo.getActiveVehicleRegisterType();
 	}
 
 	// get reg type
