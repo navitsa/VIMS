@@ -670,8 +670,8 @@ public class FinanceAccountingController {
 		String reptValue = "";
 
 		try {
-			reptValue = review.pdfReportViewInlineSystemOpen("glTranctionReport.jasper",
-					"GL Tranction Report", glTranctionReportBeenList, params, response);
+			reptValue = review.pdfReportViewInlineSystemOpen("glTranctionReport.jasper", "GL Tranction Report",
+					glTranctionReportBeenList, params, response);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1444,27 +1444,71 @@ public class FinanceAccountingController {
 		return mav;
 	}
 
-	
 	@RequestMapping(value = "/CustomerGLTransactionReport", method = RequestMethod.GET)
 	public String customerGLTransactionReportPage() {
 		return "CustomerGLTransactionReport";
 	}
-	
+
 	@ModelAttribute("customerList")
 	public List<Customer> customerList() {
 		List<Customer> customerList = usersService.viewAllCustomers();
 		return customerList;
 	}
-	
-	/*
+
 	@RequestMapping(value = "/PreviewCustomerGLTransactionReport", method = RequestMethod.POST)
 	public ModelAndView getCustomerGLTransactionReport(@RequestParam String fromDate, @RequestParam String toDate,
-			@RequestParam String customerId, HttpServletResponse response, HttpSession session) {
-		return null;
+			@RequestParam String customerId, @RequestParam(value = "debitOnly", required = false) int debitOnly,
+			HttpServletResponse response, HttpSession session) {
+		String[][] result = glAccountService.getCustomerGLTransactionReportDetails(fromDate, toDate, customerId);
+		Customer customer = usersService.getrm(customerId);
+		List<GLTransactionReportBean> list = new ArrayList<GLTransactionReportBean>();
+		String reportName = "";
+		if (debitOnly == 1) {
+			reportName = "customerCreditGLTransactionReport.jasper";
+		} else {
+			reportName = "customerGLTransactionReport.jasper";
+		}
+		for (int i = 0; i < result.length; i++) {
+			GLTransactionReportBean bean = new GLTransactionReportBean();
+			String type = result[i][0];
+			if (debitOnly == 1 && type.equals("C")) {
+				continue;
+			}
+			bean.setVendorORCustomer(customer.getName());
+			bean.setDate(result[i][2].toString());
+			bean.setInvoiceNo(result[i][3].toString());
+			bean.setDocument(result[i][4].toString());
+			bean.setGlNo(result[i][5].toString());
+			bean.setGlAccountNo(result[i][6].toString());
+			bean.setGlAccount(result[i][7].toString());
+			bean.setCredit(Double.parseDouble(result[i][8].toString()) / 100);
+			bean.setDebit(Double.parseDouble(result[i][9].toString()) / 100);
+			list.add(bean);
+		}
+
+		ModelAndView mav = new ModelAndView("CustomerGLTransactionReport");
+		String centerId = session.getAttribute("centerid") + "";
+		CenterMaster centerMaster = centerService.getcenterById(centerId);
+
+		String pdf_result = null;
+		ReportViewe view = new ReportViewe();
+		Map<String, Object> params = new HashMap<>();
+		params.put("img", centerMaster.getPartner_ID().getPartner_Logo());
+		params.put("header", centerMaster.getPartner_ID().getReceiptHeader());
+		params.put("address", centerMaster.getAdd03());
+		params.put("fromDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromDate)));
+		params.put("toDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
+		try {
+			pdf_result = view.pdfReportViewInlineSystemOpen(reportName,
+					"C:\\OCRExternal\\Customer GL Tranction Report.pdf", list, params, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mav.addObject("pdfViewEq", pdf_result);
+		return mav;
 
 	}
-	*/
-	
+
 	@RequestMapping(value = "/VendorGLTransactionReport", method = RequestMethod.GET)
 	public String vendorGLTransactionReportPage() {
 		return "VendorGLTransactionReport";
@@ -1514,13 +1558,12 @@ public class FinanceAccountingController {
 		params.put("fromDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(fromDate)));
 		params.put("toDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
 		try {
-			pdf_result = view.pdfReportViewInlineSystemOpen(reportName, "Vendor GL Tranction Report",
-					list, params, response);
+			pdf_result = view.pdfReportViewInlineSystemOpen(reportName,
+					"C:\\OCRExternal\\Vendor GL Tranction Report.pdf", list, params, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		mav.addObject("pdfViewEq", pdf_result);
 		return mav;
-
 	}
 }

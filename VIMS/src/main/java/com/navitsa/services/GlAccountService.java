@@ -120,4 +120,8 @@ public class GlAccountService {
 	public String[][] getVendorGLTransactionReportDetails(String fromDate, String toDate, String supplierId) {
 		return glPostingDetailsRepository.getVendorGLTransactionReportDetails(fromDate, toDate, supplierId);
 	}
+
+	public String[][] getCustomerGLTransactionReportDetails(String fromDate, String toDate, String customerId) {
+		return glPostingDetailsRepository.getCustomerGLTransactionReportDetails(fromDate, toDate, customerId);
+	}
 }

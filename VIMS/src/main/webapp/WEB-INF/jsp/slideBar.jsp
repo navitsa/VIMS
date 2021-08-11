@@ -334,7 +334,9 @@
 							id="DocumentTransactionDetailsReport" hidden="true">Document
 							Transaction Details Report</a><a class="collapse-item fontst-sb-it"
 							href="VendorGLTransactionReport" id="VendorGLTransactionReport"
-							hidden="true">Vendor GL Transaction Report</a>
+							hidden="true">Vendor GL Transaction Report</a><a class="collapse-item fontst-sb-it"
+							href="CustomerGLTransactionReport" id="CustomerGLTransactionReport"
+							hidden="true">Customer GL Transaction Report</a>
 					</div></li>
 
 				<li class="nav-item" hidden="true" id="Equipment"><a
@@ -458,6 +460,12 @@
 							href="equipmentRepairReport" id="equipmentRepairReport"
 							hidden="true">Repair Report</a>
 
+						<h6 class="text-section">Inventory :</h6>
+						<a class="collapse-item fontst-sb-it"
+							href="SupplierMaster" id="SupplierMaster"
+							hidden="true">Supplier</a><a class="collapse-item fontst-sb-it"
+							href="ItemMaster" id="ItemMaster"
+							hidden="true">Item</a>
 						<!-- 			</div> -->
 					</div></li>
 
