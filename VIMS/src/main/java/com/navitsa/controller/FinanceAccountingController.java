@@ -1500,7 +1500,7 @@ public class FinanceAccountingController {
 		params.put("toDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
 		try {
 			pdf_result = view.pdfReportViewInlineSystemOpen(reportName,
-					"C:\\OCRExternal\\Customer GL Tranction Report.pdf", list, params, response);
+					"Customer GL Tranction Report", list, params, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1559,7 +1559,7 @@ public class FinanceAccountingController {
 		params.put("toDate", DateHelperWeb.getFormatStringDate(DateHelperWeb.getDate(toDate)));
 		try {
 			pdf_result = view.pdfReportViewInlineSystemOpen(reportName,
-					"C:\\OCRExternal\\Vendor GL Tranction Report.pdf", list, params, response);
+					"Vendor GL Tranction Report", list, params, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
