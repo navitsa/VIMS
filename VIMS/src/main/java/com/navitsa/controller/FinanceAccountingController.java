@@ -1471,7 +1471,11 @@ public class FinanceAccountingController {
 		for (int i = 0; i < result.length; i++) {
 			GLTransactionReportBean bean = new GLTransactionReportBean();
 			String type = result[i][0];
+			String glAccNo = result[i][6].toString();
 			if (debitOnly == 1 && type.equals("C")) {
+				continue;
+			}
+			if (!glAccNo.equals("1-0002")) {
 				continue;
 			}
 			bean.setVendorORCustomer(customer.getName());
@@ -1530,7 +1534,11 @@ public class FinanceAccountingController {
 		for (int i = 0; i < result.length; i++) {
 			GLTransactionReportBean bean = new GLTransactionReportBean();
 			String type = result[i][0];
+			String glAccNo = result[i][6].toString();
 			if (creditOnly == 1 && type.equals("D")) {
+				continue;
+			}
+			if (!glAccNo.equals("2-0001")) {
 				continue;
 			}
 			bean.setVendorORCustomer(supplier.getSupplierName());

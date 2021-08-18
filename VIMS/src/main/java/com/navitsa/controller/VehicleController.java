@@ -185,7 +185,21 @@ public class VehicleController {
 			return "vehicleModelForm";
 		} else {
 			try {
-				vehicleService.saveVModel(vehicleModel);
+				if (vehicleModel.getModelLogo() == null) {
+
+					VehicleModel vm = vehicleService.getVmodelDetailsByID(vehicleModel.getVehicleModelID());
+					if (vm != null) {
+						vm.setVehicleModel(vehicleModel.getVehicleModel());
+						vm.setStatus(vehicleModel.getStatus());
+						vm.setVehicleClass(vehicleModel.getVehicleClass());
+						vm.setVehicleMakeID(vehicleModel.getVehicleMakeID());
+						vehicleService.saveVModel(vm);
+					} else {
+						vehicleService.saveVModel(vehicleModel);
+					}
+				} else {
+					vehicleService.saveVModel(vehicleModel);
+				}
 				redirectAttributes.addFlashAttribute("success", 1);
 				return "redirect:/vehiclemodel1";
 			} catch (Exception e) {
@@ -195,6 +209,27 @@ public class VehicleController {
 
 			return "vehicleModelForm";
 		}
+	}
+	
+	@RequestMapping("/updateVehicleModel")
+	public ModelAndView updateVehicleModel(@RequestParam String id) {
+		ModelAndView mav = new ModelAndView("vehicleModelForm");
+		VehicleModel vm = null;
+		try {
+			vm = vehicleService.getVmodelDetailsByID(id);
+			mav.addObject("vehicleModelForm", vm);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		try {
+			String vmImg = vm.getModelLogoView();
+			mav.addObject("vMakeLogo", vmImg);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return mav;
 	}
 
 	@RequestMapping(value = "/savevmodelFormModel", method = RequestMethod.POST)
@@ -533,13 +568,14 @@ public class VehicleController {
 	}
 
 	@RequestMapping("/vehicleMasterAuto")
-	public ModelAndView logVehicleMaster(@RequestParam String vehicleID, @RequestParam String id, HttpSession session) throws IOException {
+	public ModelAndView logVehicleMaster(@RequestParam String vehicleID, @RequestParam String id, HttpSession session)
+			throws IOException {
 		ModelAndView mav = new ModelAndView("vehicleMaster");
 
 		OcrDetails ocrDetails = vehicleService.getOcrDetailsById(Integer.parseInt(id));
 		// ocrDetails.setOcrVid(vehicleID);
 		// vehicleService.saveOcrDetailsRepo(ocrDetails);
-		
+
 		String fileName = String.valueOf(id);
 
 		File file = new File("C:\\OCRExternal\\" + fileName + ".jpg");
@@ -552,7 +588,7 @@ public class VehicleController {
 			byte[] data = bos.toByteArray();
 			mav.addObject("imgVe", Base64.getEncoder().encodeToString(data));
 		}
-		
+
 		String appNo = ocrDetails.getAppNo();
 
 		if (!appNo.equals("0")) {
@@ -562,7 +598,6 @@ public class VehicleController {
 			appointmentService.save(appointment);
 		}
 
-		
 		mav.addObject("ocid", id);
 		mav.addObject("milage", ocrDetails.getCurrentMilage());
 		VehicleMaster vm = new VehicleMaster();
@@ -679,7 +714,7 @@ public class VehicleController {
 		File file = new File("C:\\OCRExternal\\" + fileName + ".jpg");
 		System.out.println("file=" + file);
 		if (ocrDetails.isImagePresent() == true) {
-			
+
 			BufferedImage bImage = ImageIO.read(file);
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(bImage, "jpg", bos);
@@ -990,7 +1025,7 @@ public class VehicleController {
 			byte[] data = bos.toByteArray();
 			m.addAttribute("imgVimg", Base64.getEncoder().encodeToString(data));
 		}
-		//m.addAttribute("imgVimg", ocrDetails.getNoimageView());
+		// m.addAttribute("imgVimg", ocrDetails.getNoimageView());
 		m.addAttribute("pre_vehicle", vehicleService.getPerviousRegistrationVehicle(vid));
 
 		m.addAttribute("vehNo", vid);
@@ -3765,7 +3800,7 @@ public class VehicleController {
 			byte[] data = bos.toByteArray();
 			model.put("imgVe", Base64.getEncoder().encodeToString(data));
 		}
-		//model.put("imgVe", ocrDetails.getNoimageView());
+		// model.put("imgVe", ocrDetails.getNoimageView());
 		List<Document> documentlist = documentScrvice.getAllActiveDocument();
 		model.put("documentlist", documentlist);
 
@@ -3980,7 +4015,7 @@ public class VehicleController {
 			// ocrDetails.setOcrDate(dtf.format(now));
 			// ocrDetails.setCapimg(ocrDetails.getNoimage());
 			ocrDetails.setImagePresent(imagePresent);
-			//ocrDetails.setNoimage(imagedata);
+			// ocrDetails.setNoimage(imagedata);
 
 			vehicleService.saveOcrDetailsRepo(ocrDetails);
 

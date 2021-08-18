@@ -124,13 +124,27 @@
 
 										<div class="card-body">
 
+											<c:if test="${success ==1}">
+												<div class="alert alert-success alert-dismissible">
+													<button type="button" class="close" data-dismiss="alert">&times;</button>
+													<strong>Success!</strong> Data Successfully Saved.
+												</div>
+											</c:if>
+											<c:if test="${success ==0}">
+												<div class="alert alert-danger alert-dismissible">
+													<button type="button" class="close" data-dismiss="alert">&times;</button>
+													<strong>Warning!</strong>Something went wrong ! Please try
+													again!
+												</div>
+											</c:if>
+
 											<div class="form-group row">
 												<div class="col-sm-4">
 													<label class="l-fontst">Category Type</label>
 												</div>
 												<div class="col-sm-6">
 													<form:select class="form-control form-control-user fontst"
-														path="typeId.typeId">
+														path="typeId.typeId" required="true">
 														<form:option value="">- Select Type -</form:option>
 														<c:forEach items="${alltypes}" var="types">
 															<form:option value="${types.typeId}">${types.type}</form:option>
@@ -146,7 +160,7 @@
 												</div>
 												<div class="col-sm-6">
 													<form:input class="form-control fontst" type="text"
-														path="categoryID" onchange="" id="categoryID" />
+														path="categoryID" onchange="" id="categoryID" required="true" />
 												</div>
 											</div>
 											<div class="form-group row">
@@ -155,7 +169,7 @@
 												</div>
 												<div class="col-sm-6">
 													<form:input class="form-control fontst" type="text"
-														path="vehicleCategory" onchange="" id="vehicleCategory" />
+														path="vehicleCategory" onchange="" id="vehicleCategory" required="true" />
 												</div>
 											</div>
 											<div class="form-group row">
